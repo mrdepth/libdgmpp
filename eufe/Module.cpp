@@ -8,6 +8,7 @@
 #include "Modifier.h"
 #include "LocationGroupModifier.h"
 #include "LocationRequiredSkillModifier.h"
+#include "HeatSimulator.h"
 #include <algorithm>
 
 using namespace eufe;
@@ -308,6 +309,7 @@ void Module::reset()
 	Item::reset();
 	shots_ = -1;
 	dps_ = maxRange_ = falloff_ = volley_ = -1;
+	lifetime_ = -1;
 	if (charge_ != NULL)
 		charge_->reset();
 }
@@ -595,6 +597,21 @@ float Module::getFalloff()
 			falloff_ = 0;
 	}
 	return falloff_;
+}
+
+float Module::getLifetime()
+{
+	if (lifetime_ < 0)
+	{
+		Ship* ship = dynamic_cast<Ship*>(getOwner());
+		ship->updateHeatDamage();
+	}
+	return lifetime_;
+}
+
+void Module::setLifetime(float lifetime)
+{
+	lifetime_ = lifetime;
 }
 
 void Module::calculateDamageStats()

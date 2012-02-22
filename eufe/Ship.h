@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "Module.h"
 #include "CapacitorSimulator.h"
+#include "HeatSimulator.h"
 #include "DamagePattern.h"
 
 namespace eufe {
@@ -55,6 +56,7 @@ namespace eufe {
 		void removeProjectedDrone(Drone* drone);
 		
 		const CapacitorSimulator& getCapacitorSimulator();
+		const HeatSimulator& getHeatSimulator();
 		const DamagePattern& getDamagePattern();
 		void setDamagePattern(const DamagePattern& damagePattern);
 		
@@ -124,6 +126,8 @@ namespace eufe {
 		int getMaxActiveDrones();
 		int getActiveDrones();
 
+		//Other
+		void updateHeatDamage();
 		
 #if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Ship& ship);
@@ -135,6 +139,7 @@ namespace eufe {
 		ProjectedModulesList projectedModules_;
 		ProjectedDronesList projectedDrones_;
 		CapacitorSimulator capacitorSimulator_;
+		HeatSimulator heatSimulator_;
 		DamagePattern damagePattern_;
 		
 		Resistances resistances_;

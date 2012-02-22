@@ -12,12 +12,12 @@ using namespace eufe;
 
 int main(int argc, char* argv[])
 {
-	if (argc != 3)
+/*	if (argc != 3)
 		return 0;
 	Compiler compiler = Compiler(argv[1], argv[2]);
 	compiler.compile();
-	return 0;
-	/*
+	return 0;*/
+	
 #ifdef WIN32
 	Engine engine("E:\\Programing\\dbinit\\eufe.sqlite");
 #else
@@ -27,32 +27,21 @@ int main(int argc, char* argv[])
 	
 	boost::shared_ptr<Gang> gang = engine.getGang();
 	boost::shared_ptr<Character> character1 = gang->addPilot();
-	boost::shared_ptr<Character> character2 = gang->addPilot();
 	character1->setAllSkillsLevel(5);
-	character2->setAllSkillsLevel(5);
 	
 	boost::shared_ptr<Ship> gila = character1->setShip(17715);
-	gila->addModule(3841);
-	gila->addModule(3841);
-	gila->addModule(3841);
-	gila->addModule(3841);
-	gila->addModule(2281);
-	gila->addModule(2531);
-	gila->addModule(1422);
-	gila->addModule(1422);
-	gila->addModule(1422);
-	Module* dc = gila->addModule(2048).get();
-	gila->addModule(31802);
-	gila->addModule(31802);
-	gila->addModule(31802);
-	dc->getAttribute(271)->getValue();
-	
-	boost::shared_ptr<Ship> tengu = character2->setShip(29984);
-	tengu->addModule(29972);
-	tengu->addModule(4284);
-	character2->addImplant(21888);
-	gang->setFleetBooster(character2);
-	Resistances res = gila->getResistances();
+	boost::shared_ptr<Module> module1 = gila->addModule(10836);
+	boost::shared_ptr<Module> module2 = gila->addModule(10836);
+	boost::shared_ptr<Module> module3 = gila->addModule(10836);
+	gila->addModule(10836);
+	gila->addModule(10836);
+	gila->addModule(10836);
+	module1->setState(Module::STATE_OVERLOADED);
+	//module2->setState(Module::STATE_OFFLINE);
+	module3->setState(Module::STATE_OVERLOADED);
+	float lifeTime1 = module1->getLifetime();
+	float lifeTime2 = module2->getLifetime();
+	float lifeTime3 = module3->getLifetime();
 
 	
 #if _DEBUG
@@ -65,5 +54,5 @@ int main(int argc, char* argv[])
 	ofs << engine << std::endl;
 	ofs.close();
 #endif
-	return 0;*/
+	return 0;
 }

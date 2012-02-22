@@ -11,6 +11,7 @@
 		3708AE3C14892DCD005492F5 /* Charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3B14892DCC005492F5 /* Charge.cpp */; };
 		3708AE3F1489310E005492F5 /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3E1489310C005492F5 /* Implant.cpp */; };
 		3708AE4214893126005492F5 /* Booster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE4114893125005492F5 /* Booster.cpp */; };
+		371FA1D014F542FC0043E813 /* HeatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371FA1CF14F542FC0043E813 /* HeatSimulator.cpp */; };
 		373AF827148E6FEA00411AFE /* Drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 373AF826148E6FE900411AFE /* Drone.cpp */; };
 		37A9C1791490F2870048A52A /* CapacitorSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9C1781490F2860048A52A /* CapacitorSimulator.cpp */; };
 		37A9EC53147FA61C00B12A7F /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9EC51147FA61C00B12A7F /* Area.cpp */; };
@@ -63,6 +64,8 @@
 		3708AE4014893118005492F5 /* Implant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Implant.h; sourceTree = "<group>"; };
 		3708AE4114893125005492F5 /* Booster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Booster.cpp; sourceTree = "<group>"; };
 		3708AE4314893130005492F5 /* Booster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Booster.h; sourceTree = "<group>"; };
+		371FA1CF14F542FC0043E813 /* HeatSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeatSimulator.cpp; sourceTree = "<group>"; };
+		371FA1D214F543080043E813 /* HeatSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatSimulator.h; sourceTree = "<group>"; };
 		373AF826148E6FE900411AFE /* Drone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drone.cpp; sourceTree = "<group>"; };
 		373AF829148E6FF500411AFE /* Drone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drone.h; sourceTree = "<group>"; };
 		37A9C1781490F2860048A52A /* CapacitorSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CapacitorSimulator.cpp; sourceTree = "<group>"; };
@@ -174,6 +177,8 @@
 				37BA6FA6147D2F7400ADC4CE /* Skill.cpp */,
 				37BA6FA5147D2F6700ADC4CE /* Skill.h */,
 				37B33D6C1473CA5E006B18D7 /* types.h */,
+				371FA1CF14F542FC0043E813 /* HeatSimulator.cpp */,
+				371FA1D214F543080043E813 /* HeatSimulator.h */,
 			);
 			name = eufe;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 				37AC8091149906AE00CB0411 /* EffectHullRepairInterpreter.cpp in Sources */,
 				37F1E6FE14B4D47E007E2A86 /* EffectSlotModifierInterpreter.cpp in Sources */,
 				37D97F2114B76EA600329E9F /* EffecthardPointModifierEffectInterpreter.cpp in Sources */,
+				371FA1D014F542FC0043E813 /* HeatSimulator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

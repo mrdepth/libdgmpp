@@ -83,6 +83,9 @@ namespace eufe {
 		float getMaxRange();
 		float getFalloff();
 		
+		float getLifetime();
+		void setLifetime(float lifetime);
+		
 
 #if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Module& module);
@@ -107,6 +110,8 @@ namespace eufe {
 		float dps_;
 		float maxRange_;
 		float falloff_;
+		
+		float lifetime_;
 		
 		void calculateDamageStats();
 	};

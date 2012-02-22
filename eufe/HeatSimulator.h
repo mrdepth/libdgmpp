@@ -1,14 +1,38 @@
-//
-//  HeatSimulator.h
-//  eufe
-//
-//  Created by Mr. Depth on 2/22/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+#pragma once
+#include "types.h"
+#include "Module.h"
+#include <vector>
 
-#ifndef eufe_HeatSimulator_h
-#define eufe_HeatSimulator_h
+namespace eufe {
+	
+	class HeatSimulator
+	{
+	public:
+		struct State {
+			int tNow;
+			int duration;
+			int reloadTime;
+			int shot;
+			int clipSize;
+			int moduleIndex;
+			float heatDamage;
+		};
 
+		
+		HeatSimulator(Ship* ship);
+		virtual ~HeatSimulator(void);
+		void simulate();
+		void reset();
+	private:
+		Ship* ship_;
+		bool isCalculated_;
+		typedef std::vector<State*> StatesVector;
+		typedef std::vector<boost::shared_ptr<Module> > ModulesVector;
+		StatesVector states_;
 
-
-#endif
+		void simulate(const ModulesVector& modules);
+		float heat(float t, float heatCapacity, float heatGeneration);
+		float damageProbability(float h, int range, int numberOfOnlineModules, int numberOfSlots, float heatAttenuation);
+	};
+	
+}
