@@ -97,6 +97,7 @@ const TypeID eufe::SHIP_SCAN_RANGE_ATTRIBUTE_ID = 125;
 const TypeID eufe::SURVEY_SCAN_RANGE_ATTRIBUTE_ID = 197;
 const TypeID eufe::FALLOFF_ATTRIBUTE_ID = 158;
 const TypeID eufe::SHIP_SCAN_FALLOFF_ATTRIBUTE_ID = 510;
+const TypeID eufe::TRACKING_SPEED_ATTRIBUTE_ID = 160;
 
 const TypeID eufe::MAX_VELOCITY_ATTRIBUTE_ID = 37;
 const TypeID eufe::EXPLOSION_DELAY_ATTRIBUTE_ID = 281;
@@ -349,7 +350,7 @@ void Attribute::calculate()
 	{
 		if (sync)
 		{
-			std::cout << "Deadlock: " << std::endl;
+			std::cout << "Deadlock: " << attributeName_ << std::endl;
 		}
 		sync = true;
 		value_ = initialValue_;

@@ -29,11 +29,6 @@ HeatSimulator::~HeatSimulator(void)
 
 void HeatSimulator::reset()
 {
-	StatesVector::iterator i, end = states_.end();
-	for (i = states_.begin(); i != end; i++)
-		delete *i;
-	states_.clear();
-
 	isCalculated_ = false;
 }
 
@@ -72,6 +67,13 @@ void HeatSimulator::simulate()
 
 void HeatSimulator::simulate(const ModulesVector& modules)
 {
+	{
+		StatesVector::iterator i, end = states_.end();
+		for (i = states_.begin(); i != end; i++)
+			delete *i;
+		states_.clear();
+	}
+
 	const boost::shared_ptr<Module>& module = *modules.begin();
 	Module::Slot slot = module->getSlot();
 	float heatCapacity = 0;
@@ -151,7 +153,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 					modulesHP[i] -= damageProbability(h, range, numberOfOnlineModules, numberOfSlots, heatAttenuation) * state->heatDamage;
 					if (modulesHP[i] <= 0.0)
 					{
-						modules[i]->setLifetime(tNow);
+						modules[i]->setLifeTime(tNow / 1000.0);
 						numberOfDeadModules++;
 					}
 				}

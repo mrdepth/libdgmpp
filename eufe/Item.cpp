@@ -245,6 +245,11 @@ boost::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
 		//throw AttributeDidNotFoundException() << TypeIDExceptionInfo(attributeID);
 }
 
+const AttributesMap &Item::getAttributes()
+{
+	return attributes_;
+}
+
 bool Item::hasAttribute(TypeID attributeID)
 {
 	AttributesMap::iterator i = attributes_.find(attributeID);

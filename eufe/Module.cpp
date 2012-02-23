@@ -86,7 +86,7 @@ Module::Module(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID
 	forceReload_ = groupID_ == CAPACITOR_BOOSTER_GROUP_ID;
 	
 	shots_ = -1;
-	dps_ = maxRange_ = falloff_ = volley_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 	
 	TypeID attributes[] = {CHARGE_GROUP1_ATTRIBUTE_ID, CHARGE_GROUP2_ATTRIBUTE_ID, CHARGE_GROUP3_ATTRIBUTE_ID, CHARGE_GROUP4_ATTRIBUTE_ID, CHARGE_GROUP5_ATTRIBUTE_ID};
 	for (int i = 0; i < 5; i++)
@@ -119,7 +119,7 @@ Module::Module(const Module& from) :	Item(from),
 		charge_->setOwner(this);
 	}
 	shots_ = -1;
-	dps_ = maxRange_ = falloff_ = volley_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
 
 Module::~Module(void)
@@ -308,8 +308,8 @@ void Module::reset()
 {
 	Item::reset();
 	shots_ = -1;
-	dps_ = maxRange_ = falloff_ = volley_ = -1;
-	lifetime_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
+	lifeTime_ = -1;
 	if (charge_ != NULL)
 		charge_->reset();
 }
@@ -599,19 +599,31 @@ float Module::getFalloff()
 	return falloff_;
 }
 
-float Module::getLifetime()
+float Module::getTrackingSpeed()
 {
-	if (lifetime_ < 0)
+	if (trackingSpeed_ < 0)
+	{
+		if (hasAttribute(TRACKING_SPEED_ATTRIBUTE_ID))
+			trackingSpeed_ = getAttribute(TRACKING_SPEED_ATTRIBUTE_ID)->getValue();
+		else
+			trackingSpeed_ = 0;
+	}
+	return trackingSpeed_;
+}
+
+float Module::getLifeTime()
+{
+	if (lifeTime_ < 0)
 	{
 		Ship* ship = dynamic_cast<Ship*>(getOwner());
 		ship->updateHeatDamage();
 	}
-	return lifetime_;
+	return lifeTime_;
 }
 
-void Module::setLifetime(float lifetime)
+void Module::setLifeTime(float lifeTime)
 {
-	lifetime_ = lifetime;
+	lifeTime_ = lifeTime;
 }
 
 void Module::calculateDamageStats()
