@@ -16,7 +16,7 @@ Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, 
 		charge_.reset(new Charge(engine, typeID, this));
 		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
-	dps_ = maxRange_ = falloff_ = volley_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
 
 Drone::Drone(const Drone& from) : Item(from), isActive_(from.isActive_), target_(NULL)
@@ -27,7 +27,7 @@ Drone::Drone(const Drone& from) : Item(from), isActive_(from.isActive_), target_
 		charge_->setOwner(this);
 		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
-	dps_ = maxRange_ = falloff_ = volley_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
 
 Drone::~Drone(void)
@@ -143,7 +143,7 @@ void Drone::removeEffects(Effect::Category category)
 
 void Drone::reset() {
 	Item::reset();
-	dps_ = maxRange_ = falloff_ = volley_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 	if (charge_ != NULL)
 		charge_->reset();
 }
@@ -215,6 +215,18 @@ float Drone::getFalloff()
 			falloff_ = 0;
 	}
 	return falloff_;
+}
+
+float Drone::getTrackingSpeed()
+{
+	if (trackingSpeed_ < 0)
+	{
+		if (hasAttribute(TRACKING_SPEED_ATTRIBUTE_ID))
+			trackingSpeed_ = getAttribute(TRACKING_SPEED_ATTRIBUTE_ID)->getValue();
+		else
+			trackingSpeed_ = 0;
+	}
+	return trackingSpeed_;
 }
 
 void Drone::calculateDamageStats()

@@ -37,6 +37,7 @@ namespace eufe {
 		float getDps();
 		float getMaxRange();
 		float getFalloff();
+		float getTrackingSpeed();
 
 	private:
 		Ship* target_;
@@ -46,6 +47,8 @@ namespace eufe {
 		float dps_;
 		float maxRange_;
 		float falloff_;
+		float trackingSpeed_;
+
 		bool isActive_;
 		
 		void calculateDamageStats();

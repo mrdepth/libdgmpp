@@ -50,6 +50,7 @@ namespace eufe {
 		virtual TypeID getGroupID() const;
 		virtual TypeID getCategoryID() const;
 		virtual boost::shared_ptr<Attribute> getAttribute(TypeID attributeID);
+		const AttributesMap &getAttributes();
 		bool hasAttribute(TypeID attributeID);
 		boost::shared_ptr<Effect> getEffect(TypeID effectID);
 		

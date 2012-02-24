@@ -41,7 +41,7 @@ public:
 };
 
 
-Ship::Ship(Engine* engine, TypeID typeID, Character* owner) : Item(engine, typeID, owner), capacitorSimulator_(this, false, 6 * 60 * 60 * 1000), disallowAssistance_(UNKNOWN), disallowOffensiveModifiers_(UNKNOWN)
+Ship::Ship(Engine* engine, TypeID typeID, Character* owner) : Item(engine, typeID, owner), capacitorSimulator_(this, false, 6 * 60 * 60 * 1000), heatSimulator_(this), disallowAssistance_(UNKNOWN), disallowOffensiveModifiers_(UNKNOWN)
 {
 	reset();
 }
@@ -304,6 +304,7 @@ void Ship::reset()
 		(*j)->reset();
 	
 	capacitorSimulator_.reset();
+	heatSimulator_.reset();
 	disallowAssistance_ = disallowOffensiveModifiers_ = UNKNOWN;
 	
 	resistances_.armor.em = resistances_.armor.explosive = resistances_.armor.thermal = resistances_.armor.kinetic = -1;
@@ -405,6 +406,11 @@ void Ship::removeProjectedDrone(Drone* drone)
 const CapacitorSimulator& Ship::getCapacitorSimulator()
 {
 	return capacitorSimulator_;
+}
+
+const HeatSimulator& Ship::getHeatSimulator()
+{
+	return heatSimulator_;
 }
 
 const DamagePattern& Ship::getDamagePattern()
@@ -917,6 +923,11 @@ void Ship::updateActiveStatus()
 		if (state >= Module::STATE_ACTIVE && !(*i)->canHaveState(state))
 			(*i)->setState(Module::STATE_ONLINE);
 	}
+}
+
+void Ship::updateHeatDamage()
+{
+	heatSimulator_.simulate();
 }
 
 #if _DEBUG

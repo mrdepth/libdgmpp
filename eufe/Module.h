@@ -82,6 +82,10 @@ namespace eufe {
 		float getDps();
 		float getMaxRange();
 		float getFalloff();
+		float getTrackingSpeed();
+		
+		float getLifeTime();
+		void setLifeTime(float lifeTime);
 		
 
 #if _DEBUG
@@ -107,6 +111,9 @@ namespace eufe {
 		float dps_;
 		float maxRange_;
 		float falloff_;
+		float trackingSpeed_;
+		
+		float lifeTime_;
 		
 		void calculateDamageStats();
 	};

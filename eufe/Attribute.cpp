@@ -97,6 +97,7 @@ const TypeID eufe::SHIP_SCAN_RANGE_ATTRIBUTE_ID = 125;
 const TypeID eufe::SURVEY_SCAN_RANGE_ATTRIBUTE_ID = 197;
 const TypeID eufe::FALLOFF_ATTRIBUTE_ID = 158;
 const TypeID eufe::SHIP_SCAN_FALLOFF_ATTRIBUTE_ID = 510;
+const TypeID eufe::TRACKING_SPEED_ATTRIBUTE_ID = 160;
 
 const TypeID eufe::MAX_VELOCITY_ATTRIBUTE_ID = 37;
 const TypeID eufe::EXPLOSION_DELAY_ATTRIBUTE_ID = 281;
@@ -155,6 +156,19 @@ const TypeID eufe::MED_SLOT_MODIFIER_ATTRIBUTE_ID = 1375;
 const TypeID eufe::LOW_SLOT_MODIFIER_ATTRIBUTE_ID = 1376;
 const TypeID eufe::TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID = 1368;
 const TypeID eufe::LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID = 1369;
+
+const TypeID eufe::HEAT_ATTENUATION_HI_ATTRIBUTE_ID = 1259;
+const TypeID eufe::HEAT_ATTENUATION_LOW_ATTRIBUTE_ID = 1262;
+const TypeID eufe::HEAT_ATTENUATION_MED_ATTRIBUTE_ID = 1261;
+const TypeID eufe::HEAT_CAPACITY_HI_ATTRIBUTE_ID = 1178;
+const TypeID eufe::HEAT_CAPACITY_LOW_ATTRIBUTE_ID = 1200;
+const TypeID eufe::HEAT_CAPACITY_MED_ATTRIBUTE_ID = 1199;
+const TypeID eufe::HEAT_DISSIPATION_RATE_HI_ATTRIBUTE_ID = 1179;
+const TypeID eufe::HEAT_DISSIPATION_RATE_LOW_ATTRIBUTE_ID = 1198;
+const TypeID eufe::HEAT_DISSIPATION_RATE_MED_ATTRIBUTE_ID = 1196;
+const TypeID eufe::HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID = 1224;
+const TypeID eufe::HEAT_ABSORBTION_RATE_MODIFIER_ATTRIBUTE_ID = 1180;
+const TypeID eufe::HEAT_DAMAGE_ATTRIBUTE_ID = 1211;
 
 
 template<typename InputIterator, typename Output>
@@ -336,7 +350,7 @@ void Attribute::calculate()
 	{
 		if (sync)
 		{
-			std::cout << "Deadlock: " << std::endl;
+			std::cout << "Deadlock: " << attributeName_ << std::endl;
 		}
 		sync = true;
 		value_ = initialValue_;
