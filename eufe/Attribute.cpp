@@ -392,7 +392,7 @@ void Attribute::calculate()
 				continue;
 			
 			TypeID categoryID = (*i)->getModifier()->getOwner()->getCategoryID();
-			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID || categoryID == SUBSYSTEM_CATEGORY_ID;
+			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID;
 			float value = (*i)->getValue();
 			bool isNegative = (highIsGood_ && value < 1.0) || (!highIsGood_ && value > 1.0);
 
