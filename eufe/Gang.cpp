@@ -208,6 +208,7 @@ void Gang::removeSquadBooster() {
 
 std::insert_iterator<ModifiersList> Gang::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
+	Item::scoped_lock lock(*this);
 	ModifiersList list;
 	std::remove_copy_if(locationModifiers_.begin(),
 						locationModifiers_.end(),
@@ -221,6 +222,7 @@ std::insert_iterator<ModifiersList> Gang::getLocationModifiers(Attribute* attrib
 
 std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
+	Item::scoped_lock lock(*this);
 	ModifiersList list1;
 	std::remove_copy_if(locationGroupModifiers_.begin(),
 						locationGroupModifiers_.end(),

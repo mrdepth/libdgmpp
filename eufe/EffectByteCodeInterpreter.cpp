@@ -616,6 +616,8 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 	
 	if (arg1.getType() == Argument::TYPE_STRING)
 	{
+		Engine::scoped_lock lock(*engine_);
+
 		std::string typeName = arg1;
 		sqlite3* db = engine_->getDb();
 		std::stringstream sql;
