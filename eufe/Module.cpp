@@ -130,6 +130,7 @@ Module::~Module(void)
 
 boost::shared_ptr<Attribute> Module::getAttribute(TypeID attributeID)
 {
+	Item::scoped_lock lock(*this);
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;

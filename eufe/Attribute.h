@@ -1,4 +1,5 @@
 #pragma once
+#include <boost/thread/recursive_mutex.hpp>
 #include "types.h"
 
 namespace eufe {
@@ -163,7 +164,7 @@ namespace eufe {
 	extern const TypeID HEAT_ABSORBTION_RATE_MODIFIER_ATTRIBUTE_ID;
 	extern const TypeID HEAT_DAMAGE_ATTRIBUTE_ID;
 
-	class Attribute
+	class Attribute : public boost::recursive_mutex
 	{
 	public:
 		Attribute();

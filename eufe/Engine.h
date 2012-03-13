@@ -2,12 +2,13 @@
 #include "types.h"
 #include "ThirdParty/sqlite3.h"
 #include <boost/exception/all.hpp>
+#include <boost/thread/recursive_mutex.hpp>
 
 //#define FACTOR_RELOAD
 
 namespace eufe {
 
-	class Engine
+	class Engine : public boost::recursive_mutex
 	{
 	public:
 		struct SqliteException : virtual boost::exception {};

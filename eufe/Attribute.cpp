@@ -221,6 +221,8 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), isFakeAttribute_(isFakeAttribute)
 #endif
 {
+	Engine::scoped_lock lock(*engine);
+
 	forcedValue_ = std::numeric_limits<float>::infinity();
 	
 #if _DEBUG
@@ -242,6 +244,8 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 
 Attribute::Attribute(Engine* engine, TypeID attributeID, Item* owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
 {
+	Engine::scoped_lock lock(*engine);
+
 	forcedValue_ = std::numeric_limits<float>::infinity();
 
 	sqlite3* db = engine->getDb();
@@ -291,6 +295,8 @@ bool Attribute::isFakeAttribute() const
 
 float Attribute::getValue()
 {
+	Attribute::scoped_lock lock(*this);
+
 	if (!calculated_)
 		calculate();
 	return value_;
@@ -313,6 +319,8 @@ bool Attribute::highIsGood() const
 
 float Attribute::dec(float value)
 {
+	Attribute::scoped_lock lock(*this);
+
 	if (forcedValue_ == std::numeric_limits<float>::infinity())
 		forcedValue_ = initialValue_;
 	isFakeAttribute_ = false;
@@ -321,6 +329,8 @@ float Attribute::dec(float value)
 
 float Attribute::inc(float value)
 {
+	Attribute::scoped_lock lock(*this);
+
 	if (forcedValue_ == std::numeric_limits<float>::infinity())
 		forcedValue_ = initialValue_;
 	isFakeAttribute_ = false;
@@ -329,6 +339,8 @@ float Attribute::inc(float value)
 
 void Attribute::setValue(float value)
 {
+	Attribute::scoped_lock lock(*this);
+
 	value_ = value;
 	forcedValue_ = value;
 	isFakeAttribute_ = false;
@@ -336,6 +348,8 @@ void Attribute::setValue(float value)
 
 void Attribute::reset()
 {
+	Attribute::scoped_lock lock(*this);
+
 	calculated_ = false;
 	value_ = initialValue_;
 	
@@ -348,10 +362,12 @@ void Attribute::calculate()
 		value_ = forcedValue_;
 	else
 	{
+#if _DEBUG
 		if (sync)
 		{
 			std::cout << "Deadlock: " << attributeName_ << std::endl;
 		}
+#endif
 		sync = true;
 		value_ = initialValue_;
 		
