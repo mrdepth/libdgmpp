@@ -58,6 +58,9 @@ const TypeID eufe::REMOTE_HULL_REPAIR_EFFECT_ID = 3041;
 const TypeID eufe::SLOT_MODIFIER_EFFECT_ID = 3774;
 const TypeID eufe::HARD_POINT_MODIFIER_EFFECT_EFFECT_ID = 3773;
 
+const TypeID eufe::ONLINE_FOR_STRUCTURES_EFFECT_ID = 901;
+
+
 #if _DEBUG
 Effect::Effect(Engine* engine, int effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
 #else

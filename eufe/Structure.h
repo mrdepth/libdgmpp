@@ -1,14 +1,35 @@
-//
-//  Structure.h
-//  eufe
-//
-//  Created by Mr. Depth on 3/15/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+#pragma once
+#include "Module.h"
 
-#ifndef eufe_Structure_h
-#define eufe_Structure_h
+namespace eufe {
+	
+	class Structure : public Module
+	{
+	public:
+		Structure(Engine* engine, TypeID typeID, Item* owner = NULL);
+		Structure(const Structure& from);
+		virtual ~Structure(void);
 
+		virtual void setState(State state);
+		
+		virtual void reset();
+		
+		//Tank
+		const Resistances& getResistances();
+		const Tank& getTank();
+		const Tank& getEffectiveTank();
+		
+		const HitPoints& getHitPoints();
+		const HitPoints& getEffectiveHitPoints();
+		
+		float getShieldRecharge();
 
-
-#endif
+	private:
+		Resistances resistances_;
+		Tank tank_;
+		Tank effectiveTank_;
+		HitPoints hitPoints_;
+		HitPoints effectiveHitPoints_;
+		float shieldRecharge_;
+	};
+}

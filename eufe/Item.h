@@ -12,11 +12,13 @@ namespace eufe {
 	extern const TypeID CHARACTER_GROUP_ID;
 	extern const TypeID WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID;
 	extern const TypeID CAPACITOR_BOOSTER_GROUP_ID;
+	extern const TypeID CONTROL_TOWER_GROUP_ID;
 
 	extern const TypeID MODULE_CATEGORY_ID;
 	extern const TypeID CHARGE_CATEGORY_ID;
 	extern const TypeID DRONE_CATEGORY_ID;
 	extern const TypeID SUBSYSTEM_CATEGORY_ID;
+	extern const TypeID STRUCTURE_CATEGORY_ID;
 
 	class Item : public boost::recursive_mutex
 	{

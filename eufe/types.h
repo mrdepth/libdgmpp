@@ -27,6 +27,8 @@ namespace eufe {
 	class Charge;
 	class Drone;
 	class EffectInterpreter;
+	class ControlTower;
+	class Structure;
 
 	typedef unsigned char Byte;
 	typedef int TypeID;
@@ -46,6 +48,7 @@ namespace eufe {
 	typedef std::list<boost::shared_ptr<Implant> > ImplantsList;
 	typedef std::list<boost::shared_ptr<Booster> > BoostersList;
 	typedef std::list<boost::shared_ptr<Modifier> > ModifiersList;
+	typedef std::list<boost::shared_ptr<Structure> > StructuresList;
 	
 	struct Tank
 	{

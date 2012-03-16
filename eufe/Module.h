@@ -13,7 +13,8 @@ namespace eufe {
 			SLOT_MED,
 			SLOT_LOW,
 			SLOT_RIG,
-			SLOT_SUBSYSTEM
+			SLOT_SUBSYSTEM,
+			SLOT_STRUCTURE
 		};
 
 		enum State
@@ -36,7 +37,7 @@ namespace eufe {
 		typedef boost::error_info<struct BadTargetExceptionInfoTag, Ship*> BadTargetExceptionInfo;
 		struct BadTargetException : virtual boost::exception {};
 
-		Module(Engine* engine, TypeID typeID, Ship* owner = NULL);
+		Module(Engine* engine, TypeID typeID, Item* owner = NULL);
 		Module(const Module& from);
 		virtual ~Module(void);
 
@@ -44,9 +45,9 @@ namespace eufe {
 
 		Slot getSlot();
 		Hardpoint getHardpoint();
-		bool canHaveState(State state);
+		virtual bool canHaveState(State state);
 		State getState();
-		void setState(State state);
+		virtual void setState(State state);
 
 		virtual boost::shared_ptr<Environment> getEnvironment();
 
@@ -91,6 +92,8 @@ namespace eufe {
 #if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Module& module);
 #endif
+	protected:
+		State state_;
 		
 	private:
 		bool canBeOnline_;
@@ -100,7 +103,6 @@ namespace eufe {
 		bool forceReload_;
 		Slot slot_;
 		Hardpoint hardpoint_;
-		State state_;
 		boost::shared_ptr<Charge> charge_;
 		std::list<TypeID> chargeGroups_;
 		Ship* target_;

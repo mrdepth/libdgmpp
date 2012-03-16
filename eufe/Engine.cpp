@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Gang.h"
 #include "Area.h"
+#include "ControlTower.h"
 
 using namespace eufe;
 
@@ -38,12 +39,36 @@ boost::shared_ptr<Area> Engine::setArea(const boost::shared_ptr<Area>& area)
 	if (area_ != NULL)
 		area_->addEffects(Effect::CATEGORY_SYSTEM);
 	reset(gang_.get());
+//	if (controlTower_ != NULL)
+//		reset(controlTower_.get());
 	return area_;
 }
 
 boost::shared_ptr<Area> Engine::setArea(TypeID typeID)
 {
 	return setArea(boost::shared_ptr<Area>(new Area(this, typeID)));
+}
+
+boost::shared_ptr<ControlTower> Engine::setControlTower(const boost::shared_ptr<ControlTower>& controlTower)
+{
+	if (controlTower_ != NULL)
+	{
+		controlTower_->removeEffects(Effect::CATEGORY_GENERIC);
+		controlTower_->removeEffects(Effect::CATEGORY_ACTIVE);
+	}
+	controlTower_ = controlTower;
+	if (controlTower_ != NULL)
+	{
+		controlTower_->addEffects(Effect::CATEGORY_GENERIC);
+		controlTower_->addEffects(Effect::CATEGORY_ACTIVE);
+	}
+	return controlTower_;
+	
+}
+
+boost::shared_ptr<ControlTower> Engine::setControlTower(TypeID typeID)
+{
+	return setControlTower(boost::shared_ptr<ControlTower>(new ControlTower(this, typeID)));
 }
 
 void Engine::clearArea()
@@ -54,6 +79,11 @@ void Engine::clearArea()
 boost::shared_ptr<Area> Engine::getArea()
 {
 	return area_;
+}
+
+boost::shared_ptr<ControlTower> Engine::getControlTower()
+{
+	return controlTower_;
 }
 
 void Engine::reset(Item* item)
@@ -68,15 +98,14 @@ void Engine::reset(Item* item)
 		owner = item->getOwner();
 	}
 	item->reset();
-	//if (gang_ != NULL)
-	//	gang_->reset();
 }
 
 #if _DEBUG
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Engine& engine)
 {
-	os << "{\"gang\":" << *engine.gang_ << '}';
+	os << "{\"gang\":" << *engine.getGang() << ',';
+	os << "\"controlTower\":" << *engine.getControlTower() << '}';
 	return os;
 }
 

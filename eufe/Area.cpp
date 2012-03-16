@@ -3,6 +3,7 @@
 #include "Gang.h"
 #include "Ship.h"
 #include "Character.h"
+#include "ControlTower.h"
 
 using namespace eufe;
 
@@ -14,7 +15,7 @@ Area::~Area()
 {
 }
 
-void Area::addEffectsToShip(Ship* ship)
+void Area::addEffectsToShip(Item* ship)
 {
 	boost::shared_ptr<Environment> environment = getEnvironment();
 	Item* character = ship->getOwner();
@@ -32,7 +33,7 @@ void Area::addEffectsToShip(Ship* ship)
 			(*i)->addEffect(environment.get());
 }
 
-void Area::removeEffectsFromShip(Ship* ship)
+void Area::removeEffectsFromShip(Item* ship)
 {
 	boost::shared_ptr<Environment> environment = getEnvironment();
 	Item* character = ship->getOwner();
@@ -59,6 +60,9 @@ void Area::addEffects(Effect::Category category)
 		
 		for (i = pilots.begin(); i != end; i++)
 			addEffectsToShip((*i)->getShip().get());
+		boost::shared_ptr<ControlTower> controlTower = engine_->getControlTower();
+		if (controlTower)
+			addEffectsToShip(controlTower.get());
 	}
 }
 
@@ -71,6 +75,9 @@ void Area::removeEffects(Effect::Category category)
 		
 		for (i = pilots.begin(); i != end; i++)
 			removeEffectsFromShip((*i)->getShip().get());
+		boost::shared_ptr<ControlTower> controlTower = engine_->getControlTower();
+		if (controlTower)
+			removeEffectsFromShip(controlTower.get());
 	}
 }
 
