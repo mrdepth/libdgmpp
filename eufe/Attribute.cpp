@@ -183,6 +183,8 @@ const TypeID eufe::HULL_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID = 974;
 const TypeID eufe::MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID = 645;
 const TypeID eufe::MISSILE_ENTITY_FLIGHT_TIME_MULTIPLIER_ATTRIBUTE_ID = 646;
 
+const TypeID eufe::DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID = 458;
+
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)
