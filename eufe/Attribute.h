@@ -177,6 +177,8 @@ namespace eufe {
 	extern const TypeID MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID;
 	extern const TypeID MISSILE_ENTITY_FLIGHT_TIME_MULTIPLIER_ATTRIBUTE_ID;
 
+	extern const TypeID DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID;
+
 	class Attribute : public boost::recursive_mutex
 	{
 	public:
