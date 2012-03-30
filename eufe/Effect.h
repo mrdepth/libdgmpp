@@ -38,6 +38,8 @@ namespace eufe {
 	extern const TypeID SLOT_MODIFIER_EFFECT_ID;
 	extern const TypeID HARD_POINT_MODIFIER_EFFECT_EFFECT_ID;
 	
+	extern const TypeID ONLINE_FOR_STRUCTURES_EFFECT_ID;
+
 	class Effect
 	{
 

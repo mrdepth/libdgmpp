@@ -17,3 +17,5 @@
 #include "CapacitorSimulator.h"
 #include "Effect.h"
 #include "Compiler.h"
+#include "ControlTower.h"
+#include "Structure.h"

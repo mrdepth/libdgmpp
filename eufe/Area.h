@@ -9,8 +9,8 @@ namespace eufe {
 	public:
 		Area(Engine* engine, TypeID typeID);
 		virtual ~Area(void);
-		void addEffectsToShip(Ship* ship);
-		void removeEffectsFromShip(Ship* ship);
+		void addEffectsToShip(Item* ship);
+		void removeEffectsFromShip(Item* ship);
 
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);

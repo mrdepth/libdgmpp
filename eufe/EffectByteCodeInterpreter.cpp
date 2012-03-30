@@ -1345,7 +1345,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addItemModifier(Environment*
 {
 	Item* item = attribute_->getItem()->getItem();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+
+	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character));
 	item->addItemModifier(modifier);
 	return true;
 }
@@ -1355,7 +1360,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(Env
 	Item* item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+
+	boost::shared_ptr<Modifier> modifier(new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character));
 	item->addLocationGroupModifier(modifier);
 	return true;
 }
@@ -1364,7 +1374,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationModifier(Environm
 {
 	Item* item = attribute_->getItem()->getItem();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+	
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+	
+	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character));
 	item->addLocationModifier(modifier);
 	return true;
 }
@@ -1374,7 +1389,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationRequiredSkillModi
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+	
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+	
+	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character));
 	item->addLocationRequiredSkillModifier(modifier);
 	return true;
 }
@@ -1385,7 +1405,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifie
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
 	//	Attribute* attribute = item->getAttribute(attributeID).get();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+	
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+	
+	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character));
 	item->addLocationRequiredSkillModifier(modifier);
 	return true;
 }
@@ -1394,7 +1419,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeItemModifier(Environme
 {
 	Item* item = attribute_->getItem()->getItem();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+	
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+	
+	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character));
 	item->removeItemModifier(modifier);
 	return true;
 }
@@ -1404,7 +1434,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(
 	Item* item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+	
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+	
+	boost::shared_ptr<Modifier> modifier(new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character));
 	item->removeLocationGroupModifier(modifier);
 	return true;
 }
@@ -1413,7 +1448,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationModifier(Envir
 {
 	Item* item = attribute_->getItem()->getItem();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+	
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+	
+	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character));
 	item->removeLocationModifier(modifier);
 	return true;
 }
@@ -1423,7 +1463,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationRequiredSkillM
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+	
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+	
+	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character));
 	item->removeLocationRequiredSkillModifier(modifier);
 	return true;
 }
@@ -1432,9 +1477,13 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeOwnerRequiredSkillModi
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-//	Attribute* attribute = item->getAttribute(attributeID).get();
 	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
-	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, dynamic_cast<Character*>((*environment)["Char"])));
+	
+	Character* character = NULL;
+	if (environment->find("Char") != environment->end())
+		character = dynamic_cast<Character*>((*environment)["Char"]);
+	
+	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character));
 	item->removeLocationRequiredSkillModifier(modifier);
 	return true;
 }

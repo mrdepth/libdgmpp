@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 	Engine engine("/Users/mrdepth/Documents/svn/EVEUniverse/trunk/eufe.sqlite");
 #endif
 	
-	boost::shared_ptr<Gang> gang = engine.getGang();
+/*	boost::shared_ptr<Gang> gang = engine.getGang();
 	boost::shared_ptr<Character> character1 = gang->addPilot();
 	character1->setAllSkillsLevel(5);
 	
@@ -39,10 +39,28 @@ int main(int argc, char* argv[])
 	module1->setState(Module::STATE_OVERLOADED);
 	//module2->setState(Module::STATE_OFFLINE);
 	module3->setState(Module::STATE_OVERLOADED);
-	float lifeTime1 = module1->getLifetime();
-	float lifeTime2 = module2->getLifetime();
-	float lifeTime3 = module3->getLifetime();
+	float lifeTime1 = module1->getLifeTime();
+	float lifeTime2 = module2->getLifeTime();
+	float lifeTime3 = module3->getLifeTime();*/
+	boost::shared_ptr<ControlTower> controlTower = engine.setControlTower(16214);
+/*	controlTower->addStructure(16689);
+	controlTower->addStructure(17184);
+	controlTower->addStructure(17185);
+	controlTower->addStructure(17186);
+	controlTower->addStructure(17187);
 
+	controlTower->addStructure(17184);
+	controlTower->addStructure(17185);
+	controlTower->addStructure(17186);
+	controlTower->addStructure(17187);
+
+	controlTower->addStructure(17184);
+	controlTower->addStructure(17185);
+	controlTower->addStructure(17186);
+	controlTower->addStructure(17187);*/
+
+	Tank tank = controlTower->getEffectiveTank();
+	HitPoints hp = controlTower->getEffectiveHitPoints();
 	
 #if _DEBUG
 #ifdef WIN32

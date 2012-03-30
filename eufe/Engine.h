@@ -18,9 +18,12 @@ namespace eufe {
 		sqlite3* getDb();
 		boost::shared_ptr<Area> setArea(const boost::shared_ptr<Area>& area);
 		boost::shared_ptr<Area> setArea(TypeID typeID);
+		boost::shared_ptr<ControlTower> setControlTower(const boost::shared_ptr<ControlTower>& controlTower);
+		boost::shared_ptr<ControlTower> setControlTower(TypeID typeID);
 		void clearArea();
 		boost::shared_ptr<Gang> getGang();
 		boost::shared_ptr<Area> getArea();
+		boost::shared_ptr<ControlTower> getControlTower();
 		
 		void reset(Item* item);
 
@@ -32,6 +35,7 @@ namespace eufe {
 		sqlite3* db_;
 		boost::shared_ptr<Gang> gang_;
 		boost::shared_ptr<Area> area_;
+		boost::shared_ptr<ControlTower> controlTower_;
 	};
 
 }

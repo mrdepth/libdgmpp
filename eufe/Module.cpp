@@ -13,7 +13,7 @@
 
 using namespace eufe;
 
-Module::Module(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(NULL), reloadTime_(0), forceReload_(false)
+Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(NULL), reloadTime_(0), forceReload_(false)
 {
 	#if _DEBUG
 		attributes_[IS_ONLINE_ATTRIBUTE_ID] = boost::shared_ptr<Attribute>(new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this, "isOnline"));
@@ -31,6 +31,8 @@ Module::Module(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID
 		slot_ = SLOT_RIG;
 	else if (hasEffect(SUBSYSTEM_EFFECT_ID))
 		slot_ = SLOT_SUBSYSTEM;
+	else if (getCategoryID() == STRUCTURE_CATEGORY_ID)
+		slot_ = SLOT_STRUCTURE;
 	else
 		slot_ = SLOT_NONE;
 	
@@ -51,7 +53,7 @@ Module::Module(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID
 	else
 		hardpoint_ = HARDPOINT_NONE;
 
-	canBeOnline_ = hasEffect(ONLINE_EFFECT_ID);
+	canBeOnline_ = hasEffect(ONLINE_EFFECT_ID) || hasEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID);
 
 	state_ = STATE_OFFLINE;
 
@@ -467,6 +469,8 @@ float Module::getRawCycleTime()
 		return getAttribute(SPEED_ATTRIBUTE_ID)->getValue();
 	else if (hasAttribute(DURATION_ATTRIBUTE_ID))
 		return getAttribute(DURATION_ATTRIBUTE_ID)->getValue();
+	else if (hasAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID))
+		return getAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID)->getValue();
 	else
 		return 0;
 }
@@ -567,8 +571,19 @@ float Module::getMaxRange()
 			if (charge_->hasAttribute(MAX_VELOCITY_ATTRIBUTE_ID) && charge_->hasAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID) &&
 				charge_->hasAttribute(MASS_ATTRIBUTE_ID) && charge_->hasAttribute(AGILITY_ATTRIBUTE_ID))
 			{
-				float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
-				float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0;
+				float missileEntityVelocityMultiplier = 1;
+				float missileEntityFlightTimeMultiplier = 1;
+				if (hasAttribute(MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID))
+					missileEntityVelocityMultiplier = getAttribute(MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(MISSILE_ENTITY_FLIGHT_TIME_MULTIPLIER_ATTRIBUTE_ID))
+					missileEntityFlightTimeMultiplier = getAttribute(MISSILE_ENTITY_FLIGHT_TIME_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+				if (missileEntityVelocityMultiplier == 0)
+					missileEntityVelocityMultiplier = 1.0;
+				if (missileEntityFlightTimeMultiplier == 0)
+					missileEntityFlightTimeMultiplier = 1.0;
+				
+				float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue() * missileEntityVelocityMultiplier;
+				float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0 * missileEntityFlightTimeMultiplier;
 				float mass = charge_->getAttribute(MASS_ATTRIBUTE_ID)->getValue();
 				float agility = charge_->getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
 				
@@ -646,7 +661,12 @@ void Module::calculateDamageStats()
 			volley_ += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
 			volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
-		dps_ = volley_ / (getCycleTime() / 1000.0);
+		else if (hasAttribute(MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
+			volley_ *= getAttribute(MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+
+		float speed = getCycleTime();
+		if (speed > 0)
+			dps_ = volley_ / (speed / 1000.0);
 	}
 }
 

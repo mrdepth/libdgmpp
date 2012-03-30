@@ -21,11 +21,13 @@ const TypeID eufe::ANY_GROUP_ID = std::numeric_limits<TypeID>::max();
 const TypeID eufe::CHARACTER_GROUP_ID = 1;
 const TypeID eufe::WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID = 899;
 const TypeID eufe::CAPACITOR_BOOSTER_GROUP_ID = 76;
+const TypeID eufe::CONTROL_TOWER_GROUP_ID = 365;
 
 const TypeID eufe::MODULE_CATEGORY_ID = 7;
 const TypeID eufe::CHARGE_CATEGORY_ID = 8;
 const TypeID eufe::DRONE_CATEGORY_ID = 18;
 const TypeID eufe::SUBSYSTEM_CATEGORY_ID = 32;
+const TypeID eufe::STRUCTURE_CATEGORY_ID = 23;
 
 class ModifierMatchFunction : public std::unary_function<const boost::shared_ptr<Modifier>&, bool>
 {

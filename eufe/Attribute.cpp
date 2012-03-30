@@ -58,6 +58,7 @@ const TypeID eufe::MAX_GROUP_ACTIVE_ATTRIBUTE_ID = 763;
 
 const TypeID eufe::SPEED_ATTRIBUTE_ID = 51;
 const TypeID eufe::DURATION_ATTRIBUTE_ID = 73;
+const TypeID eufe::MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID = 506;
 const TypeID eufe::RELOAD_TIME_ATTRIBUTE_ID = 1795;
 const TypeID eufe::MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID = 669;
 
@@ -84,6 +85,7 @@ const TypeID eufe::KINETIC_DAMAGE_ATTRIBUTE_ID = 117;
 const TypeID eufe::EXPLOSIVE_DAMAGE_ATTRIBUTE_ID = 116;
 const TypeID eufe::THERMAL_DAMAGE_ATTRIBUTE_ID = 118;
 const TypeID eufe::DAMAGE_MULTIPLIER_ATTRIBUTE_ID = 64;
+const TypeID eufe::MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID = 212;
 
 const TypeID eufe::MAX_RANGE_ATTRIBUTE_ID = 54;
 const TypeID eufe::SHIELD_TRANSFER_RANGE_ATTRIBUTE_ID = 87;
@@ -169,6 +171,19 @@ const TypeID eufe::HEAT_DISSIPATION_RATE_MED_ATTRIBUTE_ID = 1196;
 const TypeID eufe::HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID = 1224;
 const TypeID eufe::HEAT_ABSORBTION_RATE_MODIFIER_ATTRIBUTE_ID = 1180;
 const TypeID eufe::HEAT_DAMAGE_ATTRIBUTE_ID = 1211;
+
+const TypeID eufe::POWER_ATTRIBUTE_ID = 30;
+const TypeID eufe::CPU_ATTRIBUTE_ID = 50;
+
+const TypeID eufe::HULL_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID = 976;
+const TypeID eufe::HULL_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID = 977;
+const TypeID eufe::HULL_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID = 975;
+const TypeID eufe::HULL_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID = 974;
+
+const TypeID eufe::MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID = 645;
+const TypeID eufe::MISSILE_ENTITY_FLIGHT_TIME_MULTIPLIER_ATTRIBUTE_ID = 646;
+
+const TypeID eufe::DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID = 458;
 
 
 template<typename InputIterator, typename Output>
@@ -408,7 +423,7 @@ void Attribute::calculate()
 				continue;
 			
 			TypeID categoryID = (*i)->getModifier()->getOwner()->getCategoryID();
-			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID;
+			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID || categoryID == STRUCTURE_CATEGORY_ID;
 			float value = (*i)->getValue();
 			bool isNegative = (highIsGood_ && value < 1.0) || (!highIsGood_ && value > 1.0);
 

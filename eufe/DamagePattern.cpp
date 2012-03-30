@@ -14,7 +14,7 @@ DamagePattern::~DamagePattern(void)
 {
 }
 
-HitPoints DamagePattern::effectiveHitPoints(const Resistances& resistances, const HitPoints& hitPoints)
+HitPoints DamagePattern::effectiveHitPoints(const Resistances& resistances, const HitPoints& hitPoints) const
 {
 	HitPoints ehp;
 	ehp.armor = effectivity(resistances.armor, hitPoints.armor);
@@ -23,7 +23,7 @@ HitPoints DamagePattern::effectiveHitPoints(const Resistances& resistances, cons
 	return ehp;
 }
 
-Tank DamagePattern::effectiveTank(const Resistances& resistances, const Tank& tank)
+Tank DamagePattern::effectiveTank(const Resistances& resistances, const Tank& tank) const
 {
 	Tank et;
 	et.armorRepair = effectivity(resistances.armor, tank.armorRepair);
@@ -33,7 +33,7 @@ Tank DamagePattern::effectiveTank(const Resistances& resistances, const Tank& ta
 	return et;
 }
 
-float DamagePattern::effectivity(const Resistances::Layer& resistances, float amount)
+float DamagePattern::effectivity(const Resistances::Layer& resistances, float amount) const
 {
 	float totalDamage = emAmount + thermalAmount + kineticAmount + explosiveAmount;
 	float emResonance		 = 1.0 - resistances.em;
