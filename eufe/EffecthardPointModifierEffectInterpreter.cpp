@@ -1,4 +1,4 @@
-#include "EffecthardPointModifierEffectInterpreter.h"
+#include "EffectHardPointModifierEffectInterpreter.h"
 #include "Engine.h"
 #include "Item.h"
 #include "Attribute.h"
@@ -7,15 +7,15 @@
 
 using namespace eufe;
 
-EffecthardPointModifierEffectInterpreter::EffecthardPointModifierEffectInterpreter(Engine* engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectHardPointModifierEffectInterpreter::EffectHardPointModifierEffectInterpreter(Engine* engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 
-EffecthardPointModifierEffectInterpreter::~EffecthardPointModifierEffectInterpreter(void)
+EffectHardPointModifierEffectInterpreter::~EffectHardPointModifierEffectInterpreter(void)
 {
 }
 
-bool EffecthardPointModifierEffectInterpreter::addEffect(Environment* environment)
+bool EffectHardPointModifierEffectInterpreter::addEffect(Environment* environment)
 {
 	if (environment->find("Ship") != environment->end())
 	{
@@ -37,7 +37,7 @@ bool EffecthardPointModifierEffectInterpreter::addEffect(Environment* environmen
 	return 1;
 }
 
-bool EffecthardPointModifierEffectInterpreter::removeEffect(Environment* environment)
+bool EffectHardPointModifierEffectInterpreter::removeEffect(Environment* environment)
 {
 	if (environment->find("Ship") != environment->end())
 	{
@@ -59,7 +59,7 @@ bool EffecthardPointModifierEffectInterpreter::removeEffect(Environment* environ
 	return 1;
 }
 
-EffectInterpreter* EffecthardPointModifierEffectInterpreter::clone() const
+EffectInterpreter* EffectHardPointModifierEffectInterpreter::clone() const
 {
-	return new EffecthardPointModifierEffectInterpreter(*this);
+	return new EffectHardPointModifierEffectInterpreter(*this);
 }

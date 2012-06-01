@@ -3,11 +3,11 @@
 
 namespace eufe {
 	
-	class EffectHardPointModifierEffectInterpreter : public EffectInterpreter
+	class EffectAdaptiveArmorHardener : public EffectInterpreter
 	{
 	public:
-		EffectHardPointModifierEffectInterpreter(Engine* engine, bool isAssistance, bool isOffensive);
-		virtual ~EffectHardPointModifierEffectInterpreter();
+		EffectAdaptiveArmorHardener(Engine* engine, bool isAssistance, bool isOffensive);
+		virtual ~EffectAdaptiveArmorHardener();
 		virtual bool addEffect(Environment* environment);
 		virtual bool removeEffect(Environment* environment);
 		virtual EffectInterpreter* clone() const;

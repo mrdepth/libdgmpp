@@ -40,6 +40,9 @@ namespace eufe {
 	
 	extern const TypeID ONLINE_FOR_STRUCTURES_EFFECT_ID;
 
+	extern const TypeID ADAPTIVE_ARMOR_HARDENER_EFFECT_ID;
+	extern const TypeID FUELED_SHIELD_BOOSTING_EFFECT_ID;
+
 	class Effect
 	{
 

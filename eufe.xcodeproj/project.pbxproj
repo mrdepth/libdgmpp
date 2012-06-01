@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		121E07E81578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */; };
+		121E07EA1578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */; };
 		3700DA7314869A630026EA83 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
 		3708AE3C14892DCD005492F5 /* Charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3B14892DCC005492F5 /* Charge.cpp */; };
 		3708AE3F1489310E005492F5 /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3E1489310C005492F5 /* Implant.cpp */; };
@@ -40,7 +42,6 @@
 		37D72CC41497989100B13A9D /* EffectLeechInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CC31497988F00B13A9D /* EffectLeechInterpreter.cpp */; };
 		37D72CC714979FB800B13A9D /* EffectEnergyDestabilizationNewInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CC614979FB600B13A9D /* EffectEnergyDestabilizationNewInterpreter.cpp */; };
 		37D72CCB1497A06E00B13A9D /* EffectEnergyTransferInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CCA1497A06D00B13A9D /* EffectEnergyTransferInterpreter.cpp */; };
-		37D97F2114B76EA600329E9F /* EffecthardPointModifierEffectInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D97F2014B76EA500329E9F /* EffecthardPointModifierEffectInterpreter.cpp */; };
 		37F1E6FE14B4D47E007E2A86 /* EffectSlotModifierInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F1E6FD14B4D47E007E2A86 /* EffectSlotModifierInterpreter.cpp */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectHardPointModifierEffectInterpreter.cpp; sourceTree = "<group>"; };
+		121E07E71578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectHardPointModifierEffectInterpreter.h; sourceTree = "<group>"; };
+		121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectAdaptiveArmorHardener.cpp; sourceTree = "<group>"; };
+		121E07EB1578C193000D1480 /* EffectAdaptiveArmorHardener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectAdaptiveArmorHardener.h; sourceTree = "<group>"; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3708AE3B14892DCC005492F5 /* Charge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
@@ -127,8 +132,6 @@
 		37D72CC814979FC100B13A9D /* EffectEnergyDestabilizationNewInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectEnergyDestabilizationNewInterpreter.h; sourceTree = "<group>"; };
 		37D72CCA1497A06D00B13A9D /* EffectEnergyTransferInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectEnergyTransferInterpreter.cpp; sourceTree = "<group>"; };
 		37D72CCC1497A07900B13A9D /* EffectEnergyTransferInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectEnergyTransferInterpreter.h; sourceTree = "<group>"; };
-		37D97F2014B76EA500329E9F /* EffecthardPointModifierEffectInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffecthardPointModifierEffectInterpreter.cpp; sourceTree = "<group>"; };
-		37D97F2314B76EB400329E9F /* EffecthardPointModifierEffectInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffecthardPointModifierEffectInterpreter.h; sourceTree = "<group>"; };
 		37F1E6FD14B4D47E007E2A86 /* EffectSlotModifierInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectSlotModifierInterpreter.cpp; sourceTree = "<group>"; };
 		37F1E70014B4D488007E2A86 /* EffectSlotModifierInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectSlotModifierInterpreter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -297,8 +300,10 @@
 				37AC8092149906B600CB0411 /* EffectHullRepairInterpreter.h */,
 				37F1E6FD14B4D47E007E2A86 /* EffectSlotModifierInterpreter.cpp */,
 				37F1E70014B4D488007E2A86 /* EffectSlotModifierInterpreter.h */,
-				37D97F2014B76EA500329E9F /* EffecthardPointModifierEffectInterpreter.cpp */,
-				37D97F2314B76EB400329E9F /* EffecthardPointModifierEffectInterpreter.h */,
+				121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */,
+				121E07E71578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.h */,
+				121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */,
+				121E07EB1578C193000D1480 /* EffectAdaptiveArmorHardener.h */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -383,10 +388,11 @@
 				37AC808D1499062B00CB0411 /* EffectShieldBoostingInterpreter.cpp in Sources */,
 				37AC8091149906AE00CB0411 /* EffectHullRepairInterpreter.cpp in Sources */,
 				37F1E6FE14B4D47E007E2A86 /* EffectSlotModifierInterpreter.cpp in Sources */,
-				37D97F2114B76EA600329E9F /* EffecthardPointModifierEffectInterpreter.cpp in Sources */,
 				371FA1D014F542FC0043E813 /* HeatSimulator.cpp in Sources */,
 				37BBC5971512068400EDE204 /* ControlTower.cpp in Sources */,
 				37BBC599151219B500EDE204 /* Structure.cpp in Sources */,
+				121E07E81578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp in Sources */,
+				121E07EA1578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
