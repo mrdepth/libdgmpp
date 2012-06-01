@@ -24,7 +24,8 @@
 #include "EffectHullRepairInterpreter.h"
 #include "EffectShieldBoostingInterpreter.h"
 #include "EffectSlotModifierInterpreter.h"
-#include "EffecthardPointModifierEffectInterpreter.h"
+#include "EffectHardPointModifierEffectInterpreter.h"
+#include "EffectAdaptiveArmorHardener.h"
 
 using namespace eufe;
 
@@ -60,6 +61,9 @@ const TypeID eufe::HARD_POINT_MODIFIER_EFFECT_EFFECT_ID = 3773;
 
 const TypeID eufe::ONLINE_FOR_STRUCTURES_EFFECT_ID = 901;
 
+const TypeID eufe::ADAPTIVE_ARMOR_HARDENER_EFFECT_ID = 4928;
+const TypeID eufe::FUELED_SHIELD_BOOSTING_EFFECT_ID = 4936;
+
 
 #if _DEBUG
 Effect::Effect(Engine* engine, int effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
@@ -88,7 +92,11 @@ Effect::Effect(Engine* engine, int effectID, Category category, const void* byte
 	else if (effectID == SLOT_MODIFIER_EFFECT_ID)
 		interpreter_.reset(new EffectSlotModifierInterpreter(engine, isAssistance, isOffensive));
 	else if (effectID == HARD_POINT_MODIFIER_EFFECT_EFFECT_ID)
-		interpreter_.reset(new EffecthardPointModifierEffectInterpreter(engine, isAssistance, isOffensive));
+		interpreter_.reset(new EffectHardPointModifierEffectInterpreter(engine, isAssistance, isOffensive));
+	else if (effectID == ADAPTIVE_ARMOR_HARDENER_EFFECT_ID)
+		interpreter_.reset(new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive));
+	else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
+		interpreter_.reset(new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive));
 	else
 		interpreter_.reset(new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive));
 #if _DEBUG
