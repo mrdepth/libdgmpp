@@ -6,8 +6,8 @@ namespace eufe {
 	class Drone : public Item
 	{
 	public:
-		typedef boost::error_info<struct BadTargetExceptionInfoTag, Ship*> BadTargetExceptionInfo;
-		struct BadTargetException : virtual boost::exception {};
+		typedef boost::error_info<struct BadDroneTargetExceptionInfoTag, Ship*> BadDroneTargetExceptionInfo;
+		struct BadDroneTargetException : virtual boost::exception {};
 
 		Drone(Engine* engine, TypeID typeID, Ship* owner = NULL);
 		Drone(const Drone& from);

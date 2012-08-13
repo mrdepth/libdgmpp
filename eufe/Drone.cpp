@@ -60,7 +60,7 @@ boost::shared_ptr<Environment> Drone::getEnvironment()
 void Drone::setTarget(Ship* target)
 {
 	if (target == getOwner())
-		throw BadTargetException() << BadTargetExceptionInfo(target);
+		throw BadDroneTargetException() << BadDroneTargetExceptionInfo(target);
 
 	removeEffects(Effect::CATEGORY_TARGET);
 	if (target_)
