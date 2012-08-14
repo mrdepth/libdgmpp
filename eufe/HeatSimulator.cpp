@@ -132,7 +132,6 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 	if (states_.size() > 0)
 	{
 		int tNow = 0;
-		int tLast = 0;
 		State *state;
 
 		while (1)
@@ -164,7 +163,6 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 			if (numberOfDeadModules == n)
 				break;
 			
-			tLast = tNow;
 			tNow += state->duration;
 			state->shot++;
 			
