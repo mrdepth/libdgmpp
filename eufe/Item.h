@@ -38,12 +38,12 @@ namespace eufe {
 		struct NoOwnerException : virtual boost::exception {};
 
 		Item();
-		Item(Engine* engine, TypeID typeID, Item* owner = NULL);
+		Item(Engine* engine, TypeID typeID, Item* owner = nullptr);
 		Item(Item* owner);
 		Item(const Item& from);
 		virtual ~Item(void);
-		void setContext(const boost::shared_ptr<Context>& context);
-		boost::shared_ptr<Context> getContext();
+		void setContext(const Context* context);
+		const Context* getContext();
 		Engine* getEngine();
 
 		Item* getOwner() const;
@@ -52,10 +52,10 @@ namespace eufe {
 		virtual TypeID getTypeID() const;
 		virtual TypeID getGroupID() const;
 		virtual TypeID getCategoryID() const;
-		virtual boost::shared_ptr<Attribute> getAttribute(TypeID attributeID);
+		virtual Attribute* getAttribute(TypeID attributeID);
 		const AttributesMap &getAttributes();
 		bool hasAttribute(TypeID attributeID);
-		boost::shared_ptr<Effect> getEffect(TypeID effectID);
+		Effect* getEffect(TypeID effectID);
 		
 		
 		virtual bool requireSkill(TypeID skillID);
@@ -65,21 +65,21 @@ namespace eufe {
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 
-		virtual boost::shared_ptr<Environment> getEnvironment() = 0;
+		virtual Environment getEnvironment() = 0;
 		
 		virtual void reset();
 		
 		virtual std::insert_iterator<ModifiersList> getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 		
-		virtual void addItemModifier(boost::shared_ptr<Modifier> modifier);
-		virtual void addLocationModifier(boost::shared_ptr<Modifier> modifier);
-		virtual void addLocationGroupModifier(boost::shared_ptr<Modifier> modifier);
-		virtual void addLocationRequiredSkillModifier(boost::shared_ptr<Modifier> modifier);
+		virtual void addItemModifier(Modifier* modifier);
+		virtual void addLocationModifier(Modifier* modifier);
+		virtual void addLocationGroupModifier(Modifier* modifier);
+		virtual void addLocationRequiredSkillModifier(Modifier* modifier);
 
-		virtual void removeItemModifier(boost::shared_ptr<Modifier> modifier);
-		virtual void removeLocationModifier(boost::shared_ptr<Modifier> modifier);
-		virtual void removeLocationGroupModifier(boost::shared_ptr<Modifier> modifier);
-		virtual void removeLocationRequiredSkillModifier(boost::shared_ptr<Modifier> modifier);
+		virtual void removeItemModifier(Modifier* modifier);
+		virtual void removeLocationModifier(Modifier* modifier);
+		virtual void removeLocationGroupModifier(Modifier* modifier);
+		virtual void removeLocationRequiredSkillModifier(Modifier* modifier);
 		
 #if _DEBUG
 		virtual const char* getTypeName() const;
@@ -105,7 +105,7 @@ namespace eufe {
 
 		
 	private:
-		boost::shared_ptr<Context> context_;
+		const Context* context_;
 		
 #if _DEBUG
 		std::string typeName_;

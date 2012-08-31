@@ -211,7 +211,7 @@ Attribute::Attribute()
 	sync = false;
 }
 
-Attribute::Attribute(Attribute& attribute) : owner_(NULL), calculated_(false)
+Attribute::Attribute(Attribute& attribute) : owner_(nullptr), calculated_(false)
 {
 	engine_			= attribute.engine_;
 	//owner_			= attribute.owner_;
@@ -246,8 +246,8 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 		sqlite3* db = engine->getDb();
 		std::stringstream sql;
 		sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-		sqlite3_stmt* stmt = NULL;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
+		sqlite3_stmt* stmt = nullptr;
+		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr);
 		sqlite3_step(stmt);
 		attributeName_ = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
 		isStackable_ = sqlite3_column_int(stmt, 1) != 0;
@@ -270,8 +270,8 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, Item* owner, bool isFak
 #else
 	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
 #endif
-	sqlite3_stmt* stmt = NULL;
-	sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
+	sqlite3_stmt* stmt = nullptr;
+	sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr);
 	sqlite3_step(stmt);
 	isStackable_ = sqlite3_column_int(stmt, 0) != 0;
 	maxAttributeID_ = static_cast<eufe::TypeID>(sqlite3_column_int(stmt, 1));
@@ -386,11 +386,11 @@ void Attribute::calculate()
 		sync = true;
 		value_ = initialValue_;
 		
-		boost::shared_ptr<Environment> environment = getOwner()->getEnvironment();
-		Item* currentCharacter = environment->find("Char") != environment->end() ? (*environment)["Char"] : NULL;
-		Ship* ship = environment->find("Ship") != environment->end() ? dynamic_cast<Ship*>((*environment)["Ship"]) : NULL;
-		bool isDisallowedAssistance = ship != NULL && attributeID_ != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
-		bool isDisallowedOffensiveModifiers = ship != NULL && attributeID_ != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
+		Environment environment = getOwner()->getEnvironment();
+		Item* currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
+		Ship* ship = environment.find("Ship") != environment.end() ? dynamic_cast<Ship*>(environment["Ship"]) : nullptr;
+		bool isDisallowedAssistance = ship && attributeID_ != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
+		bool isDisallowedOffensiveModifiers = ship && attributeID_ != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
 		
 		ModifiersList modifiers;
 		std::vector<float>preAssignments;
@@ -418,7 +418,7 @@ void Attribute::calculate()
 		for (; i != end; i++)
 		{
 			Item* character = (*i)->getCharacter();
-			bool projected = character != NULL && currentCharacter != NULL && character != currentCharacter;
+			bool projected = character && currentCharacter && character != currentCharacter;
 			if (projected && (((*i)->isAssistance() && isDisallowedAssistance) || ((*i)->isOffensive() && isDisallowedOffensiveModifiers)))
 				continue;
 			
@@ -537,10 +537,8 @@ void Attribute::calculate()
 		if (postAssignments.size() > 0)
 			value_ = postAssignments[0];
 
-		std::vector<float>::iterator j, endj = modAdds.end();
-		
-		for (j = modAdds.begin(); j != endj; j++)
-			value_ += *j;
+		for (auto j: modAdds)
+			value_ += j;
 		
 		value_ = multiply(preMultipliers.begin(), preMultipliers.end(), value_, false);
 		value_ = multiply(preMultipliersStackable.begin(), preMultipliersStackable.end(), value_, true);

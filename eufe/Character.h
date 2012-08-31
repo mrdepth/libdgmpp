@@ -7,28 +7,28 @@ namespace eufe {
 	class Character : public Item
 	{
 	public:
-		Character(Engine* engine, Gang* owner = NULL, const char* characterName = "");
+		Character(Engine* engine, Gang* owner = nullptr, const char* characterName = "");
 		virtual ~Character(void);
-		boost::shared_ptr<Ship> getShip();
-		boost::shared_ptr<Ship> setShip(const boost::shared_ptr<Ship>& ship);
-		boost::shared_ptr<Ship> setShip(TypeID typeID);
+		Ship* getShip();
+		Ship* setShip(Ship* ship);
+		Ship* setShip(TypeID typeID);
 
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 		
 		virtual void reset();
 		
-		boost::shared_ptr<Skill> getSkill(TypeID typeID);
+		Skill* getSkill(TypeID typeID);
 		
 		bool emptyImplantSlot(int slot);
 		bool emptyBoosterSlot(int slot);
-		boost::shared_ptr<Implant> getImplant(int slot);
-		boost::shared_ptr<Booster> getBooster(int slot);
-		boost::shared_ptr<Implant> addImplant(TypeID typeID);
-		boost::shared_ptr<Implant> addImplant(const boost::shared_ptr<Implant>& implant);
-		boost::shared_ptr<Booster> addBooster(TypeID typeID);
-		boost::shared_ptr<Booster> addBooster(const boost::shared_ptr<Booster>& booster);
-		void removeImplant(const boost::shared_ptr<Implant>& implant);
-		void removeBooster(const boost::shared_ptr<Booster>& booster);
+		Implant* getImplant(int slot);
+		Booster* getBooster(int slot);
+		Implant* addImplant(TypeID typeID);
+		Implant* addImplant(Implant* implant);
+		Booster* addBooster(TypeID typeID);
+		Booster* addBooster(Booster* booster);
+		void removeImplant(Implant* implant);
+		void removeBooster(Booster* booster);
 		const ImplantsList& getImplants();
 		const BoostersList& getBoosters();
 		
@@ -48,13 +48,13 @@ namespace eufe {
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 
 	private:
-		boost::shared_ptr<Ship> ship_;
+		Ship* ship_;
 		SkillsMap skills_;
 		ImplantsList implants_;
 		BoostersList boosters_;
 		std::string characterName_;
 
-		boost::shared_ptr<Skill> addSkill(TypeID typeID, int skillLevel, bool isLearned);
-		void removeSkill(boost::shared_ptr<Skill>& skill);
+		Skill* addSkill(TypeID typeID, int skillLevel, bool isLearned);
+		void removeSkill(Skill* skill);
 	};
 }

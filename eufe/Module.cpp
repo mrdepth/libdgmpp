@@ -13,12 +13,12 @@
 
 using namespace eufe;
 
-Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(NULL), reloadTime_(0), forceReload_(false)
+Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(nullptr), reloadTime_(0), forceReload_(false), charge_(nullptr)
 {
 	#if _DEBUG
-		attributes_[IS_ONLINE_ATTRIBUTE_ID] = boost::shared_ptr<Attribute>(new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this, "isOnline"));
+		attributes_[IS_ONLINE_ATTRIBUTE_ID] = new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this, "isOnline");
 	#else
-		attributes_[IS_ONLINE_ATTRIBUTE_ID] = boost::shared_ptr<Attribute>(new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this));
+		attributes_[IS_ONLINE_ATTRIBUTE_ID] = new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this);
 	#endif
 
 	if (hasEffect(LO_POWER_EFFECT_ID))
@@ -57,15 +57,13 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 
 	state_ = STATE_OFFLINE;
 
-	EffectsList::iterator i, end = effects_.end();
-
 	canBeActive_ = false;
 	canBeOverloaded_ = false;
 	requireTarget_ = false;
 	int n = 0;
-	for (i = effects_.begin(); i != end; i++)
+	for (auto i: effects_)
 	{
-		Effect::Category category = (*i)->getCategory();
+		Effect::Category category = i->getCategory();
 		if (category == Effect::CATEGORY_ACTIVE)
 		{
 			n++;
@@ -110,14 +108,15 @@ Module::Module(const Module& from) :	Item(from),
 										hardpoint_(from.hardpoint_),
 										state_(STATE_OFFLINE),
 										chargeGroups_(from.chargeGroups_),
-										target_(NULL),
+										target_(nullptr),
 										reloadTime_(from.reloadTime_),
 										shots_(from.shots_),
-										forceReload_(from.forceReload_)
+										forceReload_(from.forceReload_),
+										charge_(nullptr)
 {
-	if (from.charge_ != NULL)
+	if (from.charge_)
 	{
-		charge_.reset(new Charge(*from.charge_.get()));
+		charge_ = new Charge(*from.charge_);
 		charge_->setOwner(this);
 	}
 	shots_ = -1;
@@ -126,18 +125,20 @@ Module::Module(const Module& from) :	Item(from),
 
 Module::~Module(void)
 {
-	if (target_ != NULL)
+	if (charge_)
+		delete charge_;
+	if (target_)
 		clearTarget();
 }
 
-boost::shared_ptr<Attribute> Module::getAttribute(TypeID attributeID)
+Attribute* Module::getAttribute(TypeID attributeID)
 {
 	Item::scoped_lock lock(*this);
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;
 	else
-		return attributes_[attributeID] = boost::shared_ptr<Attribute>(new Attribute(engine_, attributeID, this));
+		return attributes_[attributeID] = new Attribute(engine_, attributeID, this);
 }
 
 Module::Slot Module::getSlot()
@@ -166,11 +167,9 @@ bool Module::canHaveState(State state)
 		if (hasAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID))
 		{
 			int maxGroupActive = static_cast<int>(getAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID)->getValue()) - 1;
-			const ModulesList& modules = ship->getModules();
-			ModulesList::const_iterator i, end = modules.end();
 			
-			for (i = modules.begin(); i != end; i++)
-				if ((*i).get() != this && (*i)->getState() >= Module::STATE_ACTIVE && (*i)->getGroupID() == groupID_)
+			for (auto i: ship->getModules())
+				if (i != this && i->getState() >= Module::STATE_ACTIVE && i->getGroupID() == groupID_)
 					maxGroupActive--;
 			if (maxGroupActive < 0)
 				canHaveState = false;
@@ -200,7 +199,7 @@ void Module::setState(State state)
 			if (state_ >= STATE_ONLINE && state < STATE_ONLINE)
 			{
 				removeEffects(Effect::CATEGORY_PASSIVE);
-				getEffect(ONLINE_EFFECT_ID)->removeEffect(getEnvironment().get());
+				getEffect(ONLINE_EFFECT_ID)->removeEffect(getEnvironment());
 			}
 		}
 		else if (state > state_)
@@ -208,7 +207,7 @@ void Module::setState(State state)
 			if (state_ < STATE_ONLINE && state >= STATE_ONLINE)
 			{
 				addEffects(Effect::CATEGORY_PASSIVE);
-				getEffect(ONLINE_EFFECT_ID)->addEffect(getEnvironment().get());
+				getEffect(ONLINE_EFFECT_ID)->addEffect(getEnvironment());
 			}
 			if (state_ < STATE_ACTIVE && state >= STATE_ACTIVE)
 			{
@@ -223,44 +222,41 @@ void Module::setState(State state)
 	}
 }
 
-boost::shared_ptr<Environment> Module::getEnvironment()
+Environment Module::getEnvironment()
 {
-	boost::shared_ptr<Environment> environment(new Environment());
-	(*environment)["Self"] = this;
+	Environment environment;
+	environment["Self"] = this;
 	Item* ship = getOwner();
-	Item* character = ship != NULL ? ship->getOwner() : NULL;
-	Item* gang = character != NULL ? character->getOwner() : NULL;
+	Item* character = ship ? ship->getOwner() : nullptr;
+	Item* gang = character ? character->getOwner() : nullptr;
 	
-	if (character != NULL)
-		(*environment)["Char"] = character;
-	if (ship != NULL)
-		(*environment)["Ship"] = ship;
-	if (gang != NULL)
-		(*environment)["Gang"] = gang;
-	if (engine_->getArea() != NULL)
-		(*environment)["Area"] = engine_->getArea().get();
-	if (target_ != NULL)
-		(*environment)["Target"] = target_;
+	if (character)
+		environment["Char"] = character;
+	if (ship)
+		environment["Ship"] = ship;
+	if (gang)
+		environment["Gang"] = gang;
+	if (engine_->getArea())
+		environment["Area"] = engine_->getArea();
+	if (target_)
+		environment["Target"] = target_;
 	return environment;
 }
 
 void Module::addEffects(Effect::Category category)
 {
-	boost::shared_ptr<Environment> environment = getEnvironment();
+	Environment environment = getEnvironment();
 	
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getEffectID() != ONLINE_EFFECT_ID && (*i)->getCategory() == category)
-		{
-			(*i)->addEffect(environment.get());
-		}
+	for (auto i: effects_)
+		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
+			i->addEffect(environment);
 	
 	if (category == Effect::CATEGORY_GENERIC)
 	{
 		if (state_ >= STATE_ONLINE)
 		{
 			addEffects(Effect::CATEGORY_PASSIVE);
-			getEffect(ONLINE_EFFECT_ID)->addEffect(getEnvironment().get());
+			getEffect(ONLINE_EFFECT_ID)->addEffect(getEnvironment());
 		}
 		if (state_ >= STATE_ACTIVE)
 		{
@@ -270,21 +266,18 @@ void Module::addEffects(Effect::Category category)
 		if (state_ >= STATE_OVERLOADED)
 			addEffects(Effect::CATEGORY_OVERLOADED);
 		
-		if (charge_ != NULL)
+		if (charge_)
 			charge_->addEffects(category);
 	}
 }
 
 void Module::removeEffects(Effect::Category category)
 {
-	boost::shared_ptr<Environment> environment = getEnvironment();
+	Environment environment = getEnvironment();
 
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getEffectID() != ONLINE_EFFECT_ID && (*i)->getCategory() == category)
-		{
-			(*i)->removeEffect(environment.get());
-		}
+	for (auto i: effects_)
+		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
+			i->removeEffect(environment);
 //	if (category == Effect::CATEGORY_GENERIC && charge_ != NULL)
 //		charge_->removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
@@ -299,10 +292,10 @@ void Module::removeEffects(Effect::Category category)
 		if (state_ >= STATE_ONLINE)
 		{
 			removeEffects(Effect::CATEGORY_PASSIVE);
-			getEffect(ONLINE_EFFECT_ID)->removeEffect(getEnvironment().get());
+			getEffect(ONLINE_EFFECT_ID)->removeEffect(getEnvironment());
 		}
 		
-		if (charge_ != NULL)
+		if (charge_)
 			charge_->removeEffects(category);
 	}
 }
@@ -313,49 +306,57 @@ void Module::reset()
 	shots_ = -1;
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 	lifeTime_ = -1;
-	if (charge_ != NULL)
+	if (charge_)
 		charge_->reset();
 }
 
-boost::shared_ptr<Charge> Module::setCharge(const boost::shared_ptr<Charge>& charge)
+Charge* Module::setCharge(Charge* charge)
 {
-	if (charge != NULL)
+	if (charge)
 	{
 		if (canFit(charge))
 		{
-			if (charge_ != NULL)
+			if (charge_) {
 				charge_->removeEffects(Effect::CATEGORY_GENERIC);
+				delete charge_;
+			}
 			charge_ = charge;
 			charge_->setOwner(this);
 			charge_->addEffects(Effect::CATEGORY_GENERIC);
 			engine_->reset(this);
 		}
+		else {
+			delete charge;
+			return nullptr;
+		}
 	}
-	else if (charge_ != NULL) {
+	else if (charge_) {
 		charge_->removeEffects(Effect::CATEGORY_GENERIC);
 		engine_->reset(this);
-		charge_.reset();
+		delete charge_;
+		charge_ = nullptr;
 	}
 	return charge_;
 }
 
-boost::shared_ptr<Charge> Module::setCharge(TypeID typeID)
+Charge* Module::setCharge(TypeID typeID)
 {
-	return setCharge(boost::shared_ptr<Charge>(new Charge(engine_, typeID, this)));
+	return setCharge(new Charge(engine_, typeID, this));
 }
 
 void Module::clearCharge()
 {
-	if (charge_ != NULL)
+	if (charge_)
 	{
 		charge_->removeEffects(Effect::CATEGORY_GENERIC);
-		charge_.reset();
+		delete charge_;
+		charge_ = nullptr;
 		engine_->reset(this);
 	}
 }
 
 
-boost::shared_ptr<Charge> Module::getCharge()
+Charge* Module::getCharge()
 {
 	return charge_;
 }
@@ -378,9 +379,9 @@ void Module::removeCharge()
 	setCharge(0);
 }
 
-bool Module::canFit(const boost::shared_ptr<Charge>& charge)
+bool Module::canFit(Charge* charge)
 {
-	if (charge == NULL)
+	if (!charge)
 		return true;
 	if (charge->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() > getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue())
 		return false;
@@ -394,9 +395,8 @@ bool Module::canFit(const boost::shared_ptr<Charge>& charge)
 	
 	TypeID chargeGroup = charge->getGroupID();
 	
-	std::list<TypeID>::iterator i, end = chargeGroups_.end();
-	for (i = chargeGroups_.begin(); i != end; i++)
-		if ((*i) == chargeGroup)
+	for (auto i: chargeGroups_)
+		if (i == chargeGroup)
 			return true;
 	return false;
 }
@@ -426,7 +426,7 @@ void Module::setTarget(Ship* target)
 
 void Module::clearTarget()
 {
-	setTarget(NULL);
+	setTarget(nullptr);
 }
 
 Ship* Module::getTarget()
@@ -477,7 +477,7 @@ float Module::getRawCycleTime()
 
 int Module::getCharges()
 {
-	if (charge_ == NULL)
+	if (!charge_)
 		return 0;
 	
 	float chargeVolume = charge_->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
@@ -489,7 +489,7 @@ int Module::getCharges()
 
 int Module::getShots()
 {
-	if (charge_ == NULL)
+	if (!charge_)
 		return 0;
 	if (shots_ < 0)
 	{
@@ -521,7 +521,7 @@ float Module::getCapUse()
 			capNeed = getAttribute(CAPACITOR_NEED_ATTRIBUTE_ID)->getValue();
 		else if (hasEffect(LEECH_EFFECT_ID))
 			capNeed = -getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue();
-		else if (hasEffect(POWER_BOOSTER_EFFECT_ID) && charge_ != NULL)
+		else if (hasEffect(POWER_BOOSTER_EFFECT_ID) && charge_)
 			capNeed = -charge_->getAttribute(CAPACITOR_BONUS_ATTRIBUTE_ID)->getValue();
 		
 		if (capNeed != 0.0)
@@ -650,7 +650,7 @@ void Module::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		Item* item = charge_ != NULL ? static_cast<Item*>(charge_.get()) : static_cast<Item*>(this);
+		Item* item = charge_ ? static_cast<Item*>(charge_) : static_cast<Item*>(this);
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
 			volley_ += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))
@@ -755,7 +755,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationGroupModifier*>((*i).get());
+			os << *dynamic_cast<LocationGroupModifier*>(*i);
 		}
 	}
 	
@@ -771,7 +771,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationRequiredSkillModifier*>((*i).get());
+			os << *dynamic_cast<LocationRequiredSkillModifier*>(*i);
 		}
 	}
 	

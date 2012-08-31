@@ -37,11 +37,11 @@ namespace eufe {
 		typedef boost::error_info<struct BadTargetExceptionInfoTag, Ship*> BadTargetExceptionInfo;
 		struct BadTargetException : virtual boost::exception {};
 
-		Module(Engine* engine, TypeID typeID, Item* owner = NULL);
+		Module(Engine* engine, TypeID typeID, Item* owner = nullptr);
 		Module(const Module& from);
 		virtual ~Module(void);
 
-		virtual boost::shared_ptr<Attribute> getAttribute(TypeID attributeID);
+		virtual Attribute* getAttribute(TypeID attributeID);
 
 		Slot getSlot();
 		Hardpoint getHardpoint();
@@ -49,23 +49,23 @@ namespace eufe {
 		State getState();
 		virtual void setState(State state);
 
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
 		virtual void reset();
 		
-		boost::shared_ptr<Charge> setCharge(const boost::shared_ptr<Charge>& charge);
-		boost::shared_ptr<Charge> setCharge(TypeID typeID);
+		Charge* setCharge(Charge* charge);
+		Charge* setCharge(TypeID typeID);
 		void clearCharge();
-		boost::shared_ptr<Charge> getCharge();
+		Charge* getCharge();
 		const std::list<TypeID>& getChargeGroups();
 		int getChargeSize();
 		void removeCharge();
-		bool canFit(const boost::shared_ptr<Charge>& charge);
+		bool canFit(Charge* charge);
 		bool requireTarget();
-		void setTarget(Ship* target = NULL);
+		void setTarget(Ship* target = nullptr);
 		void clearTarget();
 		Ship* getTarget();
 		float getReloadTime();
@@ -103,7 +103,7 @@ namespace eufe {
 		bool forceReload_;
 		Slot slot_;
 		Hardpoint hardpoint_;
-		boost::shared_ptr<Charge> charge_;
+		Charge* charge_;
 		std::list<TypeID> chargeGroups_;
 		Ship* target_;
 		float reloadTime_;

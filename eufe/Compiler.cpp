@@ -20,12 +20,12 @@ Compiler::~Compiler(void)
 
 void Compiler::compile()
 {
-	sqlite3* db = NULL;
+	sqlite3* db = nullptr;
 	try
 	{
 		if (sqlite3_open(databasePath_.c_str(), &db) == SQLITE_OK)
 		{
-			char* errmsg = NULL; 
+			char* errmsg = nullptr;
 			
 			std::cout << "Loading effects..." << std::endl;
 			if (sqlite3_exec(db, "select * from dgmEffects", callbackEffect, this, &errmsg) != SQLITE_OK)
@@ -52,53 +52,12 @@ void Compiler::compile()
 			}
 			
 			sqlite3_close(db);
-			db = NULL;
+			db = nullptr;
 
-			/*if (sqlite3_open(outputPath_.c_str(), &db) == SQLITE_OK)
-			{
-				sqlite3_exec(db, "DROP TABLE dgmCompiledEffects;", NULL, NULL, NULL);
-				sqlite3_exec(db,
-							 "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" INTEGER NOT NULL, \"effectCategory\" INTEGER NOT NULL, \"isOffensive\" INTEGER NOT NULL, \"isAssistance\" INTEGER NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"))",
-							 NULL,
-							 NULL,
-							 NULL);
-				
-				std::cout << "Compiling expressions..." << std::endl;
-				
-				RowsMap::iterator i, end = expressions_.end();
-				for (i = expressions_.begin(); i != end; i++)
-					compiledExpressionsMap_[i->first] = compileExpression(i->second);
-				
-				std::cout << "Compiling effects..." << std::endl;
-				
-				sqlite3_stmt *stmt;
-				sqlite3_prepare_v2(db, "INSERT INTO \"dgmCompiledEffects\" VALUES (?,?,?,?,?)", -1, &stmt, NULL);
-
-				end = effects_.end();
-				for (i = effects_.begin(); i != end; i++)
-				{
-					Row& effect = i->second;
-					MemoryBlock compiledEffect = compileEffect(effect);
-					sqlite3_bind_int(stmt, 1, boost::lexical_cast<int>(effect["effectID"]));
-					sqlite3_bind_int(stmt, 2, boost::lexical_cast<int>(effect["effectCategory"]));
-					sqlite3_bind_int(stmt, 3, boost::lexical_cast<int>(effect["isOffensive"]));
-					sqlite3_bind_int(stmt, 4, boost::lexical_cast<int>(effect["isAssistance"]));
-					sqlite3_bind_blob(stmt, 5, compiledEffect.c_str(), static_cast<int>(compiledEffect.length()), NULL);
-					sqlite3_step(stmt);
-					sqlite3_reset(stmt);
-				}
-				sqlite3_finalize(stmt);
-				sqlite3_close(db);
-				db = NULL;
-			}
-			else {
-				throw SqliteException() << SqliteExceptionInfo(sqlite3_errmsg(db));
-			}*/
 			std::cout << "Compiling expressions..." << std::endl;
 			
-			RowsMap::iterator i, end = expressions_.end();
-			for (i = expressions_.begin(); i != end; i++)
-				compiledExpressionsMap_[i->first] = compileExpression(i->second);
+			for (auto i: expressions_)
+				compiledExpressionsMap_[i.first] = compileExpression(i.second);
 			
 			std::cout << "Compiling effects..." << std::endl;
 			
@@ -108,13 +67,9 @@ void Compiler::compile()
 			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" INTEGER NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" INTEGER NOT NULL, \"isOffensive\" INTEGER NOT NULL, \"isAssistance\" INTEGER NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
 			os << "BEGIN TRANSACTION;" << std::endl;
 
-//			sqlite3_stmt *stmt;
-//			sqlite3_prepare_v2(db, "INSERT INTO \"dgmCompiledEffects\" VALUES (?,?,?,?,?,?)", -1, &stmt, NULL);
-
-			end = effects_.end();
-			for (i = effects_.begin(); i != end; i++)
+			for (auto i: effects_)
 			{
-				Row& effect = i->second;
+				Row& effect = i.second;
 				MemoryBlock compiledEffect = compileEffect(effect);
 
 				os	<< "INSERT INTO \"dgmCompiledEffects\" VALUES (" << effect["effectID"]
@@ -229,12 +184,11 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 	std::map<std::string, int> offsets;
 	
 	int offset = sizeof(int) * 2;
-	CompiledExpressionsMap::iterator i, end = expressionsMap.end();
-	
-	for (i = expressionsMap.begin(); i != end; i++)
+
+	for (auto i: expressionsMap)
 	{
-		offsets[i->first] = offset;
-		offset += i->second.length();
+		offsets[i.first] = offset;
+		offset += i.second.length();
 	}
 	
 	offset = offsets[effect["preExpression"]];
@@ -242,14 +196,14 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 	offset = offsets[effect["postExpression"]];
 	compiledEffect.append(reinterpret_cast<unsigned char*>(&offset), sizeof(int));
 
-	for (i = expressionsMap.begin(); i != end; i++)
+	for (auto i: expressionsMap)
 	{
-		size_t len = i->second.length();
+		size_t len = i.second.length();
 		Byte* data = new Byte[len];
 #ifdef WIN32
-		i->second._Copy_s(data, len, len);
+		i.second._Copy_s(data, len, len);
 #else
-		i->second.copy(data, len);
+		i.second.copy(data, len);
 #endif
 		Byte* ptr = data;
 		while (static_cast<Opcode>(*ptr) == OPCODE_ARGUMENT)

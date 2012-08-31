@@ -65,8 +65,8 @@ namespace eufe {
 #endif
 		Effect(const Effect& from);
 		virtual ~Effect(void);
-		bool addEffect(Environment* environment);
-		bool removeEffect(Environment* environment);
+		bool addEffect(Environment environment);
+		bool removeEffect(Environment environment);
 		TypeID getEffectID() const;
 		Category getCategory() const;
 #if _DEBUG
@@ -78,7 +78,7 @@ namespace eufe {
 		
 		Category category_;
 		TypeID effectID_;
-		boost::shared_ptr<EffectInterpreter> interpreter_;
+		EffectInterpreter* interpreter_;
 #if _DEBUG
 		std::string effectName_;
 #endif

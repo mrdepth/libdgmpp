@@ -6,7 +6,7 @@ namespace eufe {
 	class Structure : public Module
 	{
 	public:
-		Structure(Engine* engine, TypeID typeID, Item* owner = NULL);
+		Structure(Engine* engine, TypeID typeID, Item* owner = nullptr);
 		Structure(const Structure& from);
 		virtual ~Structure(void);
 

@@ -21,21 +21,21 @@ int Implant::getSlot()
 	return slot_;
 }
 
-boost::shared_ptr<Environment> Implant::getEnvironment()
+Environment Implant::getEnvironment()
 {
-	boost::shared_ptr<Environment> environment(new Environment());
-	(*environment)["Self"] = this;
+	Environment environment;
+	environment["Self"] = this;
 	Character* character = dynamic_cast<Character*>(getOwner());
-	Item* ship = character != NULL ? character->getShip().get() : NULL;
-	Item* gang = character != NULL ? character->getOwner() : NULL;
+	Item* ship = character ? character->getShip() : nullptr;
+	Item* gang = character ? character->getOwner() : nullptr;
 	
-	if (character != NULL)
-		(*environment)["Char"] = character;
-	if (ship != NULL)
-		(*environment)["Ship"] = ship;
-	if (gang != NULL)
-		(*environment)["Gang"] = gang;
-	if (engine_->getArea() != NULL)
-		(*environment)["Area"] = engine_->getArea().get();
+	if (character)
+		environment["Char"] = character;
+	if (ship)
+		environment["Ship"] = ship;
+	if (gang)
+		environment["Gang"] = gang;
+	if (engine_->getArea())
+		environment["Area"] = engine_->getArea();
 	return environment;
 }

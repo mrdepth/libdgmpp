@@ -21,9 +21,8 @@ HeatSimulator::HeatSimulator(Ship* ship) : ship_(ship)
 
 HeatSimulator::~HeatSimulator(void)
 {
-	StatesVector::iterator i, end = states_.end();
-	for (i = states_.begin(); i != end; i++)
-		delete *i;
+	for (auto i: states_)
+		delete i;
 	states_.clear();
 }
 
@@ -44,16 +43,15 @@ void HeatSimulator::simulate()
 		medSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
 		lowSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
 		
-		ModulesList::const_iterator i, end = ship_->getModules().end();
-		for (i = ship_->getModules().begin(); i != end; i++)
+		for (auto i: ship_->getModules())
 		{
-			Module::Slot slot = (*i)->getSlot();
+			Module::Slot slot = i->getSlot();
 			if (slot == Module::SLOT_HI)
-				hiSlot.push_back(*i);
+				hiSlot.push_back(i);
 			else if (slot == Module::SLOT_MED)
-				medSlot.push_back(*i);
+				medSlot.push_back(i);
 			else if (slot == Module::SLOT_LOW)
-				lowSlot.push_back(*i);
+				lowSlot.push_back(i);
 		}
 		if (hiSlot.size() > 0)
 			simulate(hiSlot);
@@ -68,13 +66,12 @@ void HeatSimulator::simulate()
 void HeatSimulator::simulate(const ModulesVector& modules)
 {
 	{
-		StatesVector::iterator i, end = states_.end();
-		for (i = states_.begin(); i != end; i++)
-			delete *i;
+		for (auto i: states_)
+			delete i;
 		states_.clear();
 	}
 
-	const boost::shared_ptr<Module>& module = *modules.begin();
+	Module* module = *modules.begin();
 	Module::Slot slot = module->getSlot();
 	float heatCapacity = 0;
 	float heatGenerationMultiplier = ship_->getAttribute(HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID)->getValue();
@@ -105,7 +102,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 
 	for (int i = 0; i < n; i++)
 	{
-		boost::shared_ptr<Module> module = modules[i];
+		Module* module = modules[i];
 		modulesHP[i] = module->getAttribute(HP_ATTRIBUTE_ID)->getValue();
 		Module::State state = module->getState();
 		if (state >= Module::STATE_ONLINE)

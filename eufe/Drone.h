@@ -9,18 +9,18 @@ namespace eufe {
 		typedef boost::error_info<struct BadDroneTargetExceptionInfoTag, Ship*> BadDroneTargetExceptionInfo;
 		struct BadDroneTargetException : virtual boost::exception {};
 
-		Drone(Engine* engine, TypeID typeID, Ship* owner = NULL);
+		Drone(Engine* engine, TypeID typeID, Ship* owner = nullptr);
 		Drone(const Drone& from);
 		virtual ~Drone(void);
 		
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 		
-		void setTarget(Ship* target = NULL);
+		void setTarget(Ship* target = nullptr);
 		void clearTarget();
 		Ship* getTarget();
 
 		bool dealsDamage();
-		boost::shared_ptr<Charge> getCharge();
+		Charge* getCharge();
 		
 		void setActive(bool active);
 		bool isActive();
@@ -41,7 +41,7 @@ namespace eufe {
 
 	private:
 		Ship* target_;
-		boost::shared_ptr<Charge> charge_;
+		Charge* charge_;
 		
 		float volley_;
 		float dps_;

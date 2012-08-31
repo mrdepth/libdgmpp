@@ -19,35 +19,35 @@ namespace eufe {
 			SCAN_TYPE_MULTISPECTRAL
 		};
 		
-		Ship(Engine* engine, TypeID typeID, Character* owner = NULL);
+		Ship(Engine* engine, TypeID typeID, Character* owner = nullptr);
 		virtual ~Ship(void);
 
-		boost::shared_ptr<Module> addModule(const boost::shared_ptr<Module>& module);
-		boost::shared_ptr<Module> addModule(TypeID typeID);
-		void removeModule(const boost::shared_ptr<Module>& module);
+		Module* addModule(Module* module);
+		Module* addModule(TypeID typeID);
+		void removeModule(Module* module);
 		
-		boost::shared_ptr<Drone> addDrone(const boost::shared_ptr<Drone>& drone);
-		boost::shared_ptr<Drone> addDrone(TypeID typeID);
-		void removeDrone(const boost::shared_ptr<Drone>& drone);
+		Drone* addDrone(Drone* drone);
+		Drone* addDrone(TypeID typeID);
+		void removeDrone(Drone* drone);
 		
 		const ModulesList& getModules();
 		void getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator);
 		const DronesList& getDrones();
-		const ProjectedModulesList& getProjectedModules();
-		const ProjectedDronesList& getProjectedDrones();
-		bool canFit(const boost::shared_ptr<Module>& module);
+		const ModulesList& getProjectedModules();
+		const DronesList& getProjectedDrones();
+		bool canFit(Module* module);
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();
 
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 		
 		virtual void reset();
 		
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
-		virtual void addLocationGroupModifier(boost::shared_ptr<Modifier> modifier);
-		virtual void addLocationRequiredSkillModifier(boost::shared_ptr<Modifier> modifier);
+		virtual void addLocationGroupModifier(Modifier* modifier);
+		virtual void addLocationRequiredSkillModifier(Modifier* modifier);
 
 		
 		void addProjectedModule(Module* module);
@@ -136,8 +136,8 @@ namespace eufe {
 	private:
 		ModulesList modules_;
 		DronesList drones_;
-		ProjectedModulesList projectedModules_;
-		ProjectedDronesList projectedDrones_;
+		ModulesList projectedModules_;
+		DronesList projectedDrones_;
 		CapacitorSimulator capacitorSimulator_;
 		HeatSimulator heatSimulator_;
 		DamagePattern damagePattern_;

@@ -11,7 +11,7 @@ namespace eufe {
 		virtual ~Implant(void);
 		int getSlot();
 		
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 	private:
 		int slot_;
 	};

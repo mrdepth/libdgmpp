@@ -117,11 +117,10 @@ EffectByteCodeInterpreter::~EffectByteCodeInterpreter(void)
 	delete[] byteCode_;
 }
 
-bool EffectByteCodeInterpreter::addEffect(Environment* environment)
+bool EffectByteCodeInterpreter::addEffect(const Environment& environment)
 {
 	environment_ = environment;
 	Argument arg = execute(preExpression_);
-	environment_ = NULL;
 	bool result;
 	try {
 		result = arg;
@@ -132,11 +131,10 @@ bool EffectByteCodeInterpreter::addEffect(Environment* environment)
 	return result;
 }
 
-bool EffectByteCodeInterpreter::removeEffect(Environment* environment)
+bool EffectByteCodeInterpreter::removeEffect(const Environment& environment)
 {
 	environment_ = environment;
 	Argument arg = execute(postExpression_);
-	environment_ = NULL;
 	bool result;
 	try {
 		result = arg;
@@ -487,7 +485,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand18()
 		return false;
 	
 	boost::shared_ptr<AttributeWrapper> attribute = arg1;
-	float value = (*environment_)["Self"]->getAttribute(arg2)->getValue();
+	float value = environment_["Self"]->getAttribute(arg2)->getValue();
 	attribute->dec(value);
 	return true;
 }
@@ -560,8 +558,8 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand24()
 	if (arg1.getType() == Argument::TYPE_EXPRESSION)
 		arg1 = execute(byteCode_ + static_cast<int>(arg1));
 	std::string key = arg1;
-	if (environment_->find(key) != environment_->end())
-		return boost::shared_ptr<ItemWrapper>(new ItemWrapper((*environment_)[key]));
+	if (environment_.find(key) != environment_.end())
+		return boost::shared_ptr<ItemWrapper>(new ItemWrapper(environment_[key]));
 	else
 		return false;
 }
@@ -623,8 +621,8 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 		std::stringstream sql;
 		sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
 		
-		sqlite3_stmt* stmt = NULL;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
+		sqlite3_stmt* stmt = nullptr;
+		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr);
 		int result = sqlite3_step(stmt);
 		
 		if (result == SQLITE_ROW)
@@ -701,10 +699,10 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand34()
 	if (arg2.getType() == Argument::TYPE_EXPRESSION)
 		arg2 = execute(byteCode_ + static_cast<int>(arg2));
 	
-	if (environment_->find("Gang") == environment_->end())
+	if (environment_.find("Gang") == environment_.end())
 		return false;
 	
-	Item* gang = (*environment_)["Gang"];
+	Item* gang = environment_["Gang"];
 	TypeID groupID = arg1;
 	TypeID attributeID = arg2;
 	boost::shared_ptr<ItemWrapper> item = boost::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
@@ -804,10 +802,10 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand40()
 	if (arg1.getType() == Argument::TYPE_EXPRESSION)
 		arg1 = execute(byteCode_ + static_cast<int>(arg1));
 	
-	if (environment_->find("Gang") == environment_->end())
+	if (environment_.find("Gang") == environment_.end())
 		return false;
 	
-	Item* gang = (*environment_)["Gang"];
+	Item* gang = environment_["Gang"];
 	TypeID attributeID = arg1;
 	boost::shared_ptr<ItemWrapper> item = boost::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
 	return boost::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
@@ -847,7 +845,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand42()
 		return false;
 	
 	boost::shared_ptr<AttributeWrapper> attribute = arg1;
-	float value = (*environment_)["Self"]->getAttribute(arg2)->getValue();
+	float value = environment_["Self"]->getAttribute(arg2)->getValue();
 	attribute->inc(value);
 	return true;
 }
@@ -1199,10 +1197,10 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand64()
 	if (arg2.getType() == Argument::TYPE_EXPRESSION)
 		arg2 = execute(byteCode_ + static_cast<int>(arg2));
 	
-	if (environment_->find("Gang") == environment_->end())
+	if (environment_.find("Gang") == environment_.end())
 		return false;
 	
-	Item* gang = (*environment_)["Gang"];
+	Item* gang = environment_["Gang"];
 	TypeID skillID = arg1;
 	TypeID attributeID = arg2;
 	boost::shared_ptr<ItemWrapper> item = boost::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
@@ -1341,150 +1339,187 @@ EffectByteCodeInterpreter::AssociationWrapper::AssociationWrapper(boost::shared_
 		association_ = Modifier::ASSOCIATION_PRE_DIV;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::addItemModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::addItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
 
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 
-	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character));
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
+
+	Modifier* modifier = new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->addItemModifier(modifier);
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
 
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
+	
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 
-	boost::shared_ptr<Modifier> modifier(new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character));
+	Modifier* modifier = new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
 	item->addLocationGroupModifier(modifier);
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::addLocationModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::addLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 	
-	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character));
+	Modifier* modifier = new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->addLocationModifier(modifier);
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::addLocationRequiredSkillModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::addLocationRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 	
-	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character));
+	Modifier* modifier = new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->addLocationRequiredSkillModifier(modifier);
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
 	//	Attribute* attribute = item->getAttribute(attributeID).get();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 	
-	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character));
+	Modifier* modifier = new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->addLocationRequiredSkillModifier(modifier);
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::removeItemModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::removeItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 	
-	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character));
+	Modifier* modifier = new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->removeItemModifier(modifier);
+	delete modifier;
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 	
-	boost::shared_ptr<Modifier> modifier(new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character));
+	Modifier* modifier = new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
 	item->removeLocationGroupModifier(modifier);
+	delete modifier;
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 	
-	boost::shared_ptr<Modifier> modifier(new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character));
+	Modifier* modifier = new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->removeLocationModifier(modifier);
+	delete modifier;
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationRequiredSkillModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 	
-	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character));
+	Modifier* modifier = new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->removeLocationRequiredSkillModifier(modifier);
+	delete modifier;
 	return true;
 }
 
-bool EffectByteCodeInterpreter::AssociationWrapper::removeOwnerRequiredSkillModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive)
+bool EffectByteCodeInterpreter::AssociationWrapper::removeOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	Attribute* attribute = (*environment)["Self"]->getAttribute(attributeID).get();
+	auto Self = environment.find("Self");
+	auto Char = environment.find("Char");
+	auto end = environment.end();
+	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
-	if (environment->find("Char") != environment->end())
-		character = dynamic_cast<Character*>((*environment)["Char"]);
+	Character* character = nullptr;
+	if (Char != end)
+		character = dynamic_cast<Character*>(Char->second);
 	
-	boost::shared_ptr<Modifier> modifier(new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character));
+	Modifier* modifier = new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->removeLocationRequiredSkillModifier(modifier);
+	delete modifier;
 	return true;
 }
 

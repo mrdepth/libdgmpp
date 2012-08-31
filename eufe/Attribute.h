@@ -185,11 +185,11 @@ namespace eufe {
 		Attribute();
 		Attribute(Attribute& attribute);
 #if _DEBUG
-		Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner = NULL, const char* attributeName = "", bool isFakeAttribute = false);
+		Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner = nullptr, const char* attributeName = "", bool isFakeAttribute = false);
 #else
-		Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner = NULL, bool isFakeAttribute = false);
+		Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner = nullptr, bool isFakeAttribute = false);
 #endif
-		Attribute(Engine* engine, TypeID attributeID, Item* owner = NULL, bool isFakeAttribute = false);
+		Attribute(Engine* engine, TypeID attributeID, Item* owner = nullptr, bool isFakeAttribute = false);
 		virtual ~Attribute(void);
 
 		Item* getOwner() const;

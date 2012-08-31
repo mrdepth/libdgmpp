@@ -4,8 +4,6 @@
 #include <string>
 #include <map>
 #include <list>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
 
 namespace eufe {
 	class Item;
@@ -33,22 +31,20 @@ namespace eufe {
 	typedef unsigned char Byte;
 	typedef int TypeID;
 	
-	typedef std::map<eufe::TypeID, boost::shared_ptr<Attribute> > AttributesMap;
-	typedef std::list<boost::shared_ptr<Attribute> > AttributesList;
-	typedef std::list<boost::shared_ptr<Association> > AssociationsList;
-	typedef std::list<boost::shared_ptr<Effect> > EffectsList;
-	typedef std::map<std::string, boost::shared_ptr<Association> > AssociationsMap;
+	typedef std::map<eufe::TypeID, Attribute*> AttributesMap;
+	typedef std::list<Attribute*> AttributesList;
+	typedef std::list<Association*> AssociationsList;
+	typedef std::list<Effect*> EffectsList;
+	typedef std::map<std::string, Association*> AssociationsMap;
 	typedef std::map<std::string, Item*> Environment;
-	typedef std::list<boost::shared_ptr<Module> > ModulesList;
-	typedef std::list<Module*> ProjectedModulesList;
-	typedef std::list<boost::shared_ptr<Drone> > DronesList;
-	typedef std::list<Drone*> ProjectedDronesList;
-	typedef std::list<boost::shared_ptr<Character> > CharactersList;
-	typedef std::map<eufe::TypeID, boost::shared_ptr<Skill> > SkillsMap;
-	typedef std::list<boost::shared_ptr<Implant> > ImplantsList;
-	typedef std::list<boost::shared_ptr<Booster> > BoostersList;
-	typedef std::list<boost::shared_ptr<Modifier> > ModifiersList;
-	typedef std::list<boost::shared_ptr<Structure> > StructuresList;
+	typedef std::list<Module*> ModulesList;
+	typedef std::list<Drone*> DronesList;
+	typedef std::list<Character*> CharactersList;
+	typedef std::map<eufe::TypeID, Skill*> SkillsMap;
+	typedef std::list<Implant*> ImplantsList;
+	typedef std::list<Booster*> BoostersList;
+	typedef std::list<Modifier*> ModifiersList;
+	typedef std::list<Structure*> StructuresList;
 	
 	struct Tank
 	{

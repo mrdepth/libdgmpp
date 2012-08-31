@@ -6,7 +6,7 @@ namespace eufe {
 	class LocationGroupModifier : public Modifier
 	{
 	public:
-		LocationGroupModifier(TypeID attributeID, Association association, Attribute* modifier, TypeID groupID, bool isAssistance, bool isOffensive, Character* character = NULL);
+		LocationGroupModifier(TypeID attributeID, Association association, Attribute* modifier, TypeID groupID, bool isAssistance, bool isOffensive, Character* character = nullptr);
 		virtual ~LocationGroupModifier(void);
 		virtual bool isMatch(Item* item) const;
 		TypeID getGroupID() const {return groupID_;}

@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-Area::Area(Engine* engine, TypeID typeID) : Item(engine, typeID, NULL)
+Area::Area(Engine* engine, TypeID typeID) : Item(engine, typeID, nullptr)
 {
 }
 
@@ -17,52 +17,47 @@ Area::~Area()
 
 void Area::addEffectsToShip(Item* ship)
 {
-	boost::shared_ptr<Environment> environment = getEnvironment();
+	Environment environment = getEnvironment();
 	Item* character = ship->getOwner();
-	Item* gang = character != NULL ? character->getOwner() : NULL;
+	Item* gang = character ? character->getOwner() : nullptr;
 
-	(*environment)["Ship"] = ship;
-	if (character != NULL)
-		(*environment)["Char"] = character;
-	if (gang != NULL)
-		(*environment)["Gang"] = gang;
+	environment["Ship"] = ship;
+	if (character)
+		environment["Char"] = character;
+	if (gang)
+		environment["Gang"] = gang;
 	
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getCategory() == Effect::CATEGORY_SYSTEM)
-			(*i)->addEffect(environment.get());
+	for (auto i: effects_)
+		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
+			i->addEffect(environment);
 }
 
 void Area::removeEffectsFromShip(Item* ship)
 {
-	boost::shared_ptr<Environment> environment = getEnvironment();
+	Environment environment = getEnvironment();
 	Item* character = ship->getOwner();
-	Item* gang = character != NULL ? character->getOwner() : NULL;
+	Item* gang = character ? character->getOwner() : nullptr;
 	
-	(*environment)["Ship"] = ship;
-	if (character != NULL)
-		(*environment)["Char"] = character;
-	if (gang != NULL)
-		(*environment)["Gang"] = gang;
+	environment["Ship"] = ship;
+	if (character)
+		environment["Char"] = character;
+	if (gang)
+		environment["Gang"] = gang;
 	
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getCategory() == Effect::CATEGORY_SYSTEM)
-			(*i)->removeEffect(environment.get());
+	for (auto i: effects_)
+		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
+			i->removeEffect(environment);
 }
 
 void Area::addEffects(Effect::Category category)
 {
 	if (category == Effect::CATEGORY_SYSTEM)
 	{
-		const CharactersList& pilots = engine_->getGang()->getPilots();
-		CharactersList::const_iterator i, end = pilots.end();
-		
-		for (i = pilots.begin(); i != end; i++)
-			addEffectsToShip((*i)->getShip().get());
-		boost::shared_ptr<ControlTower> controlTower = engine_->getControlTower();
+		for (auto i: engine_->getGang()->getPilots())
+			addEffectsToShip(i->getShip());
+		ControlTower* controlTower = engine_->getControlTower();
 		if (controlTower)
-			addEffectsToShip(controlTower.get());
+			addEffectsToShip(controlTower);
 	}
 }
 
@@ -70,21 +65,18 @@ void Area::removeEffects(Effect::Category category)
 {
 	if (category == Effect::CATEGORY_SYSTEM)
 	{
-		const CharactersList& pilots = engine_->getGang()->getPilots();
-		CharactersList::const_iterator i, end = pilots.end();
-		
-		for (i = pilots.begin(); i != end; i++)
-			removeEffectsFromShip((*i)->getShip().get());
-		boost::shared_ptr<ControlTower> controlTower = engine_->getControlTower();
+		for (auto i: engine_->getGang()->getPilots())
+			removeEffectsFromShip(i->getShip());
+		ControlTower* controlTower = engine_->getControlTower();
 		if (controlTower)
-			removeEffectsFromShip(controlTower.get());
+			removeEffectsFromShip(controlTower);
 	}
 }
 
-boost::shared_ptr<Environment> Area::getEnvironment()
+Environment Area::getEnvironment()
 {
-	boost::shared_ptr<Environment> environment(new Environment());
-	(*environment)["Self"] = this;
-	(*environment)["Area"] = this;
+	Environment environment;
+	environment["Self"] = this;
+	environment["Area"] = this;
 	return environment;
 }

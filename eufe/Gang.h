@@ -10,20 +10,20 @@ namespace eufe {
 		Gang(Engine* engine);
 		virtual ~Gang(void);
 		const CharactersList& getPilots();
-		boost::shared_ptr<Character> addPilot();
-		boost::shared_ptr<Character> addPilot(const boost::shared_ptr<Character>& character);
-		void removePilot(const boost::shared_ptr<Character>& character);
+		Character* addPilot();
+		Character* addPilot(Character* character);
+		void removePilot(Character* character);
 		
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 		
 		virtual void reset();
 		
-		boost::shared_ptr<Character> getFleetBooster();
-		boost::shared_ptr<Character> getWingBooster();
-		boost::shared_ptr<Character> getSquadBooster();
-		void setFleetBooster(const boost::shared_ptr<Character>& fleetBooster);
-		void setWingBooster(const boost::shared_ptr<Character>& wingBooster);
-		void setSquadBooster(const boost::shared_ptr<Character>& squadBooster);
+		Character* getFleetBooster();
+		Character* getWingBooster();
+		Character* getSquadBooster();
+		void setFleetBooster(Character* fleetBooster);
+		void setWingBooster(Character* wingBooster);
+		void setSquadBooster(Character* squadBooster);
 		void removeFleetBooster();
 		void removeWingBooster();
 		void removeSquadBooster();
@@ -38,9 +38,9 @@ namespace eufe {
 		
 	private:
 		CharactersList pilots_;
-		boost::shared_ptr<Character> fleetBooster_;
-		boost::shared_ptr<Character> wingBooster_;
-		boost::shared_ptr<Character> squadBooster_;
+		Character* fleetBooster_;
+		Character* wingBooster_;
+		Character* squadBooster_;
 	};
 
 }

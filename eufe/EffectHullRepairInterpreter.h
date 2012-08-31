@@ -8,8 +8,8 @@ namespace eufe {
 	public:
 		EffectHullRepairInterpreter(Engine* engine, bool isProjected, bool isAssistance, bool isOffensive);
 		virtual ~EffectHullRepairInterpreter();
-		virtual bool addEffect(Environment* environment);
-		virtual bool removeEffect(Environment* environment);
+		virtual bool addEffect(const Environment& environment);
+		virtual bool removeEffect(const Environment& environment);
 		virtual EffectInterpreter* clone() const;
 	private:
 		Engine* engine_;

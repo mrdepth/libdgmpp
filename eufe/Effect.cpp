@@ -72,33 +72,33 @@ Effect::Effect(Engine* engine, int effectID, Category category, const void* byte
 #endif
 {
 	if (effectID == LEECH_EFFECT_ID)
-		interpreter_.reset(new EffectLeechInterpreter(engine, isAssistance, isOffensive));
+		interpreter_ = new EffectLeechInterpreter(engine, isAssistance, isOffensive);
 	else if (effectID == ENERGY_DESTABILIZATION_NEW_EFFECT_ID)
-		interpreter_.reset(new EffectEnergyDestabilizationNewInterpreter(engine, isAssistance, isOffensive));
+		interpreter_ = new EffectEnergyDestabilizationNewInterpreter(engine, isAssistance, isOffensive);
 	else if (effectID == ENERGY_TRANSFER_EFFECT_ID)
-		interpreter_.reset(new EffectEnergyTransferInterpreter(engine, isAssistance, isOffensive));
+		interpreter_ = new EffectEnergyTransferInterpreter(engine, isAssistance, isOffensive);
 	else if (effectID == ARMOR_REPAIR_EFFECT_ID)
-		interpreter_.reset(new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive));
+		interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
 	else if (effectID == TARGET_ARMOR_REPAIR_EFFECT_ID)
-		interpreter_.reset(new EffectArmorRepairInterpreter(engine, true, isAssistance, isOffensive));
+		interpreter_ = new EffectArmorRepairInterpreter(engine, true, isAssistance, isOffensive);
 	else if (effectID == STRUCTURE_REPAIR_EFFECT_ID)
-		interpreter_.reset(new EffectHullRepairInterpreter(engine, false, isAssistance, isOffensive));
+		interpreter_ = new EffectHullRepairInterpreter(engine, false, isAssistance, isOffensive);
 	else if (effectID == REMOTE_HULL_REPAIR_EFFECT_ID)
-		interpreter_.reset(new EffectHullRepairInterpreter(engine, true, isAssistance, isOffensive));
+		interpreter_ = new EffectHullRepairInterpreter(engine, true, isAssistance, isOffensive);
 	else if (effectID == SHIELD_BOOSTING_EFFECT_ID)
-		interpreter_.reset(new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive));
+		interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
 	else if (effectID == SHIELD_TRANSFER_EFFECT_ID)
-		interpreter_.reset(new EffectShieldBoostingInterpreter(engine, true, isAssistance, isOffensive));
+		interpreter_ = new EffectShieldBoostingInterpreter(engine, true, isAssistance, isOffensive);
 	else if (effectID == SLOT_MODIFIER_EFFECT_ID)
-		interpreter_.reset(new EffectSlotModifierInterpreter(engine, isAssistance, isOffensive));
+		interpreter_ = new EffectSlotModifierInterpreter(engine, isAssistance, isOffensive);
 	else if (effectID == HARD_POINT_MODIFIER_EFFECT_EFFECT_ID)
-		interpreter_.reset(new EffectHardPointModifierEffectInterpreter(engine, isAssistance, isOffensive));
+		interpreter_ = new EffectHardPointModifierEffectInterpreter(engine, isAssistance, isOffensive);
 	else if (effectID == ADAPTIVE_ARMOR_HARDENER_EFFECT_ID)
-		interpreter_.reset(new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive));
+		interpreter_ = new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive);
 	else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
-		interpreter_.reset(new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive));
+		interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
 	else
-		interpreter_.reset(new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive));
+		interpreter_ = new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive);
 #if _DEBUG
 	std::string::iterator i, end = effectName_.end();
 	for (i = effectName_.begin(); i != end; i++)
@@ -121,12 +121,12 @@ Effect::~Effect(void)
 {
 }
 
-bool Effect::addEffect(Environment* environment)
+bool Effect::addEffect(Environment environment)
 {
 	return interpreter_->addEffect(environment);
 }
 
-bool Effect::removeEffect(Environment* environment)
+bool Effect::removeEffect(Environment environment)
 {
 	return interpreter_->removeEffect(environment);
 }
