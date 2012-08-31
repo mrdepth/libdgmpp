@@ -63,6 +63,24 @@
 		121E07E71578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectHardPointModifierEffectInterpreter.h; sourceTree = "<group>"; };
 		121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectAdaptiveArmorHardener.cpp; sourceTree = "<group>"; };
 		121E07EB1578C193000D1480 /* EffectAdaptiveArmorHardener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectAdaptiveArmorHardener.h; sourceTree = "<group>"; };
+		1220F1A715F0F6BB00DF4A62 /* Effect.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Effect.i; sourceTree = "<group>"; };
+		1220F1AD15F0F79A00DF4A62 /* Character.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Character.i; sourceTree = "<group>"; };
+		1220F1AF15F0F80F00DF4A62 /* Skill.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Skill.i; sourceTree = "<group>"; };
+		1220F1B015F0F83300DF4A62 /* Booster.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Booster.i; sourceTree = "<group>"; };
+		1220F1B115F0F83B00DF4A62 /* Implant.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Implant.i; sourceTree = "<group>"; };
+		1220F1B315F0F88F00DF4A62 /* Ship.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Ship.i; sourceTree = "<group>"; };
+		1220F1B515F0F91E00DF4A62 /* Module.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Module.i; sourceTree = "<group>"; };
+		1220F1B715F0F95E00DF4A62 /* Drone.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Drone.i; sourceTree = "<group>"; };
+		1220F1BA15F0F9A600DF4A62 /* DamagePattern.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = DamagePattern.i; sourceTree = "<group>"; };
+		1220F1BB15F0F9D900DF4A62 /* ControlTower.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = ControlTower.i; sourceTree = "<group>"; };
+		1220F1BD15F0FA0900DF4A62 /* Structure.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Structure.i; sourceTree = "<group>"; };
+		1263B87E15F0EE13003C10EB /* Engine.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Engine.i; sourceTree = "<group>"; };
+		1263B87F15F0EE13003C10EB /* eufe.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = eufe.i; sourceTree = "<group>"; };
+		1263B88015F0EE89003C10EB /* Area.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Area.i; sourceTree = "<group>"; };
+		1263B88215F0EEC2003C10EB /* Item.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Item.i; sourceTree = "<group>"; };
+		1263B88415F0EF68003C10EB /* types.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = types.i; sourceTree = "<group>"; };
+		1263B88615F0F5E1003C10EB /* Attribute.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Attribute.i; sourceTree = "<group>"; };
+		1263B88815F0F625003C10EB /* Gang.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Gang.i; sourceTree = "<group>"; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3708AE3B14892DCC005492F5 /* Charge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
@@ -147,9 +165,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1263B87D15F0EE11003C10EB /* swig */ = {
+			isa = PBXGroup;
+			children = (
+				1263B87F15F0EE13003C10EB /* eufe.i */,
+				1263B87E15F0EE13003C10EB /* Engine.i */,
+				1263B88415F0EF68003C10EB /* types.i */,
+				1263B88215F0EEC2003C10EB /* Item.i */,
+				1263B88615F0F5E1003C10EB /* Attribute.i */,
+				1263B88015F0EE89003C10EB /* Area.i */,
+				1263B88815F0F625003C10EB /* Gang.i */,
+				1220F1A715F0F6BB00DF4A62 /* Effect.i */,
+				1220F1AD15F0F79A00DF4A62 /* Character.i */,
+				1220F1AF15F0F80F00DF4A62 /* Skill.i */,
+				1220F1B015F0F83300DF4A62 /* Booster.i */,
+				1220F1B115F0F83B00DF4A62 /* Implant.i */,
+				1220F1B315F0F88F00DF4A62 /* Ship.i */,
+				1220F1B515F0F91E00DF4A62 /* Module.i */,
+				1220F1B715F0F95E00DF4A62 /* Drone.i */,
+				1220F1BA15F0F9A600DF4A62 /* DamagePattern.i */,
+				1220F1BB15F0F9D900DF4A62 /* ControlTower.i */,
+				1220F1BD15F0FA0900DF4A62 /* Structure.i */,
+			);
+			path = swig;
+			sourceTree = "<group>";
+		};
 		37AAD066149A33B5004BDA18 /* eufe */ = {
 			isa = PBXGroup;
 			children = (
+				1263B87D15F0EE11003C10EB /* swig */,
 				37C1C43114755128002AC3E7 /* ThirdParty */,
 				37C1C42C14755105002AC3E7 /* Compiler */,
 				37D72CC91497A03E00B13A9D /* Effects */,
