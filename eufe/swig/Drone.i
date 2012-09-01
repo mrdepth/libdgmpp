@@ -6,7 +6,7 @@ namespace eufe {
 	class Drone : public Item
 	{
 	public:
-		void setTarget(Ship* target = nullptr);
+		void setTarget(Ship* target = NULL);
 		void clearTarget();
 		Ship* getTarget();
 		

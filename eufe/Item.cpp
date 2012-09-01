@@ -82,11 +82,11 @@ private:
 };
 
 
-Item::Item(void) : owner_(nullptr), typeID_(0), context_(nullptr), engine_(nullptr)
+Item::Item(void) : owner_(NULL), typeID_(0), context_(NULL), engine_(NULL)
 {
 }
 
-Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), context_(nullptr)
+Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), context_(NULL)
 {
 	if (typeID == 0)
 		return;
@@ -100,8 +100,8 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID;
 #endif
 
-	sqlite3_stmt* stmt = nullptr;
-	sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr);
+	sqlite3_stmt* stmt = NULL;
+	sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
 	int result = sqlite3_step(stmt);
 	
 	if (result == SQLITE_ROW)
@@ -138,8 +138,8 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 		sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
 			<< typeID;
 #endif
-		stmt = nullptr;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr);
+		stmt = NULL;
+		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
 		while (sqlite3_step(stmt) == SQLITE_ROW)
 		{
 			TypeID attributeID = static_cast<TypeID>(sqlite3_column_int(stmt, 0));
@@ -162,8 +162,8 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 #else
 		sql << "SELECT dgmCompiledEffects.effectID, dgmCompiledEffects.effectCategory, dgmCompiledEffects.isAssistance, dgmCompiledEffects.isOffensive, byteCode FROM dgmCompiledEffects INNER JOIN dgmTypeEffects ON dgmCompiledEffects.effectID = dgmTypeEffects.effectID WHERE dgmTypeEffects.typeID = " << typeID;
 #endif		
-		stmt = nullptr;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr);
+		stmt = NULL;
+		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
 		while (sqlite3_step(stmt) == SQLITE_ROW)
 		{
 			TypeID effectID = static_cast<TypeID>(sqlite3_column_int(stmt, 0));
@@ -189,17 +189,18 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 	}
 }
 
-Item::Item(Item* owner) : owner_(owner), context_(nullptr), engine_(nullptr)
+Item::Item(Item* owner) : owner_(owner), context_(NULL), engine_(NULL)
 {
 }
 
-Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(nullptr), effects_(from.effects_), context_(nullptr)
+Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(NULL), effects_(from.effects_), context_(NULL)
 {
-	for (auto i: from.attributes_)
+	AttributesMap::iterator i, end = attributes_.end();
+	for (i = attributes_.begin(); i!= end; i++)
 	{
-		Attribute* attribute = new Attribute(*(i.second));
+		Attribute* attribute = new Attribute(*(i->second));
 		attribute->setOwner(this);
-		attributes_[i.first] = attribute;
+		attributes_[i->first] = attribute;
 	}
 	
 #if _DEBUG
@@ -209,22 +210,20 @@ Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), gro
 
 Item::~Item(void)
 {
-	for (auto i: attributes_)
-		delete i.second;
+	AttributesMap::iterator i, end = attributes_.end();
+	for (i = attributes_.begin(); i!= end; i++)
+		delete i->second;
 	attributes_.clear();
 	
-	for (ModifiersList& list : {
-		std::ref(itemModifiers_),
-		std::ref(locationModifiers_),
-		std::ref(locationGroupModifiers_),
-		std::ref(locationRequiredSkillModifiers_)}) {
-			for (auto i: list)
-				delete i;
-			list.clear();
-			
+	ModifiersList* lists[] = {&itemModifiers_, &locationModifiers_, &locationGroupModifiers_, &locationRequiredSkillModifiers_};
+	for (int i = 0; i < 4; i++) {
+		ModifiersList& list = *lists[i];
+		ModifiersList::iterator j, endj = list.end();
+		for (j = list.begin(); j != endj; j++)
+			delete *j;
+		list.clear();
 	}
-	
-	setContext(nullptr);
+	setContext(NULL);
 }
 
 void Item::setContext(const Context* context)
@@ -282,9 +281,10 @@ bool Item::hasAttribute(TypeID attributeID)
 
 Effect* Item::getEffect(TypeID effectID)
 {
-	for (auto i: effects_)
-		if (i->getEffectID() == effectID)
-			return i;
+	EffectsList::iterator i, end = effects_.end();
+	for (i = effects_.begin(); i != end; i++)
+		if ((*i)->getEffectID() == effectID)
+			return *i;
 	throw EffectDidNotFoundException() << TypeIDExceptionInfo(effectID);
 }
 
@@ -308,8 +308,9 @@ bool Item::requireSkill(TypeID skillID)
 
 bool Item::hasEffect(TypeID effectID)
 {
-	for (auto i: effects_)
-		if (i->getEffectID() == effectID)
+	EffectsList::iterator i, end = effects_.end();
+	for (i = effects_.begin(); i != end; i++)
+		if ((*i)->getEffectID() == effectID)
 			return true;
 	return false;
 }
@@ -332,23 +333,26 @@ TypeID Item::getCategoryID() const
 void Item::addEffects(Effect::Category category)
 {
 	Environment environment = getEnvironment();
-	for (auto i: effects_)
-		if (i->getCategory() == category)
-			i->addEffect(environment);
+	EffectsList::iterator i, end = effects_.end();
+	for (i = effects_.begin(); i != end; i++)
+		if ((*i)->getCategory() == category)
+			(*i)->addEffect(environment);
 }
 
 void Item::removeEffects(Effect::Category category)
 {
 	Environment environment = getEnvironment();
-	for (auto i: effects_)
-		if (i->getCategory() == category)
-			i->removeEffect(environment);
+	EffectsList::iterator i, end = effects_.end();
+	for (i = effects_.begin(); i != end; i++)
+		if ((*i)->getCategory() == category)
+			(*i)->removeEffect(environment);
 }
 
 void Item::reset()
 {
-	for (auto i: attributes_)
-		i.second->reset();
+	AttributesMap::iterator i, end = attributes_.end();
+	for (i = attributes_.begin(); i != end; i++)
+		i->second->reset();
 }
 
 std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)

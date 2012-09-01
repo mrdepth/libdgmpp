@@ -14,7 +14,7 @@ using namespace eufe;
 
 static const float SHIELD_PEAK_RECHARGE = sqrt(0.25);
 
-ControlTower::ControlTower(Engine* engine, TypeID typeID) : Item(engine, typeID, nullptr)
+ControlTower::ControlTower(Engine* engine, TypeID typeID) : Item(engine, typeID, NULL)
 {
 	reset();
 }
@@ -39,7 +39,7 @@ Structure* ControlTower::addStructure(Structure* structure)
 		return structure;
 	}
 	else
-		return nullptr;
+		return NULL;
 }
 
 Structure* ControlTower::addStructure(TypeID typeID)
@@ -87,8 +87,9 @@ void ControlTower::reset()
 {
 	Item::reset();
 	
-	for (auto i: structures_)
-		i->reset();
+	StructuresList::iterator i, end = structures_.end();
+	for (i = structures_.begin(); i != end; i++)
+		(*i)->reset();
 	
 	resistances_.armor.em = resistances_.armor.explosive = resistances_.armor.thermal = resistances_.armor.kinetic = -1;
 	resistances_.hull = resistances_.shield = resistances_.armor;
@@ -111,8 +112,9 @@ void ControlTower::addEffects(Effect::Category category)
 	Item::addEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (auto i: structures_)
-			i->addEffects(Effect::CATEGORY_GENERIC);
+		StructuresList::iterator i, end = structures_.end();
+		for (i = structures_.begin(); i != end; i++)
+			(*i)->addEffects(Effect::CATEGORY_GENERIC);
 //		boost::shared_ptr<Area> area = engine_->getArea();
 //		if (area != NULL)
 //			area->addEffectsToShip(this);
@@ -124,8 +126,9 @@ void ControlTower::removeEffects(Effect::Category category)
 	Item::removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (auto i: structures_)
-			i->removeEffects(Effect::CATEGORY_GENERIC);
+		StructuresList::iterator i, end = structures_.end();
+		for (i = structures_.begin(); i != end; i++)
+			(*i)->removeEffects(Effect::CATEGORY_GENERIC);
 //		boost::shared_ptr<Area> area = engine_->getArea();
 //		if (area != NULL)
 //			area->removeEffectsFromShip(this);
@@ -150,10 +153,11 @@ float ControlTower::getPowerGridUsed()
 	if (powerGridUsed_ < 0)
 	{
 		powerGridUsed_ = 0;
-		for (auto i: structures_)
+		StructuresList::iterator i, end = structures_.end();
+		for (i = structures_.begin(); i != end; i++)
 		{
-			if (i->getState() >= Module::STATE_ONLINE)
-				powerGridUsed_ += i->getAttribute(POWER_ATTRIBUTE_ID)->getValue();
+			if ((*i)->getState() >= Module::STATE_ONLINE)
+				powerGridUsed_ += (*i)->getAttribute(POWER_ATTRIBUTE_ID)->getValue();
 		}
 	}
 	return powerGridUsed_;
@@ -169,10 +173,11 @@ float ControlTower::getCpuUsed()
 	if (cpuUsed_ < 0)
 	{
 		cpuUsed_ = 0;
-		for (auto i: structures_)
+		StructuresList::iterator i, end = structures_.end();
+		for (i = structures_.begin(); i != end; i++)
 		{
-			if (i->getState() >= Module::STATE_ONLINE)
-				cpuUsed_ += i->getAttribute(CPU_ATTRIBUTE_ID)->getValue();
+			if ((*i)->getState() >= Module::STATE_ONLINE)
+				cpuUsed_ += (*i)->getAttribute(CPU_ATTRIBUTE_ID)->getValue();
 		}
 	}
 	return cpuUsed_;
@@ -274,10 +279,11 @@ float ControlTower::getWeaponVolley()
 void ControlTower::calculateDamageStats()
 {
 	weaponDps_ = weaponVolley_ = 0;
-	for (auto i: structures_)
+	StructuresList::iterator i, end = structures_.end();
+	for (i = structures_.begin(); i != end; i++)
 	{
-		weaponDps_ += i->getDps();
-		weaponVolley_ += i->getVolley();
+		weaponDps_ += (*i)->getDps();
+		weaponVolley_ += (*i)->getVolley();
 	}
 }
 

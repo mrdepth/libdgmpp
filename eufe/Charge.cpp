@@ -20,9 +20,9 @@ Environment Charge::getEnvironment()
 	environment["Self"] = this;
 
 	Item* module = getOwner();
-	Item* ship = module ? module->getOwner() : nullptr;
-	Item* character = ship ? ship->getOwner() : nullptr;
-	Item* gang = character ? character->getOwner() : nullptr;
+	Item* ship = module ? module->getOwner() : NULL;
+	Item* character = ship ? ship->getOwner() : NULL;
+	Item* gang = character ? character->getOwner() : NULL;
 	
 	if (character)
 		environment["Char"] = character;

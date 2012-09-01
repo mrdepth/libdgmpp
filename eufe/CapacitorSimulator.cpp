@@ -27,8 +27,9 @@ CapacitorSimulator::CapacitorSimulator(Ship* ship, bool reload, int maxTime) : s
 
 CapacitorSimulator::~CapacitorSimulator(void)
 {
-	for (auto i: states_)
-		delete i;
+	StatesVector::iterator i, end = states_.end();
+	for (i = states_.begin(); i != end; i++)
+		delete *i;
 	states_.clear();
 }
 
@@ -118,8 +119,9 @@ float CapacitorSimulator::getCapRecharge()
 void CapacitorSimulator::internalReset()
 {
 	{
-		for (auto i: states_)
-			delete i;
+		StatesVector::iterator i, end = states_.end();
+		for (i = states_.begin(); i != end; i++)
+			delete *i;
 		states_.clear();
 	}
 	
@@ -134,24 +136,34 @@ void CapacitorSimulator::internalReset()
 	std::list<Module*> drains;
 	std::list<Drone*> drainDrones;
 	{
-		for (auto i: ship_->getModules())
 		{
-			if (i->getState() >= Module::STATE_ACTIVE)
-				drains.push_back(i);
+			const ModulesList& modules = ship_->getModules();
+			ModulesList::const_iterator i, end = modules.end();
+			for (i = modules.begin(); i != end; i++)
+			{
+				if ((*i)->getState() >= Module::STATE_ACTIVE)
+					drains.push_back(*i);
+			}
 		}
 		
-		for (auto i: ship_->getProjectedModules())
 		{
-			if (i->getState() >= Module::STATE_ACTIVE)
-				drains.push_back(i);
+			const ModulesList& projectedModules = ship_->getProjectedModules();
+			ModulesList::const_iterator i, end = projectedModules.end();
+			for (i = projectedModules.begin(); i != end; i++)
+			{
+				if ((*i)->getState() >= Module::STATE_ACTIVE)
+					drains.push_back(*i);
+			}
 		}
 
 		if (!isDisallowedOffensiveModifiers)
 		{
-			for (auto i: ship_->getProjectedDrones())
+			const DronesList& projectedDrones = ship_->getProjectedDrones();
+			DronesList::const_iterator i, end = projectedDrones.end();
+			for (i = projectedDrones.begin(); i != end; i++)
 			{
-				if (i->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
-					drainDrones.push_back(i);
+				if ((*i)->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
+					drainDrones.push_back((*i));
 			}
 		}
 	}
@@ -163,8 +175,10 @@ void CapacitorSimulator::internalReset()
 	
 	bool disablePeriod = false;
 	
-	for (auto module: drains)
+	ModulesList::iterator i, end = drains.end();
+	for (i = drains.begin(); i != end; i++)
 	{
+		Module* module = *i;
 		bool projected = module->getOwner() != ship_;
 		int duration = static_cast<int>(module->getCycleTime());
 		int clipSize = module->getShots();
@@ -214,8 +228,10 @@ void CapacitorSimulator::internalReset()
 		std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
 	}
 	
-	for (auto drone: drainDrones)
+	DronesList::iterator j, endj = drainDrones.end();
+	for (j = drainDrones.begin(); j != endj; j++)
 	{
+		Drone* drone = *j;
 		int duration = static_cast<int>(drone->getCycleTime());
 		float capNeed = capNeed = drone->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue();
 		capUsed_ += static_cast<float>(capNeed / (duration / 1000.0));
@@ -307,8 +323,9 @@ void CapacitorSimulator::run()
 		
 		float avgDrain = 0;
 		
-		for (auto i: states_)
-			avgDrain += i->capNeed / i->duration;
+		StatesVector::iterator i, end = states_.end();
+		for (i = states_.begin(); i != end; i++)
+			avgDrain += (*i)->capNeed / (*i)->duration;
 		
 		float a = - (2.0 * avgDrain * tau - capacitorCapacity_) / capacitorCapacity_;
 		if (a < 0.0)

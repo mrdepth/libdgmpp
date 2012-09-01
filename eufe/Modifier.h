@@ -22,7 +22,7 @@ namespace eufe {
 			ASSOCIATION_SUB_RATE
 		};
 
-		Modifier(TypeID attributeID, Association association, Attribute* modifier, bool isAssistance, bool isOffensive, Character* character = nullptr);
+		Modifier(TypeID attributeID, Association association, Attribute* modifier, bool isAssistance, bool isOffensive, Character* character = NULL);
 		virtual ~Modifier(void);
 		virtual bool isMatch(Item* item) const {return true;}
 		TypeID getAttributeID() const {return attributeID_;}

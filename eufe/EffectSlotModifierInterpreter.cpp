@@ -17,10 +17,10 @@ EffectSlotModifierInterpreter::~EffectSlotModifierInterpreter(void)
 
 bool EffectSlotModifierInterpreter::addEffect(const Environment& environment)
 {
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto Ship = environment.find("Ship");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator Ship = environment.find("Ship");
+	Environment::const_iterator end = environment.end();
 	if (Ship != end && Self != end && Char != end) {
 		Modifier* modifierHiSlot = new Modifier(HI_SLOTS_ATTRIBUTE_ID,
 												Modifier::ASSOCIATION_MOD_ADD,
@@ -52,10 +52,10 @@ bool EffectSlotModifierInterpreter::addEffect(const Environment& environment)
 
 bool EffectSlotModifierInterpreter::removeEffect(const Environment& environment)
 {
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto Ship = environment.find("Ship");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator Ship = environment.find("Ship");
+	Environment::const_iterator end = environment.end();
 	if (Ship != end && Self != end && Char != end) {
 		Modifier* modifierHiSlot = new Modifier(HI_SLOTS_ATTRIBUTE_ID,
 												Modifier::ASSOCIATION_MOD_ADD,

@@ -17,10 +17,10 @@ EffectEnergyTransferInterpreter::~EffectEnergyTransferInterpreter(void)
 
 bool EffectEnergyTransferInterpreter::addEffect(const Environment& environment)
 {
-	auto Target = environment.find("Target");
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Target = environment.find("Target");
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
 		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
 										  Modifier::ASSOCIATION_ADD_RATE,
@@ -35,10 +35,10 @@ bool EffectEnergyTransferInterpreter::addEffect(const Environment& environment)
 
 bool EffectEnergyTransferInterpreter::removeEffect(const Environment& environment)
 {
-	auto Target = environment.find("Target");
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Target = environment.find("Target");
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
 		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
 										  Modifier::ASSOCIATION_ADD_RATE,

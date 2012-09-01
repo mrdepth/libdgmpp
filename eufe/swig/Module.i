@@ -48,7 +48,7 @@ namespace eufe {
 		void removeCharge();
 		bool canFit(Charge* charge);
 		bool requireTarget();
-		void setTarget(Ship* target = nullptr);
+		void setTarget(Ship* target = NULL);
 		void clearTarget();
 		Ship* getTarget();
 		float getReloadTime();

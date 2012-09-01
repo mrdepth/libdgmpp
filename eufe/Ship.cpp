@@ -50,22 +50,30 @@ Ship::~Ship(void)
 {
 	if (projectedModules_.size() > 0)
 	{
-		std::list<Module*> projectedModulesCopy = projectedModules_;
-		for (auto i: projectedModulesCopy)
-			i->clearTarget();
+		ModulesList projectedModulesCopy = projectedModules_;
+		ModulesList::iterator i, end = projectedModulesCopy.end();
+		for (i = projectedModulesCopy.begin(); i != end; i++)
+			(*i)->clearTarget();
 	}
 	if (projectedDrones_.size() > 0)
 	{
-		std::list<Drone*> projectedDronesCopy = projectedDrones_;
-		for (auto i: projectedDronesCopy)
-			i->clearTarget();
+		DronesList projectedDronesCopy = projectedDrones_;
+		DronesList::iterator i, end = projectedDronesCopy.end();
+		for (i = projectedDronesCopy.begin(); i != end; i++)
+			(*i)->clearTarget();
 	}
 
-	for (auto i: modules_)
-		delete i;
+	{
+		ModulesList::iterator i, end = modules_.end();
+		for (i = modules_.begin(); i != end; i++)
+			delete *i;
+	}
 	
-	for (auto i: drones_)
-		delete i;
+	{
+		DronesList::iterator i, end = drones_.end();
+		for (i = drones_.begin(); i != end; i++)
+			delete *i;
+	}
 }
 
 Module* Ship::addModule(Module* module)
@@ -85,7 +93,7 @@ Module* Ship::addModule(Module* module)
 	}
 	else {
 		delete module;
-		return nullptr;
+		return NULL;
 	}
 }
 
@@ -140,9 +148,10 @@ const ModulesList& Ship::getModules()
 
 void Ship::getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator)
 {
-	for (auto i: modules_)
-		if (i->getSlot() == slot)
-			*outIterator++ = i;
+	ModulesList::iterator i, end = modules_.end();
+	for (i = modules_.begin(); i != end; i++)
+		if ((*i)->getSlot() == slot)
+			*outIterator++ = *i;
 }
 
 const DronesList& Ship::getDrones()
@@ -194,8 +203,9 @@ bool Ship::canFit(Module* module)
 		case Module::SLOT_SUBSYSTEM:
 		{
 			int subsystemSlot = static_cast<int>(module->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue());
-			for (auto i: modules_)
-				if (i->getSlot() == Module::SLOT_SUBSYSTEM && static_cast<int>(i->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue()) == subsystemSlot)
+			ModulesList::iterator i, end = modules_.end();
+			for (i = modules_.begin(); i != end; i++)
+				if ((*i)->getSlot() == Module::SLOT_SUBSYSTEM && static_cast<int>((*i)->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue()) == subsystemSlot)
 					return false;
 			break;
 		}
@@ -213,8 +223,9 @@ bool Ship::canFit(Module* module)
 	{
 		int maxGroupFitted = static_cast<int>(module->getAttribute(MAX_GROUP_FITTED_ATTRIBUTE_ID)->getValue()) - 1;
 		TypeID groupID = module->getGroupID();
-		for (auto i: modules_)
-			if (i->getGroupID() == groupID)
+		ModulesList::iterator i, end = modules_.end();
+		for (i = modules_.begin(); i != end; i++)
+			if ((*i)->getGroupID() == groupID)
 			{
 				maxGroupFitted--;
 				if (maxGroupFitted < 0)
@@ -234,13 +245,14 @@ bool Ship::isDisallowedAssistance()
 		else
 		{
 			disallowAssistance_ = ALLOWED;
-			for (auto i: modules_)
+			ModulesList::iterator i, end = modules_.end();
+			for (i = modules_.begin(); i != end; i++)
 			{
-				if (i->getState() >= Module::STATE_ACTIVE &&
-					i->hasAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID) &&
-					i->getAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID)->getValue() != 0)
+				if ((*i)->getState() >= Module::STATE_ACTIVE &&
+					(*i)->hasAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID) &&
+					(*i)->getAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID)->getValue() != 0)
 				{
-					if (i->getGroupID() == WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID && i->getCharge())
+					if ((*i)->getGroupID() == WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID && (*i)->getCharge())
 						continue;
 					disallowAssistance_ = DISALLOWED;
 					break;
@@ -260,11 +272,12 @@ bool Ship::isDisallowedOffensiveModifiers()
 		else
 		{
 			disallowOffensiveModifiers_ = ALLOWED;
-			for (auto i: modules_)
+			ModulesList::iterator i, end = modules_.end();
+			for (i = modules_.begin(); i != end; i++)
 			{
-				if (i->getState() >= Module::STATE_ACTIVE &&
-					i->hasAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID) &&
-					i->getAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID)->getValue() != 0)
+				if ((*i)->getState() >= Module::STATE_ACTIVE &&
+					(*i)->hasAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID) &&
+					(*i)->getAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID)->getValue() != 0)
 				{
 					disallowOffensiveModifiers_ = DISALLOWED;
 					break;
@@ -281,7 +294,7 @@ Environment Ship::getEnvironment()
 	environment["Self"] = this;
 	environment["Ship"] = this;
 	Item* character = getOwner();
-	Item* gang = character ? character->getOwner() : nullptr;
+	Item* gang = character ? character->getOwner() : NULL;
 	
 	if (character)
 		environment["Char"] = character;
@@ -296,11 +309,17 @@ void Ship::reset()
 {
 	Item::reset();
 	
-	for (auto i: modules_)
-		i->reset();
+	{
+		ModulesList::iterator i, end = modules_.end();
+		for (i = modules_.begin(); i != end; i++)
+			(*i)->reset();
+	}
 	
-	for (auto i: drones_)
-		i->reset();
+	{
+		DronesList::iterator i, end = drones_.end();
+		for (i = drones_.begin(); i != end; i++)
+			(*i)->reset();
+	}
 	
 	capacitorSimulator_.reset();
 	heatSimulator_.reset();
@@ -325,11 +344,17 @@ void Ship::addEffects(Effect::Category category)
 	Item::addEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (auto i: modules_)
-			i->addEffects(Effect::CATEGORY_GENERIC);
+		{
+			ModulesList::iterator i, end = modules_.end();
+			for (i = modules_.begin(); i != end; i++)
+				(*i)->addEffects(Effect::CATEGORY_GENERIC);
+		}
 		
-		for (auto i: drones_)
-			i->addEffects(Effect::CATEGORY_GENERIC);
+		{
+			DronesList::iterator i, end = drones_.end();
+			for (i = drones_.begin(); i != end; i++)
+				(*i)->addEffects(Effect::CATEGORY_GENERIC);
+		}
 
 		Area* area = engine_->getArea();
 		if (area)
@@ -342,11 +367,18 @@ void Ship::removeEffects(Effect::Category category)
 	Item::removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (auto i: modules_)
-			i->removeEffects(Effect::CATEGORY_GENERIC);
+		{
+			ModulesList::iterator i, end = modules_.end();
+			for (i = modules_.begin(); i != end; i++)
+				(*i)->removeEffects(Effect::CATEGORY_GENERIC);
+		}
+		
+		{
+			DronesList::iterator i, end = drones_.end();
+			for (i = drones_.begin(); i != end; i++)
+				(*i)->removeEffects(Effect::CATEGORY_GENERIC);
+		}
 
-		for (auto i: drones_)
-			i->removeEffects(Effect::CATEGORY_GENERIC);
 
 		Area* area = engine_->getArea();
 		if (area)
@@ -449,8 +481,9 @@ int Ship::getFreeSlots(Module::Slot slot)
 int Ship::getUsedSlots(Module::Slot slot)
 {
 	int n = 0;
-	for (auto i: modules_)
-		if (i->getSlot() == slot)
+	ModulesList::iterator i, end = modules_.end();
+	for (i = modules_.begin(); i != end; i++)
+		if ((*i)->getSlot() == slot)
 			n++;
 	return n;
 }
@@ -476,8 +509,9 @@ int Ship::getFreeHardpoints(Module::Hardpoint hardpoint)
 int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 {
 	int n = 0;
-	for (auto i: modules_)
-		if (i->getHardpoint() == hardpoint)
+	ModulesList::iterator i, end = modules_.end();
+	for (i = modules_.begin(); i != end; i++)
+		if ((*i)->getHardpoint() == hardpoint)
 			n++;
 	return n;
 }
@@ -485,9 +519,10 @@ int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 float Ship::getCalibrationUsed()
 {
 	float calibration = 0;
-	for (auto i: modules_)
-		if (i->getSlot() == Module::SLOT_RIG)
-			calibration += i->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
+	ModulesList::iterator i, end = modules_.end();
+	for (i = modules_.begin(); i != end; i++)
+		if ((*i)->getSlot() == Module::SLOT_RIG)
+			calibration += (*i)->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
 	return calibration;
 }
 
@@ -519,9 +554,10 @@ float Ship::getTotalCpu()
 float Ship::getDroneBandwidthUsed()
 {
 	float bandwidth = 0;
-	for (auto i: drones_)
-		if (i->isActive())
-			bandwidth += i->getAttribute(DRONE_BANDWIDTH_USED_ATTRIBUTE_ID)->getValue();
+	DronesList::iterator i, end = drones_.end();
+	for (i = drones_.begin(); i != end; i++)
+		if ((*i)->isActive())
+			bandwidth += (*i)->getAttribute(DRONE_BANDWIDTH_USED_ATTRIBUTE_ID)->getValue();
 	return bandwidth;
 }
 
@@ -533,8 +569,9 @@ float Ship::getTotalDroneBandwidth()
 float Ship::getDroneBayUsed()
 {
 	float volume = 0;
-	for (auto i: drones_)
-		volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
+	DronesList::iterator i, end = drones_.end();
+	for (i = drones_.begin(); i != end; i++)
+		volume += (*i)->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
 
@@ -641,15 +678,16 @@ const Tank& Ship::getSustainableTank()
 			{
 				ModifiersList modifiers;
 				getModifiers(getAttribute(attributes[i]), std::inserter(modifiers, modifiers.begin()));
-				for (auto j: modifiers)
+				ModifiersList::iterator j, endj = modifiers.end();
+				for (j = modifiers.begin(); j != endj; j++)
 				{
-					Modifier::Association association = j->getAssociation();
+					Modifier::Association association = (*j)->getAssociation();
 					if (association == Modifier::ASSOCIATION_ADD_RATE || Modifier::ASSOCIATION_SUB_RATE)
 					{
-						Item* character = j->getCharacter();
+						Item* character = (*j)->getCharacter();
 						bool projected = character && character != currentCharacter;
 						
-						Item* item = j->getModifier()->getOwner();
+						Item* item = (*j)->getModifier()->getOwner();
 						if (!projected && item->getCategoryID() == MODULE_CATEGORY_ID)
 						{
 							Module* module = dynamic_cast<Module*>(item);
@@ -657,7 +695,7 @@ const Tank& Ship::getSustainableTank()
 							
 							Repairer* repairer = new Repairer;
 							repairer->type = types[i];
-							repairer->hpPerSec = j->getValue();
+							repairer->hpPerSec = (*j)->getValue();
 							repairer->capPerSec = module->getCapUse();
 							repairer->effectivity = repairer->hpPerSec / repairer->capPerSec;
 							*layers[i] -= repairer->hpPerSec;
@@ -671,8 +709,10 @@ const Tank& Ship::getSustainableTank()
 			
 			float totalPeakRecharge = getCapRecharge();
 
-			for (auto repairer: repairers)
+			std::list<Repairer*>::iterator j, endj = repairers.end();
+			for (j = repairers.begin(); j != endj; j++)
 			{
+				Repairer* repairer = *j;
 				if (capUsed > totalPeakRecharge)
 					break;
 
@@ -688,6 +728,7 @@ const Tank& Ship::getSustainableTank()
 						sustainableTank_.shieldRepair += amount;
 					capUsed += repairer->capPerSec;
 				}
+				delete repairer;
 			}
 		}
 	}
@@ -763,17 +804,22 @@ float Ship::getDroneVolley()
 void Ship::calculateDamageStats()
 {
 	weaponDps_ = weaponVolley_ = 0;
-	for (auto i: modules_)
 	{
-		weaponDps_ += i->getDps();
-		weaponVolley_ += i->getVolley();
+		ModulesList::iterator i, end = modules_.end();
+		for (i = modules_.begin(); i != end; i++)
+		{
+			weaponDps_ += (*i)->getDps();
+			weaponVolley_ += (*i)->getVolley();
+		}
 	}
 	
 	droneDps_ = droneVolley_ = 0;
-	for (auto i: drones_)
 	{
-		droneDps_ += i->getDps();
-		droneVolley_ += i->getVolley();
+		DronesList::iterator i, end = drones_.end();
+		for (i = drones_.begin(); i != end; i++) {
+			droneDps_ += (*i)->getDps();
+			droneVolley_ += (*i)->getVolley();
+		}
 	}
 }
 
@@ -889,8 +935,9 @@ int Ship::getMaxActiveDrones()
 int Ship::getActiveDrones()
 {
 	int n = 0;
-	for (auto i: drones_)
-		if (i->isActive())
+	DronesList::iterator i, end = drones_.end();
+	for (i = drones_.begin(); i != end; i++)
+		if ((*i)->isActive())
 			n++;
 	return n;
 }
@@ -900,11 +947,12 @@ int Ship::getActiveDrones()
 
 void Ship::updateActiveStatus()
 {
-	for (auto i: modules_)
+	ModulesList::iterator i, end = modules_.end();
+	for (i = modules_.begin(); i != end; i++)
 	{
-		Module::State state = i->getState();
-		if (state >= Module::STATE_ACTIVE && !i->canHaveState(state))
-			i->setState(Module::STATE_ONLINE);
+		Module::State state = (*i)->getState();
+		if (state >= Module::STATE_ACTIVE && !(*i)->canHaveState(state))
+			(*i)->setState(Module::STATE_ONLINE);
 	}
 }
 

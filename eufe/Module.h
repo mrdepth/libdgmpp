@@ -37,7 +37,7 @@ namespace eufe {
 		typedef boost::error_info<struct BadTargetExceptionInfoTag, Ship*> BadTargetExceptionInfo;
 		struct BadTargetException : virtual boost::exception {};
 
-		Module(Engine* engine, TypeID typeID, Item* owner = nullptr);
+		Module(Engine* engine, TypeID typeID, Item* owner = NULL);
 		Module(const Module& from);
 		virtual ~Module(void);
 
@@ -65,7 +65,7 @@ namespace eufe {
 		void removeCharge();
 		bool canFit(Charge* charge);
 		bool requireTarget();
-		void setTarget(Ship* target = nullptr);
+		void setTarget(Ship* target = NULL);
 		void clearTarget();
 		Ship* getTarget();
 		float getReloadTime();

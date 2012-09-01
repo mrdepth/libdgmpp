@@ -97,16 +97,17 @@ private:
 	bool highIsGood_;
 };
 
-Gang::Gang(Engine* engine) : Item(engine, 0, nullptr), fleetBooster_(nullptr), wingBooster_(nullptr), squadBooster_(nullptr)
+Gang::Gang(Engine* engine) : Item(engine, 0, NULL), fleetBooster_(NULL), wingBooster_(NULL), squadBooster_(NULL)
 {
 }
 
 Gang::~Gang(void)
 {
-	fleetBooster_ = wingBooster_ = squadBooster_ = nullptr;
+	fleetBooster_ = wingBooster_ = squadBooster_ = NULL;
 
-	for (auto i: pilots_)
-		delete i;
+	CharactersList::iterator i, end = pilots_.end();
+	for (i = pilots_.begin(); i != end; i++)
+		delete *i;
 
 //	CharactersList tmp = pilots_;
 	pilots_.clear();
@@ -157,8 +158,9 @@ void Gang::reset()
 {
 	Item::reset();
 	
-	for (auto i: pilots_)
-		i->reset();
+	CharactersList::iterator i, end = pilots_.end();
+	for (i = pilots_.begin(); i != end; i++)
+		(*i)->reset();
 }
 
 Character* Gang::getFleetBooster()
@@ -195,18 +197,18 @@ void Gang::setSquadBooster(Character* squadBooster)
 }
 
 void Gang::removeFleetBooster() {
-	fleetBooster_ = nullptr;
+	fleetBooster_ = NULL;
 	engine_->reset(this);
 }
 
 void Gang::removeWingBooster() {
-	wingBooster_ = nullptr;
+	wingBooster_ = NULL;
 	engine_->reset(this);
 	
 }
 
 void Gang::removeSquadBooster() {
-	squadBooster_ = nullptr;
+	squadBooster_ = NULL;
 	engine_->reset(this);
 	
 }

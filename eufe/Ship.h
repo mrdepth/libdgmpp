@@ -19,7 +19,7 @@ namespace eufe {
 			SCAN_TYPE_MULTISPECTRAL
 		};
 		
-		Ship(Engine* engine, TypeID typeID, Character* owner = nullptr);
+		Ship(Engine* engine, TypeID typeID, Character* owner = NULL);
 		virtual ~Ship(void);
 
 		Module* addModule(Module* module);

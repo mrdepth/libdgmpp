@@ -5,7 +5,7 @@
 
 using namespace eufe;
 
-Engine::Engine(const char* databasePath) : db_(nullptr), gang_(nullptr), area_(nullptr), controlTower_(nullptr)
+Engine::Engine(const char* databasePath) : db_(NULL), gang_(NULL), area_(NULL), controlTower_(NULL)
 {
 	int result = sqlite3_open(databasePath, &db_);
 	if (result != SQLITE_OK)
@@ -79,7 +79,7 @@ ControlTower* Engine::setControlTower(TypeID typeID)
 
 void Engine::clearArea()
 {
-	setArea(nullptr);
+	setArea((Area*)NULL);
 }
 
 Area* Engine::getArea()

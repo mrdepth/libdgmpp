@@ -17,10 +17,10 @@ EffectAdaptiveArmorHardener::~EffectAdaptiveArmorHardener(void)
 
 bool EffectAdaptiveArmorHardener::addEffect(const Environment& environment)
 {
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto Ship = environment.find("Ship");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator Ship = environment.find("Ship");
+	Environment::const_iterator end = environment.end();
 	if (Ship != end && Self != end && Char != end) {
 		Modifier* modifierEm = new Modifier(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID,
 											Modifier::ASSOCIATION_POST_MUL,
@@ -60,10 +60,10 @@ bool EffectAdaptiveArmorHardener::addEffect(const Environment& environment)
 
 bool EffectAdaptiveArmorHardener::removeEffect(const Environment& environment)
 {
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto Ship = environment.find("Ship");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator Ship = environment.find("Ship");
+	Environment::const_iterator end = environment.end();
 	if (Ship != end && Self != end && Char != end) {
 		Modifier* modifierEm = new Modifier(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID,
 											Modifier::ASSOCIATION_POST_MUL,

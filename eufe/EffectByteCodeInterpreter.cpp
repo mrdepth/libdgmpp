@@ -621,8 +621,8 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 		std::stringstream sql;
 		sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
 		
-		sqlite3_stmt* stmt = nullptr;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr);
+		sqlite3_stmt* stmt = NULL;
+		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
 		int result = sqlite3_step(stmt);
 		
 		if (result == SQLITE_ROW)
@@ -1343,12 +1343,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addItemModifier(const Enviro
 {
 	Item* item = attribute_->getItem()->getItem();
 
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 
@@ -1362,12 +1362,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(con
 	Item* item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
 
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 
@@ -1379,12 +1379,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(con
 bool EffectByteCodeInterpreter::AssociationWrapper::addLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 	
@@ -1397,12 +1397,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationRequiredSkillModi
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 	
@@ -1416,12 +1416,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifie
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
 	//	Attribute* attribute = item->getAttribute(attributeID).get();
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 	
@@ -1433,12 +1433,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifie
 bool EffectByteCodeInterpreter::AssociationWrapper::removeItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 	
@@ -1452,12 +1452,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 	
@@ -1470,12 +1470,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(
 bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
 	Item* item = attribute_->getItem()->getItem();
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 	
@@ -1489,12 +1489,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationRequiredSkillM
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 	
@@ -1508,12 +1508,12 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeOwnerRequiredSkillModi
 {
 	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	Attribute* attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = nullptr;
+	Character* character = NULL;
 	if (Char != end)
 		character = dynamic_cast<Character*>(Char->second);
 	

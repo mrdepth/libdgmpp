@@ -19,10 +19,10 @@ bool EffectShieldBoostingInterpreter::addEffect(const Environment& environment)
 {
 	const char* key = isProjected_ ? "Target" : "Ship";
 	
-	auto Target = environment.find(key);
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Target = environment.find(key);
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
 		Modifier* modifier = new Modifier(SHIELD_CHARGE_ATTRIBUTE_ID,
 										  Modifier::ASSOCIATION_ADD_RATE,
@@ -39,10 +39,10 @@ bool EffectShieldBoostingInterpreter::removeEffect(const Environment& environmen
 {
 	const char* key = isProjected_ ? "Target" : "Ship";
 	
-	auto Target = environment.find(key);
-	auto Self = environment.find("Self");
-	auto Char = environment.find("Char");
-	auto end = environment.end();
+	Environment::const_iterator Target = environment.find(key);
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
 		Modifier* modifier = new Modifier(SHIELD_CHARGE_ATTRIBUTE_ID,
 										  Modifier::ASSOCIATION_ADD_RATE,

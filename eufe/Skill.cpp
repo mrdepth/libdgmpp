@@ -46,8 +46,8 @@ Environment Skill::getEnvironment()
 	Environment environment;
 	environment["Self"] = this;
 	Character* character = dynamic_cast<Character*>(getOwner());
-	Item* ship = character ? character->getShip() : nullptr;
-	Item* gang = character ? character->getOwner() : nullptr;
+	Item* ship = character ? character->getShip() : NULL;
+	Item* gang = character ? character->getOwner() : NULL;
 	
 	if (character)
 		environment["Char"] = character;

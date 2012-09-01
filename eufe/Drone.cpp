@@ -8,7 +8,7 @@
 
 using namespace eufe;
 
-Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, owner), isActive_(true), target_(nullptr), charge_(nullptr)
+Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, owner), isActive_(true), target_(NULL), charge_(NULL)
 {
 	if (hasAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID))
 	{
@@ -19,7 +19,7 @@ Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, 
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
 
-Drone::Drone(const Drone& from) : Item(from), isActive_(from.isActive_), target_(nullptr), charge_(nullptr)
+Drone::Drone(const Drone& from) : Item(from), isActive_(from.isActive_), target_(NULL), charge_(NULL)
 {
 	if (from.charge_)
 	{
@@ -43,8 +43,8 @@ Environment Drone::getEnvironment()
 	Environment environment;
 	environment["Self"] = this;
 	Item* ship = getOwner();
-	Item* character = ship ? ship->getOwner() : nullptr;
-	Item* gang = character ? character->getOwner() : nullptr;
+	Item* character = ship ? ship->getOwner() : NULL;
+	Item* gang = character ? character->getOwner() : NULL;
 	
 	if (character)
 		environment["Char"] = character;
@@ -76,7 +76,7 @@ void Drone::setTarget(Ship* target)
 
 void Drone::clearTarget()
 {
-	setTarget(nullptr);
+	setTarget(NULL);
 }
 
 Ship* Drone::getTarget()

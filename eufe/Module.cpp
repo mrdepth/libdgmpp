@@ -13,7 +13,7 @@
 
 using namespace eufe;
 
-Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(nullptr), reloadTime_(0), forceReload_(false), charge_(nullptr)
+Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(NULL), reloadTime_(0), forceReload_(false), charge_(NULL)
 {
 	#if _DEBUG
 		attributes_[IS_ONLINE_ATTRIBUTE_ID] = new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this, "isOnline");
@@ -61,9 +61,11 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 	canBeOverloaded_ = false;
 	requireTarget_ = false;
 	int n = 0;
-	for (auto i: effects_)
+	
+	EffectsList::iterator i, end = effects_.end();
+	for (i = effects_.begin(); i != end; i++)
 	{
-		Effect::Category category = i->getCategory();
+		Effect::Category category = (*i)->getCategory();
 		if (category == Effect::CATEGORY_ACTIVE)
 		{
 			n++;
@@ -108,11 +110,11 @@ Module::Module(const Module& from) :	Item(from),
 										hardpoint_(from.hardpoint_),
 										state_(STATE_OFFLINE),
 										chargeGroups_(from.chargeGroups_),
-										target_(nullptr),
+										target_(NULL),
 										reloadTime_(from.reloadTime_),
 										shots_(from.shots_),
 										forceReload_(from.forceReload_),
-										charge_(nullptr)
+										charge_(NULL)
 {
 	if (from.charge_)
 	{
@@ -168,8 +170,10 @@ bool Module::canHaveState(State state)
 		{
 			int maxGroupActive = static_cast<int>(getAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID)->getValue()) - 1;
 			
-			for (auto i: ship->getModules())
-				if (i != this && i->getState() >= Module::STATE_ACTIVE && i->getGroupID() == groupID_)
+			const ModulesList& modules = ship->getModules();
+			ModulesList::const_iterator i, end = modules.end();
+			for (i = modules.begin(); i != end; i++)
+				if (*i != this && (*i)->getState() >= Module::STATE_ACTIVE && (*i)->getGroupID() == groupID_)
 					maxGroupActive--;
 			if (maxGroupActive < 0)
 				canHaveState = false;
@@ -227,8 +231,8 @@ Environment Module::getEnvironment()
 	Environment environment;
 	environment["Self"] = this;
 	Item* ship = getOwner();
-	Item* character = ship ? ship->getOwner() : nullptr;
-	Item* gang = character ? character->getOwner() : nullptr;
+	Item* character = ship ? ship->getOwner() : NULL;
+	Item* gang = character ? character->getOwner() : NULL;
 	
 	if (character)
 		environment["Char"] = character;
@@ -247,9 +251,10 @@ void Module::addEffects(Effect::Category category)
 {
 	Environment environment = getEnvironment();
 	
-	for (auto i: effects_)
-		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
-			i->addEffect(environment);
+	EffectsList::iterator i, end = effects_.end();
+	for (i = effects_.begin(); i != end; i++)
+		if ((*i)->getEffectID() != ONLINE_EFFECT_ID && (*i)->getCategory() == category)
+			(*i)->addEffect(environment);
 	
 	if (category == Effect::CATEGORY_GENERIC)
 	{
@@ -275,9 +280,10 @@ void Module::removeEffects(Effect::Category category)
 {
 	Environment environment = getEnvironment();
 
-	for (auto i: effects_)
-		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
-			i->removeEffect(environment);
+	EffectsList::iterator i, end = effects_.end();
+	for (i = effects_.begin(); i != end; i++)
+		if ((*i)->getEffectID() != ONLINE_EFFECT_ID && (*i)->getCategory() == category)
+			(*i)->removeEffect(environment);
 //	if (category == Effect::CATEGORY_GENERIC && charge_ != NULL)
 //		charge_->removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
@@ -327,14 +333,14 @@ Charge* Module::setCharge(Charge* charge)
 		}
 		else {
 			delete charge;
-			return nullptr;
+			return NULL;
 		}
 	}
 	else if (charge_) {
 		charge_->removeEffects(Effect::CATEGORY_GENERIC);
 		engine_->reset(this);
 		delete charge_;
-		charge_ = nullptr;
+		charge_ = NULL;
 	}
 	return charge_;
 }
@@ -350,7 +356,7 @@ void Module::clearCharge()
 	{
 		charge_->removeEffects(Effect::CATEGORY_GENERIC);
 		delete charge_;
-		charge_ = nullptr;
+		charge_ = NULL;
 		engine_->reset(this);
 	}
 }
@@ -395,8 +401,9 @@ bool Module::canFit(Charge* charge)
 	
 	TypeID chargeGroup = charge->getGroupID();
 	
-	for (auto i: chargeGroups_)
-		if (i == chargeGroup)
+	std::list<TypeID>::iterator i, end = chargeGroups_.end();
+	for (i = chargeGroups_.begin(); i != end; i++)
+		if (*i == chargeGroup)
 			return true;
 	return false;
 }
@@ -426,7 +433,7 @@ void Module::setTarget(Ship* target)
 
 void Module::clearTarget()
 {
-	setTarget(nullptr);
+	setTarget(NULL);
 }
 
 Ship* Module::getTarget()

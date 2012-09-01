@@ -20,12 +20,12 @@ Compiler::~Compiler(void)
 
 void Compiler::compile()
 {
-	sqlite3* db = nullptr;
+	sqlite3* db = NULL;
 	try
 	{
 		if (sqlite3_open(databasePath_.c_str(), &db) == SQLITE_OK)
 		{
-			char* errmsg = nullptr;
+			char* errmsg = NULL;
 			
 			std::cout << "Loading effects..." << std::endl;
 			if (sqlite3_exec(db, "select * from dgmEffects", callbackEffect, this, &errmsg) != SQLITE_OK)
@@ -52,12 +52,13 @@ void Compiler::compile()
 			}
 			
 			sqlite3_close(db);
-			db = nullptr;
+			db = NULL;
 
 			std::cout << "Compiling expressions..." << std::endl;
 			
-			for (auto i: expressions_)
-				compiledExpressionsMap_[i.first] = compileExpression(i.second);
+			RowsMap::iterator i, end = expressions_.end();
+			for (i = expressions_.begin(); i != end; i++)
+				compiledExpressionsMap_[i->first] = compileExpression(i->second);
 			
 			std::cout << "Compiling effects..." << std::endl;
 			
@@ -67,9 +68,10 @@ void Compiler::compile()
 			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" INTEGER NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" INTEGER NOT NULL, \"isOffensive\" INTEGER NOT NULL, \"isAssistance\" INTEGER NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
 			os << "BEGIN TRANSACTION;" << std::endl;
 
-			for (auto i: effects_)
+			end = effects_.end();
+			for (i = effects_.begin(); i != end; i++)
 			{
-				Row& effect = i.second;
+				Row& effect = i->second;
 				MemoryBlock compiledEffect = compileEffect(effect);
 
 				os	<< "INSERT INTO \"dgmCompiledEffects\" VALUES (" << effect["effectID"]
@@ -185,10 +187,11 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 	
 	int offset = sizeof(int) * 2;
 
-	for (auto i: expressionsMap)
+	CompiledExpressionsMap::iterator i, end = expressionsMap.end();
+	for (i = expressionsMap.begin(); i != end; i++)
 	{
-		offsets[i.first] = offset;
-		offset += i.second.length();
+		offsets[i->first] = offset;
+		offset += i->second.length();
 	}
 	
 	offset = offsets[effect["preExpression"]];
@@ -196,14 +199,15 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 	offset = offsets[effect["postExpression"]];
 	compiledEffect.append(reinterpret_cast<unsigned char*>(&offset), sizeof(int));
 
-	for (auto i: expressionsMap)
+	end = expressionsMap.end();
+	for (i = expressionsMap.begin(); i != end; i++)
 	{
-		size_t len = i.second.length();
+		size_t len = i->second.length();
 		Byte* data = new Byte[len];
 #ifdef WIN32
-		i.second._Copy_s(data, len, len);
+		i->second._Copy_s(data, len, len);
 #else
-		i.second.copy(data, len);
+		i->second.copy(data, len);
 #endif
 		Byte* ptr = data;
 		while (static_cast<Opcode>(*ptr) == OPCODE_ARGUMENT)

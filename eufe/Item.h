@@ -38,7 +38,7 @@ namespace eufe {
 		struct NoOwnerException : virtual boost::exception {};
 
 		Item();
-		Item(Engine* engine, TypeID typeID, Item* owner = nullptr);
+		Item(Engine* engine, TypeID typeID, Item* owner = NULL);
 		Item(Item* owner);
 		Item(const Item& from);
 		virtual ~Item(void);

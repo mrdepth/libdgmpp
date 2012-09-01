@@ -7,7 +7,7 @@ namespace eufe {
 	class Character : public Item
 	{
 	public:
-		Character(Engine* engine, Gang* owner = nullptr, const char* characterName = "");
+		Character(Engine* engine, Gang* owner = NULL, const char* characterName = "");
 		virtual ~Character(void);
 		Ship* getShip();
 		Ship* setShip(Ship* ship);

@@ -9,13 +9,13 @@ namespace eufe {
 		typedef boost::error_info<struct BadDroneTargetExceptionInfoTag, Ship*> BadDroneTargetExceptionInfo;
 		struct BadDroneTargetException : virtual boost::exception {};
 
-		Drone(Engine* engine, TypeID typeID, Ship* owner = nullptr);
+		Drone(Engine* engine, TypeID typeID, Ship* owner = NULL);
 		Drone(const Drone& from);
 		virtual ~Drone(void);
 		
 		virtual Environment getEnvironment();
 		
-		void setTarget(Ship* target = nullptr);
+		void setTarget(Ship* target = NULL);
 		void clearTarget();
 		Ship* getTarget();
 

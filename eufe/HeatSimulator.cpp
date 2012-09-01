@@ -21,8 +21,9 @@ HeatSimulator::HeatSimulator(Ship* ship) : ship_(ship)
 
 HeatSimulator::~HeatSimulator(void)
 {
-	for (auto i: states_)
-		delete i;
+	StatesVector::iterator i, end = states_.end();
+	for (i = states_.begin(); i != end; i++)
+		delete *i;
 	states_.clear();
 }
 
@@ -43,15 +44,17 @@ void HeatSimulator::simulate()
 		medSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
 		lowSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
 		
-		for (auto i: ship_->getModules())
+		const ModulesList& modules = ship_->getModules();
+		ModulesList::const_iterator i, end = modules.end();
+		for (i = modules.begin(); i != end; i++)
 		{
-			Module::Slot slot = i->getSlot();
+			Module::Slot slot = (*i)->getSlot();
 			if (slot == Module::SLOT_HI)
-				hiSlot.push_back(i);
+				hiSlot.push_back(*i);
 			else if (slot == Module::SLOT_MED)
-				medSlot.push_back(i);
+				medSlot.push_back(*i);
 			else if (slot == Module::SLOT_LOW)
-				lowSlot.push_back(i);
+				lowSlot.push_back(*i);
 		}
 		if (hiSlot.size() > 0)
 			simulate(hiSlot);
@@ -66,8 +69,9 @@ void HeatSimulator::simulate()
 void HeatSimulator::simulate(const ModulesVector& modules)
 {
 	{
-		for (auto i: states_)
-			delete i;
+		StatesVector::iterator i, end = states_.end();
+		for (i = states_.begin(); i != end; i++)
+			delete *i;
 		states_.clear();
 	}
 
