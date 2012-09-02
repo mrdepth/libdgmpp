@@ -60,15 +60,17 @@ namespace eufe {
 		float hull;
 		float shield;
 	};
+
+	struct ResistancesLayer
+	{
+		float em;
+		float explosive;
+		float kinetic;
+		float thermal;
+	};
 	
 	struct Resistances
 	{
-		struct Layer
-		{
-			float em;
-			float explosive;
-			float kinetic;
-			float thermal;
-		} armor, hull, shield;
+		ResistancesLayer armor, hull, shield;
 	};
 }

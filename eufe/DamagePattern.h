@@ -19,7 +19,7 @@ namespace eufe {
 		float explosiveAmount;
 		
 	private:
-		float effectivity(const Resistances::Layer& resistances, float amount) const;
+		float effectivity(const ResistancesLayer& resistances, float amount) const;
 	};
 	
 }
