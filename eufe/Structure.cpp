@@ -4,6 +4,7 @@
 #include "Attribute.h"
 #include "ControlTower.h"
 #include "DamagePattern.h"
+#include <math.h>
 
 using namespace eufe;
 

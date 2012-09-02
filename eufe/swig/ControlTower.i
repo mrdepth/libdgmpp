@@ -3,17 +3,17 @@ namespace eufe {
 	
 	%nodefaultctor ControlTower;
 	
-	class ControlTower : public Item
+	class ControlTower : public eufe::Item
 	{
 	public:
-		Structure* addStructure(TypeID typeID);
-		void removeStructure(Structure* structure);
+		eufe::Structure* addStructure(eufe::TypeID typeID);
+		void removeStructure(eufe::Structure* structure);
 		
-		const StructuresList& getStructures();
-		bool canFit(Structure* structure);
+		const eufe::StructuresList& getStructures();
+		bool canFit(eufe::Structure* structure);
 		
-		const DamagePattern& getDamagePattern();
-		void setDamagePattern(const DamagePattern& damagePattern);
+		const eufe::DamagePattern& getDamagePattern();
+		void setDamagePattern(const eufe::DamagePattern& damagePattern);
 		
 		//Calculations
 		
@@ -23,12 +23,12 @@ namespace eufe {
 		float getTotalCpu();
 		
 		//Tank
-		const Resistances& getResistances();
-		const Tank& getTank();
-		const Tank& getEffectiveTank();
+		const eufe::Resistances& getResistances();
+		const eufe::Tank& getTank();
+		const eufe::Tank& getEffectiveTank();
 		
-		const HitPoints& getHitPoints();
-		const HitPoints& getEffectiveHitPoints();
+		const eufe::HitPoints& getHitPoints();
+		const eufe::HitPoints& getEffectiveHitPoints();
 		
 		float getShieldRecharge();
 		

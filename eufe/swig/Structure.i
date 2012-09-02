@@ -1,15 +1,17 @@
 
 namespace eufe {
 	
-	class Structure : public Module
+	%nodefaultctor Structure;
+
+	class Structure : public eufe::Module
 	{
 	public:
-		const Resistances& getResistances();
-		const Tank& getTank();
-		const Tank& getEffectiveTank();
+		const eufe::Resistances& getResistances();
+		const eufe::Tank& getTank();
+		const eufe::Tank& getEffectiveTank();
 		
-		const HitPoints& getHitPoints();
-		const HitPoints& getEffectiveHitPoints();
+		const eufe::HitPoints& getHitPoints();
+		const eufe::HitPoints& getEffectiveHitPoints();
 		
 		float getShieldRecharge();
 	};

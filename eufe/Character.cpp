@@ -17,7 +17,7 @@ static const TypeID CHARACTER_TYPE_ID = 1381;
 
 Character::Character(Engine* engine, Gang* owner, const char* characterName) : Item(engine, CHARACTER_TYPE_ID, owner), characterName_(characterName), ship_(NULL)
 {
-	Engine::scoped_lock lock(*engine);
+	Engine::ScopedLock lock(*engine_);
 
 	sqlite3* db = engine->getDb();
 	

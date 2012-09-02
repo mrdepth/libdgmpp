@@ -3,7 +3,7 @@ namespace eufe {
 	
 	%nodefaultctor Skill;
 
-	class Skill : public Item
+	class Skill : public eufe::Item
 	{
 	public:
 		bool isLearned() const;

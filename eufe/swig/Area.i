@@ -4,7 +4,7 @@ namespace eufe {
 
 	%nodefaultctor Area;
 
-	class Area : public Item
+	class Area : public eufe::Item
 	{
 		public:
 	};

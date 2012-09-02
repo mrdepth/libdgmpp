@@ -56,7 +56,7 @@ namespace eufe {
 			CATEGORY_SYSTEM			= 7
 		};
 		
-		TypeID getEffectID() const;
+		eufe::TypeID getEffectID() const;
 		Category getCategory() const;
 		const char* getEffectName() const;
 	};

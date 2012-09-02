@@ -1,6 +1,8 @@
 %module eufe
 
 %{
+#include "eufe.h"
+using namespace std;
 %}
 
 %include "Engine.i"

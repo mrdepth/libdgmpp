@@ -7,12 +7,12 @@ namespace eufe {
 		public:
 		Engine(const char* databasePath);
 		~Engine(void);
-		Area* setArea(TypeID typeID);
-		ControlTower* setControlTower(TypeID typeID);
+		eufe::Area* setArea(eufe::TypeID typeID);
+		eufe::ControlTower* setControlTower(eufe::TypeID typeID);
 		void clearArea();
-		Gang* getGang();
-		Area* getArea();
-		ControlTower* getControlTower();
+		eufe::Gang* getGang();
+		eufe::Area* getArea();
+		eufe::ControlTower* getControlTower();
 	};
 	
 }

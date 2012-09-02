@@ -1,7 +1,6 @@
 #pragma once
 #include "types.h"
 #include <boost/exception/all.hpp>
-#include <boost/thread/recursive_mutex.hpp>
 #include "ThirdParty/sqlite3.h"
 #include <iostream>
 #include "Effect.h"
@@ -20,7 +19,7 @@ namespace eufe {
 	extern const TypeID SUBSYSTEM_CATEGORY_ID;
 	extern const TypeID STRUCTURE_CATEGORY_ID;
 
-	class Item : public boost::recursive_mutex
+	class Item
 	{
 	public:
 		

@@ -20,22 +20,22 @@ namespace eufe {
 	class Item
 	{
 		public:
-		Engine* getEngine();
+		eufe::Engine* getEngine();
 		
-		Item* getOwner() const;
-		void setOwner(Item *owner);
+		eufe::Item* getOwner() const;
+		void setOwner(eufe::Item *owner);
 		
-		virtual TypeID getTypeID() const;
-		virtual TypeID getGroupID() const;
-		virtual TypeID getCategoryID() const;
-		virtual Attribute* getAttribute(TypeID attributeID);
-		const AttributesMap &getAttributes();
-		bool hasAttribute(TypeID attributeID);
-		Effect* getEffect(TypeID effectID);
+		virtual eufe::TypeID getTypeID() const;
+		virtual eufe::TypeID getGroupID() const;
+		virtual eufe::TypeID getCategoryID() const;
+		virtual eufe::Attribute* getAttribute(eufe::TypeID attributeID);
+		const eufe::AttributesMap &getAttributes();
+		bool hasAttribute(eufe::TypeID attributeID);
+		eufe::Effect* getEffect(eufe::TypeID effectID);
 		
-		virtual bool requireSkill(TypeID skillID);
+		virtual bool requireSkill(eufe::TypeID skillID);
 		
-		bool hasEffect(TypeID effectID);
+		bool hasEffect(eufe::TypeID effectID);
 		
 		virtual const char* getTypeName() const;
 	};

@@ -182,7 +182,7 @@ namespace eufe {
 	class Attribute
 	{
 		public:
-		TypeID getAttributeID() const;
+		eufe::TypeID getAttributeID() const;
 		virtual float getValue();
 		virtual float getInitialValue() const;
 		bool isStackable() const;

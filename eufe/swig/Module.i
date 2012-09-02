@@ -1,3 +1,4 @@
+%include "Item.i"
 
 namespace eufe {
 	
@@ -32,7 +33,7 @@ namespace eufe {
 			HARDPOINT_TURRET
 		};
 		
-		virtual Attribute* getAttribute(TypeID attributeID);
+		virtual eufe::Attribute* getAttribute(eufe::TypeID attributeID);
 		
 		Slot getSlot();
 		Hardpoint getHardpoint();
@@ -40,17 +41,17 @@ namespace eufe {
 		State getState();
 		virtual void setState(State state);
 		
-		Charge* setCharge(TypeID typeID);
+		eufe::Charge* setCharge(eufe::TypeID typeID);
 		void clearCharge();
-		Charge* getCharge();
-		const std::list<TypeID>& getChargeGroups();
+		eufe::Charge* getCharge();
+		const std::list<eufe::TypeID>& getChargeGroups();
 		int getChargeSize();
 		void removeCharge();
-		bool canFit(Charge* charge);
+		bool canFit(eufe::Charge* charge);
 		bool requireTarget();
-		void setTarget(Ship* target = NULL);
+		void setTarget(eufe::Ship* target = NULL);
 		void clearTarget();
-		Ship* getTarget();
+		eufe::Ship* getTarget();
 		float getReloadTime();
 		
 		//Calculations

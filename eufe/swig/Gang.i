@@ -6,19 +6,19 @@ namespace eufe {
 	
 	%nodefaultctor Gang;
 
-	class Gang : public Item
+	class Gang : public eufe::Item
 	{
 		public:
-		const CharactersList& getPilots();
-		Character* addPilot();
-		Character* addPilot(Character* character);
-		void removePilot(Character* character);
-		Character* getFleetBooster();
-		Character* getWingBooster();
-		Character* getSquadBooster();
-		void setFleetBooster(Character* fleetBooster);
-		void setWingBooster(Character* wingBooster);
-		void setSquadBooster(Character* squadBooster);
+		const eufe::CharactersList& getPilots();
+		eufe::Character* addPilot();
+		eufe::Character* addPilot(eufe::Character* character);
+		void removePilot(eufe::Character* character);
+		eufe::Character* getFleetBooster();
+		eufe::Character* getWingBooster();
+		eufe::Character* getSquadBooster();
+		void setFleetBooster(eufe::Character* fleetBooster);
+		void setWingBooster(eufe::Character* wingBooster);
+		void setSquadBooster(eufe::Character* squadBooster);
 		void removeFleetBooster();
 		void removeWingBooster();
 		void removeSquadBooster();

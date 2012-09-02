@@ -1,5 +1,4 @@
 #pragma once
-#include <boost/thread/recursive_mutex.hpp>
 #include "types.h"
 
 namespace eufe {
@@ -179,7 +178,7 @@ namespace eufe {
 
 	extern const TypeID DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID;
 
-	class Attribute : public boost::recursive_mutex
+	class Attribute
 	{
 	public:
 		Attribute();

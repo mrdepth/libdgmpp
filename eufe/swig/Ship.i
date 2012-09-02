@@ -4,7 +4,7 @@ namespace eufe {
 	
 	%nodefaultctor Ship;
 	
-	class Ship : public Item
+	class Ship : public eufe::Item
 	{
 	public:
 		enum ScanType
@@ -16,34 +16,34 @@ namespace eufe {
 			SCAN_TYPE_MULTISPECTRAL
 		};
 		
-		Module* addModule(TypeID typeID);
-		void removeModule(Module* module);
-		Drone* addDrone(TypeID typeID);
-		void removeDrone(Drone* drone);
-		const ModulesList& getModules();
-		const DronesList& getDrones();
-		const ModulesList& getProjectedModules();
-		const DronesList& getProjectedDrones();
-		bool canFit(Module* module);
+		eufe::Module* addModule(eufe::TypeID typeID);
+		void removeModule(eufe::Module* module);
+		eufe::Drone* addDrone(eufe::TypeID typeID);
+		void removeDrone(eufe::Drone* drone);
+		const eufe::ModulesList& getModules();
+		const eufe::DronesList& getDrones();
+		const eufe::ModulesList& getProjectedModules();
+		const eufe::DronesList& getProjectedDrones();
+		bool canFit(eufe::Module* module);
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();
 		
-		void addProjectedModule(Module* module);
-		void removeProjectedModule(Module* module);
-		void addProjectedDrone(Drone* drone);
-		void removeProjectedDrone(Drone* drone);
+		void addProjectedModule(eufe::Module* module);
+		void removeProjectedModule(eufe::Module* module);
+		void addProjectedDrone(eufe::Drone* drone);
+		void removeProjectedDrone(eufe::Drone* drone);
 		
-		const DamagePattern& getDamagePattern();
-		void setDamagePattern(const DamagePattern& damagePattern);
+		const eufe::DamagePattern& getDamagePattern();
+		void setDamagePattern(const eufe::DamagePattern& damagePattern);
 		
 		//Calculations
 		
-		int getNumberOfSlots(Module::Slot slot);
-		int getFreeSlots(Module::Slot slot);
-		int getUsedSlots(Module::Slot slot);
-		int getNumberOfHardpoints(Module::Hardpoint hardpoint);
-		int getFreeHardpoints(Module::Hardpoint hardpoint);
-		int getUsedHardpoints(Module::Hardpoint hardpoint);
+		int getNumberOfSlots(eufe::Module::Slot slot);
+		int getFreeSlots(eufe::Module::Slot slot);
+		int getUsedSlots(eufe::Module::Slot slot);
+		int getNumberOfHardpoints(eufe::Module::Hardpoint hardpoint);
+		int getFreeHardpoints(eufe::Module::Hardpoint hardpoint);
+		int getUsedHardpoints(eufe::Module::Hardpoint hardpoint);
 		
 		float getCalibrationUsed();
 		float getTotalCalibration();
@@ -66,14 +66,14 @@ namespace eufe {
 		float getCapRecharge();
 		
 		//Tank
-		const Resistances& getResistances();
-		const Tank& getTank();
-		const Tank& getEffectiveTank();
-		const Tank& getSustainableTank();
-		const Tank& getEffectiveSustainableTank();
+		const eufe::Resistances& getResistances();
+		const eufe::Tank& getTank();
+		const eufe::Tank& getEffectiveTank();
+		const eufe::Tank& getSustainableTank();
+		const eufe::Tank& getEffectiveSustainableTank();
 		
-		const HitPoints& getHitPoints();
-		const HitPoints& getEffectiveHitPoints();
+		const eufe::HitPoints& getHitPoints();
+		const eufe::HitPoints& getEffectiveHitPoints();
 		
 		float getShieldRecharge();
 		
@@ -94,7 +94,7 @@ namespace eufe {
 		int getMaxTargets();
 		float getMaxTargetRange();
 		float getScanStrength();
-		ScanType getScanType();
+		eufe::Ship::ScanType getScanType();
 		float getProbeSize();
 		float getScanResolution();
 		

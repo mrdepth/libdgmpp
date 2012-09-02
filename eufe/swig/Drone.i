@@ -3,15 +3,15 @@ namespace eufe {
 	
 	%nodefaultctor Drone;
 
-	class Drone : public Item
+	class Drone : public eufe::Item
 	{
 	public:
-		void setTarget(Ship* target = NULL);
+		void setTarget(eufe::Ship* target = NULL);
 		void clearTarget();
-		Ship* getTarget();
+		eufe::Ship* getTarget();
 		
 		bool dealsDamage();
-		Charge* getCharge();
+		eufe::Charge* getCharge();
 		
 		void setActive(bool active);
 		bool isActive();

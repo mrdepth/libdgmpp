@@ -90,7 +90,7 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 {
 	if (typeID == 0)
 		return;
-	Engine::scoped_lock lock(*engine);
+	Engine::ScopedLock lock(*engine_);
 	
 	sqlite3* db = engine->getDb();
 	std::stringstream sql;
@@ -256,7 +256,7 @@ void Item::setOwner(Item* owner)
 
 Attribute* Item::getAttribute(TypeID attributeID)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;
@@ -357,7 +357,7 @@ void Item::reset()
 
 std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	outIterator = std::remove_copy_if(itemModifiers_.begin(), itemModifiers_.end(), outIterator, ModifierMatchFunction(attribute->getAttributeID()));
 	if (owner_)
 	{
@@ -369,7 +369,7 @@ std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std
 
 std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	outIterator = std::remove_copy_if(locationModifiers_.begin(), locationModifiers_.end(), outIterator, ModifierMatchFunction(attribute->getAttributeID()));
 //	if (owner_)
 //		outIterator = owner_->getLocationModifiers(attribute, outIterator);
@@ -379,7 +379,7 @@ std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attrib
 
 std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	outIterator = std::remove_copy_if(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), outIterator, LocationGroupModifierMatchFunction(attribute->getAttributeID(), item->getGroupID()));
 	outIterator = std::remove_copy_if(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), outIterator, LocationRequiredSkillModifierMatchFunction(attribute->getAttributeID(), item));
 	if (owner_)
@@ -389,31 +389,31 @@ std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, A
 
 void Item::addItemModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	itemModifiers_.push_back(modifier);
 }
 
 void Item::addLocationModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	locationModifiers_.push_back(modifier);
 }
 
 void Item::addLocationGroupModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	locationGroupModifiers_.push_back(modifier);
 }
 
 void Item::addLocationRequiredSkillModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	locationRequiredSkillModifiers_.push_back(modifier);
 }
 
 void Item::removeItemModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(itemModifiers_.begin(), itemModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != itemModifiers_.end())
 		itemModifiers_.erase(i);
@@ -421,7 +421,7 @@ void Item::removeItemModifier(Modifier* modifier)
 
 void Item::removeLocationModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationModifiers_.begin(), locationModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationModifiers_.end())
 		locationModifiers_.erase(i);
@@ -429,7 +429,7 @@ void Item::removeLocationModifier(Modifier* modifier)
 
 void Item::removeLocationGroupModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationGroupModifiers_.end())
 		locationGroupModifiers_.erase(i);
@@ -437,7 +437,7 @@ void Item::removeLocationGroupModifier(Modifier* modifier)
 
 void Item::removeLocationRequiredSkillModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationRequiredSkillModifiers_.end())
 		locationRequiredSkillModifiers_.erase(i);

@@ -2,36 +2,41 @@
 %include "Booster.i"
 %include "Implant.i"
 %include "Skill.i"
+%include <std_map.i>
+
+namespace std {
+	%template(SkillLevelsMap) map<eufe::TypeID, int>;
+}
 
 namespace eufe {
 	
-	%template(SkillLevelsMap) std::map<TypeID, int>;
+
 	
 	%nodefaultctor Character;
 
 	class Character : public Item
 	{
 	public:
-		Ship* getShip();
-		Ship* setShip(TypeID typeID);
+		eufe::Ship* getShip();
+		eufe::Ship* setShip(eufe::TypeID typeID);
 		
-		Skill* getSkill(TypeID typeID);
+		eufe::Skill* getSkill(eufe::TypeID typeID);
 		
 		bool emptyImplantSlot(int slot);
 		bool emptyBoosterSlot(int slot);
-		Implant* getImplant(int slot);
-		Booster* getBooster(int slot);
-		Implant* addImplant(TypeID typeID);
-		Implant* addImplant(Implant* implant);
-		Booster* addBooster(TypeID typeID);
-		Booster* addBooster(Booster* booster);
-		void removeImplant(Implant* implant);
-		void removeBooster(Booster* booster);
-		const ImplantsList& getImplants();
-		const BoostersList& getBoosters();
+		eufe::Implant* getImplant(int slot);
+		eufe::Booster* getBooster(int slot);
+		eufe::Implant* addImplant(eufe::TypeID typeID);
+		eufe::Implant* addImplant(eufe::Implant* implant);
+		eufe::Booster* addBooster(eufe::TypeID typeID);
+		eufe::Booster* addBooster(eufe::Booster* booster);
+		void removeImplant(eufe::Implant* implant);
+		void removeBooster(eufe::Booster* booster);
+		const eufe::ImplantsList& getImplants();
+		const eufe::BoostersList& getBoosters();
 		void setCharacterName(const char* characterName = "");
 		const char* getCharacterName();
-		void setSkillLevels(const std::map<TypeID, int>& levels);
+		void setSkillLevels(const std::map<eufe::TypeID, int>& levels);
 		void setAllSkillsLevel(int level);
 	};
 }
