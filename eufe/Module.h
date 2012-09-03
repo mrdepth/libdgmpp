@@ -60,7 +60,7 @@ namespace eufe {
 		Charge* setCharge(TypeID typeID);
 		void clearCharge();
 		Charge* getCharge();
-		const std::list<TypeID>& getChargeGroups();
+		const std::vector<TypeID>& getChargeGroups();
 		int getChargeSize();
 		void removeCharge();
 		bool canFit(Charge* charge);
@@ -104,7 +104,7 @@ namespace eufe {
 		Slot slot_;
 		Hardpoint hardpoint_;
 		Charge* charge_;
-		std::list<TypeID> chargeGroups_;
+		std::vector<TypeID> chargeGroups_;
 		Ship* target_;
 		float reloadTime_;
 		int shots_;

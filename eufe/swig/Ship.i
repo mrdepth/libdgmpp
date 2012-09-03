@@ -20,10 +20,29 @@ namespace eufe {
 		void removeModule(eufe::Module* module);
 		eufe::Drone* addDrone(eufe::TypeID typeID);
 		void removeDrone(eufe::Drone* drone);
-		const eufe::ModulesList& getModules();
-		const eufe::DronesList& getDrones();
-		const eufe::ModulesList& getProjectedModules();
-		const eufe::DronesList& getProjectedDrones();
+		
+		%extend {
+			std::vector<eufe::Module*> getModules() {
+				const eufe::ModulesList& modules = $self->getModules();
+				return std::vector<eufe::Module*>(modules.begin(), modules.end());
+			}
+
+			std::vector<eufe::Drone*> getDrones() {
+				const eufe::DronesList& drones = $self->getDrones();
+				return std::vector<eufe::Drone*>(drones.begin(), drones.end());
+			}
+
+			std::vector<eufe::Module*> getProjectedModules() {
+				const eufe::ModulesList& modules = $self->getProjectedModules();
+				return std::vector<eufe::Module*>(modules.begin(), modules.end());
+			}
+			
+			std::vector<eufe::Drone*> getProjectedDrones() {
+				const eufe::DronesList& drones = $self->getProjectedDrones();
+				return std::vector<eufe::Drone*>(drones.begin(), drones.end());
+			}
+		}
+
 		bool canFit(eufe::Module* module);
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();

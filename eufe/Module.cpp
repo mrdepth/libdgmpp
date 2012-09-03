@@ -98,7 +98,7 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 			if (typeID > 0)
 				chargeGroups_.push_back(typeID);
 		}
-	chargeGroups_.sort();
+	std::sort(chargeGroups_.begin(), chargeGroups_.end());
 }
 
 Module::Module(const Module& from) :	Item(from),
@@ -367,7 +367,7 @@ Charge* Module::getCharge()
 	return charge_;
 }
 
-const std::list<TypeID>& Module::getChargeGroups()
+const std::vector<TypeID>& Module::getChargeGroups()
 {
 	return chargeGroups_;
 }
@@ -401,7 +401,7 @@ bool Module::canFit(Charge* charge)
 	
 	TypeID chargeGroup = charge->getGroupID();
 	
-	std::list<TypeID>::iterator i, end = chargeGroups_.end();
+	std::vector<TypeID>::iterator i, end = chargeGroups_.end();
 	for (i = chargeGroups_.begin(); i != end; i++)
 		if (*i == chargeGroup)
 			return true;

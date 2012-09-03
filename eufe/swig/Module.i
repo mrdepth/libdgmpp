@@ -44,7 +44,7 @@ namespace eufe {
 		eufe::Charge* setCharge(eufe::TypeID typeID);
 		void clearCharge();
 		eufe::Charge* getCharge();
-		const std::list<eufe::TypeID>& getChargeGroups();
+		const std::vector<eufe::TypeID>& getChargeGroups();
 		int getChargeSize();
 		void removeCharge();
 		bool canFit(eufe::Charge* charge);

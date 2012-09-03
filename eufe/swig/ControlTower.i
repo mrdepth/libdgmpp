@@ -9,7 +9,12 @@ namespace eufe {
 		eufe::Structure* addStructure(eufe::TypeID typeID);
 		void removeStructure(eufe::Structure* structure);
 		
-		const eufe::StructuresList& getStructures();
+		%extend {
+			std::vector<eufe::Structure*> getStructures() {
+				const eufe::StructuresList& structures = $self->getStructures();
+				return std::vector<eufe::Structure*>(structures.begin(), structures.end());
+			}
+		}
 		bool canFit(eufe::Structure* structure);
 		
 		const eufe::DamagePattern& getDamagePattern();

@@ -9,7 +9,12 @@ namespace eufe {
 	class Gang : public eufe::Item
 	{
 		public:
-		const eufe::CharactersList& getPilots();
+		%extend {
+			std::vector<eufe::Character*> getPilots() {
+				const eufe::CharactersList& pilots = $self->getPilots();
+				return std::vector<eufe::Character*>(pilots.begin(), pilots.end());
+			}
+		}
 		eufe::Character* addPilot();
 		eufe::Character* addPilot(eufe::Character* character);
 		void removePilot(eufe::Character* character);

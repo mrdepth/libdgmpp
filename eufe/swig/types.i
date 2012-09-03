@@ -1,5 +1,5 @@
 %include <std_map.i>
-%include "std_list.i"
+%include <std_vector.i>
 %include "std_string.i"
 
 namespace eufe {
@@ -7,30 +7,30 @@ namespace eufe {
 }
 
 namespace std {
-	%template(TypesList) list<eufe::TypeID>;
+	%template(TypesList) vector<eufe::TypeID>;
 	%template(AttributesMap) map<eufe::TypeID, eufe::Attribute*>;
-	%template(EffectsList) list<eufe::Effect*>;
-	%template(ModulesList) list<eufe::Module*>;
-	%template(DronesList) list<eufe::Drone*>;
-	%template(CharactersList) list<eufe::Character*>;
+	%template(EffectsList) vector<eufe::Effect*>;
+	%template(ModulesList) vector<eufe::Module*>;
+	%template(DronesList) vector<eufe::Drone*>;
+	%template(CharactersList) vector<eufe::Character*>;
 	%template(SkillsMap) map<eufe::TypeID, eufe::Skill*>;
-	%template(ImplantsList) list<eufe::Implant*>;
-	%template(BoostersList) list<eufe::Booster*>;
-	%template(StructuresList) list<eufe::Structure*>;
+	%template(ImplantsList) vector<eufe::Implant*>;
+	%template(BoostersList) vector<eufe::Booster*>;
+	%template(StructuresList) vector<eufe::Structure*>;
 }
 namespace eufe {
 	
 	using namespace std;
 	
 	typedef map<eufe::TypeID, eufe::Attribute*> AttributesMap;
-	typedef list<eufe::Effect*> EffectsList;
-	typedef list<eufe::Module*> ModulesList;
-	typedef list<eufe::Drone*> DronesList;
-	typedef list<eufe::Character*> CharactersList;
+//	typedef list<eufe::Effect*> EffectsList;
+//	typedef list<eufe::Module*> ModulesList;
+//	typedef list<eufe::Drone*> DronesList;
+//	typedef list<eufe::Character*> CharactersList;
 	typedef map<eufe::TypeID, eufe::Skill*> SkillsMap;
-	typedef list<eufe::Implant*> ImplantsList;
-	typedef list<eufe::Booster*> BoostersList;
-	typedef list<eufe::Structure*> StructuresList;
+//	typedef list<eufe::Implant*> ImplantsList;
+//	typedef list<eufe::Booster*> BoostersList;
+//	typedef list<eufe::Structure*> StructuresList;
 	
 //	%template(AttributesMap) std::map<eufe::TypeID, eufe::Attribute*>;
 //	%template(EffectsList) std::list<eufe::Effect*>;

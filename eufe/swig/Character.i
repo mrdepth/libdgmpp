@@ -32,8 +32,18 @@ namespace eufe {
 		eufe::Booster* addBooster(eufe::Booster* booster);
 		void removeImplant(eufe::Implant* implant);
 		void removeBooster(eufe::Booster* booster);
-		const eufe::ImplantsList& getImplants();
-		const eufe::BoostersList& getBoosters();
+		%extend {
+			std::vector<eufe::Implant*> getImplants() {
+				const eufe::ImplantsList& implants = $self->getImplants();
+				return std::vector<eufe::Implant*>(implants.begin(), implants.end());
+			}
+
+			std::vector<eufe::Booster*> getBoosters() {
+				const eufe::BoostersList& boosters = $self->getBoosters();
+				return std::vector<eufe::Booster*>(boosters.begin(), boosters.end());
+			}
+		}
+		
 		void setCharacterName(const char* characterName = "");
 		const char* getCharacterName();
 		void setSkillLevels(const std::map<eufe::TypeID, int>& levels);

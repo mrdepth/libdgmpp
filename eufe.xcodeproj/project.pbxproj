@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		121D8D2215F477D80003CAA5 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121D8D2015F477D80003CAA5 /* Mutex.cpp */; };
 		121E07E81578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */; };
 		121E07EA1578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */; };
 		3700DA7314869A630026EA83 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
@@ -59,6 +60,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		121D8D2015F477D80003CAA5 /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mutex.cpp; sourceTree = "<group>"; };
+		121D8D2115F477D80003CAA5 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mutex.h; sourceTree = "<group>"; };
 		121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectHardPointModifierEffectInterpreter.cpp; sourceTree = "<group>"; };
 		121E07E71578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectHardPointModifierEffectInterpreter.h; sourceTree = "<group>"; };
 		121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectAdaptiveArmorHardener.cpp; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 				37BBC5921512060F00EDE204 /* Ship */,
 				37BBC5941512066600EDE204 /* ControlTower */,
 				37AC5E0A149A51C0005DEAEB /* eufe.h */,
+				121D8D2015F477D80003CAA5 /* Mutex.cpp */,
+				121D8D2115F477D80003CAA5 /* Mutex.h */,
 				37A9EC51147FA61C00B12A7F /* Area.cpp */,
 				37A9EC52147FA61C00B12A7F /* Area.h */,
 				37B33D511473CA5E006B18D7 /* Attribute.cpp */,
@@ -437,6 +442,7 @@
 				37BBC599151219B500EDE204 /* Structure.cpp in Sources */,
 				121E07E81578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp in Sources */,
 				121E07EA1578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp in Sources */,
+				121D8D2215F477D80003CAA5 /* Mutex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
