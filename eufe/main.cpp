@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 	Compiler compiler = Compiler(argv[1], argv[2]);
 	compiler.compile();
 	return 0;*/
-	
+	{
 #ifdef WIN32
 	Engine engine("E:\\Programing\\dbinit\\eufe.sqlite");
 #else
@@ -73,5 +73,6 @@ int main(int argc, char* argv[])
 	ofs << engine << std::endl;
 	ofs.close();
 #endif
+	}
 	return 0;
 }

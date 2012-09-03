@@ -7,7 +7,6 @@ using namespace eufe;
 
 Modifier::Modifier(TypeID attributeID, Association association, Attribute* modifier, bool isAssistance, bool isOffensive, Character* character) : attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
 {
-	
 }
 
 Modifier::~Modifier()

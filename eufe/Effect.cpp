@@ -110,7 +110,7 @@ Effect::Effect(Engine* engine, int effectID, Category category, const void* byte
 #endif
 }
 
-Effect::Effect(const Effect& from) : interpreter_(from.interpreter_)
+Effect::Effect(const Effect& from) : interpreter_(from.interpreter_->clone())
 {
 #if _DEBUG
 	effectName_ = from.effectName_;
@@ -119,6 +119,8 @@ Effect::Effect(const Effect& from) : interpreter_(from.interpreter_)
 
 Effect::~Effect(void)
 {
+	if (interpreter_)
+		delete interpreter_;
 }
 
 bool Effect::addEffect(Environment environment)

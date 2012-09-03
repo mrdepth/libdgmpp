@@ -193,14 +193,20 @@ Item::Item(Item* owner) : owner_(owner), context_(NULL), engine_(NULL)
 {
 }
 
-Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(NULL), effects_(from.effects_), context_(NULL)
+Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(NULL), context_(NULL)
 {
-	AttributesMap::iterator i, end = attributes_.end();
-	for (i = attributes_.begin(); i!= end; i++)
+	AttributesMap::const_iterator i, end = from.attributes_.end();
+	for (i = from.attributes_.begin(); i!= end; i++)
 	{
 		Attribute* attribute = new Attribute(*(i->second));
 		attribute->setOwner(this);
 		attributes_[i->first] = attribute;
+	}
+	
+	EffectsList::const_iterator j, endj = from.effects_.end();
+	for (j = from.effects_.begin(); j != endj; j++) {
+		Effect* effect = new Effect(**j);
+		effects_.push_back(effect);
 	}
 	
 #if _DEBUG
@@ -223,6 +229,12 @@ Item::~Item(void)
 			delete *j;
 		list.clear();
 	}
+	
+	EffectsList::iterator j, endj = effects_.end();
+	for (j = effects_.begin(); j != endj; j++)
+		delete *j;
+	effects_.clear();
+	
 	setContext(NULL);
 }
 
@@ -416,7 +428,10 @@ void Item::removeItemModifier(Modifier* modifier)
 	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(itemModifiers_.begin(), itemModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != itemModifiers_.end())
+	{
+		delete *i;
 		itemModifiers_.erase(i);
+	}
 }
 
 void Item::removeLocationModifier(Modifier* modifier)
@@ -424,7 +439,10 @@ void Item::removeLocationModifier(Modifier* modifier)
 	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationModifiers_.begin(), locationModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationModifiers_.end())
+	{
+		delete *i;
 		locationModifiers_.erase(i);
+	}
 }
 
 void Item::removeLocationGroupModifier(Modifier* modifier)
@@ -432,7 +450,10 @@ void Item::removeLocationGroupModifier(Modifier* modifier)
 	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationGroupModifiers_.end())
+	{
+		delete *i;
 		locationGroupModifiers_.erase(i);
+	}
 }
 
 void Item::removeLocationRequiredSkillModifier(Modifier* modifier)
@@ -440,7 +461,10 @@ void Item::removeLocationRequiredSkillModifier(Modifier* modifier)
 	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationRequiredSkillModifiers_.end())
+	{
+		delete *i;
 		locationRequiredSkillModifiers_.erase(i);
+	}
 }
 
 #if _DEBUG
