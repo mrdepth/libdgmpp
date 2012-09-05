@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <list>
+#include <boost/shared_ptr.hpp>
 
 namespace eufe {
 	class Item;
@@ -34,7 +35,7 @@ namespace eufe {
 	typedef std::map<eufe::TypeID, Attribute*> AttributesMap;
 	typedef std::list<Attribute*> AttributesList;
 	typedef std::list<Association*> AssociationsList;
-	typedef std::list<Effect*> EffectsList;
+	typedef std::list<boost::shared_ptr<Effect> > EffectsList;
 	typedef std::map<std::string, Association*> AssociationsMap;
 	typedef std::map<std::string, Item*> Environment;
 	typedef std::list<Module*> ModulesList;

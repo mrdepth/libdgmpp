@@ -27,6 +27,9 @@
 #include "EffectHardPointModifierEffectInterpreter.h"
 #include "EffectAdaptiveArmorHardener.h"
 
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
 using namespace eufe;
 
 const TypeID eufe::ONLINE_EFFECT_ID = 16;
@@ -64,11 +67,28 @@ const TypeID eufe::ONLINE_FOR_STRUCTURES_EFFECT_ID = 901;
 const TypeID eufe::ADAPTIVE_ARMOR_HARDENER_EFFECT_ID = 4928;
 const TypeID eufe::FUELED_SHIELD_BOOSTING_EFFECT_ID = 4936;
 
+static std::map<TypeID, boost::weak_ptr<eufe::Effect> > reusableEffects;
+
+boost::shared_ptr<eufe::Effect> Effect::getEffect(Engine* engine, int effectID)
+{
+	Engine::ScopedLock lock(*engine);
+
+	std::map<TypeID, boost::weak_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
+	i = reusableEffects.find(effectID);
+	if (i == end) {
+		boost::shared_ptr<Effect> effect(new Effect(engine, effectID));
+		reusableEffects[effectID] = boost::weak_ptr<Effect>(effect);
+		return effect;
+	}
+	else {
+		return i->second.lock();
+	}
+}
 
 #if _DEBUG
-Effect::Effect(Engine* engine, int effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
+Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
 #else
-Effect::Effect(Engine* engine, int effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive) : engine_(engine), effectID_(effectID), category_(category)
+Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive) : engine_(engine), effectID_(effectID), category_(category)
 #endif
 {
 	if (effectID == LEECH_EFFECT_ID)
@@ -110,6 +130,74 @@ Effect::Effect(Engine* engine, int effectID, Category category, const void* byte
 #endif
 }
 
+Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(effectID)
+{
+	Engine::ScopedLock lock(*engine_);
+	
+	sqlite3* db = engine->getDb();
+	std::stringstream sql;
+#if _DEBUG
+	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
+#else
+	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode FROM dgmCompiledEffects WHERE effectID = " << effectID;
+#endif
+	
+	sqlite3_stmt* stmt = NULL;
+	sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
+	
+	if (sqlite3_step(stmt) == SQLITE_ROW)
+	{
+		category_ = static_cast<Effect::Category>(sqlite3_column_int(stmt, 0));
+		bool isAssistance = sqlite3_column_int(stmt, 1) != 0;
+		bool isOffensive = sqlite3_column_int(stmt, 2) != 0;
+		size_t size = sqlite3_column_bytes(stmt, 3);
+		const void* byteCode = sqlite3_column_blob(stmt, 3);
+		
+		if (effectID == LEECH_EFFECT_ID)
+			interpreter_ = new EffectLeechInterpreter(engine, isAssistance, isOffensive);
+		else if (effectID == ENERGY_DESTABILIZATION_NEW_EFFECT_ID)
+			interpreter_ = new EffectEnergyDestabilizationNewInterpreter(engine, isAssistance, isOffensive);
+		else if (effectID == ENERGY_TRANSFER_EFFECT_ID)
+			interpreter_ = new EffectEnergyTransferInterpreter(engine, isAssistance, isOffensive);
+		else if (effectID == ARMOR_REPAIR_EFFECT_ID)
+			interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
+		else if (effectID == TARGET_ARMOR_REPAIR_EFFECT_ID)
+			interpreter_ = new EffectArmorRepairInterpreter(engine, true, isAssistance, isOffensive);
+		else if (effectID == STRUCTURE_REPAIR_EFFECT_ID)
+			interpreter_ = new EffectHullRepairInterpreter(engine, false, isAssistance, isOffensive);
+		else if (effectID == REMOTE_HULL_REPAIR_EFFECT_ID)
+			interpreter_ = new EffectHullRepairInterpreter(engine, true, isAssistance, isOffensive);
+		else if (effectID == SHIELD_BOOSTING_EFFECT_ID)
+			interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
+		else if (effectID == SHIELD_TRANSFER_EFFECT_ID)
+			interpreter_ = new EffectShieldBoostingInterpreter(engine, true, isAssistance, isOffensive);
+		else if (effectID == SLOT_MODIFIER_EFFECT_ID)
+			interpreter_ = new EffectSlotModifierInterpreter(engine, isAssistance, isOffensive);
+		else if (effectID == HARD_POINT_MODIFIER_EFFECT_EFFECT_ID)
+			interpreter_ = new EffectHardPointModifierEffectInterpreter(engine, isAssistance, isOffensive);
+		else if (effectID == ADAPTIVE_ARMOR_HARDENER_EFFECT_ID)
+			interpreter_ = new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive);
+		else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
+			interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
+		else
+			interpreter_ = new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive);
+		
+		
+#if _DEBUG
+		effectName_ = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
+		std::string::iterator i, end = effectName_.end();
+		for (i = effectName_.begin(); i != end; i++)
+		{
+			char c = *i;
+			if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
+				*i = ' ';
+		}
+#endif
+	}
+	sqlite3_finalize(stmt);
+
+}
+
 Effect::Effect(const Effect& from) : interpreter_(from.interpreter_->clone())
 {
 #if _DEBUG
@@ -119,6 +207,8 @@ Effect::Effect(const Effect& from) : interpreter_(from.interpreter_->clone())
 
 Effect::~Effect(void)
 {
+	Engine::ScopedLock lock(*engine_);
+	reusableEffects.erase(reusableEffects.find(effectID_));
 	if (interpreter_)
 		delete interpreter_;
 }
