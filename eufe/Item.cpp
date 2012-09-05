@@ -29,11 +29,11 @@ const TypeID eufe::DRONE_CATEGORY_ID = 18;
 const TypeID eufe::SUBSYSTEM_CATEGORY_ID = 32;
 const TypeID eufe::STRUCTURE_CATEGORY_ID = 23;
 
-class ModifierMatchFunction : public std::unary_function<const boost::shared_ptr<Modifier>&, bool>
+class ModifierMatchFunction : public std::unary_function<Modifier*, bool>
 {
 public:
 	ModifierMatchFunction(TypeID attributeID) : attributeID_(attributeID) {}
-	bool operator() (const boost::shared_ptr<Modifier>& modifier)
+	bool operator() (Modifier* modifier)
 	{
 		return !(modifier->getAttributeID() == attributeID_);
 	}
@@ -41,37 +41,37 @@ private:
 	TypeID attributeID_;
 };
 
-class LocationGroupModifierMatchFunction : public std::unary_function<const boost::shared_ptr<Modifier>&, bool>
+class LocationGroupModifierMatchFunction : public std::unary_function<Modifier*, bool>
 {
 public:
 	LocationGroupModifierMatchFunction(TypeID attributeID, TypeID groupID) : attributeID_(attributeID), groupID_(groupID) {}
-	bool operator() (const boost::shared_ptr<Modifier>& modifier)
+	bool operator() (Modifier* modifier)
 	{
-		return !(modifier->getAttributeID() == attributeID_ && boost::dynamic_pointer_cast<LocationGroupModifier>(modifier)->getGroupID() == groupID_);
+		return !(modifier->getAttributeID() == attributeID_ && dynamic_cast<LocationGroupModifier*>(modifier)->getGroupID() == groupID_);
 	}
 private:
 	TypeID attributeID_;
 	TypeID groupID_;
 };
 
-class LocationRequiredSkillModifierMatchFunction : public std::unary_function<const boost::shared_ptr<Modifier>&, bool>
+class LocationRequiredSkillModifierMatchFunction : public std::unary_function<Modifier*, bool>
 {
 public:
 	LocationRequiredSkillModifierMatchFunction(TypeID attributeID, Item* item) : attributeID_(attributeID), item_(item) {}
-	bool operator() (const boost::shared_ptr<Modifier>& modifier)
+	bool operator() (Modifier* modifier)
 	{
-		return !(modifier->getAttributeID() == attributeID_ && item_->requireSkill(boost::dynamic_pointer_cast<LocationRequiredSkillModifier>(modifier)->getSkillID()));
+		return !(modifier->getAttributeID() == attributeID_ && item_->requireSkill(dynamic_cast<LocationRequiredSkillModifier*>(modifier)->getSkillID()));
 	}
 private:
 	TypeID attributeID_;
 	Item* item_;
 };
 
-class ModifiersFindFunction : public std::unary_function<const boost::shared_ptr<Modifier>&, bool>
+class ModifiersFindFunction : public std::unary_function<Modifier*, bool>
 {
 public:
-	ModifiersFindFunction(const boost::shared_ptr<Modifier>& modifier) : attributeID_(modifier->getAttributeID()), modifier_(modifier->getModifier()), association_(modifier->getAssociation())	{};
-	bool operator() (const boost::shared_ptr<Modifier>& modifier)
+	ModifiersFindFunction(Modifier* modifier) : attributeID_(modifier->getAttributeID()), modifier_(modifier->getModifier()), association_(modifier->getAssociation())	{};
+	bool operator() (Modifier* modifier)
 	{
 		return modifier->getAttributeID() == attributeID_ && modifier->getAssociation() == association_ && modifier->getModifier() == modifier_;
 	}
@@ -82,15 +82,15 @@ private:
 };
 
 
-Item::Item(void) : owner_(NULL), typeID_(0)
+Item::Item(void) : owner_(NULL), typeID_(0), context_(NULL), engine_(NULL)
 {
 }
 
-Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0)
+Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), context_(NULL)
 {
 	if (typeID == 0)
 		return;
-	Engine::scoped_lock lock(*engine);
+	Engine::ScopedLock lock(*engine_);
 	
 	sqlite3* db = engine->getDb();
 	std::stringstream sql;
@@ -116,17 +116,17 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 		
 #if _DEBUG
 		typeName_ = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7));
-		attributes_[RADIUS_ATTRIBUTE_ID]    = boost::shared_ptr<Attribute>(new Attribute(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, this, "radius"));
-		attributes_[MASS_ATTRIBUTE_ID]      = boost::shared_ptr<Attribute>(new Attribute(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, this, "mass"));
-		attributes_[VOLUME_ATTRIBUTE_ID]    = boost::shared_ptr<Attribute>(new Attribute(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, this, "volume"));
-		attributes_[CAPACITY_ATTRIBUTE_ID]  = boost::shared_ptr<Attribute>(new Attribute(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, this, "capacity"));
-		attributes_[RACE_ID_ATTRIBUTE_ID]   = boost::shared_ptr<Attribute>(new Attribute(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, this, "raceID"));
+		attributes_[RADIUS_ATTRIBUTE_ID]    = new Attribute(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, this, "radius");
+		attributes_[MASS_ATTRIBUTE_ID]      = new Attribute(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, this, "mass");
+		attributes_[VOLUME_ATTRIBUTE_ID]    = new Attribute(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, this, "volume");
+		attributes_[CAPACITY_ATTRIBUTE_ID]  = new Attribute(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, this, "capacity");
+		attributes_[RACE_ID_ATTRIBUTE_ID]   = new Attribute(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, this, "raceID");
 #else
-		attributes_[RADIUS_ATTRIBUTE_ID]    = boost::shared_ptr<Attribute>(new Attribute(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, this));
-		attributes_[MASS_ATTRIBUTE_ID]      = boost::shared_ptr<Attribute>(new Attribute(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, this));
-		attributes_[VOLUME_ATTRIBUTE_ID]    = boost::shared_ptr<Attribute>(new Attribute(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, this));
-		attributes_[CAPACITY_ATTRIBUTE_ID]  = boost::shared_ptr<Attribute>(new Attribute(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, this));
-		attributes_[RACE_ID_ATTRIBUTE_ID]   = boost::shared_ptr<Attribute>(new Attribute(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, this));
+		attributes_[RADIUS_ATTRIBUTE_ID]    = new Attribute(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, this);
+		attributes_[MASS_ATTRIBUTE_ID]      = new Attribute(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, this);
+		attributes_[VOLUME_ATTRIBUTE_ID]    = new Attribute(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, this);
+		attributes_[CAPACITY_ATTRIBUTE_ID]  = new Attribute(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, this);
+		attributes_[RACE_ID_ATTRIBUTE_ID]   = new Attribute(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, this);
 #endif
 
 		sqlite3_finalize(stmt);
@@ -149,9 +149,9 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 			bool highIsGood = sqlite3_column_int(stmt, 4) != 0;
 #if _DEBUG
 			const char* attributeName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
-			attributes_[attributeID] = boost::shared_ptr<Attribute>(new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this, attributeName));
+			attributes_[attributeID] = new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this, attributeName);
 #else
-			attributes_[attributeID] = boost::shared_ptr<Attribute>(new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this));
+			attributes_[attributeID] = new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this);
 #endif
 		}
 		sqlite3_finalize(stmt);
@@ -174,9 +174,9 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 			const void* byteCode = sqlite3_column_blob(stmt, 4);
 #if _DEBUG
 			const char* effectName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
-			effects_.push_back(boost::shared_ptr<Effect>(new Effect(engine_, effectID, category, byteCode, bytes, isAssistance, isOffensive, effectName)));
+			effects_.push_back(new Effect(engine_, effectID, category, byteCode, bytes, isAssistance, isOffensive, effectName));
 #else
-			effects_.push_back(boost::shared_ptr<Effect>(new Effect(engine_, effectID, category, byteCode, bytes, isAssistance, isOffensive)));
+			effects_.push_back(new Effect(engine_, effectID, category, byteCode, bytes, isAssistance, isOffensive));
 #endif
 		}
 		sqlite3_finalize(stmt);
@@ -189,18 +189,24 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 	}
 }
 
-Item::Item(Item* owner) : owner_(owner)
+Item::Item(Item* owner) : owner_(owner), context_(NULL), engine_(NULL)
 {
 }
 
-Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(NULL), effects_(from.effects_)
+Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(NULL), context_(NULL)
 {
 	AttributesMap::const_iterator i, end = from.attributes_.end();
-	for (i = from.attributes_.begin(); i != end; i++)
+	for (i = from.attributes_.begin(); i!= end; i++)
 	{
-		boost::shared_ptr<Attribute> attribute(new Attribute(*i->second.get()));
+		Attribute* attribute = new Attribute(*(i->second));
 		attribute->setOwner(this);
 		attributes_[i->first] = attribute;
+	}
+	
+	EffectsList::const_iterator j, endj = from.effects_.end();
+	for (j = from.effects_.begin(); j != endj; j++) {
+		Effect* effect = new Effect(**j);
+		effects_.push_back(effect);
 	}
 	
 #if _DEBUG
@@ -210,14 +216,36 @@ Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), gro
 
 Item::~Item(void)
 {
+	AttributesMap::iterator i, end = attributes_.end();
+	for (i = attributes_.begin(); i!= end; i++)
+		delete i->second;
+	attributes_.clear();
+	
+	ModifiersList* lists[] = {&itemModifiers_, &locationModifiers_, &locationGroupModifiers_, &locationRequiredSkillModifiers_};
+	for (int i = 0; i < 4; i++) {
+		ModifiersList& list = *lists[i];
+		ModifiersList::iterator j, endj = list.end();
+		for (j = list.begin(); j != endj; j++)
+			delete *j;
+		list.clear();
+	}
+	
+	EffectsList::iterator j, endj = effects_.end();
+	for (j = effects_.begin(); j != endj; j++)
+		delete *j;
+	effects_.clear();
+	
+	setContext(NULL);
 }
 
-void Item::setContext(const boost::shared_ptr<Context>& context)
+void Item::setContext(const Context* context)
 {
+	if (context_)
+		delete context_;
 	context_ = context;
 }
 
-boost::shared_ptr<Item::Context> Item::getContext()
+const Item::Context* Item::getContext()
 {
 	return context_;
 }
@@ -238,14 +266,14 @@ void Item::setOwner(Item* owner)
 }
 
 
-boost::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
+Attribute* Item::getAttribute(TypeID attributeID)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;
 	else
-		return attributes_[attributeID] = boost::shared_ptr<Attribute>(new Attribute(engine_, attributeID, this, true));
+		return attributes_[attributeID] = new Attribute(engine_, attributeID, this, true);
 		//throw AttributeDidNotFoundException() << TypeIDExceptionInfo(attributeID);
 }
 
@@ -263,12 +291,12 @@ bool Item::hasAttribute(TypeID attributeID)
 		return false;
 }
 
-boost::shared_ptr<Effect> Item::getEffect(TypeID effectID)
+Effect* Item::getEffect(TypeID effectID)
 {
 	EffectsList::iterator i, end = effects_.end();
 	for (i = effects_.begin(); i != end; i++)
 		if ((*i)->getEffectID() == effectID)
-			return (*i);
+			return *i;
 	throw EffectDidNotFoundException() << TypeIDExceptionInfo(effectID);
 }
 
@@ -316,20 +344,20 @@ TypeID Item::getCategoryID() const
 
 void Item::addEffects(Effect::Category category)
 {
-	boost::shared_ptr<Environment> environment = getEnvironment();
+	Environment environment = getEnvironment();
 	EffectsList::iterator i, end = effects_.end();
 	for (i = effects_.begin(); i != end; i++)
 		if ((*i)->getCategory() == category)
-			(*i)->addEffect(environment.get());
+			(*i)->addEffect(environment);
 }
 
 void Item::removeEffects(Effect::Category category)
 {
-	boost::shared_ptr<Environment> environment = getEnvironment();
+	Environment environment = getEnvironment();
 	EffectsList::iterator i, end = effects_.end();
 	for (i = effects_.begin(); i != end; i++)
 		if ((*i)->getCategory() == category)
-			(*i)->removeEffect(environment.get());
+			(*i)->removeEffect(environment);
 }
 
 void Item::reset()
@@ -341,7 +369,7 @@ void Item::reset()
 
 std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	outIterator = std::remove_copy_if(itemModifiers_.begin(), itemModifiers_.end(), outIterator, ModifierMatchFunction(attribute->getAttributeID()));
 	if (owner_)
 	{
@@ -353,7 +381,7 @@ std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std
 
 std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	outIterator = std::remove_copy_if(locationModifiers_.begin(), locationModifiers_.end(), outIterator, ModifierMatchFunction(attribute->getAttributeID()));
 //	if (owner_)
 //		outIterator = owner_->getLocationModifiers(attribute, outIterator);
@@ -363,7 +391,7 @@ std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attrib
 
 std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	outIterator = std::remove_copy_if(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), outIterator, LocationGroupModifierMatchFunction(attribute->getAttributeID(), item->getGroupID()));
 	outIterator = std::remove_copy_if(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), outIterator, LocationRequiredSkillModifierMatchFunction(attribute->getAttributeID(), item));
 	if (owner_)
@@ -371,60 +399,72 @@ std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, A
 	return outIterator;
 }
 
-void Item::addItemModifier(boost::shared_ptr<Modifier> modifier)
+void Item::addItemModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	itemModifiers_.push_back(modifier);
 }
 
-void Item::addLocationModifier(boost::shared_ptr<Modifier> modifier)
+void Item::addLocationModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	locationModifiers_.push_back(modifier);
 }
 
-void Item::addLocationGroupModifier(boost::shared_ptr<Modifier> modifier)
+void Item::addLocationGroupModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	locationGroupModifiers_.push_back(modifier);
 }
 
-void Item::addLocationRequiredSkillModifier(boost::shared_ptr<Modifier> modifier)
+void Item::addLocationRequiredSkillModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	locationRequiredSkillModifiers_.push_back(modifier);
 }
 
-void Item::removeItemModifier(boost::shared_ptr<Modifier> modifier)
+void Item::removeItemModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(itemModifiers_.begin(), itemModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != itemModifiers_.end())
+	{
+		delete *i;
 		itemModifiers_.erase(i);
+	}
 }
 
-void Item::removeLocationModifier(boost::shared_ptr<Modifier> modifier)
+void Item::removeLocationModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationModifiers_.begin(), locationModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationModifiers_.end())
+	{
+		delete *i;
 		locationModifiers_.erase(i);
+	}
 }
 
-void Item::removeLocationGroupModifier(boost::shared_ptr<Modifier> modifier)
+void Item::removeLocationGroupModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationGroupModifiers_.end())
+	{
+		delete *i;
 		locationGroupModifiers_.erase(i);
+	}
 }
 
-void Item::removeLocationRequiredSkillModifier(boost::shared_ptr<Modifier> modifier)
+void Item::removeLocationRequiredSkillModifier(Modifier* modifier)
 {
-	Item::scoped_lock lock(*this);
+	Engine::ScopedLock lock(*engine_);
 	ModifiersList::iterator i = std::find_if(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationRequiredSkillModifiers_.end())
+	{
+		delete *i;
 		locationRequiredSkillModifiers_.erase(i);
+	}
 }
 
 #if _DEBUG
@@ -512,7 +552,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationGroupModifier*>((*i).get());
+			os << *dynamic_cast<LocationGroupModifier*>((*i));
 		}
 	}
 
@@ -528,7 +568,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationRequiredSkillModifier*>((*i).get());
+			os << *dynamic_cast<LocationRequiredSkillModifier*>((*i));
 		}
 	}
 

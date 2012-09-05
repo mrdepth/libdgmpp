@@ -8,8 +8,8 @@ namespace eufe {
 	public:
 		EffectSlotModifierInterpreter(Engine* engine, bool isAssistance, bool isOffensive);
 		virtual ~EffectSlotModifierInterpreter();
-		virtual bool addEffect(Environment* environment);
-		virtual bool removeEffect(Environment* environment);
+		virtual bool addEffect(const Environment& environment);
+		virtual bool removeEffect(const Environment& environment);
 		virtual EffectInterpreter* clone() const;
 	private:
 		Engine* engine_;

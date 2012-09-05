@@ -5,18 +5,23 @@
 
 using namespace eufe;
 
-Engine::Engine(const char* databasePath) : db_(NULL)
+Engine::Engine(const char* databasePath) : db_(NULL), gang_(NULL), area_(NULL), controlTower_(NULL)
 {
 	int result = sqlite3_open(databasePath, &db_);
 	if (result != SQLITE_OK)
 		throw SqliteException() << boost::errinfo_errno(result);
-	gang_.reset(new Gang(this));
+	gang_ = new Gang(this);
 	//gang_->addEffects(Effect::CATEGORY_GENERIC);
 }
 
 Engine::~Engine(void)
 {
-	gang_.reset();
+	if (gang_)
+		delete gang_;
+	if (area_)
+		delete area_;
+	if (controlTower_)
+		delete controlTower_;
 	if (db_)
 		sqlite3_close(db_);
 }
@@ -26,38 +31,39 @@ sqlite3* Engine::getDb()
 	return db_;
 }
 
-boost::shared_ptr<Gang> Engine::getGang()
+Gang* Engine::getGang()
 {
 	return gang_;
 }
 
-boost::shared_ptr<Area> Engine::setArea(const boost::shared_ptr<Area>& area)
+Area* Engine::setArea(Area* area)
 {
-	if (area_ != NULL)
+	if (area_) {
 		area_->removeEffects(Effect::CATEGORY_SYSTEM);
+		delete area_;
+	}
 	area_ = area;
-	if (area_ != NULL)
+	if (area_)
 		area_->addEffects(Effect::CATEGORY_SYSTEM);
-	reset(gang_.get());
-//	if (controlTower_ != NULL)
-//		reset(controlTower_.get());
+	reset(gang_);
+
 	return area_;
 }
 
-boost::shared_ptr<Area> Engine::setArea(TypeID typeID)
+Area* Engine::setArea(TypeID typeID)
 {
-	return setArea(boost::shared_ptr<Area>(new Area(this, typeID)));
+	return setArea(new Area(this, typeID));
 }
 
-boost::shared_ptr<ControlTower> Engine::setControlTower(const boost::shared_ptr<ControlTower>& controlTower)
+ControlTower* Engine::setControlTower(ControlTower* controlTower)
 {
-	if (controlTower_ != NULL)
+	if (controlTower_)
 	{
 		controlTower_->removeEffects(Effect::CATEGORY_GENERIC);
 		controlTower_->removeEffects(Effect::CATEGORY_ACTIVE);
 	}
 	controlTower_ = controlTower;
-	if (controlTower_ != NULL)
+	if (controlTower_)
 	{
 		controlTower_->addEffects(Effect::CATEGORY_GENERIC);
 		controlTower_->addEffects(Effect::CATEGORY_ACTIVE);
@@ -66,34 +72,34 @@ boost::shared_ptr<ControlTower> Engine::setControlTower(const boost::shared_ptr<
 	
 }
 
-boost::shared_ptr<ControlTower> Engine::setControlTower(TypeID typeID)
+ControlTower* Engine::setControlTower(TypeID typeID)
 {
-	return setControlTower(boost::shared_ptr<ControlTower>(new ControlTower(this, typeID)));
+	return setControlTower(new ControlTower(this, typeID));
 }
 
 void Engine::clearArea()
 {
-	setArea(boost::shared_ptr<Area>());
+	setArea((Area*)NULL);
 }
 
-boost::shared_ptr<Area> Engine::getArea()
+Area* Engine::getArea()
 {
 	return area_;
 }
 
-boost::shared_ptr<ControlTower> Engine::getControlTower()
+ControlTower* Engine::getControlTower()
 {
 	return controlTower_;
 }
 
 void Engine::reset(Item* item)
 {
-	if (item == NULL)
+	if (!item)
 		return;
 	
 	Item* owner = item->getOwner();
 	
-	while (owner != NULL) {
+	while (owner) {
 		item = owner;
 		owner = item->getOwner();
 	}
@@ -105,7 +111,9 @@ void Engine::reset(Item* item)
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Engine& engine)
 {
 	os << "{\"gang\":" << *engine.getGang() << ',';
-	os << "\"controlTower\":" << *engine.getControlTower() << '}';
+	if (engine.getControlTower())
+		os << "\"controlTower\":" << *engine.getControlTower();
+	os << '}';
 	return os;
 }
 

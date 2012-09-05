@@ -14,26 +14,26 @@ Charge::~Charge()
 {
 }
 
-boost::shared_ptr<Environment> Charge::getEnvironment()
+Environment Charge::getEnvironment()
 {
-	boost::shared_ptr<Environment> environment(new Environment());
-	(*environment)["Self"] = this;
+	Environment environment;
+	environment["Self"] = this;
 
 	Item* module = getOwner();
-	Item* ship = module != NULL ? module->getOwner() : NULL;
-	Item* character = ship != NULL ? ship->getOwner() : NULL;
-	Item* gang = character != NULL ? character->getOwner() : NULL;
+	Item* ship = module ? module->getOwner() : NULL;
+	Item* character = ship ? ship->getOwner() : NULL;
+	Item* gang = character ? character->getOwner() : NULL;
 	
-	if (character != NULL)
-		(*environment)["Char"] = character;
-	if (ship != NULL)
-		(*environment)["Ship"] = ship;
-	if (gang != NULL)
-		(*environment)["Gang"] = gang;
-	if (engine_->getArea() != NULL)
-		(*environment)["Area"] = engine_->getArea().get();
-	if (module != NULL)
-		(*environment)["Other"] = module;
+	if (character)
+		environment["Char"] = character;
+	if (ship)
+		environment["Ship"] = ship;
+	if (gang)
+		environment["Gang"] = gang;
+	if (engine_->getArea())
+		environment["Area"] = engine_->getArea();
+	if (module)
+		environment["Other"] = module;
 	
 	return environment;
 }

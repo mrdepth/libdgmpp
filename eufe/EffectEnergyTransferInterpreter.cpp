@@ -15,30 +15,39 @@ EffectEnergyTransferInterpreter::~EffectEnergyTransferInterpreter(void)
 {
 }
 
-bool EffectEnergyTransferInterpreter::addEffect(Environment* environment)
+bool EffectEnergyTransferInterpreter::addEffect(const Environment& environment)
 {
-	if (environment->find("Target") != environment->end())
-	{
-		(*environment)["Target"]->addItemModifier(boost::shared_ptr<Modifier>(new Modifier(CHARGE_ATTRIBUTE_ID,
-																						   Modifier::ASSOCIATION_ADD_RATE,
-																						   (*environment)["Self"]->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID).get(),
-																						   isAssistance_,
-																						   isOffensive_,
-																						   dynamic_cast<Character*>((*environment)["Char"]))));
+	Environment::const_iterator Target = environment.find("Target");
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
+	if (Target != end && Self != end && Char != end) {
+		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
+										  Modifier::ASSOCIATION_ADD_RATE,
+										  Self->second->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID),
+										  isAssistance_,
+										  isOffensive_,
+										  dynamic_cast<Character*>(Char->second));
+		Target->second->addItemModifier(modifier);
 	}
 	return 1;
 }
 
-bool EffectEnergyTransferInterpreter::removeEffect(Environment* environment)
+bool EffectEnergyTransferInterpreter::removeEffect(const Environment& environment)
 {
-	if (environment->find("Target") != environment->end())
-	{
-		(*environment)["Target"]->removeItemModifier(boost::shared_ptr<Modifier>(new Modifier(CHARGE_ATTRIBUTE_ID,
-																							  Modifier::ASSOCIATION_ADD_RATE,
-																							  (*environment)["Self"]->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID).get(),
-																							  isAssistance_,
-																							  isOffensive_,
-																							  dynamic_cast<Character*>((*environment)["Char"]))));
+	Environment::const_iterator Target = environment.find("Target");
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
+	if (Target != end && Self != end && Char != end) {
+		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
+										  Modifier::ASSOCIATION_ADD_RATE,
+										  Self->second->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID),
+										  isAssistance_,
+										  isOffensive_,
+										  dynamic_cast<Character*>(Char->second));
+		Target->second->removeItemModifier(modifier);
+		delete modifier;
 	}
 	return 1;
 }

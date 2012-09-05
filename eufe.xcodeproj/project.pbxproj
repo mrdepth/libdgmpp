@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		121D8D2215F477D80003CAA5 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121D8D2015F477D80003CAA5 /* Mutex.cpp */; };
 		121E07E81578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */; };
 		121E07EA1578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */; };
 		3700DA7314869A630026EA83 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
@@ -59,10 +60,30 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		121D8D2015F477D80003CAA5 /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mutex.cpp; sourceTree = "<group>"; };
+		121D8D2115F477D80003CAA5 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mutex.h; sourceTree = "<group>"; };
 		121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectHardPointModifierEffectInterpreter.cpp; sourceTree = "<group>"; };
 		121E07E71578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectHardPointModifierEffectInterpreter.h; sourceTree = "<group>"; };
 		121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectAdaptiveArmorHardener.cpp; sourceTree = "<group>"; };
 		121E07EB1578C193000D1480 /* EffectAdaptiveArmorHardener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectAdaptiveArmorHardener.h; sourceTree = "<group>"; };
+		1220F1A715F0F6BB00DF4A62 /* Effect.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Effect.i; sourceTree = "<group>"; };
+		1220F1AD15F0F79A00DF4A62 /* Character.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Character.i; sourceTree = "<group>"; };
+		1220F1AF15F0F80F00DF4A62 /* Skill.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Skill.i; sourceTree = "<group>"; };
+		1220F1B015F0F83300DF4A62 /* Booster.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Booster.i; sourceTree = "<group>"; };
+		1220F1B115F0F83B00DF4A62 /* Implant.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Implant.i; sourceTree = "<group>"; };
+		1220F1B315F0F88F00DF4A62 /* Ship.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Ship.i; sourceTree = "<group>"; };
+		1220F1B515F0F91E00DF4A62 /* Module.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Module.i; sourceTree = "<group>"; };
+		1220F1B715F0F95E00DF4A62 /* Drone.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Drone.i; sourceTree = "<group>"; };
+		1220F1BA15F0F9A600DF4A62 /* DamagePattern.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = DamagePattern.i; sourceTree = "<group>"; };
+		1220F1BB15F0F9D900DF4A62 /* ControlTower.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = ControlTower.i; sourceTree = "<group>"; };
+		1220F1BD15F0FA0900DF4A62 /* Structure.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Structure.i; sourceTree = "<group>"; };
+		1263B87E15F0EE13003C10EB /* Engine.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Engine.i; sourceTree = "<group>"; };
+		1263B87F15F0EE13003C10EB /* eufe.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = eufe.i; sourceTree = "<group>"; };
+		1263B88015F0EE89003C10EB /* Area.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Area.i; sourceTree = "<group>"; };
+		1263B88215F0EEC2003C10EB /* Item.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Item.i; sourceTree = "<group>"; };
+		1263B88415F0EF68003C10EB /* types.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = types.i; sourceTree = "<group>"; };
+		1263B88615F0F5E1003C10EB /* Attribute.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Attribute.i; sourceTree = "<group>"; };
+		1263B88815F0F625003C10EB /* Gang.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Gang.i; sourceTree = "<group>"; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3708AE3B14892DCC005492F5 /* Charge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
@@ -90,7 +111,7 @@
 		37AE79981487AD39003FB98A /* LocationGroupModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LocationGroupModifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37AE799A1487AF9D003FB98A /* LocationRequiredSkillModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LocationRequiredSkillModifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37AE799C1487AFA7003FB98A /* LocationRequiredSkillModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LocationRequiredSkillModifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		37B33D3D1473CA0D006B18D7 /* eufe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = eufe; sourceTree = BUILT_PRODUCTS_DIR; };
+		37B33D3D1473CA0D006B18D7 /* compiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = compiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B33D431473CA0D006B18D7 /* eufe.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = eufe.1; sourceTree = "<group>"; };
 		37B33D511473CA5E006B18D7 /* Attribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Attribute.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37B33D521473CA5E006B18D7 /* Attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Attribute.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -147,9 +168,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1263B87D15F0EE11003C10EB /* swig */ = {
+			isa = PBXGroup;
+			children = (
+				1263B87F15F0EE13003C10EB /* eufe.i */,
+				1263B87E15F0EE13003C10EB /* Engine.i */,
+				1263B88415F0EF68003C10EB /* types.i */,
+				1263B88215F0EEC2003C10EB /* Item.i */,
+				1263B88615F0F5E1003C10EB /* Attribute.i */,
+				1263B88015F0EE89003C10EB /* Area.i */,
+				1263B88815F0F625003C10EB /* Gang.i */,
+				1220F1A715F0F6BB00DF4A62 /* Effect.i */,
+				1220F1AD15F0F79A00DF4A62 /* Character.i */,
+				1220F1AF15F0F80F00DF4A62 /* Skill.i */,
+				1220F1B015F0F83300DF4A62 /* Booster.i */,
+				1220F1B115F0F83B00DF4A62 /* Implant.i */,
+				1220F1B315F0F88F00DF4A62 /* Ship.i */,
+				1220F1B515F0F91E00DF4A62 /* Module.i */,
+				1220F1B715F0F95E00DF4A62 /* Drone.i */,
+				1220F1BA15F0F9A600DF4A62 /* DamagePattern.i */,
+				1220F1BB15F0F9D900DF4A62 /* ControlTower.i */,
+				1220F1BD15F0FA0900DF4A62 /* Structure.i */,
+			);
+			path = swig;
+			sourceTree = "<group>";
+		};
 		37AAD066149A33B5004BDA18 /* eufe */ = {
 			isa = PBXGroup;
 			children = (
+				1263B87D15F0EE11003C10EB /* swig */,
 				37C1C43114755128002AC3E7 /* ThirdParty */,
 				37C1C42C14755105002AC3E7 /* Compiler */,
 				37D72CC91497A03E00B13A9D /* Effects */,
@@ -158,6 +205,8 @@
 				37BBC5921512060F00EDE204 /* Ship */,
 				37BBC5941512066600EDE204 /* ControlTower */,
 				37AC5E0A149A51C0005DEAEB /* eufe.h */,
+				121D8D2015F477D80003CAA5 /* Mutex.cpp */,
+				121D8D2115F477D80003CAA5 /* Mutex.h */,
 				37A9EC51147FA61C00B12A7F /* Area.cpp */,
 				37A9EC52147FA61C00B12A7F /* Area.h */,
 				37B33D511473CA5E006B18D7 /* Attribute.cpp */,
@@ -197,7 +246,7 @@
 		37B33D3E1473CA0D006B18D7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				37B33D3D1473CA0D006B18D7 /* eufe */,
+				37B33D3D1473CA0D006B18D7 /* compiler */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -325,7 +374,7 @@
 			);
 			name = eufe;
 			productName = eufe;
-			productReference = 37B33D3D1473CA0D006B18D7 /* eufe */;
+			productReference = 37B33D3D1473CA0D006B18D7 /* compiler */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -393,6 +442,7 @@
 				37BBC599151219B500EDE204 /* Structure.cpp in Sources */,
 				121E07E81578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp in Sources */,
 				121E07EA1578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp in Sources */,
+				121D8D2215F477D80003CAA5 /* Mutex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,14 +500,20 @@
 		37B33D481473CA0D006B18D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = compiler;
 			};
 			name = Debug;
 		};
 		37B33D491473CA0D006B18D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = compiler;
 			};
 			name = Release;
 		};

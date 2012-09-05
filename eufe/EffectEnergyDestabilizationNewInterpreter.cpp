@@ -15,30 +15,40 @@ EffectEnergyDestabilizationNewInterpreter::~EffectEnergyDestabilizationNewInterp
 {
 }
 
-bool EffectEnergyDestabilizationNewInterpreter::addEffect(Environment* environment)
+
+bool EffectEnergyDestabilizationNewInterpreter::addEffect(const Environment& environment)
 {
-	if (environment->find("Target") != environment->end())
-	{
-		(*environment)["Target"]->addItemModifier(boost::shared_ptr<Modifier>(new Modifier(CHARGE_ATTRIBUTE_ID,
-																						   Modifier::ASSOCIATION_SUB_RATE,
-																						   (*environment)["Self"]->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID).get(),
-																						   isAssistance_,
-																						   isOffensive_,
-																						   dynamic_cast<Character*>((*environment)["Char"]))));
+	Environment::const_iterator Target = environment.find("Target");
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
+	if (Target != end && Self != end && Char != end) {
+		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
+										  Modifier::ASSOCIATION_SUB_RATE,
+										  Self->second->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID),
+										  isAssistance_,
+										  isOffensive_,
+										  dynamic_cast<Character*>(Char->second));
+		Target->second->addItemModifier(modifier);
 	}
 	return 1;
 }
 
-bool EffectEnergyDestabilizationNewInterpreter::removeEffect(Environment* environment)
+bool EffectEnergyDestabilizationNewInterpreter::removeEffect(const Environment& environment)
 {
-	if (environment->find("Target") != environment->end())
-	{
-		(*environment)["Target"]->removeItemModifier(boost::shared_ptr<Modifier>(new Modifier(CHARGE_ATTRIBUTE_ID,
-																							  Modifier::ASSOCIATION_SUB_RATE,
-																							  (*environment)["Self"]->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID).get(),
-																							  isAssistance_,
-																							  isOffensive_,
-																							  dynamic_cast<Character*>((*environment)["Char"]))));
+	Environment::const_iterator Target = environment.find("Target");
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator end = environment.end();
+	if (Target != end && Self != end && Char != end) {
+		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
+										  Modifier::ASSOCIATION_SUB_RATE,
+										  Self->second->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID),
+										  isAssistance_,
+										  isOffensive_,
+										  dynamic_cast<Character*>(Char->second));
+		Target->second->removeItemModifier(modifier);
+		delete modifier;
 	}
 	return 1;
 }

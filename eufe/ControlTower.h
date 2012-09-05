@@ -12,14 +12,14 @@ namespace eufe {
 		ControlTower(Engine* engine, TypeID typeID);
 		virtual ~ControlTower(void);
 		
-		boost::shared_ptr<Structure> addStructure(const boost::shared_ptr<Structure>& structure);
-		boost::shared_ptr<Structure> addStructure(TypeID typeID);
-		void removeStructure(const boost::shared_ptr<Structure>& structure);
+		Structure* addStructure(Structure* structure);
+		Structure* addStructure(TypeID typeID);
+		void removeStructure(Structure* structure);
 		
 		const StructuresList& getStructures();
-		bool canFit(const boost::shared_ptr<Structure>& structure);
+		bool canFit(Structure* structure);
 
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 		
 		virtual void reset();
 		

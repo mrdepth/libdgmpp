@@ -13,14 +13,14 @@ namespace eufe {
 		Drone(const Drone& from);
 		virtual ~Drone(void);
 		
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 		
 		void setTarget(Ship* target = NULL);
 		void clearTarget();
 		Ship* getTarget();
 
 		bool dealsDamage();
-		boost::shared_ptr<Charge> getCharge();
+		Charge* getCharge();
 		
 		void setActive(bool active);
 		bool isActive();
@@ -41,7 +41,7 @@ namespace eufe {
 
 	private:
 		Ship* target_;
-		boost::shared_ptr<Charge> charge_;
+		Charge* charge_;
 		
 		float volley_;
 		float dps_;

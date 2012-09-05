@@ -136,27 +136,34 @@ void CapacitorSimulator::internalReset()
 	std::list<Module*> drains;
 	std::list<Drone*> drainDrones;
 	{
-		ModulesList::const_iterator i, end = ship_->getModules().end();
-		for (i = ship_->getModules().begin(); i != end; i++)
 		{
-			if ((*i)->getState() >= Module::STATE_ACTIVE)
-				drains.push_back((*i).get());
+			const ModulesList& modules = ship_->getModules();
+			ModulesList::const_iterator i, end = modules.end();
+			for (i = modules.begin(); i != end; i++)
+			{
+				if ((*i)->getState() >= Module::STATE_ACTIVE)
+					drains.push_back(*i);
+			}
 		}
 		
-		ProjectedModulesList::const_iterator j, endj = ship_->getProjectedModules().end();
-		for (j = ship_->getProjectedModules().begin(); j != endj; j++)
 		{
-			if ((*j)->getState() >= Module::STATE_ACTIVE)
-				drains.push_back((*j));
+			const ModulesList& projectedModules = ship_->getProjectedModules();
+			ModulesList::const_iterator i, end = projectedModules.end();
+			for (i = projectedModules.begin(); i != end; i++)
+			{
+				if ((*i)->getState() >= Module::STATE_ACTIVE)
+					drains.push_back(*i);
+			}
 		}
 
 		if (!isDisallowedOffensiveModifiers)
 		{
-			ProjectedDronesList::const_iterator k, endk = ship_->getProjectedDrones().end();
-			for (k = ship_->getProjectedDrones().begin(); k != endk; k++)
+			const DronesList& projectedDrones = ship_->getProjectedDrones();
+			DronesList::const_iterator i, end = projectedDrones.end();
+			for (i = projectedDrones.begin(); i != end; i++)
 			{
-				if ((*k)->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
-					drainDrones.push_back((*k));
+				if ((*i)->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
+					drainDrones.push_back((*i));
 			}
 		}
 	}
@@ -168,7 +175,7 @@ void CapacitorSimulator::internalReset()
 	
 	bool disablePeriod = false;
 	
-	std::list<Module*>::iterator i, end = drains.end();
+	ModulesList::iterator i, end = drains.end();
 	for (i = drains.begin(); i != end; i++)
 	{
 		Module* module = *i;
@@ -221,7 +228,7 @@ void CapacitorSimulator::internalReset()
 		std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
 	}
 	
-	std::list<Drone*>::iterator j, endj = drainDrones.end();
+	DronesList::iterator j, endj = drainDrones.end();
 	for (j = drainDrones.begin(); j != endj; j++)
 	{
 		Drone* drone = *j;

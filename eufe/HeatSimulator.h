@@ -27,7 +27,7 @@ namespace eufe {
 		Ship* ship_;
 		bool isCalculated_;
 		typedef std::vector<State*> StatesVector;
-		typedef std::vector<boost::shared_ptr<Module> > ModulesVector;
+		typedef std::vector<Module*> ModulesVector;
 		StatesVector states_;
 
 		void simulate(const ModulesVector& modules);

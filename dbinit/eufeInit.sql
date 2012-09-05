@@ -1,3 +1,3 @@
 attach database :memory as eufe;
-.read "./eufe/eufe.sql"
+.read "./eufe.sql"
 .backup eufe eufe.sqlite

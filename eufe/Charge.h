@@ -10,7 +10,7 @@ namespace eufe {
 		Charge(Engine* engine, TypeID typeID, Item* owner);
 		virtual ~Charge(void);
 		
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 		
 	};
 	

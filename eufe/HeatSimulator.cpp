@@ -44,8 +44,9 @@ void HeatSimulator::simulate()
 		medSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
 		lowSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
 		
-		ModulesList::const_iterator i, end = ship_->getModules().end();
-		for (i = ship_->getModules().begin(); i != end; i++)
+		const ModulesList& modules = ship_->getModules();
+		ModulesList::const_iterator i, end = modules.end();
+		for (i = modules.begin(); i != end; i++)
 		{
 			Module::Slot slot = (*i)->getSlot();
 			if (slot == Module::SLOT_HI)
@@ -74,7 +75,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 		states_.clear();
 	}
 
-	const boost::shared_ptr<Module>& module = *modules.begin();
+	Module* module = *modules.begin();
 	Module::Slot slot = module->getSlot();
 	float heatCapacity = 0;
 	float heatGenerationMultiplier = ship_->getAttribute(HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID)->getValue();
@@ -105,7 +106,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 
 	for (int i = 0; i < n; i++)
 	{
-		boost::shared_ptr<Module> module = modules[i];
+		Module* module = modules[i];
 		modulesHP[i] = module->getAttribute(HP_ATTRIBUTE_ID)->getValue();
 		Module::State state = module->getState();
 		if (state >= Module::STATE_ONLINE)

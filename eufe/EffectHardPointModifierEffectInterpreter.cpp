@@ -15,46 +15,59 @@ EffectHardPointModifierEffectInterpreter::~EffectHardPointModifierEffectInterpre
 {
 }
 
-bool EffectHardPointModifierEffectInterpreter::addEffect(Environment* environment)
+bool EffectHardPointModifierEffectInterpreter::addEffect(const Environment& environment)
 {
-	if (environment->find("Ship") != environment->end())
-	{
-		Item* ship = (*environment)["Ship"];
-		ship->addItemModifier(boost::shared_ptr<Modifier>(new Modifier(LAUNCHER_SLOTS_LEFT_ATTRIBUTE_ID,
-																	   Modifier::ASSOCIATION_MOD_ADD,
-																	   (*environment)["Self"]->getAttribute(LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID).get(),
-																	   isAssistance_,
-																	   isOffensive_,
-																	   dynamic_cast<Character*>((*environment)["Char"]))));
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator Ship = environment.find("Ship");
+	Environment::const_iterator end = environment.end();
+	if (Ship != end && Self != end && Char != end) {
+		Modifier* modifierLauncher = new Modifier(LAUNCHER_SLOTS_LEFT_ATTRIBUTE_ID,
+												  Modifier::ASSOCIATION_MOD_ADD,
+												  Self->second->getAttribute(LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
+												  isAssistance_,
+												  isOffensive_,
+												  dynamic_cast<Character*>(Char->second));
 		
-		ship->addItemModifier(boost::shared_ptr<Modifier>(new Modifier(TURRET_SLOTS_LEFT_ATTRIBUTE_ID,
-																	   Modifier::ASSOCIATION_MOD_ADD,
-																	   (*environment)["Self"]->getAttribute(TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID).get(),
-																	   isAssistance_,
-																	   isOffensive_,
-																	   dynamic_cast<Character*>((*environment)["Char"]))));
+		Modifier* modifierTurrent = new Modifier(TURRET_SLOTS_LEFT_ATTRIBUTE_ID,
+												 Modifier::ASSOCIATION_MOD_ADD,
+												 Self->second->getAttribute(TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
+												 isAssistance_,
+												 isOffensive_,
+												 dynamic_cast<Character*>(Char->second));
+		
+		Ship->second->addItemModifier(modifierLauncher);
+		Ship->second->addItemModifier(modifierTurrent);
 	}
 	return 1;
 }
 
-bool EffectHardPointModifierEffectInterpreter::removeEffect(Environment* environment)
+bool EffectHardPointModifierEffectInterpreter::removeEffect(const Environment& environment)
 {
-	if (environment->find("Ship") != environment->end())
-	{
-		Item* ship = (*environment)["Ship"];
-		ship->removeItemModifier(boost::shared_ptr<Modifier>(new Modifier(LAUNCHER_SLOTS_LEFT_ATTRIBUTE_ID,
-																		  Modifier::ASSOCIATION_MOD_ADD,
-																		  (*environment)["Self"]->getAttribute(LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID).get(),
-																		  isAssistance_,
-																		  isOffensive_,
-																		  dynamic_cast<Character*>((*environment)["Char"]))));
+	Environment::const_iterator Self = environment.find("Self");
+	Environment::const_iterator Char = environment.find("Char");
+	Environment::const_iterator Ship = environment.find("Ship");
+	Environment::const_iterator end = environment.end();
+	if (Ship != end && Self != end && Char != end) {
+		Modifier* modifierLauncher = new Modifier(LAUNCHER_SLOTS_LEFT_ATTRIBUTE_ID,
+												  Modifier::ASSOCIATION_MOD_ADD,
+												  Self->second->getAttribute(LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
+												  isAssistance_,
+												  isOffensive_,
+												  dynamic_cast<Character*>(Char->second));
 		
-		ship->removeItemModifier(boost::shared_ptr<Modifier>(new Modifier(TURRET_SLOTS_LEFT_ATTRIBUTE_ID,
-																		  Modifier::ASSOCIATION_MOD_ADD,
-																		  (*environment)["Self"]->getAttribute(TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID).get(),
-																		  isAssistance_,
-																		  isOffensive_,
-																		  dynamic_cast<Character*>((*environment)["Char"]))));
+		Modifier* modifierTurrent = new Modifier(TURRET_SLOTS_LEFT_ATTRIBUTE_ID,
+												 Modifier::ASSOCIATION_MOD_ADD,
+												 Self->second->getAttribute(TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
+												 isAssistance_,
+												 isOffensive_,
+												 dynamic_cast<Character*>(Char->second));
+		
+		Ship->second->removeItemModifier(modifierLauncher);
+		Ship->second->removeItemModifier(modifierTurrent);
+
+		delete modifierLauncher;
+		delete modifierTurrent;
 	}
 	return 1;
 }

@@ -41,7 +41,7 @@ namespace eufe {
 		Module(const Module& from);
 		virtual ~Module(void);
 
-		virtual boost::shared_ptr<Attribute> getAttribute(TypeID attributeID);
+		virtual Attribute* getAttribute(TypeID attributeID);
 
 		Slot getSlot();
 		Hardpoint getHardpoint();
@@ -49,21 +49,21 @@ namespace eufe {
 		State getState();
 		virtual void setState(State state);
 
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
 		virtual void reset();
 		
-		boost::shared_ptr<Charge> setCharge(const boost::shared_ptr<Charge>& charge);
-		boost::shared_ptr<Charge> setCharge(TypeID typeID);
+		Charge* setCharge(Charge* charge);
+		Charge* setCharge(TypeID typeID);
 		void clearCharge();
-		boost::shared_ptr<Charge> getCharge();
-		const std::list<TypeID>& getChargeGroups();
+		Charge* getCharge();
+		const std::vector<TypeID>& getChargeGroups();
 		int getChargeSize();
 		void removeCharge();
-		bool canFit(const boost::shared_ptr<Charge>& charge);
+		bool canFit(Charge* charge);
 		bool requireTarget();
 		void setTarget(Ship* target = NULL);
 		void clearTarget();
@@ -103,8 +103,8 @@ namespace eufe {
 		bool forceReload_;
 		Slot slot_;
 		Hardpoint hardpoint_;
-		boost::shared_ptr<Charge> charge_;
-		std::list<TypeID> chargeGroups_;
+		Charge* charge_;
+		std::vector<TypeID> chargeGroups_;
 		Ship* target_;
 		float reloadTime_;
 		int shots_;

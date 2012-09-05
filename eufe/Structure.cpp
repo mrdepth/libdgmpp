@@ -4,6 +4,7 @@
 #include "Attribute.h"
 #include "ControlTower.h"
 #include "DamagePattern.h"
+#include <math.h>
 
 using namespace eufe;
 
@@ -35,7 +36,7 @@ void Structure::setState(State state)
 			if (state_ >= STATE_ONLINE && state < STATE_ONLINE)
 			{
 				removeEffects(Effect::CATEGORY_PASSIVE);
-				getEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID)->removeEffect(getEnvironment().get());
+				getEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID)->removeEffect(getEnvironment());
 			}
 		}
 		else if (state > state_)
@@ -43,7 +44,7 @@ void Structure::setState(State state)
 			if (state_ < STATE_ONLINE && state >= STATE_ONLINE)
 			{
 				addEffects(Effect::CATEGORY_PASSIVE);
-				getEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID)->addEffect(getEnvironment().get());
+				getEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID)->addEffect(getEnvironment());
 			}
 			if (state_ < STATE_ACTIVE && state >= STATE_ACTIVE)
 			{

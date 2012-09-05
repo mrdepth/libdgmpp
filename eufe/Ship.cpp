@@ -31,10 +31,10 @@ struct Repairer
 	float effectivity;
 };
 
-class RepairersEffectivityCompare : public std::binary_function<const Repairer*, const Repairer*, bool>
+class RepairersEffectivityCompare : public std::binary_function<const boost::shared_ptr<Repairer>&, const boost::shared_ptr<Repairer>&, bool>
 {
 public:
-	bool operator() (const Repairer* a, const Repairer* b)
+	bool operator() (const boost::shared_ptr<Repairer>& a, const boost::shared_ptr<Repairer>& b)
 	{
 		return a->effectivity > b->effectivity;
 	}
@@ -50,22 +50,33 @@ Ship::~Ship(void)
 {
 	if (projectedModules_.size() > 0)
 	{
-		std::list<Module*> projectedModulesCopy = projectedModules_;
-		std::list<Module*>::iterator i, end = projectedModulesCopy.end();
+		ModulesList projectedModulesCopy = projectedModules_;
+		ModulesList::iterator i, end = projectedModulesCopy.end();
 		for (i = projectedModulesCopy.begin(); i != end; i++)
 			(*i)->clearTarget();
 	}
 	if (projectedDrones_.size() > 0)
 	{
-		std::list<Drone*> projectedDronesCopy = projectedDrones_;
-		std::list<Drone*>::iterator i, end = projectedDronesCopy.end();
+		DronesList projectedDronesCopy = projectedDrones_;
+		DronesList::iterator i, end = projectedDronesCopy.end();
 		for (i = projectedDronesCopy.begin(); i != end; i++)
 			(*i)->clearTarget();
-		
+	}
+
+	{
+		ModulesList::iterator i, end = modules_.end();
+		for (i = modules_.begin(); i != end; i++)
+			delete *i;
+	}
+	
+	{
+		DronesList::iterator i, end = drones_.end();
+		for (i = drones_.begin(); i != end; i++)
+			delete *i;
 	}
 }
 
-boost::shared_ptr<Module> Ship::addModule(const boost::shared_ptr<Module>& module)
+Module* Ship::addModule(Module* module)
 {
 	if (canFit(module))
 	{
@@ -80,26 +91,29 @@ boost::shared_ptr<Module> Ship::addModule(const boost::shared_ptr<Module>& modul
 		engine_->reset(this);
 		return module;
 	}
-	else
-		return boost::shared_ptr<Module>();
+	else {
+		delete module;
+		return NULL;
+	}
 }
 
-boost::shared_ptr<Module> Ship::addModule(TypeID typeID)
+Module* Ship::addModule(TypeID typeID)
 {
-	return addModule(boost::shared_ptr<Module>(new Module(engine_, typeID, this)));
+	return addModule(new Module(engine_, typeID, this));
 }
 
-void Ship::removeModule(const boost::shared_ptr<Module>& module)
+void Ship::removeModule(Module* module)
 {
 	module->setState(Module::STATE_OFFLINE);
 	module->clearTarget();
 	module->removeEffects(Effect::CATEGORY_GENERIC);
 
 	modules_.remove(module);
+	delete module;
 	engine_->reset(this);
 }
 
-boost::shared_ptr<Drone> Ship::addDrone(const boost::shared_ptr<Drone>& drone)
+Drone* Ship::addDrone(Drone* drone)
 {
 	drones_.push_back(drone);
 	drone->setOwner(this);
@@ -111,18 +125,18 @@ boost::shared_ptr<Drone> Ship::addDrone(const boost::shared_ptr<Drone>& drone)
 	return drone;
 }
 
-boost::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
+Drone* Ship::addDrone(TypeID typeID)
 {
-	return addDrone(boost::shared_ptr<Drone>(new Drone(engine_, typeID, this)));
-	
+	return addDrone(new Drone(engine_, typeID, this));
 }
 
-void Ship::removeDrone(const boost::shared_ptr<Drone>& drone)
+void Ship::removeDrone(Drone* drone)
 {
 	drone->removeEffects(Effect::CATEGORY_TARGET);
 	drone->removeEffects(Effect::CATEGORY_GENERIC);
 	
 	drones_.remove(drone);
+	delete drone;
 	engine_->reset(this);
 }
 
@@ -145,17 +159,17 @@ const DronesList& Ship::getDrones()
 	return drones_;
 }
 
-const ProjectedModulesList& Ship::getProjectedModules()
+const ModulesList& Ship::getProjectedModules()
 {
 	return projectedModules_;
 }
 
-const ProjectedDronesList& Ship::getProjectedDrones()
+const DronesList& Ship::getProjectedDrones()
 {
 	return projectedDrones_;
 }
 
-bool Ship::canFit(const boost::shared_ptr<Module>& module)
+bool Ship::canFit(Module* module)
 {
 	if (getFreeSlots(module->getSlot()) == 0)
 		return false;
@@ -238,7 +252,7 @@ bool Ship::isDisallowedAssistance()
 					(*i)->hasAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID) &&
 					(*i)->getAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID)->getValue() != 0)
 				{
-					if ((*i)->getGroupID() == WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID && (*i)->getCharge() != NULL)
+					if ((*i)->getGroupID() == WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID && (*i)->getCharge())
 						continue;
 					disallowAssistance_ = DISALLOWED;
 					break;
@@ -274,20 +288,20 @@ bool Ship::isDisallowedOffensiveModifiers()
 	return disallowOffensiveModifiers_ == DISALLOWED;
 }
 
-boost::shared_ptr<Environment> Ship::getEnvironment()
+Environment Ship::getEnvironment()
 {
-	boost::shared_ptr<Environment> environment(new Environment());
-	(*environment)["Self"] = this;
-	(*environment)["Ship"] = this;
+	Environment environment;
+	environment["Self"] = this;
+	environment["Ship"] = this;
 	Item* character = getOwner();
-	Item* gang = character != NULL ? character->getOwner() : NULL;
+	Item* gang = character ? character->getOwner() : NULL;
 	
-	if (character != NULL)
-		(*environment)["Char"] = character;
-	if (gang != NULL)
-		(*environment)["Gang"] = gang;
-	if (engine_->getArea() != NULL)
-		(*environment)["Area"] = engine_->getArea().get();
+	if (character)
+		environment["Char"] = character;
+	if (gang)
+		environment["Gang"] = gang;
+	if (engine_->getArea())
+		environment["Area"] = engine_->getArea();
 	return environment;
 }
 
@@ -295,13 +309,17 @@ void Ship::reset()
 {
 	Item::reset();
 	
-	ModulesList::iterator i, end = modules_.end();
-	for (i = modules_.begin(); i != end; i++)
-		(*i)->reset();
+	{
+		ModulesList::iterator i, end = modules_.end();
+		for (i = modules_.begin(); i != end; i++)
+			(*i)->reset();
+	}
 	
-	DronesList::iterator j, endj = drones_.end();
-	for (j = drones_.begin(); j != endj; j++)
-		(*j)->reset();
+	{
+		DronesList::iterator i, end = drones_.end();
+		for (i = drones_.begin(); i != end; i++)
+			(*i)->reset();
+	}
 	
 	capacitorSimulator_.reset();
 	heatSimulator_.reset();
@@ -326,18 +344,21 @@ void Ship::addEffects(Effect::Category category)
 	Item::addEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		ModulesList::iterator i, end = modules_.end();
-		for (i = modules_.begin(); i != end; i++)
 		{
-			(*i)->addEffects(Effect::CATEGORY_GENERIC);
+			ModulesList::iterator i, end = modules_.end();
+			for (i = modules_.begin(); i != end; i++)
+				(*i)->addEffects(Effect::CATEGORY_GENERIC);
 		}
-		boost::shared_ptr<Area> area = engine_->getArea();
-		if (area != NULL)
-			area->addEffectsToShip(this);
 		
-		DronesList::iterator j, endj = drones_.end();
-		for (j = drones_.begin(); j != endj; j++)
-			(*j)->addEffects(Effect::CATEGORY_GENERIC);
+		{
+			DronesList::iterator i, end = drones_.end();
+			for (i = drones_.begin(); i != end; i++)
+				(*i)->addEffects(Effect::CATEGORY_GENERIC);
+		}
+
+		Area* area = engine_->getArea();
+		if (area)
+			area->addEffectsToShip(this);
 	}
 }
 
@@ -346,27 +367,33 @@ void Ship::removeEffects(Effect::Category category)
 	Item::removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		ModulesList::iterator i, end = modules_.end();
-		for (i = modules_.begin(); i != end; i++)
-			(*i)->removeEffects(Effect::CATEGORY_GENERIC);
-		boost::shared_ptr<Area> area = engine_->getArea();
-		if (area != NULL)
-			area->removeEffectsFromShip(this);
+		{
+			ModulesList::iterator i, end = modules_.end();
+			for (i = modules_.begin(); i != end; i++)
+				(*i)->removeEffects(Effect::CATEGORY_GENERIC);
+		}
 		
-		DronesList::iterator j, endj = drones_.end();
-		for (j = drones_.begin(); j != endj; j++)
-			(*j)->removeEffects(Effect::CATEGORY_GENERIC);
+		{
+			DronesList::iterator i, end = drones_.end();
+			for (i = drones_.begin(); i != end; i++)
+				(*i)->removeEffects(Effect::CATEGORY_GENERIC);
+		}
+
+
+		Area* area = engine_->getArea();
+		if (area)
+			area->removeEffectsFromShip(this);
 	}
 }
 
-void Ship::addLocationGroupModifier(boost::shared_ptr<Modifier> modifier)
+void Ship::addLocationGroupModifier(Modifier* modifier)
 {
 	Item::addLocationGroupModifier(modifier);
 	if (modifier->getAttributeID() == ACTIVATION_BLOCKED_ATTRIBUTE_ID)
 		updateActiveStatus();
 }
 
-void Ship::addLocationRequiredSkillModifier(boost::shared_ptr<Modifier> modifier)
+void Ship::addLocationRequiredSkillModifier(Modifier* modifier)
 {
 	Item::addLocationRequiredSkillModifier(modifier);
 	if (modifier->getAttributeID() == ACTIVATION_BLOCKED_ATTRIBUTE_ID)
@@ -491,8 +518,8 @@ int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 
 float Ship::getCalibrationUsed()
 {
-	ModulesList::iterator i, end = modules_.end();
 	float calibration = 0;
+	ModulesList::iterator i, end = modules_.end();
 	for (i = modules_.begin(); i != end; i++)
 		if ((*i)->getSlot() == Module::SLOT_RIG)
 			calibration += (*i)->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
@@ -526,8 +553,8 @@ float Ship::getTotalCpu()
 
 float Ship::getDroneBandwidthUsed()
 {
-	DronesList::iterator i, end = drones_.end();
 	float bandwidth = 0;
+	DronesList::iterator i, end = drones_.end();
 	for (i = drones_.begin(); i != end; i++)
 		if ((*i)->isActive())
 			bandwidth += (*i)->getAttribute(DRONE_BANDWIDTH_USED_ATTRIBUTE_ID)->getValue();
@@ -541,8 +568,8 @@ float Ship::getTotalDroneBandwidth()
 
 float Ship::getDroneBayUsed()
 {
-	DronesList::iterator i, end = drones_.end();
 	float volume = 0;
+	DronesList::iterator i, end = drones_.end();
 	for (i = drones_.begin(); i != end; i++)
 		volume += (*i)->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
@@ -640,7 +667,7 @@ const Tank& Ship::getSustainableTank()
 
 			sustainableTank_ = getTank();
 			
-			std::list<Repairer*> repairers;
+			std::list<boost::shared_ptr<Repairer> > repairers;
 			float capUsed = getCapUsed();
 			
 			TypeID attributes[] = {ARMOR_DAMAGE_ATTRIBUTE_ID, DAMAGE_ATTRIBUTE_ID, SHIELD_CHARGE_ATTRIBUTE_ID};
@@ -650,15 +677,15 @@ const Tank& Ship::getSustainableTank()
 			for (int i = 0; i < 3; i++)
 			{
 				ModifiersList modifiers;
-				getModifiers(getAttribute(attributes[i]).get(), std::inserter(modifiers, modifiers.begin()));
-				ModifiersList::iterator j, end = modifiers.end();
-				for (j = modifiers.begin(); j != end; j++)
+				getModifiers(getAttribute(attributes[i]), std::inserter(modifiers, modifiers.begin()));
+				ModifiersList::iterator j, endj = modifiers.end();
+				for (j = modifiers.begin(); j != endj; j++)
 				{
 					Modifier::Association association = (*j)->getAssociation();
 					if (association == Modifier::ASSOCIATION_ADD_RATE || Modifier::ASSOCIATION_SUB_RATE)
 					{
 						Item* character = (*j)->getCharacter();
-						bool projected = character != NULL && character != currentCharacter;
+						bool projected = character && character != currentCharacter;
 						
 						Item* item = (*j)->getModifier()->getOwner();
 						if (!projected && item->getCategoryID() == MODULE_CATEGORY_ID)
@@ -666,7 +693,7 @@ const Tank& Ship::getSustainableTank()
 							Module* module = dynamic_cast<Module*>(item);
 							assert(module);
 							
-							Repairer* repairer = new Repairer;
+							boost::shared_ptr<Repairer> repairer (new Repairer);
 							repairer->type = types[i];
 							repairer->hpPerSec = (*j)->getValue();
 							repairer->capPerSec = module->getCapUse();
@@ -682,10 +709,10 @@ const Tank& Ship::getSustainableTank()
 			
 			float totalPeakRecharge = getCapRecharge();
 
-			std::list<Repairer*>::iterator i, end = repairers.end();
-			for (i = repairers.begin(); i != end; i++)
+			std::list<boost::shared_ptr<Repairer> >::iterator j, endj = repairers.end();
+			for (j = repairers.begin(); j != endj; j++)
 			{
-				Repairer* repairer = *i;
+				Repairer* repairer = j->get();
 				if (capUsed > totalPeakRecharge)
 					break;
 
@@ -776,19 +803,22 @@ float Ship::getDroneVolley()
 void Ship::calculateDamageStats()
 {
 	weaponDps_ = weaponVolley_ = 0;
-	ModulesList::iterator i, end = modules_.end();
-	for (i = modules_.begin(); i != end; i++)
 	{
-		weaponDps_ += (*i)->getDps();
-		weaponVolley_ += (*i)->getVolley();
+		ModulesList::iterator i, end = modules_.end();
+		for (i = modules_.begin(); i != end; i++)
+		{
+			weaponDps_ += (*i)->getDps();
+			weaponVolley_ += (*i)->getVolley();
+		}
 	}
 	
 	droneDps_ = droneVolley_ = 0;
-	DronesList::iterator j, endj = drones_.end();
-	for (j = drones_.begin(); j != endj; j++)
 	{
-		droneDps_ += (*j)->getDps();
-		droneVolley_ += (*j)->getVolley();
+		DronesList::iterator i, end = drones_.end();
+		for (i = drones_.begin(); i != end; i++) {
+			droneDps_ += (*i)->getDps();
+			droneVolley_ += (*i)->getVolley();
+		}
 	}
 }
 
@@ -903,8 +933,8 @@ int Ship::getMaxActiveDrones()
 
 int Ship::getActiveDrones()
 {
-	DronesList::iterator i, end = drones_.end();
 	int n = 0;
+	DronesList::iterator i, end = drones_.end();
 	for (i = drones_.begin(); i != end; i++)
 		if ((*i)->isActive())
 			n++;
@@ -1026,7 +1056,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationGroupModifier*>((*i).get());
+			os << *dynamic_cast<LocationGroupModifier*>(*i);
 		}
 	}
 	
@@ -1042,7 +1072,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationRequiredSkillModifier*>((*i).get());
+			os << *dynamic_cast<LocationRequiredSkillModifier*>(*i);
 		}
 	}
 

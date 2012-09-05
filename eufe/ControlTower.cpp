@@ -23,7 +23,7 @@ ControlTower::~ControlTower(void)
 {
 }
 
-boost::shared_ptr<Structure> ControlTower::addStructure(const boost::shared_ptr<Structure>& structure)
+Structure* ControlTower::addStructure(Structure* structure)
 {
 	if (canFit(structure))
 	{
@@ -39,20 +39,21 @@ boost::shared_ptr<Structure> ControlTower::addStructure(const boost::shared_ptr<
 		return structure;
 	}
 	else
-		return boost::shared_ptr<Structure>();
+		return NULL;
 }
 
-boost::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
+Structure* ControlTower::addStructure(TypeID typeID)
 {
-	return addStructure(boost::shared_ptr<Structure>(new Structure(engine_, typeID, this)));
+	return addStructure(new Structure(engine_, typeID, this));
 }
 
-void ControlTower::removeStructure(const boost::shared_ptr<Structure>& structure)
+void ControlTower::removeStructure(Structure* structure)
 {
 	structure->setState(Structure::STATE_OFFLINE);
 	structure->removeEffects(Effect::CATEGORY_GENERIC);
 	
 	structures_.remove(structure);
+	delete structure;
 	engine_->reset(this);
 }
 
@@ -61,7 +62,7 @@ const StructuresList& ControlTower::getStructures()
 	return structures_;
 }
 
-bool ControlTower::canFit(const boost::shared_ptr<Structure>& structure)
+bool ControlTower::canFit(Structure* structure)
 {
 	if (structure->getSlot() != Structure::SLOT_STRUCTURE)
 		return false;
@@ -71,14 +72,14 @@ bool ControlTower::canFit(const boost::shared_ptr<Structure>& structure)
 		return false;
 }
 
-boost::shared_ptr<Environment> ControlTower::getEnvironment()
+Environment ControlTower::getEnvironment()
 {
-	boost::shared_ptr<Environment> environment(new Environment());
-	(*environment)["Self"] = this;
-	(*environment)["Ship"] = this;
+	Environment environment;
+	environment["Self"] = this;
+	environment["Ship"] = this;
 	
-	if (engine_->getArea() != NULL)
-		(*environment)["Area"] = engine_->getArea().get();
+	if (engine_->getArea())
+		environment["Area"] = engine_->getArea();
 	return environment;
 }
 
@@ -113,9 +114,7 @@ void ControlTower::addEffects(Effect::Category category)
 	{
 		StructuresList::iterator i, end = structures_.end();
 		for (i = structures_.begin(); i != end; i++)
-		{
 			(*i)->addEffects(Effect::CATEGORY_GENERIC);
-		}
 //		boost::shared_ptr<Area> area = engine_->getArea();
 //		if (area != NULL)
 //			area->addEffectsToShip(this);
@@ -384,7 +383,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationGroupModifier*>((*i).get());
+			os << *dynamic_cast<LocationGroupModifier*>(*i);
 		}
 	}
 	
@@ -400,7 +399,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationRequiredSkillModifier*>((*i).get());
+			os << *dynamic_cast<LocationRequiredSkillModifier*>(*i);
 		}
 	}
 	

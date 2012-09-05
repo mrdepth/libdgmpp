@@ -8,22 +8,22 @@
 
 using namespace eufe;
 
-Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, owner), isActive_(true), target_(NULL)
+Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, owner), isActive_(true), target_(NULL), charge_(NULL)
 {
 	if (hasAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID))
 	{
 		TypeID typeID = static_cast<TypeID>(getAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID)->getValue());
-		charge_.reset(new Charge(engine, typeID, this));
+		charge_ = new Charge(engine, typeID, this);
 		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
 
-Drone::Drone(const Drone& from) : Item(from), isActive_(from.isActive_), target_(NULL)
+Drone::Drone(const Drone& from) : Item(from), isActive_(from.isActive_), target_(NULL), charge_(NULL)
 {
-	if (from.charge_ != NULL)
+	if (from.charge_)
 	{
-		charge_.reset(new Charge(*from.charge_.get()));
+		charge_ = new Charge(*from.charge_);
 		charge_->setOwner(this);
 		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
@@ -32,28 +32,30 @@ Drone::Drone(const Drone& from) : Item(from), isActive_(from.isActive_), target_
 
 Drone::~Drone(void)
 {
-	if (target_ != NULL)
+	if (charge_)
+		delete charge_;
+	if (target_)
 		clearTarget();
 }
 
-boost::shared_ptr<Environment> Drone::getEnvironment()
+Environment Drone::getEnvironment()
 {
-	boost::shared_ptr<Environment> environment(new Environment());
-	(*environment)["Self"] = this;
+	Environment environment;
+	environment["Self"] = this;
 	Item* ship = getOwner();
-	Item* character = ship != NULL ? ship->getOwner() : NULL;
-	Item* gang = character != NULL ? character->getOwner() : NULL;
+	Item* character = ship ? ship->getOwner() : NULL;
+	Item* gang = character ? character->getOwner() : NULL;
 	
-	if (character != NULL)
-		(*environment)["Char"] = character;
-	if (ship != NULL)
-		(*environment)["Ship"] = ship;
-	if (gang != NULL)
-		(*environment)["Gang"] = gang;
-	if (engine_->getArea() != NULL)
-		(*environment)["Area"] = engine_->getArea().get();
-	if (target_ != NULL)
-		(*environment)["Target"] = target_;
+	if (character)
+		environment["Char"] = character;
+	if (ship)
+		environment["Ship"] = ship;
+	if (gang)
+		environment["Gang"] = gang;
+	if (engine_->getArea())
+		environment["Area"] = engine_->getArea();
+	if (target_)
+		environment["Target"] = target_;
 	return environment;
 }
 
@@ -101,7 +103,7 @@ bool Drone::dealsDamage()
 	return chargeHasDamageAttribute;
 }
 
-boost::shared_ptr<Charge> Drone::getCharge()
+Charge* Drone::getCharge()
 {
 	return charge_;
 }
@@ -130,21 +132,21 @@ bool Drone::isActive()
 void Drone::addEffects(Effect::Category category)
 {
 	Item::addEffects(category);
-	if (category == Effect::CATEGORY_GENERIC && charge_ != NULL)
+	if (category == Effect::CATEGORY_GENERIC && charge_)
 		charge_->addEffects(category);
 }
 
 void Drone::removeEffects(Effect::Category category)
 {
 	Item::removeEffects(category);
-	if (category == Effect::CATEGORY_GENERIC && charge_ != NULL)
+	if (category == Effect::CATEGORY_GENERIC && charge_)
 		charge_->removeEffects(category);
 }
 
 void Drone::reset() {
 	Item::reset();
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
-	if (charge_ != NULL)
+	if (charge_)
 		charge_->reset();
 }
 
@@ -237,7 +239,7 @@ void Drone::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		Item* item = charge_ != NULL ? static_cast<Item*>(charge_.get()) : static_cast<Item*>(this);
+		Item* item = charge_ ? static_cast<Item*>(charge_) : static_cast<Item*>(this);
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
 			volley_ += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))

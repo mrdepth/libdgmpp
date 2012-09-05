@@ -47,16 +47,16 @@ namespace eufe {
 			boost::shared_ptr<AttributeWrapper> getAttribute() {return attribute_;}
 			Modifier::Association getAssociation() {return association_;}
 			
-			bool addItemModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool addLocationGroupModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool addLocationModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool addLocationRequiredSkillModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool addOwnerRequiredSkillModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool removeItemModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool removeLocationGroupModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool removeLocationModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool removeLocationRequiredSkillModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
-			bool removeOwnerRequiredSkillModifier(Environment* environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool addItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool addLocationGroupModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool addLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool addLocationRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool addOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool removeItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool removeLocationGroupModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool removeLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool removeLocationRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
+			bool removeOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
 			
 		private:
 			boost::shared_ptr<AttributeWrapper> attribute_;
@@ -128,8 +128,8 @@ namespace eufe {
 		EffectByteCodeInterpreter(const EffectByteCodeInterpreter& from);
 		virtual ~EffectByteCodeInterpreter();
 		
-		virtual bool addEffect(Environment* environment);
-		virtual bool removeEffect(Environment* environment);
+		virtual bool addEffect(const Environment& environment);
+		virtual bool removeEffect(const Environment& environment);
 		virtual EffectInterpreter* clone() const;
 
 	private:
@@ -147,7 +147,7 @@ namespace eufe {
 		Byte* endPtr_;
 		
 		std::list<Argument> stack_;
-		Environment* environment_;
+		Environment environment_;
 		
 		Argument execute(const Byte *expression);
 		

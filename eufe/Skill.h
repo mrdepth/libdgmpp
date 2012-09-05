@@ -12,9 +12,9 @@ namespace eufe {
 		bool isLearned() const;
 		int getSkillLevel();
 		void setSkillLevel(int level);
-		//virtual boost::shared_ptr<Attribute> getAttribute(TypeID attributeID);
+		//virtual Attribute getAttribute(TypeID attributeID);
 
-		virtual boost::shared_ptr<Environment> getEnvironment();
+		virtual Environment getEnvironment();
 		
 	private:
 		bool isLearned_;
