@@ -111,7 +111,7 @@
 		37AE79981487AD39003FB98A /* LocationGroupModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LocationGroupModifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37AE799A1487AF9D003FB98A /* LocationRequiredSkillModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LocationRequiredSkillModifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37AE799C1487AFA7003FB98A /* LocationRequiredSkillModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LocationRequiredSkillModifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		37B33D3D1473CA0D006B18D7 /* eufe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = eufe; sourceTree = BUILT_PRODUCTS_DIR; };
+		37B33D3D1473CA0D006B18D7 /* compiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = compiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B33D431473CA0D006B18D7 /* eufe.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = eufe.1; sourceTree = "<group>"; };
 		37B33D511473CA5E006B18D7 /* Attribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Attribute.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37B33D521473CA5E006B18D7 /* Attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Attribute.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -246,7 +246,7 @@
 		37B33D3E1473CA0D006B18D7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				37B33D3D1473CA0D006B18D7 /* eufe */,
+				37B33D3D1473CA0D006B18D7 /* compiler */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -374,7 +374,7 @@
 			);
 			name = eufe;
 			productName = eufe;
-			productReference = 37B33D3D1473CA0D006B18D7 /* eufe */;
+			productReference = 37B33D3D1473CA0D006B18D7 /* compiler */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -503,7 +503,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = compiler;
 			};
 			name = Debug;
 		};
@@ -513,7 +513,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = compiler;
 			};
 			name = Release;
 		};
