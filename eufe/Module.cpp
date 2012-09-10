@@ -526,9 +526,9 @@ float Module::getCapUse()
 		float capNeed = 0.0;
 		if (hasAttribute(CAPACITOR_NEED_ATTRIBUTE_ID))
 			capNeed = getAttribute(CAPACITOR_NEED_ATTRIBUTE_ID)->getValue();
-		else if (hasEffect(LEECH_EFFECT_ID))
+		if (capNeed == 0.0 && hasEffect(LEECH_EFFECT_ID))
 			capNeed = -getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue();
-		else if (hasEffect(POWER_BOOSTER_EFFECT_ID) && charge_)
+		if (capNeed == 0.0 && hasEffect(POWER_BOOSTER_EFFECT_ID) && charge_)
 			capNeed = -charge_->getAttribute(CAPACITOR_BONUS_ATTRIBUTE_ID)->getValue();
 		
 		if (capNeed != 0.0)
