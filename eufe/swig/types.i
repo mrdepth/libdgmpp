@@ -9,7 +9,6 @@ namespace eufe {
 namespace std {
 	%template(TypesList) vector<eufe::TypeID>;
 	%template(AttributesMap) map<eufe::TypeID, eufe::Attribute*>;
-	%template(EffectsList) vector<eufe::Effect*>;
 	%template(ModulesList) vector<eufe::Module*>;
 	%template(DronesList) vector<eufe::Drone*>;
 	%template(CharactersList) vector<eufe::Character*>;
@@ -23,24 +22,7 @@ namespace eufe {
 	using namespace std;
 	
 	typedef map<eufe::TypeID, eufe::Attribute*> AttributesMap;
-//	typedef list<eufe::Effect*> EffectsList;
-//	typedef list<eufe::Module*> ModulesList;
-//	typedef list<eufe::Drone*> DronesList;
-//	typedef list<eufe::Character*> CharactersList;
 	typedef map<eufe::TypeID, eufe::Skill*> SkillsMap;
-//	typedef list<eufe::Implant*> ImplantsList;
-//	typedef list<eufe::Booster*> BoostersList;
-//	typedef list<eufe::Structure*> StructuresList;
-	
-//	%template(AttributesMap) std::map<eufe::TypeID, eufe::Attribute*>;
-//	%template(EffectsList) std::list<eufe::Effect*>;
-//	%template(ModulesList) std::list<eufe::Module*>;
-//	%template(DronesList) std::list<eufe::Drone*>;
-//	%template(CharactersList) std::list<eufe::Character*>;
-//	%template(SkillsMap) std::map<eufe::TypeID, eufe::Skill*>;
-//	%template(ImplantsList) std::list<eufe::Implant*>;
-//	%template(BoostersList) std::list<eufe::Booster*>;
-//	%template(StructuresList) std::list<eufe::Structure*>;
 	
 	struct Tank
 	{

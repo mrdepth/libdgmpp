@@ -157,27 +157,13 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 		sqlite3_finalize(stmt);
 		
 		sql.str(std::string());
-#if _DEBUG
-		sql << "SELECT dgmCompiledEffects.effectID, dgmCompiledEffects.effectCategory, dgmCompiledEffects.isAssistance, dgmCompiledEffects.isOffensive, byteCode, effectName FROM dgmCompiledEffects INNER JOIN dgmTypeEffects ON dgmCompiledEffects.effectID = dgmTypeEffects.effectID WHERE dgmTypeEffects.typeID = " << typeID;
-#else
-		sql << "SELECT dgmCompiledEffects.effectID, dgmCompiledEffects.effectCategory, dgmCompiledEffects.isAssistance, dgmCompiledEffects.isOffensive, byteCode FROM dgmCompiledEffects INNER JOIN dgmTypeEffects ON dgmCompiledEffects.effectID = dgmTypeEffects.effectID WHERE dgmTypeEffects.typeID = " << typeID;
-#endif		
+		sql << "SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = " << typeID;
 		stmt = NULL;
 		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
 		while (sqlite3_step(stmt) == SQLITE_ROW)
 		{
 			TypeID effectID = static_cast<TypeID>(sqlite3_column_int(stmt, 0));
-			Effect::Category category = static_cast<Effect::Category>(sqlite3_column_int(stmt, 1));
-			bool isAssistance = sqlite3_column_int(stmt, 2) != 0;
-			bool isOffensive = sqlite3_column_int(stmt, 3) != 0;
-			size_t bytes = sqlite3_column_bytes(stmt, 4);
-			const void* byteCode = sqlite3_column_blob(stmt, 4);
-#if _DEBUG
-			const char* effectName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
-			effects_.push_back(new Effect(engine_, effectID, category, byteCode, bytes, isAssistance, isOffensive, effectName));
-#else
-			effects_.push_back(new Effect(engine_, effectID, category, byteCode, bytes, isAssistance, isOffensive));
-#endif
+			effects_.push_back(Effect::getEffect(engine_, effectID));
 		}
 		sqlite3_finalize(stmt);
 		
@@ -193,7 +179,7 @@ Item::Item(Item* owner) : owner_(owner), context_(NULL), engine_(NULL)
 {
 }
 
-Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(NULL), context_(NULL)
+Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(NULL), context_(NULL), effects_(from.effects_)
 {
 	AttributesMap::const_iterator i, end = from.attributes_.end();
 	for (i = from.attributes_.begin(); i!= end; i++)
@@ -201,12 +187,6 @@ Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), gro
 		Attribute* attribute = new Attribute(*(i->second));
 		attribute->setOwner(this);
 		attributes_[i->first] = attribute;
-	}
-	
-	EffectsList::const_iterator j, endj = from.effects_.end();
-	for (j = from.effects_.begin(); j != endj; j++) {
-		Effect* effect = new Effect(**j);
-		effects_.push_back(effect);
 	}
 	
 #if _DEBUG
@@ -229,11 +209,6 @@ Item::~Item(void)
 			delete *j;
 		list.clear();
 	}
-	
-	EffectsList::iterator j, endj = effects_.end();
-	for (j = effects_.begin(); j != endj; j++)
-		delete *j;
-	effects_.clear();
 	
 	setContext(NULL);
 }
@@ -296,7 +271,7 @@ Effect* Item::getEffect(TypeID effectID)
 	EffectsList::iterator i, end = effects_.end();
 	for (i = effects_.begin(); i != end; i++)
 		if ((*i)->getEffectID() == effectID)
-			return *i;
+			return i->get();
 	throw EffectDidNotFoundException() << TypeIDExceptionInfo(effectID);
 }
 
