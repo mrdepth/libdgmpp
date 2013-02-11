@@ -11,6 +11,7 @@
 #include "LocationRequiredSkillModifier.h"
 #include <math.h>
 #include <algorithm>
+#include "Charge.h"
 
 using namespace eufe;
 
@@ -100,6 +101,36 @@ Module* Ship::addModule(Module* module)
 Module* Ship::addModule(TypeID typeID)
 {
 	return addModule(new Module(engine_, typeID, this));
+}
+
+Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
+	return replaceModule(oldModule, new Module(engine_, typeID, this));
+}
+
+Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
+	Module::State state = oldModule->getState();
+	Charge* charge = oldModule->getCharge();
+	TypeID chargeTypeID = charge ? charge->getTypeID() : 0;
+	Ship* target = oldModule->getTarget();
+	
+	ModulesList::iterator i = std::find(modules_.begin(), modules_.end(), oldModule);
+	i--;
+	
+	removeModule(oldModule);
+	
+	if ((newModule = addModule(newModule))) {
+		modules_.remove(newModule);
+		i++;
+		modules_.insert(i, newModule);
+		if (chargeTypeID)
+			newModule->setCharge(chargeTypeID);
+		if (target)
+			newModule->setTarget();
+		if (newModule->canHaveState(state))
+			newModule->setState(state);
+	}
+	engine_->reset(this);
+	return newModule;
 }
 
 void Ship::removeModule(Module* module)

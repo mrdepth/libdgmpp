@@ -24,6 +24,8 @@ namespace eufe {
 
 		Module* addModule(Module* module);
 		Module* addModule(TypeID typeID);
+		Module* replaceModule(Module* oldModule, TypeID typeID);
+		Module* replaceModule(Module* oldModule, Module* newModule);
 		void removeModule(Module* module);
 		
 		Drone* addDrone(Drone* drone);
