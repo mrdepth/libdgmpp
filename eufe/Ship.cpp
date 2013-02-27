@@ -242,7 +242,7 @@ bool Ship::canFit(Module* module)
 		}
 		case Module::SLOT_RIG:
 		{
-			if (module->getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue() < getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue())
+			if (module->getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue() != getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue())
 				return false;
 			break;
 		}
