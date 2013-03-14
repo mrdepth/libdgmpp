@@ -218,15 +218,34 @@ bool Ship::canFit(Module* module)
 		if (module->hasAttribute(i))
 			fitsOn.push_back(static_cast<int>(module->getAttribute(i)->getValue()));
 	
-	if (fitsOn.size() > 0 && std::find(fitsOn.begin(), fitsOn.end(), typeID_) == fitsOn.end())
-		return false;
+	int matchType = 1;
+	if (fitsOn.size() > 0) {
+		if (std::find(fitsOn.begin(), fitsOn.end(), typeID_) == fitsOn.end())
+			matchType = -1;
+		else
+			matchType = 0;
+	}
+	
+//	if (fitsOn.size() > 0 && std::find(fitsOn.begin(), fitsOn.end(), typeID_) == fitsOn.end())
+//		return false;
 	
 	fitsOn.clear();
 	for (TypeID i = CAN_FIT_SHIP_GROUP1_ATTRIBUTE_ID; i <= CAN_FIT_SHIP_GROUP4_ATTRIBUTE_ID; i++)
 		if (module->hasAttribute(i))
 			fitsOn.push_back(static_cast<int>(module->getAttribute(i)->getValue()));
 
-	if (fitsOn.size() > 0 && std::find(fitsOn.begin(), fitsOn.end(), groupID_) == fitsOn.end())
+	int matchGroup = 1;
+	if (fitsOn.size() > 0) {
+		if (std::find(fitsOn.begin(), fitsOn.end(), groupID_) == fitsOn.end())
+			matchGroup = -1;
+		else
+			matchGroup = 0;
+	}
+
+//	if (fitsOn.size() > 0 && std::find(fitsOn.begin(), fitsOn.end(), groupID_) == fitsOn.end())
+//		return false;
+	
+	if ((matchType == -1 && matchGroup == -1) || matchType * matchGroup < 0)
 		return false;
 
 	switch (module->getSlot())
