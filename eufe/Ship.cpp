@@ -230,9 +230,20 @@ bool Ship::canFit(Module* module)
 //		return false;
 	
 	fitsOn.clear();
-	for (TypeID i = CAN_FIT_SHIP_GROUP1_ATTRIBUTE_ID; i <= CAN_FIT_SHIP_GROUP4_ATTRIBUTE_ID; i++)
+	TypeID canFitShipGroupAttribute[] = {
+		CAN_FIT_SHIP_GROUP1_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_GROUP2_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_GROUP3_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_GROUP4_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_GROUP5_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_GROUP6_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_GROUP7_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_GROUP8_ATTRIBUTE_ID};
+	for (TypeID i : canFitShipGroupAttribute) {
 		if (module->hasAttribute(i))
 			fitsOn.push_back(static_cast<int>(module->getAttribute(i)->getValue()));
+		
+	}
 
 	int matchGroup = 1;
 	if (fitsOn.size() > 0) {
