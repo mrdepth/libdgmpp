@@ -182,6 +182,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Blob.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Booster.cpp"
 				>
 			</File>
@@ -258,6 +262,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FetchResult.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Gang.cpp"
 				>
 			</File>
@@ -306,6 +314,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SqlConnector.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SqliteConnector.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SqliteFetchResult.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Structure.cpp"
 				>
 			</File>
@@ -337,6 +357,10 @@
 			</File>
 			<File
 				RelativePath=".\Attribute.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Blob.h"
 				>
 			</File>
 			<File
@@ -424,6 +448,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FetchResult.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Gang.h"
 				>
 			</File>
@@ -465,6 +493,18 @@
 			</File>
 			<File
 				RelativePath=".\Skill.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SqlConnector.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SqliteConnector.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SqliteFetchResult.h"
 				>
 			</File>
 			<File

@@ -464,7 +464,7 @@ float Module::getCycleTime()
 	if (factorReload && reactivation < reload)
 	{
 		float additionalReloadTime = (reload - reactivation);
-		float numShots = getShots();
+		float numShots = static_cast<float>(getShots());
 		speed = numShots > 0 ? (speed * numShots + additionalReloadTime) / numShots : speed;
 	}
 	return speed;
@@ -534,14 +534,14 @@ float Module::getCapUse()
 		if (capNeed != 0.0)
 		{
 			float cycleTime = getCycleTime();
-			return cycleTime != 0.0 ? capNeed / (cycleTime / 1000.0) : 0.0;
+			return cycleTime != 0.0f ? capNeed / (cycleTime / 1000.0f) : 0.0f;
 		}
 		else
-			return float(0.0);
+			return 0.0f;
 		return capNeed;
 	}
 	else
-		return 0.0;
+		return 0.0f;
 }
 
 float Module::getVolley()
@@ -590,11 +590,11 @@ float Module::getMaxRange()
 					missileEntityFlightTimeMultiplier = 1.0;
 				
 				float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue() * missileEntityVelocityMultiplier;
-				float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0 * missileEntityFlightTimeMultiplier;
+				float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0f * missileEntityFlightTimeMultiplier;
 				float mass = charge_->getAttribute(MASS_ATTRIBUTE_ID)->getValue();
 				float agility = charge_->getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
 				
-				float accelTime = std::min(flightTime, static_cast<float>(mass * agility / 1000000.0));
+				float accelTime = std::min(flightTime, static_cast<float>(mass * agility / 1000000.0f));
 				float duringAcceleration = maxVelocity / 2 * accelTime;
 				float fullSpeed = maxVelocity * (flightTime - accelTime);
 				maxRange_ =  duringAcceleration + fullSpeed;
@@ -673,7 +673,7 @@ void Module::calculateDamageStats()
 
 		float speed = getCycleTime();
 		if (speed > 0)
-			dps_ = volley_ / (speed / 1000.0);
+			dps_ = volley_ / (speed / 1000.0f);
 	}
 }
 

@@ -10,7 +10,7 @@
 
 using namespace eufe;
 
-static const float CAPACITOR_PEAK_RECHARGE = sqrt(0.25);
+static const float CAPACITOR_PEAK_RECHARGE = sqrtf(0.25);
 
 class StateCompareFunction : public std::binary_function<const CapacitorSimulator::State*, const CapacitorSimulator::State*, bool>
 {
@@ -131,7 +131,7 @@ void CapacitorSimulator::internalReset()
 	bool isDisallowedAssistance = ship_->isDisallowedAssistance();
 	bool isDisallowedOffensiveModifiers = ship_->isDisallowedOffensiveModifiers();
 	
-	capRecharge_ = 10.0 / (capacitorRecharge_ / 1000.0) * CAPACITOR_PEAK_RECHARGE * (1 - CAPACITOR_PEAK_RECHARGE) * capacitorCapacity_;
+	capRecharge_ = 10.0f / (capacitorRecharge_ / 1000.0f) * CAPACITOR_PEAK_RECHARGE * (1 - CAPACITOR_PEAK_RECHARGE) * capacitorCapacity_;
 	
 	std::list<Module*> drains;
 	std::list<Drone*> drainDrones;
@@ -194,19 +194,19 @@ void CapacitorSimulator::internalReset()
 				capNeed = static_cast<float>(-module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
 		}
 		else
-			capNeed = module->getCapUse() * module->getCycleTime() / 1000.0;
+			capNeed = module->getCapUse() * module->getCycleTime() / 1000.0f;
 		
 		if (capNeed > 0)
 		{
 			if (projected && isDisallowedOffensiveModifiers)
 				continue;
-			capUsed_ += capNeed / (duration / 1000.0);
+			capUsed_ += capNeed / (duration / 1000.0f);
 		}
 		else
 		{
 			if (projected && isDisallowedAssistance)
 				continue;
-			capRecharge_ -= capNeed / (duration / 1000.0);
+			capRecharge_ -= capNeed / (duration / 1000.0f);
 		}
 		
 		period_ = boost::math::lcm(period_, duration);
@@ -223,7 +223,7 @@ void CapacitorSimulator::internalReset()
 		state->capNeed = capNeed;
 		state->clipSize = clipSize;
 		state->shot = 0;
-		state->reloadTime = module->getReloadTime();
+		state->reloadTime = static_cast<int>(module->getReloadTime());
 		states_.push_back(state);
 		std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
 	}
@@ -258,7 +258,7 @@ void CapacitorSimulator::run()
 	
 	if (states_.size() > 0)
 	{
-		float tau = capacitorRecharge_ / 5.0;
+		float tau = capacitorRecharge_ / 5.0f;
 		float capWrap = capacitorCapacity_;
 		float capLowest = capacitorCapacity_;
 		float capLowestPre = capacitorCapacity_;
@@ -278,7 +278,7 @@ void CapacitorSimulator::run()
 			if (tNow > maxTime_)
 				break;
 			
-			float s((1.0 + (sqrt(cap / capacitorCapacity_) - 1.0) * exp((tLast - state->tNow) / tau)));
+			float s((1.0f + (sqrtf(cap / capacitorCapacity_) - 1.0f) * expf((tLast - state->tNow) / tau)));
 			cap = s * s *capacitorCapacity_;
 			if (tNow != tLast) {
 				if (cap < capLowestPre)
@@ -327,12 +327,12 @@ void CapacitorSimulator::run()
 		for (i = states_.begin(); i != end; i++)
 			avgDrain += (*i)->capNeed / (*i)->duration;
 		
-		float a = - (2.0 * avgDrain * tau - capacitorCapacity_) / capacitorCapacity_;
+		float a = - (2.0f * avgDrain * tau - capacitorCapacity_) / capacitorCapacity_;
 		if (a < 0.0)
 			capStableEVE_ = 0;
 		else {
-			float t = (1.0 + sqrt(a));
-			capStableEVE_ = 0.25 * t * t;	
+			float t = (1.0f + sqrtf(a));
+			capStableEVE_ = 0.25f * t * t;	
 		}
 		
 		if (cap > 0.0) {

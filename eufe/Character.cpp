@@ -19,16 +19,12 @@ Character::Character(Engine* engine, Gang* owner, const char* characterName) : I
 {
 	Engine::ScopedLock lock(*engine_);
 
-	sqlite3* db = engine->getDb();
-	
-	sqlite3_stmt* stmt = NULL;
-	sqlite3_prepare_v2(db, "SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1", -1, &stmt, NULL);
-	while (sqlite3_step(stmt) == SQLITE_ROW)
+	boost::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
+	while (result->next())
 	{
-		TypeID skillID = sqlite3_column_int(stmt, 0);
+		TypeID skillID = result->getInt(0);
 		addSkill(skillID, 0, false);
 	}
-	sqlite3_finalize(stmt);
 	engine_->reset(this);
 }
 

@@ -195,8 +195,8 @@ float Drone::getMaxRange()
 			if (charge_->hasAttribute(MAX_VELOCITY_ATTRIBUTE_ID) && charge_->hasAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID))
 			{
 				float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
-				float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0;
-				maxRange_ = flightTime / 1000.0 * maxVelocity;
+				float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0f;
+				maxRange_ = flightTime / 1000.0f * maxVelocity;
 			}
 			else
 				maxRange_ = 0;
@@ -250,6 +250,6 @@ void Drone::calculateDamageStats()
 			volley_ += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
 			volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
-		dps_ = volley_ / (getCycleTime() / 1000.0);
+		dps_ = volley_ / (getCycleTime() / 1000.0f);
 	}
 }

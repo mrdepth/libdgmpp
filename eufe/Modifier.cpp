@@ -17,20 +17,20 @@ float Modifier::getValue() const
 {
 	float value = modifier_->getValue();
 	if (association_ == ASSOCIATION_POST_DIV)
-		return static_cast<float>(1.0 / value);
+		return static_cast<float>(1.0f / value);
 	else if (association_ == ASSOCIATION_POST_PERCENT)
-		return static_cast<float>(1.0 + value / 100.0);
+		return static_cast<float>(1.0f + value / 100.0f);
 	else if (association_ == ASSOCIATION_ADD_RATE || association_ == ASSOCIATION_SUB_RATE)
 	{
 		Item* item = modifier_->getOwner();
 		float duration;
 		if (item->hasAttribute(DURATION_ATTRIBUTE_ID))
-			duration = static_cast<float>(item->getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0);
+			duration = static_cast<float>(item->getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0f);
 		else if (item->hasAttribute(SPEED_ATTRIBUTE_ID))
-			duration = static_cast<float>(item->getAttribute(SPEED_ATTRIBUTE_ID)->getValue() / 1000.0);
+			duration = static_cast<float>(item->getAttribute(SPEED_ATTRIBUTE_ID)->getValue() / 1000.0f);
 		else
 			duration = 1;
-		return duration > 0.0 ? static_cast<float>(value / duration) : 0.0;
+		return duration > 0.0f ? static_cast<float>(value / duration) : 0.0f;
 	}
 	else
 		return value;

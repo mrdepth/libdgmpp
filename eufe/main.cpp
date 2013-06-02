@@ -13,7 +13,7 @@ using namespace eufe;
 void usageExample()
 {
 #ifdef WIN32
-	Engine engine("E:\\Programing\\dbinit\\eufe.sqlite");
+	Engine engine(new SqliteConnector("E:\\Programing\\dbinit\\eufe.sqlite"));
 #else
 	Engine engine("/Users/shimanski/Documents/git/EVEUniverse/eufe.sqlite");
 #endif
@@ -48,6 +48,8 @@ void usageExample()
 
 int main(int argc, char* argv[])
 {
+	usageExample();
+	return 0;
 	if (argc != 3) {
 		std::cout<<"Usage: compiler source_database.sqlite output_dir"<<std::endl;
 		return 0;

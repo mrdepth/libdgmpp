@@ -134,7 +134,6 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 {
 	Engine::ScopedLock lock(*engine_);
 	
-	sqlite3* db = engine->getDb();
 	std::stringstream sql;
 #if _DEBUG
 	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
@@ -142,16 +141,15 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode FROM dgmCompiledEffects WHERE effectID = " << effectID;
 #endif
 	
-	sqlite3_stmt* stmt = NULL;
-	sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
-	
-	if (sqlite3_step(stmt) == SQLITE_ROW)
+	boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());	
+
+	if (result->next())
 	{
-		category_ = static_cast<Effect::Category>(sqlite3_column_int(stmt, 0));
-		bool isAssistance = sqlite3_column_int(stmt, 1) != 0;
-		bool isOffensive = sqlite3_column_int(stmt, 2) != 0;
-		size_t size = sqlite3_column_bytes(stmt, 3);
-		const void* byteCode = sqlite3_column_blob(stmt, 3);
+		category_ = static_cast<Effect::Category>(result->getInt(0));
+		bool isAssistance = result->getInt(1) != 0;
+		bool isOffensive = result->getInt(2) != 0;
+		size_t size = result->getInt(3);
+		Blob blob = result->getBlob(3);
 		
 		if (effectID == LEECH_EFFECT_ID)
 			interpreter_ = new EffectLeechInterpreter(engine, isAssistance, isOffensive);
@@ -180,11 +178,11 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 		else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
 			interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
 		else
-			interpreter_ = new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive);
+			interpreter_ = new EffectByteCodeInterpreter(engine, reinterpret_cast<const Byte*>(blob.getMemory()), blob.getSize(), isAssistance, isOffensive);
 		
 		
 #if _DEBUG
-		effectName_ = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
+		effectName_ = result->getText(4);
 		std::string::iterator i, end = effectName_.end();
 		for (i = effectName_.begin(); i != end; i++)
 		{
@@ -194,8 +192,6 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 		}
 #endif
 	}
-	sqlite3_finalize(stmt);
-
 }
 
 Effect::Effect(const Effect& from) : interpreter_(from.interpreter_->clone())

@@ -36,10 +36,10 @@ Tank DamagePattern::effectiveTank(const Resistances& resistances, const Tank& ta
 float DamagePattern::effectivity(const ResistancesLayer& resistances, float amount) const
 {
 	float totalDamage = emAmount + thermalAmount + kineticAmount + explosiveAmount;
-	float emResonance		 = 1.0 - resistances.em;
-	float thermalResonance	 = 1.0 - resistances.thermal;
-	float kineticResonance	 = 1.0 - resistances.kinetic;
-	float explosiveResonance = 1.0 - resistances.explosive;
+	float emResonance		 = 1.0f - resistances.em;
+	float thermalResonance	 = 1.0f - resistances.thermal;
+	float kineticResonance	 = 1.0f - resistances.kinetic;
+	float explosiveResonance = 1.0f - resistances.explosive;
 	
 	float specificDivider = 0;
 	

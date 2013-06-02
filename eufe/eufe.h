@@ -19,3 +19,4 @@
 #include "Compiler.h"
 #include "ControlTower.h"
 #include "Structure.h"
+#include "SqliteConnector.h"

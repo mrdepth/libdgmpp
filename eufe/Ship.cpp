@@ -15,7 +15,7 @@
 
 using namespace eufe;
 
-static const float SHIELD_PEAK_RECHARGE = sqrt(0.25);
+static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
 
 struct Repairer
 {
@@ -239,9 +239,10 @@ bool Ship::canFit(Module* module)
 		CAN_FIT_SHIP_GROUP6_ATTRIBUTE_ID,
 		CAN_FIT_SHIP_GROUP7_ATTRIBUTE_ID,
 		CAN_FIT_SHIP_GROUP8_ATTRIBUTE_ID};
-	for (TypeID i : canFitShipGroupAttribute) {
-		if (module->hasAttribute(i))
-			fitsOn.push_back(static_cast<int>(module->getAttribute(i)->getValue()));
+
+	for (int i = 0; i < 8; i++) {
+		if (module->hasAttribute(canFitShipGroupAttribute[i]))
+			fitsOn.push_back(static_cast<int>(module->getAttribute(canFitShipGroupAttribute[i])->getValue()));
 		
 	}
 
@@ -679,20 +680,20 @@ const Resistances& Ship::getResistances()
 {
 	if (resistances_.armor.em < 0.0)
 	{
-		resistances_.armor.em		 = 1.0 - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.explosive = 1.0 - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.kinetic   = 1.0 - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.thermal   = 1.0 - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.em		 = 1.0f - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.explosive = 1.0f - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.kinetic   = 1.0f - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.thermal   = 1.0f - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 
-		resistances_.shield.em		  = 1.0 - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.explosive = 1.0 - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.kinetic   = 1.0 - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.thermal   = 1.0 - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.em		  = 1.0f - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.explosive = 1.0f - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.kinetic   = 1.0f - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.thermal   = 1.0f - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 
-		resistances_.hull.em		= 1.0 - getAttribute(EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.explosive = 1.0 - getAttribute(EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.kinetic   = 1.0 - getAttribute(KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.thermal   = 1.0 - getAttribute(THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.em		= 1.0f - getAttribute(EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.explosive = 1.0f - getAttribute(EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.kinetic   = 1.0f - getAttribute(KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.thermal   = 1.0f - getAttribute(THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 	}
 	return resistances_;
 }
@@ -826,7 +827,7 @@ float Ship::getShieldRecharge()
 	{
 		float capacity = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
 		float rechargeRate = getAttribute(SHIELD_RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
-		shieldRecharge_ = 10.0 / (rechargeRate / 1000.0) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
+		shieldRecharge_ = 10.0f / (rechargeRate / 1000.0f) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
 	}
 	return shieldRecharge_;
 }
@@ -888,7 +889,7 @@ float Ship::getAlignTime()
 {
 	float agility = getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
 	float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
-	return -log(0.25) * agility * mass / 1000000.0;
+	return -logf(0.25f) * agility * mass / 1000000.0f;
 }
 
 float Ship::getWarpSpeed()
@@ -983,7 +984,7 @@ float Ship::getProbeSize()
 {
 	float signatureRadius = getSignatureRadius();
 	float sensorStrength = getScanStrength();
-	return sensorStrength > 0.0 ? signatureRadius / sensorStrength : 0.0;
+	return sensorStrength > 0.0f ? signatureRadius / sensorStrength : 0.0f;
 }
 
 //Drones

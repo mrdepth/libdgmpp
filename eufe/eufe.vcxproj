@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BEFC09B4-CD76-41E6-B5A0-1D291E6D2395}</ProjectGuid>
+    <RootNamespace>eufe</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>E:\Programing\boost_1_51_0;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>E:\Programing\boost_1_51_0;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\pthreads</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BOOST_ALL_NO_LIB;DONT_USE_MUTEX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\pthreads</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(SolutionDir)\pthreads</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(SolutionDir)\pthreads</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Area.cpp" />
+    <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="Blob.cpp" />
+    <ClCompile Include="Booster.cpp" />
+    <ClCompile Include="CapacitorSimulator.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Charge.cpp" />
+    <ClCompile Include="ControlTower.cpp" />
+    <ClCompile Include="DamagePattern.cpp" />
+    <ClCompile Include="Drone.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectAdaptiveArmorHardener.cpp" />
+    <ClCompile Include="EffectArmorRepairInterpreter.cpp" />
+    <ClCompile Include="EffectByteCodeInterpreter.cpp" />
+    <ClCompile Include="EffectEnergyDestabilizationNewInterpreter.cpp" />
+    <ClCompile Include="EffectEnergyTransferInterpreter.cpp" />
+    <ClCompile Include="EffecthardPointModifierEffectInterpreter.cpp" />
+    <ClCompile Include="EffectHullRepairInterpreter.cpp" />
+    <ClCompile Include="EffectLeechInterpreter.cpp" />
+    <ClCompile Include="EffectShieldBoostingInterpreter.cpp" />
+    <ClCompile Include="EffectSlotModifierInterpreter.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="FetchResult.cpp" />
+    <ClCompile Include="Gang.cpp" />
+    <ClCompile Include="HeatSimulator.cpp" />
+    <ClCompile Include="Implant.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LocationGroupModifier.cpp" />
+    <ClCompile Include="LocationRequiredSkillModifier.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Modifier.cpp" />
+    <ClCompile Include="Module.cpp" />
+    <ClCompile Include="Mutex.cpp" />
+    <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SqlConnector.cpp" />
+    <ClCompile Include="SqliteConnector.cpp" />
+    <ClCompile Include="SqliteFetchResult.cpp" />
+    <ClCompile Include="Structure.cpp" />
+    <ClCompile Include="Compiler.cpp" />
+    <ClCompile Include="ThirdParty\sqlite3.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Area.h" />
+    <ClInclude Include="Attribute.h" />
+    <ClInclude Include="Blob.h" />
+    <ClInclude Include="Booster.h" />
+    <ClInclude Include="CapacitorSimulator.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="Charge.h" />
+    <ClInclude Include="ControlTower.h" />
+    <ClInclude Include="DamagePattern.h" />
+    <ClInclude Include="Drone.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectAdaptiveArmorHardener.h" />
+    <ClInclude Include="EffectArmorRepairInterpreter.h" />
+    <ClInclude Include="EffectByteCodeInterpreter.h" />
+    <ClInclude Include="EffectEnergyDestabilizationNewInterpreter.h" />
+    <ClInclude Include="EffectEnergyTransferInterpreter.h" />
+    <ClInclude Include="EffecthardPointModifierEffectInterpreter.h" />
+    <ClInclude Include="EffectHullRepairInterpreter.h" />
+    <ClInclude Include="EffectInterpreter.h" />
+    <ClInclude Include="EffectLeechInterpreter.h" />
+    <ClInclude Include="EffectShieldBoostingInterpreter.h" />
+    <ClInclude Include="EffectSlotModifierInterpreter.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="eufe.h" />
+    <ClInclude Include="FetchResult.h" />
+    <ClInclude Include="Gang.h" />
+    <ClInclude Include="HeatSimulator.h" />
+    <ClInclude Include="Implant.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="LocationGroupModifier.h" />
+    <ClInclude Include="LocationRequiredSkillModifier.h" />
+    <ClInclude Include="Modifier.h" />
+    <ClInclude Include="Module.h" />
+    <ClInclude Include="Mutex.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SqlConnector.h" />
+    <ClInclude Include="SqliteConnector.h" />
+    <ClInclude Include="SqliteFetchResult.h" />
+    <ClInclude Include="Structure.h" />
+    <ClInclude Include="types.h" />
+    <ClInclude Include="Compiler.h" />
+    <ClInclude Include="ThirdParty\sqlite3.h" />
+    <ClInclude Include="ThirdParty\sqlite3ext.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -5,13 +5,9 @@
 
 using namespace eufe;
 
-Engine::Engine(const char* databasePath) : db_(NULL), gang_(NULL), area_(NULL), controlTower_(NULL)
+Engine::Engine(SqlConnector* sqlConnector) : sqlConnector_(sqlConnector), gang_(NULL), area_(NULL), controlTower_(NULL)
 {
-	int result = sqlite3_open(databasePath, &db_);
-	if (result != SQLITE_OK)
-		throw SqliteException() << boost::errinfo_errno(result);
 	gang_ = new Gang(this);
-	//gang_->addEffects(Effect::CATEGORY_GENERIC);
 }
 
 Engine::~Engine(void)
@@ -22,13 +18,13 @@ Engine::~Engine(void)
 		delete area_;
 	if (controlTower_)
 		delete controlTower_;
-	if (db_)
-		sqlite3_close(db_);
+	if (sqlConnector_)
+		delete sqlConnector_;
 }
 
-sqlite3* Engine::getDb()
+SqlConnector* Engine::getSqlConnector()
 {
-	return db_;
+	return sqlConnector_;
 }
 
 Gang* Engine::getGang()

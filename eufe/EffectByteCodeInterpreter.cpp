@@ -125,7 +125,7 @@ bool EffectByteCodeInterpreter::addEffect(const Environment& environment)
 	try {
 		result = arg;
 	}
-	catch(eufe::EffectByteCodeInterpreter::Argument::TypeCastException& exc) {
+	catch(eufe::EffectByteCodeInterpreter::Argument::TypeCastException&) {
 		result = false;
 	}
 	return result;
@@ -139,7 +139,7 @@ bool EffectByteCodeInterpreter::removeEffect(const Environment& environment)
 	try {
 		result = arg;
 	}
-	catch(eufe::EffectByteCodeInterpreter::Argument::TypeCastException& exc) {
+	catch(eufe::EffectByteCodeInterpreter::Argument::TypeCastException&) {
 		result = false;
 	}
 	return result;
@@ -617,23 +617,17 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 		Engine::ScopedLock lock(*engine_);
 
 		std::string typeName = arg1;
-		sqlite3* db = engine_->getDb();
 		std::stringstream sql;
 		sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
 		
-		sqlite3_stmt* stmt = NULL;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
-		int result = sqlite3_step(stmt);
-		
-		if (result == SQLITE_ROW)
+		boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		if (result->next())
 		{
-			TypeID typeID = sqlite3_column_int(stmt, 0);
-			sqlite3_finalize(stmt);
+			TypeID typeID = result->getInt(0);
 			return typeID;
 		}
 		else
 		{
-			sqlite3_finalize(stmt);
 			throw UnknownTypeNameException() << UnknownTypeNameExceptionInfo(typeName);
 		}
 		

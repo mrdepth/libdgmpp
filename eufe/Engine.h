@@ -3,6 +3,8 @@
 #include "ThirdParty/sqlite3.h"
 #include <boost/exception/all.hpp>
 #include "Mutex.h"
+#include "SqlConnector.h"
+
 
 //#define FACTOR_RELOAD
 
@@ -13,9 +15,9 @@ namespace eufe {
 	public:
 		struct SqliteException : virtual boost::exception {};
 
-		Engine(const char* databasePath);
+		Engine(SqlConnector* sqlConnector);
 		~Engine(void);
-		sqlite3* getDb();
+		SqlConnector* getSqlConnector();
 		Area* setArea(Area* area);
 		Area* setArea(TypeID typeID);
 		ControlTower* setControlTower(ControlTower* controlTower);
@@ -32,7 +34,7 @@ namespace eufe {
 #endif
 
 	private:
-		sqlite3* db_;
+		SqlConnector* sqlConnector_;
 		Gang* gang_;
 		Area* area_;
 		ControlTower* controlTower_;

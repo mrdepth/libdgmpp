@@ -87,17 +87,17 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 	
 	if (slot == Module::SLOT_HI)
 	{
-		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_HI_ATTRIBUTE_ID)->getValue() / 100.0;
+		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_HI_ATTRIBUTE_ID)->getValue() / 100.0f;
 		heatAttenuation = ship_->getAttribute(HEAT_ATTENUATION_HI_ATTRIBUTE_ID)->getValue();
 	}
 	else if (slot == Module::SLOT_MED)
 	{
-		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_MED_ATTRIBUTE_ID)->getValue() / 100.0;
+		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_MED_ATTRIBUTE_ID)->getValue() / 100.0f;
 		heatAttenuation = ship_->getAttribute(HEAT_ATTENUATION_MED_ATTRIBUTE_ID)->getValue();
 	}
 	else if (slot == Module::SLOT_LOW)
 	{
-		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_LOW_ATTRIBUTE_ID)->getValue() / 100.0;
+		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_LOW_ATTRIBUTE_ID)->getValue() / 100.0f;
 		heatAttenuation = ship_->getAttribute(HEAT_ATTENUATION_LOW_ATTRIBUTE_ID)->getValue();
 	}
 	
@@ -118,10 +118,10 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 
 			State *state = new State();
 			state->tNow = 0;
-			state->duration = module->getCycleTime();
+			state->duration = static_cast<int>(module->getCycleTime());
 			state->clipSize = clipSize;
 			state->shot = 0;
-			state->reloadTime = module->getReloadTime();
+			state->reloadTime = static_cast<int>(module->getReloadTime());
 			state->moduleIndex = i;
 			state->heatDamage = module->getAttribute(HEAT_DAMAGE_ATTRIBUTE_ID)->getValue();
 			states_.push_back(state);
@@ -143,7 +143,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 
 			tNow = state->tNow;
 			
-			float h = heat(tNow, heatCapacity, heatGeneration);
+			float h = heat(static_cast<float>(tNow), heatCapacity, heatGeneration);
 			int numberOfDeadModules = 0;
 			for (int i = 0; i < n; i++)
 			{
@@ -153,7 +153,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 					modulesHP[i] -= damageProbability(h, range, numberOfOnlineModules, numberOfSlots, heatAttenuation) * state->heatDamage;
 					if (modulesHP[i] <= 0.0)
 					{
-						modules[i]->setLifeTime(tNow / 1000.0);
+						modules[i]->setLifeTime(tNow / 1000.0f);
 						numberOfDeadModules++;
 					}
 				}

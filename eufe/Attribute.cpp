@@ -247,15 +247,13 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 #if _DEBUG
 	if (attributeName[0] == 0 && attributeID != 0)
 	{
-		sqlite3* db = engine->getDb();
 		std::stringstream sql;
 		sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-		sqlite3_stmt* stmt = NULL;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
-		sqlite3_step(stmt);
-		attributeName_ = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
-		isStackable_ = sqlite3_column_int(stmt, 1) != 0;
-		sqlite3_finalize(stmt);
+		boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		if (result->next()) {
+			attributeName_ = result->getText(0);
+			isStackable_ = result->getInt(1) != 0;
+		}
 	}
 #endif
 	sync = false;
@@ -267,24 +265,22 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, Item* owner, bool isFak
 
 	forcedValue_ = std::numeric_limits<float>::infinity();
 
-	sqlite3* db = engine->getDb();
 	std::stringstream sql;
 #if _DEBUG
 	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
 #else
 	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
 #endif
-	sqlite3_stmt* stmt = NULL;
-	sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
-	sqlite3_step(stmt);
-	isStackable_ = sqlite3_column_int(stmt, 0) != 0;
-	maxAttributeID_ = static_cast<eufe::TypeID>(sqlite3_column_int(stmt, 1));
-	value_ = initialValue_ = static_cast<float>(sqlite3_column_double(stmt, 2));
-	highIsGood_ = sqlite3_column_int(stmt, 3) != 0;
+	boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+	if (result->next()) {
+		isStackable_ = result->getInt(0) != 0;
+		maxAttributeID_ = static_cast<eufe::TypeID>(result->getInt(1));
+		value_ = initialValue_ = static_cast<float>(result->getDouble(2));
+		highIsGood_ = result->getInt(3) != 0;
 #if _DEBUG
-	attributeName_ = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
+		attributeName_ = result->getText(4);
 #endif
-	sqlite3_finalize(stmt);
+	}
 	sync = false;
 }
 

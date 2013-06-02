@@ -1,5 +1,7 @@
 #pragma once
+#ifndef DONT_USE_MUTEX
 #include <pthread.h>
+#endif
 
 class Mutex
 {
@@ -26,5 +28,7 @@ public:
 	};
 
 private:
+#ifndef DONT_USE_MUTEX
 	pthread_mutex_t mutex_;
+#endif
 };

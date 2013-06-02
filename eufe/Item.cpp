@@ -92,7 +92,6 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 		return;
 	Engine::ScopedLock lock(*engine_);
 	
-	sqlite3* db = engine->getDb();
 	std::stringstream sql;
 #if _DEBUG
 	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID;
@@ -100,22 +99,19 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID;
 #endif
 
-	sqlite3_stmt* stmt = NULL;
-	sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
-	int result = sqlite3_step(stmt);
-	
-	if (result == SQLITE_ROW)
+	boost::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+	if (result->next())
 	{
-		groupID_ = sqlite3_column_int(stmt, 0);
-		float radius = static_cast<float>(sqlite3_column_double(stmt, 1));
-		float mass = static_cast<float>(sqlite3_column_double(stmt, 2));
-		float volume = static_cast<float>(sqlite3_column_double(stmt, 3));
-		float capacity = static_cast<float>(sqlite3_column_double(stmt, 4));
-		int raceID = sqlite3_column_int(stmt, 5);
-		categoryID_ = sqlite3_column_int(stmt, 6);
+		groupID_ = result->getInt(0);
+		float radius = static_cast<float>(result->getDouble(1));
+		float mass = static_cast<float>(result->getDouble(2));
+		float volume = static_cast<float>(result->getDouble(3));
+		float capacity = static_cast<float>(result->getDouble(4));
+		int raceID = result->getInt(5);
+		categoryID_ = result->getInt(6);
 		
 #if _DEBUG
-		typeName_ = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7));
+		typeName_ = result->getText(7);
 		attributes_[RADIUS_ATTRIBUTE_ID]    = new Attribute(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, this, "radius");
 		attributes_[MASS_ATTRIBUTE_ID]      = new Attribute(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, this, "mass");
 		attributes_[VOLUME_ATTRIBUTE_ID]    = new Attribute(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, this, "volume");
@@ -129,7 +125,6 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 		attributes_[RACE_ID_ATTRIBUTE_ID]   = new Attribute(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, this);
 #endif
 
-		sqlite3_finalize(stmt);
 		sql.str(std::string());
 #if _DEBUG
 		sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
@@ -138,39 +133,33 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 		sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
 			<< typeID;
 #endif
-		stmt = NULL;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
-		while (sqlite3_step(stmt) == SQLITE_ROW)
+		result = engine->getSqlConnector()->exec(sql.str().c_str());
+		while (result->next())
 		{
-			TypeID attributeID = static_cast<TypeID>(sqlite3_column_int(stmt, 0));
-			TypeID maxAttributeID = static_cast<TypeID>(sqlite3_column_int(stmt, 1));
-			bool isStackable = sqlite3_column_int(stmt, 2) != 0;
-			float value = static_cast<float>(sqlite3_column_double(stmt, 3));
-			bool highIsGood = sqlite3_column_int(stmt, 4) != 0;
+			TypeID attributeID = static_cast<TypeID>(result->getInt(0));
+			TypeID maxAttributeID = static_cast<TypeID>(result->getInt(1));
+			bool isStackable = result->getInt(2) != 0;
+			float value = static_cast<float>(result->getDouble(3));
+			bool highIsGood = result->getInt(4) != 0;
 #if _DEBUG
-			const char* attributeName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
-			attributes_[attributeID] = new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this, attributeName);
+			std::string attributeName = result->getText(5);
+			attributes_[attributeID] = new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this, attributeName.c_str());
 #else
 			attributes_[attributeID] = new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this);
 #endif
 		}
-		sqlite3_finalize(stmt);
 		
 		sql.str(std::string());
 		sql << "SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = " << typeID;
-		stmt = NULL;
-		sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, NULL);
-		while (sqlite3_step(stmt) == SQLITE_ROW)
+		result = engine->getSqlConnector()->exec(sql.str().c_str());
+		while (result->next())
 		{
-			TypeID effectID = static_cast<TypeID>(sqlite3_column_int(stmt, 0));
+			TypeID effectID = static_cast<TypeID>(result->getInt(0));
 			effects_.push_back(Effect::getEffect(engine_, effectID));
 		}
-		sqlite3_finalize(stmt);
-		
 	}
 	else
 	{
-		sqlite3_finalize(stmt);
 		throw UnknownTypeIDException() << TypeIDExceptionInfo(typeID);
 	}
 }
