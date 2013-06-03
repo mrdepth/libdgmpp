@@ -44,6 +44,8 @@ namespace eufe {
 #if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Character& character);
 #endif
+		Character(Decoder& decoder, Engine* engine, Gang* owner = NULL);
+		virtual void encode(Encoder& encoder)  const;
 	protected:
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 

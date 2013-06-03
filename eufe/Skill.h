@@ -16,6 +16,8 @@ namespace eufe {
 
 		virtual Environment getEnvironment();
 		
+		Skill(Decoder& decoder, Engine* engine, Character* owner = NULL);
+		virtual void encode(Encoder& encoder)  const;
 	private:
 		bool isLearned_;
 	};

@@ -6,7 +6,7 @@
 #include <functional>
 #include <ios>
 #include <queue>
-
+#include <time.h>
 
 using namespace eufe;
 
@@ -19,8 +19,33 @@ void usageExample()
 #endif
 	
 	Gang* gang = engine.getGang();
+	gang->addPilot();
+
+	clock_t t01 = clock();
 	Character* character1 = gang->addPilot();
+	clock_t t02 = clock();
+
+	Encoder* encoder = new Encoder("character");
+	character1->encode(*encoder);
+	delete encoder;
+
+	Decoder decoder = Decoder("character");
+
+	clock_t t11 = clock();
+	Character* character2 = gang->addPilot(new Character(decoder, &engine, gang));
+	clock_t t12 = clock();
+
+	clock_t d0 = t02 - t01;
+	clock_t d1 = t12 - t11;
+	printf("%d %d", d0, d1);
 	character1->setAllSkillsLevel(5);
+	character2->setAllSkillsLevel(5);
+
+	Ship* domi1 = character1->setShip(645);
+	Ship* domi2 = character2->setShip(645);
+
+	Resistances res1 = domi1->getResistances();
+	Resistances res2 = domi2->getResistances();
 	
 	Ship* gila = character1->setShip(17715);
 	Module* module1 = gila->addModule(10836);

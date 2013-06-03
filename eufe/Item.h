@@ -4,6 +4,8 @@
 #include "ThirdParty/sqlite3.h"
 #include <iostream>
 #include "Effect.h"
+#include "Encoder.h"
+#include "Decoder.h"
 
 namespace eufe {
 	
@@ -86,6 +88,9 @@ namespace eufe {
 #endif
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
+
+		Item(Decoder& decoder, Engine* engine, Item* owner = NULL);
+		virtual void encode(Encoder& encoder) const;
 
 	protected:
 		Engine* engine_;

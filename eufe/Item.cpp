@@ -363,6 +363,54 @@ std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, A
 	return outIterator;
 }
 
+Item::Item(Decoder& decoder, Engine* engine, Item* owner) : engine_(engine), owner_(owner)
+{
+	decoder.decode(typeID_);
+	decoder.decode(groupID_);
+	decoder.decode(categoryID_);
+
+	{
+		AttributesMap::size_type size;
+		decoder.decode(size);
+		for (AttributesMap::size_type i = 0; i < size; i++)
+		{
+			Attribute* attribute = new Attribute(decoder, engine, this);
+			attributes_[attribute->getAttributeID()] = attribute;
+		}
+	}
+	{
+		EffectsList::size_type size;
+		decoder.decode(size);
+		for (EffectsList::size_type i = 0; i < size; i++)
+		{
+			TypeID effectID;
+			decoder.decode(effectID);
+			effects_.push_back(Effect::getEffect(engine_, effectID));
+		}
+	}
+}
+
+void Item::encode(Encoder& encoder) const
+{
+	encoder.encode(typeID_);
+	encoder.encode(groupID_);
+	encoder.encode(categoryID_);
+	
+	{
+		AttributesMap::const_iterator i, end = attributes_.end();
+		encoder.encode(attributes_.size());
+		for (i = attributes_.begin(); i != end; i++)
+			i->second->encode(encoder);
+	}
+	{
+		EffectsList::const_iterator i, end = effects_.end();
+		encoder.encode(effects_.size());
+		for (i = effects_.begin(); i != end; i++)
+			encoder.encode((*i)->getEffectID());
+	}
+
+}
+
 void Item::addItemModifier(Modifier* modifier)
 {
 	Engine::ScopedLock lock(*engine_);

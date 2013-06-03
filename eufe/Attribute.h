@@ -1,5 +1,7 @@
 #pragma once
 #include "types.h"
+#include "Encoder.h"
+#include "Decoder.h"
 
 namespace eufe {
 
@@ -211,11 +213,13 @@ namespace eufe {
 		
 		void reset();
 		
+		Attribute(Decoder& decoder, Engine* engine, Item* owner);
+		virtual void encode(Encoder& encoder) const;
+
 #if _DEBUG
 		const char* getAttributeName() const;
 		friend std::ostream& operator<<(std::ostream& os, Attribute& attribute);
 #endif
-
 	private:
 		Engine* engine_;
 		TypeID attributeID_;

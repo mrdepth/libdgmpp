@@ -59,3 +59,14 @@ Environment Skill::getEnvironment()
 		environment["Area"] = engine_->getArea();
 	return environment;
 }
+
+Skill::Skill(Decoder& decoder, Engine* engine, Character* owner) : Item(decoder, engine, owner)
+{
+	decoder.decode(isLearned_);
+}
+
+void Skill::encode(Encoder& encoder)  const
+{
+	Item::encode(encoder);
+	encoder.encode(isLearned_);
+}

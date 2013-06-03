@@ -565,6 +565,30 @@ void Attribute::calculate()
 	calculated_ = true;
 }
 
+Attribute::Attribute(Decoder& decoder, Engine* engine, Item* owner) : engine_(engine), owner_(owner), calculated_(false)
+{
+	decoder.decode(attributeID_);
+	decoder.decode(maxAttributeID_);
+	decoder.decode(value_);
+	decoder.decode(initialValue_);
+	decoder.decode(forcedValue_);
+	decoder.decode(isStackable_);
+	decoder.decode(highIsGood_);
+	decoder.decode(isFakeAttribute_);
+}
+
+void Attribute::encode(Encoder& encoder)  const
+{
+	encoder.encode(attributeID_);
+	encoder.encode(maxAttributeID_);
+	encoder.encode(value_);
+	encoder.encode(initialValue_);
+	encoder.encode(forcedValue_);
+	encoder.encode(isStackable_);
+	encoder.encode(highIsGood_);
+	encoder.encode(isFakeAttribute_);
+}
+
 #if _DEBUG
 
 const char* Attribute::getAttributeName() const

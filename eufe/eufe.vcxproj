@@ -76,7 +76,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;BOOST_ALL_NO_LIB;_CONSOLE;DONT_USE_MUTEX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
@@ -104,6 +104,7 @@
     <ClCompile Include="Charge.cpp" />
     <ClCompile Include="ControlTower.cpp" />
     <ClCompile Include="DamagePattern.cpp" />
+    <ClCompile Include="Decoder.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectAdaptiveArmorHardener.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="EffectLeechInterpreter.cpp" />
     <ClCompile Include="EffectShieldBoostingInterpreter.cpp" />
     <ClCompile Include="EffectSlotModifierInterpreter.cpp" />
+    <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FetchResult.cpp" />
     <ClCompile Include="Gang.cpp" />
@@ -147,6 +149,7 @@
     <ClInclude Include="Charge.h" />
     <ClInclude Include="ControlTower.h" />
     <ClInclude Include="DamagePattern.h" />
+    <ClInclude Include="Decoder.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectAdaptiveArmorHardener.h" />
@@ -160,6 +163,7 @@
     <ClInclude Include="EffectLeechInterpreter.h" />
     <ClInclude Include="EffectShieldBoostingInterpreter.h" />
     <ClInclude Include="EffectSlotModifierInterpreter.h" />
+    <ClInclude Include="Encoder.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="eufe.h" />
     <ClInclude Include="FetchResult.h" />

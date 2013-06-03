@@ -345,6 +345,25 @@ std::insert_iterator<ModifiersList> Character::getLocationModifiers(Attribute* a
 	return outIterator;
 }
 
+Character::Character(Decoder& decoder, Engine* engine, Gang* owner) : Item(decoder, engine, owner), ship_(NULL)
+{
+	SkillsMap::size_type size;
+	decoder.decode(size);
+	for (SkillsMap::size_type i = 0; i < size; i++)
+	{
+		Skill* skill = new Skill(decoder, engine, this);
+		skills_[skill->getTypeID()] = skill;
+	}
+}
+
+void Character::encode(Encoder& encoder) const
+{
+	Item::encode(encoder);
+	SkillsMap::const_iterator i, end = skills_.end();
+	encoder.encode(skills_.size());
+	for (i = skills_.begin(); i != end; i++)
+		i->second->encode(encoder);
+}
 
 #if _DEBUG
 
