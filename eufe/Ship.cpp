@@ -133,6 +133,58 @@ Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
 	return newModule;
 }
 
+ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
+{
+	std::list<TypeID>::const_iterator i, end = typeIDs.end();
+	ModulesList modules;
+	ModulesList lows;
+	ModulesList meds;
+	ModulesList highs;
+	ModulesList rigs;
+	ModulesList subsystems;
+
+	for (i = typeIDs.begin(); i != end; i++)
+	{
+		Module* module;
+		module = new Module(engine_, *i, this);
+		modules.push_back(module);
+		switch(module->getSlot())
+		{
+		case Module::SLOT_LOW:
+			lows.push_back(module);
+			break;
+		case Module::SLOT_MED:
+			meds.push_back(module);
+			break;
+		case Module::SLOT_HI:
+			highs.push_back(module);
+			break;
+		case Module::SLOT_RIG:
+			rigs.push_back(module);
+			break;
+		case Module::SLOT_SUBSYSTEM:
+			subsystems.push_back(module);
+			break;
+		default:
+			modules.pop_back();
+			modules.push_back(NULL);
+			break;
+		}
+	}
+
+
+	ModulesList* lists[] = {&subsystems, &rigs, &lows, &meds, &highs};
+
+	for (int j = 0; j < 5; j++)
+	{
+		ModulesList::iterator k, endk;
+		for (k = lists[j]->begin(), endk = lists[j]->end(); k != endk; k++)
+			if (!addModule(*k))
+				std::replace(modules.begin(), modules.end(), *k, (Module*) NULL);
+	}
+	return modules;
+}
+
 void Ship::removeModule(Module* module)
 {
 	module->setState(Module::STATE_OFFLINE);

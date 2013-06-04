@@ -26,6 +26,7 @@ namespace eufe {
 		Module* addModule(TypeID typeID);
 		Module* replaceModule(Module* oldModule, TypeID typeID);
 		Module* replaceModule(Module* oldModule, Module* newModule);
+		ModulesList addModules(const std::list<TypeID>& typeIDs);
 		void removeModule(Module* module);
 		
 		Drone* addDrone(Drone* drone);
