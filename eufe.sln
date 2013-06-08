@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eufe", "eufe\eufe.vcxproj", "{BEFC09B4-CD76-41E6-B5A0-1D291E6D2395}"
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eufe", "eufe\eufe.vcproj", "{BEFC09B4-CD76-41E6-B5A0-1D291E6D2395}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eufelib", "eufelib\eufelib.vcxproj", "{0BDE1B99-ED38-4009-B2C8-8B0B64625EF8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libeufe", "libeufe\libeufe.vcproj", "{64460821-8B33-4264-B11C-79F5026928FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,10 @@ Global
 		{BEFC09B4-CD76-41E6-B5A0-1D291E6D2395}.Debug|Win32.Build.0 = Debug|Win32
 		{BEFC09B4-CD76-41E6-B5A0-1D291E6D2395}.Release|Win32.ActiveCfg = Release|Win32
 		{BEFC09B4-CD76-41E6-B5A0-1D291E6D2395}.Release|Win32.Build.0 = Release|Win32
-		{0BDE1B99-ED38-4009-B2C8-8B0B64625EF8}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0BDE1B99-ED38-4009-B2C8-8B0B64625EF8}.Debug|Win32.Build.0 = Debug|Win32
-		{0BDE1B99-ED38-4009-B2C8-8B0B64625EF8}.Release|Win32.ActiveCfg = Release|Win32
-		{0BDE1B99-ED38-4009-B2C8-8B0B64625EF8}.Release|Win32.Build.0 = Release|Win32
+		{64460821-8B33-4264-B11C-79F5026928FF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{64460821-8B33-4264-B11C-79F5026928FF}.Debug|Win32.Build.0 = Debug|Win32
+		{64460821-8B33-4264-B11C-79F5026928FF}.Release|Win32.ActiveCfg = Release|Win32
+		{64460821-8B33-4264-B11C-79F5026928FF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
