@@ -100,11 +100,25 @@ Module* Ship::addModule(Module* module)
 
 Module* Ship::addModule(TypeID typeID)
 {
-	return addModule(new Module(engine_, typeID, this));
+	try
+	{
+		return addModule(new Module(engine_, typeID, this));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
-	return replaceModule(oldModule, new Module(engine_, typeID, this));
+	try
+	{
+		return replaceModule(oldModule, new Module(engine_, typeID, this));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
@@ -146,8 +160,18 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 	for (i = typeIDs.begin(); i != end; i++)
 	{
 		Module* module;
-		module = new Module(engine_, *i, this);
+		try
+		{
+			module = new Module(engine_, *i, this);
+		}
+		catch(Item::UnknownTypeIDException)
+		{
+			module = NULL;
+		}
+
 		modules.push_back(module);
+		if (!module)
+			continue;
 		switch(module->getSlot())
 		{
 		case Module::SLOT_LOW:
@@ -210,7 +234,14 @@ Drone* Ship::addDrone(Drone* drone)
 
 Drone* Ship::addDrone(TypeID typeID)
 {
-	return addDrone(new Drone(engine_, typeID, this));
+	try
+	{
+		return addDrone(new Drone(engine_, typeID, this));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 void Ship::removeDrone(Drone* drone)

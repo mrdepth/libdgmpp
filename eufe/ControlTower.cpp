@@ -44,7 +44,14 @@ Structure* ControlTower::addStructure(Structure* structure)
 
 Structure* ControlTower::addStructure(TypeID typeID)
 {
-	return addStructure(new Structure(engine_, typeID, this));
+	try
+	{
+		return addStructure(new Structure(engine_, typeID, this));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 void ControlTower::removeStructure(Structure* structure)

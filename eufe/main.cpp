@@ -25,6 +25,7 @@ void usageExample()
 	character1->setAllSkillsLevel(5);
 
 	Ship* domi1 = character1->setShip(645);
+	domi1->getGroupName();
 
 	std::list<TypeID> typeIDs;
 	typeIDs.push_back(10836);

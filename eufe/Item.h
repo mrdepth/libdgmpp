@@ -82,8 +82,9 @@ namespace eufe {
 		virtual void removeLocationGroupModifier(Modifier* modifier);
 		virtual void removeLocationRequiredSkillModifier(Modifier* modifier);
 		
+		virtual const char* getTypeName();
+		virtual const char* getGroupName();
 #if _DEBUG
-		virtual const char* getTypeName() const;
 		friend std::ostream& operator<<(std::ostream& os, Item& item);
 #endif
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
@@ -111,8 +112,7 @@ namespace eufe {
 	private:
 		const Context* context_;
 		
-#if _DEBUG
 		std::string typeName_;
-#endif
+		std::string groupName_;
 	};
 }

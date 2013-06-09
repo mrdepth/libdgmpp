@@ -479,12 +479,37 @@ void Item::removeLocationRequiredSkillModifier(Modifier* modifier)
 	}
 }
 
-#if _DEBUG
-
-const char* Item::getTypeName() const
+const char* Item::getTypeName()
 {
+	if (typeName_.size() == 0)
+	{
+		std::stringstream sql;
+		sql << "SELECT typeName FROM invTypes WHERE typeID = " << typeID_;
+
+		boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		if (result->next()) {
+			typeName_ = result->getText(0);
+		}
+	}
 	return typeName_.c_str();
 }
+
+const char* Item::getGroupName()
+{
+	if (groupName_.size() == 0)
+	{
+		std::stringstream sql;
+		sql << "SELECT groupName FROM invTypes AS A, invGroups AS B WHERE A.groupID=B.groupID AND typeID = " << typeID_;
+
+		boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		if (result->next()) {
+			groupName_ = result->getText(0);
+		}
+	}
+	return groupName_.c_str();
+}
+
+#if _DEBUG
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 {

@@ -77,7 +77,14 @@ Ship* Character::setShip(Ship* ship)
 
 Ship* Character::setShip(TypeID typeID)
 {
-	return setShip(new Ship(engine_, typeID, this));
+	try
+	{
+		return setShip(new Ship(engine_, typeID, this));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 Environment Character::getEnvironment()
@@ -125,11 +132,18 @@ void Character::reset()
 
 Skill* Character::addSkill(TypeID typeID, int skillLevel, bool isLearned)
 {
-	Skill* skill = new Skill(engine_, typeID, skillLevel, isLearned, this);
-	skills_[typeID] = skill;
+	try
+	{
+		Skill* skill = new Skill(engine_, typeID, skillLevel, isLearned, this);
+		skills_[typeID] = skill;
 //	if (getOwner() && ship_ != NULL)
 		skill->addEffects(Effect::CATEGORY_GENERIC);
-	return skill;
+		return skill;
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 void Character::removeSkill(Skill* skill)
@@ -175,7 +189,14 @@ Booster* Character::getBooster(int slot)
 
 Implant* Character::addImplant(TypeID typeID)
 {
-	return addImplant(new Implant(engine_, typeID, this));
+	try
+	{
+		return addImplant(new Implant(engine_, typeID, this));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 Implant* Character::addImplant(Implant* implant)
@@ -193,7 +214,14 @@ Implant* Character::addImplant(Implant* implant)
 
 Booster* Character::addBooster(TypeID typeID)
 {
-	return addBooster(new Booster(engine_, typeID, this));
+	try
+	{
+		return addBooster(new Booster(engine_, typeID, this));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 Booster* Character::addBooster(Booster* booster)

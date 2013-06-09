@@ -347,7 +347,14 @@ Charge* Module::setCharge(Charge* charge)
 
 Charge* Module::setCharge(TypeID typeID)
 {
-	return setCharge(new Charge(engine_, typeID, this));
+	try
+	{
+		return setCharge(new Charge(engine_, typeID, this));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 void Module::clearCharge()

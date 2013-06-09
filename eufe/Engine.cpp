@@ -48,7 +48,14 @@ Area* Engine::setArea(Area* area)
 
 Area* Engine::setArea(TypeID typeID)
 {
-	return setArea(new Area(this, typeID));
+	try
+	{
+		return setArea(new Area(this, typeID));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 ControlTower* Engine::setControlTower(ControlTower* controlTower)
@@ -70,7 +77,14 @@ ControlTower* Engine::setControlTower(ControlTower* controlTower)
 
 ControlTower* Engine::setControlTower(TypeID typeID)
 {
-	return setControlTower(new ControlTower(this, typeID));
+	try
+	{
+		return setControlTower(new ControlTower(this, typeID));
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return NULL;
+	}
 }
 
 void Engine::clearArea()
