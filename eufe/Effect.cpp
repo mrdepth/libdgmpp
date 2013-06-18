@@ -148,7 +148,6 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 		category_ = static_cast<Effect::Category>(result->getInt(0));
 		bool isAssistance = result->getInt(1) != 0;
 		bool isOffensive = result->getInt(2) != 0;
-		size_t size = result->getInt(3);
 		Blob blob = result->getBlob(3);
 		
 		if (effectID == LEECH_EFFECT_ID)
