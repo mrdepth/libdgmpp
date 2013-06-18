@@ -19,36 +19,15 @@ void usageExample()
 #endif
 	
 	Gang* gang = engine.getGang();
-	gang->addPilot();
-
 	Character* character1 = gang->addPilot();
 	character1->setAllSkillsLevel(5);
 
-	Ship* domi1 = character1->setShip(645);
-	domi1->getGroupName();
-
-	std::list<TypeID> typeIDs;
-	typeIDs.push_back(10836);
-	typeIDs.push_back(10836);
-	typeIDs.push_back(645);
-	typeIDs.push_back(10836);
-
-	ModulesList modules = domi1->addModules(typeIDs);
-
-	Resistances res1 = domi1->getResistances();
 	
 	Ship* gila = character1->setShip(17715);
-	Module* module1 = gila->addModule(10836);
-	Module* module2 = gila->addModule(10836);
-	Module* module3 = gila->addModule(10836);
-	gila->addModule(10836);
-	gila->addModule(10836);
-	gila->addModule(10836);
-	gila->removeModule(module2);
-	module1->setState(Module::STATE_OVERLOADED);
-	gila->getWeaponDps();
-	gila->getResistances();
-	gila->getCapStableLevel();
+	Module* module1 = gila->addModule(28756);
+	module1->setCharge(30488);
+
+	int l = module1->getMaxRange();
 
 #if _DEBUG
 #ifdef WIN32

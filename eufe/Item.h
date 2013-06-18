@@ -21,6 +21,8 @@ namespace eufe {
 	extern const TypeID SUBSYSTEM_CATEGORY_ID;
 	extern const TypeID STRUCTURE_CATEGORY_ID;
 
+	extern const TypeID ASTROMETRICS_TYPE_ID;
+
 	class Item
 	{
 	public:
