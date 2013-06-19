@@ -580,7 +580,7 @@ float Module::getMaxRange()
 				return maxRange_;
 			}
 		
-		if (charge_ && !charge_->requireSkill(ASTROMETRICS_TYPE_ID))
+		if (charge_)
 		{
 			if (charge_->hasAttribute(MAX_VELOCITY_ATTRIBUTE_ID) && charge_->hasAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID) &&
 				charge_->hasAttribute(MASS_ATTRIBUTE_ID) && charge_->hasAttribute(AGILITY_ATTRIBUTE_ID))

@@ -29,7 +29,7 @@ const TypeID eufe::DRONE_CATEGORY_ID = 18;
 const TypeID eufe::SUBSYSTEM_CATEGORY_ID = 32;
 const TypeID eufe::STRUCTURE_CATEGORY_ID = 23;
 
-const TypeID eufe::ASTROMETRICS_TYPE_ID = 3412;
+const TypeID eufe::MISSILE_LAUNCHER_OPERATION_TYPE_ID = 3319;
 
 class ModifierMatchFunction : public std::unary_function<Modifier*, bool>
 {
