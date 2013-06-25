@@ -195,12 +195,21 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 {
 	if (stacking)
 	{
-		float i = 0;
-		for (; first != last; first++)
-		{
-			value *= static_cast<float>(1.0 + (*first - 1.0) * exp(- i * i / 7.1289));
-			i++;
+		static int precalculatedExp = 0;
+		static float* pExp = NULL;
+		int n = last - first;
+		if (n > precalculatedExp) {
+			if (pExp)
+				delete[] pExp;
+			precalculatedExp += 20;
+			pExp = new float[precalculatedExp];
+			float j = 0;
+			for (int i = 0; i < precalculatedExp; i++, j++)
+				pExp[i] = exp(- j * j / 7.1289);
 		}
+
+		for (int i = 0; first != last; first++, i++)
+			value *= static_cast<float>(1.0 + (*first - 1.0) * pExp[i]);
 	}
 	else
 	{
