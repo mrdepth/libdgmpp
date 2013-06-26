@@ -205,7 +205,7 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 			pExp = new float[precalculatedExp];
 			float j = 0;
 			for (int i = 0; i < precalculatedExp; i++, j++)
-				pExp[i] = exp(- j * j / 7.1289);
+				pExp[i] = expf(- j * j / 7.1289f);
 		}
 
 		for (int i = 0; first != last; first++, i++)
