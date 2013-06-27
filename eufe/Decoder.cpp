@@ -20,5 +20,5 @@ void Decoder::decode(std::string& value)
 	char* buf = new char[len];
 	fread(buf, len, 1, if_);
 	value = buf;
-	free(buf);
+	delete[] buf;
 }
