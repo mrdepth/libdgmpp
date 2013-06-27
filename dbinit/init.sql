@@ -7,4 +7,3 @@
 .read ./dump/invCategories.sql
 .read ./dump/invGroups.sql
 .read ./dump/invTypes.sql
-.read ./dump/invControlTowerResources.sql

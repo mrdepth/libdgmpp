@@ -48,5 +48,6 @@ INSERT INTO invCategories (categoryID,categoryName,description,published,iconID,
 INSERT INTO invCategories (categoryID,categoryName,description,published,iconID,categoryNameID,dataID) VALUES(53,'Effects','',0,0,63573,16545552);
 INSERT INTO invCategories (categoryID,categoryName,description,published,iconID,categoryNameID,dataID) VALUES(54,'Lights','',0,0,63574,22244434);
 INSERT INTO invCategories (categoryID,categoryName,description,published,iconID,categoryNameID,dataID) VALUES(59,'Cells','',0,0,235965,16545554);
-INSERT INTO invCategories (categoryID,categoryName,description,published,iconID,categoryNameID,dataID) VALUES(350001,'Catma','',0,0,267649,60304602);
+INSERT INTO invCategories (categoryID,categoryName,description,published,iconID,categoryNameID,dataID) VALUES(63,'Special Edition Assets','Special Edition Assets',1,0,285070,85634237);
+INSERT INTO invCategories (categoryID,categoryName,description,published,iconID,categoryNameID,dataID) VALUES(350001,'Infantry','',0,0,267649,64275205);
 COMMIT TRANSACTION;
