@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{64460821-8B33-4264-B11C-79F5026928FF}</ProjectGuid>
+    <RootNamespace>libeufe</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <IncludePath>E:\Programing\boost_1_51_0;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <IncludePath>E:\Programing\boost_1_51_0;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;DONT_USE_MUTEX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;DONT_USE_MUTEX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\eufe\Area.h" />
+    <ClInclude Include="..\eufe\Attribute.h" />
+    <ClInclude Include="..\eufe\Blob.h" />
+    <ClInclude Include="..\eufe\Booster.h" />
+    <ClInclude Include="..\eufe\CapacitorSimulator.h" />
+    <ClInclude Include="..\eufe\Character.h" />
+    <ClInclude Include="..\eufe\Charge.h" />
+    <ClInclude Include="..\eufe\ControlTower.h" />
+    <ClInclude Include="..\eufe\DamagePattern.h" />
+    <ClInclude Include="..\eufe\Drone.h" />
+    <ClInclude Include="..\eufe\Effect.h" />
+    <ClInclude Include="..\eufe\EffectAdaptiveArmorHardener.h" />
+    <ClInclude Include="..\eufe\EffectArmorRepairInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectByteCodeInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectEnergyDestabilizationNewInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectEnergyTransferInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectHardPointModifierEffectInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectHullRepairInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectLeechInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectShieldBoostingInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectSlotModifierInterpreter.h" />
+    <ClInclude Include="..\eufe\Engine.h" />
+    <ClInclude Include="..\eufe\eufe.h" />
+    <ClInclude Include="..\eufe\FetchResult.h" />
+    <ClInclude Include="..\eufe\Gang.h" />
+    <ClInclude Include="..\eufe\HeatSimulator.h" />
+    <ClInclude Include="..\eufe\Implant.h" />
+    <ClInclude Include="..\eufe\Item.h" />
+    <ClInclude Include="..\eufe\LocationGroupModifier.h" />
+    <ClInclude Include="..\eufe\LocationRequiredSkillModifier.h" />
+    <ClInclude Include="..\eufe\Modifier.h" />
+    <ClInclude Include="..\eufe\Module.h" />
+    <ClInclude Include="..\eufe\Mutex.h" />
+    <ClInclude Include="..\eufe\Ship.h" />
+    <ClInclude Include="..\eufe\Skill.h" />
+    <ClInclude Include="..\eufe\SqlConnector.h" />
+    <ClInclude Include="..\eufe\SqliteConnector.h" />
+    <ClInclude Include="..\eufe\SqliteFetchResult.h" />
+    <ClInclude Include="..\eufe\Structure.h" />
+    <ClInclude Include="..\eufe\types.h" />
+    <ClInclude Include="..\eufe\Compiler.h" />
+    <ClInclude Include="..\eufe\ThirdParty\sqlite3.h" />
+    <ClInclude Include="..\eufe\ThirdParty\sqlite3ext.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\eufe\Area.cpp" />
+    <ClCompile Include="..\eufe\Attribute.cpp" />
+    <ClCompile Include="..\eufe\Blob.cpp" />
+    <ClCompile Include="..\eufe\Booster.cpp" />
+    <ClCompile Include="..\eufe\CapacitorSimulator.cpp" />
+    <ClCompile Include="..\eufe\Character.cpp" />
+    <ClCompile Include="..\eufe\Charge.cpp" />
+    <ClCompile Include="..\eufe\ControlTower.cpp" />
+    <ClCompile Include="..\eufe\DamagePattern.cpp" />
+    <ClCompile Include="..\eufe\Drone.cpp" />
+    <ClCompile Include="..\eufe\Effect.cpp" />
+    <ClCompile Include="..\eufe\EffectAdaptiveArmorHardener.cpp" />
+    <ClCompile Include="..\eufe\EffectArmorRepairInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectByteCodeInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectEnergyDestabilizationNewInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectEnergyTransferInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectHardPointModifierEffectInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectHullRepairInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectLeechInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectShieldBoostingInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectSlotModifierInterpreter.cpp" />
+    <ClCompile Include="..\eufe\Engine.cpp" />
+    <ClCompile Include="..\eufe\FetchResult.cpp" />
+    <ClCompile Include="..\eufe\Gang.cpp" />
+    <ClCompile Include="..\eufe\HeatSimulator.cpp" />
+    <ClCompile Include="..\eufe\Implant.cpp" />
+    <ClCompile Include="..\eufe\Item.cpp" />
+    <ClCompile Include="..\eufe\LocationGroupModifier.cpp" />
+    <ClCompile Include="..\eufe\LocationRequiredSkillModifier.cpp" />
+    <ClCompile Include="..\eufe\Modifier.cpp" />
+    <ClCompile Include="..\eufe\Module.cpp" />
+    <ClCompile Include="..\eufe\Mutex.cpp" />
+    <ClCompile Include="..\eufe\Ship.cpp" />
+    <ClCompile Include="..\eufe\Skill.cpp" />
+    <ClCompile Include="..\eufe\SqlConnector.cpp" />
+    <ClCompile Include="..\eufe\SqliteConnector.cpp" />
+    <ClCompile Include="..\eufe\SqliteFetchResult.cpp" />
+    <ClCompile Include="..\eufe\Structure.cpp" />
+    <ClCompile Include="..\eufe\Compiler.cpp" />
+    <ClCompile Include="..\eufe\ThirdParty\sqlite3.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
