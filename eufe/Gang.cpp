@@ -105,12 +105,13 @@ Gang::~Gang(void)
 {
 	fleetBooster_ = wingBooster_ = squadBooster_ = NULL;
 
-	CharactersList::iterator i, end = pilots_.end();
-	for (i = pilots_.begin(); i != end; i++)
+	CharactersList pilotsTmp = pilots_;
+	pilots_.clear();
+	
+	CharactersList::iterator i, end = pilotsTmp.end();
+	for (i = pilotsTmp.begin(); i != end; i++)
 		delete *i;
 
-//	CharactersList tmp = pilots_;
-	pilots_.clear();
 }
 
 const CharactersList& Gang::getPilots()

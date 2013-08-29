@@ -30,8 +30,9 @@ Character::Character(Engine* engine, Gang* owner, const char* characterName) : I
 
 Character::~Character(void)
 {
-	delete ship_;
+	Ship* shipTmp = ship_;
 	ship_ = NULL;
+	delete shipTmp;
 	
 	{
 		SkillsMap::iterator i, end = skills_.end();
