@@ -209,9 +209,10 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 			for (int i = 0; i < precalculatedExp; i++, j++)
 				pExp[i] = expf(- j * j / 7.1289f);
 		}
-
-		for (int i = 0; first != last; first++, i++)
-			value *= static_cast<float>(1.0 + (*first - 1.0) * pExp[i]);
+		
+		if (pExp)
+			for (int i = 0; first != last; first++, i++)
+				value *= static_cast<float>(1.0 + (*first - 1.0) * pExp[i]);
 	}
 	else
 	{
