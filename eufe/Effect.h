@@ -42,6 +42,9 @@ namespace eufe {
 
 	extern const TypeID ADAPTIVE_ARMOR_HARDENER_EFFECT_ID;
 	extern const TypeID FUELED_SHIELD_BOOSTING_EFFECT_ID;
+	extern const TypeID FUELED_ARMOR_REPAIR__EFFECT_ID;
+	
+	extern const TypeID NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS;
 
 	class Effect
 	{

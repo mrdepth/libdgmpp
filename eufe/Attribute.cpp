@@ -189,6 +189,8 @@ const TypeID eufe::MISSILE_ENTITY_FLIGHT_TIME_MULTIPLIER_ATTRIBUTE_ID = 646;
 
 const TypeID eufe::DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID = 458;
 
+const TypeID eufe::CHARGE_ARMOR_DAMAGE_MULTIPLIER_ATTRIBUTE_ID = 1886;
+
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)

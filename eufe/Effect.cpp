@@ -26,6 +26,7 @@
 #include "EffectSlotModifierInterpreter.h"
 #include "EffectHardPointModifierEffectInterpreter.h"
 #include "EffectAdaptiveArmorHardener.h"
+#include "EffectNaniteRepairPasteArmorDamageBonus.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -66,6 +67,9 @@ const TypeID eufe::ONLINE_FOR_STRUCTURES_EFFECT_ID = 901;
 
 const TypeID eufe::ADAPTIVE_ARMOR_HARDENER_EFFECT_ID = 4928;
 const TypeID eufe::FUELED_SHIELD_BOOSTING_EFFECT_ID = 4936;
+const TypeID eufe::FUELED_ARMOR_REPAIR__EFFECT_ID = 5275;
+
+const TypeID eufe::NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS = 10004;
 
 static std::map<TypeID, boost::weak_ptr<eufe::Effect> > reusableEffects;
 
@@ -117,6 +121,10 @@ Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* b
 		interpreter_ = new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive);
 	else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
 		interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
+	else if (effectID == FUELED_ARMOR_REPAIR__EFFECT_ID)
+		interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
+	else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS)
+		interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
 	else
 		interpreter_ = new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive);
 #if _DEBUG
@@ -176,6 +184,10 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 			interpreter_ = new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive);
 		else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
 			interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
+		else if (effectID == FUELED_ARMOR_REPAIR__EFFECT_ID)
+			interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
+		else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS)
+			interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
 		else
 			interpreter_ = new EffectByteCodeInterpreter(engine, reinterpret_cast<const Byte*>(blob.getMemory()), blob.getSize(), isAssistance, isOffensive);
 		
