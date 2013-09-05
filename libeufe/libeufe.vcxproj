@@ -95,6 +95,7 @@
     <ClInclude Include="..\eufe\EffectHullRepairInterpreter.h" />
     <ClInclude Include="..\eufe\EffectInterpreter.h" />
     <ClInclude Include="..\eufe\EffectLeechInterpreter.h" />
+    <ClInclude Include="..\eufe\EffectNaniteRepairPasteArmorDamageBonus.h" />
     <ClInclude Include="..\eufe\EffectShieldBoostingInterpreter.h" />
     <ClInclude Include="..\eufe\EffectSlotModifierInterpreter.h" />
     <ClInclude Include="..\eufe\Engine.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="..\eufe\EffectHardPointModifierEffectInterpreter.cpp" />
     <ClCompile Include="..\eufe\EffectHullRepairInterpreter.cpp" />
     <ClCompile Include="..\eufe\EffectLeechInterpreter.cpp" />
+    <ClCompile Include="..\eufe\EffectNaniteRepairPasteArmorDamageBonus.cpp" />
     <ClCompile Include="..\eufe\EffectShieldBoostingInterpreter.cpp" />
     <ClCompile Include="..\eufe\EffectSlotModifierInterpreter.cpp" />
     <ClCompile Include="..\eufe\Engine.cpp" />
