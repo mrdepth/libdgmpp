@@ -989,7 +989,7 @@ float Ship::getWarpSpeed()
 		base = 1.0;
 	if (multiplier == 0.0)
 		multiplier = 1.0;
-	return 3 * base * multiplier;
+	return base * multiplier;
 }
 
 float Ship::getMaxWarpDistance()
