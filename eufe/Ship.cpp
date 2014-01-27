@@ -83,9 +83,9 @@ Ship::~Ship(void)
 	}
 }
 
-Module* Ship::addModule(Module* module)
+Module* Ship::addModule(Module* module, bool force)
 {
-	if (canFit(module))
+	if (force || canFit(module))
 	{
 		modules_.push_back(module);
 		module->setOwner(this);
@@ -104,11 +104,11 @@ Module* Ship::addModule(Module* module)
 	}
 }
 
-Module* Ship::addModule(TypeID typeID)
+Module* Ship::addModule(TypeID typeID, bool force)
 {
 	try
 	{
-		return addModule(new Module(engine_, typeID, this));
+		return addModule(new Module(engine_, typeID, this), force);
 	}
 	catch(Item::UnknownTypeIDException)
 	{

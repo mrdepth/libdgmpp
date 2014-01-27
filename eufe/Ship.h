@@ -22,8 +22,8 @@ namespace eufe {
 		Ship(Engine* engine, TypeID typeID, Character* owner = NULL);
 		virtual ~Ship(void);
 
-		Module* addModule(Module* module);
-		Module* addModule(TypeID typeID);
+		Module* addModule(Module* module, bool force = false);
+		Module* addModule(TypeID typeID, bool force = false);
 		Module* replaceModule(Module* oldModule, TypeID typeID);
 		Module* replaceModule(Module* oldModule, Module* newModule);
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
