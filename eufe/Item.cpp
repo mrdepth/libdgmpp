@@ -511,6 +511,21 @@ const char* Item::getGroupName()
 	return groupName_.c_str();
 }
 
+std::set<Item*> Item::getAffectors() {
+	ModifiersList modifiers;
+	for (auto attribute: getAttributes())
+		getModifiers(attribute.second, std::inserter(modifiers, modifiers.begin()));
+	
+	std::set<Item*> items;
+	for (auto modifier: modifiers) {
+		Item* item = modifier->getModifier()->getOwner();
+		if (item != this)
+			items.insert(modifier->getModifier()->getOwner());
+	}
+	
+	return items;
+}
+
 #if _DEBUG
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
