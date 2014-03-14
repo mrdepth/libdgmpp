@@ -199,7 +199,7 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	{
 		static int precalculatedExp = 0;
 		static float* pExp = NULL;
-		int n = last - first;
+		long n = last - first;
 		if (n > precalculatedExp) {
 			if (pExp)
 				delete[] pExp;
