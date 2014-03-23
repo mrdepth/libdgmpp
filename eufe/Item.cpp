@@ -513,14 +513,21 @@ const char* Item::getGroupName()
 
 std::set<Item*> Item::getAffectors() {
 	ModifiersList modifiers;
-	for (auto attribute: getAttributes())
-		getModifiers(attribute.second, std::inserter(modifiers, modifiers.begin()));
+	{
+		auto attributes = getAttributes();
+		auto attribute = attributes.begin(), end = attributes.end();
+		for (;attribute != end; attribute++)
+			getModifiers(attribute->second, std::inserter(modifiers, modifiers.begin()));
+		}
 	
 	std::set<Item*> items;
-	for (auto modifier: modifiers) {
-		Item* item = modifier->getModifier()->getOwner();
-		if (item != this)
-			items.insert(modifier->getModifier()->getOwner());
+	{
+		auto modifier = modifiers.begin(), end = modifiers.end();
+		for (; modifier != end; modifier++) {
+			Item* item = (*modifier)->getModifier()->getOwner();
+			if (item != this)
+				items.insert((*modifier)->getModifier()->getOwner());
+		}
 	}
 	
 	return items;
