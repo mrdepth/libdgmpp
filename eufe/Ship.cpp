@@ -136,7 +136,15 @@ Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
 	ModulesList::iterator i = std::find(modules_.begin(), modules_.end(), oldModule);
 	i--;
 	
-	removeModule(oldModule);
+	//removeModule(oldModule);
+	Module::Slot slot = oldModule->getSlot();
+	
+	oldModule->setState(Module::STATE_OFFLINE);
+	oldModule->clearTarget();
+	oldModule->removeEffects(Effect::CATEGORY_GENERIC);
+	
+	modules_.remove(oldModule);
+	delete oldModule;
 	
 	if ((newModule = addModule(newModule))) {
 		modules_.remove(newModule);
@@ -150,6 +158,22 @@ Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
 			newModule->setState(state);
 	}
 	engine_->reset(this);
+	
+	if (slot == Module::SLOT_SUBSYSTEM) {
+		static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
+		for (int i = 0; i < 3; i++) {
+			int n = getFreeSlots(slots[i]);
+			if (n < 0) {
+				ModulesList modules;
+				getModules(slots[i], std::inserter(modules, modules.begin()));
+				auto j = modules.rbegin();
+				for (; n < 0; j++, n++) {
+					removeModule(*j);
+				}
+			}
+		}
+	}
+	
 	return newModule;
 }
 
@@ -217,6 +241,8 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 
 void Ship::removeModule(Module* module)
 {
+	Module::Slot slot = module->getSlot();
+
 	module->setState(Module::STATE_OFFLINE);
 	module->clearTarget();
 	module->removeEffects(Effect::CATEGORY_GENERIC);
@@ -224,6 +250,21 @@ void Ship::removeModule(Module* module)
 	modules_.remove(module);
 	delete module;
 	engine_->reset(this);
+	
+	if (slot == Module::SLOT_SUBSYSTEM) {
+		static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
+		for (int i = 0; i < 3; i++) {
+			int n = getFreeSlots(slots[i]);
+			if (n < 0) {
+				ModulesList modules;
+				getModules(slots[i], std::inserter(modules, modules.begin()));
+				auto j = modules.rbegin();
+				for (; n < 0; j++, n++) {
+					removeModule(*j);
+				}
+			}
+		}
+	}
 }
 
 Drone* Ship::addDrone(Drone* drone)
