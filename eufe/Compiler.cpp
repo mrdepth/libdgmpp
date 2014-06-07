@@ -65,7 +65,7 @@ void Compiler::compile()
 			std::string path = outputPath_ + "dgmCompiledEffects.sql";
 			std::ofstream os(path.c_str());
 			os << "DROP TABLE IF EXISTS dgmCompiledEffects;" << std::endl;
-			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" INTEGER NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" INTEGER NOT NULL, \"isOffensive\" INTEGER NOT NULL, \"isAssistance\" INTEGER NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
+			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" SMALLINT(6) NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" SMALLINT(6) NOT NULL, \"isOffensive\" BOOL NOT NULL, \"isAssistance\" BOOL NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
 			os << "BEGIN TRANSACTION;" << std::endl;
 
 			end = effects_.end();
@@ -98,23 +98,32 @@ void Compiler::compile()
 
 Compiler::MemoryBlock Compiler::compileExpression(Row& expression)
 {
-	TypeID arg1 = boost::lexical_cast<TypeID>(expression["arg1"]);
-	TypeID arg2 = boost::lexical_cast<TypeID>(expression["arg2"]);
+	TypeID arg1 = 0;
+	TypeID arg2 = 0;
 	TypeID operandID = boost::lexical_cast<TypeID>(expression["operandID"]);
-	TypeID expressionAttributeID = boost::lexical_cast<TypeID>(expression["expressionAttributeID"]);
-	TypeID expressionGroupID = boost::lexical_cast<TypeID>(expression["expressionGroupID"]);
-	TypeID expressionTypeID = boost::lexical_cast<TypeID>(expression["expressionTypeID"]);
+	TypeID expressionAttributeID = 0;
+	TypeID expressionGroupID = 0;
+	TypeID expressionTypeID = 0;
 	std::string &expressionValueString = expression["expressionValue"];
 	int expressionValueInt;
 	
-	try
-	{
-		expressionValueInt = boost::lexical_cast<int>(expressionValueString);
-	}
-	catch(boost::bad_lexical_cast)
-	{
-		expressionValueInt = std::numeric_limits<int>::min();
-	}
+	try {arg1 = boost::lexical_cast<TypeID>(expression["arg1"]);}
+	catch (boost::bad_lexical_cast) {}
+
+	try {arg2 = boost::lexical_cast<TypeID>(expression["arg2"]);}
+	catch (boost::bad_lexical_cast) {}
+
+	try {expressionAttributeID = boost::lexical_cast<TypeID>(expression["expressionAttributeID"]);}
+	catch (boost::bad_lexical_cast) {}
+
+	try {expressionGroupID = boost::lexical_cast<TypeID>(expression["expressionGroupID"]);}
+	catch (boost::bad_lexical_cast) {}
+
+	try {expressionTypeID = boost::lexical_cast<TypeID>(expression["expressionTypeID"]);}
+	catch (boost::bad_lexical_cast) {}
+
+	try {expressionValueInt = boost::lexical_cast<int>(expressionValueString);}
+	catch(boost::bad_lexical_cast) {expressionValueInt = std::numeric_limits<int>::min();}
 	
 	MemoryBlock compiledExpression;
 	compiledExpression.reserve(64);
@@ -241,8 +250,15 @@ size_t Compiler::addExpression(Row& expression, CompiledExpressionsMap& expressi
 	
 	size_t len = compiledExpression.length();
 	
-	TypeID arg1 = boost::lexical_cast<TypeID>(expression["arg1"]);
-	TypeID arg2 = boost::lexical_cast<TypeID>(expression["arg2"]);
+	TypeID arg1 = 0;
+	TypeID arg2 = 0;
+
+	try {arg1 = boost::lexical_cast<TypeID>(expression["arg1"]);}
+	catch(boost::bad_lexical_cast) {};
+
+	try {arg2 = boost::lexical_cast<TypeID>(expression["arg2"]);}
+	catch(boost::bad_lexical_cast) {};
+
 	if (arg1)
 		len += addExpression(expressions_[expression["arg1"]], expressionsMap);
 	if (arg2)

@@ -189,6 +189,8 @@ const TypeID eufe::MISSILE_ENTITY_FLIGHT_TIME_MULTIPLIER_ATTRIBUTE_ID = 646;
 
 const TypeID eufe::DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID = 458;
 
+const TypeID eufe::CHARGE_ARMOR_DAMAGE_MULTIPLIER_ATTRIBUTE_ID = 1886;
+
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)
@@ -207,9 +209,10 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 			for (int i = 0; i < precalculatedExp; i++, j++)
 				pExp[i] = expf(- j * j / 7.1289f);
 		}
-
-		for (int i = 0; first != last; first++, i++)
-			value *= static_cast<float>(1.0 + (*first - 1.0) * pExp[i]);
+		
+		if (pExp)
+			for (int i = 0; first != last; first++, i++)
+				value *= static_cast<float>(1.0 + (*first - 1.0) * pExp[i]);
 	}
 	else
 	{

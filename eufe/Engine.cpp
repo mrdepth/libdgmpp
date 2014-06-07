@@ -12,14 +12,24 @@ Engine::Engine(SqlConnector* sqlConnector) : sqlConnector_(sqlConnector), gang_(
 
 Engine::~Engine(void)
 {
-	if (gang_)
-		delete gang_;
-	if (area_)
-		delete area_;
-	if (controlTower_)
-		delete controlTower_;
-	if (sqlConnector_)
-		delete sqlConnector_;
+	Gang* gangTmp = gang_;
+	Area* areaTmp = area_;
+	ControlTower* controlTowerTmp = controlTower_;
+	SqlConnector* sqlConnectorTmp = sqlConnector_;
+	
+	gang_ = NULL;
+	area_ = NULL;
+	controlTower_ = NULL;
+	sqlConnector_ = NULL;
+	
+	if (gangTmp)
+		delete gangTmp;
+	if (areaTmp)
+		delete areaTmp;
+	if (controlTowerTmp)
+		delete controlTowerTmp;
+	if (sqlConnectorTmp)
+		delete sqlConnectorTmp;
 }
 
 SqlConnector* Engine::getSqlConnector()

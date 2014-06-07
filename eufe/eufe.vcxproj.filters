@@ -6,20 +6,20 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Source Files\Compiler">
-      <UniqueIdentifier>{61852dad-040b-4858-a01a-1e4664abdf48}</UniqueIdentifier>
+      <UniqueIdentifier>{8161f47e-dae7-4877-a61b-c364c6e51e60}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ThirdParty">
-      <UniqueIdentifier>{16e734d6-7f70-4a80-a8be-99d1fbbf823b}</UniqueIdentifier>
+      <UniqueIdentifier>{d2f6a599-6ef9-4196-a665-32658b6042e2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Header Files\Compiler">
-      <UniqueIdentifier>{d558e30f-c8ff-4e88-8b0a-ad6b0af296b0}</UniqueIdentifier>
+      <UniqueIdentifier>{fbef9ce3-519d-467f-b9b0-8c212588f0b0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\ThirdParty">
-      <UniqueIdentifier>{f022a744-6e40-4db4-8e6a-9742cdf92f83}</UniqueIdentifier>
+      <UniqueIdentifier>{ef6b6287-7ad6-433c-9345-97e12d4ca936}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -150,10 +150,7 @@
     <ClCompile Include="ThirdParty\sqlite3.c">
       <Filter>Source Files\ThirdParty</Filter>
     </ClCompile>
-    <ClCompile Include="Encoder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Decoder.cpp">
+    <ClCompile Include="EffectNaniteRepairPasteArmorDamageBonus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -290,10 +287,7 @@
     <ClInclude Include="ThirdParty\sqlite3ext.h">
       <Filter>Header Files\ThirdParty</Filter>
     </ClInclude>
-    <ClInclude Include="Encoder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Decoder.h">
+    <ClInclude Include="EffectNaniteRepairPasteArmorDamageBonus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

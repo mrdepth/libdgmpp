@@ -184,6 +184,8 @@ namespace eufe {
 
 	extern const TypeID DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID;
 
+	extern const TypeID CHARGE_ARMOR_DAMAGE_MULTIPLIER_ATTRIBUTE_ID;
+
 	class Attribute
 	{
 	public:

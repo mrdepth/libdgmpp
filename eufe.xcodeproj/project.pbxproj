@@ -49,6 +49,7 @@
 		12A3C70F177C2B160067E00C /* HeatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371FA1CF14F542FC0043E813 /* HeatSimulator.cpp */; };
 		12A3C710177C2B190067E00C /* ControlTower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BBC5961512068400EDE204 /* ControlTower.cpp */; };
 		12A3C711177C2B190067E00C /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BBC598151219B500EDE204 /* Structure.cpp */; };
+		12D43FBB17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */; };
 		37B33D441473CA0D006B18D7 /* eufe.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37B33D431473CA0D006B18D7 /* eufe.1 */; };
 		37C1C4301475511F002AC3E7 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C42E1475511E002AC3E7 /* Compiler.cpp */; };
 		37C1C43514755128002AC3E7 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C43214755128002AC3E7 /* sqlite3.c */; };
@@ -119,6 +120,8 @@
 		12A3C6CA177C28A90067E00C /* SqliteFetchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteFetchResult.h; sourceTree = "<group>"; };
 		12A3C723177C2FAF0067E00C /* compiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = compiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A3C724177C2FAF0067E00C /* libeufe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libeufe.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectNaniteRepairPasteArmorDamageBonus.cpp; sourceTree = "<group>"; };
+		12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectNaniteRepairPasteArmorDamageBonus.h; sourceTree = "<group>"; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3708AE3B14892DCC005492F5 /* Charge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
@@ -453,6 +456,8 @@
 				121E07E71578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.h */,
 				121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */,
 				121E07EB1578C193000D1480 /* EffectAdaptiveArmorHardener.h */,
+				12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */,
+				12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -500,7 +505,7 @@
 		37B33D341473CA0D006B18D7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 37B33D371473CA0D006B18D7 /* Build configuration list for PBXProject "eufe" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -565,6 +570,7 @@
 				12A3C70F177C2B160067E00C /* HeatSimulator.cpp in Sources */,
 				12A3C710177C2B190067E00C /* ControlTower.cpp in Sources */,
 				12A3C711177C2B190067E00C /* Structure.cpp in Sources */,
+				12D43FBB17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,10 +590,6 @@
 		12A3C6BB177C283E0067E00C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					i386,
-				);
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -614,10 +616,6 @@
 		12A3C6BC177C283E0067E00C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					i386,
-				);
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -646,8 +644,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -666,7 +665,9 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /Developer/Tools/boost;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -679,8 +680,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -692,7 +694,9 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /Developer/Tools/boost;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

@@ -65,14 +65,20 @@ Ship::~Ship(void)
 	}
 
 	{
-		ModulesList::iterator i, end = modules_.end();
-		for (i = modules_.begin(); i != end; i++)
+		ModulesList modulesTmp = modules_;
+		modules_.clear();
+		
+		ModulesList::iterator i, end = modulesTmp.end();
+		for (i = modulesTmp.begin(); i != end; i++)
 			delete *i;
 	}
 	
 	{
-		DronesList::iterator i, end = drones_.end();
-		for (i = drones_.begin(); i != end; i++)
+		DronesList dronesTmp = drones_;
+		drones_.clear();
+		
+		DronesList::iterator i, end = dronesTmp.end();
+		for (i = dronesTmp.begin(); i != end; i++)
 			delete *i;
 	}
 }
@@ -983,7 +989,7 @@ float Ship::getWarpSpeed()
 		base = 1.0;
 	if (multiplier == 0.0)
 		multiplier = 1.0;
-	return 3 * base * multiplier;
+	return base * multiplier;
 }
 
 float Ship::getMaxWarpDistance()
