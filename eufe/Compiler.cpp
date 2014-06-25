@@ -65,7 +65,7 @@ void Compiler::compile()
 			std::string path = outputPath_ + "dgmCompiledEffects.sql";
 			std::ofstream os(path.c_str());
 			os << "DROP TABLE IF EXISTS dgmCompiledEffects;" << std::endl;
-			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" INTEGER NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" INTEGER NOT NULL, \"isOffensive\" INTEGER NOT NULL, \"isAssistance\" INTEGER NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
+			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" SMALLINT(6) NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" SMALLINT(6) NOT NULL, \"isOffensive\" BOOL NOT NULL, \"isAssistance\" BOOL NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
 			os << "BEGIN TRANSACTION;" << std::endl;
 
 			end = effects_.end();

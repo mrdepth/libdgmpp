@@ -341,13 +341,21 @@ bool Ship::canFit(Module* module)
 	
 	std::vector<int> fitsOn;
 	fitsOn.reserve(5);
-	if (module->hasAttribute(FITS_TO_SHIP_TYPE_ATTRIBUTE_ID))
-		fitsOn.push_back(static_cast<int>(module->getAttribute(FITS_TO_SHIP_TYPE_ATTRIBUTE_ID)->getValue()));
 
-	for (TypeID i = CAN_FIT_SHIP_TYPE1_ATTRIBUTE_ID; i <= CAN_FIT_SHIP_TYPE4_ATTRIBUTE_ID; i++)
-		if (module->hasAttribute(i))
-			fitsOn.push_back(static_cast<int>(module->getAttribute(i)->getValue()));
-	
+	TypeID canFitToShipTypeAttribute[] = {
+		FITS_TO_SHIP_TYPE_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE1_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE2_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE3_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE4_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE5_ATTRIBUTE_ID};
+
+	for (int i = 0; i < 6; i++) {
+		if (module->hasAttribute(canFitToShipTypeAttribute[i]))
+			fitsOn.push_back(static_cast<int>(module->getAttribute(canFitToShipTypeAttribute[i])->getValue()));
+		
+	}
+
 	int matchType = 1;
 	if (fitsOn.size() > 0) {
 		if (std::find(fitsOn.begin(), fitsOn.end(), typeID_) == fitsOn.end())
