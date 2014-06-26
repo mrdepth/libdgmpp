@@ -31,7 +31,7 @@ void Encoder::encode(size_t value)
 
 void Encoder::encode(const std::string& value)
 {
-	int len = value.length();
+	size_t len = value.length();
 	encode(len);
 	fwrite(value.c_str(), sizeof(char), len, of_);
 }

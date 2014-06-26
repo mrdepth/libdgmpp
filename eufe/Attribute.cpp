@@ -37,6 +37,7 @@ const TypeID eufe::CAN_FIT_SHIP_TYPE1_ATTRIBUTE_ID = 1302;
 const TypeID eufe::CAN_FIT_SHIP_TYPE2_ATTRIBUTE_ID = 1303;
 const TypeID eufe::CAN_FIT_SHIP_TYPE3_ATTRIBUTE_ID = 1304;
 const TypeID eufe::CAN_FIT_SHIP_TYPE4_ATTRIBUTE_ID = 1305;
+const TypeID eufe::CAN_FIT_SHIP_TYPE5_ATTRIBUTE_ID = 1944;
 
 const TypeID eufe::CAN_FIT_SHIP_GROUP1_ATTRIBUTE_ID = 1298;
 const TypeID eufe::CAN_FIT_SHIP_GROUP2_ATTRIBUTE_ID = 1299;
@@ -199,7 +200,7 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	{
 		static int precalculatedExp = 0;
 		static float* pExp = NULL;
-		int n = last - first;
+		long n = last - first;
 		if (n > precalculatedExp) {
 			if (pExp)
 				delete[] pExp;

@@ -83,9 +83,9 @@ Ship::~Ship(void)
 	}
 }
 
-Module* Ship::addModule(Module* module)
+Module* Ship::addModule(Module* module, bool force)
 {
-	if (canFit(module))
+	if (force || canFit(module))
 	{
 		modules_.push_back(module);
 		module->setOwner(this);
@@ -104,11 +104,11 @@ Module* Ship::addModule(Module* module)
 	}
 }
 
-Module* Ship::addModule(TypeID typeID)
+Module* Ship::addModule(TypeID typeID, bool force)
 {
 	try
 	{
-		return addModule(new Module(engine_, typeID, this));
+		return addModule(new Module(engine_, typeID, this), force);
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -136,7 +136,15 @@ Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
 	ModulesList::iterator i = std::find(modules_.begin(), modules_.end(), oldModule);
 	i--;
 	
-	removeModule(oldModule);
+	//removeModule(oldModule);
+	Module::Slot slot = oldModule->getSlot();
+	
+	oldModule->setState(Module::STATE_OFFLINE);
+	oldModule->clearTarget();
+	oldModule->removeEffects(Effect::CATEGORY_GENERIC);
+	
+	modules_.remove(oldModule);
+	delete oldModule;
 	
 	if ((newModule = addModule(newModule))) {
 		modules_.remove(newModule);
@@ -150,6 +158,22 @@ Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
 			newModule->setState(state);
 	}
 	engine_->reset(this);
+	
+	if (slot == Module::SLOT_SUBSYSTEM) {
+		static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
+		for (int i = 0; i < 3; i++) {
+			int n = getFreeSlots(slots[i]);
+			if (n < 0) {
+				ModulesList modules;
+				getModules(slots[i], std::inserter(modules, modules.begin()));
+				auto j = modules.rbegin();
+				for (; n < 0; j++, n++) {
+					removeModule(*j);
+				}
+			}
+		}
+	}
+	
 	return newModule;
 }
 
@@ -217,6 +241,8 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 
 void Ship::removeModule(Module* module)
 {
+	Module::Slot slot = module->getSlot();
+
 	module->setState(Module::STATE_OFFLINE);
 	module->clearTarget();
 	module->removeEffects(Effect::CATEGORY_GENERIC);
@@ -224,6 +250,21 @@ void Ship::removeModule(Module* module)
 	modules_.remove(module);
 	delete module;
 	engine_->reset(this);
+	
+	if (slot == Module::SLOT_SUBSYSTEM) {
+		static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
+		for (int i = 0; i < 3; i++) {
+			int n = getFreeSlots(slots[i]);
+			if (n < 0) {
+				ModulesList modules;
+				getModules(slots[i], std::inserter(modules, modules.begin()));
+				auto j = modules.rbegin();
+				for (; n < 0; j++, n++) {
+					removeModule(*j);
+				}
+			}
+		}
+	}
 }
 
 Drone* Ship::addDrone(Drone* drone)
@@ -300,13 +341,21 @@ bool Ship::canFit(Module* module)
 	
 	std::vector<int> fitsOn;
 	fitsOn.reserve(5);
-	if (module->hasAttribute(FITS_TO_SHIP_TYPE_ATTRIBUTE_ID))
-		fitsOn.push_back(static_cast<int>(module->getAttribute(FITS_TO_SHIP_TYPE_ATTRIBUTE_ID)->getValue()));
 
-	for (TypeID i = CAN_FIT_SHIP_TYPE1_ATTRIBUTE_ID; i <= CAN_FIT_SHIP_TYPE4_ATTRIBUTE_ID; i++)
-		if (module->hasAttribute(i))
-			fitsOn.push_back(static_cast<int>(module->getAttribute(i)->getValue()));
-	
+	TypeID canFitToShipTypeAttribute[] = {
+		FITS_TO_SHIP_TYPE_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE1_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE2_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE3_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE4_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE5_ATTRIBUTE_ID};
+
+	for (int i = 0; i < 6; i++) {
+		if (module->hasAttribute(canFitToShipTypeAttribute[i]))
+			fitsOn.push_back(static_cast<int>(module->getAttribute(canFitToShipTypeAttribute[i])->getValue()));
+		
+	}
+
 	int matchType = 1;
 	if (fitsOn.size() > 0) {
 		if (std::find(fitsOn.begin(), fitsOn.end(), typeID_) == fitsOn.end())

@@ -86,6 +86,8 @@ namespace eufe {
 		
 		virtual const char* getTypeName();
 		virtual const char* getGroupName();
+		
+		std::set<Item*> getAffectors();
 #if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Item& item);
 #endif

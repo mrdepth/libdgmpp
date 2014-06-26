@@ -6,6 +6,7 @@
 #include <list>
 #include <boost/shared_ptr.hpp>
 #include <iterator>
+#include <set>
 
 namespace eufe {
 	class Item;
