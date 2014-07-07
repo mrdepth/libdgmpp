@@ -1,3 +1,5 @@
 *.DS_Store
 /Debug/
 /Release/
+*.v11.suo
+*.sdf
