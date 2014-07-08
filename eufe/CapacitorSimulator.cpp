@@ -184,6 +184,9 @@ void CapacitorSimulator::internalReset()
 		int clipSize = module->getShots();
 		float capNeed = 0;
 		
+		if (duration == 0)
+			continue;
+
 		if (projected)
 		{
 			if (module->hasEffect(LEECH_EFFECT_ID))
@@ -202,12 +205,14 @@ void CapacitorSimulator::internalReset()
 				continue;
 			capUsed_ += capNeed / (duration / 1000.0f);
 		}
-		else
+		else if (capNeed < 0)
 		{
 			if (projected && isDisallowedAssistance)
 				continue;
 			capRecharge_ -= capNeed / (duration / 1000.0f);
 		}
+		else
+			continue;
 		
 		period_ = boost::math::lcm(period_, duration);
 		

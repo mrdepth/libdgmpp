@@ -1,4 +1,5 @@
 #include "DamagePattern.h"
+#include <limits>
 
 using namespace eufe;
 
@@ -50,5 +51,5 @@ float DamagePattern::effectivity(const ResistancesLayer& resistances, float amou
 	specificDivider += thermalAmount / totalDamage * thermalResonance;
 	specificDivider += kineticAmount / totalDamage * kineticResonance;
 	specificDivider += explosiveAmount / totalDamage * explosiveResonance;
-	return amount / (specificDivider ? specificDivider : 1);
+	return specificDivider ? amount / specificDivider : std::numeric_limits<float>::infinity();
 }
