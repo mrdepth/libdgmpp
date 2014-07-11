@@ -16,7 +16,7 @@ namespace eufe {
 		struct SqliteException : virtual boost::exception {};
 
 		Engine(SqlConnector* sqlConnector);
-		~Engine(void);
+		virtual ~Engine(void);
 		SqlConnector* getSqlConnector();
 		Area* setArea(Area* area);
 		Area* setArea(TypeID typeID);

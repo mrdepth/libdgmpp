@@ -12,6 +12,8 @@ Engine::Engine(SqlConnector* sqlConnector) : sqlConnector_(sqlConnector), gang_(
 
 Engine::~Engine(void)
 {
+	Engine::ScopedLock lock(*this);
+
 	Gang* gangTmp = gang_;
 	Area* areaTmp = area_;
 	ControlTower* controlTowerTmp = controlTower_;
