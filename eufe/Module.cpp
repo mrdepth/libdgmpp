@@ -95,8 +95,11 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 		if (hasAttribute(attributes[i]))
 		{
 			TypeID typeID = static_cast<TypeID>(getAttribute(attributes[i])->getValue());
-			if (typeID > 0)
+			if (typeID > 0) {
 				chargeGroups_.push_back(typeID);
+				if (!forceReload_ && (typeID == CAPACITOR_BOOSTER_CHARGE_GROUP_ID || typeID == NANITE_REPAIR_PASTE_GROUP_ID))
+					forceReload_ = true;
+			}
 		}
 	std::sort(chargeGroups_.begin(), chargeGroups_.end());
 }

@@ -14,6 +14,8 @@ namespace eufe {
 	extern const TypeID WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID;
 	extern const TypeID CAPACITOR_BOOSTER_GROUP_ID;
 	extern const TypeID CONTROL_TOWER_GROUP_ID;
+	extern const TypeID CAPACITOR_BOOSTER_CHARGE_GROUP_ID;
+	extern const TypeID NANITE_REPAIR_PASTE_GROUP_ID;
 
 	extern const TypeID MODULE_CATEGORY_ID;
 	extern const TypeID CHARGE_CATEGORY_ID;
