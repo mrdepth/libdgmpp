@@ -279,6 +279,12 @@ bool Item::requireSkill(TypeID skillID)
 			return true;
 		else if (getAttribute(REQUIRED_SKILL3_ATTRIBUTE_ID)->getInitialValue() == skillID)
 			return true;
+		else if (getAttribute(REQUIRED_SKILL4_ATTRIBUTE_ID)->getInitialValue() == skillID)
+			return true;
+		else if (getAttribute(REQUIRED_SKILL5_ATTRIBUTE_ID)->getInitialValue() == skillID)
+			return true;
+		else if (getAttribute(REQUIRED_SKILL6_ATTRIBUTE_ID)->getInitialValue() == skillID)
+			return true;
 	}
 	catch (AttributeDidNotFoundException&)
 	{

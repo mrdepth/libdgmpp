@@ -248,16 +248,7 @@ std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(Item* item, A
 	ModifiersList::iterator j = std::max_element(list2.begin(), list2.end(), ModifiersCompareFunction(attribute->highIsGood()));
 	if (j != list2.end())
 		*outIterator++ = *j;
-
 	
-/*	outIterator = std::remove_copy_if(locationGroupModifiers_.begin(),
-									  locationGroupModifiers_.end(),
-									  outIterator,
-									  GangLocationGroupModifierMatchFunction(attribute->getAttributeID(), item->getGroupID(), fleetBooster_.get(), wingBooster_.get(), squadBooster_.get()));
-	outIterator = std::remove_copy_if(locationRequiredSkillModifiers_.begin(),
-									  locationRequiredSkillModifiers_.end(),
-									  outIterator,
-									  GangLocationRequiredSkillModifierMatchFunction(attribute->getAttributeID(), item, fleetBooster_.get(), wingBooster_.get(), squadBooster_.get()));*/
 	return outIterator;
 }
 

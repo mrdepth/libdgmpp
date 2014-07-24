@@ -146,9 +146,9 @@
 		12C5177F196D0C360004CF96 /* eufeTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "eufeTests-Prefix.pch"; sourceTree = "<group>"; };
 		12C51786196D0D420004CF96 /* eufe.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = eufe.sqlite; path = ../../../Neocom/db/eufe.sqlite; sourceTree = "<group>"; };
 		12C51788196D10CE0004CF96 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
-		12C5178C196D13450004CF96 /* eufeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eufeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectNaniteRepairPasteArmorDamageBonus.cpp; sourceTree = "<group>"; };
 		12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectNaniteRepairPasteArmorDamageBonus.h; sourceTree = "<group>"; };
+		12EB84741980CD670058D497 /* eufeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eufeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3708AE3B14892DCC005492F5 /* Charge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
@@ -414,7 +414,7 @@
 				12C51777196D0C360004CF96 /* eufeTests */,
 				12A3C6B0177C283E0067E00C /* Frameworks */,
 				12A3C726177C2FC80067E00C /* Products */,
-				12C5178C196D13450004CF96 /* eufeTests.xctest */,
+				12EB84741980CD670058D497 /* eufeTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -561,7 +561,7 @@
 			);
 			name = eufeTests;
 			productName = eufeTests;
-			productReference = 12C5178C196D13450004CF96 /* eufeTests.xctest */;
+			productReference = 12EB84741980CD670058D497 /* eufeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		37B33D3C1473CA0D006B18D7 /* compiler */ = {
@@ -898,6 +898,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_VERSION = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = compiler;
 			};
@@ -908,6 +910,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_VERSION = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = compiler;
 			};

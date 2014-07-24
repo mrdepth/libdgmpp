@@ -13,6 +13,9 @@ namespace eufe {
 	extern const TypeID REQUIRED_SKILL1_ATTRIBUTE_ID;
 	extern const TypeID REQUIRED_SKILL2_ATTRIBUTE_ID;
 	extern const TypeID REQUIRED_SKILL3_ATTRIBUTE_ID;
+	extern const TypeID REQUIRED_SKILL4_ATTRIBUTE_ID;
+	extern const TypeID REQUIRED_SKILL5_ATTRIBUTE_ID;
+	extern const TypeID REQUIRED_SKILL6_ATTRIBUTE_ID;
 	extern const TypeID RACE_ID_ATTRIBUTE_ID;
 	extern const TypeID SKILL_LEVEL_ATTRIBUTE_ID;
 	extern const TypeID IMPLANTNESS_ATTRIBUTE_ID;
