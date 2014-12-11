@@ -190,6 +190,9 @@ namespace eufe {
 
 	extern const TypeID CHARGE_ARMOR_DAMAGE_MULTIPLIER_ATTRIBUTE_ID;
 
+	extern const TypeID SHIP_MODIFIERS_GROUP_ID;
+	extern const TypeID CONFESSOR_TYPE_ID;
+
 	class Attribute
 	{
 	public:

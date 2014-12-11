@@ -14,7 +14,8 @@ namespace eufe {
 			SLOT_LOW,
 			SLOT_RIG,
 			SLOT_SUBSYSTEM,
-			SLOT_STRUCTURE
+			SLOT_STRUCTURE,
+			SLOT_MODE
 		};
 
 		enum State

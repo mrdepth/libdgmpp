@@ -20,8 +20,10 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 	#else
 		attributes_[IS_ONLINE_ATTRIBUTE_ID] = new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this);
 	#endif
-
-	if (hasEffect(LO_POWER_EFFECT_ID))
+	
+	if (getGroupID() == SHIP_MODIFIERS_GROUP_ID)
+		slot_ = SLOT_MODE;
+	else if (hasEffect(LO_POWER_EFFECT_ID))
 		slot_ = SLOT_LOW;
 	else if (hasEffect(MED_POWER_EFFECT_ID))
 		slot_ = SLOT_MED;
