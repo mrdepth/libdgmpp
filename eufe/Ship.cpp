@@ -668,7 +668,7 @@ int Ship::getNumberOfSlots(Module::Slot slot)
 		case Module::SLOT_SUBSYSTEM:
 			return static_cast<int>(getAttribute(MAX_SUBSYSTEMS_SLOTS_ATTRIBUTE_ID)->getValue());
 		case Module::SLOT_MODE:
-			return getTypeID() == CONFESSOR_TYPE_ID ? 1 : 0;
+			return static_cast<int>(getAttribute(TACTICAL_MODES_ATTRIBUTE_ID)->getValue());
 		default:
 			return 0;
 			break;

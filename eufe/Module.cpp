@@ -21,9 +21,7 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 		attributes_[IS_ONLINE_ATTRIBUTE_ID] = new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this);
 	#endif
 	
-	if (getGroupID() == SHIP_MODIFIERS_GROUP_ID)
-		slot_ = SLOT_MODE;
-	else if (hasEffect(LO_POWER_EFFECT_ID))
+	if (hasEffect(LO_POWER_EFFECT_ID))
 		slot_ = SLOT_LOW;
 	else if (hasEffect(MED_POWER_EFFECT_ID))
 		slot_ = SLOT_MED;
@@ -33,6 +31,8 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 		slot_ = SLOT_RIG;
 	else if (hasEffect(SUBSYSTEM_EFFECT_ID))
 		slot_ = SLOT_SUBSYSTEM;
+	else if (hasEffect(TACTICAL_MODE_EFFECT_ID))
+		slot_ = SLOT_MODE;
 	else if (getCategoryID() == STRUCTURE_CATEGORY_ID)
 		slot_ = SLOT_STRUCTURE;
 	else
