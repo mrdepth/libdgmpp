@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1242EC211A4DFF5C00FD488A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1242EC201A4DFF5C00FD488A /* main.cpp */; };
+		1242EC261A4DFF9800FD488A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1242EC251A4DFF9800FD488A /* libsqlite3.dylib */; };
 		12A3C6B2177C283E0067E00C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3C6B1177C283E0067E00C /* Foundation.framework */; };
 		12A3C6CB177C28A90067E00C /* Blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6BD177C28A90067E00C /* Blob.cpp */; };
 		12A3C6CC177C28A90067E00C /* Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6BF177C28A90067E00C /* Decoder.cpp */; };
@@ -74,6 +76,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1242EC1C1A4DFF5B00FD488A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		12A3C6AD177C283E0067E00C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -113,6 +124,9 @@
 		1220F1BA15F0F9A600DF4A62 /* DamagePattern.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = DamagePattern.i; sourceTree = "<group>"; };
 		1220F1BB15F0F9D900DF4A62 /* ControlTower.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = ControlTower.i; sourceTree = "<group>"; };
 		1220F1BD15F0FA0900DF4A62 /* Structure.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Structure.i; sourceTree = "<group>"; };
+		1242EC1E1A4DFF5B00FD488A /* dbpatch */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dbpatch; sourceTree = BUILT_PRODUCTS_DIR; };
+		1242EC201A4DFF5C00FD488A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		1242EC251A4DFF9800FD488A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1263B87E15F0EE13003C10EB /* Engine.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Engine.i; sourceTree = "<group>"; };
 		1263B87F15F0EE13003C10EB /* eufe.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = eufe.i; sourceTree = "<group>"; };
 		1263B88015F0EE89003C10EB /* Area.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Area.i; sourceTree = "<group>"; };
@@ -222,6 +236,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1242EC1B1A4DFF5B00FD488A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1242EC261A4DFF9800FD488A /* libsqlite3.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		12A3C6AC177C283E0067E00C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,6 +274,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1242EC1F1A4DFF5C00FD488A /* dbpatch */ = {
+			isa = PBXGroup;
+			children = (
+				1242EC201A4DFF5C00FD488A /* main.cpp */,
+			);
+			path = dbpatch;
+			sourceTree = "<group>";
+		};
 		1263B87D15F0EE11003C10EB /* swig */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +310,7 @@
 		12A3C6B0177C283E0067E00C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1242EC251A4DFF9800FD488A /* libsqlite3.dylib */,
 				12C51788196D10CE0004CF96 /* libsqlite3.dylib */,
 				12A3C6B1177C283E0067E00C /* Foundation.framework */,
 				12C51772196D0C360004CF96 /* XCTest.framework */,
@@ -412,9 +443,11 @@
 				37B33D401473CA0D006B18D7 /* eufe */,
 				12A3C6B3177C283E0067E00C /* libeufe */,
 				12C51777196D0C360004CF96 /* eufeTests */,
+				1242EC1F1A4DFF5C00FD488A /* dbpatch */,
 				12A3C6B0177C283E0067E00C /* Frameworks */,
 				12A3C726177C2FC80067E00C /* Products */,
 				12EB84741980CD670058D497 /* eufeTests.xctest */,
+				1242EC1E1A4DFF5B00FD488A /* dbpatch */,
 			);
 			sourceTree = "<group>";
 		};
@@ -529,6 +562,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1242EC1D1A4DFF5B00FD488A /* dbpatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1242EC241A4DFF5C00FD488A /* Build configuration list for PBXNativeTarget "dbpatch" */;
+			buildPhases = (
+				1242EC1A1A4DFF5B00FD488A /* Sources */,
+				1242EC1B1A4DFF5B00FD488A /* Frameworks */,
+				1242EC1C1A4DFF5B00FD488A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dbpatch;
+			productName = dbpatch;
+			productReference = 1242EC1E1A4DFF5B00FD488A /* dbpatch */;
+			productType = "com.apple.product-type.tool";
+		};
 		12A3C6AE177C283E0067E00C /* eufe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 12A3C6BA177C283E0067E00C /* Build configuration list for PBXNativeTarget "eufe" */;
@@ -589,6 +639,9 @@
 			attributes = {
 				LastUpgradeCheck = 0610;
 				TargetAttributes = {
+					1242EC1D1A4DFF5B00FD488A = {
+						CreatedOnToolsVersion = 6.1;
+					};
 					12C51770196D0C360004CF96 = {
 						TestTargetID = 12A3C6AE177C283E0067E00C;
 					};
@@ -609,6 +662,7 @@
 				37B33D3C1473CA0D006B18D7 /* compiler */,
 				12A3C6AE177C283E0067E00C /* eufe */,
 				12C51770196D0C360004CF96 /* eufeTests */,
+				1242EC1D1A4DFF5B00FD488A /* dbpatch */,
 			);
 		};
 /* End PBXProject section */
@@ -626,6 +680,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1242EC1A1A4DFF5B00FD488A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1242EC211A4DFF5C00FD488A /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		12A3C6AB177C283E0067E00C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -714,6 +776,45 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1242EC221A4DFF5C00FD488A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1242EC231A4DFF5C00FD488A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		12A3C6BB177C283E0067E00C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -924,6 +1025,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1242EC241A4DFF5C00FD488A /* Build configuration list for PBXNativeTarget "dbpatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1242EC221A4DFF5C00FD488A /* Debug */,
+				1242EC231A4DFF5C00FD488A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		12A3C6BA177C283E0067E00C /* Build configuration list for PBXNativeTarget "eufe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

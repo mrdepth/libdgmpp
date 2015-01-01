@@ -128,13 +128,16 @@ Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
 }
 
 Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
+	ModulesList::iterator i = std::find(modules_.begin(), modules_.end(), oldModule);
+	if (i == modules_.end())
+		return nullptr;
+	i--;
+
 	Module::State state = oldModule->getState();
 	Charge* charge = oldModule->getCharge();
 	TypeID chargeTypeID = charge ? charge->getTypeID() : 0;
 	Ship* target = oldModule->getTarget();
 	
-	ModulesList::iterator i = std::find(modules_.begin(), modules_.end(), oldModule);
-	i--;
 	
 	//removeModule(oldModule);
 	Module::Slot slot = oldModule->getSlot();

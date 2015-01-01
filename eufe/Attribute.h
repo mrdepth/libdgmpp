@@ -190,7 +190,6 @@ namespace eufe {
 
 	extern const TypeID CHARGE_ARMOR_DAMAGE_MULTIPLIER_ATTRIBUTE_ID;
 
-	extern const TypeID TACTICAL_MODE_EFFECT_ID;
 	extern const TypeID TACTICAL_MODES_ATTRIBUTE_ID;
 
 	class Attribute
