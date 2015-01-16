@@ -431,6 +431,28 @@ int patch(const char* databasePath) {
 				DefEnv("Ship").attr("launcherSlotsLeft").assoc("ModAdd").RIM("launcherHardPointModifier"),
 				DefEnv("Ship").attr("turretSlotsLeft").assoc("ModAdd").RIM("turretHardPointModifier")));
 
+	update("adaptiveArmorHardener",
+		   COMB(
+				COMB(
+					 DefEnv("Ship").attr("armorEmDamageResonance").assoc("PostMul").AIM("armorEmDamageResonance"),
+					 DefEnv("Ship").attr("armorExplosiveDamageResonance").assoc("PostMul").AIM("armorExplosiveDamageResonance")),
+				COMB(
+					 DefEnv("Ship").attr("armorKineticDamageResonance").assoc("PostMul").AIM("armorKineticDamageResonance"),
+					 DefEnv("Ship").attr("armorThermalDamageResonance").assoc("PostMul").AIM("armorThermalDamageResonance"))),
+		   
+		   
+		   COMB(
+				COMB(
+					 DefEnv("Ship").attr("armorEmDamageResonance").assoc("PostMul").RIM("armorEmDamageResonance"),
+					 DefEnv("Ship").attr("armorExplosiveDamageResonance").assoc("PostMul").RIM("armorExplosiveDamageResonance")),
+				COMB(
+					 DefEnv("Ship").attr("armorKineticDamageResonance").assoc("PostMul").RIM("armorKineticDamageResonance"),
+					 DefEnv("Ship").attr("armorThermalDamageResonance").assoc("PostMul").RIM("armorThermalDamageResonance"))));
+
+	update("naniteRepairPasteArmorDamageBonus",
+		   DefEnv("Other").attr("armorDamageAmount").assoc("PostMul").AIM("chargedArmorDamageMultiplier"),
+		   DefEnv("Other").attr("armorDamageAmount").assoc("PostMul").RIM("chargedArmorDamageMultiplier"));
+
 	
 	//Confessor
 	update("modeVelocityPostDiv",

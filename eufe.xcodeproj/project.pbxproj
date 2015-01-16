@@ -32,9 +32,6 @@
 		12A3C6FC177C2AFC0067E00C /* EffectArmorRepairInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC807D1498EDB200CB0411 /* EffectArmorRepairInterpreter.cpp */; };
 		12A3C6FD177C2AFC0067E00C /* EffectShieldBoostingInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC808C1499062B00CB0411 /* EffectShieldBoostingInterpreter.cpp */; };
 		12A3C6FE177C2AFC0067E00C /* EffectHullRepairInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC8090149906AD00CB0411 /* EffectHullRepairInterpreter.cpp */; };
-		12A3C6FF177C2AFC0067E00C /* EffectSlotModifierInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F1E6FD14B4D47E007E2A86 /* EffectSlotModifierInterpreter.cpp */; };
-		12A3C700177C2AFC0067E00C /* EffectHardPointModifierEffectInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */; };
-		12A3C701177C2AFC0067E00C /* EffectAdaptiveArmorHardener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */; };
 		12A3C702177C2B0A0067E00C /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
 		12A3C703177C2B0A0067E00C /* LocationGroupModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AE79981487AD39003FB98A /* LocationGroupModifier.cpp */; };
 		12A3C704177C2B0A0067E00C /* LocationRequiredSkillModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AE799A1487AF9D003FB98A /* LocationRequiredSkillModifier.cpp */; };
@@ -59,7 +56,6 @@
 		12C51785196D0C7A0004CF96 /* libeufe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3C724177C2FAF0067E00C /* libeufe.a */; };
 		12C51787196D0D420004CF96 /* eufe.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 12C51786196D0D420004CF96 /* eufe.sqlite */; };
 		12C51789196D10CE0004CF96 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C51788196D10CE0004CF96 /* libsqlite3.dylib */; };
-		12D43FBB17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */; };
 		37B33D441473CA0D006B18D7 /* eufe.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37B33D431473CA0D006B18D7 /* eufe.1 */; };
 		37C1C4301475511F002AC3E7 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C42E1475511E002AC3E7 /* Compiler.cpp */; };
 		37C1C43514755128002AC3E7 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C43214755128002AC3E7 /* sqlite3.c */; };
@@ -713,9 +709,6 @@
 				12A3C6FC177C2AFC0067E00C /* EffectArmorRepairInterpreter.cpp in Sources */,
 				12A3C6FD177C2AFC0067E00C /* EffectShieldBoostingInterpreter.cpp in Sources */,
 				12A3C6FE177C2AFC0067E00C /* EffectHullRepairInterpreter.cpp in Sources */,
-				12A3C6FF177C2AFC0067E00C /* EffectSlotModifierInterpreter.cpp in Sources */,
-				12A3C700177C2AFC0067E00C /* EffectHardPointModifierEffectInterpreter.cpp in Sources */,
-				12A3C701177C2AFC0067E00C /* EffectAdaptiveArmorHardener.cpp in Sources */,
 				12A3C702177C2B0A0067E00C /* Modifier.cpp in Sources */,
 				12A3C703177C2B0A0067E00C /* LocationGroupModifier.cpp in Sources */,
 				12A3C704177C2B0A0067E00C /* LocationRequiredSkillModifier.cpp in Sources */,
@@ -732,7 +725,6 @@
 				12A3C70F177C2B160067E00C /* HeatSimulator.cpp in Sources */,
 				12A3C710177C2B190067E00C /* ControlTower.cpp in Sources */,
 				12A3C711177C2B190067E00C /* Structure.cpp in Sources */,
-				12D43FBB17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1032,6 +1024,7 @@
 				1242EC231A4DFF5C00FD488A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		12A3C6BA177C283E0067E00C /* Build configuration list for PBXNativeTarget "eufe" */ = {
 			isa = XCConfigurationList;
