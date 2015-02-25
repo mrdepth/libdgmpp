@@ -502,6 +502,33 @@ int patch(const char* databasePath) {
 		   DefEnv("Ship").attr("maxTargetRange").assoc("PostDiv").AIM("modeMaxTargetRangePostDiv"),
 		   DefEnv("Ship").attr("maxTargetRange").assoc("PostDiv").RIM("modeMaxTargetRangePostDiv"));
 	
+	//Svipul
+	update("modeShieldResonancePostDiv",
+		   COMB(
+				COMB(
+					 DefEnv("Ship").attr("shieldEmDamageResonance").assoc("PostDiv").AIM("modeEmResistancePostDiv"),
+					 DefEnv("Ship").attr("shieldExplosiveDamageResonance").assoc("PostDiv").AIM("modeExplosiveResistancePostDiv")),
+				COMB(
+					 DefEnv("Ship").attr("shieldKineticDamageResonance").assoc("PostDiv").AIM("modeKineticResistancePostDiv"),
+					 DefEnv("Ship").attr("shieldThermalDamageResonance").assoc("PostDiv").AIM("modeThermicResistancePostDiv"))),
+		   
+		   
+		   COMB(
+				COMB(
+					 DefEnv("Ship").attr("shieldEmDamageResonance").assoc("PostDiv").RIM("modeEmResistancePostDiv"),
+					 DefEnv("Ship").attr("shieldExplosiveDamageResonance").assoc("PostDiv").RIM("modeExplosiveResistancePostDiv")),
+				COMB(
+					 DefEnv("Ship").attr("shieldKineticDamageResonance").assoc("PostDiv").RIM("modeKineticResistancePostDiv"),
+					 DefEnv("Ship").attr("shieldThermalDamageResonance").assoc("PostDiv").RIM("modeThermicResistancePostDiv"))));
+	
+	update("shipModeSPTTrackingPostDiv",
+		   DefEnv("Ship").locationSkill("Small Projectile Turret").attr("trackingSpeed").assoc("PostDiv").ALRSM("modeTrackingPostDiv"),
+		   DefEnv("Ship").locationSkill("Small Projectile Turret").attr("trackingSpeed").assoc("PostDiv").RLRSM("modeTrackingPostDiv"));
+	update("modeMWDSigRadiusPostDiv",
+		   DefEnv("Ship").locationSkill("High Speed Manuvering").attr("signatureRadiusBonus").assoc("PostDiv").ALRSM("modeMWDSigPenaltyPostDiv"),
+		   DefEnv("Ship").locationSkill("High Speed Manuvering").attr("signatureRadiusBonus").assoc("PostDiv").RLRSM("modeMWDSigPenaltyPostDiv"));
+
+
 	return 0;
 }
 
