@@ -69,8 +69,8 @@ const TypeID eufe::ADAPTIVE_ARMOR_HARDENER_EFFECT_ID = 4928;
 const TypeID eufe::FUELED_SHIELD_BOOSTING_EFFECT_ID = 4936;
 const TypeID eufe::FUELED_ARMOR_REPAIR__EFFECT_ID = 5275;
 
-const TypeID eufe::NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID = 10004;
-const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10005;
+const TypeID eufe::NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID = 10001;
+const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10002;
 
 static std::map<TypeID, boost::weak_ptr<eufe::Effect> > reusableEffects;
 

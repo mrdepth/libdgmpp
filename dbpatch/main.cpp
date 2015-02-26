@@ -525,8 +525,8 @@ int patch(const char* databasePath) {
 		   DefEnv("Ship").locationSkill("Small Projectile Turret").attr("trackingSpeed").assoc("PostDiv").ALRSM("modeTrackingPostDiv"),
 		   DefEnv("Ship").locationSkill("Small Projectile Turret").attr("trackingSpeed").assoc("PostDiv").RLRSM("modeTrackingPostDiv"));
 	update("modeMWDSigRadiusPostDiv",
-		   DefEnv("Ship").locationSkill("High Speed Manuvering").attr("signatureRadiusBonus").assoc("PostDiv").ALRSM("modeMWDSigPenaltyPostDiv"),
-		   DefEnv("Ship").locationSkill("High Speed Manuvering").attr("signatureRadiusBonus").assoc("PostDiv").RLRSM("modeMWDSigPenaltyPostDiv"));
+		   DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("signatureRadiusBonus").assoc("PostDiv").ALRSM("modeMWDSigPenaltyPostDiv"),
+		   DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("signatureRadiusBonus").assoc("PostDiv").RLRSM("modeMWDSigPenaltyPostDiv"));
 
 
 	return 0;
