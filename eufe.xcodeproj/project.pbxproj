@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1219C1561AB775A400FF6205 /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */; };
 		1242EC211A4DFF5C00FD488A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1242EC201A4DFF5C00FD488A /* main.cpp */; };
 		1242EC261A4DFF9800FD488A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1242EC251A4DFF9800FD488A /* libsqlite3.dylib */; };
 		12A3C6B2177C283E0067E00C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3C6B1177C283E0067E00C /* Foundation.framework */; };
@@ -713,6 +714,7 @@
 				12A3C703177C2B0A0067E00C /* LocationGroupModifier.cpp in Sources */,
 				12A3C704177C2B0A0067E00C /* LocationRequiredSkillModifier.cpp in Sources */,
 				12A3C705177C2B0E0067E00C /* Booster.cpp in Sources */,
+				1219C1561AB775A400FF6205 /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */,
 				12A3C706177C2B0E0067E00C /* Character.cpp in Sources */,
 				12A3C707177C2B0E0067E00C /* Implant.cpp in Sources */,
 				12A3C708177C2B0E0067E00C /* Skill.cpp in Sources */,

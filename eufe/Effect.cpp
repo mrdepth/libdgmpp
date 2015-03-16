@@ -124,8 +124,8 @@ Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* b
 		interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
 	else if (effectID == FUELED_ARMOR_REPAIR__EFFECT_ID)
 		interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
-//	else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID)
-//		interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
+	else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID)
+		interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
 	else
 		interpreter_ = new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive);
 #if _DEBUG
@@ -187,8 +187,8 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 			interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
 		else if (effectID == FUELED_ARMOR_REPAIR__EFFECT_ID)
 			interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
-//		else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID)
-//			interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
+		else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID)
+			interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
 		else
 			interpreter_ = new EffectByteCodeInterpreter(engine, reinterpret_cast<const Byte*>(blob.getMemory()), blob.getSize(), isAssistance, isOffensive);
 		

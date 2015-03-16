@@ -449,9 +449,9 @@ int patch(const char* databasePath) {
 					 DefEnv("Ship").attr("armorKineticDamageResonance").assoc("PostMul").RIM("armorKineticDamageResonance"),
 					 DefEnv("Ship").attr("armorThermalDamageResonance").assoc("PostMul").RIM("armorThermalDamageResonance"))));
 
-	update("naniteRepairPasteArmorDamageBonus",
-		   DefEnv("Other").attr("armorDamageAmount").assoc("PostMul").AIM("chargedArmorDamageMultiplier"),
-		   DefEnv("Other").attr("armorDamageAmount").assoc("PostMul").RIM("chargedArmorDamageMultiplier"));
+//	update("naniteRepairPasteArmorDamageBonus",
+//		   DefEnv("Other").attr("armorDamageAmount").assoc("PostMul").AIM("chargedArmorDamageMultiplier"),
+//		   DefEnv("Other").attr("armorDamageAmount").assoc("PostMul").RIM("chargedArmorDamageMultiplier"));
 
 	
 	//Confessor
