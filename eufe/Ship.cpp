@@ -1064,6 +1064,16 @@ float Ship::getSignatureRadius()
 	return getAttribute(SIGNATURE_RADIUS_ATTRIBUTE_ID)->getValue();
 }
 
+float Ship::getMass()
+{
+	return getAttribute(MASS_ATTRIBUTE_ID)->getValue();
+}
+
+float Ship::getVolume() {
+	return getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
+}
+
+
 //targeting
 int Ship::getMaxTargets()
 {

@@ -116,6 +116,8 @@ namespace eufe {
 		float getMaxWarpDistance();
 		float getVelocity();
 		float getSignatureRadius();
+		float getMass();
+		float getVolume();
 		
 		//Targeting
 		int getMaxTargets();
