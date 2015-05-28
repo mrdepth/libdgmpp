@@ -1,9 +1,10 @@
 #include "Compiler.h"
-#include <boost/lexical_cast.hpp>
+//#include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <fstream>
 #include <ios>
-#include <boost/format.hpp>
+#include <string>
+//#include <boost/format.hpp>
 
 using namespace eufe;
 
@@ -30,25 +31,25 @@ void Compiler::compile()
 			std::cout << "Loading effects..." << std::endl;
 			if (sqlite3_exec(db, "select * from dgmEffects", callbackEffect, this, &errmsg) != SQLITE_OK)
 			{
-				SqliteExceptionInfo info(errmsg);
+				SqliteException exc(errmsg);
 				sqlite3_free(errmsg);
-				throw SqliteException() << info;
+				throw exc;
 			}
 			
 			std::cout << "Loading operands..." << std::endl;
 			if (sqlite3_exec(db, "select * from dgmOperands", callbackOperand, this, &errmsg) != SQLITE_OK)
 			{
-				SqliteExceptionInfo info(errmsg);
+				SqliteException exc(errmsg);
 				sqlite3_free(errmsg);
-				throw SqliteException() << info;
+				throw exc;
 			}
 			
 			std::cout << "Loading expressions..." << std::endl;
 			if (sqlite3_exec(db, "select * from dgmExpressions", callbackExpression, this, &errmsg) != SQLITE_OK)
 			{
-				SqliteExceptionInfo info(errmsg);
+				SqliteException exc(errmsg);
 				sqlite3_free(errmsg);
-				throw SqliteException() << info;
+				throw exc;
 			}
 			
 			sqlite3_close(db);
@@ -85,7 +86,8 @@ void Compiler::compile()
 			os.close();
 		}
 		else {
-			throw SqliteException() << SqliteExceptionInfo(sqlite3_errmsg(db));
+			SqliteException exc(sqlite3_errmsg(db));
+			throw exc;
 		}
 	}
 	catch(SqliteException& exc)
@@ -100,30 +102,30 @@ Compiler::MemoryBlock Compiler::compileExpression(Row& expression)
 {
 	TypeID arg1 = 0;
 	TypeID arg2 = 0;
-	TypeID operandID = boost::lexical_cast<TypeID>(expression["operandID"]);
+	TypeID operandID = std::stoi(expression["operandID"]);
 	TypeID expressionAttributeID = 0;
 	TypeID expressionGroupID = 0;
 	TypeID expressionTypeID = 0;
 	std::string &expressionValueString = expression["expressionValue"];
 	int expressionValueInt;
 	
-	try {arg1 = boost::lexical_cast<TypeID>(expression["arg1"]);}
-	catch (boost::bad_lexical_cast) {}
+	try {arg1 = std::stoi(expression["arg1"]);}
+	catch (std::invalid_argument) {}
 
-	try {arg2 = boost::lexical_cast<TypeID>(expression["arg2"]);}
-	catch (boost::bad_lexical_cast) {}
+	try {arg2 = std::stoi(expression["arg2"]);}
+	catch (std::invalid_argument) {}
 
-	try {expressionAttributeID = boost::lexical_cast<TypeID>(expression["expressionAttributeID"]);}
-	catch (boost::bad_lexical_cast) {}
+	try {expressionAttributeID = std::stoi(expression["expressionAttributeID"]);}
+	catch (std::invalid_argument) {}
 
-	try {expressionGroupID = boost::lexical_cast<TypeID>(expression["expressionGroupID"]);}
-	catch (boost::bad_lexical_cast) {}
+	try {expressionGroupID = std::stoi(expression["expressionGroupID"]);}
+	catch (std::invalid_argument) {}
 
-	try {expressionTypeID = boost::lexical_cast<TypeID>(expression["expressionTypeID"]);}
-	catch (boost::bad_lexical_cast) {}
+	try {expressionTypeID = std::stoi(expression["expressionTypeID"]);}
+	catch (std::invalid_argument) {}
 
-	try {expressionValueInt = boost::lexical_cast<int>(expressionValueString);}
-	catch(boost::bad_lexical_cast) {expressionValueInt = std::numeric_limits<int>::min();}
+	try {expressionValueInt = std::stoi(expressionValueString);}
+	catch(std::invalid_argument) {expressionValueInt = std::numeric_limits<int>::min();}
 	
 	MemoryBlock compiledExpression;
 	compiledExpression.reserve(64);
@@ -229,7 +231,7 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 			if (type == ARGUMENT_TYPE_EXPRESSION)
 			{
 				TypeID* value = reinterpret_cast<int*>(ptr);
-				*value = offsets[boost::lexical_cast<std::string>(*value)];
+				*value = offsets[std::to_string(*value)];
 			}
 			ptr += length;
 		}
@@ -253,11 +255,11 @@ size_t Compiler::addExpression(Row& expression, CompiledExpressionsMap& expressi
 	TypeID arg1 = 0;
 	TypeID arg2 = 0;
 
-	try {arg1 = boost::lexical_cast<TypeID>(expression["arg1"]);}
-	catch(boost::bad_lexical_cast) {};
+	try {arg1 = std::stoi(expression["arg1"]);}
+	catch(std::invalid_argument) {};
 
-	try {arg2 = boost::lexical_cast<TypeID>(expression["arg2"]);}
-	catch(boost::bad_lexical_cast) {};
+	try {arg2 = std::stoi(expression["arg2"]);}
+	catch(std::invalid_argument) {};
 
 	if (arg1)
 		len += addExpression(expressions_[expression["arg1"]], expressionsMap);
@@ -327,4 +329,15 @@ std::string Compiler::stringRepresentation(const MemoryBlock& memoryBlock)
 	std::string s(buf);
 	delete[] buf;
 	return s;
+}
+
+int main(int argc, char* argv[])
+{
+	if (argc != 3) {
+		std::cout<<"Usage: compiler source_database.sqlite output_dir"<<std::endl;
+		return 0;
+	}
+	Compiler compiler = Compiler(argv[1], argv[2]);
+	compiler.compile();
+	return 0;
 }

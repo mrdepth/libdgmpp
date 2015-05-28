@@ -1,7 +1,10 @@
 #pragma once
+#include <stdexcept>
 #include "types.h"
-#include "ThirdParty/sqlite3.h"
-#include <boost/exception/all.hpp>
+#include <sqlite3.h>
+
+//#include "ThirdParty/sqlite3.h"
+//#include <boost/exception/all.hpp>
 
 
 namespace eufe {
@@ -10,8 +13,10 @@ namespace eufe {
 	{
 	public:
 
-		typedef boost::error_info<struct SqliteExceptionInfoTag, std::string> SqliteExceptionInfo;
-		struct SqliteException : virtual boost::exception {};
+		//typedef boost::error_info<struct SqliteExceptionInfoTag, std::string> SqliteExceptionInfo;
+		//struct SqliteException : virtual boost::exception {};
+		//struct SqliteExpcetion: std::logic_error {};
+		typedef std::logic_error SqliteException;
 		
 		
 		enum Opcode
