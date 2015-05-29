@@ -122,7 +122,7 @@ void ControlTower::addEffects(Effect::Category category)
 		StructuresList::iterator i, end = structures_.end();
 		for (i = structures_.begin(); i != end; i++)
 			(*i)->addEffects(Effect::CATEGORY_GENERIC);
-//		boost::shared_ptr<Area> area = engine_->getArea();
+//		std::shared_ptr<Area> area = engine_->getArea();
 //		if (area != NULL)
 //			area->addEffectsToShip(this);
 	}
@@ -136,7 +136,7 @@ void ControlTower::removeEffects(Effect::Category category)
 		StructuresList::iterator i, end = structures_.end();
 		for (i = structures_.begin(); i != end; i++)
 			(*i)->removeEffects(Effect::CATEGORY_GENERIC);
-//		boost::shared_ptr<Area> area = engine_->getArea();
+//		std::shared_ptr<Area> area = engine_->getArea();
 //		if (area != NULL)
 //			area->removeEffectsFromShip(this);
 	}

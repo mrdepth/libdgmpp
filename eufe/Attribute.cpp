@@ -267,7 +267,7 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 	{
 		std::stringstream sql;
 		sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-		boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 		if (result->next()) {
 			attributeName_ = result->getText(0);
 			isStackable_ = result->getInt(1) != 0;
@@ -289,7 +289,7 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, Item* owner, bool isFak
 #else
 	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
 #endif
-	boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+	std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 	if (result->next()) {
 		isStackable_ = result->getInt(0) != 0;
 		maxAttributeID_ = static_cast<eufe::TypeID>(result->getInt(1));

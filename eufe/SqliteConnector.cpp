@@ -13,10 +13,10 @@ SqliteConnector::~SqliteConnector(void)
 		sqlite3_close(db_);
 }
 
-boost::shared_ptr<FetchResult> SqliteConnector::exec(const char* sql)
+std::shared_ptr<FetchResult> SqliteConnector::exec(const char* sql)
 {
 	sqlite3_stmt* stmt = NULL;
 	sqlite3_prepare_v2(db_, sql, -1, &stmt, NULL);
 
-	return boost::shared_ptr<FetchResult>(new SqliteFetchResult(stmt));
+	return std::shared_ptr<FetchResult>(new SqliteFetchResult(stmt));
 }

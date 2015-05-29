@@ -18,20 +18,6 @@ namespace eufe {
 		//struct SqliteExpcetion: std::logic_error {};
 		typedef std::logic_error SqliteException;
 		
-		
-		enum Opcode
-		{
-			OPCODE_ARGUMENT = 0,
-			OPCODE_OPERAND = 1
-		};
-		
-		enum ArgumentType
-		{
-			ARGUMENT_TYPE_INT = 0,
-			ARGUMENT_TYPE_STRING = 1,
-			ARGUMENT_TYPE_EXPRESSION = 2
-		};
-		
 		Compiler(const std::string& databasePath, const std::string& outputPath);
 		~Compiler(void);
 		void compile();

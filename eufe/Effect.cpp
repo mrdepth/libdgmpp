@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <ios>
-#include "Compiler.h"
+//#include "Compiler.h"
 #include "Ship.h"
 #include "Module.h"
 #include <cctype>
@@ -72,17 +72,17 @@ const TypeID eufe::FUELED_ARMOR_REPAIR__EFFECT_ID = 5275;
 const TypeID eufe::NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID = 10001;
 const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10002;
 
-static std::map<TypeID, boost::weak_ptr<eufe::Effect> > reusableEffects;
+static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
 
-boost::shared_ptr<eufe::Effect> Effect::getEffect(Engine* engine, int effectID)
+std::shared_ptr<eufe::Effect> Effect::getEffect(Engine* engine, int effectID)
 {
 	Engine::ScopedLock lock(*engine);
 
-	std::map<TypeID, boost::weak_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
+	std::map<TypeID, std::weak_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
 	i = reusableEffects.find(effectID);
 	if (i == end) {
-		boost::shared_ptr<Effect> effect(new Effect(engine, effectID));
-		reusableEffects[effectID] = boost::weak_ptr<Effect>(effect);
+		std::shared_ptr<Effect> effect(new Effect(engine, effectID));
+		reusableEffects[effectID] = std::weak_ptr<Effect>(effect);
 		return effect;
 	}
 	else {
@@ -150,7 +150,7 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode FROM dgmCompiledEffects WHERE effectID = " << effectID;
 #endif
 	
-	boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());	
+	std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 
 	if (result->next())
 	{

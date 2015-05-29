@@ -1,6 +1,6 @@
 #include "EffectByteCodeInterpreter.h"
 #include "Engine.h"
-#include "Compiler.h"
+//#include "Compiler.h"
 #include "Item.h"
 #include "Attribute.h"
 #include "Character.h"
@@ -154,27 +154,27 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::execute(const Byt
 {
 	const Byte* ptr = expression;
 	while (1) {
-		Compiler::Opcode opcode = static_cast<Compiler::Opcode>(*ptr);
+		Opcode opcode = static_cast<Opcode>(*ptr);
 		ptr++;
 		switch(opcode) {
-			case Compiler::OPCODE_ARGUMENT :
+			case OPCODE_ARGUMENT :
 			{
-				Compiler::ArgumentType type = static_cast<Compiler::ArgumentType>(*ptr);
+				ArgumentType type = static_cast<ArgumentType>(*ptr);
 				ptr++;
 				short length = *reinterpret_cast<const short*>(ptr);
 				ptr += sizeof(short);
 				
-				if (type == Compiler::ARGUMENT_TYPE_INT)
+				if (type == ARGUMENT_TYPE_INT)
 					stack_.push_back(Argument(*reinterpret_cast<const int*>(ptr)));
-				else if (type == Compiler::ARGUMENT_TYPE_STRING)
+				else if (type == ARGUMENT_TYPE_STRING)
 					stack_.push_back(Argument(reinterpret_cast<const char*>(ptr)));
-				else if (type == Compiler::ARGUMENT_TYPE_EXPRESSION)
+				else if (type == ARGUMENT_TYPE_EXPRESSION)
 					stack_.push_back(Argument(*reinterpret_cast<const int*>(ptr), Argument::TYPE_EXPRESSION));
 				
 				ptr += length;
 				break;
 			}
-			case Compiler::OPCODE_OPERAND:
+			case OPCODE_OPERAND:
 			{
 				TypeID operandID = *reinterpret_cast<const TypeID*>(ptr);
 				OperandPtr operand = operands[operandID];
@@ -218,7 +218,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand2()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addLocationGroupModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -239,7 +239,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand3()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addLocationModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -260,7 +260,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand4()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addOwnerRequiredSkillModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -281,7 +281,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand5()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addLocationRequiredSkillModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -302,7 +302,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand6()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addItemModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -323,7 +323,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand7()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addLocationGroupModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -344,7 +344,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand8()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addLocationModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -365,7 +365,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand9()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addLocationRequiredSkillModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -404,7 +404,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand11()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->addOwnerRequiredSkillModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -425,9 +425,9 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand12()
 	if (arg1.getType() != Argument::TYPE_ITEM)
 		return false;
 	
-	boost::shared_ptr<ItemWrapper> item = arg1;
+	std::shared_ptr<ItemWrapper> item = arg1;
 	TypeID attributeID = arg2;
-	return boost::shared_ptr<AttributeWrapper>(new AttributeWrapper(item, attributeID));
+	return std::shared_ptr<AttributeWrapper>(new AttributeWrapper(item, attributeID));
 }
 
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand13()
@@ -484,7 +484,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand18()
 	if (arg1.getType() != Argument::TYPE_ATTRIBUTE)
 		return false;
 	
-	boost::shared_ptr<AttributeWrapper> attribute = arg1;
+	std::shared_ptr<AttributeWrapper> attribute = arg1;
 	float value = environment_["Self"]->getAttribute(arg2)->getValue();
 	attribute->dec(value);
 	return true;
@@ -510,7 +510,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand20()
 	if (arg1.getType() != Argument::TYPE_ATTRIBUTE)
 		return false;
 	
-	boost::shared_ptr<AttributeWrapper> attribute = arg1;
+	std::shared_ptr<AttributeWrapper> attribute = arg1;
 	float value = arg2;
 	attribute->dec(value);
 	return true;
@@ -559,7 +559,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand24()
 		arg1 = execute(byteCode_ + static_cast<int>(arg1));
 	std::string key = arg1;
 	if (environment_.find(key) != environment_.end())
-		return boost::shared_ptr<ItemWrapper>(new ItemWrapper(environment_[key]));
+		return std::shared_ptr<ItemWrapper>(new ItemWrapper(environment_[key]));
 	else
 		return false;
 }
@@ -620,7 +620,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 		std::stringstream sql;
 		sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
 		
-		boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 		if (result->next())
 		{
 			TypeID typeID = result->getInt(0);
@@ -658,8 +658,8 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand31()
 		return false;
 	
 	std::string associationName = arg1;
-	boost::shared_ptr<AttributeWrapper> attribute = arg2;
-	return boost::shared_ptr<AssociationWrapper>(new AssociationWrapper(attribute, associationName));
+	std::shared_ptr<AttributeWrapper> attribute = arg2;
+	return std::shared_ptr<AssociationWrapper>(new AssociationWrapper(attribute, associationName));
 }
 
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand32()
@@ -699,9 +699,9 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand34()
 	Item* gang = environment_["Gang"];
 	TypeID groupID = arg1;
 	TypeID attributeID = arg2;
-	boost::shared_ptr<ItemWrapper> item = boost::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
+	std::shared_ptr<ItemWrapper> item = std::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
 	item->setGroupID(groupID);
-	return boost::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
+	return std::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
 }
 
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand35()
@@ -719,7 +719,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand35()
 	if (arg1.getType() != Argument::TYPE_ITEM)
 		return false;
 	
-	boost::shared_ptr<ItemWrapper> item = arg1;
+	std::shared_ptr<ItemWrapper> item = arg1;
 	TypeID attributeID = arg2;
 	return item->getItem()->getAttribute(attributeID)->getValue();
 }
@@ -735,7 +735,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand36()
 	if (arg1.getType() != Argument::TYPE_ITEM)
 		return false;
 	
-	boost::shared_ptr<ItemWrapper> item = arg1;
+	std::shared_ptr<ItemWrapper> item = arg1;
 	return item->getItem()->getTypeID();
 }
 
@@ -754,7 +754,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand37()
 	if (arg1.getType() != Argument::TYPE_ITEM)
 		return false;
 	
-	boost::shared_ptr<ItemWrapper> item = arg1;
+	std::shared_ptr<ItemWrapper> item = arg1;
 	TypeID groupID = static_cast<TypeID>(arg2);
 	item->setGroupID(groupID);
 	return item;
@@ -801,8 +801,8 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand40()
 	
 	Item* gang = environment_["Gang"];
 	TypeID attributeID = arg1;
-	boost::shared_ptr<ItemWrapper> item = boost::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
-	return boost::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
+	std::shared_ptr<ItemWrapper> item = std::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
+	return std::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
 }
 
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand41()
@@ -838,7 +838,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand42()
 	if (arg1.getType() != Argument::TYPE_ATTRIBUTE)
 		return false;
 	
-	boost::shared_ptr<AttributeWrapper> attribute = arg1;
+	std::shared_ptr<AttributeWrapper> attribute = arg1;
 	float value = environment_["Self"]->getAttribute(arg2)->getValue();
 	attribute->inc(value);
 	return true;
@@ -859,7 +859,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand43()
 	if (arg1.getType() != Argument::TYPE_ATTRIBUTE)
 		return false;
 	
-	boost::shared_ptr<AttributeWrapper> attribute = arg1;
+	std::shared_ptr<AttributeWrapper> attribute = arg1;
 	float value = arg2;
 	attribute->inc(value);
 	return true;
@@ -900,7 +900,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand48()
 	if (arg1.getType() != Argument::TYPE_ITEM)
 		return false;
 	
-	boost::shared_ptr<ItemWrapper> item = arg1;
+	std::shared_ptr<ItemWrapper> item = arg1;
 	TypeID groupID = arg2;
 	item->setGroupID(groupID);
 	return item;
@@ -921,7 +921,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand49()
 	if (arg1.getType() != Argument::TYPE_ITEM)
 		return false;
 	
-	boost::shared_ptr<ItemWrapper> item = arg1;
+	std::shared_ptr<ItemWrapper> item = arg1;
 	TypeID skillID = arg2;
 	item->setRequiredSkillID(skillID);
 	return item;
@@ -985,7 +985,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand54()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeLocationGroupModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1006,7 +1006,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand55()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeLocationModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1027,7 +1027,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand56()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeOwnerRequiredSkillModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1048,7 +1048,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand57()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeLocationRequiredSkillModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1069,7 +1069,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand58()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeItemModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1090,7 +1090,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand59()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeLocationGroupModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1111,7 +1111,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand60()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeLocationModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1132,7 +1132,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand61()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeLocationRequiredSkillModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1153,7 +1153,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand62()
 	if (arg1.getType() != Argument::TYPE_ASSOCIATION)
 		return false;
 	
-	boost::shared_ptr<AssociationWrapper> association = arg1;
+	std::shared_ptr<AssociationWrapper> association = arg1;
 	TypeID attributeID = arg2;
 	association->removeOwnerRequiredSkillModifier(environment_, attributeID, isAssistance_, isOffensive_);
 	return true;
@@ -1174,7 +1174,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand63()
 	if (arg1.getType() != Argument::TYPE_ITEM)
 		return false;
 	
-	boost::shared_ptr<ItemWrapper> item = arg1;
+	std::shared_ptr<ItemWrapper> item = arg1;
 	TypeID skillID = arg2;
 	return item->getItem()->requireSkill(skillID);
 }
@@ -1197,9 +1197,9 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand64()
 	Item* gang = environment_["Gang"];
 	TypeID skillID = arg1;
 	TypeID attributeID = arg2;
-	boost::shared_ptr<ItemWrapper> item = boost::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
+	std::shared_ptr<ItemWrapper> item = std::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
 	item->setRequiredSkillID(skillID);
-	return boost::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
+	return std::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
 	
 }
 
@@ -1218,7 +1218,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand65()
 	if (arg1.getType() != Argument::TYPE_ATTRIBUTE)
 		return false;
 	
-	boost::shared_ptr<AttributeWrapper> attribute = arg1;
+	std::shared_ptr<AttributeWrapper> attribute = arg1;
 	float value = arg2;
 	attribute->setValue(value);
 	return true;
@@ -1309,7 +1309,7 @@ void EffectByteCodeInterpreter::AttributeWrapper::dec(float value)
 	item_->getItem()->getAttribute(attributeID_)->dec(value);
 }
 
-EffectByteCodeInterpreter::AssociationWrapper::AssociationWrapper(boost::shared_ptr<AttributeWrapper>& attribute, const std::string& name) : attribute_(attribute)
+EffectByteCodeInterpreter::AssociationWrapper::AssociationWrapper(std::shared_ptr<AttributeWrapper>& attribute, const std::string& name) : attribute_(attribute)
 {
 	if (name == "PreAssignment")
 		association_ = Modifier::ASSOCIATION_POST_ASSIGNMENT;
@@ -1524,9 +1524,9 @@ EffectByteCodeInterpreter::Argument::Argument(bool value)			: type_(TYPE_BOOL),	
 EffectByteCodeInterpreter::Argument::Argument(float value)			: type_(TYPE_FLOAT),	floatValue_(value) {}
 EffectByteCodeInterpreter::Argument::Argument(const char* value)	: type_(TYPE_STRING),	stringValue_(value) {}
 EffectByteCodeInterpreter::Argument::Argument(const std::string& value)						: type_(TYPE_STRING),		stringValue_(value) {}
-EffectByteCodeInterpreter::Argument::Argument(boost::shared_ptr<ItemWrapper> value)			: type_(TYPE_ITEM),			itemValue_(value) {}
-EffectByteCodeInterpreter::Argument::Argument(boost::shared_ptr<AttributeWrapper> value)	: type_(TYPE_ATTRIBUTE),	attributeValue_(value) {}
-EffectByteCodeInterpreter::Argument::Argument(boost::shared_ptr<AssociationWrapper> value)	: type_(TYPE_ASSOCIATION),	associationValue_(value) {}
+EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<ItemWrapper> value)			: type_(TYPE_ITEM),			itemValue_(value) {}
+EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<AttributeWrapper> value)	: type_(TYPE_ATTRIBUTE),	attributeValue_(value) {}
+EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<AssociationWrapper> value)	: type_(TYPE_ASSOCIATION),	associationValue_(value) {}
 
 EffectByteCodeInterpreter::Argument::Type EffectByteCodeInterpreter::Argument::getType()
 {
@@ -1583,7 +1583,7 @@ EffectByteCodeInterpreter::Argument::operator std::string ()
 		throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_STRING);
 };
 
-EffectByteCodeInterpreter::Argument::operator boost::shared_ptr<EffectByteCodeInterpreter::ItemWrapper> ()
+EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInterpreter::ItemWrapper> ()
 {
 	if (type_ == TYPE_ITEM)
 		return itemValue_;
@@ -1591,7 +1591,7 @@ EffectByteCodeInterpreter::Argument::operator boost::shared_ptr<EffectByteCodeIn
 		throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_ITEM);
 };
 
-EffectByteCodeInterpreter::Argument::operator boost::shared_ptr<EffectByteCodeInterpreter::AttributeWrapper> ()
+EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInterpreter::AttributeWrapper> ()
 {
 	if (type_ == TYPE_ATTRIBUTE)
 		return attributeValue_;
@@ -1599,7 +1599,7 @@ EffectByteCodeInterpreter::Argument::operator boost::shared_ptr<EffectByteCodeIn
 		throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_ATTRIBUTE);
 };
 
-EffectByteCodeInterpreter::Argument::operator boost::shared_ptr<EffectByteCodeInterpreter::AssociationWrapper> ()
+EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInterpreter::AssociationWrapper> ()
 {
 	if (type_ == TYPE_ASSOCIATION)
 		return associationValue_;

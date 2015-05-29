@@ -103,7 +103,7 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID;
 #endif
 
-	boost::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
 	if (result->next())
 	{
 		groupID_ = result->getInt(0);
@@ -496,7 +496,7 @@ const char* Item::getTypeName()
 		std::stringstream sql;
 		sql << "SELECT typeName FROM invTypes WHERE typeID = " << typeID_;
 
-		boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 		if (result->next()) {
 			typeName_ = result->getText(0);
 		}
@@ -511,7 +511,7 @@ const char* Item::getGroupName()
 		std::stringstream sql;
 		sql << "SELECT groupName FROM invTypes AS A, invGroups AS B WHERE A.groupID=B.groupID AND typeID = " << typeID_;
 
-		boost::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 		if (result->next()) {
 			groupName_ = result->getText(0);
 		}

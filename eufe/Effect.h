@@ -62,7 +62,7 @@ namespace eufe {
 			CATEGORY_SYSTEM			= 7
 		};
 		
-		static boost::shared_ptr<Effect> getEffect(Engine* engine, int effectID);
+		static std::shared_ptr<Effect> getEffect(Engine* engine, int effectID);
 		
 #if _DEBUG
 		Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName = "");

@@ -16,7 +16,7 @@
 #include "DamagePattern.h"
 #include "CapacitorSimulator.h"
 #include "Effect.h"
-#include "Compiler.h"
+//#include "Compiler.h"
 #include "ControlTower.h"
 #include "Structure.h"
 #include "SqliteConnector.h"

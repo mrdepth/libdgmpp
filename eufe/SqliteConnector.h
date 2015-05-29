@@ -9,7 +9,7 @@ namespace eufe {
 	public:
 		SqliteConnector(const char* databasePath);
 		virtual ~SqliteConnector(void);
-		virtual boost::shared_ptr<FetchResult> exec(const char* sql);
+		virtual std::shared_ptr<FetchResult> exec(const char* sql);
 	private:
 		sqlite3* db_;
 	};

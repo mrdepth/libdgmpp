@@ -28,23 +28,23 @@ namespace eufe {
 		class AttributeWrapper
 		{
 		public:
-			AttributeWrapper(boost::shared_ptr<ItemWrapper>& item, TypeID attributeID) : item_(item), attributeID_(attributeID) {}
+			AttributeWrapper(std::shared_ptr<ItemWrapper>& item, TypeID attributeID) : item_(item), attributeID_(attributeID) {}
 			float getValue();
 			void setValue(float value);
 			void inc(float value);
 			void dec(float value);
-			boost::shared_ptr<ItemWrapper> getItem() {return item_;}
+			std::shared_ptr<ItemWrapper> getItem() {return item_;}
 			TypeID getAttributeID() const {return attributeID_;}
 		private:
-			boost::shared_ptr<ItemWrapper> item_;
+			std::shared_ptr<ItemWrapper> item_;
 			TypeID attributeID_;
 		};
 		
 		class AssociationWrapper
 		{
 		public:
-			AssociationWrapper(boost::shared_ptr<AttributeWrapper>& attribute, const std::string& name);
-			boost::shared_ptr<AttributeWrapper> getAttribute() {return attribute_;}
+			AssociationWrapper(std::shared_ptr<AttributeWrapper>& attribute, const std::string& name);
+			std::shared_ptr<AttributeWrapper> getAttribute() {return attribute_;}
 			Modifier::Association getAssociation() {return association_;}
 			
 			bool addItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
@@ -59,7 +59,7 @@ namespace eufe {
 			bool removeOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive);
 			
 		private:
-			boost::shared_ptr<AttributeWrapper> attribute_;
+			std::shared_ptr<AttributeWrapper> attribute_;
 			Modifier::Association association_;
 		};
 		
@@ -90,9 +90,9 @@ namespace eufe {
 			Argument(float value);
 			Argument(const char* value);
 			Argument(const std::string& value);
-			Argument(boost::shared_ptr<ItemWrapper> value);
-			Argument(boost::shared_ptr<AttributeWrapper> value);
-			Argument(boost::shared_ptr<AssociationWrapper> value);
+			Argument(std::shared_ptr<ItemWrapper> value);
+			Argument(std::shared_ptr<AttributeWrapper> value);
+			Argument(std::shared_ptr<AssociationWrapper> value);
 			
 			Type getType();
 			
@@ -100,9 +100,9 @@ namespace eufe {
 			operator int ();
 			operator float ();
 			operator std::string ();
-			operator boost::shared_ptr<ItemWrapper> ();
-			operator boost::shared_ptr<AttributeWrapper> ();
-			operator boost::shared_ptr<AssociationWrapper> ();
+			operator std::shared_ptr<ItemWrapper> ();
+			operator std::shared_ptr<AttributeWrapper> ();
+			operator std::shared_ptr<AssociationWrapper> ();
 			
 			
 		private:
@@ -112,9 +112,9 @@ namespace eufe {
 				float floatValue_;
 			};
 			std::string stringValue_;
-			boost::shared_ptr<ItemWrapper> itemValue_;
-			boost::shared_ptr<AttributeWrapper> attributeValue_;
-			boost::shared_ptr<AssociationWrapper> associationValue_;
+			std::shared_ptr<ItemWrapper> itemValue_;
+			std::shared_ptr<AttributeWrapper> attributeValue_;
+			std::shared_ptr<AssociationWrapper> associationValue_;
 			Type type_;
 		};
 		

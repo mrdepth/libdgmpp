@@ -32,10 +32,10 @@ struct Repairer
 	float effectivity;
 };
 
-class RepairersEffectivityCompare : public std::binary_function<const boost::shared_ptr<Repairer>&, const boost::shared_ptr<Repairer>&, bool>
+class RepairersEffectivityCompare : public std::binary_function<const std::shared_ptr<Repairer>&, const std::shared_ptr<Repairer>&, bool>
 {
 public:
-	bool operator() (const boost::shared_ptr<Repairer>& a, const boost::shared_ptr<Repairer>& b)
+	bool operator() (const std::shared_ptr<Repairer>& a, const std::shared_ptr<Repairer>& b)
 	{
 		return a->effectivity > b->effectivity;
 	}
@@ -872,7 +872,7 @@ const Tank& Ship::getSustainableTank()
 
 			sustainableTank_ = getTank();
 			
-			std::list<boost::shared_ptr<Repairer> > repairers;
+			std::list<std::shared_ptr<Repairer> > repairers;
 			float capUsed = getCapUsed();
 			
 			TypeID attributes[] = {ARMOR_DAMAGE_ATTRIBUTE_ID, DAMAGE_ATTRIBUTE_ID, SHIELD_CHARGE_ATTRIBUTE_ID};
@@ -898,7 +898,7 @@ const Tank& Ship::getSustainableTank()
 							Module* module = dynamic_cast<Module*>(item);
 							assert(module);
 							
-							boost::shared_ptr<Repairer> repairer (new Repairer);
+							std::shared_ptr<Repairer> repairer (new Repairer);
 							repairer->type = types[i];
 							repairer->hpPerSec = (*j)->getValue();
 							repairer->capPerSec = module->getCapUse();
@@ -914,7 +914,7 @@ const Tank& Ship::getSustainableTank()
 			
 			float totalPeakRecharge = getCapRecharge();
 
-			std::list<boost::shared_ptr<Repairer> >::iterator j, endj = repairers.end();
+			std::list<std::shared_ptr<Repairer> >::iterator j, endj = repairers.end();
 			for (j = repairers.begin(); j != endj; j++)
 			{
 				Repairer* repairer = j->get();

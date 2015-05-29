@@ -6,6 +6,6 @@ namespace eufe {
 	public:
 		SqlConnector(void);
 		virtual ~SqlConnector(void);
-		virtual boost::shared_ptr<FetchResult> exec(const char* sql) = 0;
+		virtual std::shared_ptr<FetchResult> exec(const char* sql) = 0;
 	};
 }
