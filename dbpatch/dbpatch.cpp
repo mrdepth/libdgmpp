@@ -501,7 +501,7 @@ int patch(const char* databasePath) {
 	update("shipModeMaxTargetRangePostDiv",
 		   DefEnv("Ship").attr("maxTargetRange").assoc("PostDiv").AIM("modeMaxTargetRangePostDiv"),
 		   DefEnv("Ship").attr("maxTargetRange").assoc("PostDiv").RIM("modeMaxTargetRangePostDiv"));
-	
+
 	//Svipul
 	update("modeShieldResonancePostDiv",
 		   COMB(
@@ -527,6 +527,12 @@ int patch(const char* databasePath) {
 	update("modeMWDSigRadiusPostDiv",
 		   DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("signatureRadiusBonus").assoc("PostDiv").ALRSM("modeMWDSigPenaltyPostDiv"),
 		   DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("signatureRadiusBonus").assoc("PostDiv").RLRSM("modeMWDSigPenaltyPostDiv"));
+	
+	//Jackdaw
+	update("shipModeSPTTrackingPostDiv",
+		   DefEnv("Char").locationSkill("Missile Launcher Operation").attr("maxVelocity").assoc("PostDiv").AORSM("modeMaxRangePostDiv"),
+		   DefEnv("Char").locationSkill("Missile Launcher Operation").attr("maxVelocity").assoc("PostDiv").RORSM("modeMaxRangePostDiv"));
+	
 
 
 	return 0;

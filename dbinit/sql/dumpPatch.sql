@@ -96,3 +96,14 @@ INSERT INTO "dgmTypeAttributes" VALUES (34566,1302,34562);
 INSERT INTO "dgmTypeAttributes" VALUES (34570,1302,34562);
 
 INSERT INTO "dgmTypeAttributes" VALUES (34562,10000,1);
+
+--Jackdaw
+INSERT INTO "dgmTypeEffects" VALUES ("35676","10002","0");
+INSERT INTO "dgmTypeEffects" VALUES ("35677","10002","0");
+INSERT INTO "dgmTypeEffects" VALUES ("35678","10002","0");
+
+INSERT INTO "dgmTypeAttributes" VALUES (35676,1302,34828);
+INSERT INTO "dgmTypeAttributes" VALUES (35677,1302,34828);
+INSERT INTO "dgmTypeAttributes" VALUES (35678,1302,34828);
+
+INSERT INTO "dgmTypeAttributes" VALUES (34828,10000,1);
