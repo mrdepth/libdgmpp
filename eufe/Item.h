@@ -1,6 +1,6 @@
 #pragma once
 #include "types.h"
-#include <boost/exception/all.hpp>
+#include <stdexcept>
 #include "ThirdParty/sqlite3.h"
 #include <iostream>
 #include "Effect.h"
@@ -35,12 +35,16 @@ namespace eufe {
 			virtual ~Context() {};
 		};
 		
-		typedef boost::error_info<struct TypeIDExceptionInfoTag, TypeID> TypeIDExceptionInfo;
-		struct AttributeDidNotFoundException : virtual boost::exception {};
-		struct UnknownTypeIDException : virtual boost::exception {};
-		struct EffectDidNotFoundException : virtual boost::exception {};
+		//typedef boost::error_info<struct TypeIDExceptionInfoTag, TypeID> TypeIDExceptionInfo;
+		//struct AttributeDidNotFoundException : virtual boost::exception {};
+		//struct UnknownTypeIDException : virtual boost::exception {};
+		//struct EffectDidNotFoundException : virtual boost::exception {};
+        //struct NoOwnerException : virtual boost::exception {};
+        typedef std::invalid_argument AttributeDidNotFoundException;
+        typedef std::invalid_argument UnknownTypeIDException;
+        typedef std::invalid_argument EffectDidNotFoundException;
+        typedef std::runtime_error NoOwnerException;
 
-		struct NoOwnerException : virtual boost::exception {};
 
 		Item();
 		Item(Engine* engine, TypeID typeID, Item* owner = NULL);

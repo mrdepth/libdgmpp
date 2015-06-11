@@ -3,7 +3,7 @@
 #include "Attribute.h"
 #include "Effect.h"
 #include "Engine.h"
-#include <boost/lexical_cast.hpp>
+//#include <boost/lexical_cast.hpp>
 #include <sstream>
 #include <functional>
 #include <limits>
@@ -164,7 +164,7 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 	}
 	else
 	{
-		throw UnknownTypeIDException() << TypeIDExceptionInfo(typeID);
+        throw UnknownTypeIDException(std::to_string(typeID));
 	}
 }
 
@@ -265,7 +265,7 @@ Effect* Item::getEffect(TypeID effectID)
 	for (i = effects_.begin(); i != end; i++)
 		if ((*i)->getEffectID() == effectID)
 			return i->get();
-	throw EffectDidNotFoundException() << TypeIDExceptionInfo(effectID);
+    throw EffectDidNotFoundException(std::to_string(effectID));
 }
 
 

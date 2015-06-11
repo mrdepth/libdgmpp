@@ -1,7 +1,8 @@
 #pragma once
 #include "types.h"
 #include "ThirdParty/sqlite3.h"
-#include <boost/exception/all.hpp>
+//#include <boost/exception/all.hpp>
+#include <stdexcept>
 #include "Mutex.h"
 #include "SqlConnector.h"
 
@@ -13,7 +14,8 @@ namespace eufe {
 	class Engine : public Mutex
 	{
 	public:
-		struct SqliteException : virtual boost::exception {};
+		//struct SqliteException : virtual boost::exception {};
+        typedef std::runtime_error SqliteException;
 
 		Engine(SqlConnector* sqlConnector);
 		virtual ~Engine(void);

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <ios>
+#include <sstream>
 //#include "Compiler.h"
 #include "Ship.h"
 #include "Module.h"
@@ -28,8 +29,8 @@
 #include "EffectAdaptiveArmorHardener.h"
 #include "EffectNaniteRepairPasteArmorDamageBonus.h"
 
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
+//#include <boost/shared_ptr.hpp>
+//#include <boost/weak_ptr.hpp>
 
 using namespace eufe;
 

@@ -16,7 +16,7 @@ namespace eufe {
 		//typedef boost::error_info<struct SqliteExceptionInfoTag, std::string> SqliteExceptionInfo;
 		//struct SqliteException : virtual boost::exception {};
 		//struct SqliteExpcetion: std::logic_error {};
-		typedef std::logic_error SqliteException;
+		typedef std::runtime_error SqliteException;
 		
 		Compiler(const std::string& databasePath, const std::string& outputPath);
 		~Compiler(void);

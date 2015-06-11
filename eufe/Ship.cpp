@@ -12,6 +12,7 @@
 #include <math.h>
 #include <algorithm>
 #include "Charge.h"
+#include <cassert>
 
 using namespace eufe;
 

@@ -1,7 +1,8 @@
 #pragma once
 #include "EffectInterpreter.h"
 #include "Modifier.h"
-#include <boost/exception/all.hpp>
+//#include <boost/exception/all.hpp>
+#include <stdexcept>
 #include <vector>
 
 namespace eufe {
@@ -78,11 +79,12 @@ namespace eufe {
 				TYPE_ID = TYPE_INT	//argumentCategoryID = 2, 8, 9
 			};
 			
-			typedef boost::error_info<struct TypeCastExceptionFromTypeInfoTag, Type> TypeCastExceptionFromTypeInfo;
-			typedef boost::error_info<struct TypeCastExceptionToTypeInfoTag, Type> TypeCastExceptionToTypeInfo;
-			typedef boost::tuple<TypeCastExceptionFromTypeInfo, TypeCastExceptionToTypeInfo> TypeCastExceptionInfo;
+			//typedef boost::error_info<struct TypeCastExceptionFromTypeInfoTag, Type> TypeCastExceptionFromTypeInfo;
+			//typedef boost::error_info<struct TypeCastExceptionToTypeInfoTag, Type> TypeCastExceptionToTypeInfo;
+			//typedef boost::tuple<TypeCastExceptionFromTypeInfo, TypeCastExceptionToTypeInfo> TypeCastExceptionInfo;
 			
-			struct TypeCastException : virtual boost::exception {};
+			//struct TypeCastException : virtual boost::exception {};
+            typedef std::runtime_error TypeCastException;
 			
 			Argument();
 			Argument(int value, Type type = TYPE_INT);
@@ -118,11 +120,13 @@ namespace eufe {
 			Type type_;
 		};
 		
-		typedef boost::error_info<struct BadOperandExceptionInfoTag, int> BadOperandExceptionInfo;
-		struct BadOperandException : virtual boost::exception {};
+		//typedef boost::error_info<struct BadOperandExceptionInfoTag, int> BadOperandExceptionInfo;
+		//struct BadOperandException : virtual boost::exception {};
 		
-		typedef boost::error_info<struct UnknownTypeNameExceptionInfoTag, std::string> UnknownTypeNameExceptionInfo;
-		struct UnknownTypeNameException : virtual boost::exception {};
+		//typedef boost::error_info<struct UnknownTypeNameExceptionInfoTag, std::string> UnknownTypeNameExceptionInfo;
+		//struct UnknownTypeNameException : virtual boost::exception {};
+        typedef std::invalid_argument BadOperandException;
+        typedef std::invalid_argument UnknownTypeNameException;
 
 		EffectByteCodeInterpreter(Engine* engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive);
 		EffectByteCodeInterpreter(const EffectByteCodeInterpreter& from);

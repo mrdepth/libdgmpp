@@ -1,3 +1,4 @@
+#include <sstream>
 #include "EffectByteCodeInterpreter.h"
 #include "Engine.h"
 //#include "Compiler.h"
@@ -186,7 +187,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::execute(const Byt
 
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand0()
 {
-	throw BadOperandException() << BadOperandExceptionInfo(0);
+	throw BadOperandException("0");
 }
 
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand1()
@@ -628,7 +629,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 		}
 		else
 		{
-			throw UnknownTypeNameException() << UnknownTypeNameExceptionInfo(typeName);
+			throw UnknownTypeNameException(typeName);
 		}
 		
 	}
@@ -1543,7 +1544,7 @@ EffectByteCodeInterpreter::Argument::operator bool ()
 		case TYPE_FLOAT:
 			return floatValue_ != 0;
 		default:
-			throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_BOOL);
+			throw TypeCastException(std::to_string(type_));
 	}
 };
 
@@ -1557,7 +1558,7 @@ EffectByteCodeInterpreter::Argument::operator int ()
 		case TYPE_FLOAT:
 			return static_cast<int>(floatValue_);
 		default:
-			throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_INT);
+			throw TypeCastException(std::to_string(type_));
 	}
 };
 
@@ -1571,7 +1572,7 @@ EffectByteCodeInterpreter::Argument::operator float ()
 		case TYPE_FLOAT:
 			return floatValue_;
 		default:
-			throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_FLOAT);
+			throw TypeCastException(std::to_string(type_));
 	}
 };
 
@@ -1580,7 +1581,7 @@ EffectByteCodeInterpreter::Argument::operator std::string ()
 	if (type_ == TYPE_STRING)
 		return stringValue_;
 	else
-		throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_STRING);
+		throw TypeCastException(std::to_string(type_));
 };
 
 EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInterpreter::ItemWrapper> ()
@@ -1588,7 +1589,7 @@ EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInte
 	if (type_ == TYPE_ITEM)
 		return itemValue_;
 	else
-		throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_ITEM);
+		throw TypeCastException(std::to_string(type_));
 };
 
 EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInterpreter::AttributeWrapper> ()
@@ -1596,7 +1597,7 @@ EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInte
 	if (type_ == TYPE_ATTRIBUTE)
 		return attributeValue_;
 	else
-		throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_ATTRIBUTE);
+		throw TypeCastException(std::to_string(type_));
 };
 
 EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInterpreter::AssociationWrapper> ()
@@ -1604,5 +1605,5 @@ EffectByteCodeInterpreter::Argument::operator std::shared_ptr<EffectByteCodeInte
 	if (type_ == TYPE_ASSOCIATION)
 		return associationValue_;
 	else
-		throw TypeCastException() << TypeCastExceptionInfo(type_, TYPE_ASSOCIATION);
+		throw TypeCastException(std::to_string(type_));
 };

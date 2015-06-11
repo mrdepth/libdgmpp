@@ -62,7 +62,7 @@ Environment Drone::getEnvironment()
 void Drone::setTarget(Ship* target)
 {
 	if (target == getOwner())
-		throw BadDroneTargetException() << BadDroneTargetExceptionInfo(target);
+		throw BadDroneTargetException("self");
 
 	removeEffects(Effect::CATEGORY_TARGET);
 	if (target_)

@@ -1,5 +1,5 @@
 #include "CapacitorSimulator.h"
-#include <boost/math/common_factor.hpp>
+//#include <boost/math/common_factor.hpp>
 #include <math.h>
 #include <functional>
 #include <algorithm>
@@ -214,7 +214,7 @@ void CapacitorSimulator::internalReset()
 		else
 			continue;
 		
-		period_ = boost::math::lcm(period_, duration);
+		period_ = lcm(period_, duration);
 		
 		if (!reload_ && capNeed > 0)
 			clipSize = 0;
@@ -240,7 +240,7 @@ void CapacitorSimulator::internalReset()
 		int duration = static_cast<int>(drone->getCycleTime());
 		float capNeed = capNeed = drone->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue();
 		capUsed_ += static_cast<float>(capNeed / (duration / 1000.0));
-		period_ = boost::math::lcm(period_, duration);
+		period_ = lcm(period_, duration);
 		
 		State *state = new State();
 		state->tNow = 0;
@@ -353,4 +353,12 @@ void CapacitorSimulator::run()
 		capStableEVE_ = capStableLow_ = capStableHigh_ = capacitorCapacity_;
 	}
 	isCalculated_ = true;
+}
+
+int CapacitorSimulator::gcd(int a, int b) {
+    return b?gcd(b,a%b):a;
+}
+
+int CapacitorSimulator::lcm(int a, int b) {
+    return a/gcd(a,b) * b;
 }

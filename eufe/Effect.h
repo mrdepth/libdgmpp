@@ -1,7 +1,8 @@
 #pragma once
 #include "types.h"
 #include "Modifier.h"
-#include <boost/exception/all.hpp>
+//#include <boost/exception/all.hpp>
+#include <stdexcept>
 #include <vector>
 
 namespace eufe {

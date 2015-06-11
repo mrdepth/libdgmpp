@@ -428,7 +428,7 @@ bool Module::requireTarget()
 void Module::setTarget(Ship* target)
 {
 	if (target == getOwner())
-		throw BadTargetException() << BadTargetExceptionInfo(target);
+		throw BadTargetException("self");
 	
 	if (target_)
 	{

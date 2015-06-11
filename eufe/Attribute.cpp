@@ -7,6 +7,7 @@
 #include <cmath>
 #include "Ship.h"
 #include "Character.h"
+#include <sstream>
 
 using namespace eufe;
 
@@ -265,7 +266,7 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 #if _DEBUG
 	if (attributeName[0] == 0 && attributeID != 0)
 	{
-		std::stringstream sql;
+        std::stringstream sql;
 		sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
 		std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 		if (result->next()) {
