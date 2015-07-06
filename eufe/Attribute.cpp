@@ -8,6 +8,7 @@
 #include "Ship.h"
 #include "Character.h"
 #include <sstream>
+#include <functional>
 
 using namespace eufe;
 

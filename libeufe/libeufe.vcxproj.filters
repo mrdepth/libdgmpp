@@ -2,22 +2,16 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{abf5f75c-10e5-47c3-b547-05f2506d0840}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Compiler">
-      <UniqueIdentifier>{22f1690d-d14e-4a49-b9b3-4e0b1dfe3ff9}</UniqueIdentifier>
+      <UniqueIdentifier>{a9c918e7-c2e7-4170-87eb-29f110cc4598}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\ThirdParty">
-      <UniqueIdentifier>{7ff5ba68-7d89-417e-8ae7-1da34b1f4e32}</UniqueIdentifier>
+      <UniqueIdentifier>{6b750f10-0ab6-4e05-b6f9-1574da4d2dc5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{7c49781b-3c8c-42a4-95af-14c38427ba68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Compiler">
-      <UniqueIdentifier>{3e4cf25f-e735-49ad-8713-d311954b0b75}</UniqueIdentifier>
+      <UniqueIdentifier>{51249fb2-8e03-4bf7-9ae5-18435ca322ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ThirdParty">
-      <UniqueIdentifier>{4f7bd57a-b181-4ee2-95a9-06bb33ed4112}</UniqueIdentifier>
+      <UniqueIdentifier>{07c5fffe-6cb0-48ba-9b6d-2c53b18ad8cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -148,16 +142,19 @@
     <ClInclude Include="..\eufe\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\eufe\Compiler.h">
-      <Filter>Header Files\Compiler</Filter>
-    </ClInclude>
     <ClInclude Include="..\eufe\ThirdParty\sqlite3.h">
       <Filter>Header Files\ThirdParty</Filter>
     </ClInclude>
     <ClInclude Include="..\eufe\ThirdParty\sqlite3ext.h">
       <Filter>Header Files\ThirdParty</Filter>
     </ClInclude>
+    <ClInclude Include="..\eufe\Decoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\eufe\EffectNaniteRepairPasteArmorDamageBonus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\eufe\Encoder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -276,13 +273,16 @@
     <ClCompile Include="..\eufe\Structure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\eufe\Compiler.cpp">
-      <Filter>Source Files\Compiler</Filter>
-    </ClCompile>
     <ClCompile Include="..\eufe\ThirdParty\sqlite3.c">
       <Filter>Source Files\ThirdParty</Filter>
     </ClCompile>
+    <ClCompile Include="..\eufe\Decoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\eufe\EffectNaniteRepairPasteArmorDamageBonus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\eufe\Encoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

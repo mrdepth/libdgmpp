@@ -18,13 +18,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -38,17 +38,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
-    <IncludePath>D:\Programing\boost_1_51_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\..\eufe\eufe\ThirdParty;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
-    <IncludePath>D:\Programing\boost_1_51_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\..\eufe\eufe\ThirdParty;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -84,6 +84,7 @@
     <ClInclude Include="..\eufe\Charge.h" />
     <ClInclude Include="..\eufe\ControlTower.h" />
     <ClInclude Include="..\eufe\DamagePattern.h" />
+    <ClInclude Include="..\eufe\Decoder.h" />
     <ClInclude Include="..\eufe\Drone.h" />
     <ClInclude Include="..\eufe\Effect.h" />
     <ClInclude Include="..\eufe\EffectAdaptiveArmorHardener.h" />
@@ -98,6 +99,7 @@
     <ClInclude Include="..\eufe\EffectNaniteRepairPasteArmorDamageBonus.h" />
     <ClInclude Include="..\eufe\EffectShieldBoostingInterpreter.h" />
     <ClInclude Include="..\eufe\EffectSlotModifierInterpreter.h" />
+    <ClInclude Include="..\eufe\Encoder.h" />
     <ClInclude Include="..\eufe\Engine.h" />
     <ClInclude Include="..\eufe\eufe.h" />
     <ClInclude Include="..\eufe\FetchResult.h" />
@@ -116,10 +118,9 @@
     <ClInclude Include="..\eufe\SqliteConnector.h" />
     <ClInclude Include="..\eufe\SqliteFetchResult.h" />
     <ClInclude Include="..\eufe\Structure.h" />
-    <ClInclude Include="..\eufe\types.h" />
-    <ClInclude Include="..\eufe\Compiler.h" />
     <ClInclude Include="..\eufe\ThirdParty\sqlite3.h" />
     <ClInclude Include="..\eufe\ThirdParty\sqlite3ext.h" />
+    <ClInclude Include="..\eufe\types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\eufe\Area.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="..\eufe\Charge.cpp" />
     <ClCompile Include="..\eufe\ControlTower.cpp" />
     <ClCompile Include="..\eufe\DamagePattern.cpp" />
+    <ClCompile Include="..\eufe\Decoder.cpp" />
     <ClCompile Include="..\eufe\Drone.cpp" />
     <ClCompile Include="..\eufe\Effect.cpp" />
     <ClCompile Include="..\eufe\EffectAdaptiveArmorHardener.cpp" />
@@ -144,6 +146,7 @@
     <ClCompile Include="..\eufe\EffectNaniteRepairPasteArmorDamageBonus.cpp" />
     <ClCompile Include="..\eufe\EffectShieldBoostingInterpreter.cpp" />
     <ClCompile Include="..\eufe\EffectSlotModifierInterpreter.cpp" />
+    <ClCompile Include="..\eufe\Encoder.cpp" />
     <ClCompile Include="..\eufe\Engine.cpp" />
     <ClCompile Include="..\eufe\FetchResult.cpp" />
     <ClCompile Include="..\eufe\Gang.cpp" />
@@ -161,7 +164,6 @@
     <ClCompile Include="..\eufe\SqliteConnector.cpp" />
     <ClCompile Include="..\eufe\SqliteFetchResult.cpp" />
     <ClCompile Include="..\eufe\Structure.cpp" />
-    <ClCompile Include="..\eufe\Compiler.cpp" />
     <ClCompile Include="..\eufe\ThirdParty\sqlite3.c" />
   </ItemGroup>
   <ItemGroup>

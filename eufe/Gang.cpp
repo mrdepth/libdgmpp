@@ -9,6 +9,7 @@
 #include "Attribute.h"
 #include <functional>
 #include <math.h>
+#include <algorithm>
 
 
 using namespace eufe;

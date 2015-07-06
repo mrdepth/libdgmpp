@@ -6,6 +6,7 @@
 //#include <boost/lexical_cast.hpp>
 #include <sstream>
 #include <functional>
+#include <algorithm>
 #include <limits>
 #include "Modifier.h"
 #include "LocationGroupModifier.h"

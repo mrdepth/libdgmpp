@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "Attribute.h"
 #include <math.h>
+#include <algorithm>
 
 using namespace eufe;
 

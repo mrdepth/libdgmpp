@@ -8,6 +8,7 @@
 //#include <boost/shared_ptr.hpp>
 #include <iterator>
 #include <set>
+#include <memory>
 
 namespace eufe {
 	class Item;
