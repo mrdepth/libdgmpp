@@ -1031,7 +1031,7 @@ void Ship::calculateDamageStats()
 //mobility
 float Ship::getAlignTime()
 {
-	float agility = getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
+	float agility = getAgility();
 	float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
 	return -logf(0.25f) * agility * mass / 1000000.0f;
 }
@@ -1072,6 +1072,29 @@ float Ship::getMass()
 
 float Ship::getVolume() {
 	return getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
+}
+
+float Ship::getAgility() {
+	return getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
+}
+
+float Ship::getMaxVelocityInOrbit(float r) {
+	double i = getAgility();
+	double m = getMass() / 1000000.0;
+	double v = getVelocity();
+	double i2 = i * i;
+	double m2 = m * m;
+	double r2 = r * r;
+	double r4 = r2 * r2;
+	double v2 = v * v;
+	return sqrt((sqrt(4 * i2 * m2 * r2 * v2 + r4) / (2 * i2 * m2)) - r2 / (2 * i2 * m2));
+}
+
+float Ship::getOrbitRadiusWithVelocity(float v) {
+	double i = getAgility();
+	double m = getMass() / 1000000.0;
+	double vm = getVelocity();
+	return (i * m * v * v) / sqrt(vm * vm - v * v);
 }
 
 
