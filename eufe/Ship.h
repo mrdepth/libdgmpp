@@ -120,7 +120,8 @@ namespace eufe {
 		float getVolume();
 		float getAgility();
 		float getMaxVelocityInOrbit(float r);
-		float getOrbitRadiusWithVelocity(float v);
+		float getOrbitRadiusWithLinearVelocity(float v);
+		float getOrbitRadiusWithAngularVelocity(float v);
 		
 		//Targeting
 		int getMaxTargets();

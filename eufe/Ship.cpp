@@ -1090,11 +1090,24 @@ float Ship::getMaxVelocityInOrbit(float r) {
 	return sqrt((sqrt(4 * i2 * m2 * r2 * v2 + r4) / (2 * i2 * m2)) - r2 / (2 * i2 * m2));
 }
 
-float Ship::getOrbitRadiusWithVelocity(float v) {
+float Ship::getOrbitRadiusWithLinearVelocity(float v) {
 	double i = getAgility();
 	double m = getMass() / 1000000.0;
 	double vm = getVelocity();
 	return (i * m * v * v) / sqrt(vm * vm - v * v);
+}
+
+float Ship::getOrbitRadiusWithAngularVelocity(float v) {
+	double lv = getVelocity();
+	double r;
+	for (int i = 0; i < 10; i++) {
+		r = lv / v;
+		lv = getMaxVelocityInOrbit(r);
+		double av = lv / r;
+		if (fabs(av - v) / v < 0.001)
+			break;
+	}
+	return r;
 }
 
 
