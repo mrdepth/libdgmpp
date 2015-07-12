@@ -1,35 +1,39 @@
 SHELL:=/bin/sh
-CC=clang++
-CFLAGS=-arch x86_64 -std=gnu++11 -stdlib=libc++ -lsqlite3
+CC=g++
+#CFLAGS=-arch x86_64 -std=gnu++11 -stdlib=libc++ -lsqlite3
+CFLAGS=-std=c++11
 OUTPUT_DIR+=./
 DUMP+=./dump
 SQL=${PWD}/sql
-TMP+=${PWD}/tmp
+SDE+=${PWD}/sde/eve.sqlite
+T+=${PWD}/tmp
 
 all: eufe.sqlite
 
 dbpatch: tmp
-	$(CC) $(CFLAGS) ../dbpatch/dbpatch.cpp -o $(TMP)/$@
+	$(CC) $(CFLAGS) ../dbpatch/dbpatch.cpp -o $(T)/$@ -lsqlite3
 
 compiler: tmp
-	$(CC) $(CFLAGS) ../eufe/Compiler.cpp -o $(TMP)/$@
+	$(CC) $(CFLAGS) ../eufe/Compiler.cpp -o $(T)/$@ -lsqlite3
 
 dump.sqlite: dbpatch
-	cd $(DUMP); sqlite3 $(TMP)/dump.sqlite ".read $(SQL)/dump.sql"
-	sqlite3 $(TMP)/dump.sqlite ".read $(SQL)/dumpPatch.sql"
-	$(TMP)/dbpatch $(TMP)/dump.sqlite
+	cd $(DUMP); sqlite3 $(SDE) ".read $(SQL)/eve.sql"; mv dump.sqlite $(T)/dump.sqlite
+	cd $(DUMP); sqlite3 $(T)/dump.sqlite ".read $(SQL)/dump.sql"
+	sqlite3 $(T)/dump.sqlite ".read $(SQL)/dumpPatch.sql"
+	$(T)/dbpatch $(T)/dump.sqlite
 
 dgmCompiledEffects.sql: dump.sqlite compiler
-	$(TMP)/compiler $(TMP)/dump.sqlite $(TMP)/
+	$(T)/compiler $(T)/dump.sqlite $(T)/
 
 eufe.sqlite: dgmCompiledEffects.sql
-	sqlite3 $(TMP)/dump.sqlite ".read $(SQL)/eufe.sql"
-	sqlite3 eufe.sqlite ".read $(TMP)/dgmCompiledEffects.sql"
+	sqlite3 $(T)/dump.sqlite ".read $(SQL)/eufe.sql"
+	sqlite3 eufe.sqlite ".read $(T)/dgmCompiledEffects.sql"
 	mv ./eufe.sqlite $(OUTPUT_DIR)/eufe.sqlite
 
 tmp:
-	mkdir -p $(TMP)
+	mkdir -p $(T)
 
 clean:
-	rm -rf $(TMP)
+	echo ${T}
+	rm -rf ${T}
 	rm -f *.sqlite

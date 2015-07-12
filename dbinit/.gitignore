@@ -1,3 +1,4 @@
 /*.sqlite
 dgmCompiledEffects.sql
 *.exe
+/tmp/

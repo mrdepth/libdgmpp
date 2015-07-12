@@ -45,15 +45,23 @@ CREATE TABLE eufe.dgmTypeEffects (
   "isDefault" tinyint(1) default NULL,
   PRIMARY KEY  ("typeID","effectID")
 );
+--DROP TABLE IF EXISTS eufe.invCategories;
+--CREATE TABLE eufe.invCategories (
+--"categoryID"  tinyint(3) NOT NULL,
+--"categoryName"  TEXT(100),
+--"description"  TEXT(3000),
+--"published"  tinyint(1),
+--"iconID" smallint(6) default NULL,
+--"categoryNameID" smallint(6) default NULL,
+--"dataID" smallint(6) default NULL,
+--PRIMARY KEY ("categoryID")
+--);
 DROP TABLE IF EXISTS eufe.invCategories;
 CREATE TABLE eufe.invCategories (
 "categoryID"  tinyint(3) NOT NULL,
 "categoryName"  TEXT(100),
-"description"  TEXT(3000),
-"published"  tinyint(1),
 "iconID" smallint(6) default NULL,
-"categoryNameID" smallint(6) default NULL,
-"dataID" smallint(6) default NULL,
+"published"  tinyint(1),
 PRIMARY KEY ("categoryID")
 );
 

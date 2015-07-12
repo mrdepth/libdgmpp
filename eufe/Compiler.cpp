@@ -4,9 +4,18 @@
 #include <fstream>
 #include <ios>
 #include <string>
+#include <cstdlib>
+#include <limits>
+#include <sstream>
 //#include <boost/format.hpp>
 
 using namespace eufe;
+
+template<typename T> std::string to_string(const T& t) {
+	std::stringstream s;
+	s << t;
+	return s.str();
+};
 
 Compiler::Compiler(const std::string& databasePath, const std::string& outputPath) : databasePath_(databasePath), outputPath_(outputPath)
 {
@@ -100,31 +109,39 @@ void Compiler::compile()
 
 Compiler::MemoryBlock Compiler::compileExpression(Row& expression)
 {
+  char* end;
+
 	TypeID arg1 = 0;
 	TypeID arg2 = 0;
-	TypeID operandID = std::stoi(expression["operandID"]);
+	//TypeID operandID = std::stoi(expression["operandID"]);
+	TypeID operandID = std::strtol(expression["operandID"].c_str(), &end, 10);  
 	TypeID expressionAttributeID = 0;
 	TypeID expressionGroupID = 0;
 	TypeID expressionTypeID = 0;
 	std::string &expressionValueString = expression["expressionValue"];
 	int expressionValueInt;
 	
-	try {arg1 = std::stoi(expression["arg1"]);}
+	//try {arg1 = std::stoi(expression["arg1"]);}
+  try {arg1 = std::strtol(expression["arg1"].c_str(), &end, 10);}
 	catch (std::invalid_argument) {}
 
-	try {arg2 = std::stoi(expression["arg2"]);}
+//	try {arg2 = std::stoi(expression["arg2"]);}
+  try {arg2 = std::strtol(expression["arg2"].c_str(), &end, 10);}
 	catch (std::invalid_argument) {}
 
-	try {expressionAttributeID = std::stoi(expression["expressionAttributeID"]);}
+	try {expressionAttributeID = strtol(expression["expressionAttributeID"].c_str(), &end, 10);}
 	catch (std::invalid_argument) {}
 
-	try {expressionGroupID = std::stoi(expression["expressionGroupID"]);}
+//	try {expressionGroupID = std::stoi(expression["expressionGroupID"]);}
+  try {expressionGroupID = std::strtol(expression["expressionGroupID"].c_str(), &end, 10);}
 	catch (std::invalid_argument) {}
 
-	try {expressionTypeID = std::stoi(expression["expressionTypeID"]);}
+//	try {expressionTypeID = std::stoi(expression["expressionTypeID"]);}
+  try {expressionTypeID = std::strtol(expression["expressionTypeID"].c_str(), &end, 10);}
 	catch (std::invalid_argument) {}
 
-	try {expressionValueInt = std::stoi(expressionValueString);}
+//	try {expressionValueInt = std::stoi(expressionValueString);}
+  try {expressionValueInt = std::strtol(expression["expressionValueInt"].c_str(), &end, 10);}
 	catch(std::invalid_argument) {expressionValueInt = std::numeric_limits<int>::min();}
 	
 	MemoryBlock compiledExpression;
@@ -231,7 +248,7 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 			if (type == ARGUMENT_TYPE_EXPRESSION)
 			{
 				TypeID* value = reinterpret_cast<int*>(ptr);
-				*value = offsets[std::to_string(*value)];
+				*value = offsets[to_string(*value)];
 			}
 			ptr += length;
 		}
@@ -255,11 +272,14 @@ size_t Compiler::addExpression(Row& expression, CompiledExpressionsMap& expressi
 	TypeID arg1 = 0;
 	TypeID arg2 = 0;
 
-	try {arg1 = std::stoi(expression["arg1"]);}
+	char* end;
+	//try { arg1 = std::stoi(expression["arg1"]); }
+	try{ arg1 = std::strtol(expression["arg1"].c_str(), &end, 10); }
 	catch(std::invalid_argument) {};
 
-	try {arg2 = std::stoi(expression["arg2"]);}
-	catch(std::invalid_argument) {};
+	//try {arg2 = std::stoi(expression["arg2"]);}
+	try{ arg2 = std::strtol(expression["arg2"].c_str(), &end, 10); }
+	catch (std::invalid_argument) {};
 
 	if (arg1)
 		len += addExpression(expressions_[expression["arg1"]], expressionsMap);
