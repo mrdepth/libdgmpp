@@ -533,6 +533,40 @@ int patch(const char* databasePath) {
 		   DefEnv("Char").locationSkill("Missile Launcher Operation").attr("maxVelocity").assoc("PostDiv").AORSM("modeMaxRangePostDiv"),
 		   DefEnv("Char").locationSkill("Missile Launcher Operation").attr("maxVelocity").assoc("PostDiv").RORSM("modeMaxRangePostDiv"));
 	
+    //Hecate
+    update("modeHullResonancePostDiv",
+           COMB(
+                COMB(
+                     DefEnv("Ship").attr("hullEmDamageResonance").assoc("PostDiv").AIM("modeEmResistancePostDiv"),
+                     DefEnv("Ship").attr("hullExplosiveDamageResonance").assoc("PostDiv").AIM("modeExplosiveResistancePostDiv")),
+                COMB(
+                     DefEnv("Ship").attr("hullKineticDamageResonance").assoc("PostDiv").AIM("modeKineticResistancePostDiv"),
+                     DefEnv("Ship").attr("hullThermalDamageResonance").assoc("PostDiv").AIM("modeThermicResistancePostDiv"))),
+           
+           
+           COMB(
+                COMB(
+                     DefEnv("Ship").attr("hullEmDamageResonance").assoc("PostDiv").RIM("modeEmResistancePostDiv"),
+                     DefEnv("Ship").attr("hullExplosiveDamageResonance").assoc("PostDiv").RIM("modeExplosiveResistancePostDiv")),
+                COMB(
+                     DefEnv("Ship").attr("hullKineticDamageResonance").assoc("PostDiv").RIM("modeKineticResistancePostDiv"),
+                     DefEnv("Ship").attr("hullThermalDamageResonance").assoc("PostDiv").RIM("modeThermicResistancePostDiv"))));
+
+    update("modeArmorRepDurationPostDiv",
+           DefEnv("Ship").locationSkill("Repair Systems").attr("duration").assoc("PostDiv").ALRSM("modeArmorRepDurationPostDiv"),
+           DefEnv("Ship").locationSkill("Repair Systems").attr("duration").assoc("PostDiv").RLRSM("modeArmorRepDurationPostDiv"));
+
+    update("modeMWDBoostPostDiv",
+           DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("speedFactor").assoc("PostDiv").ALRSM("modeMWDVelocityPostDiv"),
+           DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("speedFactor").assoc("PostDiv").RLRSM("modeMWDVelocityPostDiv"));
+
+    update("modeMWDCapPostDiv",
+           DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("capacitorNeed").assoc("PostDiv").ALRSM("modeMWDCapPostDiv"),
+           DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("capacitorNeed").assoc("PostDiv").RLRSM("modeMWDCapPostDiv"));
+
+    update("shipModeSHTOptimalRangePostDiv",
+           DefEnv("Ship").locationSkill("Small Hybrid Turret").attr("maxRange").assoc("PostDiv").ALRSM("modeMaxRangePostDiv"),
+           DefEnv("Ship").locationSkill("Small Hybrid Turret").attr("maxRange").assoc("PostDiv").RLRSM("modeMaxRangePostDiv"));
 
 
 	return 0;

@@ -107,3 +107,14 @@ INSERT INTO "dgmTypeAttributes" VALUES (35677,1302,34828);
 INSERT INTO "dgmTypeAttributes" VALUES (35678,1302,34828);
 
 INSERT INTO "dgmTypeAttributes" VALUES (34828,10000,1);
+
+--Hecate
+INSERT INTO "dgmTypeEffects" VALUES ("35686","10002","0");
+INSERT INTO "dgmTypeEffects" VALUES ("35687","10002","0");
+INSERT INTO "dgmTypeEffects" VALUES ("35688","10002","0");
+
+INSERT INTO "dgmTypeAttributes" VALUES (35686,1302,35683);
+INSERT INTO "dgmTypeAttributes" VALUES (35687,1302,35683);
+INSERT INTO "dgmTypeAttributes" VALUES (35688,1302,35683);
+
+INSERT INTO "dgmTypeAttributes" VALUES (35683,10000,1);
