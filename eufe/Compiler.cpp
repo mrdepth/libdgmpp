@@ -118,30 +118,44 @@ Compiler::MemoryBlock Compiler::compileExpression(Row& expression)
 	TypeID expressionAttributeID = 0;
 	TypeID expressionGroupID = 0;
 	TypeID expressionTypeID = 0;
+	
 	std::string &expressionValueString = expression["expressionValue"];
 	int expressionValueInt;
 	
 	//try {arg1 = std::stoi(expression["arg1"]);}
-  try {arg1 = std::strtol(expression["arg1"].c_str(), &end, 10);}
+  try {arg1 = (int) std::strtol(expression["arg1"].c_str(), &end, 10);
+  }
 	catch (std::invalid_argument) {}
 
 //	try {arg2 = std::stoi(expression["arg2"]);}
-  try {arg2 = std::strtol(expression["arg2"].c_str(), &end, 10);}
+  try {
+	  arg2 = std::strtol(expression["arg2"].c_str(), &end, 10);
+  }
 	catch (std::invalid_argument) {}
 
-	try {expressionAttributeID = strtol(expression["expressionAttributeID"].c_str(), &end, 10);}
+	try {
+		expressionAttributeID = strtol(expression["expressionAttributeID"].c_str(), &end, 10);
+	}
 	catch (std::invalid_argument) {}
 
 //	try {expressionGroupID = std::stoi(expression["expressionGroupID"]);}
-  try {expressionGroupID = std::strtol(expression["expressionGroupID"].c_str(), &end, 10);}
+  try {
+	  expressionGroupID = std::strtol(expression["expressionGroupID"].c_str(), &end, 10);
+  }
 	catch (std::invalid_argument) {}
 
 //	try {expressionTypeID = std::stoi(expression["expressionTypeID"]);}
-  try {expressionTypeID = std::strtol(expression["expressionTypeID"].c_str(), &end, 10);}
+  try {
+	  expressionTypeID = std::strtol(expression["expressionTypeID"].c_str(), &end, 10);
+  }
 	catch (std::invalid_argument) {}
 
 //	try {expressionValueInt = std::stoi(expressionValueString);}
-  try {expressionValueInt = std::strtol(expression["expressionValueInt"].c_str(), &end, 10);}
+  try {
+	  expressionValueInt = std::strtol(expression["expressionValue"].c_str(), &end, 10);
+	  if (end[0] != 0)
+		  expressionValueInt = std::numeric_limits<int>::min();
+  }
 	catch(std::invalid_argument) {expressionValueInt = std::numeric_limits<int>::min();}
 	
 	MemoryBlock compiledExpression;
@@ -157,14 +171,14 @@ Compiler::MemoryBlock Compiler::compileExpression(Row& expression)
 		compiledExpression.append(reinterpret_cast<Byte*>(&arg1), sizeof(TypeID));
 	}
 	else {
-		int value = 0;
+		int value = std::numeric_limits<int>::min();
 		if (expressionAttributeID)
 			value = expressionAttributeID;
 		else if (expressionGroupID)
 			value = expressionGroupID;
 		else if (expressionTypeID)
 			value = expressionTypeID;
-		else if (expressionValueInt)
+		else if (expressionValueInt != std::numeric_limits<int>::min())
 			value = expressionValueInt;
 		
 		if (value != std::numeric_limits<int>::min()) {
@@ -183,6 +197,9 @@ Compiler::MemoryBlock Compiler::compileExpression(Row& expression)
 			short len = static_cast<short>(expressionValueString.length()) + 1;
 			compiledExpression.append(reinterpret_cast<const unsigned char*>(&len), sizeof(short));
 			compiledExpression.append(reinterpret_cast<const unsigned char*>(expressionValueString.c_str()), len);
+		}
+		else {
+			throw (0);
 		}
 	}
 
