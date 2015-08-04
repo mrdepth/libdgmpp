@@ -537,20 +537,20 @@ int patch(const char* databasePath) {
     update("modeHullResonancePostDiv",
            COMB(
                 COMB(
-                     DefEnv("Ship").attr("hullEmDamageResonance").assoc("PostDiv").AIM("modeEmResistancePostDiv"),
-                     DefEnv("Ship").attr("hullExplosiveDamageResonance").assoc("PostDiv").AIM("modeExplosiveResistancePostDiv")),
+                     DefEnv("Ship").attr("emDamageResonance").assoc("PostDiv").AIM("modeEmResistancePostDiv"),
+                     DefEnv("Ship").attr("explosiveDamageResonance").assoc("PostDiv").AIM("modeExplosiveResistancePostDiv")),
                 COMB(
-                     DefEnv("Ship").attr("hullKineticDamageResonance").assoc("PostDiv").AIM("modeKineticResistancePostDiv"),
-                     DefEnv("Ship").attr("hullThermalDamageResonance").assoc("PostDiv").AIM("modeThermicResistancePostDiv"))),
+                     DefEnv("Ship").attr("kineticDamageResonance").assoc("PostDiv").AIM("modeKineticResistancePostDiv"),
+                     DefEnv("Ship").attr("thermalDamageResonance").assoc("PostDiv").AIM("modeThermicResistancePostDiv"))),
            
            
            COMB(
                 COMB(
-                     DefEnv("Ship").attr("hullEmDamageResonance").assoc("PostDiv").RIM("modeEmResistancePostDiv"),
-                     DefEnv("Ship").attr("hullExplosiveDamageResonance").assoc("PostDiv").RIM("modeExplosiveResistancePostDiv")),
+                     DefEnv("Ship").attr("emDamageResonance").assoc("PostDiv").RIM("modeEmResistancePostDiv"),
+                     DefEnv("Ship").attr("explosiveDamageResonance").assoc("PostDiv").RIM("modeExplosiveResistancePostDiv")),
                 COMB(
-                     DefEnv("Ship").attr("hullKineticDamageResonance").assoc("PostDiv").RIM("modeKineticResistancePostDiv"),
-                     DefEnv("Ship").attr("hullThermalDamageResonance").assoc("PostDiv").RIM("modeThermicResistancePostDiv"))));
+                     DefEnv("Ship").attr("kineticDamageResonance").assoc("PostDiv").RIM("modeKineticResistancePostDiv"),
+                     DefEnv("Ship").attr("thermalDamageResonance").assoc("PostDiv").RIM("modeThermicResistancePostDiv"))));
 
     update("modeArmorRepDurationPostDiv",
            DefEnv("Ship").locationSkill("Repair Systems").attr("duration").assoc("PostDiv").ALRSM("modeArmorRepDurationPostDiv"),
