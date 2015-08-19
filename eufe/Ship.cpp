@@ -1099,7 +1099,7 @@ float Ship::getOrbitRadiusWithLinearVelocity(float v) {
 
 float Ship::getOrbitRadiusWithAngularVelocity(float v) {
 	double lv = getVelocity();
-	double r;
+	double r = 0;
 	for (int i = 0; i < 10; i++) {
 		r = lv / v;
 		lv = getMaxVelocityInOrbit(r);

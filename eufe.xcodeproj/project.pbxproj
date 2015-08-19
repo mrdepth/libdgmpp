@@ -7,68 +7,97 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1219C1561AB775A400FF6205 /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */; };
 		1242EC211A4DFF5C00FD488A /* dbpatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1242EC201A4DFF5C00FD488A /* dbpatch.cpp */; };
 		124FAFBD1B17208800B7FE95 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1242EC251A4DFF9800FD488A /* libsqlite3.dylib */; };
-		12A3C6B2177C283E0067E00C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3C6B1177C283E0067E00C /* Foundation.framework */; };
-		12A3C6CB177C28A90067E00C /* Blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6BD177C28A90067E00C /* Blob.cpp */; };
-		12A3C6CC177C28A90067E00C /* Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6BF177C28A90067E00C /* Decoder.cpp */; };
-		12A3C6CD177C28A90067E00C /* Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C1177C28A90067E00C /* Encoder.cpp */; };
-		12A3C6CE177C28A90067E00C /* FetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C3177C28A90067E00C /* FetchResult.cpp */; };
-		12A3C6CF177C28A90067E00C /* SqlConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C5177C28A90067E00C /* SqlConnector.cpp */; };
-		12A3C6D0177C28A90067E00C /* SqliteConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C7177C28A90067E00C /* SqliteConnector.cpp */; };
-		12A3C6D1177C28A90067E00C /* SqliteFetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */; };
-		12A3C6F1177C2AE30067E00C /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121D8D2015F477D80003CAA5 /* Mutex.cpp */; };
-		12A3C6F2177C2AE30067E00C /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9EC51147FA61C00B12A7F /* Area.cpp */; };
-		12A3C6F3177C2AE30067E00C /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D511473CA5E006B18D7 /* Attribute.cpp */; };
-		12A3C6F4177C2AE30067E00C /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F98147D10E200ADC4CE /* Engine.cpp */; };
-		12A3C6F5177C2AE30067E00C /* Gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B9AB64147A5DDF006F1F8E /* Gang.cpp */; };
-		12A3C6F6177C2AE30067E00C /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D551473CA5E006B18D7 /* Item.cpp */; };
-		12A3C6F7177C2AFC0067E00C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D531473CA5E006B18D7 /* Effect.cpp */; };
-		12A3C6F8177C2AFC0067E00C /* EffectByteCodeInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CBD14978B9B00B13A9D /* EffectByteCodeInterpreter.cpp */; };
-		12A3C6F9177C2AFC0067E00C /* EffectLeechInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CC31497988F00B13A9D /* EffectLeechInterpreter.cpp */; };
-		12A3C6FA177C2AFC0067E00C /* EffectEnergyDestabilizationNewInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CC614979FB600B13A9D /* EffectEnergyDestabilizationNewInterpreter.cpp */; };
-		12A3C6FB177C2AFC0067E00C /* EffectEnergyTransferInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CCA1497A06D00B13A9D /* EffectEnergyTransferInterpreter.cpp */; };
-		12A3C6FC177C2AFC0067E00C /* EffectArmorRepairInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC807D1498EDB200CB0411 /* EffectArmorRepairInterpreter.cpp */; };
-		12A3C6FD177C2AFC0067E00C /* EffectShieldBoostingInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC808C1499062B00CB0411 /* EffectShieldBoostingInterpreter.cpp */; };
-		12A3C6FE177C2AFC0067E00C /* EffectHullRepairInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC8090149906AD00CB0411 /* EffectHullRepairInterpreter.cpp */; };
-		12A3C702177C2B0A0067E00C /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
-		12A3C703177C2B0A0067E00C /* LocationGroupModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AE79981487AD39003FB98A /* LocationGroupModifier.cpp */; };
-		12A3C704177C2B0A0067E00C /* LocationRequiredSkillModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AE799A1487AF9D003FB98A /* LocationRequiredSkillModifier.cpp */; };
-		12A3C705177C2B0E0067E00C /* Booster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE4114893125005492F5 /* Booster.cpp */; };
-		12A3C706177C2B0E0067E00C /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F9F147D1ACF00ADC4CE /* Character.cpp */; };
-		12A3C707177C2B0E0067E00C /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3E1489310C005492F5 /* Implant.cpp */; };
-		12A3C708177C2B0E0067E00C /* Skill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6FA6147D2F7400ADC4CE /* Skill.cpp */; };
-		12A3C709177C2B160067E00C /* CapacitorSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9C1781490F2860048A52A /* CapacitorSimulator.cpp */; };
-		12A3C70A177C2B160067E00C /* Charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3B14892DCC005492F5 /* Charge.cpp */; };
-		12A3C70B177C2B160067E00C /* DamagePattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CAF1497770C00B13A9D /* DamagePattern.cpp */; };
-		12A3C70C177C2B160067E00C /* Drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 373AF826148E6FE900411AFE /* Drone.cpp */; };
-		12A3C70D177C2B160067E00C /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B9AB66147A5DDF006F1F8E /* Module.cpp */; };
-		12A3C70E177C2B160067E00C /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B9AB68147A5DDF006F1F8E /* Ship.cpp */; };
-		12A3C70F177C2B160067E00C /* HeatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371FA1CF14F542FC0043E813 /* HeatSimulator.cpp */; };
-		12A3C710177C2B190067E00C /* ControlTower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BBC5961512068400EDE204 /* ControlTower.cpp */; };
-		12A3C711177C2B190067E00C /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BBC598151219B500EDE204 /* Structure.cpp */; };
-		12C51773196D0C360004CF96 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C51772196D0C360004CF96 /* XCTest.framework */; };
-		12C51774196D0C360004CF96 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3C6B1177C283E0067E00C /* Foundation.framework */; };
-		12C51776196D0C360004CF96 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C51775196D0C360004CF96 /* UIKit.framework */; };
-		12C5177C196D0C360004CF96 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 12C5177A196D0C360004CF96 /* InfoPlist.strings */; };
-		12C5177E196D0C360004CF96 /* eufeTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12C5177D196D0C360004CF96 /* eufeTests.mm */; };
-		12C51785196D0C7A0004CF96 /* libeufe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3C724177C2FAF0067E00C /* libeufe.a */; };
-		12C51787196D0D420004CF96 /* eufe.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 12C51786196D0D420004CF96 /* eufe.sqlite */; };
-		12C51789196D10CE0004CF96 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C51788196D10CE0004CF96 /* libsqlite3.dylib */; };
+		12564B931B84AF15000F68D8 /* eufe.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564B921B84AF15000F68D8 /* eufe.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BA91B84B027000F68D8 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D531473CA5E006B18D7 /* Effect.cpp */; };
+		12564BAA1B84B027000F68D8 /* EffectByteCodeInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CBD14978B9B00B13A9D /* EffectByteCodeInterpreter.cpp */; };
+		12564BAB1B84B027000F68D8 /* EffectLeechInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CC31497988F00B13A9D /* EffectLeechInterpreter.cpp */; };
+		12564BAC1B84B027000F68D8 /* EffectEnergyDestabilizationNewInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CC614979FB600B13A9D /* EffectEnergyDestabilizationNewInterpreter.cpp */; };
+		12564BAD1B84B027000F68D8 /* EffectEnergyTransferInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CCA1497A06D00B13A9D /* EffectEnergyTransferInterpreter.cpp */; };
+		12564BAE1B84B027000F68D8 /* EffectArmorRepairInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC807D1498EDB200CB0411 /* EffectArmorRepairInterpreter.cpp */; };
+		12564BAF1B84B027000F68D8 /* EffectShieldBoostingInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC808C1499062B00CB0411 /* EffectShieldBoostingInterpreter.cpp */; };
+		12564BB01B84B027000F68D8 /* EffectHullRepairInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AC8090149906AD00CB0411 /* EffectHullRepairInterpreter.cpp */; };
+		12564BB11B84B027000F68D8 /* EffectSlotModifierInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F1E6FD14B4D47E007E2A86 /* EffectSlotModifierInterpreter.cpp */; };
+		12564BB21B84B027000F68D8 /* EffectHardPointModifierEffectInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */; };
+		12564BB31B84B027000F68D8 /* EffectAdaptiveArmorHardener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */; };
+		12564BB41B84B027000F68D8 /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */; };
+		12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
+		12564BB61B84B027000F68D8 /* LocationGroupModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AE79981487AD39003FB98A /* LocationGroupModifier.cpp */; };
+		12564BB71B84B027000F68D8 /* LocationRequiredSkillModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AE799A1487AF9D003FB98A /* LocationRequiredSkillModifier.cpp */; };
+		12564BB81B84B027000F68D8 /* Skill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6FA6147D2F7400ADC4CE /* Skill.cpp */; };
+		12564BB91B84B027000F68D8 /* CapacitorSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9C1781490F2860048A52A /* CapacitorSimulator.cpp */; };
+		12564BBA1B84B027000F68D8 /* Charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3B14892DCC005492F5 /* Charge.cpp */; };
+		12564BBB1B84B027000F68D8 /* DamagePattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CAF1497770C00B13A9D /* DamagePattern.cpp */; };
+		12564BBC1B84B027000F68D8 /* Drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 373AF826148E6FE900411AFE /* Drone.cpp */; };
+		12564BBD1B84B027000F68D8 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B9AB66147A5DDF006F1F8E /* Module.cpp */; };
+		12564BBE1B84B027000F68D8 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B9AB68147A5DDF006F1F8E /* Ship.cpp */; };
+		12564BBF1B84B027000F68D8 /* HeatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371FA1CF14F542FC0043E813 /* HeatSimulator.cpp */; };
+		12564BC01B84B027000F68D8 /* ControlTower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BBC5961512068400EDE204 /* ControlTower.cpp */; };
+		12564BC11B84B027000F68D8 /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BBC598151219B500EDE204 /* Structure.cpp */; };
+		12564BC21B84B027000F68D8 /* Blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6BD177C28A90067E00C /* Blob.cpp */; };
+		12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C3177C28A90067E00C /* FetchResult.cpp */; };
+		12564BC41B84B027000F68D8 /* SqlConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C5177C28A90067E00C /* SqlConnector.cpp */; };
+		12564BC51B84B027000F68D8 /* SqliteConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C7177C28A90067E00C /* SqliteConnector.cpp */; };
+		12564BC61B84B027000F68D8 /* SqliteFetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */; };
+		12564BC71B84B027000F68D8 /* Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6BF177C28A90067E00C /* Decoder.cpp */; };
+		12564BC81B84B027000F68D8 /* Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C1177C28A90067E00C /* Encoder.cpp */; };
+		12564BC91B84B027000F68D8 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121D8D2015F477D80003CAA5 /* Mutex.cpp */; };
+		12564BCA1B84B027000F68D8 /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9EC51147FA61C00B12A7F /* Area.cpp */; };
+		12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D511473CA5E006B18D7 /* Attribute.cpp */; };
+		12564BCC1B84B027000F68D8 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F98147D10E200ADC4CE /* Engine.cpp */; };
+		12564BCD1B84B027000F68D8 /* Gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B9AB64147A5DDF006F1F8E /* Gang.cpp */; };
+		12564BCE1B84B027000F68D8 /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D551473CA5E006B18D7 /* Item.cpp */; };
+		12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE4114893125005492F5 /* Booster.cpp */; };
+		12564BD01B84B03C000F68D8 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F9F147D1ACF00ADC4CE /* Character.cpp */; };
+		12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3E1489310C005492F5 /* Implant.cpp */; };
+		12564BD31B84B04B000F68D8 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12564BD21B84B04B000F68D8 /* libsqlite3.dylib */; };
+		12564BD41B84B07E000F68D8 /* Effect.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D541473CA5E006B18D7 /* Effect.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BD51B84B07E000F68D8 /* EffectInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CB31497799600B13A9D /* EffectInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BD61B84B07E000F68D8 /* EffectByteCodeInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CBE14978B9C00B13A9D /* EffectByteCodeInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BD71B84B07E000F68D8 /* EffectLeechInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CC51497989C00B13A9D /* EffectLeechInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BD81B84B07E000F68D8 /* EffectEnergyDestabilizationNewInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CC814979FC100B13A9D /* EffectEnergyDestabilizationNewInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BD91B84B07E000F68D8 /* EffectEnergyTransferInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CCC1497A07900B13A9D /* EffectEnergyTransferInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BDA1B84B07E000F68D8 /* EffectArmorRepairInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC807B1498EDA800CB0411 /* EffectArmorRepairInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BDB1B84B07E000F68D8 /* EffectShieldBoostingInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC808F1499063500CB0411 /* EffectShieldBoostingInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BDC1B84B07E000F68D8 /* EffectHullRepairInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC8092149906B600CB0411 /* EffectHullRepairInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BDD1B84B07E000F68D8 /* EffectSlotModifierInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37F1E70014B4D488007E2A86 /* EffectSlotModifierInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BDE1B84B07E000F68D8 /* EffectHardPointModifierEffectInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 121E07E71578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BDF1B84B07E000F68D8 /* EffectAdaptiveArmorHardener.h in Headers */ = {isa = PBXBuildFile; fileRef = 121E07EB1578C193000D1480 /* EffectAdaptiveArmorHardener.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE01B84B07E000F68D8 /* EffectNaniteRepairPasteArmorDamageBonus.h in Headers */ = {isa = PBXBuildFile; fileRef = 12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE11B84B07E000F68D8 /* Modifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 3700DA7014869A570026EA83 /* Modifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AE79961487AD2E003FB98A /* LocationGroupModifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AE799C1487AFA7003FB98A /* LocationRequiredSkillModifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE41B84B07F000F68D8 /* Booster.h in Headers */ = {isa = PBXBuildFile; fileRef = 3708AE4314893130005492F5 /* Booster.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE51B84B07F000F68D8 /* Character.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BA6FA1147D1ADC00ADC4CE /* Character.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE61B84B07F000F68D8 /* Implant.h in Headers */ = {isa = PBXBuildFile; fileRef = 3708AE4014893118005492F5 /* Implant.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE71B84B07F000F68D8 /* Skill.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BA6FA5147D2F6700ADC4CE /* Skill.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE81B84B07F000F68D8 /* CapacitorSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 37A9C17B1490F2950048A52A /* CapacitorSimulator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BE91B84B07F000F68D8 /* Charge.h in Headers */ = {isa = PBXBuildFile; fileRef = 3708AE3D14892DD9005492F5 /* Charge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BEA1B84B07F000F68D8 /* DamagePattern.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CB21497771600B13A9D /* DamagePattern.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BEB1B84B07F000F68D8 /* Drone.h in Headers */ = {isa = PBXBuildFile; fileRef = 373AF829148E6FF500411AFE /* Drone.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BEC1B84B07F000F68D8 /* Module.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B9AB67147A5DDF006F1F8E /* Module.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BED1B84B07F000F68D8 /* Ship.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B9AB69147A5DDF006F1F8E /* Ship.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 371FA1D214F543080043E813 /* HeatSimulator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BEF1B84B07F000F68D8 /* ControlTower.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BBC5951512067A00EDE204 /* ControlTower.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF01B84B07F000F68D8 /* Structure.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BBC59A151219C200EDE204 /* Structure.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF11B84B07F000F68D8 /* Blob.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6BE177C28A90067E00C /* Blob.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF21B84B07F000F68D8 /* FetchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C4177C28A90067E00C /* FetchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C6177C28A90067E00C /* SqlConnector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF41B84B07F000F68D8 /* SqliteConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C8177C28A90067E00C /* SqliteConnector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6CA177C28A90067E00C /* SqliteFetchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF61B84B07F000F68D8 /* Decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C0177C28A90067E00C /* Decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF71B84B07F000F68D8 /* Encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C2177C28A90067E00C /* Encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF81B84B07F000F68D8 /* Mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 121D8D2115F477D80003CAA5 /* Mutex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BF91B84B07F000F68D8 /* Area.h in Headers */ = {isa = PBXBuildFile; fileRef = 37A9EC52147FA61C00B12A7F /* Area.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D521473CA5E006B18D7 /* Attribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BFB1B84B07F000F68D8 /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BA6F99147D10E200ADC4CE /* Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BFC1B84B07F000F68D8 /* Gang.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B9AB65147A5DDF006F1F8E /* Gang.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BFD1B84B07F000F68D8 /* Item.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D561473CA5E006B18D7 /* Item.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12564BFE1B84B07F000F68D8 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D6C1473CA5E006B18D7 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37B33D441473CA0D006B18D7 /* eufe.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37B33D431473CA0D006B18D7 /* eufe.1 */; };
 		37C1C4301475511F002AC3E7 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C42E1475511E002AC3E7 /* Compiler.cpp */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		12C51780196D0C360004CF96 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 37B33D341473CA0D006B18D7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 12A3C6AE177C283E0067E00C;
-			remoteInfo = eufe;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1242EC1C1A4DFF5B00FD488A /* CopyFiles */ = {
@@ -79,15 +108,6 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-		};
-		12A3C6AD177C283E0067E00C /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		37B33D3B1473CA0D006B18D7 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -122,6 +142,11 @@
 		1242EC1E1A4DFF5B00FD488A /* dbpatch */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dbpatch; sourceTree = BUILT_PRODUCTS_DIR; };
 		1242EC201A4DFF5C00FD488A /* dbpatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dbpatch.cpp; sourceTree = "<group>"; };
 		1242EC251A4DFF9800FD488A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		12564B8E1B84AF15000F68D8 /* eufe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = eufe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		12564B911B84AF15000F68D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		12564B921B84AF15000F68D8 /* eufe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = eufe.h; sourceTree = "<group>"; };
+		12564BA71B84AFAD000F68D8 /* eufe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eufe.h; sourceTree = SOURCE_ROOT; };
+		12564BD21B84B04B000F68D8 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		1263B87E15F0EE13003C10EB /* Engine.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Engine.i; sourceTree = "<group>"; };
 		1263B87F15F0EE13003C10EB /* eufe.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = eufe.i; sourceTree = "<group>"; };
 		1263B88015F0EE89003C10EB /* Area.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Area.i; sourceTree = "<group>"; };
@@ -146,18 +171,11 @@
 		12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SqliteFetchResult.cpp; sourceTree = "<group>"; };
 		12A3C6CA177C28A90067E00C /* SqliteFetchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteFetchResult.h; sourceTree = "<group>"; };
 		12A3C723177C2FAF0067E00C /* compiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = compiler; sourceTree = BUILT_PRODUCTS_DIR; };
-		12A3C724177C2FAF0067E00C /* libeufe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libeufe.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		12C51772196D0C360004CF96 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		12C51775196D0C360004CF96 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		12C51779196D0C360004CF96 /* eufeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "eufeTests-Info.plist"; sourceTree = "<group>"; };
-		12C5177B196D0C360004CF96 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		12C5177D196D0C360004CF96 /* eufeTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = eufeTests.mm; sourceTree = "<group>"; };
-		12C5177F196D0C360004CF96 /* eufeTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "eufeTests-Prefix.pch"; sourceTree = "<group>"; };
-		12C51786196D0D420004CF96 /* eufe.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = eufe.sqlite; path = ../../../Neocom/db/eufe.sqlite; sourceTree = "<group>"; };
 		12C51788196D10CE0004CF96 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectNaniteRepairPasteArmorDamageBonus.cpp; sourceTree = "<group>"; };
 		12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectNaniteRepairPasteArmorDamageBonus.h; sourceTree = "<group>"; };
-		12EB84741980CD670058D497 /* eufeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eufeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3708AE3B14892DCC005492F5 /* Charge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
@@ -174,7 +192,6 @@
 		37A9C17B1490F2950048A52A /* CapacitorSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CapacitorSimulator.h; sourceTree = "<group>"; };
 		37A9EC51147FA61C00B12A7F /* Area.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Area.cpp; sourceTree = "<group>"; };
 		37A9EC52147FA61C00B12A7F /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
-		37AC5E0A149A51C0005DEAEB /* eufe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eufe.h; sourceTree = "<group>"; };
 		37AC807B1498EDA800CB0411 /* EffectArmorRepairInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectArmorRepairInterpreter.h; sourceTree = "<group>"; };
 		37AC807D1498EDB200CB0411 /* EffectArmorRepairInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectArmorRepairInterpreter.cpp; sourceTree = "<group>"; };
 		37AC808C1499062B00CB0411 /* EffectShieldBoostingInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectShieldBoostingInterpreter.cpp; sourceTree = "<group>"; };
@@ -238,23 +255,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		12A3C6AC177C283E0067E00C /* Frameworks */ = {
+		12564B8A1B84AF15000F68D8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12A3C6B2177C283E0067E00C /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		12C5176E196D0C360004CF96 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				12C51789196D10CE0004CF96 /* libsqlite3.dylib in Frameworks */,
-				12C51785196D0C7A0004CF96 /* libeufe.a in Frameworks */,
-				12C51773196D0C360004CF96 /* XCTest.framework in Frameworks */,
-				12C51776196D0C360004CF96 /* UIKit.framework in Frameworks */,
-				12C51774196D0C360004CF96 /* Foundation.framework in Frameworks */,
+				12564BD31B84B04B000F68D8 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +280,23 @@
 				1242EC201A4DFF5C00FD488A /* dbpatch.cpp */,
 			);
 			path = dbpatch;
+			sourceTree = "<group>";
+		};
+		12564B8F1B84AF15000F68D8 /* eufe */ = {
+			isa = PBXGroup;
+			children = (
+				12564B921B84AF15000F68D8 /* eufe.h */,
+				12564B901B84AF15000F68D8 /* Supporting Files */,
+			);
+			path = eufe;
+			sourceTree = "<group>";
+		};
+		12564B901B84AF15000F68D8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				12564B911B84AF15000F68D8 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		1263B87D15F0EE11003C10EB /* swig */ = {
@@ -305,6 +327,7 @@
 		12A3C6B0177C283E0067E00C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				12564BD21B84B04B000F68D8 /* libsqlite3.dylib */,
 				1242EC251A4DFF9800FD488A /* libsqlite3.dylib */,
 				12C51788196D10CE0004CF96 /* libsqlite3.dylib */,
 				12A3C6B1177C283E0067E00C /* Foundation.framework */,
@@ -363,29 +386,8 @@
 			isa = PBXGroup;
 			children = (
 				12A3C723177C2FAF0067E00C /* compiler */,
-				12A3C724177C2FAF0067E00C /* libeufe.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		12C51777196D0C360004CF96 /* eufeTests */ = {
-			isa = PBXGroup;
-			children = (
-				12C5177D196D0C360004CF96 /* eufeTests.mm */,
-				12C51778196D0C360004CF96 /* Supporting Files */,
-			);
-			path = eufeTests;
-			sourceTree = "<group>";
-		};
-		12C51778196D0C360004CF96 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				12C51786196D0D420004CF96 /* eufe.sqlite */,
-				12C51779196D0C360004CF96 /* eufeTests-Info.plist */,
-				12C5177A196D0C360004CF96 /* InfoPlist.strings */,
-				12C5177F196D0C360004CF96 /* eufeTests-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		37AAD066149A33B5004BDA18 /* eufe */ = {
@@ -401,7 +403,6 @@
 				37BBC5941512066600EDE204 /* ControlTower */,
 				12A3C6D2177C28AD0067E00C /* SQL */,
 				12A3C6D3177C28C20067E00C /* Encoder */,
-				37AC5E0A149A51C0005DEAEB /* eufe.h */,
 				121D8D2015F477D80003CAA5 /* Mutex.cpp */,
 				121D8D2115F477D80003CAA5 /* Mutex.h */,
 				37A9EC51147FA61C00B12A7F /* Area.cpp */,
@@ -437,18 +438,19 @@
 			children = (
 				37B33D401473CA0D006B18D7 /* eufe */,
 				12A3C6B3177C283E0067E00C /* libeufe */,
-				12C51777196D0C360004CF96 /* eufeTests */,
 				1242EC1F1A4DFF5C00FD488A /* dbpatch */,
+				12564B8F1B84AF15000F68D8 /* eufe */,
 				12A3C6B0177C283E0067E00C /* Frameworks */,
 				12A3C726177C2FC80067E00C /* Products */,
-				12EB84741980CD670058D497 /* eufeTests.xctest */,
 				1242EC1E1A4DFF5B00FD488A /* dbpatch */,
+				12564B8E1B84AF15000F68D8 /* eufe.framework */,
 			);
 			sourceTree = "<group>";
 		};
 		37B33D401473CA0D006B18D7 /* eufe */ = {
 			isa = PBXGroup;
 			children = (
+				12564BA71B84AFAD000F68D8 /* eufe.h */,
 				37AAD066149A33B5004BDA18 /* eufe */,
 				37B33D571473CA5E006B18D7 /* main.cpp */,
 				37B33D431473CA0D006B18D7 /* eufe.1 */,
@@ -556,6 +558,60 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		12564B8B1B84AF15000F68D8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12564B931B84AF15000F68D8 /* eufe.h in Headers */,
+				12564BD41B84B07E000F68D8 /* Effect.h in Headers */,
+				12564BD51B84B07E000F68D8 /* EffectInterpreter.h in Headers */,
+				12564BD61B84B07E000F68D8 /* EffectByteCodeInterpreter.h in Headers */,
+				12564BD71B84B07E000F68D8 /* EffectLeechInterpreter.h in Headers */,
+				12564BD81B84B07E000F68D8 /* EffectEnergyDestabilizationNewInterpreter.h in Headers */,
+				12564BD91B84B07E000F68D8 /* EffectEnergyTransferInterpreter.h in Headers */,
+				12564BDA1B84B07E000F68D8 /* EffectArmorRepairInterpreter.h in Headers */,
+				12564BDB1B84B07E000F68D8 /* EffectShieldBoostingInterpreter.h in Headers */,
+				12564BDC1B84B07E000F68D8 /* EffectHullRepairInterpreter.h in Headers */,
+				12564BDD1B84B07E000F68D8 /* EffectSlotModifierInterpreter.h in Headers */,
+				12564BDE1B84B07E000F68D8 /* EffectHardPointModifierEffectInterpreter.h in Headers */,
+				12564BDF1B84B07E000F68D8 /* EffectAdaptiveArmorHardener.h in Headers */,
+				12564BE01B84B07E000F68D8 /* EffectNaniteRepairPasteArmorDamageBonus.h in Headers */,
+				12564BE11B84B07E000F68D8 /* Modifier.h in Headers */,
+				12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */,
+				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
+				12564BE41B84B07F000F68D8 /* Booster.h in Headers */,
+				12564BE51B84B07F000F68D8 /* Character.h in Headers */,
+				12564BE61B84B07F000F68D8 /* Implant.h in Headers */,
+				12564BE71B84B07F000F68D8 /* Skill.h in Headers */,
+				12564BE81B84B07F000F68D8 /* CapacitorSimulator.h in Headers */,
+				12564BE91B84B07F000F68D8 /* Charge.h in Headers */,
+				12564BEA1B84B07F000F68D8 /* DamagePattern.h in Headers */,
+				12564BEB1B84B07F000F68D8 /* Drone.h in Headers */,
+				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
+				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
+				12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */,
+				12564BEF1B84B07F000F68D8 /* ControlTower.h in Headers */,
+				12564BF01B84B07F000F68D8 /* Structure.h in Headers */,
+				12564BF11B84B07F000F68D8 /* Blob.h in Headers */,
+				12564BF21B84B07F000F68D8 /* FetchResult.h in Headers */,
+				12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */,
+				12564BF41B84B07F000F68D8 /* SqliteConnector.h in Headers */,
+				12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */,
+				12564BF61B84B07F000F68D8 /* Decoder.h in Headers */,
+				12564BF71B84B07F000F68D8 /* Encoder.h in Headers */,
+				12564BF81B84B07F000F68D8 /* Mutex.h in Headers */,
+				12564BF91B84B07F000F68D8 /* Area.h in Headers */,
+				12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */,
+				12564BFB1B84B07F000F68D8 /* Engine.h in Headers */,
+				12564BFC1B84B07F000F68D8 /* Gang.h in Headers */,
+				12564BFD1B84B07F000F68D8 /* Item.h in Headers */,
+				12564BFE1B84B07F000F68D8 /* types.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		1242EC1D1A4DFF5B00FD488A /* dbpatch */ = {
 			isa = PBXNativeTarget;
@@ -574,13 +630,14 @@
 			productReference = 1242EC1E1A4DFF5B00FD488A /* dbpatch */;
 			productType = "com.apple.product-type.tool";
 		};
-		12A3C6AE177C283E0067E00C /* eufe */ = {
+		12564B8D1B84AF15000F68D8 /* eufe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 12A3C6BA177C283E0067E00C /* Build configuration list for PBXNativeTarget "eufe" */;
+			buildConfigurationList = 12564BA11B84AF15000F68D8 /* Build configuration list for PBXNativeTarget "eufe" */;
 			buildPhases = (
-				12A3C6AB177C283E0067E00C /* Sources */,
-				12A3C6AC177C283E0067E00C /* Frameworks */,
-				12A3C6AD177C283E0067E00C /* CopyFiles */,
+				12564B891B84AF15000F68D8 /* Sources */,
+				12564B8A1B84AF15000F68D8 /* Frameworks */,
+				12564B8B1B84AF15000F68D8 /* Headers */,
+				12564B8C1B84AF15000F68D8 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -588,26 +645,8 @@
 			);
 			name = eufe;
 			productName = eufe;
-			productReference = 12A3C724177C2FAF0067E00C /* libeufe.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		12C51770196D0C360004CF96 /* eufeTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 12C51784196D0C360004CF96 /* Build configuration list for PBXNativeTarget "eufeTests" */;
-			buildPhases = (
-				12C5176D196D0C360004CF96 /* Sources */,
-				12C5176E196D0C360004CF96 /* Frameworks */,
-				12C5176F196D0C360004CF96 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				12C51781196D0C360004CF96 /* PBXTargetDependency */,
-			);
-			name = eufeTests;
-			productName = eufeTests;
-			productReference = 12EB84741980CD670058D497 /* eufeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			productReference = 12564B8E1B84AF15000F68D8 /* eufe.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		37B33D3C1473CA0D006B18D7 /* compiler */ = {
 			isa = PBXNativeTarget;
@@ -637,8 +676,8 @@
 					1242EC1D1A4DFF5B00FD488A = {
 						CreatedOnToolsVersion = 6.1;
 					};
-					12C51770196D0C360004CF96 = {
-						TestTargetID = 12A3C6AE177C283E0067E00C;
+					12564B8D1B84AF15000F68D8 = {
+						CreatedOnToolsVersion = 6.4;
 					};
 				};
 			};
@@ -655,20 +694,17 @@
 			projectRoot = "";
 			targets = (
 				37B33D3C1473CA0D006B18D7 /* compiler */,
-				12A3C6AE177C283E0067E00C /* eufe */,
-				12C51770196D0C360004CF96 /* eufeTests */,
 				1242EC1D1A4DFF5B00FD488A /* dbpatch */,
+				12564B8D1B84AF15000F68D8 /* eufe */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		12C5176F196D0C360004CF96 /* Resources */ = {
+		12564B8C1B84AF15000F68D8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12C51787196D0D420004CF96 /* eufe.sqlite in Resources */,
-				12C5177C196D0C360004CF96 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,56 +719,51 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		12A3C6AB177C283E0067E00C /* Sources */ = {
+		12564B891B84AF15000F68D8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12A3C6CB177C28A90067E00C /* Blob.cpp in Sources */,
-				12A3C6CC177C28A90067E00C /* Decoder.cpp in Sources */,
-				12A3C6CD177C28A90067E00C /* Encoder.cpp in Sources */,
-				12A3C6CE177C28A90067E00C /* FetchResult.cpp in Sources */,
-				12A3C6CF177C28A90067E00C /* SqlConnector.cpp in Sources */,
-				12A3C6D0177C28A90067E00C /* SqliteConnector.cpp in Sources */,
-				12A3C6D1177C28A90067E00C /* SqliteFetchResult.cpp in Sources */,
-				12A3C6F1177C2AE30067E00C /* Mutex.cpp in Sources */,
-				12A3C6F2177C2AE30067E00C /* Area.cpp in Sources */,
-				12A3C6F3177C2AE30067E00C /* Attribute.cpp in Sources */,
-				12A3C6F4177C2AE30067E00C /* Engine.cpp in Sources */,
-				12A3C6F5177C2AE30067E00C /* Gang.cpp in Sources */,
-				12A3C6F6177C2AE30067E00C /* Item.cpp in Sources */,
-				12A3C6F7177C2AFC0067E00C /* Effect.cpp in Sources */,
-				12A3C6F8177C2AFC0067E00C /* EffectByteCodeInterpreter.cpp in Sources */,
-				12A3C6F9177C2AFC0067E00C /* EffectLeechInterpreter.cpp in Sources */,
-				12A3C6FA177C2AFC0067E00C /* EffectEnergyDestabilizationNewInterpreter.cpp in Sources */,
-				12A3C6FB177C2AFC0067E00C /* EffectEnergyTransferInterpreter.cpp in Sources */,
-				12A3C6FC177C2AFC0067E00C /* EffectArmorRepairInterpreter.cpp in Sources */,
-				12A3C6FD177C2AFC0067E00C /* EffectShieldBoostingInterpreter.cpp in Sources */,
-				12A3C6FE177C2AFC0067E00C /* EffectHullRepairInterpreter.cpp in Sources */,
-				12A3C702177C2B0A0067E00C /* Modifier.cpp in Sources */,
-				12A3C703177C2B0A0067E00C /* LocationGroupModifier.cpp in Sources */,
-				12A3C704177C2B0A0067E00C /* LocationRequiredSkillModifier.cpp in Sources */,
-				12A3C705177C2B0E0067E00C /* Booster.cpp in Sources */,
-				1219C1561AB775A400FF6205 /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */,
-				12A3C706177C2B0E0067E00C /* Character.cpp in Sources */,
-				12A3C707177C2B0E0067E00C /* Implant.cpp in Sources */,
-				12A3C708177C2B0E0067E00C /* Skill.cpp in Sources */,
-				12A3C709177C2B160067E00C /* CapacitorSimulator.cpp in Sources */,
-				12A3C70A177C2B160067E00C /* Charge.cpp in Sources */,
-				12A3C70B177C2B160067E00C /* DamagePattern.cpp in Sources */,
-				12A3C70C177C2B160067E00C /* Drone.cpp in Sources */,
-				12A3C70D177C2B160067E00C /* Module.cpp in Sources */,
-				12A3C70E177C2B160067E00C /* Ship.cpp in Sources */,
-				12A3C70F177C2B160067E00C /* HeatSimulator.cpp in Sources */,
-				12A3C710177C2B190067E00C /* ControlTower.cpp in Sources */,
-				12A3C711177C2B190067E00C /* Structure.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		12C5176D196D0C360004CF96 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				12C5177E196D0C360004CF96 /* eufeTests.mm in Sources */,
+				12564BAA1B84B027000F68D8 /* EffectByteCodeInterpreter.cpp in Sources */,
+				12564BC61B84B027000F68D8 /* SqliteFetchResult.cpp in Sources */,
+				12564BCA1B84B027000F68D8 /* Area.cpp in Sources */,
+				12564BD01B84B03C000F68D8 /* Character.cpp in Sources */,
+				12564BB31B84B027000F68D8 /* EffectAdaptiveArmorHardener.cpp in Sources */,
+				12564BB01B84B027000F68D8 /* EffectHullRepairInterpreter.cpp in Sources */,
+				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
+				12564BAC1B84B027000F68D8 /* EffectEnergyDestabilizationNewInterpreter.cpp in Sources */,
+				12564BBE1B84B027000F68D8 /* Ship.cpp in Sources */,
+				12564BB91B84B027000F68D8 /* CapacitorSimulator.cpp in Sources */,
+				12564BB71B84B027000F68D8 /* LocationRequiredSkillModifier.cpp in Sources */,
+				12564BC41B84B027000F68D8 /* SqlConnector.cpp in Sources */,
+				12564BB21B84B027000F68D8 /* EffectHardPointModifierEffectInterpreter.cpp in Sources */,
+				12564BAE1B84B027000F68D8 /* EffectArmorRepairInterpreter.cpp in Sources */,
+				12564BB61B84B027000F68D8 /* LocationGroupModifier.cpp in Sources */,
+				12564BBD1B84B027000F68D8 /* Module.cpp in Sources */,
+				12564BBC1B84B027000F68D8 /* Drone.cpp in Sources */,
+				12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */,
+				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
+				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
+				12564BBB1B84B027000F68D8 /* DamagePattern.cpp in Sources */,
+				12564BC21B84B027000F68D8 /* Blob.cpp in Sources */,
+				12564BB81B84B027000F68D8 /* Skill.cpp in Sources */,
+				12564BAB1B84B027000F68D8 /* EffectLeechInterpreter.cpp in Sources */,
+				12564BAD1B84B027000F68D8 /* EffectEnergyTransferInterpreter.cpp in Sources */,
+				12564BBA1B84B027000F68D8 /* Charge.cpp in Sources */,
+				12564BA91B84B027000F68D8 /* Effect.cpp in Sources */,
+				12564BCD1B84B027000F68D8 /* Gang.cpp in Sources */,
+				12564BCC1B84B027000F68D8 /* Engine.cpp in Sources */,
+				12564BC11B84B027000F68D8 /* Structure.cpp in Sources */,
+				12564BC91B84B027000F68D8 /* Mutex.cpp in Sources */,
+				12564BC01B84B027000F68D8 /* ControlTower.cpp in Sources */,
+				12564BCE1B84B027000F68D8 /* Item.cpp in Sources */,
+				12564BAF1B84B027000F68D8 /* EffectShieldBoostingInterpreter.cpp in Sources */,
+				12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */,
+				12564BBF1B84B027000F68D8 /* HeatSimulator.cpp in Sources */,
+				12564BC71B84B027000F68D8 /* Decoder.cpp in Sources */,
+				12564BC81B84B027000F68D8 /* Encoder.cpp in Sources */,
+				12564BC51B84B027000F68D8 /* SqliteConnector.cpp in Sources */,
+				12564BB11B84B027000F68D8 /* EffectSlotModifierInterpreter.cpp in Sources */,
+				12564BB41B84B027000F68D8 /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -745,25 +776,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		12C51781196D0C360004CF96 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 12A3C6AE177C283E0067E00C /* eufe */;
-			targetProxy = 12C51780196D0C360004CF96 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		12C5177A196D0C360004CF96 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				12C5177B196D0C360004CF96 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1242EC221A4DFF5C00FD488A /* Debug */ = {
@@ -805,64 +817,7 @@
 			};
 			name = Release;
 		};
-		12A3C6BB177C283E0067E00C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/eufe.dst;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eufe/libeufe-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "_DEBUG=1";
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s";
-			};
-			name = Debug;
-		};
-		12A3C6BC177C283E0067E00C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				DSTROOT = /tmp/eufe.dst;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eufe/libeufe-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "";
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s";
-			};
-			name = Release;
-		};
-		12C51782196D0C360004CF96 /* Debug */ = {
+		12564BA21B84AF15000F68D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -871,28 +826,36 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eufeTests/eufeTests-Prefix.pch";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "eufeTests/eufeTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				INFOPLIST_FILE = eufe/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = xctest;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		12C51783196D0C360004CF96 /* Release */ = {
+		12564BA31B84AF15000F68D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -901,22 +864,30 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eufeTests/eufeTests-Prefix.pch";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "eufeTests/eufeTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				INFOPLIST_FILE = eufe/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = xctest;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -1026,23 +997,13 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		12A3C6BA177C283E0067E00C /* Build configuration list for PBXNativeTarget "eufe" */ = {
+		12564BA11B84AF15000F68D8 /* Build configuration list for PBXNativeTarget "eufe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				12A3C6BB177C283E0067E00C /* Debug */,
-				12A3C6BC177C283E0067E00C /* Release */,
+				12564BA21B84AF15000F68D8 /* Debug */,
+				12564BA31B84AF15000F68D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		12C51784196D0C360004CF96 /* Build configuration list for PBXNativeTarget "eufeTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				12C51782196D0C360004CF96 /* Debug */,
-				12C51783196D0C360004CF96 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 		37B33D371473CA0D006B18D7 /* Build configuration list for PBXProject "eufe" */ = {
 			isa = XCConfigurationList;

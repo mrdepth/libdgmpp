@@ -1,7 +1,7 @@
 #pragma once
 #include "types.h"
 #include <stdexcept>
-#include "ThirdParty/sqlite3.h"
+#include <sqlite3.h>
 #include <iostream>
 #include "Effect.h"
 #include "Encoder.h"

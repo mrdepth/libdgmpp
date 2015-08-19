@@ -1,6 +1,6 @@
 #pragma once
 #include "types.h"
-#include "ThirdParty/sqlite3.h"
+#include <sqlite3.h>
 //#include <boost/exception/all.hpp>
 #include <stdexcept>
 #include "Mutex.h"

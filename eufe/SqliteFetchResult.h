@@ -1,5 +1,5 @@
 #pragma once
-#include "ThirdParty/sqlite3.h"
+#include <sqlite3.h>
 #include "FetchResult.h"
 
 namespace eufe {
