@@ -51,7 +51,6 @@
 		12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE4114893125005492F5 /* Booster.cpp */; };
 		12564BD01B84B03C000F68D8 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F9F147D1ACF00ADC4CE /* Character.cpp */; };
 		12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3E1489310C005492F5 /* Implant.cpp */; };
-		12564BD31B84B04B000F68D8 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 12564BD21B84B04B000F68D8 /* libsqlite3.dylib */; };
 		12564BD41B84B07E000F68D8 /* Effect.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D541473CA5E006B18D7 /* Effect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BD51B84B07E000F68D8 /* EffectInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CB31497799600B13A9D /* EffectInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BD61B84B07E000F68D8 /* EffectByteCodeInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CBE14978B9C00B13A9D /* EffectByteCodeInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -259,7 +258,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12564BD31B84B04B000F68D8 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1002,7 @@
 				12564BA31B84AF15000F68D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		37B33D371473CA0D006B18D7 /* Build configuration list for PBXProject "eufe" */ = {
 			isa = XCConfigurationList;
