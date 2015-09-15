@@ -17,8 +17,6 @@ static const TypeID CHARACTER_TYPE_ID = 1381;
 
 Character::Character(Engine* engine, Gang* owner, const char* characterName) : Item(engine, CHARACTER_TYPE_ID, owner), characterName_(characterName), ship_(NULL)
 {
-	Engine::ScopedLock lock(*engine_);
-
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
 	while (result->next())
 	{

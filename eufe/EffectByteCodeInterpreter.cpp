@@ -615,8 +615,6 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 	
 	if (arg1.getType() == Argument::TYPE_STRING)
 	{
-		Engine::ScopedLock lock(*engine_);
-
 		std::string typeName = arg1;
 		std::stringstream sql;
 		sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";

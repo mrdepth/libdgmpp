@@ -260,8 +260,6 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), isFakeAttribute_(isFakeAttribute)
 #endif
 {
-	Engine::ScopedLock lock(*engine);
-
 	forcedValue_ = std::numeric_limits<float>::infinity();
 	
 #if _DEBUG
@@ -281,8 +279,6 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 
 Attribute::Attribute(Engine* engine, TypeID attributeID, Item* owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
 {
-	Engine::ScopedLock lock(*engine);
-
 	forcedValue_ = std::numeric_limits<float>::infinity();
 
 	std::stringstream sql;
@@ -330,8 +326,6 @@ bool Attribute::isFakeAttribute() const
 
 float Attribute::getValue()
 {
-	Engine::ScopedLock lock(*engine_);
-
 	if (!calculated_)
 		calculate();
 	return value_;
@@ -354,8 +348,6 @@ bool Attribute::highIsGood() const
 
 float Attribute::dec(float value)
 {
-	Engine::ScopedLock lock(*engine_);
-
 	if (forcedValue_ == std::numeric_limits<float>::infinity())
 		forcedValue_ = initialValue_;
 	isFakeAttribute_ = false;
@@ -364,8 +356,6 @@ float Attribute::dec(float value)
 
 float Attribute::inc(float value)
 {
-	Engine::ScopedLock lock(*engine_);
-
 	if (forcedValue_ == std::numeric_limits<float>::infinity())
 		forcedValue_ = initialValue_;
 	isFakeAttribute_ = false;
@@ -374,8 +364,6 @@ float Attribute::inc(float value)
 
 void Attribute::setValue(float value)
 {
-	Engine::ScopedLock lock(*engine_);
-
 	value_ = value;
 	forcedValue_ = value;
 	isFakeAttribute_ = false;
@@ -383,8 +371,6 @@ void Attribute::setValue(float value)
 
 void Attribute::reset()
 {
-	Engine::ScopedLock lock(*engine_);
-
 	calculated_ = false;
 	value_ = initialValue_;
 	

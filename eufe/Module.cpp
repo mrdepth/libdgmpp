@@ -140,7 +140,6 @@ Module::~Module(void)
 
 Attribute* Module::getAttribute(TypeID attributeID)
 {
-	Engine::ScopedLock lock(*engine_);
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;

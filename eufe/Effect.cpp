@@ -77,8 +77,6 @@ static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
 
 std::shared_ptr<eufe::Effect> Effect::getEffect(Engine* engine, int effectID)
 {
-	Engine::ScopedLock lock(*engine);
-
 	std::map<TypeID, std::weak_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
 	i = reusableEffects.find(effectID);
 	if (i == end) {
@@ -142,8 +140,6 @@ Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* b
 
 Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(effectID)
 {
-	Engine::ScopedLock lock(*engine_);
-	
 	std::stringstream sql;
 #if _DEBUG
 	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
@@ -216,7 +212,6 @@ Effect::Effect(const Effect& from) : interpreter_(from.interpreter_->clone())
 
 Effect::~Effect(void)
 {
-	Engine::ScopedLock lock(*engine_);
 	reusableEffects.erase(reusableEffects.find(effectID_));
 	if (interpreter_)
 		delete interpreter_;

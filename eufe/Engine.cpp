@@ -12,8 +12,6 @@ Engine::Engine(SqlConnector* sqlConnector) : sqlConnector_(sqlConnector), gang_(
 
 Engine::~Engine(void)
 {
-	Engine::ScopedLock lock(*this);
-
 	Gang* gangTmp = gang_;
 	Area* areaTmp = area_;
 	ControlTower* controlTowerTmp = controlTower_;
@@ -127,6 +125,11 @@ void Engine::reset(Item* item)
 	}
 	item->reset();
 }
+
+//std::lock_guard<std::recursive_mutex> Engine::lock() {
+//	return std::lock_guard<std::recursive_mutex>(mutex_);
+//}
+
 
 #if _DEBUG
 

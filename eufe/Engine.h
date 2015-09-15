@@ -3,7 +3,7 @@
 #include <sqlite3.h>
 //#include <boost/exception/all.hpp>
 #include <stdexcept>
-#include "Mutex.h"
+#include <mutex>
 #include "SqlConnector.h"
 
 
@@ -11,9 +11,15 @@
 
 namespace eufe {
 
-	class Engine : public Mutex
+	class Engine
 	{
 	public:
+		class ScopedLock : public std::lock_guard<std::recursive_mutex> {
+		public:
+			ScopedLock(Engine* engine): std::lock_guard<std::recursive_mutex>(engine->mutex_) {
+			};
+		};
+		
 		//struct SqliteException : virtual boost::exception {};
         typedef std::runtime_error SqliteException;
 
@@ -30,6 +36,8 @@ namespace eufe {
 		ControlTower* getControlTower();
 		
 		void reset(Item* item);
+		
+		//std::lock_guard<std::recursive_mutex> lock();
 
 #if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Engine& engine);
@@ -40,6 +48,7 @@ namespace eufe {
 		Gang* gang_;
 		Area* area_;
 		ControlTower* controlTower_;
+		std::recursive_mutex mutex_;
 	};
 
 }

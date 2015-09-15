@@ -42,7 +42,6 @@
 		12564BC61B84B027000F68D8 /* SqliteFetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */; };
 		12564BC71B84B027000F68D8 /* Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6BF177C28A90067E00C /* Decoder.cpp */; };
 		12564BC81B84B027000F68D8 /* Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C1177C28A90067E00C /* Encoder.cpp */; };
-		12564BC91B84B027000F68D8 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121D8D2015F477D80003CAA5 /* Mutex.cpp */; };
 		12564BCA1B84B027000F68D8 /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9EC51147FA61C00B12A7F /* Area.cpp */; };
 		12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D511473CA5E006B18D7 /* Attribute.cpp */; };
 		12564BCC1B84B027000F68D8 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F98147D10E200ADC4CE /* Engine.cpp */; };
@@ -87,7 +86,6 @@
 		12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6CA177C28A90067E00C /* SqliteFetchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BF61B84B07F000F68D8 /* Decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C0177C28A90067E00C /* Decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BF71B84B07F000F68D8 /* Encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C2177C28A90067E00C /* Encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BF81B84B07F000F68D8 /* Mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 121D8D2115F477D80003CAA5 /* Mutex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BF91B84B07F000F68D8 /* Area.h in Headers */ = {isa = PBXBuildFile; fileRef = 37A9EC52147FA61C00B12A7F /* Area.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D521473CA5E006B18D7 /* Attribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BFB1B84B07F000F68D8 /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BA6F99147D10E200ADC4CE /* Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -121,8 +119,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		121D8D2015F477D80003CAA5 /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mutex.cpp; sourceTree = "<group>"; };
-		121D8D2115F477D80003CAA5 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mutex.h; sourceTree = "<group>"; };
 		121E07E61578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectHardPointModifierEffectInterpreter.cpp; sourceTree = "<group>"; };
 		121E07E71578C15B000D1480 /* EffectHardPointModifierEffectInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectHardPointModifierEffectInterpreter.h; sourceTree = "<group>"; };
 		121E07E91578C18B000D1480 /* EffectAdaptiveArmorHardener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectAdaptiveArmorHardener.cpp; sourceTree = "<group>"; };
@@ -401,8 +397,6 @@
 				37BBC5941512066600EDE204 /* ControlTower */,
 				12A3C6D2177C28AD0067E00C /* SQL */,
 				12A3C6D3177C28C20067E00C /* Encoder */,
-				121D8D2015F477D80003CAA5 /* Mutex.cpp */,
-				121D8D2115F477D80003CAA5 /* Mutex.h */,
 				37A9EC51147FA61C00B12A7F /* Area.cpp */,
 				37A9EC52147FA61C00B12A7F /* Area.h */,
 				37B33D511473CA5E006B18D7 /* Attribute.cpp */,
@@ -598,7 +592,6 @@
 				12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */,
 				12564BF61B84B07F000F68D8 /* Decoder.h in Headers */,
 				12564BF71B84B07F000F68D8 /* Encoder.h in Headers */,
-				12564BF81B84B07F000F68D8 /* Mutex.h in Headers */,
 				12564BF91B84B07F000F68D8 /* Area.h in Headers */,
 				12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */,
 				12564BFB1B84B07F000F68D8 /* Engine.h in Headers */,
@@ -751,7 +744,6 @@
 				12564BCD1B84B027000F68D8 /* Gang.cpp in Sources */,
 				12564BCC1B84B027000F68D8 /* Engine.cpp in Sources */,
 				12564BC11B84B027000F68D8 /* Structure.cpp in Sources */,
-				12564BC91B84B027000F68D8 /* Mutex.cpp in Sources */,
 				12564BC01B84B027000F68D8 /* ControlTower.cpp in Sources */,
 				12564BCE1B84B027000F68D8 /* Item.cpp in Sources */,
 				12564BAF1B84B027000F68D8 /* EffectShieldBoostingInterpreter.cpp in Sources */,
@@ -840,7 +832,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = eufe/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -876,7 +868,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = eufe/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = NO;
