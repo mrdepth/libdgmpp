@@ -89,11 +89,7 @@ std::shared_ptr<eufe::Effect> Effect::getEffect(Engine* engine, int effectID)
 	}
 }
 
-#if _DEBUG
 Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
-#else
-Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive) : engine_(engine), effectID_(effectID), category_(category)
-#endif
 {
 	if (effectID == LEECH_EFFECT_ID)
 		interpreter_ = new EffectLeechInterpreter(engine, isAssistance, isOffensive);
@@ -127,7 +123,6 @@ Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* b
 		interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
 	else
 		interpreter_ = new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive);
-#if _DEBUG
 	std::string::iterator i, end = effectName_.end();
 	for (i = effectName_.begin(); i != end; i++)
 	{
@@ -135,17 +130,12 @@ Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* b
 		if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
 			*i = ' ';
 	}
-#endif
 }
 
 Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(effectID)
 {
 	std::stringstream sql;
-#if _DEBUG
 	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
-#else
-	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode FROM dgmCompiledEffects WHERE effectID = " << effectID;
-#endif
 	
 	std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 
@@ -190,7 +180,6 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 			interpreter_ = new EffectByteCodeInterpreter(engine, reinterpret_cast<const Byte*>(blob.getMemory()), blob.getSize(), isAssistance, isOffensive);
 		
 		
-#if _DEBUG
 		effectName_ = result->getText(4);
 		std::string::iterator i, end = effectName_.end();
 		for (i = effectName_.begin(); i != end; i++)
@@ -199,15 +188,7 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 			if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
 				*i = ' ';
 		}
-#endif
 	}
-}
-
-Effect::Effect(const Effect& from) : interpreter_(from.interpreter_->clone())
-{
-#if _DEBUG
-	effectName_ = from.effectName_;
-#endif
 }
 
 Effect::~Effect(void)
@@ -237,7 +218,6 @@ Effect::Category Effect::getCategory() const
 	return category_;
 }
 
-#if _DEBUG
 const char* Effect::getEffectName() const
 {
 	return effectName_.c_str();
@@ -248,5 +228,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Effect& effect)
 	os << "{\"effectName\":\"" << effect.effectName_<< "\", \"effectID\":\"" << effect.effectID_ << "\"}";
 	return os;
 }
-
-#endif

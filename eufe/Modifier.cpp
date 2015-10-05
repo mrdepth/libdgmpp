@@ -57,8 +57,6 @@ bool Modifier::isAssistance()
 	return isAssistance_;
 }
 
-#if _DEBUG
-
 std::string Modifier::getAssociationName()
 {
 	switch (association_) {
@@ -99,4 +97,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Modifier& modifier)
 	return os;
 }
 
-#endif

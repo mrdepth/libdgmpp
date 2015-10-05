@@ -23,12 +23,12 @@ ControlTower::~ControlTower(void)
 {
 }
 
-Structure* ControlTower::addStructure(Structure* structure)
+Structure* ControlTower::addStructure(TypeID typeID)
 {
-	if (canFit(structure))
+	try
 	{
+		Structure* structure = new Structure(engine_, typeID, this);
 		structures_.push_back(structure);
-		structure->setOwner(this);
 		
 		structure->addEffects(Effect::CATEGORY_GENERIC);
 		if (structure->canHaveState(Structure::STATE_ACTIVE))
@@ -37,16 +37,6 @@ Structure* ControlTower::addStructure(Structure* structure)
 			structure->setState(Structure::STATE_ONLINE);
 		engine_->reset(this);
 		return structure;
-	}
-	else
-		return NULL;
-}
-
-Structure* ControlTower::addStructure(TypeID typeID)
-{
-	try
-	{
-		return addStructure(new Structure(engine_, typeID, this));
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -294,8 +284,6 @@ void ControlTower::calculateDamageStats()
 	}
 }
 
-#if _DEBUG
-
 std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTower)
 {
 	os << "{\"typeName\":\"" << controlTower.getTypeName() << "\", \"typeID\":\"" << controlTower.typeID_ << "\", \"groupID\":\"" << controlTower.groupID_ << "\", \"attributes\":[";
@@ -413,5 +401,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	os << "]}";
 	return os;
 }
-
-#endif

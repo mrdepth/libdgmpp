@@ -7,11 +7,8 @@ namespace eufe {
 	class Gang : public Item
 	{
 	public:
-		Gang(Engine* engine);
-		virtual ~Gang(void);
 		const CharactersList& getPilots();
 		Character* addPilot();
-		Character* addPilot(Character* character);
 		void removePilot(Character* character);
 		
 		virtual Environment getEnvironment();
@@ -28,11 +25,13 @@ namespace eufe {
 		void removeWingBooster();
 		void removeSquadBooster();
 
-#if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Gang& gang);
-#endif
 		
 	protected:
+		friend class Engine;
+		Gang(Engine* engine);
+		virtual ~Gang(void);
+
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 		

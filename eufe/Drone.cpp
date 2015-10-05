@@ -19,17 +19,6 @@ Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, 
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
 
-Drone::Drone(const Drone& from) : Item(from), isActive_(from.isActive_), target_(NULL), charge_(NULL)
-{
-	if (from.charge_)
-	{
-		charge_ = new Charge(*from.charge_);
-		charge_->setOwner(this);
-		//charge_->addEffects(Effect::CATEGORY_GENERIC);
-	}
-	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
-}
-
 Drone::~Drone(void)
 {
 	if (charge_)

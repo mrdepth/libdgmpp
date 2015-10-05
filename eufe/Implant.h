@@ -7,11 +7,14 @@ namespace eufe {
 	class Implant : public Item
 	{
 	public:
-		Implant(Engine* engine, TypeID typeID, Character* owner);
-		virtual ~Implant(void);
 		int getSlot();
 		
 		virtual Environment getEnvironment();
+	protected:
+		friend class Character;
+		Implant(Engine* engine, TypeID typeID, Character* owner);
+		virtual ~Implant(void);
+
 	private:
 		int slot_;
 	};

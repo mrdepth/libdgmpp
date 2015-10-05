@@ -1,7 +1,5 @@
 #pragma once
 #include "types.h"
-#include "Encoder.h"
-#include "Decoder.h"
 
 namespace eufe {
 
@@ -195,16 +193,6 @@ namespace eufe {
 	class Attribute
 	{
 	public:
-		Attribute();
-		Attribute(Attribute& attribute);
-#if _DEBUG
-		Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner = NULL, const char* attributeName = "", bool isFakeAttribute = false);
-#else
-		Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner = NULL, bool isFakeAttribute = false);
-#endif
-		Attribute(Engine* engine, TypeID attributeID, Item* owner = NULL, bool isFakeAttribute = false);
-		virtual ~Attribute(void);
-
 		Item* getOwner() const;
 		void setOwner(Item* owner);
 		TypeID getAttributeID() const;
@@ -221,13 +209,13 @@ namespace eufe {
 		
 		void reset();
 		
-		Attribute(Decoder& decoder, Engine* engine, Item* owner);
-		virtual void encode(Encoder& encoder) const;
-
-#if _DEBUG
 		const char* getAttributeName() const;
 		friend std::ostream& operator<<(std::ostream& os, Attribute& attribute);
-#endif
+	protected:
+		friend class Item;
+		Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner = NULL, const char* attributeName = "", bool isFakeAttribute = false);
+		Attribute(Engine* engine, TypeID attributeID, Item* owner = NULL, bool isFakeAttribute = false);
+		virtual ~Attribute(void);
 	private:
 		Engine* engine_;
 		TypeID attributeID_;
@@ -245,9 +233,7 @@ namespace eufe {
 		void calculate();
 
 		bool sync;
-#if _DEBUG
 		std::string attributeName_;
-#endif
 	};
 
 }

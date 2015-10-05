@@ -40,8 +40,6 @@
 		12564BC41B84B027000F68D8 /* SqlConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C5177C28A90067E00C /* SqlConnector.cpp */; };
 		12564BC51B84B027000F68D8 /* SqliteConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C7177C28A90067E00C /* SqliteConnector.cpp */; };
 		12564BC61B84B027000F68D8 /* SqliteFetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */; };
-		12564BC71B84B027000F68D8 /* Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6BF177C28A90067E00C /* Decoder.cpp */; };
-		12564BC81B84B027000F68D8 /* Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C1177C28A90067E00C /* Encoder.cpp */; };
 		12564BCA1B84B027000F68D8 /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9EC51147FA61C00B12A7F /* Area.cpp */; };
 		12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D511473CA5E006B18D7 /* Attribute.cpp */; };
 		12564BCC1B84B027000F68D8 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F98147D10E200ADC4CE /* Engine.cpp */; };
@@ -84,8 +82,6 @@
 		12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C6177C28A90067E00C /* SqlConnector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BF41B84B07F000F68D8 /* SqliteConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C8177C28A90067E00C /* SqliteConnector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6CA177C28A90067E00C /* SqliteFetchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BF61B84B07F000F68D8 /* Decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C0177C28A90067E00C /* Decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BF71B84B07F000F68D8 /* Encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C2177C28A90067E00C /* Encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BF91B84B07F000F68D8 /* Area.h in Headers */ = {isa = PBXBuildFile; fileRef = 37A9EC52147FA61C00B12A7F /* Area.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D521473CA5E006B18D7 /* Attribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BFB1B84B07F000F68D8 /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 37BA6F99147D10E200ADC4CE /* Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -153,10 +149,6 @@
 		12A3C6B5177C283E0067E00C /* libeufe-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libeufe-Prefix.pch"; sourceTree = "<group>"; };
 		12A3C6BD177C28A90067E00C /* Blob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Blob.cpp; sourceTree = "<group>"; };
 		12A3C6BE177C28A90067E00C /* Blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blob.h; sourceTree = "<group>"; };
-		12A3C6BF177C28A90067E00C /* Decoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Decoder.cpp; sourceTree = "<group>"; };
-		12A3C6C0177C28A90067E00C /* Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decoder.h; sourceTree = "<group>"; };
-		12A3C6C1177C28A90067E00C /* Encoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Encoder.cpp; sourceTree = "<group>"; };
-		12A3C6C2177C28A90067E00C /* Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encoder.h; sourceTree = "<group>"; };
 		12A3C6C3177C28A90067E00C /* FetchResult.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FetchResult.cpp; sourceTree = "<group>"; };
 		12A3C6C4177C28A90067E00C /* FetchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchResult.h; sourceTree = "<group>"; };
 		12A3C6C5177C28A90067E00C /* SqlConnector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SqlConnector.cpp; sourceTree = "<group>"; };
@@ -365,17 +357,6 @@
 			name = SQL;
 			sourceTree = "<group>";
 		};
-		12A3C6D3177C28C20067E00C /* Encoder */ = {
-			isa = PBXGroup;
-			children = (
-				12A3C6BF177C28A90067E00C /* Decoder.cpp */,
-				12A3C6C0177C28A90067E00C /* Decoder.h */,
-				12A3C6C1177C28A90067E00C /* Encoder.cpp */,
-				12A3C6C2177C28A90067E00C /* Encoder.h */,
-			);
-			name = Encoder;
-			sourceTree = "<group>";
-		};
 		12A3C726177C2FC80067E00C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,7 +377,6 @@
 				37BBC5921512060F00EDE204 /* Ship */,
 				37BBC5941512066600EDE204 /* ControlTower */,
 				12A3C6D2177C28AD0067E00C /* SQL */,
-				12A3C6D3177C28C20067E00C /* Encoder */,
 				37A9EC51147FA61C00B12A7F /* Area.cpp */,
 				37A9EC52147FA61C00B12A7F /* Area.h */,
 				37B33D511473CA5E006B18D7 /* Attribute.cpp */,
@@ -590,8 +570,6 @@
 				12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */,
 				12564BF41B84B07F000F68D8 /* SqliteConnector.h in Headers */,
 				12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */,
-				12564BF61B84B07F000F68D8 /* Decoder.h in Headers */,
-				12564BF71B84B07F000F68D8 /* Encoder.h in Headers */,
 				12564BF91B84B07F000F68D8 /* Area.h in Headers */,
 				12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */,
 				12564BFB1B84B07F000F68D8 /* Engine.h in Headers */,
@@ -749,8 +727,6 @@
 				12564BAF1B84B027000F68D8 /* EffectShieldBoostingInterpreter.cpp in Sources */,
 				12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */,
 				12564BBF1B84B027000F68D8 /* HeatSimulator.cpp in Sources */,
-				12564BC71B84B027000F68D8 /* Decoder.cpp in Sources */,
-				12564BC81B84B027000F68D8 /* Encoder.cpp in Sources */,
 				12564BC51B84B027000F68D8 /* SqliteConnector.cpp in Sources */,
 				12564BB11B84B027000F68D8 /* EffectSlotModifierInterpreter.cpp in Sources */,
 				12564BB41B84B027000F68D8 /* EffectNaniteRepairPasteArmorDamageBonus.cpp in Sources */,

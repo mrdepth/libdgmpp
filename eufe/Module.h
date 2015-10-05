@@ -33,18 +33,10 @@ namespace eufe {
 			HARDPOINT_TURRET
 		};
 
-		//typedef boost::error_info<struct BadStateExceptionInfoTag, State> BadStateExceptionInfo;
-		//struct BadStateException : virtual boost::exception {};
-		//typedef boost::error_info<struct BadTargetExceptionInfoTag, Ship*> BadTargetExceptionInfo;
-		//struct BadTargetException : virtual boost::exception {};
         typedef std::invalid_argument BadTargetException;
         typedef std::invalid_argument BadStateException;
 
-		Module(Engine* engine, TypeID typeID, Item* owner = NULL);
-		Module(const Module& from);
-		virtual ~Module(void);
-
-		virtual Attribute* getAttribute(TypeID attributeID);
+		//virtual Attribute* getAttribute(TypeID attributeID);
 
 		Slot getSlot();
 		Hardpoint getHardpoint();
@@ -92,11 +84,13 @@ namespace eufe {
 		void setLifeTime(float lifeTime);
 		
 
-#if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Module& module);
-#endif
 	protected:
 		State state_;
+		friend class Ship;
+		Module(Engine* engine, TypeID typeID, Item* owner = NULL);
+		virtual ~Module(void);
+
 		
 	private:
 		bool canBeOnline_;

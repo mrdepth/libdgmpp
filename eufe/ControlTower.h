@@ -12,7 +12,6 @@ namespace eufe {
 		ControlTower(Engine* engine, TypeID typeID);
 		virtual ~ControlTower(void);
 		
-		Structure* addStructure(Structure* structure);
 		Structure* addStructure(TypeID typeID);
 		void removeStructure(Structure* structure);
 		
@@ -50,9 +49,7 @@ namespace eufe {
 		float getWeaponDps();
 		float getWeaponVolley();
 		
-#if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, ControlTower& controlTower);
-#endif
 		
 	private:
 		StructuresList structures_;

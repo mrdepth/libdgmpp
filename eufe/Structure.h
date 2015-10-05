@@ -7,7 +7,6 @@ namespace eufe {
 	{
 	public:
 		Structure(Engine* engine, TypeID typeID, Item* owner = NULL);
-		Structure(const Structure& from);
 		virtual ~Structure(void);
 
 		virtual void setState(State state);

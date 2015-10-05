@@ -34,11 +34,8 @@ namespace eufe {
 		bool isOffensive();
 		bool isAssistance();
 
-		
-#if _DEBUG
 		std::string getAssociationName();
 		friend std::ostream& operator<<(std::ostream& os, Modifier& modifier);
-#endif
 
 	private:
 		TypeID attributeID_;

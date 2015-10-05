@@ -19,17 +19,11 @@ namespace eufe {
 			SCAN_TYPE_MULTISPECTRAL
 		};
 		
-		Ship(Engine* engine, TypeID typeID, Character* owner = NULL);
-		virtual ~Ship(void);
-
-		Module* addModule(Module* module, bool force = false);
 		Module* addModule(TypeID typeID, bool force = false);
 		Module* replaceModule(Module* oldModule, TypeID typeID);
-		Module* replaceModule(Module* oldModule, Module* newModule);
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
 		void removeModule(Module* module);
 		
-		Drone* addDrone(Drone* drone);
 		Drone* addDrone(TypeID typeID);
 		void removeDrone(Drone* drone);
 		
@@ -138,9 +132,12 @@ namespace eufe {
 		//Other
 		void updateHeatDamage();
 		
-#if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Ship& ship);
-#endif
+		
+	protected:
+		friend class Character;
+		Ship(Engine* engine, TypeID typeID, Character* owner = NULL);
+		virtual ~Ship(void);
 
 	private:
 		ModulesList modules_;

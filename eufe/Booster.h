@@ -7,11 +7,14 @@ namespace eufe {
 	class Booster : public Item
 	{
 	public:
-		Booster(Engine* engine, TypeID typeID, Character* owner);
-		virtual ~Booster(void);
 		int getSlot();
 		
 		virtual Environment getEnvironment();
+	protected:
+		friend class Character;
+		Booster(Engine* engine, TypeID typeID, Character* owner);
+		virtual ~Booster(void);
+
 	private:
 		int slot_;
 		

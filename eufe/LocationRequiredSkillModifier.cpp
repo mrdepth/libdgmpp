@@ -18,8 +18,6 @@ bool LocationRequiredSkillModifier::isMatch(Item* item) const
 	return item->requireSkill(skillID_);
 }
 
-#if _DEBUG
-
 std::ostream& eufe::operator<<(std::ostream& os, eufe::LocationRequiredSkillModifier& modifier)
 {
 	os	<< "{\"skillID\":\"" << modifier.skillID_
@@ -29,4 +27,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::LocationRequiredSkillModi
 	return os;
 }
 
-#endif

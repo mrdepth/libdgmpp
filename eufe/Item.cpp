@@ -97,11 +97,7 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 		return;
 	
 	std::stringstream sql;
-#if _DEBUG
 	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID;
-#else
-	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID;
-#endif
 
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
 	if (result->next())
@@ -114,29 +110,16 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 		int raceID = result->getInt(5);
 		categoryID_ = result->getInt(6);
 		
-#if _DEBUG
 		typeName_ = result->getText(7);
 		attributes_[RADIUS_ATTRIBUTE_ID]    = new Attribute(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, this, "radius");
 		attributes_[MASS_ATTRIBUTE_ID]      = new Attribute(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, this, "mass");
 		attributes_[VOLUME_ATTRIBUTE_ID]    = new Attribute(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, this, "volume");
 		attributes_[CAPACITY_ATTRIBUTE_ID]  = new Attribute(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, this, "capacity");
 		attributes_[RACE_ID_ATTRIBUTE_ID]   = new Attribute(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, this, "raceID");
-#else
-		attributes_[RADIUS_ATTRIBUTE_ID]    = new Attribute(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, this);
-		attributes_[MASS_ATTRIBUTE_ID]      = new Attribute(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, this);
-		attributes_[VOLUME_ATTRIBUTE_ID]    = new Attribute(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, this);
-		attributes_[CAPACITY_ATTRIBUTE_ID]  = new Attribute(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, this);
-		attributes_[RACE_ID_ATTRIBUTE_ID]   = new Attribute(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, this);
-#endif
 
 		sql.str(std::string());
-#if _DEBUG
 		sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
 			<< typeID;
-#else
-		sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
-			<< typeID;
-#endif
 		result = engine->getSqlConnector()->exec(sql.str().c_str());
 		while (result->next())
 		{
@@ -145,12 +128,8 @@ Item::Item(Engine* engine, TypeID typeID, Item* owner) : engine_(engine), owner_
 			bool isStackable = result->getInt(2) != 0;
 			float value = static_cast<float>(result->getDouble(3));
 			bool highIsGood = result->getInt(4) != 0;
-#if _DEBUG
 			std::string attributeName = result->getText(5);
 			attributes_[attributeID] = new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this, attributeName.c_str());
-#else
-			attributes_[attributeID] = new Attribute(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this);
-#endif
 		}
 		
 		sql.str(std::string());
@@ -172,21 +151,6 @@ Item::Item(Item* owner) : owner_(owner), context_(NULL), engine_(NULL)
 {
 }
 
-Item::Item(const Item& from) : engine_(from.engine_), typeID_(from.typeID_), groupID_(from.groupID_), categoryID_(from.categoryID_), owner_(NULL), context_(NULL), effects_(from.effects_)
-{
-	AttributesMap::const_iterator i, end = from.attributes_.end();
-	for (i = from.attributes_.begin(); i!= end; i++)
-	{
-		Attribute* attribute = new Attribute(*(i->second));
-		attribute->setOwner(this);
-		attributes_[i->first] = attribute;
-	}
-	
-#if _DEBUG
-	typeName_ = from.typeName_;
-#endif
-}
-
 Item::~Item(void)
 {
 	AttributesMap::iterator i, end = attributes_.end();
@@ -203,10 +167,10 @@ Item::~Item(void)
 		list.clear();
 	}
 	
-	setContext(NULL);
+//	setContext(NULL);
 }
 
-void Item::setContext(const Context* context)
+/*void Item::setContext(const Context* context)
 {
 	if (context_)
 		delete context_;
@@ -216,7 +180,7 @@ void Item::setContext(const Context* context)
 const Item::Context* Item::getContext()
 {
 	return context_;
-}
+}*/
 
 Engine* Item::getEngine()
 {
@@ -228,10 +192,10 @@ Item* Item::getOwner() const
 	return owner_;
 }
 
-void Item::setOwner(Item* owner)
+/*void Item::setOwner(Item* owner)
 {
 	owner_ = owner;
-}
+}*/
 
 
 Attribute* Item::getAttribute(TypeID attributeID)
@@ -369,54 +333,6 @@ std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, A
 	return outIterator;
 }
 
-Item::Item(Decoder& decoder, Engine* engine, Item* owner) : engine_(engine), owner_(owner)
-{
-	decoder.decode(typeID_);
-	decoder.decode(groupID_);
-	decoder.decode(categoryID_);
-
-	{
-		AttributesMap::size_type size;
-		decoder.decode(size);
-		for (AttributesMap::size_type i = 0; i < size; i++)
-		{
-			Attribute* attribute = new Attribute(decoder, engine, this);
-			attributes_[attribute->getAttributeID()] = attribute;
-		}
-	}
-	{
-		EffectsList::size_type size;
-		decoder.decode(size);
-		for (EffectsList::size_type i = 0; i < size; i++)
-		{
-			TypeID effectID;
-			decoder.decode(effectID);
-			effects_.push_back(Effect::getEffect(engine_, effectID));
-		}
-	}
-}
-
-void Item::encode(Encoder& encoder) const
-{
-	encoder.encode(typeID_);
-	encoder.encode(groupID_);
-	encoder.encode(categoryID_);
-	
-	{
-		AttributesMap::const_iterator i, end = attributes_.end();
-		encoder.encode(attributes_.size());
-		for (i = attributes_.begin(); i != end; i++)
-			i->second->encode(encoder);
-	}
-	{
-		EffectsList::const_iterator i, end = effects_.end();
-		encoder.encode(effects_.size());
-		for (i = effects_.begin(); i != end; i++)
-			encoder.encode((*i)->getEffectID());
-	}
-
-}
-
 void Item::addItemModifier(Modifier* modifier)
 {
 	itemModifiers_.push_back(modifier);
@@ -507,6 +423,11 @@ const char* Item::getGroupName()
 	return groupName_.c_str();
 }
 
+Attribute* Item::addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName) {
+	return attributes_[attributeID] = new Attribute(engine_, attributeID, maxAttributeID, value, isStackable, highIsGood, this, attributeName, false);
+}
+
+
 std::set<Item*> Item::getAffectors() {
 	ModifiersList modifiers;
 	{
@@ -528,8 +449,6 @@ std::set<Item*> Item::getAffectors() {
 	
 	return items;
 }
-
-#if _DEBUG
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 {
@@ -632,29 +551,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 	os << "]}";
 	return os;
 }
-
-#endif
-/*
-
-{"typeName":"Minmatar Propulsion Systems", "typeID":"30554", "groupID":"989", "attributes":
-	[
-	 {"attributeName":"mass", "typeName":"Minmatar Propulsion Systems", "attributeID":"4", "value":"0", "initialValue":"0", "stackable":"0"},
-	 {"attributeName":"capacity", "typeName":"Minmatar Propulsion Systems", "attributeID":"38", "value":"0", "initialValue":"0", "stackable":"1"},
-	 {"attributeName":"volume", "typeName":"Minmatar Propulsion Systems", "attributeID":"161", "value":"0.01", "initialValue":"0.01", "stackable":"1"},
-	 {"attributeName":"radius", "typeName":"Minmatar Propulsion Systems", "attributeID":"162", "value":"0", "initialValue":"0", "stackable":"1"},
-	 {"attributeName":"primaryAttribute", "typeName":"Minmatar Propulsion Systems", "attributeID":"180", "value":"167", "initialValue":"167", "stackable":"1"},
-	 {"attributeName":"secondaryAttribute", "typeName":"Minmatar Propulsion Systems", "attributeID":"181", "value":"168", "initialValue":"168", "stackable":"1"},
-	 {"attributeName":"requiredSkill1", "typeName":"Minmatar Propulsion Systems", "attributeID":"182", "value":"3449", "initialValue":"3449", "stackable":"1"},
-	 {"attributeName":"raceID", "typeName":"Minmatar Propulsion Systems", "attributeID":"195", "value":"0", "initialValue":"0", "stackable":"1"},
-	 {"attributeName":"skillTimeConstant", "typeName":"Minmatar Propulsion Systems", "attributeID":"275", "value":"1", "initialValue":"1", "stackable":"1"},
-	 {"attributeName":"skillPoints", "typeName":"Minmatar Propulsion Systems", "attributeID":"276", "value":"0", "initialValue":"0", "stackable":"1"},
-	 {"attributeName":"requiredSkill1Level", "typeName":"Minmatar Propulsion Systems", "attributeID":"277", "value":"5", "initialValue":"5", "stackable":"1"},
-	 {"attributeName":"skillLevel", "typeName":"Minmatar Propulsion Systems", "attributeID":"280", "value":"0", "initialValue":"0", "stackable":"1"}
-	],
-	"effects":
-	[
-	 {"effectName":"skillEffect", "effectID":"132"},
-	 {"effectName":"subsystemSkillLevelMinmatarPropulsion", "effectID":"3851"},
-	 {"effectName":"subsystemSkillLevelMinmatarPropulsion2", "effectID":"4214"}
-	]
-}*/

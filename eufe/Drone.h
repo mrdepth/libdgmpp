@@ -11,10 +11,6 @@ namespace eufe {
         
         typedef std::invalid_argument BadDroneTargetException;
 
-		Drone(Engine* engine, TypeID typeID, Ship* owner = NULL);
-		Drone(const Drone& from);
-		virtual ~Drone(void);
-		
 		virtual Environment getEnvironment();
 		
 		void setTarget(Ship* target = NULL);
@@ -40,6 +36,11 @@ namespace eufe {
 		float getMaxRange();
 		float getFalloff();
 		float getTrackingSpeed();
+
+	protected:
+		friend class Ship;
+		Drone(Engine* engine, TypeID typeID, Ship* owner = NULL);
+		virtual ~Drone(void);
 
 	private:
 		Ship* target_;

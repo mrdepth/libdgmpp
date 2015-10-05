@@ -190,6 +190,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand0()
 	throw BadOperandException("0");
 }
 
+//"1, ADD, add two numbers, (%(arg1)s)+(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand1()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -204,6 +205,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand1()
 	return static_cast<float>(arg1) + static_cast<float>(arg2);
 }
 
+//"2, AGGM, add gang groupl modifier, [%(arg1)s].AGGM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand2()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -225,6 +227,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand2()
 	return true;
 }
 
+//"3, AGIM, add gang shipl modifier, [%(arg1)s].AGIM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand3()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -246,6 +249,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand3()
 	return true;
 }
 
+//"4, AGORSM, add gang owner required skill modifier, [%(arg1)s].AGORSM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand4()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -267,6 +271,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand4()
 	return true;
 }
 
+//"5, AGRSM, add gang required skill modifier, [%(arg1)s].AGRSM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand5()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -288,6 +293,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand5()
 	return true;
 }
 
+//"6, AIM, add item modifier, (%(arg1)s).AddItemModifier (%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand6()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -309,6 +315,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand6()
 	return true;
 }
 
+//"7, ALGM, add location group modifier, (%(arg1)s).AddLocationGroupModifier (%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand7()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -330,6 +337,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand7()
 	return true;
 }
 
+//"8, ALM, add location modifier, (%(arg1)s).AddLocationModifier (%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand8()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -351,6 +359,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand8()
 	return true;
 }
 
+//"9, ALRSM, add location required skill modifier, (%(arg1)s).ALRSM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand9()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -372,6 +381,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand9()
 	return true;
 }
 
+//"10, AND, logical and operation, (%(arg1)s) AND (%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand10()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -390,6 +400,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand10()
 	return false;
 }
 
+//"11, AORSM, add owner required skill modifier, (%(arg1)s).AORSM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand11()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -411,6 +422,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand11()
 	return true;
 }
 
+//"12, ATT, attribute, %(arg1)s->%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand12()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -431,6 +443,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand12()
 	return std::shared_ptr<AttributeWrapper>(new AttributeWrapper(item, attributeID));
 }
 
+//"13, ATTACK, attack given ship, Attack"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand13()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -441,21 +454,25 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand13()
 	return true;
 }
 
+//"14, CARGOSCAN, Scans the cargo of the targeted ship., CargoScan"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand14()
 {
 	return true;
 }
 
+//"15, CHEATTELEDOCK, Instantly enter a station., CheatTeleDock()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand15()
 {
 	return true;
 }
 
+//"16, CHEATTELEGATE, Automatically invoke a stargate destination from remote distances., CheatTeleGate()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand16()
 {
 	return true;
 }
 
+//"17, COMBINE, executes two statements, %(arg1)s);     (%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand17()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -470,6 +487,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand17()
 	return true;
 }
 
+//"18, DEC, decreases an item-attribute by the value of another attribute, %(arg1)s-=self.%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand18()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -491,11 +509,13 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand18()
 	return true;
 }
 
+//"19, DECLOAKWAVE, broadcasts a decloaking wave, DecloakWave"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand19()
 {
 	return true;
 }
 
+//"20, DECN, decreases an item-attribute by number, %(arg1)s-=%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand20()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -517,6 +537,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand20()
 	return true;
 }
 
+//"21, DEFASSOCIATION, define attribute association type, %(value)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand21()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -531,6 +552,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand21()
 		return "SkillTime";
 }
 
+//"22, DEFATTRIBUTE, define attribute, %(value)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand22()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -541,6 +563,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand22()
 	return arg1;
 }
 
+//"23, DEFBOOL, define bool constant, Bool(%(value)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand23()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -551,6 +574,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand23()
 	return arg1;
 }
 
+//"24, DEFENVIDX, define environment index, Current%(value)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand24()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -565,6 +589,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand24()
 		return false;
 }
 
+//"25, DEFFLOAT, defines a float constant, Float(%(value)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand25()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -575,6 +600,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand25()
 	return arg1;
 }
 
+//"26, DEFGROUP, define group, %(value)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand26()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -585,6 +611,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand26()
 	return arg1;
 }
 
+//"27, DEFINT, defines an int constant, Int(%(value)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand27()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -595,6 +622,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand27()
 	return arg1;
 }
 
+//"28, DEFSTRING, defines a string constant, ""%(value)s"""
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand28()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -605,6 +633,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand28()
 	return arg1;
 }
 
+//"29, DEFTYPEID, define a type ID, Type(%(value)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -635,11 +664,13 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 		return arg1;
 }
 
+//"30, ECMBURST, Clears all targets on all ships(excluding self) wihin range. , ECMBurst()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand30()
 {
 	return true;
 }
 
+//"31, EFF, define association type, (%(arg2)s).(%(arg1)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand31()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -661,11 +692,13 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand31()
 	return std::shared_ptr<AssociationWrapper>(new AssociationWrapper(attribute, associationName));
 }
 
+//"32, EMPWAVE, broadcasts an EMP wave, EMPWave"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand32()
 {
 	return true;
 }
 
+//"33, EQ, checks for equality, %(arg1)s == %(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand33()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -680,6 +713,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand33()
 	return static_cast<float>(arg1) == static_cast<float>(arg2);
 }
 
+//"34, GA, attribute on a module group, %(arg1)s.%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand34()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -703,6 +737,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand34()
 	return std::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
 }
 
+//"35, GET, calculate attribute, %(arg1)s.%(arg2)s()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand35()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -723,6 +758,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand35()
 	return item->getItem()->getAttribute(attributeID)->getValue();
 }
 
+//"36, GETTYPE, gets type of item, %(arg1)s.GetTypeID()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand36()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -738,6 +774,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand36()
 	return item->getItem()->getTypeID();
 }
 
+//"37, GM, get a module of a given groupID from a given location (ship or player), %(arg1)s.%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand37()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -759,6 +796,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand37()
 	return item;
 }
 
+//"38, GT, checks whether expression 1  is greater than expression 2, %(arg1)s> %(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand38()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -773,6 +811,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand38()
 	return static_cast<float>(arg1) > static_cast<float>(arg2);
 }
 
+//"39, GTE, checks whether an expression is greater than or equal to another, %(arg1)s>=%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand39()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -787,6 +826,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand39()
 	return static_cast<float>(arg1) >= static_cast<float>(arg2);
 }
 
+//"40, IA, generic attribute, %(arg1)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand40()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -804,6 +844,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand40()
 	return std::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
 }
 
+//"41, IF, if construct, If(%(arg1)s), Then (%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand41()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -822,6 +863,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand41()
 	return false;
 }
 
+//"42, INC, increases an item-attribute by the value of another attribute, %(arg1)s+=self.%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand42()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -843,6 +885,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand42()
 	return true;
 }
 
+//"43, INCN, increases an item-attribute by a number, %(arg1)s+=%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand43()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -864,26 +907,31 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand43()
 	return true;
 }
 
+//"44, LAUNCH, launches a missile, LaunchMissile()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand44()
 {
 	return true;
 }
 
+//"45, LAUNCHDEFENDERMISSILE, launches a defender missile, LaunchDefenderMissile()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand45()
 {
 	return true;
 }
 
+//"46, LAUNCHDRONE, launches a drone., LaunchDrone()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand46()
 {
 	return true;
 }
 
+//"47, LAUNCHFOFMISSILE, launches an FOF missile, LaunchFOFMissile()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand47()
 {
 	return true;
 }
 
+//"48, LG, specify a group in a location, %(arg1)s..%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand48()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -905,6 +953,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand48()
 	return item;
 }
 
+//"49, LS, location - skill required item group, %(arg1)s[%(arg2)s]"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand49()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -926,11 +975,13 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand49()
 	return item;
 }
 
+//"50, MINE, mines an asteroid, Mine"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand50()
 {
 	return true;
 }
 
+//"51, MUL, multiplies two numbers, (%(arg1)s)*(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand51()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -945,6 +996,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand51()
 	return static_cast<float>(arg1) * static_cast<float>(arg2);
 }
 
+//"52, OR, logical or operation, %(arg1)s OR %(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand52()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -964,11 +1016,13 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand52()
 		return true;
 }
 
+//"53, POWERBOOST, , PowerBoost"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand53()
 {
 	return true;
 }
 
+//"54, RGGM, remove gang groupl modifier, [%(arg1)s].RGGM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand54()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -990,6 +1044,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand54()
 	return true;
 }
 
+//"55, RGIM, remove gang shipl modifier, [%(arg1)s].RGIM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand55()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1011,6 +1066,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand55()
 	return true;
 }
 
+//"56, RGORSM, remove a gang owner required skill modifier, [%(arg1)s].RGORSM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand56()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1032,6 +1088,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand56()
 	return true;
 }
 
+//"57, RGRSM, remove a gang required skill modifier, [%(arg1)s].RGRSM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand57()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1053,6 +1110,8 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand57()
 	return true;
 }
 
+
+//"58, RIM, remove  item modifier, (%(arg1)s).RemoveItemModifier (%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand58()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1074,6 +1133,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand58()
 	return true;
 }
 
+//"59, RLGM, remove location group modifier, (%(arg1)s).RemoveLocationGroupModifier (%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand59()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1095,6 +1155,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand59()
 	return true;
 }
 
+//"60, RLM, remove location modifier, (%(arg1)s).RemoveLocationModifier (%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand60()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1116,6 +1177,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand60()
 	return true;
 }
 
+//"61, RLRSM, remove a  required skill modifier, (%(arg1)s).RLRSM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand61()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1137,6 +1199,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand61()
 	return true;
 }
 
+//"62, RORSM, remove an owner required skill modifier, (%(arg1)s).RORSM(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand62()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1158,6 +1221,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand62()
 	return true;
 }
 
+//"63, RS, true if arg1 requires arg2, %(arg1)s.Requires(%(arg2)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand63()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1178,6 +1242,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand63()
 	return item->getItem()->requireSkill(skillID);
 }
 
+//"64, RSA, attribute on modules that have required skill, %(arg1)s.%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand64()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1202,6 +1267,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand64()
 	
 }
 
+//"65, SET, sets an item attribute, %(arg1)s := %(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand65()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1223,11 +1289,13 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand65()
 	return true;
 }
 
+//"66, SHIPSCAN, scans a ship, ShipScan()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand66()
 {
 	return true;
 }
 
+//"67, SKILLCHECK, , SkillCheck(%(arg1)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand67()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -1238,6 +1306,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand67()
 	return true;
 }
 
+//"68, SUB, subtracts a number from another one, %(arg1)s-%(arg2)s"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand68()
 {
 	Argument arg2 = *stack_.rbegin();
@@ -1252,26 +1321,31 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand68()
 	return static_cast<float>(arg1) - static_cast<float>(arg2);
 }
 
+//"69, SURVEYSCAN, scans an asteroid for information, SurveyScan()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand69()
 {
 	return true;
 }
 
+//"70, TARGETHOSTILES, Targets any hostile ships within range (assuming electronics have capability)., TargetHostiles()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand70()
 {
 	return true;
 }
 
+//"71, TARGETSILENTLY, , TargetSilently()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand71()
 {
 	return true;
 }
 
+//"72, TOOLTARGETSKILLS,  , CheckToolTargetSkills"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand72()
 {
 	return true;
 }
 
+//"73, UE, raises an user error, UserError(%(arg1)s)"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand73()
 {
 	Argument arg1 = *stack_.rbegin();
@@ -1282,6 +1356,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand73()
 	return arg1;
 }
 
+//"74, VERIFYTARGETGROUP, raises a user error if incorrect target group, VerifyTargetGroup()"
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand74()
 {
 	return true;

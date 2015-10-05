@@ -4,8 +4,6 @@
 #include <sqlite3.h>
 #include <iostream>
 #include "Effect.h"
-#include "Encoder.h"
-#include "Decoder.h"
 
 namespace eufe {
 	
@@ -35,11 +33,6 @@ namespace eufe {
 			virtual ~Context() {};
 		};
 		
-		//typedef boost::error_info<struct TypeIDExceptionInfoTag, TypeID> TypeIDExceptionInfo;
-		//struct AttributeDidNotFoundException : virtual boost::exception {};
-		//struct UnknownTypeIDException : virtual boost::exception {};
-		//struct EffectDidNotFoundException : virtual boost::exception {};
-        //struct NoOwnerException : virtual boost::exception {};
         typedef std::invalid_argument AttributeDidNotFoundException;
         typedef std::invalid_argument UnknownTypeIDException;
         typedef std::invalid_argument EffectDidNotFoundException;
@@ -49,14 +42,12 @@ namespace eufe {
 		Item();
 		Item(Engine* engine, TypeID typeID, Item* owner = NULL);
 		Item(Item* owner);
-		Item(const Item& from);
 		virtual ~Item(void);
-		void setContext(const Context* context);
-		const Context* getContext();
+//		void setContext(const Context* context);
+//		const Context* getContext();
 		Engine* getEngine();
 
 		Item* getOwner() const;
-		void setOwner(Item *owner);
 
 		virtual TypeID getTypeID() const;
 		virtual TypeID getGroupID() const;
@@ -100,10 +91,8 @@ namespace eufe {
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 
-		Item(Decoder& decoder, Engine* engine, Item* owner = NULL);
-		virtual void encode(Encoder& encoder) const;
-
 	protected:
+//		void setOwner(Item *owner);
 		Engine* engine_;
 		AttributesMap attributes_;
 		TypeID typeID_;
@@ -117,6 +106,7 @@ namespace eufe {
 		ModifiersList locationGroupModifiers_;
 		ModifiersList locationRequiredSkillModifiers_;
 		
+		Attribute* addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName = "");
 
 		
 	private:

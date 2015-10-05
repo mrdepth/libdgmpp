@@ -7,10 +7,7 @@ namespace eufe {
 	class Character : public Item
 	{
 	public:
-		Character(Engine* engine, Gang* owner = NULL, const char* characterName = "");
-		virtual ~Character(void);
 		Ship* getShip();
-		Ship* setShip(Ship* ship);
 		Ship* setShip(TypeID typeID);
 
 		virtual Environment getEnvironment();
@@ -24,9 +21,7 @@ namespace eufe {
 		Implant* getImplant(int slot);
 		Booster* getBooster(int slot);
 		Implant* addImplant(TypeID typeID);
-		Implant* addImplant(Implant* implant);
 		Booster* addBooster(TypeID typeID);
-		Booster* addBooster(Booster* booster);
 		void removeImplant(Implant* implant);
 		void removeBooster(Booster* booster);
 		const ImplantsList& getImplants();
@@ -41,12 +36,12 @@ namespace eufe {
 		void setSkillLevels(const std::map<TypeID, int>& levels);
 		void setAllSkillsLevel(int level);
 		
-#if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Character& character);
-#endif
-		Character(Decoder& decoder, Engine* engine, Gang* owner = NULL);
-		virtual void encode(Encoder& encoder)  const;
 	protected:
+		friend class Gang;
+		Character(Engine* engine, Gang* owner = NULL, const char* characterName = "");
+		virtual ~Character(void);
+
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 
 	private:

@@ -15,11 +15,7 @@ using namespace eufe;
 
 Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(NULL), reloadTime_(0), forceReload_(false), charge_(NULL)
 {
-	#if _DEBUG
-		attributes_[IS_ONLINE_ATTRIBUTE_ID] = new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this, "isOnline");
-	#else
-		attributes_[IS_ONLINE_ATTRIBUTE_ID] = new Attribute(engine, IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, this);
-	#endif
+	addExtraAttribute(IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, "isOnline");
 	
 	if (hasEffect(LO_POWER_EFFECT_ID))
 		slot_ = SLOT_LOW;
@@ -106,30 +102,6 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 	std::sort(chargeGroups_.begin(), chargeGroups_.end());
 }
 
-Module::Module(const Module& from) :	Item(from),
-										canBeOnline_(from.canBeOnline_),
-										canBeActive_(from.canBeActive_),
-										canBeOverloaded_(from.canBeOverloaded_),
-										requireTarget_(from.requireTarget_),
-										slot_(from.slot_),
-										hardpoint_(from.hardpoint_),
-										state_(STATE_OFFLINE),
-										chargeGroups_(from.chargeGroups_),
-										target_(NULL),
-										reloadTime_(from.reloadTime_),
-										shots_(from.shots_),
-										forceReload_(from.forceReload_),
-										charge_(NULL)
-{
-	if (from.charge_)
-	{
-		charge_ = new Charge(*from.charge_);
-		charge_->setOwner(this);
-	}
-	shots_ = -1;
-	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
-}
-
 Module::~Module(void)
 {
 	if (charge_)
@@ -138,14 +110,14 @@ Module::~Module(void)
 		clearTarget();
 }
 
-Attribute* Module::getAttribute(TypeID attributeID)
+/*Attribute* Module::getAttribute(TypeID attributeID)
 {
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;
 	else
 		return attributes_[attributeID] = new Attribute(engine_, attributeID, this);
-}
+}*/
 
 Module::Slot Module::getSlot()
 {
@@ -320,40 +292,35 @@ void Module::reset()
 		charge_->reset();
 }
 
-Charge* Module::setCharge(Charge* charge)
-{
-	if (charge)
-	{
-		if (canFit(charge))
-		{
-			if (charge_) {
-				charge_->removeEffects(Effect::CATEGORY_GENERIC);
-				delete charge_;
-			}
-			charge_ = charge;
-			charge_->setOwner(this);
-			charge_->addEffects(Effect::CATEGORY_GENERIC);
-			engine_->reset(this);
-		}
-		else {
-			delete charge;
-			return NULL;
-		}
-	}
-	else if (charge_) {
-		charge_->removeEffects(Effect::CATEGORY_GENERIC);
-		engine_->reset(this);
-		delete charge_;
-		charge_ = NULL;
-	}
-	return charge_;
-}
-
 Charge* Module::setCharge(TypeID typeID)
 {
 	try
 	{
-		return setCharge(new Charge(engine_, typeID, this));
+		Charge* charge = new Charge(engine_, typeID, this);
+		if (charge)
+		{
+			if (canFit(charge))
+			{
+				if (charge_) {
+					charge_->removeEffects(Effect::CATEGORY_GENERIC);
+					delete charge_;
+				}
+				charge_ = charge;
+				charge_->addEffects(Effect::CATEGORY_GENERIC);
+				engine_->reset(this);
+			}
+			else {
+				delete charge;
+				return NULL;
+			}
+		}
+		else if (charge_) {
+			charge_->removeEffects(Effect::CATEGORY_GENERIC);
+			engine_->reset(this);
+			delete charge_;
+			charge_ = NULL;
+		}
+		return charge_;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -688,8 +655,6 @@ void Module::calculateDamageStats()
 	}
 }
 
-#if _DEBUG
-
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 {
 	os << "{\"typeName\":\"" << module.getTypeName() << "\", \"typeID\":\"" << module.typeID_ << "\", \"groupID\":\"" << module.groupID_ << "\", \"attributes\":[";
@@ -796,5 +761,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	os << "]}";
 	return os;
 }
-
-#endif

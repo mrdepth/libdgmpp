@@ -65,31 +65,21 @@ namespace eufe {
 		
 		static std::shared_ptr<Effect> getEffect(Engine* engine, int effectID);
 		
-#if _DEBUG
 		Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName = "");
-#else
-		Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive);
-#endif
 		Effect(Engine* engine, TypeID effectID);
-
-		Effect(const Effect& from);
 		virtual ~Effect(void);
 		bool addEffect(Environment environment);
 		bool removeEffect(Environment environment);
 		TypeID getEffectID() const;
 		Category getCategory() const;
-#if _DEBUG
 		const char* getEffectName() const;
 		friend std::ostream& operator<<(std::ostream& os, Effect& effect);
-#endif
 	private:
 		Engine* engine_;
 		
 		Category category_;
 		TypeID effectID_;
 		EffectInterpreter* interpreter_;
-#if _DEBUG
 		std::string effectName_;
-#endif
 	};
 }

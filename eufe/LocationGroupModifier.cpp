@@ -18,8 +18,6 @@ bool LocationGroupModifier::isMatch(Item* item) const
 	return item->getGroupID() == groupID_;
 }
 
-#if _DEBUG
-
 std::ostream& eufe::operator<<(std::ostream& os, eufe::LocationGroupModifier& modifier)
 {
 	os	<< "{\"groupID\":\"" << modifier.groupID_
@@ -28,5 +26,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::LocationGroupModifier& mo
 	<< "\", \"modifier\":" << *modifier.getModifier() << "}";
 	return os;
 }
-
-#endif

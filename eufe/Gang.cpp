@@ -123,18 +123,13 @@ const CharactersList& Gang::getPilots()
 Character* Gang::addPilot()
 {
 	Character* character = new Character(engine_, this);
-	return addPilot(character);
-}
-
-Character* Gang::addPilot(Character* character)
-{
 	character->removeEffects(Effect::CATEGORY_GENERIC);
 	pilots_.push_back(character);
-	character->setOwner(this);
 	character->addEffects(Effect::CATEGORY_GENERIC);
 	engine_->reset(this);
 	return character;
 }
+
 
 void Gang::removePilot(Character* character)
 {
@@ -252,8 +247,6 @@ std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(Item* item, A
 }
 
 
-#if _DEBUG
-
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 {
 	os << "{\"typeName\":\"Gang\",\"pilots\":[";
@@ -339,5 +332,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	os << "]}";
 	return os;
 }
-
-#endif

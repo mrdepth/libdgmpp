@@ -59,26 +59,22 @@ Ship* Character::getShip()
 	return ship_;
 }
 
-Ship* Character::setShip(Ship* ship)
-{
-	removeEffects(Effect::CATEGORY_GENERIC);
-	if (ship_)
-		delete ship_;
-	
-	ship_ = ship;
-	ship_->setOwner(this);
-
-	if (ship_)
-		addEffects(Effect::CATEGORY_GENERIC);
-	engine_->reset(this);
-	return ship;
-}
-
 Ship* Character::setShip(TypeID typeID)
 {
 	try
 	{
-		return setShip(new Ship(engine_, typeID, this));
+		Ship* ship = new Ship(engine_, typeID, this);
+		
+		removeEffects(Effect::CATEGORY_GENERIC);
+		if (ship_)
+			delete ship_;
+		
+		ship_ = ship;
+		
+		if (ship_)
+			addEffects(Effect::CATEGORY_GENERIC);
+		engine_->reset(this);
+		return ship;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -190,32 +186,34 @@ Implant* Character::addImplant(TypeID typeID)
 {
 	try
 	{
-		return addImplant(new Implant(engine_, typeID, this));
+		Implant* implant = new Implant(engine_, typeID, this);
+		Implant* currentImplant = getImplant(implant->getSlot());
+		if (currentImplant)
+			removeImplant(currentImplant);
+		implants_.push_back(implant);
+		implant->addEffects(Effect::CATEGORY_GENERIC);
+		engine_->reset(this);
+		return implant;
+
 	}
 	catch(Item::UnknownTypeIDException)
 	{
 		return NULL;
 	}
-}
-
-Implant* Character::addImplant(Implant* implant)
-{
-	Implant* currentImplant = getImplant(implant->getSlot());
-	if (currentImplant)
-		removeImplant(currentImplant);
-	implants_.push_back(implant);
-	implant->setOwner(this);
-//	if (getOwner() && ship_ != NULL)
-		implant->addEffects(Effect::CATEGORY_GENERIC);
-	engine_->reset(this);
-	return implant;
 }
 
 Booster* Character::addBooster(TypeID typeID)
 {
 	try
 	{
-		return addBooster(new Booster(engine_, typeID, this));
+		Booster* booster = new Booster(engine_, typeID, this);
+		Booster* currentBooster = getBooster(booster->getSlot());
+		if (currentBooster)
+			removeBooster(currentBooster);
+		boosters_.push_back(booster);
+		booster->addEffects(Effect::CATEGORY_GENERIC);
+		engine_->reset(this);
+		return booster;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -223,22 +221,8 @@ Booster* Character::addBooster(TypeID typeID)
 	}
 }
 
-Booster* Character::addBooster(Booster* booster)
-{
-	Booster* currentBooster = getBooster(booster->getSlot());
-	if (currentBooster)
-		removeBooster(currentBooster);
-	boosters_.push_back(booster);
-	booster->setOwner(this);
-//	if (getOwner() && ship_ != NULL)
-		booster->addEffects(Effect::CATEGORY_GENERIC);
-	engine_->reset(this);
-	return booster;
-}
-
 void Character::removeImplant(Implant* implant)
 {
-	//if (getOwner() && ship_ != NULL)
 	if (implant != NULL)
 	{
 		implant->removeEffects(Effect::CATEGORY_GENERIC);
@@ -250,7 +234,7 @@ void Character::removeImplant(Implant* implant)
 
 void Character::removeBooster(Booster* booster)
 {
-	if (booster != NULL/* && getOwner() && ship_ != NULL*/)
+	if (booster != NULL)
 	{
 		booster->removeEffects(Effect::CATEGORY_GENERIC);
 		boosters_.remove(booster);
@@ -372,28 +356,6 @@ std::insert_iterator<ModifiersList> Character::getLocationModifiers(Attribute* a
 	return outIterator;
 }
 
-Character::Character(Decoder& decoder, Engine* engine, Gang* owner) : Item(decoder, engine, owner), ship_(NULL)
-{
-	SkillsMap::size_type size;
-	decoder.decode(size);
-	for (SkillsMap::size_type i = 0; i < size; i++)
-	{
-		Skill* skill = new Skill(decoder, engine, this);
-		skills_[skill->getTypeID()] = skill;
-	}
-}
-
-void Character::encode(Encoder& encoder) const
-{
-	Item::encode(encoder);
-	SkillsMap::const_iterator i, end = skills_.end();
-	encoder.encode(skills_.size());
-	for (i = skills_.begin(); i != end; i++)
-		i->second->encode(encoder);
-}
-
-#if _DEBUG
-
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 {
 	os << "{\"typeName\":\"Character\",\"ship\":" << *character.ship_ << ", \"attributes\":[";
@@ -514,5 +476,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	os << "]}";
 	return os;
 }
-
-#endif

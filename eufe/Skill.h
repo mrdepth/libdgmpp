@@ -7,8 +7,6 @@ namespace eufe {
 	class Skill : public Item
 	{
 	public:
-		Skill(Engine* engine, TypeID typeID, int skillLevel, bool isLearned, Character* owner);
-		virtual ~Skill(void);
 		bool isLearned() const;
 		int getSkillLevel();
 		void setSkillLevel(int level);
@@ -16,8 +14,10 @@ namespace eufe {
 
 		virtual Environment getEnvironment();
 		
-		Skill(Decoder& decoder, Engine* engine, Character* owner = NULL);
-		virtual void encode(Encoder& encoder)  const;
+	protected:
+		friend class Character;
+		Skill(Engine* engine, TypeID typeID, int skillLevel, bool isLearned, Character* owner);
+		virtual ~Skill(void);
 	private:
 		bool isLearned_;
 	};

@@ -14,10 +14,6 @@ Structure::Structure(Engine* engine, TypeID typeID, Item* owner) : Module(engine
 {
 }
 
-Structure::Structure(const Structure& from) : Module(from)
-{
-}
-
 Structure::~Structure(void)
 {
 }

@@ -42,25 +42,21 @@ Gang* Engine::getGang()
 	return gang_;
 }
 
-Area* Engine::setArea(Area* area)
-{
-	if (area_) {
-		area_->removeEffects(Effect::CATEGORY_SYSTEM);
-		delete area_;
-	}
-	area_ = area;
-	if (area_)
-		area_->addEffects(Effect::CATEGORY_SYSTEM);
-	reset(gang_);
-
-	return area_;
-}
-
 Area* Engine::setArea(TypeID typeID)
 {
 	try
 	{
-		return setArea(new Area(this, typeID));
+		Area* area = new Area(this, typeID);
+		if (area_) {
+			area_->removeEffects(Effect::CATEGORY_SYSTEM);
+			delete area_;
+		}
+		area_ = area;
+		if (area_)
+			area_->addEffects(Effect::CATEGORY_SYSTEM);
+		reset(gang_);
+		
+		return area_;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -68,28 +64,23 @@ Area* Engine::setArea(TypeID typeID)
 	}
 }
 
-ControlTower* Engine::setControlTower(ControlTower* controlTower)
-{
-	if (controlTower_)
-	{
-		controlTower_->removeEffects(Effect::CATEGORY_GENERIC);
-		controlTower_->removeEffects(Effect::CATEGORY_ACTIVE);
-	}
-	controlTower_ = controlTower;
-	if (controlTower_)
-	{
-		controlTower_->addEffects(Effect::CATEGORY_GENERIC);
-		controlTower_->addEffects(Effect::CATEGORY_ACTIVE);
-	}
-	return controlTower_;
-	
-}
-
 ControlTower* Engine::setControlTower(TypeID typeID)
 {
 	try
 	{
-		return setControlTower(new ControlTower(this, typeID));
+		ControlTower* controlTower = new ControlTower(this, typeID);
+		if (controlTower_)
+		{
+			controlTower_->removeEffects(Effect::CATEGORY_GENERIC);
+			controlTower_->removeEffects(Effect::CATEGORY_ACTIVE);
+		}
+		controlTower_ = controlTower;
+		if (controlTower_)
+		{
+			controlTower_->addEffects(Effect::CATEGORY_GENERIC);
+			controlTower_->addEffects(Effect::CATEGORY_ACTIVE);
+		}
+		return controlTower_;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -99,7 +90,11 @@ ControlTower* Engine::setControlTower(TypeID typeID)
 
 void Engine::clearArea()
 {
-	setArea((Area*)NULL);
+	if (area_) {
+		area_->removeEffects(Effect::CATEGORY_SYSTEM);
+		delete area_;
+	}
+	area_ = nullptr;
 }
 
 Area* Engine::getArea()
@@ -131,8 +126,6 @@ void Engine::reset(Item* item)
 //}
 
 
-#if _DEBUG
-
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Engine& engine)
 {
 	os << "{\"gang\":" << *engine.getGang() << ',';
@@ -141,5 +134,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Engine& engine)
 	os << '}';
 	return os;
 }
-
-#endif

@@ -26,9 +26,7 @@ namespace eufe {
 		Engine(SqlConnector* sqlConnector);
 		virtual ~Engine(void);
 		SqlConnector* getSqlConnector();
-		Area* setArea(Area* area);
 		Area* setArea(TypeID typeID);
-		ControlTower* setControlTower(ControlTower* controlTower);
 		ControlTower* setControlTower(TypeID typeID);
 		void clearArea();
 		Gang* getGang();
@@ -39,11 +37,11 @@ namespace eufe {
 		
 		//std::lock_guard<std::recursive_mutex> lock();
 
-#if _DEBUG
 		friend std::ostream& operator<<(std::ostream& os, Engine& engine);
-#endif
 
 	private:
+//		Area* setArea(Area* area);
+//		ControlTower* setControlTower(ControlTower* controlTower);
 		SqlConnector* sqlConnector_;
 		Gang* gang_;
 		Area* area_;

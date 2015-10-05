@@ -84,32 +84,28 @@ Ship::~Ship(void)
 	}
 }
 
-Module* Ship::addModule(Module* module, bool force)
-{
-	if (force || canFit(module))
-	{
-		modules_.push_back(module);
-		module->setOwner(this);
-
-		module->addEffects(Effect::CATEGORY_GENERIC);
-		if (module->canHaveState(Module::STATE_ACTIVE))
-			module->setState(Module::STATE_ACTIVE);
-		else if (module->canHaveState(Module::STATE_ONLINE))
-			module->setState(Module::STATE_ONLINE);
-		engine_->reset(this);
-		return module;
-	}
-	else {
-		delete module;
-		return NULL;
-	}
-}
-
 Module* Ship::addModule(TypeID typeID, bool force)
 {
 	try
 	{
-		return addModule(new Module(engine_, typeID, this), force);
+		Module* module = new Module(engine_, typeID, this);
+		if (force || canFit(module))
+		{
+			modules_.push_back(module);
+			//module->setOwner(this);
+			
+			module->addEffects(Effect::CATEGORY_GENERIC);
+			if (module->canHaveState(Module::STATE_ACTIVE))
+				module->setState(Module::STATE_ACTIVE);
+			else if (module->canHaveState(Module::STATE_ONLINE))
+				module->setState(Module::STATE_ONLINE);
+			engine_->reset(this);
+			return module;
+		}
+		else {
+			delete module;
+			return NULL;
+		}
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -120,7 +116,58 @@ Module* Ship::addModule(TypeID typeID, bool force)
 Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
 	try
 	{
-		return replaceModule(oldModule, new Module(engine_, typeID, this));
+		//Module* newModule =  new Module(engine_, typeID, this);
+		ModulesList::iterator i = std::find(modules_.begin(), modules_.end(), oldModule);
+		if (i == modules_.end())
+			return nullptr;
+		i--;
+		
+		Module::State state = oldModule->getState();
+		Charge* charge = oldModule->getCharge();
+		TypeID chargeTypeID = charge ? charge->getTypeID() : 0;
+		Ship* target = oldModule->getTarget();
+		
+		
+		//removeModule(oldModule);
+		Module::Slot slot = oldModule->getSlot();
+		
+		oldModule->setState(Module::STATE_OFFLINE);
+		oldModule->clearTarget();
+		oldModule->removeEffects(Effect::CATEGORY_GENERIC);
+		
+		modules_.remove(oldModule);
+		delete oldModule;
+		
+		Module* newModule = addModule(typeID);
+		if (newModule) {
+			modules_.remove(newModule);
+			i++;
+			modules_.insert(i, newModule);
+			if (chargeTypeID)
+				newModule->setCharge(chargeTypeID);
+			if (target)
+				newModule->setTarget();
+			if (newModule->canHaveState(state))
+				newModule->setState(state);
+		}
+		engine_->reset(this);
+		
+		if (slot == Module::SLOT_SUBSYSTEM) {
+			static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
+			for (int i = 0; i < 3; i++) {
+				int n = getFreeSlots(slots[i]);
+				if (n < 0) {
+					ModulesList modules;
+					getModules(slots[i], std::inserter(modules, modules.begin()));
+					auto j = modules.rbegin();
+					for (; n < 0; j++, n++) {
+						removeModule(*j);
+					}
+				}
+			}
+		}
+		
+		return newModule;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -128,62 +175,26 @@ Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
 	}
 }
 
-Module* Ship::replaceModule(Module* oldModule, Module* newModule) {
-	ModulesList::iterator i = std::find(modules_.begin(), modules_.end(), oldModule);
-	if (i == modules_.end())
-		return nullptr;
-	i--;
-
-	Module::State state = oldModule->getState();
-	Charge* charge = oldModule->getCharge();
-	TypeID chargeTypeID = charge ? charge->getTypeID() : 0;
-	Ship* target = oldModule->getTarget();
-	
-	
-	//removeModule(oldModule);
-	Module::Slot slot = oldModule->getSlot();
-	
-	oldModule->setState(Module::STATE_OFFLINE);
-	oldModule->clearTarget();
-	oldModule->removeEffects(Effect::CATEGORY_GENERIC);
-	
-	modules_.remove(oldModule);
-	delete oldModule;
-	
-	if ((newModule = addModule(newModule))) {
-		modules_.remove(newModule);
-		i++;
-		modules_.insert(i, newModule);
-		if (chargeTypeID)
-			newModule->setCharge(chargeTypeID);
-		if (target)
-			newModule->setTarget();
-		if (newModule->canHaveState(state))
-			newModule->setState(state);
-	}
-	engine_->reset(this);
-	
-	if (slot == Module::SLOT_SUBSYSTEM) {
-		static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
-		for (int i = 0; i < 3; i++) {
-			int n = getFreeSlots(slots[i]);
-			if (n < 0) {
-				ModulesList modules;
-				getModules(slots[i], std::inserter(modules, modules.begin()));
-				auto j = modules.rbegin();
-				for (; n < 0; j++, n++) {
-					removeModule(*j);
-				}
-			}
-		}
-	}
-	
-	return newModule;
-}
-
 ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 {
-	std::list<TypeID>::const_iterator i, end = typeIDs.end();
+	ModulesList modules;
+	for (auto i: typeIDs)
+	{
+		Module* module;
+		try
+		{
+			module = addModule(i);
+		}
+		catch(Item::UnknownTypeIDException)
+		{
+			module = NULL;
+		}
+		
+		modules.push_back(module);
+	}
+	return modules;
+	
+	/*std::list<TypeID>::const_iterator i, end = typeIDs.end();
 	ModulesList modules;
 	ModulesList lows;
 	ModulesList meds;
@@ -196,6 +207,7 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 		Module* module;
 		try
 		{
+			module = addModule(*i);
 			module = new Module(engine_, *i, this);
 		}
 		catch(Item::UnknownTypeIDException)
@@ -240,7 +252,7 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 			if (!addModule(*k))
 				std::replace(modules.begin(), modules.end(), *k, (Module*) NULL);
 	}
-	return modules;
+	return modules;*/
 }
 
 void Ship::removeModule(Module* module)
@@ -271,23 +283,17 @@ void Ship::removeModule(Module* module)
 	}
 }
 
-Drone* Ship::addDrone(Drone* drone)
-{
-	drones_.push_back(drone);
-	drone->setOwner(this);
-	
-	drone->addEffects(Effect::CATEGORY_GENERIC);
-	drone->addEffects(Effect::CATEGORY_TARGET);
-	engine_->reset(this);
-
-	return drone;
-}
-
 Drone* Ship::addDrone(TypeID typeID)
 {
 	try
 	{
-		return addDrone(new Drone(engine_, typeID, this));
+		Drone* drone = new Drone(engine_, typeID, this);
+		drones_.push_back(drone);
+		drone->addEffects(Effect::CATEGORY_GENERIC);
+		drone->addEffects(Effect::CATEGORY_TARGET);
+		engine_->reset(this);
+		
+		return drone;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -1212,8 +1218,6 @@ void Ship::updateHeatDamage()
 	heatSimulator_.simulate();
 }
 
-#if _DEBUG
-
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 {
 	os << "{\"typeName\":\"" << ship.getTypeName() << "\", \"typeID\":\"" << ship.typeID_ << "\", \"groupID\":\"" << ship.groupID_ << "\", \"attributes\":[";
@@ -1331,5 +1335,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	os << "]}";
 	return os;
 }
-
-#endif

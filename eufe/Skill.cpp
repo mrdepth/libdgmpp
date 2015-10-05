@@ -14,11 +14,7 @@ Skill::Skill(Engine* engine, TypeID typeID, int skillLevel, bool isLearned, Char
 	if (i != attributes_.end())
 		attribute = i->second;
 	else
-#if _DEBUG
-		attribute = attributes_[SKILL_LEVEL_ATTRIBUTE_ID] = new Attribute(engine, SKILL_LEVEL_ATTRIBUTE_ID, 0, 0.0, true, true, this, "skillLevel");
-#else
-		attribute = attributes_[SKILL_LEVEL_ATTRIBUTE_ID] = new Attribute(engine, SKILL_LEVEL_ATTRIBUTE_ID, 0, 0.0, true, true, this);
-#endif
+		attribute = addExtraAttribute(SKILL_LEVEL_ATTRIBUTE_ID, 0, 0, true, true);
 	attribute->setValue(static_cast<float>(skillLevel));
 }
 
@@ -58,15 +54,4 @@ Environment Skill::getEnvironment()
 	if (engine_->getArea())
 		environment["Area"] = engine_->getArea();
 	return environment;
-}
-
-Skill::Skill(Decoder& decoder, Engine* engine, Character* owner) : Item(decoder, engine, owner)
-{
-	decoder.decode(isLearned_);
-}
-
-void Skill::encode(Encoder& encoder)  const
-{
-	Item::encode(encoder);
-	encoder.encode(isLearned_);
 }

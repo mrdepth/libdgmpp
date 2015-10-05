@@ -230,39 +230,10 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	return value;
 }
 
-Attribute::Attribute()
-{
-	sync = false;
-}
-
-Attribute::Attribute(Attribute& attribute) : owner_(NULL), calculated_(false)
-{
-	engine_			= attribute.engine_;
-	//owner_			= attribute.owner_;
-	attributeID_	= attribute.attributeID_;
-	maxAttributeID_ = attribute.maxAttributeID_;
-	value_			= attribute.value_;
-	initialValue_	= attribute.initialValue_;
-	forcedValue_	= attribute.forcedValue_;
-	isStackable_	= attribute.isStackable_;
-	highIsGood_		= attribute.highIsGood_;
-	isFakeAttribute_= attribute.isFakeAttribute_;
-	//calculated_		= attribute.calculated_;
-#if _DEBUG
-	attributeName_	= attribute.attributeName_;
-#endif
-	sync = false;
-}
-
-#if _DEBUG
 Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner, const char* attributeName, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), attributeName_(attributeName), isFakeAttribute_(isFakeAttribute)
-#else
-Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), isFakeAttribute_(isFakeAttribute)
-#endif
 {
 	forcedValue_ = std::numeric_limits<float>::infinity();
 	
-#if _DEBUG
 	if (attributeName[0] == 0 && attributeID != 0)
 	{
         std::stringstream sql;
@@ -273,7 +244,6 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, 
 			isStackable_ = result->getInt(1) != 0;
 		}
 	}
-#endif
 	sync = false;
 }
 
@@ -282,20 +252,14 @@ Attribute::Attribute(Engine* engine, TypeID attributeID, Item* owner, bool isFak
 	forcedValue_ = std::numeric_limits<float>::infinity();
 
 	std::stringstream sql;
-#if _DEBUG
 	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-#else
-	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-#endif
 	std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
 	if (result->next()) {
 		isStackable_ = result->getInt(0) != 0;
 		maxAttributeID_ = static_cast<eufe::TypeID>(result->getInt(1));
 		value_ = initialValue_ = static_cast<float>(result->getDouble(2));
 		highIsGood_ = result->getInt(3) != 0;
-#if _DEBUG
 		attributeName_ = result->getText(4);
-#endif
 	}
 	sync = false;
 }
@@ -383,12 +347,10 @@ void Attribute::calculate()
 		value_ = forcedValue_;
 	else
 	{
-#if _DEBUG
 		if (sync)
 		{
 			std::cout << "Deadlock: " << attributeName_ << std::endl;
 		}
-#endif
 		sync = true;
 		value_ = initialValue_;
 		
@@ -571,32 +533,6 @@ void Attribute::calculate()
 	calculated_ = true;
 }
 
-Attribute::Attribute(Decoder& decoder, Engine* engine, Item* owner) : engine_(engine), owner_(owner), calculated_(false)
-{
-	decoder.decode(attributeID_);
-	decoder.decode(maxAttributeID_);
-	decoder.decode(value_);
-	decoder.decode(initialValue_);
-	decoder.decode(forcedValue_);
-	decoder.decode(isStackable_);
-	decoder.decode(highIsGood_);
-	decoder.decode(isFakeAttribute_);
-}
-
-void Attribute::encode(Encoder& encoder)  const
-{
-	encoder.encode(attributeID_);
-	encoder.encode(maxAttributeID_);
-	encoder.encode(value_);
-	encoder.encode(initialValue_);
-	encoder.encode(forcedValue_);
-	encoder.encode(isStackable_);
-	encoder.encode(highIsGood_);
-	encoder.encode(isFakeAttribute_);
-}
-
-#if _DEBUG
-
 const char* Attribute::getAttributeName() const
 {
 	return attributeName_.c_str();
@@ -612,5 +548,3 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Attribute& attribute)
 		<< "\", \"stackable\":\"" << attribute.isStackable_ << "\"}";
 	return os;
 }
-
-#endif
