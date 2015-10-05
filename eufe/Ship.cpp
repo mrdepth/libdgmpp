@@ -255,31 +255,33 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 	return modules;*/
 }
 
-void Ship::removeModule(Module* module)
-{
-	Module::Slot slot = module->getSlot();
-
-	module->setState(Module::STATE_OFFLINE);
-	module->clearTarget();
-	module->removeEffects(Effect::CATEGORY_GENERIC);
-
-	modules_.remove(module);
-	delete module;
-	engine_->reset(this);
-	
-	if (slot == Module::SLOT_SUBSYSTEM) {
-		static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
-		for (int i = 0; i < 3; i++) {
-			int n = getFreeSlots(slots[i]);
-			if (n < 0) {
-				ModulesList modules;
-				getModules(slots[i], std::inserter(modules, modules.begin()));
-				auto j = modules.rbegin();
-				for (; n < 0; j++, n++) {
-					removeModule(*j);
+void Ship::removeModule(Module* module) {
+	if (std::find(modules_.begin(), modules_.end(), module) != modules_.end()) {
+		Module::Slot slot = module->getSlot();
+		
+		module->setState(Module::STATE_OFFLINE);
+		module->clearTarget();
+		module->removeEffects(Effect::CATEGORY_GENERIC);
+		
+		modules_.remove(module);
+		delete module;
+		engine_->reset(this);
+		
+		if (slot == Module::SLOT_SUBSYSTEM) {
+			static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
+			for (int i = 0; i < 3; i++) {
+				int n = getFreeSlots(slots[i]);
+				if (n < 0) {
+					ModulesList modules;
+					getModules(slots[i], std::inserter(modules, modules.begin()));
+					auto j = modules.rbegin();
+					for (; n < 0; j++, n++) {
+						removeModule(*j);
+					}
 				}
 			}
 		}
+		
 	}
 }
 
@@ -303,12 +305,14 @@ Drone* Ship::addDrone(TypeID typeID)
 
 void Ship::removeDrone(Drone* drone)
 {
-	drone->removeEffects(Effect::CATEGORY_TARGET);
-	drone->removeEffects(Effect::CATEGORY_GENERIC);
-	
-	drones_.remove(drone);
-	delete drone;
-	engine_->reset(this);
+	if (std::find(drones_.begin(), drones_.end(), drone) != drones_.end()) {
+		drone->removeEffects(Effect::CATEGORY_TARGET);
+		drone->removeEffects(Effect::CATEGORY_GENERIC);
+		
+		drones_.remove(drone);
+		delete drone;
+		engine_->reset(this);
+	}
 }
 
 

@@ -8,19 +8,19 @@ namespace eufe {
 	{
 	public:
 		const CharactersList& getPilots();
-		Character* addPilot();
-		void removePilot(Character* character);
+		std::shared_ptr<Character> addPilot();
+		void removePilot(std::shared_ptr<Character> character);
 		
 		virtual Environment getEnvironment();
 		
 		virtual void reset();
 		
-		Character* getFleetBooster();
-		Character* getWingBooster();
-		Character* getSquadBooster();
-		void setFleetBooster(Character* fleetBooster);
-		void setWingBooster(Character* wingBooster);
-		void setSquadBooster(Character* squadBooster);
+		std::shared_ptr<Character> getFleetBooster();
+		std::shared_ptr<Character> getWingBooster();
+		std::shared_ptr<Character> getSquadBooster();
+		void setFleetBooster(std::shared_ptr<Character> fleetBooster);
+		void setWingBooster(std::shared_ptr<Character> wingBooster);
+		void setSquadBooster(std::shared_ptr<Character> squadBooster);
 		void removeFleetBooster();
 		void removeWingBooster();
 		void removeSquadBooster();
@@ -29,17 +29,17 @@ namespace eufe {
 		
 	protected:
 		friend class Engine;
-		Gang(Engine* engine);
+		Gang(std::shared_ptr<Engine> engine);
 		virtual ~Gang(void);
 
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
-		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
 		
 	private:
 		CharactersList pilots_;
-		Character* fleetBooster_;
-		Character* wingBooster_;
-		Character* squadBooster_;
+		std::shared_ptr<Character> fleetBooster_;
+		std::shared_ptr<Character> wingBooster_;
+		std::shared_ptr<Character> squadBooster_;
 	};
 
 }

@@ -7,10 +7,10 @@ namespace eufe {
 	class Area : public Item
 	{
 	public:
-		Area(Engine* engine, TypeID typeID);
+		Area(std::shared_ptr<Engine> engine, TypeID typeID);
 		virtual ~Area(void);
-		void addEffectsToShip(Item* ship);
-		void removeEffectsFromShip(Item* ship);
+		void addEffectsToShip(std::shared_ptr<Item> ship);
+		void removeEffectsFromShip(std::shared_ptr<Item> ship);
 
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);

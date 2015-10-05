@@ -23,29 +23,25 @@ namespace eufe {
 		//struct SqliteException : virtual boost::exception {};
         typedef std::runtime_error SqliteException;
 
-		Engine(SqlConnector* sqlConnector);
+		Engine(std::shared_ptr<SqlConnector> sqlConnector);
 		virtual ~Engine(void);
-		SqlConnector* getSqlConnector();
-		Area* setArea(TypeID typeID);
-		ControlTower* setControlTower(TypeID typeID);
+		std::shared_ptr<SqlConnector> getSqlConnector();
+		std::shared_ptr<Area> setArea(TypeID typeID);
+		std::shared_ptr<ControlTower> setControlTower(TypeID typeID);
 		void clearArea();
-		Gang* getGang();
-		Area* getArea();
-		ControlTower* getControlTower();
+		std::shared_ptr<Gang> getGang();
+		std::shared_ptr<Area> getArea();
+		std::shared_ptr<ControlTower> getControlTower();
 		
 		void reset(Item* item);
 		
-		//std::lock_guard<std::recursive_mutex> lock();
-
 		friend std::ostream& operator<<(std::ostream& os, Engine& engine);
 
 	private:
-//		Area* setArea(Area* area);
-//		ControlTower* setControlTower(ControlTower* controlTower);
-		SqlConnector* sqlConnector_;
-		Gang* gang_;
-		Area* area_;
-		ControlTower* controlTower_;
+		std::shared_ptr<SqlConnector> sqlConnector_;
+		std::shared_ptr<Gang> gang_;
+		std::shared_ptr<Area> area_;
+		std::shared_ptr<ControlTower> controlTower_;
 		std::recursive_mutex mutex_;
 	};
 

@@ -23,7 +23,7 @@ namespace eufe {
 
 	extern const TypeID MISSILE_LAUNCHER_OPERATION_TYPE_ID;
 
-	class Item
+	class Item: public std::enable_shared_from_this<Item>
 	{
 	public:
 		
@@ -40,22 +40,19 @@ namespace eufe {
 
 
 		Item();
-		Item(Engine* engine, TypeID typeID, Item* owner = NULL);
-		Item(Item* owner);
+		Item(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner = nullptr);
+		Item(std::shared_ptr<Item> owner);
 		virtual ~Item(void);
-//		void setContext(const Context* context);
-//		const Context* getContext();
-		Engine* getEngine();
-
-		Item* getOwner() const;
+		std::shared_ptr<Engine> getEngine();
+		std::shared_ptr<Item> getOwner() const;
 
 		virtual TypeID getTypeID() const;
 		virtual TypeID getGroupID() const;
 		virtual TypeID getCategoryID() const;
-		virtual Attribute* getAttribute(TypeID attributeID);
+		virtual std::shared_ptr<Attribute> getAttribute(TypeID attributeID);
 		const AttributesMap &getAttributes();
 		bool hasAttribute(TypeID attributeID);
-		Effect* getEffect(TypeID effectID);
+		std::shared_ptr<Effect> getEffect(TypeID effectID);
 		
 		
 		virtual bool requireSkill(TypeID skillID);
@@ -69,44 +66,41 @@ namespace eufe {
 		
 		virtual void reset();
 		
-		virtual std::insert_iterator<ModifiersList> getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
 		
-		virtual void addItemModifier(Modifier* modifier);
-		virtual void addLocationModifier(Modifier* modifier);
-		virtual void addLocationGroupModifier(Modifier* modifier);
-		virtual void addLocationRequiredSkillModifier(Modifier* modifier);
+		virtual void addItemModifier(std::shared_ptr<Modifier> modifier);
+		virtual void addLocationModifier(std::shared_ptr<Modifier> modifier);
+		virtual void addLocationGroupModifier(std::shared_ptr<Modifier> modifier);
+		virtual void addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier);
 
-		virtual void removeItemModifier(Modifier* modifier);
-		virtual void removeLocationModifier(Modifier* modifier);
-		virtual void removeLocationGroupModifier(Modifier* modifier);
-		virtual void removeLocationRequiredSkillModifier(Modifier* modifier);
+		virtual void removeItemModifier(std::shared_ptr<Modifier> modifier);
+		virtual void removeLocationModifier(std::shared_ptr<Modifier> modifier);
+		virtual void removeLocationGroupModifier(std::shared_ptr<Modifier> modifier);
+		virtual void removeLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier);
 		
 		virtual const char* getTypeName();
 		virtual const char* getGroupName();
 		
-		std::set<Item*> getAffectors();
-#if _DEBUG
+		std::set<std::shared_ptr<Item>> getAffectors();
 		friend std::ostream& operator<<(std::ostream& os, Item& item);
-#endif
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
-		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
 
 	protected:
-//		void setOwner(Item *owner);
-		Engine* engine_;
+		std::weak_ptr<Engine> engine_;
 		AttributesMap attributes_;
 		TypeID typeID_;
 		TypeID groupID_;
 		TypeID categoryID_;
 		EffectsList effects_;
-		Item* owner_;
+		std::weak_ptr<Item> owner_;
 
 		ModifiersList itemModifiers_;
 		ModifiersList locationModifiers_;
 		ModifiersList locationGroupModifiers_;
 		ModifiersList locationRequiredSkillModifiers_;
 		
-		Attribute* addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName = "");
+		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName = "");
 
 		
 	private:

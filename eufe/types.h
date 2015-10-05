@@ -36,20 +36,20 @@ namespace eufe {
 	typedef unsigned char Byte;
 	typedef int TypeID;
 	
-	typedef std::map<eufe::TypeID, Attribute*> AttributesMap;
-	typedef std::list<Attribute*> AttributesList;
-	typedef std::list<Association*> AssociationsList;
+	typedef std::map<eufe::TypeID, std::shared_ptr<Attribute>> AttributesMap;
+	typedef std::list<std::shared_ptr<Attribute>> AttributesList;
+	typedef std::list<std::shared_ptr<Association>> AssociationsList;
 	typedef std::list<std::shared_ptr<Effect> > EffectsList;
 	typedef std::map<std::string, Association*> AssociationsMap;
-	typedef std::map<std::string, Item*> Environment;
-	typedef std::list<Module*> ModulesList;
-	typedef std::list<Drone*> DronesList;
-	typedef std::list<Character*> CharactersList;
-	typedef std::map<eufe::TypeID, Skill*> SkillsMap;
-	typedef std::list<Implant*> ImplantsList;
-	typedef std::list<Booster*> BoostersList;
-	typedef std::list<Modifier*> ModifiersList;
-	typedef std::list<Structure*> StructuresList;
+	typedef std::map<std::string, std::shared_ptr<Item>> Environment;
+	typedef std::list<std::shared_ptr<Module>> ModulesList;
+	typedef std::list<std::shared_ptr<Drone>> DronesList;
+	typedef std::list<std::shared_ptr<Character>> CharactersList;
+	typedef std::map<eufe::TypeID, std::shared_ptr<Skill>> SkillsMap;
+	typedef std::list<std::shared_ptr<Implant>> ImplantsList;
+	typedef std::list<std::shared_ptr<Booster>> BoostersList;
+	typedef std::list<std::shared_ptr<Modifier>> ModifiersList;
+	typedef std::list<std::shared_ptr<Structure>> StructuresList;
 	
 	struct Tank
 	{

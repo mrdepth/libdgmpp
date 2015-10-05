@@ -190,11 +190,10 @@ namespace eufe {
 
 	extern const TypeID TACTICAL_MODES_ATTRIBUTE_ID;
 
-	class Attribute
+	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
-		Item* getOwner() const;
-		void setOwner(Item* owner);
+		std::shared_ptr<Item> getOwner() const;
 		TypeID getAttributeID() const;
 		bool isFakeAttribute() const;
 
@@ -213,11 +212,11 @@ namespace eufe {
 		friend std::ostream& operator<<(std::ostream& os, Attribute& attribute);
 	protected:
 		friend class Item;
-		Attribute(Engine* engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, Item* owner = NULL, const char* attributeName = "", bool isFakeAttribute = false);
-		Attribute(Engine* engine, TypeID attributeID, Item* owner = NULL, bool isFakeAttribute = false);
+		Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> owner = NULL, const char* attributeName = "", bool isFakeAttribute = false);
+		Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, std::shared_ptr<Item> owner = NULL, bool isFakeAttribute = false);
 		virtual ~Attribute(void);
 	private:
-		Engine* engine_;
+		std::weak_ptr<Engine> engine_;
 		TypeID attributeID_;
 		TypeID maxAttributeID_;
 		float value_;
@@ -228,7 +227,7 @@ namespace eufe {
 		bool highIsGood_;
 		bool isFakeAttribute_;
 		
-		Item* owner_;
+		std::weak_ptr<Item> owner_;
 		
 		void calculate();
 

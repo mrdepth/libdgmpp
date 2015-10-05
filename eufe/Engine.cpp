@@ -5,70 +5,61 @@
 
 using namespace eufe;
 
-Engine::Engine(SqlConnector* sqlConnector) : sqlConnector_(sqlConnector), gang_(NULL), area_(NULL), controlTower_(NULL)
+Engine::Engine(std::shared_ptr<SqlConnector> sqlConnector) : sqlConnector_(sqlConnector), gang_(NULL), area_(NULL), controlTower_(NULL)
 {
-	gang_ = new Gang(this);
 }
 
 Engine::~Engine(void)
 {
-	Gang* gangTmp = gang_;
-	Area* areaTmp = area_;
-	ControlTower* controlTowerTmp = controlTower_;
-	SqlConnector* sqlConnectorTmp = sqlConnector_;
+	std::shared_ptr<Gang> gangTmp = gang_;
+	std::shared_ptr<Area> areaTmp = area_;
+	std::shared_ptr<ControlTower> controlTowerTmp = controlTower_;
+	std::shared_ptr<SqlConnector> sqlConnectorTmp = sqlConnector_;
 	
-	gang_ = NULL;
-	area_ = NULL;
-	controlTower_ = NULL;
-	sqlConnector_ = NULL;
-	
-	if (gangTmp)
-		delete gangTmp;
-	if (areaTmp)
-		delete areaTmp;
-	if (controlTowerTmp)
-		delete controlTowerTmp;
-	if (sqlConnectorTmp)
-		delete sqlConnectorTmp;
+	gang_ = nullptr;
+	area_ = nullptr;
+	controlTower_ = nullptr;
+	sqlConnector_ = nullptr;
 }
 
-SqlConnector* Engine::getSqlConnector()
+std::shared_ptr<SqlConnector> Engine::getSqlConnector()
 {
 	return sqlConnector_;
 }
 
-Gang* Engine::getGang()
+std::shared_ptr<Gang> Engine::getGang()
 {
+	if (!gang_)
+		gang_ = std::make_shared<Gang>(this);
 	return gang_;
 }
 
-Area* Engine::setArea(TypeID typeID)
+std::shared_ptr<Area> Engine::setArea(TypeID typeID)
 {
 	try
 	{
-		Area* area = new Area(this, typeID);
+		std::shared_ptr<Area> area = std::make_shared<Area>(this, typeID);
 		if (area_) {
 			area_->removeEffects(Effect::CATEGORY_SYSTEM);
-			delete area_;
 		}
 		area_ = area;
 		if (area_)
 			area_->addEffects(Effect::CATEGORY_SYSTEM);
-		reset(gang_);
+		reset(getGang());
 		
 		return area_;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
-ControlTower* Engine::setControlTower(TypeID typeID)
+std::shared_ptr<ControlTower> Engine::setControlTower(TypeID typeID)
 {
 	try
 	{
-		ControlTower* controlTower = new ControlTower(this, typeID);
+		std::shared_ptr<ControlTower> controlTower = std::make_shared<ControlTower>(this, typeID);
 		if (controlTower_)
 		{
 			controlTower_->removeEffects(Effect::CATEGORY_GENERIC);
@@ -84,7 +75,7 @@ ControlTower* Engine::setControlTower(TypeID typeID)
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -92,17 +83,16 @@ void Engine::clearArea()
 {
 	if (area_) {
 		area_->removeEffects(Effect::CATEGORY_SYSTEM);
-		delete area_;
 	}
 	area_ = nullptr;
 }
 
-Area* Engine::getArea()
+std::shared_ptr<Area> Engine::getArea()
 {
 	return area_;
 }
 
-ControlTower* Engine::getControlTower()
+std::shared_ptr<ControlTower> Engine::getControlTower()
 {
 	return controlTower_;
 }
@@ -112,10 +102,10 @@ void Engine::reset(Item* item)
 	if (!item)
 		return;
 	
-	Item* owner = item->getOwner();
+	std::shared_ptr<Item> owner = item->getOwner();
 	
 	while (owner) {
-		item = owner;
+		item = owner.get();
 		owner = item->getOwner();
 	}
 	item->reset();
