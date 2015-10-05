@@ -75,11 +75,11 @@ const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10002;
 
 static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
 
-std::shared_ptr<eufe::Effect> Effect::getEffect(Engine* engine, int effectID)
+std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> engine, int effectID)
 {
 	std::map<TypeID, std::weak_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
 	i = reusableEffects.find(effectID);
-	if (i == end) {
+	if (i == end || !i->second.lock()) {
 		std::shared_ptr<Effect> effect(new Effect(engine, effectID));
 		reusableEffects[effectID] = std::weak_ptr<Effect>(effect);
 		return effect;
@@ -89,26 +89,26 @@ std::shared_ptr<eufe::Effect> Effect::getEffect(Engine* engine, int effectID)
 	}
 }
 
-Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
+/*Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
 {
 	if (effectID == LEECH_EFFECT_ID)
-		interpreter_ = new EffectLeechInterpreter(engine, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectLeechInterpreter>(engine, isAssistance, isOffensive);
 	else if (effectID == ENERGY_DESTABILIZATION_NEW_EFFECT_ID)
-		interpreter_ = new EffectEnergyDestabilizationNewInterpreter(engine, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectEnergyDestabilizationNewInterpreter>(engine, isAssistance, isOffensive);
 	else if (effectID == ENERGY_TRANSFER_EFFECT_ID)
-		interpreter_ = new EffectEnergyTransferInterpreter(engine, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectEnergyTransferInterpreter>(engine, isAssistance, isOffensive);
 	else if (effectID == ARMOR_REPAIR_EFFECT_ID)
-		interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, false, isAssistance, isOffensive);
 	else if (effectID == TARGET_ARMOR_REPAIR_EFFECT_ID)
-		interpreter_ = new EffectArmorRepairInterpreter(engine, true, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, true, isAssistance, isOffensive);
 	else if (effectID == STRUCTURE_REPAIR_EFFECT_ID)
-		interpreter_ = new EffectHullRepairInterpreter(engine, false, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectHullRepairInterpreter>(engine, false, isAssistance, isOffensive);
 	else if (effectID == REMOTE_HULL_REPAIR_EFFECT_ID)
-		interpreter_ = new EffectHullRepairInterpreter(engine, true, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectHullRepairInterpreter>(engine, true, isAssistance, isOffensive);
 	else if (effectID == SHIELD_BOOSTING_EFFECT_ID)
-		interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, false, isAssistance, isOffensive);
 	else if (effectID == SHIELD_TRANSFER_EFFECT_ID)
-		interpreter_ = new EffectShieldBoostingInterpreter(engine, true, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, true, isAssistance, isOffensive);
 //	else if (effectID == SLOT_MODIFIER_EFFECT_ID)
 //		interpreter_ = new EffectSlotModifierInterpreter(engine, isAssistance, isOffensive);
 //	else if (effectID == HARD_POINT_MODIFIER_EFFECT_EFFECT_ID)
@@ -116,13 +116,13 @@ Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* b
 //	else if (effectID == ADAPTIVE_ARMOR_HARDENER_EFFECT_ID)
 //		interpreter_ = new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive);
 	else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
-		interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, false, isAssistance, isOffensive);
 	else if (effectID == FUELED_ARMOR_REPAIR__EFFECT_ID)
-		interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, false, isAssistance, isOffensive);
 	else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID)
-		interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectNaniteRepairPasteArmorDamageBonus>(engine, isAssistance, isOffensive);
 	else
-		interpreter_ = new EffectByteCodeInterpreter(engine, byteCode, size, isAssistance, isOffensive);
+		interpreter_ = std::make_shared<EffectByteCodeInterpreter>(engine, byteCode, size, isAssistance, isOffensive);
 	std::string::iterator i, end = effectName_.end();
 	for (i = effectName_.begin(); i != end; i++)
 	{
@@ -130,14 +130,14 @@ Effect::Effect(Engine* engine, TypeID effectID, Category category, const void* b
 		if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
 			*i = ' ';
 	}
-}
+}*/
 
-Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(effectID)
+Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID) : engine_(engine), effectID_(effectID)
 {
 	std::stringstream sql;
 	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
 	
-	std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
 
 	if (result->next())
 	{
@@ -147,23 +147,23 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 		Blob blob = result->getBlob(3);
 		
 		if (effectID == LEECH_EFFECT_ID)
-			interpreter_ = new EffectLeechInterpreter(engine, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectLeechInterpreter>(engine, isAssistance, isOffensive);
 		else if (effectID == ENERGY_DESTABILIZATION_NEW_EFFECT_ID)
-			interpreter_ = new EffectEnergyDestabilizationNewInterpreter(engine, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectEnergyDestabilizationNewInterpreter>(engine, isAssistance, isOffensive);
 		else if (effectID == ENERGY_TRANSFER_EFFECT_ID)
-			interpreter_ = new EffectEnergyTransferInterpreter(engine, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectEnergyTransferInterpreter>(engine, isAssistance, isOffensive);
 		else if (effectID == ARMOR_REPAIR_EFFECT_ID)
-			interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, false, isAssistance, isOffensive);
 		else if (effectID == TARGET_ARMOR_REPAIR_EFFECT_ID)
-			interpreter_ = new EffectArmorRepairInterpreter(engine, true, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, true, isAssistance, isOffensive);
 		else if (effectID == STRUCTURE_REPAIR_EFFECT_ID)
-			interpreter_ = new EffectHullRepairInterpreter(engine, false, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectHullRepairInterpreter>(engine, false, isAssistance, isOffensive);
 		else if (effectID == REMOTE_HULL_REPAIR_EFFECT_ID)
-			interpreter_ = new EffectHullRepairInterpreter(engine, true, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectHullRepairInterpreter>(engine, true, isAssistance, isOffensive);
 		else if (effectID == SHIELD_BOOSTING_EFFECT_ID)
-			interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, false, isAssistance, isOffensive);
 		else if (effectID == SHIELD_TRANSFER_EFFECT_ID)
-			interpreter_ = new EffectShieldBoostingInterpreter(engine, true, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, true, isAssistance, isOffensive);
 //		else if (effectID == SLOT_MODIFIER_EFFECT_ID)
 //			interpreter_ = new EffectSlotModifierInterpreter(engine, isAssistance, isOffensive);
 //		else if (effectID == HARD_POINT_MODIFIER_EFFECT_EFFECT_ID)
@@ -171,13 +171,13 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 //		else if (effectID == ADAPTIVE_ARMOR_HARDENER_EFFECT_ID)
 //			interpreter_ = new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive);
 		else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
-			interpreter_ = new EffectShieldBoostingInterpreter(engine, false, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, false, isAssistance, isOffensive);
 		else if (effectID == FUELED_ARMOR_REPAIR__EFFECT_ID)
-			interpreter_ = new EffectArmorRepairInterpreter(engine, false, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, false, isAssistance, isOffensive);
 		else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID)
-			interpreter_ = new EffectNaniteRepairPasteArmorDamageBonus(engine, isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectNaniteRepairPasteArmorDamageBonus>(engine, isAssistance, isOffensive);
 		else
-			interpreter_ = new EffectByteCodeInterpreter(engine, reinterpret_cast<const Byte*>(blob.getMemory()), blob.getSize(), isAssistance, isOffensive);
+			interpreter_ = std::make_shared<EffectByteCodeInterpreter>(engine, reinterpret_cast<const Byte*>(blob.getMemory()), blob.getSize(), isAssistance, isOffensive);
 		
 		
 		effectName_ = result->getText(4);
@@ -194,8 +194,6 @@ Effect::Effect(Engine* engine, TypeID effectID) : engine_(engine), effectID_(eff
 Effect::~Effect(void)
 {
 	reusableEffects.erase(reusableEffects.find(effectID_));
-	if (interpreter_)
-		delete interpreter_;
 }
 
 bool Effect::addEffect(Environment environment)

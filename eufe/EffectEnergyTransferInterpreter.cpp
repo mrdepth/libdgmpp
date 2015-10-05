@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-EffectEnergyTransferInterpreter::EffectEnergyTransferInterpreter(Engine* engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectEnergyTransferInterpreter::EffectEnergyTransferInterpreter(std::shared_ptr<Engine> engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 
@@ -22,12 +22,12 @@ bool EffectEnergyTransferInterpreter::addEffect(const Environment& environment)
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
-		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
-										  Modifier::ASSOCIATION_ADD_RATE,
-										  Self->second->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID),
-										  isAssistance_,
-										  isOffensive_,
-										  dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(CHARGE_ATTRIBUTE_ID,
+																		Modifier::ASSOCIATION_ADD_RATE,
+																		Self->second->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID),
+																		isAssistance_,
+																		isOffensive_,
+																		std::dynamic_pointer_cast<Character>(Char->second));
 		Target->second->addItemModifier(modifier);
 	}
 	return 1;
@@ -40,19 +40,13 @@ bool EffectEnergyTransferInterpreter::removeEffect(const Environment& environmen
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
-		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
-										  Modifier::ASSOCIATION_ADD_RATE,
-										  Self->second->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID),
-										  isAssistance_,
-										  isOffensive_,
-										  dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(CHARGE_ATTRIBUTE_ID,
+																		Modifier::ASSOCIATION_ADD_RATE,
+																		Self->second->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID),
+																		isAssistance_,
+																		isOffensive_,
+																		std::dynamic_pointer_cast<Character>(Char->second));
 		Target->second->removeItemModifier(modifier);
-		delete modifier;
 	}
 	return 1;
-}
-
-EffectInterpreter* EffectEnergyTransferInterpreter::clone() const
-{
-	return new EffectEnergyTransferInterpreter(*this);
 }

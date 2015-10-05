@@ -63,10 +63,10 @@ namespace eufe {
 			CATEGORY_SYSTEM			= 7
 		};
 		
-		static std::shared_ptr<Effect> getEffect(Engine* engine, int effectID);
+		static std::shared_ptr<Effect> getEffect(std::shared_ptr<Engine> engine, int effectID);
 		
-		Effect(Engine* engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName = "");
-		Effect(Engine* engine, TypeID effectID);
+//		Effect(std::shared_ptr<Engine> engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName = "");
+		Effect(std::shared_ptr<Engine> engine, TypeID effectID);
 		virtual ~Effect(void);
 		bool addEffect(Environment environment);
 		bool removeEffect(Environment environment);
@@ -75,11 +75,11 @@ namespace eufe {
 		const char* getEffectName() const;
 		friend std::ostream& operator<<(std::ostream& os, Effect& effect);
 	private:
-		Engine* engine_;
+		std::weak_ptr<Engine> engine_;
 		
 		Category category_;
 		TypeID effectID_;
-		EffectInterpreter* interpreter_;
+		std::shared_ptr<EffectInterpreter> interpreter_;
 		std::string effectName_;
 	};
 }

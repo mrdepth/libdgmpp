@@ -8,12 +8,12 @@
 
 using namespace eufe;
 
-Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, owner), isActive_(true), target_(NULL), charge_(NULL)
+Drone::Drone(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Ship> owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr)
 {
 	if (hasAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID))
 	{
 		TypeID typeID = static_cast<TypeID>(getAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID)->getValue());
-		charge_ = new Charge(engine, typeID, this);
+		charge_ = std::make_shared<Charge>(engine, typeID, this);
 		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
@@ -21,19 +21,19 @@ Drone::Drone(Engine* engine, TypeID typeID, Ship* owner) : Item(engine, typeID, 
 
 Drone::~Drone(void)
 {
-	if (charge_)
-		delete charge_;
-	if (target_)
+	if (target_.lock())
 		clearTarget();
 }
 
 Environment Drone::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = this;
-	Item* ship = getOwner();
-	Item* character = ship ? ship->getOwner() : NULL;
-	Item* gang = character ? character->getOwner() : NULL;
+	environment["Self"] = shared_from_this();
+	std::shared_ptr<Item> ship = getOwner();
+	std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
+	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+	std::shared_ptr<Area> area = engine_.lock()->getArea();
+	std::shared_ptr<Item> target = target_.lock();
 	
 	if (character)
 		environment["Char"] = character;
@@ -41,36 +41,37 @@ Environment Drone::getEnvironment()
 		environment["Ship"] = ship;
 	if (gang)
 		environment["Gang"] = gang;
-	if (engine_->getArea())
-		environment["Area"] = engine_->getArea();
-	if (target_)
-		environment["Target"] = target_;
+	if (area)
+		environment["Area"] = area;
+	if (target)
+		environment["Target"] = target;
 	return environment;
 }
 
-void Drone::setTarget(Ship* target)
+void Drone::setTarget(std::shared_ptr<Ship> target)
 {
 	if (target == getOwner())
 		throw BadDroneTargetException("self");
 
 	removeEffects(Effect::CATEGORY_TARGET);
-	if (target_)
-		target_->removeProjectedDrone(this);
+	std::shared_ptr<Ship> oldTarget = target_.lock();
+	if (oldTarget)
+		oldTarget->removeProjectedDrone(std::dynamic_pointer_cast<Drone>(shared_from_this()));
 	target_ = target;
 	if (target)
-		target->addProjectedDrone(this);
+		target->addProjectedDrone(std::dynamic_pointer_cast<Drone>(shared_from_this()));
 	addEffects(Effect::CATEGORY_TARGET);
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
 void Drone::clearTarget()
 {
-	setTarget(NULL);
+	setTarget(nullptr);
 }
 
-Ship* Drone::getTarget()
+std::shared_ptr<Ship> Drone::getTarget()
 {
-	return target_;
+	return target_.lock();
 }
 
 bool Drone::dealsDamage()
@@ -92,7 +93,7 @@ bool Drone::dealsDamage()
 	return chargeHasDamageAttribute;
 }
 
-Charge* Drone::getCharge()
+std::shared_ptr<Charge> Drone::getCharge()
 {
 	return charge_;
 }
@@ -110,7 +111,7 @@ void Drone::setActive(bool active)
 		removeEffects(Effect::CATEGORY_TARGET);
 	}
 	isActive_ = active;
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
 bool Drone::isActive()
@@ -228,7 +229,7 @@ void Drone::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		Item* item = charge_ ? static_cast<Item*>(charge_) : static_cast<Item*>(this);
+		std::shared_ptr<Item> item = charge_ ?: shared_from_this();
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
 			volley_ += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))

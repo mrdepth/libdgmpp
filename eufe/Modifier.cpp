@@ -5,7 +5,7 @@
 
 using namespace eufe;
 
-Modifier::Modifier(TypeID attributeID, Association association, Attribute* modifier, bool isAssistance, bool isOffensive, Character* character) : attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
+Modifier::Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> modifier, bool isAssistance, bool isOffensive, std::shared_ptr<Character> character) : attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
 {
 }
 
@@ -13,16 +13,37 @@ Modifier::~Modifier()
 {
 }
 
+bool Modifier::isMatch(std::shared_ptr<Item> item) const
+{
+	return true;
+}
+
+TypeID Modifier::getAttributeID() const
+{
+	return attributeID_;
+}
+
+std::shared_ptr<Attribute> Modifier::getModifier() const
+{
+	return modifier_.lock();
+}
+
+Modifier::Association Modifier::getAssociation() const
+{
+	return association_;
+}
+
+
 float Modifier::getValue() const
 {
-	float value = modifier_->getValue();
+	float value = modifier_.lock()->getValue();
 	if (association_ == ASSOCIATION_POST_DIV)
 		return static_cast<float>(1.0f / value);
 	else if (association_ == ASSOCIATION_POST_PERCENT)
 		return static_cast<float>(1.0f + value / 100.0f);
 	else if (association_ == ASSOCIATION_ADD_RATE || association_ == ASSOCIATION_SUB_RATE)
 	{
-		Item* item = modifier_->getOwner();
+		std::shared_ptr<Item> item = modifier_.lock()->getOwner();
 		float duration;
 		if (item->hasAttribute(DURATION_ATTRIBUTE_ID))
 			duration = static_cast<float>(item->getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0f);
@@ -38,12 +59,12 @@ float Modifier::getValue() const
 
 bool Modifier::isStackable() const
 {
-	return modifier_->isStackable();
+	return modifier_.lock()->isStackable();
 }
 
-Character* Modifier::getCharacter()
+std::shared_ptr<Character> Modifier::getCharacter()
 {
-	return character_;
+	return character_.lock();
 }
 
 bool Modifier::isOffensive()
@@ -93,7 +114,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Modifier& modifier)
 {
 	os	<< "{\"association\":\"" << modifier.getAssociationName()
 	<< "\", \"attributeID\":\"" << modifier.attributeID_
-	<< "\", \"modifier\":" << *modifier.modifier_ << "}";
+	<< "\", \"modifier\":" << *modifier.modifier_.lock() << "}";
 	return os;
 }
 

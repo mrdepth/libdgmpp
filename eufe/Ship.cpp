@@ -43,7 +43,7 @@ public:
 };
 
 
-Ship::Ship(Engine* engine, TypeID typeID, Character* owner) : Item(engine, typeID, owner), capacitorSimulator_(this, false, 6 * 60 * 60 * 1000), heatSimulator_(this), disallowAssistance_(UNKNOWN), disallowOffensiveModifiers_(UNKNOWN)
+Ship::Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), capacitorSimulator_(std::dynamic_pointer_cast<Ship>(shared_from_this()), false, 6 * 60 * 60 * 1000), heatSimulator_(std::dynamic_pointer_cast<Ship>(shared_from_this())), disallowAssistance_(UNKNOWN), disallowOffensiveModifiers_(UNKNOWN)
 {
 	reset();
 }
@@ -68,27 +68,19 @@ Ship::~Ship(void)
 	{
 		ModulesList modulesTmp = modules_;
 		modules_.clear();
-		
-		ModulesList::iterator i, end = modulesTmp.end();
-		for (i = modulesTmp.begin(); i != end; i++)
-			delete *i;
 	}
 	
 	{
 		DronesList dronesTmp = drones_;
 		drones_.clear();
-		
-		DronesList::iterator i, end = dronesTmp.end();
-		for (i = dronesTmp.begin(); i != end; i++)
-			delete *i;
 	}
 }
 
-Module* Ship::addModule(TypeID typeID, bool force)
+std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool force)
 {
 	try
 	{
-		Module* module = new Module(engine_, typeID, this);
+		std::shared_ptr<Module> module = std::make_shared<Module>(engine_, typeID, this);
 		if (force || canFit(module))
 		{
 			modules_.push_back(module);
@@ -99,12 +91,11 @@ Module* Ship::addModule(TypeID typeID, bool force)
 				module->setState(Module::STATE_ACTIVE);
 			else if (module->canHaveState(Module::STATE_ONLINE))
 				module->setState(Module::STATE_ONLINE);
-			engine_->reset(this);
+			engine_.lock()->reset(shared_from_this());
 			return module;
 		}
 		else {
-			delete module;
-			return NULL;
+			return nullptr;
 		}
 	}
 	catch(Item::UnknownTypeIDException)
@@ -113,7 +104,7 @@ Module* Ship::addModule(TypeID typeID, bool force)
 	}
 }
 
-Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
+std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, TypeID typeID) {
 	try
 	{
 		//Module* newModule =  new Module(engine_, typeID, this);
@@ -123,9 +114,9 @@ Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
 		i--;
 		
 		Module::State state = oldModule->getState();
-		Charge* charge = oldModule->getCharge();
+		std::shared_ptr<Charge> charge = oldModule->getCharge();
 		TypeID chargeTypeID = charge ? charge->getTypeID() : 0;
-		Ship* target = oldModule->getTarget();
+		std::shared_ptr<Ship> target = oldModule->getTarget();
 		
 		
 		//removeModule(oldModule);
@@ -136,9 +127,8 @@ Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
 		oldModule->removeEffects(Effect::CATEGORY_GENERIC);
 		
 		modules_.remove(oldModule);
-		delete oldModule;
 		
-		Module* newModule = addModule(typeID);
+		std::shared_ptr<Module> newModule = addModule(typeID);
 		if (newModule) {
 			modules_.remove(newModule);
 			i++;
@@ -150,7 +140,7 @@ Module* Ship::replaceModule(Module* oldModule, TypeID typeID) {
 			if (newModule->canHaveState(state))
 				newModule->setState(state);
 		}
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 		
 		if (slot == Module::SLOT_SUBSYSTEM) {
 			static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
@@ -180,7 +170,7 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 	ModulesList modules;
 	for (auto i: typeIDs)
 	{
-		Module* module;
+		std::shared_ptr<Module> module;
 		try
 		{
 			module = addModule(i);
@@ -255,45 +245,41 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 	return modules;*/
 }
 
-void Ship::removeModule(Module* module) {
-	if (std::find(modules_.begin(), modules_.end(), module) != modules_.end()) {
-		Module::Slot slot = module->getSlot();
-		
-		module->setState(Module::STATE_OFFLINE);
-		module->clearTarget();
-		module->removeEffects(Effect::CATEGORY_GENERIC);
-		
-		modules_.remove(module);
-		delete module;
-		engine_->reset(this);
-		
-		if (slot == Module::SLOT_SUBSYSTEM) {
-			static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
-			for (int i = 0; i < 3; i++) {
-				int n = getFreeSlots(slots[i]);
-				if (n < 0) {
-					ModulesList modules;
-					getModules(slots[i], std::inserter(modules, modules.begin()));
-					auto j = modules.rbegin();
-					for (; n < 0; j++, n++) {
-						removeModule(*j);
-					}
+void Ship::removeModule(std::shared_ptr<Module> module) {
+	Module::Slot slot = module->getSlot();
+	
+	module->setState(Module::STATE_OFFLINE);
+	module->clearTarget();
+	module->removeEffects(Effect::CATEGORY_GENERIC);
+	
+	modules_.remove(module);
+	engine_.lock()->reset(shared_from_this());
+	
+	if (slot == Module::SLOT_SUBSYSTEM) {
+		static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
+		for (int i = 0; i < 3; i++) {
+			int n = getFreeSlots(slots[i]);
+			if (n < 0) {
+				ModulesList modules;
+				getModules(slots[i], std::inserter(modules, modules.begin()));
+				auto j = modules.rbegin();
+				for (; n < 0; j++, n++) {
+					removeModule(*j);
 				}
 			}
 		}
-		
 	}
 }
 
-Drone* Ship::addDrone(TypeID typeID)
+std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
 {
 	try
 	{
-		Drone* drone = new Drone(engine_, typeID, this);
+		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine_, typeID, this);
 		drones_.push_back(drone);
 		drone->addEffects(Effect::CATEGORY_GENERIC);
 		drone->addEffects(Effect::CATEGORY_TARGET);
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 		
 		return drone;
 	}
@@ -303,16 +289,13 @@ Drone* Ship::addDrone(TypeID typeID)
 	}
 }
 
-void Ship::removeDrone(Drone* drone)
+void Ship::removeDrone(std::shared_ptr<Drone> drone)
 {
-	if (std::find(drones_.begin(), drones_.end(), drone) != drones_.end()) {
-		drone->removeEffects(Effect::CATEGORY_TARGET);
-		drone->removeEffects(Effect::CATEGORY_GENERIC);
-		
-		drones_.remove(drone);
-		delete drone;
-		engine_->reset(this);
-	}
+	drone->removeEffects(Effect::CATEGORY_TARGET);
+	drone->removeEffects(Effect::CATEGORY_GENERIC);
+	
+	drones_.remove(drone);
+	engine_.lock()->reset(shared_from_this());
 }
 
 
@@ -344,7 +327,7 @@ const DronesList& Ship::getProjectedDrones()
 	return projectedDrones_;
 }
 
-bool Ship::canFit(Module* module)
+bool Ship::canFit(std::shared_ptr<Module> module)
 {
 	if (getFreeSlots(module->getSlot()) == 0)
 		return false;
@@ -505,17 +488,18 @@ bool Ship::isDisallowedOffensiveModifiers()
 Environment Ship::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = this;
-	environment["Ship"] = this;
-	Item* character = getOwner();
-	Item* gang = character ? character->getOwner() : NULL;
+	environment["Self"] = shared_from_this();
+	environment["Ship"] = shared_from_this();
+	std::shared_ptr<Item> character = getOwner();
+	std::shared_ptr<Item> gang = character ? character->getOwner() : NULL;
+	std::shared_ptr<Area> area = engine_.lock()->getArea();
 	
 	if (character)
 		environment["Char"] = character;
 	if (gang)
 		environment["Gang"] = gang;
-	if (engine_->getArea())
-		environment["Area"] = engine_->getArea();
+	if (area)
+		environment["Area"] = area;
 	return environment;
 }
 
@@ -570,9 +554,9 @@ void Ship::addEffects(Effect::Category category)
 				(*i)->addEffects(Effect::CATEGORY_GENERIC);
 		}
 
-		Area* area = engine_->getArea();
+		std::shared_ptr<Area> area = engine_.lock()->getArea();
 		if (area)
-			area->addEffectsToShip(this);
+			area->addEffectsToShip(shared_from_this());
 	}
 }
 
@@ -594,54 +578,54 @@ void Ship::removeEffects(Effect::Category category)
 		}
 
 
-		Area* area = engine_->getArea();
+		std::shared_ptr<Area> area = engine_.lock()->getArea();
 		if (area)
-			area->removeEffectsFromShip(this);
+			area->removeEffectsFromShip(shared_from_this());
 	}
 }
 
-void Ship::addLocationGroupModifier(Modifier* modifier)
+void Ship::addLocationGroupModifier(std::shared_ptr<Modifier> modifier)
 {
 	Item::addLocationGroupModifier(modifier);
 	if (modifier->getAttributeID() == ACTIVATION_BLOCKED_ATTRIBUTE_ID)
 		updateActiveStatus();
 }
 
-void Ship::addLocationRequiredSkillModifier(Modifier* modifier)
+void Ship::addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier)
 {
 	Item::addLocationRequiredSkillModifier(modifier);
 	if (modifier->getAttributeID() == ACTIVATION_BLOCKED_ATTRIBUTE_ID)
 		updateActiveStatus();
 }
 
-void Ship::addProjectedModule(Module* module)
+void Ship::addProjectedModule(std::shared_ptr<Module> module)
 {
 	if (std::find(projectedModules_.begin(), projectedModules_.end(), module) == projectedModules_.end())
 	{
 		projectedModules_.push_back(module);
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 	}
 }
 
-void Ship::removeProjectedModule(Module* module)
+void Ship::removeProjectedModule(std::shared_ptr<Module> module)
 {
 	projectedModules_.remove(module);
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
-void Ship::addProjectedDrone(Drone* drone)
+void Ship::addProjectedDrone(std::shared_ptr<Drone> drone)
 {
 	if (std::find(projectedDrones_.begin(), projectedDrones_.end(), drone) == projectedDrones_.end())
 	{
 		projectedDrones_.push_back(drone);
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 	}
 }
 
-void Ship::removeProjectedDrone(Drone* drone)
+void Ship::removeProjectedDrone(std::shared_ptr<Drone> drone)
 {
 	projectedDrones_.remove(drone);
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
 const CapacitorSimulator& Ship::getCapacitorSimulator()
@@ -662,7 +646,7 @@ const DamagePattern& Ship::getDamagePattern()
 void Ship::setDamagePattern(const DamagePattern& damagePattern)
 {
 	damagePattern_ = damagePattern;
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
 //Calculations
@@ -879,7 +863,7 @@ const Tank& Ship::getSustainableTank()
 			sustainableTank_ = getTank();
 		else
 		{
-			Item* currentCharacter = getOwner();
+			std::shared_ptr<Item> currentCharacter = getOwner();
 
 			sustainableTank_ = getTank();
 			
@@ -900,13 +884,13 @@ const Tank& Ship::getSustainableTank()
 					Modifier::Association association = (*j)->getAssociation();
 					if (association == Modifier::ASSOCIATION_ADD_RATE || Modifier::ASSOCIATION_SUB_RATE)
 					{
-						Item* character = (*j)->getCharacter();
+						std::shared_ptr<Item> character = (*j)->getCharacter();
 						bool projected = character && character != currentCharacter;
 						
-						Item* item = (*j)->getModifier()->getOwner();
+						std::shared_ptr<Item> item = (*j)->getModifier()->getOwner();
 						if (!projected && item->getCategoryID() == MODULE_CATEGORY_ID)
 						{
-							Module* module = dynamic_cast<Module*>(item);
+							std::shared_ptr<Module> module = std::dynamic_pointer_cast<Module>(item);
 							assert(module);
 							
 							std::shared_ptr<Repairer> repairer (new Repairer);
@@ -1125,7 +1109,7 @@ float Ship::getOrbitRadiusWithAngularVelocity(float v) {
 int Ship::getMaxTargets()
 {
 	int maxTargetsShip = static_cast<int>(getAttribute(MAX_LOCKED_TARGETS_ATTRIBUTE_ID)->getValue());
-	Item* character = getOwner();
+	std::shared_ptr<Item> character = getOwner();
 	if (character)
 	{
 		int maxTargetsChar = static_cast<int>(character->getAttribute(MAX_LOCKED_TARGETS_ATTRIBUTE_ID)->getValue());
@@ -1316,7 +1300,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationGroupModifier*>(*i);
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(*i);
 		}
 	}
 	
@@ -1332,7 +1316,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationRequiredSkillModifier*>(*i);
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(*i);
 		}
 	}
 

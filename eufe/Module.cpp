@@ -13,7 +13,7 @@
 
 using namespace eufe;
 
-Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(NULL), reloadTime_(0), forceReload_(false), charge_(NULL)
+Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr)
 {
 	addExtraAttribute(IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, "isOnline");
 	
@@ -104,9 +104,7 @@ Module::Module(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID
 
 Module::~Module(void)
 {
-	if (charge_)
-		delete charge_;
-	if (target_)
+	if (target_.lock())
 		clearTarget();
 }
 
@@ -140,16 +138,14 @@ bool Module::canHaveState(State state)
 		if (getAttribute(ACTIVATION_BLOCKED_ATTRIBUTE_ID)->getValue() > 0)
 			return false;
 			
-		Ship* ship = dynamic_cast<Ship*>(getOwner());
+		std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
 		
 		if (hasAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID))
 		{
 			int maxGroupActive = static_cast<int>(getAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID)->getValue()) - 1;
 			
-			const ModulesList& modules = ship->getModules();
-			ModulesList::const_iterator i, end = modules.end();
-			for (i = modules.begin(); i != end; i++)
-				if (*i != this && (*i)->getState() >= Module::STATE_ACTIVE && (*i)->getGroupID() == groupID_)
+			for (auto i: ship->getModules())
+				if (i.get() != this && i->getState() >= Module::STATE_ACTIVE && i->getGroupID() == groupID_)
 					maxGroupActive--;
 			if (maxGroupActive < 0)
 				canHaveState = false;
@@ -198,17 +194,19 @@ void Module::setState(State state)
 				addEffects(Effect::CATEGORY_OVERLOADED);
 		}
 		state_ = state;
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 	}
 }
 
 Environment Module::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = this;
-	Item* ship = getOwner();
-	Item* character = ship ? ship->getOwner() : NULL;
-	Item* gang = character ? character->getOwner() : NULL;
+	environment["Self"] = shared_from_this();
+	std::shared_ptr<Item> ship = getOwner();
+	std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
+	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+	std::shared_ptr<Area> area = engine_.lock()->getArea();
+	std::shared_ptr<Item> target = target_.lock();
 	
 	if (character)
 		environment["Char"] = character;
@@ -216,10 +214,10 @@ Environment Module::getEnvironment()
 		environment["Ship"] = ship;
 	if (gang)
 		environment["Gang"] = gang;
-	if (engine_->getArea())
-		environment["Area"] = engine_->getArea();
-	if (target_)
-		environment["Target"] = target_;
+	if (area)
+		environment["Area"] = area;
+	if (target)
+		environment["Target"] = target;
 	return environment;
 }
 
@@ -292,39 +290,36 @@ void Module::reset()
 		charge_->reset();
 }
 
-Charge* Module::setCharge(TypeID typeID)
+std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 {
 	try
 	{
-		Charge* charge = new Charge(engine_, typeID, this);
+		std::shared_ptr<Charge> charge = typeID ? std::make_shared<Charge>(engine_.lock(), typeID, this) : nullptr;
 		if (charge)
 		{
 			if (canFit(charge))
 			{
 				if (charge_) {
 					charge_->removeEffects(Effect::CATEGORY_GENERIC);
-					delete charge_;
 				}
 				charge_ = charge;
 				charge_->addEffects(Effect::CATEGORY_GENERIC);
-				engine_->reset(this);
+				engine_.lock()->reset(shared_from_this());
 			}
 			else {
-				delete charge;
-				return NULL;
+				return nullptr;
 			}
 		}
 		else if (charge_) {
 			charge_->removeEffects(Effect::CATEGORY_GENERIC);
-			engine_->reset(this);
-			delete charge_;
-			charge_ = NULL;
+			charge_ = nullptr;
+			engine_.lock()->reset(shared_from_this());
 		}
 		return charge_;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -333,14 +328,13 @@ void Module::clearCharge()
 	if (charge_)
 	{
 		charge_->removeEffects(Effect::CATEGORY_GENERIC);
-		delete charge_;
-		charge_ = NULL;
-		engine_->reset(this);
+		charge_ = nullptr;
+		engine_.lock()->reset(shared_from_this());
 	}
 }
 
 
-Charge* Module::getCharge()
+std::shared_ptr<Charge> Module::getCharge()
 {
 	return charge_;
 }
@@ -363,7 +357,7 @@ void Module::removeCharge()
 	setCharge(0);
 }
 
-bool Module::canFit(Charge* charge)
+bool Module::canFit(std::shared_ptr<Charge> charge)
 {
 	if (!charge)
 		return true;
@@ -391,20 +385,21 @@ bool Module::requireTarget()
 	return requireTarget_;
 }
 
-void Module::setTarget(Ship* target)
+void Module::setTarget(std::shared_ptr<Ship> target)
 {
 	if (target == getOwner())
 		throw BadTargetException("self");
 	
-	if (target_)
+	std::shared_ptr<Ship> oldTarget = target_.lock();
+	if (oldTarget)
 	{
 		removeEffects(Effect::CATEGORY_TARGET);
-		target_->removeProjectedModule(this);
+		oldTarget->removeProjectedModule(std::dynamic_pointer_cast<Module>(shared_from_this()));
 	}
 	target_ = target;
 	if (target)
 	{
-		target->addProjectedModule(this);
+		target->addProjectedModule(std::dynamic_pointer_cast<Module>(shared_from_this()));
 		addEffects(Effect::CATEGORY_TARGET);
 	}
 }
@@ -414,9 +409,9 @@ void Module::clearTarget()
 	setTarget(NULL);
 }
 
-Ship* Module::getTarget()
+std::shared_ptr<Ship> Module::getTarget()
 {
-	return target_;
+	return target_.lock();
 }
 
 float Module::getReloadTime()
@@ -616,7 +611,7 @@ float Module::getLifeTime()
 {
 	if (lifeTime_ < 0)
 	{
-		Ship* ship = dynamic_cast<Ship*>(getOwner());
+		std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
 		ship->updateHeatDamage();
 	}
 	return lifeTime_;
@@ -635,7 +630,7 @@ void Module::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		Item* item = charge_ ? static_cast<Item*>(charge_) : static_cast<Item*>(this);
+		std::shared_ptr<Item> item = charge_ ?: shared_from_this();
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
 			volley_ += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))
@@ -738,7 +733,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationGroupModifier*>(*i);
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(*i);
 		}
 	}
 	
@@ -754,7 +749,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationRequiredSkillModifier*>(*i);
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(*i);
 		}
 	}
 	

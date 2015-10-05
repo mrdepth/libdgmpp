@@ -51,18 +51,17 @@ namespace eufe {
 		
 		virtual void reset();
 		
-		Charge* setCharge(Charge* charge);
-		Charge* setCharge(TypeID typeID);
+		std::shared_ptr<Charge> setCharge(TypeID typeID);
 		void clearCharge();
-		Charge* getCharge();
+		std::shared_ptr<Charge> getCharge();
 		const std::vector<TypeID>& getChargeGroups();
 		int getChargeSize();
 		void removeCharge();
-		bool canFit(Charge* charge);
+		bool canFit(std::shared_ptr<Charge> charge);
 		bool requireTarget();
-		void setTarget(Ship* target = NULL);
+		void setTarget(std::shared_ptr<Ship> target = nullptr);
 		void clearTarget();
-		Ship* getTarget();
+		std::shared_ptr<Ship> getTarget();
 		float getReloadTime();
 		
 		//Calculations
@@ -88,7 +87,7 @@ namespace eufe {
 	protected:
 		State state_;
 		friend class Ship;
-		Module(Engine* engine, TypeID typeID, Item* owner = NULL);
+		Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner = nullptr);
 		virtual ~Module(void);
 
 		
@@ -100,9 +99,9 @@ namespace eufe {
 		bool forceReload_;
 		Slot slot_;
 		Hardpoint hardpoint_;
-		Charge* charge_;
+		std::shared_ptr<Charge> charge_;
 		std::vector<TypeID> chargeGroups_;
-		Ship* target_;
+		std::weak_ptr<Ship> target_;
 		float reloadTime_;
 		int shots_;
 		

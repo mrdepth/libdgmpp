@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-EffectEnergyDestabilizationNewInterpreter::EffectEnergyDestabilizationNewInterpreter(Engine* engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectEnergyDestabilizationNewInterpreter::EffectEnergyDestabilizationNewInterpreter(std::shared_ptr<Engine> engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 
@@ -23,12 +23,12 @@ bool EffectEnergyDestabilizationNewInterpreter::addEffect(const Environment& env
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
-		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
-										  Modifier::ASSOCIATION_SUB_RATE,
-										  Self->second->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID),
-										  isAssistance_,
-										  isOffensive_,
-										  dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(CHARGE_ATTRIBUTE_ID,
+																		Modifier::ASSOCIATION_SUB_RATE,
+																		Self->second->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID),
+																		isAssistance_,
+																		isOffensive_,
+																		std::dynamic_pointer_cast<Character>(Char->second));
 		Target->second->addItemModifier(modifier);
 	}
 	return 1;
@@ -41,19 +41,13 @@ bool EffectEnergyDestabilizationNewInterpreter::removeEffect(const Environment& 
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
-		Modifier* modifier = new Modifier(CHARGE_ATTRIBUTE_ID,
-										  Modifier::ASSOCIATION_SUB_RATE,
-										  Self->second->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID),
-										  isAssistance_,
-										  isOffensive_,
-										  dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(CHARGE_ATTRIBUTE_ID,
+																		Modifier::ASSOCIATION_SUB_RATE,
+																		Self->second->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID),
+																		isAssistance_,
+																		isOffensive_,
+																		std::dynamic_pointer_cast<Character>(Char->second));
 		Target->second->removeItemModifier(modifier);
-		delete modifier;
 	}
 	return 1;
-}
-
-EffectInterpreter* EffectEnergyDestabilizationNewInterpreter::clone() const
-{
-	return new EffectEnergyDestabilizationNewInterpreter(*this);
 }

@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-Implant::Implant(Engine* engine, TypeID typeID, Character* owner) : Item(engine, typeID, owner)
+Implant::Implant(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner)
 {
 	slot_ = static_cast<int>(getAttribute(IMPLANTNESS_ATTRIBUTE_ID)->getValue());
 }
@@ -24,10 +24,11 @@ int Implant::getSlot()
 Environment Implant::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = this;
-	Character* character = dynamic_cast<Character*>(getOwner());
-	Item* ship = character ? character->getShip() : NULL;
-	Item* gang = character ? character->getOwner() : NULL;
+	environment["Self"] = shared_from_this();
+	std::shared_ptr<Character> character = std::dynamic_pointer_cast<Character>(getOwner());
+	std::shared_ptr<Item> ship = character ? character->getShip() : nullptr;
+	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+	std::shared_ptr<Area> area = engine_.lock()->getArea();
 	
 	if (character)
 		environment["Char"] = character;
@@ -35,7 +36,7 @@ Environment Implant::getEnvironment()
 		environment["Ship"] = ship;
 	if (gang)
 		environment["Gang"] = gang;
-	if (engine_->getArea())
-		environment["Area"] = engine_->getArea();
+	if (area)
+		environment["Area"] = area;
 	return environment;
 }

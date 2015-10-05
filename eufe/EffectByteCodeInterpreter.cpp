@@ -94,7 +94,7 @@ EffectByteCodeInterpreter::OperandsVector EffectByteCodeInterpreter::InitOperand
 	return operands;
 }
 
-EffectByteCodeInterpreter::EffectByteCodeInterpreter(Engine* engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectByteCodeInterpreter::EffectByteCodeInterpreter(std::shared_ptr<Engine> engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 	byteCode_ = new Byte[size];
 	memcpy(byteCode_, byteCode, size);
@@ -144,11 +144,6 @@ bool EffectByteCodeInterpreter::removeEffect(const Environment& environment)
 		result = false;
 	}
 	return result;
-}
-
-EffectInterpreter* EffectByteCodeInterpreter::clone() const
-{
-	return new EffectByteCodeInterpreter(*this);
 }
 
 EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::execute(const Byte *expression)
@@ -648,7 +643,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 		std::stringstream sql;
 		sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
 		
-		std::shared_ptr<FetchResult> result = engine_->getSqlConnector()->exec(sql.str().c_str());
+		std::shared_ptr<FetchResult> result = engine_.lock()->getSqlConnector()->exec(sql.str().c_str());
 		if (result->next())
 		{
 			TypeID typeID = result->getInt(0);
@@ -729,12 +724,12 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand34()
 	if (environment_.find("Gang") == environment_.end())
 		return false;
 	
-	Item* gang = environment_["Gang"];
+	std::shared_ptr<Item> gang = environment_["Gang"];
 	TypeID groupID = arg1;
 	TypeID attributeID = arg2;
-	std::shared_ptr<ItemWrapper> item = std::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
+	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(gang);
 	item->setGroupID(groupID);
-	return std::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
+	return std::make_shared<AttributeWrapper>(item, attributeID);
 }
 
 //"35, GET, calculate attribute, %(arg1)s.%(arg2)s()"
@@ -838,10 +833,10 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand40()
 	if (environment_.find("Gang") == environment_.end())
 		return false;
 	
-	Item* gang = environment_["Gang"];
+	std::shared_ptr<Item> gang = environment_["Gang"];
 	TypeID attributeID = arg1;
-	std::shared_ptr<ItemWrapper> item = std::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
-	return std::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
+	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(gang);
+	return std::make_shared<AttributeWrapper>(item, attributeID);
 }
 
 //"41, IF, if construct, If(%(arg1)s), Then (%(arg2)s)"
@@ -1258,12 +1253,12 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand64()
 	if (environment_.find("Gang") == environment_.end())
 		return false;
 	
-	Item* gang = environment_["Gang"];
+	std::shared_ptr<Item> gang = environment_["Gang"];
 	TypeID skillID = arg1;
 	TypeID attributeID = arg2;
-	std::shared_ptr<ItemWrapper> item = std::shared_ptr<ItemWrapper>(new ItemWrapper(gang));
+	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(gang);
 	item->setRequiredSkillID(skillID);
-	return std::shared_ptr<AttributeWrapper> (new AttributeWrapper(item, attributeID));
+	return std::make_shared<AttributeWrapper>(item, attributeID);
 	
 }
 
@@ -1409,185 +1404,179 @@ EffectByteCodeInterpreter::AssociationWrapper::AssociationWrapper(std::shared_pt
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 
-	Modifier* modifier = new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->addItemModifier(modifier);
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
 
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 
-	Modifier* modifier = new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<LocationGroupModifier>(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
 	item->addLocationGroupModifier(modifier);
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	Modifier* modifier = new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->addLocationModifier(modifier);
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addLocationRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	Modifier* modifier = new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->addLocationRequiredSkillModifier(modifier);
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	//	Attribute* attribute = item->getAttribute(attributeID).get();
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	Modifier* modifier = new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->addLocationRequiredSkillModifier(modifier);
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	Modifier* modifier = new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->removeItemModifier(modifier);
-	delete modifier;
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	Modifier* modifier = new LocationGroupModifier(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<LocationGroupModifier>(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
 	item->removeLocationGroupModifier(modifier);
-	delete modifier;
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	Modifier* modifier = new Modifier(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->removeLocationModifier(modifier);
-	delete modifier;
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	Modifier* modifier = new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->removeLocationRequiredSkillModifier(modifier);
-	delete modifier;
 	return true;
 }
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
 	Environment::const_iterator end = environment.end();
-	Attribute* attribute = Self->second->getAttribute(attributeID);
+	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
 	
-	Character* character = NULL;
+	std::shared_ptr<Character> character = nullptr;
 	if (Char != end)
-		character = dynamic_cast<Character*>(Char->second);
+		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	Modifier* modifier = new LocationRequiredSkillModifier(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
+	std::shared_ptr<Modifier> modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->removeLocationRequiredSkillModifier(modifier);
-	delete modifier;
 	return true;
 }
 

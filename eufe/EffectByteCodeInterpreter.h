@@ -14,14 +14,14 @@ namespace eufe {
 		class ItemWrapper
 		{
 		public:
-			ItemWrapper(Item* item) : item_(item) {}
-			Item* getItem() const {return item_;}
+			ItemWrapper(std::shared_ptr<Item> item) : item_(item) {}
+			std::shared_ptr<Item> getItem() const {return item_.lock();}
 			TypeID getGroupID() const {return groupID_;}
 			TypeID getRequiredSkillID() const {return requiredSkillID_;}
 			void setGroupID(TypeID groupID) {groupID_ = groupID;}
 			void setRequiredSkillID(TypeID requiredSkillID) {requiredSkillID_ = requiredSkillID;}
 		private:
-			Item* item_;
+			std::weak_ptr<Item> item_;
 			TypeID groupID_;
 			TypeID requiredSkillID_;
 		};
@@ -128,19 +128,18 @@ namespace eufe {
         typedef std::invalid_argument BadOperandException;
         typedef std::invalid_argument UnknownTypeNameException;
 
-		EffectByteCodeInterpreter(Engine* engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive);
+		EffectByteCodeInterpreter(std::shared_ptr<Engine> engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive);
 		EffectByteCodeInterpreter(const EffectByteCodeInterpreter& from);
 		virtual ~EffectByteCodeInterpreter();
 		
 		virtual bool addEffect(const Environment& environment);
 		virtual bool removeEffect(const Environment& environment);
-		virtual EffectInterpreter* clone() const;
 
 	private:
 		typedef Argument (EffectByteCodeInterpreter::*OperandPtr)();
 		typedef std::vector<EffectByteCodeInterpreter::OperandPtr> OperandsVector;
 		
-		Engine* engine_;
+		std::weak_ptr<Engine> engine_;
 		
 		bool isAssistance_;
 		bool isOffensive_;

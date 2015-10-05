@@ -12,7 +12,7 @@ namespace eufe {
 		virtual Environment getEnvironment();
 	protected:
 		friend class Character;
-		Implant(Engine* engine, TypeID typeID, Character* owner);
+		Implant(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner);
 		virtual ~Implant(void);
 
 	private:

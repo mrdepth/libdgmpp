@@ -33,7 +33,7 @@ namespace eufe {
 		virtual ~Gang(void);
 
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
-		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(std::shared_ptr<Item> item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
 		
 	private:
 		CharactersList pilots_;

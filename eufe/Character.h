@@ -7,23 +7,23 @@ namespace eufe {
 	class Character : public Item
 	{
 	public:
-		Ship* getShip();
-		Ship* setShip(TypeID typeID);
+		std::shared_ptr<Ship> getShip();
+		std::shared_ptr<Ship> setShip(TypeID typeID);
 
 		virtual Environment getEnvironment();
 		
 		virtual void reset();
 		
-		Skill* getSkill(TypeID typeID);
+		std::shared_ptr<Skill> getSkill(TypeID typeID);
 		
 		bool emptyImplantSlot(int slot);
 		bool emptyBoosterSlot(int slot);
-		Implant* getImplant(int slot);
-		Booster* getBooster(int slot);
-		Implant* addImplant(TypeID typeID);
-		Booster* addBooster(TypeID typeID);
-		void removeImplant(Implant* implant);
-		void removeBooster(Booster* booster);
+		std::shared_ptr<Implant> getImplant(int slot);
+		std::shared_ptr<Booster> getBooster(int slot);
+		std::shared_ptr<Implant> addImplant(TypeID typeID);
+		std::shared_ptr<Booster> addBooster(TypeID typeID);
+		void removeImplant(std::shared_ptr<Implant> implant);
+		void removeBooster(std::shared_ptr<Booster> booster);
 		const ImplantsList& getImplants();
 		const BoostersList& getBoosters();
 		
@@ -39,19 +39,19 @@ namespace eufe {
 		friend std::ostream& operator<<(std::ostream& os, Character& character);
 	protected:
 		friend class Gang;
-		Character(Engine* engine, Gang* owner = NULL, const char* characterName = "");
+		Character(std::shared_ptr<Engine> engine, std::shared_ptr<Gang> owner = nullptr, const char* characterName = "");
 		virtual ~Character(void);
 
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
 
 	private:
-		Ship* ship_;
+		std::shared_ptr<Ship> ship_;
 		SkillsMap skills_;
 		ImplantsList implants_;
 		BoostersList boosters_;
 		std::string characterName_;
 
-		Skill* addSkill(TypeID typeID, int skillLevel, bool isLearned);
-		void removeSkill(Skill* skill);
+		std::shared_ptr<Skill> addSkill(TypeID typeID, int skillLevel, bool isLearned);
+		void removeSkill(std::shared_ptr<Skill> skill);
 	};
 }

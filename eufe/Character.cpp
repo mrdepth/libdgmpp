@@ -15,7 +15,7 @@ using namespace eufe;
 
 static const TypeID CHARACTER_TYPE_ID = 1381;
 
-Character::Character(Engine* engine, Gang* owner, const char* characterName) : Item(engine, CHARACTER_TYPE_ID, owner), characterName_(characterName), ship_(NULL)
+Character::Character(std::shared_ptr<Engine> engine, std::shared_ptr<Gang> owner, const char* characterName) : Item(engine, CHARACTER_TYPE_ID, owner), characterName_(characterName), ship_(nullptr)
 {
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
 	while (result->next())
@@ -23,71 +23,51 @@ Character::Character(Engine* engine, Gang* owner, const char* characterName) : I
 		TypeID skillID = result->getInt(0);
 		addSkill(skillID, 0, false);
 	}
-	engine_->reset(this);
+	engine->reset(shared_from_this());
 }
 
 Character::~Character(void)
 {
-	Ship* shipTmp = ship_;
-	ship_ = NULL;
-	delete shipTmp;
+	std::shared_ptr<Ship> shipTmp = ship_;
+	ship_ = nullptr;
 	
-	{
-		SkillsMap::iterator i, end = skills_.end();
-		for (i = skills_.begin(); i != end; i++)
-			delete i->second;
-		skills_.clear();
-	}
-	
-	{
-		ImplantsList::iterator i, end = implants_.end();
-		for (i = implants_.begin(); i != end; i++)
-			delete *i;
-		implants_.clear();
-	}
-
-	{
-		BoostersList::iterator i, end = boosters_.end();
-		for (i = boosters_.begin(); i != end; i++)
-			delete *i;
-		boosters_.clear();
-	}
+	skills_.clear();
+	implants_.clear();
+	boosters_.clear();
 }
 
-Ship* Character::getShip()
+std::shared_ptr<Ship> Character::getShip()
 {
 	return ship_;
 }
 
-Ship* Character::setShip(TypeID typeID)
+std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 {
 	try
 	{
-		Ship* ship = new Ship(engine_, typeID, this);
+		std::shared_ptr<Ship> ship = std::make_shared<Ship>(engine_, typeID, this);
 		
 		removeEffects(Effect::CATEGORY_GENERIC);
-		if (ship_)
-			delete ship_;
-		
 		ship_ = ship;
 		
 		if (ship_)
 			addEffects(Effect::CATEGORY_GENERIC);
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 		return ship;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
 Environment Character::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = this;
-	environment["Char"] = this;
-	Item* gang = getOwner();
+	environment["Self"] = shared_from_this();
+	environment["Char"] = shared_from_this();
+	std::shared_ptr<Item> gang = getOwner();
+	std::shared_ptr<Area> area = engine_.lock()->getArea();
 
 	if (ship_)
 		environment["Ship"] = ship_;
@@ -95,8 +75,8 @@ Environment Character::getEnvironment()
 	if (gang)
 		environment["Gang"] = gang;
 	
-	if (engine_->getArea())
-		environment["Area"] = engine_->getArea();
+	if (area)
+		environment["Area"] = area;
 	return environment;
 }
 
@@ -125,11 +105,11 @@ void Character::reset()
 	}
 }
 
-Skill* Character::addSkill(TypeID typeID, int skillLevel, bool isLearned)
+std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool isLearned)
 {
 	try
 	{
-		Skill* skill = new Skill(engine_, typeID, skillLevel, isLearned, this);
+		std::shared_ptr<Skill> skill = std::make_shared<Skill>(engine_, typeID, skillLevel, isLearned, this);
 		skills_[typeID] = skill;
 //	if (getOwner() && ship_ != NULL)
 		skill->addEffects(Effect::CATEGORY_GENERIC);
@@ -141,15 +121,14 @@ Skill* Character::addSkill(TypeID typeID, int skillLevel, bool isLearned)
 	}
 }
 
-void Character::removeSkill(Skill* skill)
+void Character::removeSkill(std::shared_ptr<Skill> skill)
 {
 //	if (getOwner() && ship_ != NULL)
 		skill->removeEffects(Effect::CATEGORY_GENERIC);
 	skills_.erase(skill->getTypeID());
-	delete skill;
 }
 
-Skill* Character::getSkill(TypeID typeID)
+std::shared_ptr<Skill> Character::getSkill(TypeID typeID)
 {
 	return skills_[typeID];
 }
@@ -164,35 +143,33 @@ bool Character::emptyBoosterSlot(int slot)
 	return !getBooster(slot);
 }
 
-Implant* Character::getImplant(int slot)
+std::shared_ptr<Implant> Character::getImplant(int slot)
 {
-	ImplantsList::iterator i, end = implants_.end();
-	for (i = implants_.begin(); i != end; i++)
-		if ((*i)->getSlot() == slot)
-			return *i;
-	return NULL;
+	auto i = std::find_if(implants_.begin(), implants_.end(), [=](std::shared_ptr<Implant> implant) {
+		return implant->getSlot() == slot;
+	});
+	return i != implants_.end() ? *i : nullptr;
 }
 
-Booster* Character::getBooster(int slot)
+std::shared_ptr<Booster> Character::getBooster(int slot)
 {
-	BoostersList::iterator i, end = boosters_.end();
-	for (i = boosters_.begin(); i != end; i++)
-		if ((*i)->getSlot() == slot)
-			return *i;
-	return NULL;
+	auto i = std::find_if(boosters_.begin(), boosters_.end(), [=](std::shared_ptr<Booster> booster) {
+		return booster->getSlot() == slot;
+	});
+	return i != boosters_.end() ? *i : nullptr;
 }
 
-Implant* Character::addImplant(TypeID typeID)
+std::shared_ptr<Implant> Character::addImplant(TypeID typeID)
 {
 	try
 	{
-		Implant* implant = new Implant(engine_, typeID, this);
-		Implant* currentImplant = getImplant(implant->getSlot());
+		std::shared_ptr<Implant> implant = std::make_shared<Implant>(engine_, typeID, this);
+		std::shared_ptr<Implant> currentImplant = getImplant(implant->getSlot());
 		if (currentImplant)
 			removeImplant(currentImplant);
 		implants_.push_back(implant);
 		implant->addEffects(Effect::CATEGORY_GENERIC);
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 		return implant;
 
 	}
@@ -202,17 +179,17 @@ Implant* Character::addImplant(TypeID typeID)
 	}
 }
 
-Booster* Character::addBooster(TypeID typeID)
+std::shared_ptr<Booster> Character::addBooster(TypeID typeID)
 {
 	try
 	{
-		Booster* booster = new Booster(engine_, typeID, this);
-		Booster* currentBooster = getBooster(booster->getSlot());
+		std::shared_ptr<Booster> booster = std::make_shared<Booster>(engine_, typeID, this);
+		std::shared_ptr<Booster> currentBooster = getBooster(booster->getSlot());
 		if (currentBooster)
 			removeBooster(currentBooster);
 		boosters_.push_back(booster);
 		booster->addEffects(Effect::CATEGORY_GENERIC);
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 		return booster;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -221,25 +198,23 @@ Booster* Character::addBooster(TypeID typeID)
 	}
 }
 
-void Character::removeImplant(Implant* implant)
+void Character::removeImplant(std::shared_ptr<Implant> implant)
 {
 	if (implant != NULL)
 	{
 		implant->removeEffects(Effect::CATEGORY_GENERIC);
 		implants_.remove(implant);
-		delete implant;
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 	}
 }
 
-void Character::removeBooster(Booster* booster)
+void Character::removeBooster(std::shared_ptr<Booster> booster)
 {
 	if (booster != NULL)
 	{
 		booster->removeEffects(Effect::CATEGORY_GENERIC);
 		boosters_.remove(booster);
-		delete booster;
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 	}
 }
 
@@ -337,7 +312,7 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 		else
 			i->second->setSkillLevel(0);
 	}
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
 void Character::setAllSkillsLevel(int level)
@@ -345,14 +320,15 @@ void Character::setAllSkillsLevel(int level)
 	SkillsMap::iterator i, end = skills_.end();
 	for (i = skills_.begin(); i != end; i++)
 		i->second->setSkillLevel(level);
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
-std::insert_iterator<ModifiersList> Character::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	outIterator = Item::getLocationModifiers(attribute, outIterator);
-	if (owner_)
-		outIterator = owner_->getLocationModifiers(attribute, outIterator);
+	std::shared_ptr<Item> owner = owner_.lock();
+	if (owner)
+		outIterator = owner->getLocationModifiers(attribute, outIterator);
 	return outIterator;
 }
 
@@ -436,7 +412,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationGroupModifier*>(*i);
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(*i);
 		}
 	}
 	
@@ -452,7 +428,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationRequiredSkillModifier*>(*i);
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(*i);
 		}
 	}
 

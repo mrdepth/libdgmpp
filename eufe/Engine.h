@@ -33,7 +33,7 @@ namespace eufe {
 		std::shared_ptr<Area> getArea();
 		std::shared_ptr<ControlTower> getControlTower();
 		
-		void reset(Item* item);
+		void reset(std::shared_ptr<Item> item);
 		
 		friend std::ostream& operator<<(std::ostream& os, Engine& engine);
 

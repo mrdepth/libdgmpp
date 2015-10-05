@@ -52,7 +52,7 @@ private:
 class GangLocationRequiredSkillModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier>, bool>
 {
 public:
-	GangLocationRequiredSkillModifierMatchFunction(TypeID attributeID, Item* item, std::shared_ptr<Character> fleetBooster, std::shared_ptr<Character> wingBooster, std::shared_ptr<Character> squadBooster) : attributeID_(attributeID), item_(item), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
+	GangLocationRequiredSkillModifierMatchFunction(TypeID attributeID, std::shared_ptr<Item> item, std::shared_ptr<Character> fleetBooster, std::shared_ptr<Character> wingBooster, std::shared_ptr<Character> squadBooster) : attributeID_(attributeID), item_(item), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
 	bool operator() (std::shared_ptr<Modifier> modifier)
 	{
 		std::shared_ptr<Character> character = modifier->getCharacter();
@@ -61,7 +61,7 @@ public:
 	}
 private:
 	TypeID attributeID_;
-	Item* item_;
+	std::shared_ptr<Item> item_;
 	std::shared_ptr<Character> fleetBooster_;
 	std::shared_ptr<Character> wingBooster_;
 	std::shared_ptr<Character> squadBooster_;
@@ -217,7 +217,7 @@ std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<A
 	return outIterator;
 }
 
-std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(std::shared_ptr<Item> item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	ModifiersList list1;
 	std::remove_copy_if(locationGroupModifiers_.begin(),

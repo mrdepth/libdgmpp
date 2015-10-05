@@ -6,7 +6,7 @@
 
 using namespace eufe;
 
-Charge::Charge(Engine* engine, TypeID typeID, Item* owner) : Item(engine, typeID, owner)
+Charge::Charge(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner)
 {
 }
 
@@ -17,12 +17,12 @@ Charge::~Charge()
 Environment Charge::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = this;
+	environment["Self"] = shared_from_this();
 
 	Item* module = getOwner();
-	Item* ship = module ? module->getOwner() : NULL;
-	Item* character = ship ? ship->getOwner() : NULL;
-	Item* gang = character ? character->getOwner() : NULL;
+	Item* ship = module ? module->getOwner() : nullptr;
+	Item* character = ship ? ship->getOwner() : nullptr;
+	Item* gang = character ? character->getOwner() : nullptr;
 	
 	if (character)
 		environment["Char"] = character;

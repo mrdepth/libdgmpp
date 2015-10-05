@@ -6,9 +6,9 @@ namespace eufe {
 	class LocationGroupModifier : public Modifier
 	{
 	public:
-		LocationGroupModifier(TypeID attributeID, Association association, Attribute* modifier, TypeID groupID, bool isAssistance, bool isOffensive, Character* character = NULL);
+		LocationGroupModifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> modifier, TypeID groupID, bool isAssistance, bool isOffensive, std::shared_ptr<Character> character = nullptr);
 		virtual ~LocationGroupModifier(void);
-		virtual bool isMatch(Item* item) const;
+		virtual bool isMatch(std::shared_ptr<Item> item) const;
 		TypeID getGroupID() const {return groupID_;}
 		
 		friend std::ostream& operator<<(std::ostream& os, LocationGroupModifier& modifier);

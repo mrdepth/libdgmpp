@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-EffectHardPointModifierEffectInterpreter::EffectHardPointModifierEffectInterpreter(Engine* engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectHardPointModifierEffectInterpreter::EffectHardPointModifierEffectInterpreter(std::shared_ptr<Engine> engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 
@@ -22,19 +22,19 @@ bool EffectHardPointModifierEffectInterpreter::addEffect(const Environment& envi
 	Environment::const_iterator Ship = environment.find("Ship");
 	Environment::const_iterator end = environment.end();
 	if (Ship != end && Self != end && Char != end) {
-		Modifier* modifierLauncher = new Modifier(LAUNCHER_SLOTS_LEFT_ATTRIBUTE_ID,
-												  Modifier::ASSOCIATION_MOD_ADD,
-												  Self->second->getAttribute(LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
-												  isAssistance_,
-												  isOffensive_,
-												  dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifierLauncher = std::make_shared<Modifier>(LAUNCHER_SLOTS_LEFT_ATTRIBUTE_ID,
+																				Modifier::ASSOCIATION_MOD_ADD,
+																				Self->second->getAttribute(LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
+																				isAssistance_,
+																				isOffensive_,
+																				std::dynamic_pointer_cast<Character>(Char->second));
 		
-		Modifier* modifierTurrent = new Modifier(TURRET_SLOTS_LEFT_ATTRIBUTE_ID,
-												 Modifier::ASSOCIATION_MOD_ADD,
-												 Self->second->getAttribute(TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
-												 isAssistance_,
-												 isOffensive_,
-												 dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifierTurrent = std::make_shared<Modifier>(TURRET_SLOTS_LEFT_ATTRIBUTE_ID,
+																			   Modifier::ASSOCIATION_MOD_ADD,
+																			   Self->second->getAttribute(TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
+																			   isAssistance_,
+																			   isOffensive_,
+																			   std::dynamic_pointer_cast<Character>(Char->second));
 		
 		Ship->second->addItemModifier(modifierLauncher);
 		Ship->second->addItemModifier(modifierTurrent);
@@ -49,30 +49,23 @@ bool EffectHardPointModifierEffectInterpreter::removeEffect(const Environment& e
 	Environment::const_iterator Ship = environment.find("Ship");
 	Environment::const_iterator end = environment.end();
 	if (Ship != end && Self != end && Char != end) {
-		Modifier* modifierLauncher = new Modifier(LAUNCHER_SLOTS_LEFT_ATTRIBUTE_ID,
-												  Modifier::ASSOCIATION_MOD_ADD,
-												  Self->second->getAttribute(LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
-												  isAssistance_,
-												  isOffensive_,
-												  dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifierLauncher = std::make_shared<Modifier>(LAUNCHER_SLOTS_LEFT_ATTRIBUTE_ID,
+																				Modifier::ASSOCIATION_MOD_ADD,
+																				Self->second->getAttribute(LAUNCHER_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
+																				isAssistance_,
+																				isOffensive_,
+																				std::dynamic_pointer_cast<Character>(Char->second));
 		
-		Modifier* modifierTurrent = new Modifier(TURRET_SLOTS_LEFT_ATTRIBUTE_ID,
-												 Modifier::ASSOCIATION_MOD_ADD,
-												 Self->second->getAttribute(TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
-												 isAssistance_,
-												 isOffensive_,
-												 dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifierTurrent = std::make_shared<Modifier>(TURRET_SLOTS_LEFT_ATTRIBUTE_ID,
+																			   Modifier::ASSOCIATION_MOD_ADD,
+																			   Self->second->getAttribute(TURRET_HARD_POINT_MODIFIER_ATTRIBUTE_ID),
+																			   isAssistance_,
+																			   isOffensive_,
+																			   std::dynamic_pointer_cast<Character>(Char->second));
 		
 		Ship->second->removeItemModifier(modifierLauncher);
 		Ship->second->removeItemModifier(modifierTurrent);
 
-		delete modifierLauncher;
-		delete modifierTurrent;
 	}
 	return 1;
-}
-
-EffectInterpreter* EffectHardPointModifierEffectInterpreter::clone() const
-{
-	return new EffectHardPointModifierEffectInterpreter(*this);
 }

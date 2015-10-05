@@ -12,7 +12,7 @@ namespace eufe {
 		virtual Environment getEnvironment();
 	protected:
 		friend class Character;
-		Booster(Engine* engine, TypeID typeID, Character* owner);
+		Booster(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner);
 		virtual ~Booster(void);
 
 	private:

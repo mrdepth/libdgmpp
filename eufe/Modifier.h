@@ -22,15 +22,15 @@ namespace eufe {
 			ASSOCIATION_SUB_RATE
 		};
 
-		Modifier(TypeID attributeID, Association association, Attribute* modifier, bool isAssistance, bool isOffensive, Character* character = NULL);
+		Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> modifier, bool isAssistance, bool isOffensive, std::shared_ptr<Character> character = nullptr);
 		virtual ~Modifier(void);
-		virtual bool isMatch(Item* item) const {return true;}
-		TypeID getAttributeID() const {return attributeID_;}
-		Attribute* getModifier() const {return modifier_;}
-		Association getAssociation() const {return association_;}
+		virtual bool isMatch(std::shared_ptr<Item> item) const;
+		TypeID getAttributeID() const;
+		std::shared_ptr<Attribute> getModifier() const;
+		Association getAssociation() const;
 		float getValue() const;
 		bool isStackable() const;
-		Character* getCharacter();
+		std::shared_ptr<Character> getCharacter();
 		bool isOffensive();
 		bool isAssistance();
 
@@ -39,9 +39,9 @@ namespace eufe {
 
 	private:
 		TypeID attributeID_;
-		Attribute* modifier_;
+		std::weak_ptr<Attribute> modifier_;
 		Association association_;
-		Character* character_;
+		std::weak_ptr<Character> character_;
 		bool isOffensive_;
 		bool isAssistance_;
 	};

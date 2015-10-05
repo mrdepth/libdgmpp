@@ -16,7 +16,7 @@ namespace eufe {
 		
 	protected:
 		friend class Character;
-		Skill(Engine* engine, TypeID typeID, int skillLevel, bool isLearned, Character* owner);
+		Skill(std::shared_ptr<Engine> engine, TypeID typeID, int skillLevel, bool isLearned, std::shared_ptr<Character> owner);
 		virtual ~Skill(void);
 	private:
 		bool isLearned_;

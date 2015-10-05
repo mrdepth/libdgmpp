@@ -11,7 +11,7 @@ namespace eufe {
 	protected:
 		friend class Module;
 		friend class Drone;
-		Charge(Engine* engine, TypeID typeID, Item* owner);
+		Charge(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner);
 		virtual ~Charge(void);
 	};
 	

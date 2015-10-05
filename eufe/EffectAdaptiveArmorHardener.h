@@ -6,13 +6,12 @@ namespace eufe {
 	class EffectAdaptiveArmorHardener : public EffectInterpreter
 	{
 	public:
-		EffectAdaptiveArmorHardener(Engine* engine, bool isAssistance, bool isOffensive);
+		EffectAdaptiveArmorHardener(std::shared_ptr<Engine> engine, bool isAssistance, bool isOffensive);
 		virtual ~EffectAdaptiveArmorHardener();
 		virtual bool addEffect(const Environment& environment);
 		virtual bool removeEffect(const Environment& environment);
-		virtual EffectInterpreter* clone() const;
 	private:
-		Engine* engine_;
+		std::weak_ptr<Engine> engine_;
 		bool isAssistance_;
 		bool isOffensive_;
 	};

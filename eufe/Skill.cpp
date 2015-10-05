@@ -7,10 +7,10 @@
 
 using namespace eufe;
 
-Skill::Skill(Engine* engine, TypeID typeID, int skillLevel, bool isLearned, Character* owner) : Item(engine, typeID, owner), isLearned_(isLearned)
+Skill::Skill(std::shared_ptr<Engine> engine, TypeID typeID, int skillLevel, bool isLearned, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), isLearned_(isLearned)
 {
 	AttributesMap::iterator i = attributes_.find(SKILL_LEVEL_ATTRIBUTE_ID);
-	Attribute* attribute;
+	std::shared_ptr<Attribute> attribute;
 	if (i != attributes_.end())
 		attribute = i->second;
 	else
@@ -40,10 +40,11 @@ void Skill::setSkillLevel(int level)
 Environment Skill::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = this;
-	Character* character = dynamic_cast<Character*>(getOwner());
-	Item* ship = character ? character->getShip() : NULL;
-	Item* gang = character ? character->getOwner() : NULL;
+	environment["Self"] = shared_from_this();
+	std::shared_ptr<Character> character = std::dynamic_pointer_cast<Character>(getOwner());
+	std::shared_ptr<Item> ship = character ? character->getShip() : nullptr;
+	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+	std::shared_ptr<Area> area = engine_.lock()->getArea();
 	
 	if (character)
 		environment["Char"] = character;
@@ -51,7 +52,7 @@ Environment Skill::getEnvironment()
 		environment["Ship"] = ship;
 	if (gang)
 		environment["Gang"] = gang;
-	if (engine_->getArea())
-		environment["Area"] = engine_->getArea();
+	if (area)
+		environment["Area"] = area;
 	return environment;
 }

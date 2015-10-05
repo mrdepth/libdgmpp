@@ -97,7 +97,7 @@ std::shared_ptr<ControlTower> Engine::getControlTower()
 	return controlTower_;
 }
 
-void Engine::reset(Item* item)
+void Engine::reset(std::shared_ptr<Item> item)
 {
 	if (!item)
 		return;
@@ -105,7 +105,7 @@ void Engine::reset(Item* item)
 	std::shared_ptr<Item> owner = item->getOwner();
 	
 	while (owner) {
-		item = owner.get();
+		item = owner;
 		owner = item->getOwner();
 	}
 	item->reset();

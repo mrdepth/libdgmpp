@@ -11,11 +11,11 @@ namespace eufe {
 		class Drain
 		{
 		public:
-			Drain(Module* module, float cycleTime = 0, float capacitorNeed = 0, float clipSize = 0, float reloadTime = 0) : cycleTime_(cycleTime), capacitorNeed_(capacitorNeed), clipSize_(clipSize), reloadTime_(reloadTime), module_(module) {};
+			Drain(std::shared_ptr<Module> module, float cycleTime = 0, float capacitorNeed = 0, float clipSize = 0, float reloadTime = 0) : cycleTime_(cycleTime), capacitorNeed_(capacitorNeed), clipSize_(clipSize), reloadTime_(reloadTime), module_(module) {};
 			
 			bool operator == (const Drain& other)
 			{
-				return module_ == other.module_;
+				return module_.lock() == other.module_.lock();
 			}
 
 			float cycleTime_;
@@ -23,7 +23,7 @@ namespace eufe {
 			float clipSize_;
 			float reloadTime_;
 		private:
-			Module* module_;
+			std::weak_ptr<Module> module_;
 		};
 		
 		struct State {
@@ -36,7 +36,7 @@ namespace eufe {
 		};
 
 		
-		CapacitorSimulator(Ship* ship, bool reload, int maxTime);
+		CapacitorSimulator(std::shared_ptr<Ship> ship, bool reload, int maxTime);
 		virtual ~CapacitorSimulator(void);
 		
 		void reset();
@@ -55,9 +55,9 @@ namespace eufe {
 		
 		
 	private:
-		typedef std::vector<State*> StatesVector;
+		typedef std::vector<std::shared_ptr<State>> StatesVector;
 		
-		Ship* ship_;
+		std::weak_ptr<Ship> ship_;
 		
 		StatesVector states_;
 		

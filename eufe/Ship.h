@@ -19,20 +19,20 @@ namespace eufe {
 			SCAN_TYPE_MULTISPECTRAL
 		};
 		
-		Module* addModule(TypeID typeID, bool force = false);
-		Module* replaceModule(Module* oldModule, TypeID typeID);
+		std::shared_ptr<Module> addModule(TypeID typeID, bool force = false);
+		std::shared_ptr<Module> replaceModule(std::shared_ptr<Module> oldModule, TypeID typeID);
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
-		void removeModule(Module* module);
+		void removeModule(std::shared_ptr<Module> module);
 		
-		Drone* addDrone(TypeID typeID);
-		void removeDrone(Drone* drone);
+		std::shared_ptr<Drone> addDrone(TypeID typeID);
+		void removeDrone(std::shared_ptr<Drone> drone);
 		
 		const ModulesList& getModules();
 		void getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator);
 		const DronesList& getDrones();
 		const ModulesList& getProjectedModules();
 		const DronesList& getProjectedDrones();
-		bool canFit(Module* module);
+		bool canFit(std::shared_ptr<Module> module);
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();
 
@@ -43,14 +43,14 @@ namespace eufe {
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
-		virtual void addLocationGroupModifier(Modifier* modifier);
-		virtual void addLocationRequiredSkillModifier(Modifier* modifier);
+		virtual void addLocationGroupModifier(std::shared_ptr<Modifier> modifier);
+		virtual void addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier);
 
 		
-		void addProjectedModule(Module* module);
-		void removeProjectedModule(Module* module);
-		void addProjectedDrone(Drone* drone);
-		void removeProjectedDrone(Drone* drone);
+		void addProjectedModule(std::shared_ptr<Module> module);
+		void removeProjectedModule(std::shared_ptr<Module> module);
+		void addProjectedDrone(std::shared_ptr<Drone> drone);
+		void removeProjectedDrone(std::shared_ptr<Drone> drone);
 		
 		const CapacitorSimulator& getCapacitorSimulator();
 		const HeatSimulator& getHeatSimulator();
@@ -136,7 +136,7 @@ namespace eufe {
 		
 	protected:
 		friend class Character;
-		Ship(Engine* engine, TypeID typeID, Character* owner = NULL);
+		Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner = nullptr);
 		virtual ~Ship(void);
 
 	private:

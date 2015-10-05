@@ -13,12 +13,12 @@ namespace eufe {
 
 		virtual Environment getEnvironment();
 		
-		void setTarget(Ship* target = NULL);
+		void setTarget(std::shared_ptr<Ship> target = nullptr);
 		void clearTarget();
-		Ship* getTarget();
+		std::shared_ptr<Ship> getTarget();
 
 		bool dealsDamage();
-		Charge* getCharge();
+		std::shared_ptr<Charge> getCharge();
 		
 		void setActive(bool active);
 		bool isActive();
@@ -39,12 +39,12 @@ namespace eufe {
 
 	protected:
 		friend class Ship;
-		Drone(Engine* engine, TypeID typeID, Ship* owner = NULL);
+		Drone(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Ship> owner = nullptr);
 		virtual ~Drone(void);
 
 	private:
-		Ship* target_;
-		Charge* charge_;
+		std::weak_ptr<Ship> target_;
+		std::shared_ptr<Charge> charge_;
 		
 		float volley_;
 		float dps_;

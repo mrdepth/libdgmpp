@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-EffectSlotModifierInterpreter::EffectSlotModifierInterpreter(Engine* engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectSlotModifierInterpreter::EffectSlotModifierInterpreter(std::shared_ptr<Engine> engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 
@@ -22,26 +22,26 @@ bool EffectSlotModifierInterpreter::addEffect(const Environment& environment)
 	Environment::const_iterator Ship = environment.find("Ship");
 	Environment::const_iterator end = environment.end();
 	if (Ship != end && Self != end && Char != end) {
-		Modifier* modifierHiSlot = new Modifier(HI_SLOTS_ATTRIBUTE_ID,
-												Modifier::ASSOCIATION_MOD_ADD,
-												Self->second->getAttribute(HI_SLOT_MODIFIER_ATTRIBUTE_ID),
-												isAssistance_,
-												isOffensive_,
-												dynamic_cast<Character*>(Char->second));
-
-		Modifier* modifierMedSlot = new Modifier(MED_SLOTS_ATTRIBUTE_ID,
-												Modifier::ASSOCIATION_MOD_ADD,
-												Self->second->getAttribute(MED_SLOT_MODIFIER_ATTRIBUTE_ID),
-												isAssistance_,
-												isOffensive_,
-												dynamic_cast<Character*>(Char->second));
-
-		Modifier* modifierLowSlot = new Modifier(LOW_SLOTS_ATTRIBUTE_ID,
-												Modifier::ASSOCIATION_MOD_ADD,
-												Self->second->getAttribute(LOW_SLOT_MODIFIER_ATTRIBUTE_ID),
-												isAssistance_,
-												isOffensive_,
-												dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifierHiSlot = std::make_shared<Modifier>(HI_SLOTS_ATTRIBUTE_ID,
+																			  Modifier::ASSOCIATION_MOD_ADD,
+																			  Self->second->getAttribute(HI_SLOT_MODIFIER_ATTRIBUTE_ID),
+																			  isAssistance_,
+																			  isOffensive_,
+																			  std::dynamic_pointer_cast<Character>(Char->second));
+		
+		std::shared_ptr<Modifier> modifierMedSlot = std::make_shared<Modifier>(MED_SLOTS_ATTRIBUTE_ID,
+																			   Modifier::ASSOCIATION_MOD_ADD,
+																			   Self->second->getAttribute(MED_SLOT_MODIFIER_ATTRIBUTE_ID),
+																			   isAssistance_,
+																			   isOffensive_,
+																			   std::dynamic_pointer_cast<Character>(Char->second));
+		
+		std::shared_ptr<Modifier> modifierLowSlot = std::make_shared<Modifier>(LOW_SLOTS_ATTRIBUTE_ID,
+																			   Modifier::ASSOCIATION_MOD_ADD,
+																			   Self->second->getAttribute(LOW_SLOT_MODIFIER_ATTRIBUTE_ID),
+																			   isAssistance_,
+																			   isOffensive_,
+																			   std::dynamic_pointer_cast<Character>(Char->second));
 
 		Ship->second->addItemModifier(modifierHiSlot);
 		Ship->second->addItemModifier(modifierMedSlot);
@@ -57,39 +57,30 @@ bool EffectSlotModifierInterpreter::removeEffect(const Environment& environment)
 	Environment::const_iterator Ship = environment.find("Ship");
 	Environment::const_iterator end = environment.end();
 	if (Ship != end && Self != end && Char != end) {
-		Modifier* modifierHiSlot = new Modifier(HI_SLOTS_ATTRIBUTE_ID,
-												Modifier::ASSOCIATION_MOD_ADD,
-												Self->second->getAttribute(HI_SLOT_MODIFIER_ATTRIBUTE_ID),
-												isAssistance_,
-												isOffensive_,
-												dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifierHiSlot = std::make_shared<Modifier>(HI_SLOTS_ATTRIBUTE_ID,
+																			  Modifier::ASSOCIATION_MOD_ADD,
+																			  Self->second->getAttribute(HI_SLOT_MODIFIER_ATTRIBUTE_ID),
+																			  isAssistance_,
+																			  isOffensive_,
+																			  std::dynamic_pointer_cast<Character>(Char->second));
 		
-		Modifier* modifierMedSlot = new Modifier(MED_SLOTS_ATTRIBUTE_ID,
-												 Modifier::ASSOCIATION_MOD_ADD,
-												 Self->second->getAttribute(MED_SLOT_MODIFIER_ATTRIBUTE_ID),
-												 isAssistance_,
-												 isOffensive_,
-												 dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifierMedSlot = std::make_shared<Modifier>(MED_SLOTS_ATTRIBUTE_ID,
+																			   Modifier::ASSOCIATION_MOD_ADD,
+																			   Self->second->getAttribute(MED_SLOT_MODIFIER_ATTRIBUTE_ID),
+																			   isAssistance_,
+																			   isOffensive_,
+																			   std::dynamic_pointer_cast<Character>(Char->second));
 		
-		Modifier* modifierLowSlot = new Modifier(LOW_SLOTS_ATTRIBUTE_ID,
-												 Modifier::ASSOCIATION_MOD_ADD,
-												 Self->second->getAttribute(LOW_SLOT_MODIFIER_ATTRIBUTE_ID),
-												 isAssistance_,
-												 isOffensive_,
-												 dynamic_cast<Character*>(Char->second));
+		std::shared_ptr<Modifier> modifierLowSlot = std::make_shared<Modifier>(LOW_SLOTS_ATTRIBUTE_ID,
+																			   Modifier::ASSOCIATION_MOD_ADD,
+																			   Self->second->getAttribute(LOW_SLOT_MODIFIER_ATTRIBUTE_ID),
+																			   isAssistance_,
+																			   isOffensive_,
+																			   std::dynamic_pointer_cast<Character>(Char->second));
 		
 		Ship->second->removeItemModifier(modifierHiSlot);
 		Ship->second->removeItemModifier(modifierMedSlot);
 		Ship->second->removeItemModifier(modifierLowSlot);
-		delete modifierHiSlot;
-		delete modifierMedSlot;
-		delete modifierLowSlot;
 	}
 	return 1;
-}
-
-
-EffectInterpreter* EffectSlotModifierInterpreter::clone() const
-{
-	return new EffectSlotModifierInterpreter(*this);
 }
