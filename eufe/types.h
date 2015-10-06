@@ -5,7 +5,6 @@
 #include <string>
 #include <map>
 #include <list>
-//#include <boost/shared_ptr.hpp>
 #include <iterator>
 #include <set>
 #include <memory>
@@ -13,7 +12,6 @@
 namespace eufe {
 	class Item;
 	class Attribute;
-//	class Association;
 	class Effect;
 	class Ship;
 	class Module;
@@ -38,9 +36,7 @@ namespace eufe {
 	
 	typedef std::map<eufe::TypeID, std::shared_ptr<Attribute>> AttributesMap;
 	typedef std::list<std::shared_ptr<Attribute>> AttributesList;
-//	typedef std::list<std::shared_ptr<Association>> AssociationsList;
 	typedef std::list<std::shared_ptr<Effect> > EffectsList;
-//	typedef std::map<std::string, Association*> AssociationsMap;
 	typedef std::map<std::string, std::shared_ptr<Item>> Environment;
 	typedef std::list<std::shared_ptr<Module>> ModulesList;
 	typedef std::list<std::shared_ptr<Drone>> DronesList;

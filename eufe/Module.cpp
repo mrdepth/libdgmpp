@@ -142,10 +142,9 @@ void Module::addEffects(Effect::Category category)
 {
 	Environment environment = getEnvironment();
 	
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getEffectID() != ONLINE_EFFECT_ID && (*i)->getCategory() == category)
-			(*i)->addEffect(environment);
+	for (auto i: effects_)
+		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
+			i->addEffect(environment);
 	
 	if (category == Effect::CATEGORY_GENERIC)
 	{
@@ -171,10 +170,9 @@ void Module::removeEffects(Effect::Category category)
 {
 	Environment environment = getEnvironment();
 
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getEffectID() != ONLINE_EFFECT_ID && (*i)->getCategory() == category)
-			(*i)->removeEffect(environment);
+	for (auto i: effects_)
+		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
+			i->removeEffect(environment);
 //	if (category == Effect::CATEGORY_GENERIC && charge_ != nullptr)
 //		charge_->removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
@@ -290,9 +288,8 @@ bool Module::canFit(std::shared_ptr<Charge> charge)
 	
 	TypeID chargeGroup = charge->getGroupID();
 	
-	std::vector<TypeID>::iterator i, end = chargeGroups_.end();
-	for (i = chargeGroups_.begin(); i != end; i++)
-		if (*i == chargeGroup)
+	for (auto i: chargeGroups_)
+		if (i == chargeGroup)
 			return true;
 	return false;
 }
@@ -614,10 +611,9 @@ void Module::lazyLoad() {
 	requireTarget_ = false;
 	int n = 0;
 	
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
+	for (auto i: effects_)
 	{
-		Effect::Category category = (*i)->getCategory();
+		Effect::Category category = i->getCategory();
 		if (category == Effect::CATEGORY_ACTIVE)
 		{
 			n++;
@@ -662,15 +658,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	
 	if (module.attributes_.size() > 0)
 	{
-		AttributesMap::const_iterator i, end = module.attributes_.end();
 		bool isFirst = true;
-		for (i = module.attributes_.begin(); i != end; i++)
+		for (auto i: module.attributes_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *i->second;
+			os << *i.second;
 		}
 	}
 	
@@ -678,15 +673,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	
 	if (module.effects_.size() > 0)
 	{
-		EffectsList::const_iterator i, end = module.effects_.end();
 		bool isFirst = true;
-		for (i = module.effects_.begin(); i != end; i++)
+		for (auto i: module.effects_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -699,15 +693,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	
 	if (module.itemModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = module.itemModifiers_.end();
 		bool isFirst = true;
-		for (i = module.itemModifiers_.begin(); i != end; i++)
+		for (auto i: module.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -715,15 +708,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	
 	if (module.locationModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = module.locationModifiers_.end();
 		bool isFirst = true;
-		for (i = module.locationModifiers_.begin(); i != end; i++)
+		for (auto i: module.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -731,15 +723,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	
 	if (module.locationGroupModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = module.locationGroupModifiers_.end();
 		bool isFirst = true;
-		for (i = module.locationGroupModifiers_.begin(); i != end; i++)
+		for (auto i: module.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(*i);
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
 		}
 	}
 	
@@ -747,15 +738,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	
 	if (module.locationRequiredSkillModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = module.locationRequiredSkillModifiers_.end();
 		bool isFirst = true;
-		for (i = module.locationRequiredSkillModifiers_.begin(); i != end; i++)
+		for (auto i: module.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(*i);
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
 		}
 	}
 	

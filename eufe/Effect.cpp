@@ -29,9 +29,6 @@
 #include "EffectAdaptiveArmorHardener.h"
 #include "EffectNaniteRepairPasteArmorDamageBonus.h"
 
-//#include <boost/shared_ptr.hpp>
-//#include <boost/weak_ptr.hpp>
-
 using namespace eufe;
 
 const TypeID eufe::ONLINE_EFFECT_ID = 16;
@@ -181,12 +178,11 @@ Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID) : engine_(engine
 		
 		
 		effectName_ = result->getText(4);
-		std::string::iterator i, end = effectName_.end();
-		for (i = effectName_.begin(); i != end; i++)
+		for (auto i: effectName_)
 		{
-			char c = *i;
+			char c = i;
 			if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
-				*i = ' ';
+				i = ' ';
 		}
 	}
 }

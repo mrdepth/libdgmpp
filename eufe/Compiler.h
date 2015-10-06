@@ -4,7 +4,6 @@
 #include <sqlite3.h>
 
 //#include "ThirdParty/sqlite3.h"
-//#include <boost/exception/all.hpp>
 
 
 namespace eufe {

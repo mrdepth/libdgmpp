@@ -3,7 +3,6 @@
 #include "Attribute.h"
 #include "Effect.h"
 #include "Engine.h"
-//#include <boost/lexical_cast.hpp>
 #include <sstream>
 #include <functional>
 #include <algorithm>
@@ -101,12 +100,6 @@ Item::Item(std::shared_ptr<Item> owner) : owner_(owner), context_(), engine_(), 
 
 Item::~Item(void)
 {
-	attributes_.clear();
-	
-	ModifiersList* lists[] = {&itemModifiers_, &locationModifiers_, &locationGroupModifiers_, &locationRequiredSkillModifiers_};
-	for (auto list: lists) {
-		list->clear();
-	}
 }
 
 std::shared_ptr<Engine> Item::getEngine()
@@ -153,10 +146,9 @@ std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 {
 	if (!loaded_)
 		lazyLoad();
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getEffectID() == effectID)
-			return *i;
+	for (auto i: effects_)
+		if (i->getEffectID() == effectID)
+			return i;
     throw EffectDidNotFoundException(std::to_string(effectID));
 }
 
@@ -190,9 +182,8 @@ bool Item::hasEffect(TypeID effectID)
 {
 	if (!loaded_)
 		lazyLoad();
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getEffectID() == effectID)
+	for (auto i: effects_)
+		if (i->getEffectID() == effectID)
 			return true;
 	return false;
 }
@@ -217,10 +208,9 @@ void Item::addEffects(Effect::Category category)
 	if (!loaded_)
 		lazyLoad();
 	Environment environment = getEnvironment();
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getCategory() == category)
-			(*i)->addEffect(environment);
+	for (auto i: effects_)
+		if (i->getCategory() == category)
+			i->addEffect(environment);
 }
 
 void Item::removeEffects(Effect::Category category)
@@ -228,19 +218,17 @@ void Item::removeEffects(Effect::Category category)
 	if (!loaded_)
 		lazyLoad();
 	Environment environment = getEnvironment();
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getCategory() == category)
-			(*i)->removeEffect(environment);
+	for (auto i: effects_)
+		if (i->getCategory() == category)
+			i->removeEffect(environment);
 }
 
 void Item::reset()
 {
 	if (!loaded_)
 		lazyLoad();
-	AttributesMap::iterator i, end = attributes_.end();
-	for (i = attributes_.begin(); i != end; i++)
-		i->second->reset();
+	for (auto i: attributes_)
+		i.second->reset();
 }
 
 std::insert_iterator<ModifiersList> Item::getModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
@@ -434,19 +422,16 @@ void Item::lazyLoad() {
 std::set<std::shared_ptr<Item>> Item::getAffectors() {
 	ModifiersList modifiers;
 	{
-		auto attributes = getAttributes();
-		auto attribute = attributes.begin(), end = attributes.end();
-		for (;attribute != end; attribute++)
-			getModifiers(attribute->second, std::inserter(modifiers, modifiers.begin()));
+		for (auto i: getAttributes())
+			getModifiers(i.second, std::inserter(modifiers, modifiers.begin()));
 		}
 	
 	std::set<std::shared_ptr<Item>> items;
 	{
-		auto modifier = modifiers.begin(), end = modifiers.end();
-		for (; modifier != end; modifier++) {
-			std::shared_ptr<Item> item = (*modifier)->getModifier()->getOwner();
+		for (auto i: modifiers) {
+			std::shared_ptr<Item> item = i->getModifier()->getOwner();
 			if (item.get() != this)
-				items.insert((*modifier)->getModifier()->getOwner());
+				items.insert(i->getModifier()->getOwner());
 		}
 	}
 	
@@ -459,15 +444,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 	
 	if (item.attributes_.size() > 0)
 	{
-		AttributesMap::const_iterator i, end = item.attributes_.end();
 		bool isFirst = true;
-		for (i = item.attributes_.begin(); i != end; i++)
+		for (auto i: item.attributes_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *i->second;
+			os << *i.second;
 		}
 	}
 	
@@ -475,15 +459,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 	
 	if (item.effects_.size() > 0)
 	{
-		EffectsList::const_iterator i, end = item.effects_.end();
 		bool isFirst = true;
-		for (i = item.effects_.begin(); i != end; i++)
+		for (auto i: item.effects_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -491,15 +474,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 	
 	if (item.itemModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = item.itemModifiers_.end();
 		bool isFirst = true;
-		for (i = item.itemModifiers_.begin(); i != end; i++)
+		for (auto i: item.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 
@@ -507,15 +489,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 	
 	if (item.locationModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = item.locationModifiers_.end();
 		bool isFirst = true;
-		for (i = item.locationModifiers_.begin(); i != end; i++)
+		for (auto i: item.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 
@@ -523,15 +504,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 	
 	if (item.locationGroupModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = item.locationGroupModifiers_.end();
 		bool isFirst = true;
-		for (i = item.locationGroupModifiers_.begin(); i != end; i++)
+		for (auto i: item.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>((*i));
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
 		}
 	}
 
@@ -539,15 +519,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)
 	
 	if (item.locationRequiredSkillModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = item.locationRequiredSkillModifiers_.end();
 		bool isFirst = true;
-		for (i = item.locationRequiredSkillModifiers_.begin(); i != end; i++)
+		for (auto i: item.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>((*i));
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
 		}
 	}
 

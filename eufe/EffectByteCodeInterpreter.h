@@ -1,7 +1,6 @@
 #pragma once
 #include "EffectInterpreter.h"
 #include "Modifier.h"
-//#include <boost/exception/all.hpp>
 #include <stdexcept>
 #include <vector>
 

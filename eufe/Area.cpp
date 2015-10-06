@@ -27,10 +27,9 @@ void Area::addEffectsToShip(std::shared_ptr<Item> ship)
 	if (gang)
 		environment["Gang"] = gang;
 	
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-		if ((*i)->getCategory() == Effect::CATEGORY_SYSTEM)
-			(*i)->addEffect(environment);
+	for (auto i: effects_)
+		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
+			i->addEffect(environment);
 }
 
 void Area::removeEffectsFromShip(std::shared_ptr<Item> ship)

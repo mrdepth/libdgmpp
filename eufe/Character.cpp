@@ -79,23 +79,12 @@ void Character::reset()
 	if (ship_ != nullptr)
 		ship_->reset();
 	
-	{
-		SkillsMap::iterator i, end = skills_.end();
-		for (i = skills_.begin(); i != end; i++)
-			i->second->reset();
-	}
-	
-	{
-		ImplantsList::iterator i, end = implants_.end();
-		for (i = implants_.begin(); i != end; i++)
-			(*i)->reset();
-	}
-	
-	{
-		BoostersList::iterator i, end = boosters_.end();
-		for (i = boosters_.begin(); i != end; i++)
-			(*i)->reset();
-	}
+	for (auto i: skills_)
+		i.second->reset();
+	for (auto i: implants_)
+		i->reset();
+	for (auto i: boosters_)
+		i->reset();
 }
 
 std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool isLearned)
@@ -231,23 +220,12 @@ void Character::addEffects(Effect::Category category)
 			if (ship_)
 				ship_->addEffects(Effect::CATEGORY_GENERIC);
 
-			{
-				SkillsMap::iterator i, end = skills_.end();
-				for (i = skills_.begin(); i != end; i++)
-					i->second->addEffects(Effect::CATEGORY_GENERIC);
-			}
-			
-			{
-				ImplantsList::iterator i, end = implants_.end();
-				for (i = implants_.begin(); i != end; i++)
-					(*i)->addEffects(Effect::CATEGORY_GENERIC);
-			}
-			
-			{
-				BoostersList::iterator i, end = boosters_.end();
-				for (i = boosters_.begin(); i != end; i++)
-					(*i)->addEffects(Effect::CATEGORY_GENERIC);
-			}
+			for (auto i: skills_)
+				i.second->addEffects(Effect::CATEGORY_GENERIC);
+			for (auto i: implants_)
+				i->addEffects(Effect::CATEGORY_GENERIC);
+			for (auto i: boosters_)
+				i->addEffects(Effect::CATEGORY_GENERIC);
 		}
 	}
 }
@@ -262,23 +240,12 @@ void Character::removeEffects(Effect::Category category)
 			if (ship_)
 				ship_->removeEffects(Effect::CATEGORY_GENERIC);
 
-			{
-				SkillsMap::iterator i, end = skills_.end();
-				for (i = skills_.begin(); i != end; i++)
-					i->second->removeEffects(Effect::CATEGORY_GENERIC);
-			}
-			
-			{
-				ImplantsList::iterator i, end = implants_.end();
-				for (i = implants_.begin(); i != end; i++)
-					(*i)->removeEffects(Effect::CATEGORY_GENERIC);
-			}
-			
-			{
-				BoostersList::iterator i, end = boosters_.end();
-				for (i = boosters_.begin(); i != end; i++)
-					(*i)->removeEffects(Effect::CATEGORY_GENERIC);
-			}
+			for (auto i: skills_)
+				i.second->removeEffects(Effect::CATEGORY_GENERIC);
+			for (auto i: implants_)
+				i->removeEffects(Effect::CATEGORY_GENERIC);
+			for (auto i: boosters_)
+				i->removeEffects(Effect::CATEGORY_GENERIC);
 		}
 	}
 }
@@ -297,22 +264,20 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 {
 	std::map<TypeID, int>::const_iterator j, endj = levels.end();
 	
-	SkillsMap::iterator i, end = skills_.end();
-	for (i = skills_.begin(); i != end; i++) {
-		j = levels.find(i->first);
+	for (auto i: skills_) {
+		j = levels.find(i.first);
 		if (j != endj)
-			i->second->setSkillLevel(j->second);
+			i.second->setSkillLevel(j->second);
 		else
-			i->second->setSkillLevel(0);
+			i.second->setSkillLevel(0);
 	}
 	engine_.lock()->reset(shared_from_this());
 }
 
 void Character::setAllSkillsLevel(int level)
 {
-	SkillsMap::iterator i, end = skills_.end();
-	for (i = skills_.begin(); i != end; i++)
-		i->second->setSkillLevel(level);
+	for (auto i: skills_)
+		i.second->setSkillLevel(level);
 	engine_.lock()->reset(shared_from_this());
 }
 
@@ -342,14 +307,13 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.attributes_.size() > 0)
 	{
 		bool isFirst = true;
-		AttributesMap::iterator i, end = character.attributes_.end();
-		for (i = character.attributes_.begin(); i != end; i++)
+		for (auto i: character.attributes_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *i->second;
+			os << *i.second;
 		}
 	}
 	
@@ -358,14 +322,13 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.effects_.size() > 0)
 	{
 		bool isFirst = true;
-		EffectsList::iterator i, end = character.effects_.end();
-		for (i = character.effects_.begin(); i != end; i++)
+		for (auto i: character.effects_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 
@@ -376,14 +339,13 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		ModifiersList::iterator i, end = character.itemModifiers_.end();
-		for (i = character.itemModifiers_.begin(); i != end; i++)
+		for (auto i: character.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -392,14 +354,13 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		ModifiersList::iterator i, end = character.locationModifiers_.end();
-		for (i = character.locationModifiers_.begin(); i != end; i++)
+		for (auto i: character.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -408,14 +369,13 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		ModifiersList::iterator i, end = character.locationGroupModifiers_.end();
-		for (i = character.locationGroupModifiers_.begin(); i != end; i++)
+		for (auto i: character.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(*i);
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
 		}
 	}
 	
@@ -424,14 +384,13 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		ModifiersList::iterator i, end = character.locationRequiredSkillModifiers_.end();
-		for (i = character.locationRequiredSkillModifiers_.begin(); i != end; i++)
+		for (auto i: character.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(*i);
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
 		}
 	}
 

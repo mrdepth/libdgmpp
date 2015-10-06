@@ -1,5 +1,4 @@
 #include "CapacitorSimulator.h"
-//#include <boost/math/common_factor.hpp>
 #include <math.h>
 #include <functional>
 #include <algorithm>
@@ -138,16 +137,18 @@ void CapacitorSimulator::internalReset()
 	
 	for (auto i: ship->getProjectedModules())
 	{
-		if (i->getState() >= Module::STATE_ACTIVE)
-			drains.push_back(i);
+		auto module = i.lock();
+		if (module && module->getState() >= Module::STATE_ACTIVE)
+			drains.push_back(module);
 	}
 	
 	if (!isDisallowedOffensiveModifiers)
 	{
 		for (auto i: ship->getProjectedDrones())
 		{
-			if (i->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
-				drainDrones.push_back(i);
+			auto drone = i.lock();
+			if (drone && drone->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
+				drainDrones.push_back(drone);
 		}
 	}
 	
@@ -307,9 +308,8 @@ void CapacitorSimulator::run()
 		
 		float avgDrain = 0;
 		
-		StatesVector::iterator i, end = states_.end();
-		for (i = states_.begin(); i != end; i++)
-			avgDrain += (*i)->capNeed / (*i)->duration;
+		for (auto i: states_)
+			avgDrain += i->capNeed / i->duration;
 		
 		float a = - (2.0f * avgDrain * tau - capacitorCapacity_) / capacitorCapacity_;
 		if (a < 0.0)

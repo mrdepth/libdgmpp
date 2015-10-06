@@ -1,7 +1,6 @@
 #pragma once
 #include "types.h"
 #include <sqlite3.h>
-//#include <boost/exception/all.hpp>
 #include <stdexcept>
 #include <mutex>
 #include "SqlConnector.h"

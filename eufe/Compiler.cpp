@@ -1,5 +1,4 @@
 #include "Compiler.h"
-//#include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <fstream>
 #include <ios>
@@ -7,7 +6,6 @@
 #include <cstdlib>
 #include <limits>
 #include <sstream>
-//#include <boost/format.hpp>
 
 using namespace eufe;
 
@@ -66,9 +64,8 @@ void Compiler::compile()
 
 			std::cout << "Compiling expressions..." << std::endl;
 			
-			RowsMap::iterator i, end = expressions_.end();
-			for (i = expressions_.begin(); i != end; i++)
-				compiledExpressionsMap_[i->first] = compileExpression(i->second);
+			for (auto i: expressions_)
+				compiledExpressionsMap_[i.first] = compileExpression(i.second);
 			
 			std::cout << "Compiling effects..." << std::endl;
 			
@@ -78,10 +75,9 @@ void Compiler::compile()
 			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" SMALLINT(6) NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" SMALLINT(6) NOT NULL, \"isOffensive\" BOOL NOT NULL, \"isAssistance\" BOOL NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
 			os << "BEGIN TRANSACTION;" << std::endl;
 
-			end = effects_.end();
-			for (i = effects_.begin(); i != end; i++)
+			for (auto i: effects_)
 			{
-				Row& effect = i->second;
+				Row& effect = i.second;
 				MemoryBlock compiledEffect = compileEffect(effect);
 
 				os	<< "INSERT INTO \"dgmCompiledEffects\" VALUES (" << effect["effectID"]
@@ -232,11 +228,10 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 	
 	int offset = sizeof(int) * 2;
 
-	CompiledExpressionsMap::iterator i, end = expressionsMap.end();
-	for (i = expressionsMap.begin(); i != end; i++)
+	for (auto i: expressionsMap)
 	{
-		offsets[i->first] = offset;
-		offset += i->second.length();
+		offsets[i.first] = offset;
+		offset += i.second.length();
 	}
 	
 	offset = offsets[effect["preExpression"]];
@@ -244,15 +239,14 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 	offset = offsets[effect["postExpression"]];
 	compiledEffect.append(reinterpret_cast<unsigned char*>(&offset), sizeof(int));
 
-	end = expressionsMap.end();
-	for (i = expressionsMap.begin(); i != end; i++)
+	for (auto i: expressionsMap)
 	{
-		size_t len = i->second.length();
+		size_t len = i.second.length();
 		Byte* data = new Byte[len];
 #ifdef WIN32
-		i->second._Copy_s(data, len, len);
+		i.second._Copy_s(data, len, len);
 #else
-		i->second.copy(data, len);
+		i.second.copy(data, len);
 #endif
 		Byte* ptr = data;
 		while (static_cast<Opcode>(*ptr) == OPCODE_ARGUMENT)

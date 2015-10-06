@@ -35,8 +35,8 @@ namespace eufe {
 		const ModulesList& getModules();
 		void getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator);
 		const DronesList& getDrones();
-		const ModulesList& getProjectedModules();
-		const DronesList& getProjectedDrones();
+		const std::list<std::weak_ptr<Module>>& getProjectedModules();
+		const std::list<std::weak_ptr<Drone>>& getProjectedDrones();
 		bool canFit(std::shared_ptr<Module> module);
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();
@@ -142,8 +142,8 @@ namespace eufe {
 	private:
 		ModulesList modules_;
 		DronesList drones_;
-		ModulesList projectedModules_;
-		DronesList projectedDrones_;
+		std::list<std::weak_ptr<Module>> projectedModules_;
+		std::list<std::weak_ptr<Drone>> projectedDrones_;
 		std::shared_ptr<CapacitorSimulator> capacitorSimulator_;
 		std::shared_ptr<HeatSimulator> heatSimulator_;
 		DamagePattern damagePattern_;

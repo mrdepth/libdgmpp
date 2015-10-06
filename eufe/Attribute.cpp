@@ -502,9 +502,8 @@ void Attribute::calculate()
 		if (postAssignments.size() > 0)
 			value_ = postAssignments[0];
 
-		std::vector<float>::iterator j, endj = modAdds.end();
-		for (j = modAdds.begin(); j != endj; j++)
-			value_ += *j;
+		for (auto j: modAdds)
+			value_ += j;
 		
 		value_ = multiply(preMultipliers.begin(), preMultipliers.end(), value_, false);
 		value_ = multiply(preMultipliersStackable.begin(), preMultipliersStackable.end(), value_, true);

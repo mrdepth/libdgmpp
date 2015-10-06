@@ -104,10 +104,6 @@ Gang::Gang(std::shared_ptr<Engine> engine) : Item(engine, 0, nullptr), fleetBoos
 
 Gang::~Gang(void)
 {
-	fleetBooster_ = wingBooster_ = squadBooster_ = nullptr;
-
-	CharactersList pilotsTmp = pilots_;
-	pilots_.clear();
 }
 
 const CharactersList& Gang::getPilots()
@@ -149,9 +145,8 @@ void Gang::reset()
 {
 	Item::reset();
 	
-	CharactersList::iterator i, end = pilots_.end();
-	for (i = pilots_.begin(); i != end; i++)
-		(*i)->reset();
+	for (auto i: pilots_)
+		i->reset();
 }
 
 std::shared_ptr<Character> Gang::getFleetBooster()
@@ -247,15 +242,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	
 	if (gang.pilots_.size() > 0)
 	{
-		CharactersList::const_iterator i, end = gang.pilots_.end();
 		bool isFirst = true;
-		for (i = gang.pilots_.begin(); i != end; i++)
+		for (auto i: gang.pilots_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -263,15 +257,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	
 	if (gang.itemModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = gang.itemModifiers_.end();
 		bool isFirst = true;
-		for (i = gang.itemModifiers_.begin(); i != end; i++)
+		for (auto i: gang.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 
@@ -279,15 +272,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	
 	if (gang.locationModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = gang.locationModifiers_.end();
 		bool isFirst = true;
-		for (i = gang.locationModifiers_.begin(); i != end; i++)
+		for (auto i: gang.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -295,15 +287,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	
 	if (gang.locationGroupModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = gang.locationGroupModifiers_.end();
 		bool isFirst = true;
-		for (i = gang.locationGroupModifiers_.begin(); i != end; i++)
+		for (auto i: gang.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(*i);
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
 		}
 	}
 	
@@ -311,15 +302,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	
 	if (gang.locationRequiredSkillModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = gang.locationRequiredSkillModifiers_.end();
 		bool isFirst = true;
-		for (i = gang.locationRequiredSkillModifiers_.begin(); i != end; i++)
+		for (auto i: gang.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(*i);
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
 		}
 	}
 	

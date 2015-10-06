@@ -82,9 +82,8 @@ void ControlTower::reset()
 {
 	Item::reset();
 	
-	StructuresList::iterator i, end = structures_.end();
-	for (i = structures_.begin(); i != end; i++)
-		(*i)->reset();
+	for (auto i: structures_)
+		i->reset();
 	
 	resistances_.armor.em = resistances_.armor.explosive = resistances_.armor.thermal = resistances_.armor.kinetic = -1;
 	resistances_.hull = resistances_.shield = resistances_.armor;
@@ -107,9 +106,8 @@ void ControlTower::addEffects(Effect::Category category)
 	Item::addEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		StructuresList::iterator i, end = structures_.end();
-		for (i = structures_.begin(); i != end; i++)
-			(*i)->addEffects(Effect::CATEGORY_GENERIC);
+		for (auto i: structures_)
+			i->addEffects(Effect::CATEGORY_GENERIC);
 //		std::shared_ptr<Area> area = engine_->getArea();
 //		if (area != nullptr)
 //			area->addEffectsToShip(this);
@@ -121,9 +119,8 @@ void ControlTower::removeEffects(Effect::Category category)
 	Item::removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		StructuresList::iterator i, end = structures_.end();
-		for (i = structures_.begin(); i != end; i++)
-			(*i)->removeEffects(Effect::CATEGORY_GENERIC);
+		for (auto i: structures_)
+			i->removeEffects(Effect::CATEGORY_GENERIC);
 //		std::shared_ptr<Area> area = engine_->getArea();
 //		if (area != nullptr)
 //			area->removeEffectsFromShip(this);
@@ -148,11 +145,10 @@ float ControlTower::getPowerGridUsed()
 	if (powerGridUsed_ < 0)
 	{
 		powerGridUsed_ = 0;
-		StructuresList::iterator i, end = structures_.end();
-		for (i = structures_.begin(); i != end; i++)
+		for (auto i: structures_)
 		{
-			if ((*i)->getState() >= Module::STATE_ONLINE)
-				powerGridUsed_ += (*i)->getAttribute(POWER_ATTRIBUTE_ID)->getValue();
+			if (i->getState() >= Module::STATE_ONLINE)
+				powerGridUsed_ += i->getAttribute(POWER_ATTRIBUTE_ID)->getValue();
 		}
 	}
 	return powerGridUsed_;
@@ -168,11 +164,10 @@ float ControlTower::getCpuUsed()
 	if (cpuUsed_ < 0)
 	{
 		cpuUsed_ = 0;
-		StructuresList::iterator i, end = structures_.end();
-		for (i = structures_.begin(); i != end; i++)
+		for (auto i: structures_)
 		{
-			if ((*i)->getState() >= Module::STATE_ONLINE)
-				cpuUsed_ += (*i)->getAttribute(CPU_ATTRIBUTE_ID)->getValue();
+			if (i->getState() >= Module::STATE_ONLINE)
+				cpuUsed_ += i->getAttribute(CPU_ATTRIBUTE_ID)->getValue();
 		}
 	}
 	return cpuUsed_;
@@ -274,11 +269,10 @@ float ControlTower::getWeaponVolley()
 void ControlTower::calculateDamageStats()
 {
 	weaponDps_ = weaponVolley_ = 0;
-	StructuresList::iterator i, end = structures_.end();
-	for (i = structures_.begin(); i != end; i++)
+	for (auto i: structures_)
 	{
-		weaponDps_ += (*i)->getDps();
-		weaponVolley_ += (*i)->getVolley();
+		weaponDps_ += i->getDps();
+		weaponVolley_ += i->getVolley();
 	}
 }
 
@@ -288,15 +282,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	
 	if (controlTower.attributes_.size() > 0)
 	{
-		AttributesMap::const_iterator i, end = controlTower.attributes_.end();
 		bool isFirst = true;
-		for (i = controlTower.attributes_.begin(); i != end; i++)
+		for (auto i: controlTower.attributes_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *i->second;
+			os << *i.second;
 		}
 	}
 	
@@ -304,15 +297,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	
 	if (controlTower.effects_.size() > 0)
 	{
-		EffectsList::const_iterator i, end = controlTower.effects_.end();
 		bool isFirst = true;
-		for (i = controlTower.effects_.begin(); i != end; i++)
+		for (auto i: controlTower.effects_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -320,15 +312,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	
 	if (controlTower.structures_.size() > 0)
 	{
-		StructuresList::const_iterator i, end = controlTower.structures_.end();
 		bool isFirst = true;
-		for (i = controlTower.structures_.begin(); i != end; i++)
+		for (auto i: controlTower.structures_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -336,15 +327,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	
 	if (controlTower.itemModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = controlTower.itemModifiers_.end();
 		bool isFirst = true;
-		for (i = controlTower.itemModifiers_.begin(); i != end; i++)
+		for (auto i: controlTower.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -352,15 +342,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	
 	if (controlTower.locationModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = controlTower.locationModifiers_.end();
 		bool isFirst = true;
-		for (i = controlTower.locationModifiers_.begin(); i != end; i++)
+		for (auto i: controlTower.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << **i;
+			os << *i;
 		}
 	}
 	
@@ -368,15 +357,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	
 	if (controlTower.locationGroupModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = controlTower.locationGroupModifiers_.end();
 		bool isFirst = true;
-		for (i = controlTower.locationGroupModifiers_.begin(); i != end; i++)
+		for (auto i: controlTower.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(*i);
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
 		}
 	}
 	
@@ -384,15 +372,14 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	
 	if (controlTower.locationRequiredSkillModifiers_.size() > 0)
 	{
-		ModifiersList::const_iterator i, end = controlTower.locationRequiredSkillModifiers_.end();
 		bool isFirst = true;
-		for (i = controlTower.locationRequiredSkillModifiers_.begin(); i != end; i++)
+		for (auto i: controlTower.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
 			else
 				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(*i);
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
 		}
 	}
 	
