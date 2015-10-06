@@ -206,7 +206,7 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	if (stacking)
 	{
 		static int precalculatedExp = 0;
-		static float* pExp = NULL;
+		static float* pExp = nullptr;
 		long n = last - first;
 		if (n > precalculatedExp) {
 			if (pExp)
@@ -350,8 +350,8 @@ void Attribute::calculate()
 		value_ = initialValue_;
 		
 		Environment environment = getOwner()->getEnvironment();
-		std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : NULL;
-		std::shared_ptr<Ship> ship = environment.find("Ship") != environment.end() ? std::dynamic_pointer_cast<Ship>(environment["Ship"]) : NULL;
+		std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
+		std::shared_ptr<Ship> ship = environment.find("Ship") != environment.end() ? std::dynamic_pointer_cast<Ship>(environment["Ship"]) : nullptr;
 		bool isDisallowedAssistance = ship && attributeID_ != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
 		bool isDisallowedOffensiveModifiers = ship && attributeID_ != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
 		

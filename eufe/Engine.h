@@ -11,12 +11,12 @@
 
 namespace eufe {
 
-	class Engine
+	class Engine : public std::enable_shared_from_this<Engine>
 	{
 	public:
 		class ScopedLock : public std::lock_guard<std::recursive_mutex> {
 		public:
-			ScopedLock(Engine* engine): std::lock_guard<std::recursive_mutex>(engine->mutex_) {
+			ScopedLock(std::shared_ptr<Engine> engine): std::lock_guard<std::recursive_mutex>(engine->mutex_) {
 			};
 		};
 		

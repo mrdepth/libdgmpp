@@ -43,6 +43,6 @@ void SqliteFetchResult::finalize()
 {
 	if (stmt_) {
 		sqlite3_finalize(stmt_);
-		stmt_ = NULL;
+		stmt_ = nullptr;
 	}
 }

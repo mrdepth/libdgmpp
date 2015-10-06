@@ -10,12 +10,6 @@ using namespace eufe;
 
 Drone::Drone(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Ship> owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr)
 {
-	if (hasAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID))
-	{
-		TypeID typeID = static_cast<TypeID>(getAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID)->getValue());
-		charge_ = std::make_shared<Charge>(engine, typeID, this);
-		//charge_->addEffects(Effect::CATEGORY_GENERIC);
-	}
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
 
@@ -56,10 +50,10 @@ void Drone::setTarget(std::shared_ptr<Ship> target)
 	removeEffects(Effect::CATEGORY_TARGET);
 	std::shared_ptr<Ship> oldTarget = target_.lock();
 	if (oldTarget)
-		oldTarget->removeProjectedDrone(std::dynamic_pointer_cast<Drone>(shared_from_this()));
+		oldTarget->removeProjectedDrone(shared_from_this());
 	target_ = target;
 	if (target)
-		target->addProjectedDrone(std::dynamic_pointer_cast<Drone>(shared_from_this()));
+		target->addProjectedDrone(shared_from_this());
 	addEffects(Effect::CATEGORY_TARGET);
 	engine_.lock()->reset(shared_from_this());
 }
@@ -229,7 +223,7 @@ void Drone::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		std::shared_ptr<Item> item = charge_ ?: shared_from_this();
+		std::shared_ptr<Item> item = charge_ ?: std::static_pointer_cast<Item>(shared_from_this());
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
 			volley_ += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))
@@ -241,5 +235,15 @@ void Drone::calculateDamageStats()
 		if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
 			volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
 		dps_ = volley_ / (getCycleTime() / 1000.0f);
+	}
+}
+
+void Drone::lazyLoad() {
+	Item::lazyLoad();
+	if (hasAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID))
+	{
+		TypeID typeID = static_cast<TypeID>(getAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID)->getValue());
+		charge_ = std::make_shared<Charge>(engine_.lock(), typeID, shared_from_this());
+		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
 }

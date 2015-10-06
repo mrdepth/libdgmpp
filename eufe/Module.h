@@ -8,14 +8,15 @@ namespace eufe {
 	public:
 		enum Slot
 		{
-			SLOT_NONE,
+			SLOT_UNKNOWN = -1,
+			SLOT_NONE = 0,
 			SLOT_HI,
 			SLOT_MED,
 			SLOT_LOW,
 			SLOT_RIG,
 			SLOT_SUBSYSTEM,
 			SLOT_STRUCTURE,
-			SLOT_MODE
+			SLOT_MODE,
 		};
 
 		enum State
@@ -32,6 +33,11 @@ namespace eufe {
 			HARDPOINT_LAUNCHER,
 			HARDPOINT_TURRET
 		};
+		Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner = nullptr);
+		virtual ~Module(void);
+		std::shared_ptr<Module> shared_from_this() {
+			return std::static_pointer_cast<Module>(Item::shared_from_this());
+		}
 
         typedef std::invalid_argument BadTargetException;
         typedef std::invalid_argument BadStateException;
@@ -86,9 +92,7 @@ namespace eufe {
 		friend std::ostream& operator<<(std::ostream& os, Module& module);
 	protected:
 		State state_;
-		friend class Ship;
-		Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner = nullptr);
-		virtual ~Module(void);
+		virtual void lazyLoad();
 
 		
 	private:

@@ -129,6 +129,7 @@ bool EffectByteCodeInterpreter::addEffect(const Environment& environment)
 	catch(eufe::EffectByteCodeInterpreter::Argument::TypeCastException&) {
 		result = false;
 	}
+	environment_ = Environment();
 	return result;
 }
 
@@ -143,6 +144,7 @@ bool EffectByteCodeInterpreter::removeEffect(const Environment& environment)
 	catch(eufe::EffectByteCodeInterpreter::Argument::TypeCastException&) {
 		result = false;
 	}
+	environment_ = Environment();
 	return result;
 }
 

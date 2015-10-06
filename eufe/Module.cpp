@@ -13,93 +13,8 @@
 
 using namespace eufe;
 
-Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr)
+Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN)
 {
-	addExtraAttribute(IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, "isOnline");
-	
-	if (hasEffect(LO_POWER_EFFECT_ID))
-		slot_ = SLOT_LOW;
-	else if (hasEffect(MED_POWER_EFFECT_ID))
-		slot_ = SLOT_MED;
-	else if (hasEffect(HI_POWER_EFFECT_ID))
-		slot_ = SLOT_HI;
-	else if (hasEffect(RIG_SLOT_EFFECT_ID))
-		slot_ = SLOT_RIG;
-	else if (hasEffect(SUBSYSTEM_EFFECT_ID))
-		slot_ = SLOT_SUBSYSTEM;
-	else if (hasEffect(TACTICAL_MODE_EFFECT_ID))
-		slot_ = SLOT_MODE;
-	else if (getCategoryID() == STRUCTURE_CATEGORY_ID)
-		slot_ = SLOT_STRUCTURE;
-	else
-		slot_ = SLOT_NONE;
-	
-	if (hasAttribute(RELOAD_TIME_ATTRIBUTE_ID))
-		reloadTime_ = getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue();
-	else
-	{
-		if (hasEffect(MINING_LASER_EFFECT_ID) || hasEffect(TARGET_ATTACK_EFFECT_ID) || hasEffect(USE_MISSILES_EFFECT_ID))
-			reloadTime_ = 1000;
-		else if (hasEffect(POWER_BOOSTER_EFFECT_ID) || hasEffect(PROJECTILE_FIRED_EFFECT_ID))
-			reloadTime_ = 10000;
-	}
-		
-	if (hasEffect(TURRET_FITTED_EFFECT_ID))
-		hardpoint_ = HARDPOINT_TURRET;
-	else if (hasEffect(LAUNCHER_FITTED_EFFECT_ID))
-		hardpoint_ = HARDPOINT_LAUNCHER;
-	else
-		hardpoint_ = HARDPOINT_NONE;
-
-	canBeOnline_ = hasEffect(ONLINE_EFFECT_ID) || hasEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID);
-
-	state_ = STATE_OFFLINE;
-
-	canBeActive_ = false;
-	canBeOverloaded_ = false;
-	requireTarget_ = false;
-	int n = 0;
-	
-	EffectsList::iterator i, end = effects_.end();
-	for (i = effects_.begin(); i != end; i++)
-	{
-		Effect::Category category = (*i)->getCategory();
-		if (category == Effect::CATEGORY_ACTIVE)
-		{
-			n++;
-			if (n >= 2)
-			{
-				canBeActive_ = true;
-			}
-		}
-		else if (category == Effect::CATEGORY_TARGET)
-		{
-			canBeActive_ = true;
-			requireTarget_ = true;
-		}
-		else if (category == Effect::CATEGORY_OVERLOADED)
-		{
-			canBeActive_ = true;
-			canBeOverloaded_ = true;
-		}
-	}
-	forceReload_ = groupID_ == CAPACITOR_BOOSTER_GROUP_ID;
-	
-	shots_ = -1;
-	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
-	
-	TypeID attributes[] = {CHARGE_GROUP1_ATTRIBUTE_ID, CHARGE_GROUP2_ATTRIBUTE_ID, CHARGE_GROUP3_ATTRIBUTE_ID, CHARGE_GROUP4_ATTRIBUTE_ID, CHARGE_GROUP5_ATTRIBUTE_ID};
-	for (int i = 0; i < 5; i++)
-		if (hasAttribute(attributes[i]))
-		{
-			TypeID typeID = static_cast<TypeID>(getAttribute(attributes[i])->getValue());
-			if (typeID > 0) {
-				chargeGroups_.push_back(typeID);
-				if (!forceReload_ && (typeID == CAPACITOR_BOOSTER_CHARGE_GROUP_ID || typeID == NANITE_REPAIR_PASTE_GROUP_ID))
-					forceReload_ = true;
-			}
-		}
-	std::sort(chargeGroups_.begin(), chargeGroups_.end());
 }
 
 Module::~Module(void)
@@ -119,6 +34,8 @@ Module::~Module(void)
 
 Module::Slot Module::getSlot()
 {
+	if (slot_ == SLOT_UNKNOWN)
+		lazyLoad();
 	return slot_;
 }
 
@@ -258,7 +175,7 @@ void Module::removeEffects(Effect::Category category)
 	for (i = effects_.begin(); i != end; i++)
 		if ((*i)->getEffectID() != ONLINE_EFFECT_ID && (*i)->getCategory() == category)
 			(*i)->removeEffect(environment);
-//	if (category == Effect::CATEGORY_GENERIC && charge_ != NULL)
+//	if (category == Effect::CATEGORY_GENERIC && charge_ != nullptr)
 //		charge_->removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
@@ -294,7 +211,7 @@ std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Charge> charge = typeID ? std::make_shared<Charge>(engine_.lock(), typeID, this) : nullptr;
+		std::shared_ptr<Charge> charge = typeID ? std::make_shared<Charge>(engine_.lock(), typeID, shared_from_this()) : nullptr;
 		if (charge)
 		{
 			if (canFit(charge))
@@ -394,19 +311,19 @@ void Module::setTarget(std::shared_ptr<Ship> target)
 	if (oldTarget)
 	{
 		removeEffects(Effect::CATEGORY_TARGET);
-		oldTarget->removeProjectedModule(std::dynamic_pointer_cast<Module>(shared_from_this()));
+		oldTarget->removeProjectedModule(shared_from_this());
 	}
 	target_ = target;
 	if (target)
 	{
-		target->addProjectedModule(std::dynamic_pointer_cast<Module>(shared_from_this()));
+		target->addProjectedModule(shared_from_this());
 		addEffects(Effect::CATEGORY_TARGET);
 	}
 }
 
 void Module::clearTarget()
 {
-	setTarget(NULL);
+	setTarget(nullptr);
 }
 
 std::shared_ptr<Ship> Module::getTarget()
@@ -630,7 +547,7 @@ void Module::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		std::shared_ptr<Item> item = charge_ ?: shared_from_this();
+		std::shared_ptr<Item> item = charge_ ?: std::static_pointer_cast<Item>(shared_from_this());
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
 			volley_ += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))
@@ -648,6 +565,95 @@ void Module::calculateDamageStats()
 		if (speed > 0)
 			dps_ = volley_ / (speed / 1000.0f);
 	}
+}
+
+void Module::lazyLoad() {
+	Item::lazyLoad();
+	addExtraAttribute(IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, "isOnline");
+	
+	if (hasEffect(LO_POWER_EFFECT_ID))
+		slot_ = SLOT_LOW;
+	else if (hasEffect(MED_POWER_EFFECT_ID))
+		slot_ = SLOT_MED;
+	else if (hasEffect(HI_POWER_EFFECT_ID))
+		slot_ = SLOT_HI;
+	else if (hasEffect(RIG_SLOT_EFFECT_ID))
+		slot_ = SLOT_RIG;
+	else if (hasEffect(SUBSYSTEM_EFFECT_ID))
+		slot_ = SLOT_SUBSYSTEM;
+	else if (hasEffect(TACTICAL_MODE_EFFECT_ID))
+		slot_ = SLOT_MODE;
+	else if (getCategoryID() == STRUCTURE_CATEGORY_ID)
+		slot_ = SLOT_STRUCTURE;
+	else
+		slot_ = SLOT_NONE;
+	
+	if (hasAttribute(RELOAD_TIME_ATTRIBUTE_ID))
+		reloadTime_ = getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue();
+	else
+	{
+		if (hasEffect(MINING_LASER_EFFECT_ID) || hasEffect(TARGET_ATTACK_EFFECT_ID) || hasEffect(USE_MISSILES_EFFECT_ID))
+			reloadTime_ = 1000;
+		else if (hasEffect(POWER_BOOSTER_EFFECT_ID) || hasEffect(PROJECTILE_FIRED_EFFECT_ID))
+			reloadTime_ = 10000;
+	}
+	
+	if (hasEffect(TURRET_FITTED_EFFECT_ID))
+		hardpoint_ = HARDPOINT_TURRET;
+	else if (hasEffect(LAUNCHER_FITTED_EFFECT_ID))
+		hardpoint_ = HARDPOINT_LAUNCHER;
+	else
+		hardpoint_ = HARDPOINT_NONE;
+	
+	canBeOnline_ = hasEffect(ONLINE_EFFECT_ID) || hasEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID);
+	
+	state_ = STATE_OFFLINE;
+	
+	canBeActive_ = false;
+	canBeOverloaded_ = false;
+	requireTarget_ = false;
+	int n = 0;
+	
+	EffectsList::iterator i, end = effects_.end();
+	for (i = effects_.begin(); i != end; i++)
+	{
+		Effect::Category category = (*i)->getCategory();
+		if (category == Effect::CATEGORY_ACTIVE)
+		{
+			n++;
+			if (n >= 2)
+			{
+				canBeActive_ = true;
+			}
+		}
+		else if (category == Effect::CATEGORY_TARGET)
+		{
+			canBeActive_ = true;
+			requireTarget_ = true;
+		}
+		else if (category == Effect::CATEGORY_OVERLOADED)
+		{
+			canBeActive_ = true;
+			canBeOverloaded_ = true;
+		}
+	}
+	forceReload_ = groupID_ == CAPACITOR_BOOSTER_GROUP_ID;
+	
+	shots_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
+	
+	TypeID attributes[] = {CHARGE_GROUP1_ATTRIBUTE_ID, CHARGE_GROUP2_ATTRIBUTE_ID, CHARGE_GROUP3_ATTRIBUTE_ID, CHARGE_GROUP4_ATTRIBUTE_ID, CHARGE_GROUP5_ATTRIBUTE_ID};
+	for (int i = 0; i < 5; i++)
+		if (hasAttribute(attributes[i]))
+		{
+			TypeID typeID = static_cast<TypeID>(getAttribute(attributes[i])->getValue());
+			if (typeID > 0) {
+				chargeGroups_.push_back(typeID);
+				if (!forceReload_ && (typeID == CAPACITOR_BOOSTER_CHARGE_GROUP_ID || typeID == NANITE_REPAIR_PASTE_GROUP_ID))
+					forceReload_ = true;
+			}
+		}
+	std::sort(chargeGroups_.begin(), chargeGroups_.end());
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)

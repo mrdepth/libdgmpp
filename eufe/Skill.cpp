@@ -7,15 +7,8 @@
 
 using namespace eufe;
 
-Skill::Skill(std::shared_ptr<Engine> engine, TypeID typeID, int skillLevel, bool isLearned, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), isLearned_(isLearned)
+Skill::Skill(std::shared_ptr<Engine> engine, TypeID typeID, int skillLevel, bool isLearned, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), isLearned_(isLearned), skillLevel_(skillLevel)
 {
-	AttributesMap::iterator i = attributes_.find(SKILL_LEVEL_ATTRIBUTE_ID);
-	std::shared_ptr<Attribute> attribute;
-	if (i != attributes_.end())
-		attribute = i->second;
-	else
-		attribute = addExtraAttribute(SKILL_LEVEL_ATTRIBUTE_ID, 0, 0, true, true);
-	attribute->setValue(static_cast<float>(skillLevel));
 }
 
 Skill::~Skill(void)
@@ -55,4 +48,15 @@ Environment Skill::getEnvironment()
 	if (area)
 		environment["Area"] = area;
 	return environment;
+}
+
+void Skill::lazyLoad() {
+	Item::lazyLoad();
+	AttributesMap::iterator i = attributes_.find(SKILL_LEVEL_ATTRIBUTE_ID);
+	std::shared_ptr<Attribute> attribute;
+	if (i != attributes_.end())
+		attribute = i->second;
+	else
+		attribute = addExtraAttribute(SKILL_LEVEL_ATTRIBUTE_ID, 0, 0, true, true);
+	attribute->setValue(static_cast<float>(skillLevel_));
 }

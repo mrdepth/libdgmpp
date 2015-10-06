@@ -7,9 +7,8 @@
 
 using namespace eufe;
 
-Booster::Booster(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner)
+Booster::Booster(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), slot_(-1)
 {
-	slot_ = static_cast<int>(getAttribute(BOOSTERNESS_ATTRIBUTE_ID)->getValue());
 }
 
 Booster::~Booster()
@@ -39,4 +38,9 @@ Environment Booster::getEnvironment()
 	if (area)
 		environment["Area"] = area;
 	return environment;
+}
+
+void Booster::lazyLoad() {
+	Item::lazyLoad();
+	slot_ = static_cast<int>(getAttribute(IMPLANTNESS_ATTRIBUTE_ID)->getValue());
 }

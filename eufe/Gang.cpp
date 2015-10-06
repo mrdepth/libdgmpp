@@ -81,11 +81,11 @@ private:
 	Modifier::Association association_;
 };
 
-class ModifiersCompareFunction : public std::binary_function<Modifier*, Modifier*, bool>
+class ModifiersCompareFunction : public std::binary_function<std::shared_ptr<Modifier>, std::shared_ptr<Modifier>, bool>
 {
 public:
 	ModifiersCompareFunction(bool highIsGood) : highIsGood_(highIsGood) {}
-	bool operator() (Modifier* arg1, Modifier* arg2)
+	bool operator() (std::shared_ptr<Modifier> arg1, std::shared_ptr<Modifier> arg2)
 	{
 /*		if (highIsGood_)
 			return arg1->getValue() < arg2->getValue();
@@ -117,11 +117,11 @@ const CharactersList& Gang::getPilots()
 
 std::shared_ptr<Character> Gang::addPilot()
 {
-	std::shared_ptr<Character> character = std::make_shared<Character>(engine_, this);
+	std::shared_ptr<Character> character = std::make_shared<Character>(engine_.lock(), shared_from_this());
 	character->removeEffects(Effect::CATEGORY_GENERIC);
 	pilots_.push_back(character);
 	character->addEffects(Effect::CATEGORY_GENERIC);
-	getEngine()->reset(this);
+	getEngine()->reset(shared_from_this());
 	return character;
 }
 
@@ -130,7 +130,7 @@ void Gang::removePilot(std::shared_ptr<Character> character)
 {
 	character->removeEffects(Effect::CATEGORY_GENERIC);
 	pilots_.remove(character);
-	getEngine()->reset(this);
+	getEngine()->reset(shared_from_this());
 }
 
 
@@ -172,35 +172,35 @@ std::shared_ptr<Character> Gang::getSquadBooster()
 void Gang::setFleetBooster(std::shared_ptr<Character> fleetBooster)
 {
 	fleetBooster_ = fleetBooster;
-	getEngine()->reset(this);
+	getEngine()->reset(shared_from_this());
 }
 
 void Gang::setWingBooster(std::shared_ptr<Character> wingBooster)
 {
 	wingBooster_ = wingBooster;
-	getEngine()->reset(this);
+	getEngine()->reset(shared_from_this());
 }
 
 void Gang::setSquadBooster(std::shared_ptr<Character> squadBooster)
 {
 	squadBooster_ = squadBooster;
-	getEngine()->reset(this);
+	getEngine()->reset(shared_from_this());
 }
 
 void Gang::removeFleetBooster() {
 	fleetBooster_ = nullptr;
-	getEngine()->reset(this);
+	getEngine()->reset(shared_from_this());
 }
 
 void Gang::removeWingBooster() {
 	wingBooster_ = nullptr;
-	getEngine()->reset(this);
+	getEngine()->reset(shared_from_this());
 	
 }
 
 void Gang::removeSquadBooster() {
 	squadBooster_ = nullptr;
-	getEngine()->reset(this);
+	getEngine()->reset(shared_from_this());
 	
 }
 

@@ -193,6 +193,9 @@ namespace eufe {
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
+		Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> owner = nullptr, const char* attributeName = "", bool isFakeAttribute = false);
+		Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, std::shared_ptr<Item> owner = nullptr, bool isFakeAttribute = false);
+		virtual ~Attribute(void);
 		std::shared_ptr<Item> getOwner() const;
 		TypeID getAttributeID() const;
 		bool isFakeAttribute() const;
@@ -211,10 +214,6 @@ namespace eufe {
 		const char* getAttributeName() const;
 		friend std::ostream& operator<<(std::ostream& os, Attribute& attribute);
 	protected:
-		friend class Item;
-		Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> owner = NULL, const char* attributeName = "", bool isFakeAttribute = false);
-		Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, std::shared_ptr<Item> owner = NULL, bool isFakeAttribute = false);
-		virtual ~Attribute(void);
 	private:
 		std::weak_ptr<Engine> engine_;
 		TypeID attributeID_;

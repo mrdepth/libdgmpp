@@ -7,24 +7,21 @@
 
 using namespace eufe;
 
-class StateCompareFunction : public std::binary_function<const HeatSimulator::State*, const HeatSimulator::State*, bool>
+class StateCompareFunction : public std::binary_function<std::shared_ptr<const HeatSimulator::State>, std::shared_ptr<const HeatSimulator::State>, bool>
 {
 public:
-	bool operator() (const HeatSimulator::State* a, const HeatSimulator::State* b)
+	bool operator() (std::shared_ptr<const HeatSimulator::State> a, std::shared_ptr<const HeatSimulator::State> b)
 	{
 		return a->tNow > b->tNow;
 	}
 };
 
-HeatSimulator::HeatSimulator(Ship* ship) : ship_(ship)
+HeatSimulator::HeatSimulator(std::shared_ptr<Ship> ship) : ship_(ship)
 {
 }
 
 HeatSimulator::~HeatSimulator(void)
 {
-	StatesVector::iterator i, end = states_.end();
-	for (i = states_.begin(); i != end; i++)
-		delete *i;
 	states_.clear();
 }
 
@@ -41,21 +38,20 @@ void HeatSimulator::simulate()
 		ModulesVector hiSlot;
 		ModulesVector medSlot;
 		ModulesVector lowSlot;
-		hiSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
-		medSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
-		lowSlot.reserve(ship_->getNumberOfSlots(Module::SLOT_HI));
+		std::shared_ptr<Ship> ship = ship_.lock();
+		hiSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
+		medSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
+		lowSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
 		
-		const ModulesList& modules = ship_->getModules();
-		ModulesList::const_iterator i, end = modules.end();
-		for (i = modules.begin(); i != end; i++)
+		for (auto i: ship->getModules())
 		{
-			Module::Slot slot = (*i)->getSlot();
+			Module::Slot slot = i->getSlot();
 			if (slot == Module::SLOT_HI)
-				hiSlot.push_back(*i);
+				hiSlot.push_back(i);
 			else if (slot == Module::SLOT_MED)
-				medSlot.push_back(*i);
+				medSlot.push_back(i);
 			else if (slot == Module::SLOT_LOW)
-				lowSlot.push_back(*i);
+				lowSlot.push_back(i);
 		}
 		if (hiSlot.size() > 0)
 			simulate(hiSlot);
@@ -69,37 +65,33 @@ void HeatSimulator::simulate()
 
 void HeatSimulator::simulate(const ModulesVector& modules)
 {
-	{
-		StatesVector::iterator i, end = states_.end();
-		for (i = states_.begin(); i != end; i++)
-			delete *i;
-		states_.clear();
-	}
+	states_.clear();
 
-	Module* module = *modules.begin();
+	std::shared_ptr<Ship> ship = ship_.lock();
+	std::shared_ptr<Module> module = *modules.begin();
 	Module::Slot slot = module->getSlot();
 	float heatCapacity = 0;
-	float heatGenerationMultiplier = ship_->getAttribute(HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+	float heatGenerationMultiplier = ship->getAttribute(HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID)->getValue();
 	float heatAttenuation = 0;
 	float heatGeneration = 0;
 	float heatAbsorbtionRateModifier = 0;
-	int numberOfSlots = ship_->getNumberOfSlots(slot);
+	int numberOfSlots = ship->getNumberOfSlots(slot);
 	int numberOfOnlineModules = 0;
 	
 	if (slot == Module::SLOT_HI)
 	{
-		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_HI_ATTRIBUTE_ID)->getValue() / 100.0f;
-		heatAttenuation = ship_->getAttribute(HEAT_ATTENUATION_HI_ATTRIBUTE_ID)->getValue();
+		heatCapacity = ship->getAttribute(HEAT_CAPACITY_HI_ATTRIBUTE_ID)->getValue() / 100.0f;
+		heatAttenuation = ship->getAttribute(HEAT_ATTENUATION_HI_ATTRIBUTE_ID)->getValue();
 	}
 	else if (slot == Module::SLOT_MED)
 	{
-		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_MED_ATTRIBUTE_ID)->getValue() / 100.0f;
-		heatAttenuation = ship_->getAttribute(HEAT_ATTENUATION_MED_ATTRIBUTE_ID)->getValue();
+		heatCapacity = ship->getAttribute(HEAT_CAPACITY_MED_ATTRIBUTE_ID)->getValue() / 100.0f;
+		heatAttenuation = ship->getAttribute(HEAT_ATTENUATION_MED_ATTRIBUTE_ID)->getValue();
 	}
 	else if (slot == Module::SLOT_LOW)
 	{
-		heatCapacity = ship_->getAttribute(HEAT_CAPACITY_LOW_ATTRIBUTE_ID)->getValue() / 100.0f;
-		heatAttenuation = ship_->getAttribute(HEAT_ATTENUATION_LOW_ATTRIBUTE_ID)->getValue();
+		heatCapacity = ship->getAttribute(HEAT_CAPACITY_LOW_ATTRIBUTE_ID)->getValue() / 100.0f;
+		heatAttenuation = ship->getAttribute(HEAT_ATTENUATION_LOW_ATTRIBUTE_ID)->getValue();
 	}
 	
 	int n = (int) modules.size();
@@ -107,7 +99,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 
 	for (int i = 0; i < n; i++)
 	{
-		Module* module = modules[i];
+		std::shared_ptr<Module> module = modules[i];
 		modulesHP[i] = module->getAttribute(HP_ATTRIBUTE_ID)->getValue();
 		Module::State state = module->getState();
 		if (state >= Module::STATE_ONLINE)
@@ -117,7 +109,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 			heatAbsorbtionRateModifier += module->getAttribute(HEAT_ABSORBTION_RATE_MODIFIER_ATTRIBUTE_ID)->getValue();
 			int clipSize = module->getShots();
 
-			State *state = new State();
+			std::shared_ptr<State> state = std::make_shared<State>();
 			state->tNow = 0;
 			state->duration = static_cast<int>(module->getCycleTime());
 			state->clipSize = clipSize;
@@ -134,7 +126,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 	if (states_.size() > 0)
 	{
 		int tNow = 0;
-		State *state;
+		std::shared_ptr<State> state;
 
 		while (1)
 		{

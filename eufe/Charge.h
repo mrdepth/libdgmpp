@@ -7,12 +7,13 @@ namespace eufe {
 	class Charge : public Item
 	{
 	public:
-		virtual Environment getEnvironment();
-	protected:
-		friend class Module;
-		friend class Drone;
 		Charge(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner);
 		virtual ~Charge(void);
+		std::shared_ptr<Charge> shared_from_this() {
+			return std::static_pointer_cast<Charge>(Item::shared_from_this());
+		}
+		virtual Environment getEnvironment();
+	protected:
 	};
 	
 }

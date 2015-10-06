@@ -2,7 +2,7 @@
 
 using namespace eufe;
 
-SqliteConnector::SqliteConnector(const char* databasePath) : db_(NULL)
+SqliteConnector::SqliteConnector(const char* databasePath) : db_(nullptr)
 {
 	sqlite3_open(databasePath, &db_);
 }
@@ -15,8 +15,8 @@ SqliteConnector::~SqliteConnector(void)
 
 std::shared_ptr<FetchResult> SqliteConnector::exec(const char* sql)
 {
-	sqlite3_stmt* stmt = NULL;
-	sqlite3_prepare_v2(db_, sql, -1, &stmt, NULL);
+	sqlite3_stmt* stmt = nullptr;
+	sqlite3_prepare_v2(db_, sql, -1, &stmt, nullptr);
 
 	return std::shared_ptr<FetchResult>(new SqliteFetchResult(stmt));
 }

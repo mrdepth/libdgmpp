@@ -7,6 +7,12 @@ namespace eufe {
 	class Character : public Item
 	{
 	public:
+		Character(std::shared_ptr<Engine> engine, std::shared_ptr<Gang> owner = nullptr, const char* characterName = "");
+		virtual ~Character(void);
+		std::shared_ptr<Character> shared_from_this() {
+			return std::static_pointer_cast<Character>(Item::shared_from_this());
+		}
+		
 		std::shared_ptr<Ship> getShip();
 		std::shared_ptr<Ship> setShip(TypeID typeID);
 
@@ -39,10 +45,9 @@ namespace eufe {
 		friend std::ostream& operator<<(std::ostream& os, Character& character);
 	protected:
 		friend class Gang;
-		Character(std::shared_ptr<Engine> engine, std::shared_ptr<Gang> owner = nullptr, const char* characterName = "");
-		virtual ~Character(void);
 
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual void lazyLoad();
 
 	private:
 		std::shared_ptr<Ship> ship_;

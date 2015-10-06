@@ -10,7 +10,7 @@ using namespace eufe;
 
 static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
 
-Structure::Structure(Engine* engine, TypeID typeID, Item* owner) : Module(engine, typeID, owner)
+Structure::Structure(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<ControlTower> owner) : Module(engine, typeID, owner)
 {
 }
 
@@ -49,7 +49,7 @@ void Structure::setState(State state)
 			}
 		}
 		state_ = state;
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 	}
 }
 
@@ -107,7 +107,7 @@ const Tank& Structure::getTank()
 
 const Tank& Structure::getEffectiveTank()
 {
-	ControlTower* controlTower = dynamic_cast<ControlTower*>(getOwner());
+	std::shared_ptr<ControlTower> controlTower = std::dynamic_pointer_cast<ControlTower>(getOwner());
 	const DamagePattern damagePattern = controlTower->getDamagePattern();
 	if (effectiveTank_.armorRepair < 0.0)
 		effectiveTank_ = damagePattern.effectiveTank(getResistances(), getTank());
@@ -127,7 +127,7 @@ const HitPoints& Structure::getHitPoints()
 
 const HitPoints& Structure::getEffectiveHitPoints()
 {
-	ControlTower* controlTower = dynamic_cast<ControlTower*>(getOwner());
+	std::shared_ptr<ControlTower> controlTower = std::dynamic_pointer_cast<ControlTower>(getOwner());
 	const DamagePattern damagePattern = controlTower->getDamagePattern();
 	if (effectiveHitPoints_.armor < 0.0)
 		effectiveHitPoints_ = damagePattern.effectiveHitPoints(getResistances(), getHitPoints());

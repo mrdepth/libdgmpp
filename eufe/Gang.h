@@ -7,6 +7,12 @@ namespace eufe {
 	class Gang : public Item
 	{
 	public:
+		Gang(std::shared_ptr<Engine> engine);
+		virtual ~Gang(void);
+		std::shared_ptr<Gang> shared_from_this() {
+			return std::static_pointer_cast<Gang>(Item::shared_from_this());
+		}
+
 		const CharactersList& getPilots();
 		std::shared_ptr<Character> addPilot();
 		void removePilot(std::shared_ptr<Character> character);
@@ -28,9 +34,6 @@ namespace eufe {
 		friend std::ostream& operator<<(std::ostream& os, Gang& gang);
 		
 	protected:
-		friend class Engine;
-		Gang(std::shared_ptr<Engine> engine);
-		virtual ~Gang(void);
 
 		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
 		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(std::shared_ptr<Item> item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);

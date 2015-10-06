@@ -7,9 +7,8 @@
 
 using namespace eufe;
 
-Implant::Implant(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner)
+Implant::Implant(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), slot_(-1)
 {
-	slot_ = static_cast<int>(getAttribute(IMPLANTNESS_ATTRIBUTE_ID)->getValue());
 }
 
 Implant::~Implant()
@@ -18,6 +17,8 @@ Implant::~Implant()
 
 int Implant::getSlot()
 {
+	if (slot_ == -1)
+		lazyLoad();
 	return slot_;
 }
 
@@ -39,4 +40,9 @@ Environment Implant::getEnvironment()
 	if (area)
 		environment["Area"] = area;
 	return environment;
+}
+
+void Implant::lazyLoad() {
+	Item::lazyLoad();
+	slot_ = static_cast<int>(getAttribute(IMPLANTNESS_ATTRIBUTE_ID)->getValue());
 }

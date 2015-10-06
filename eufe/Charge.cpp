@@ -19,19 +19,19 @@ Environment Charge::getEnvironment()
 	Environment environment;
 	environment["Self"] = shared_from_this();
 
-	Item* module = getOwner();
-	Item* ship = module ? module->getOwner() : nullptr;
-	Item* character = ship ? ship->getOwner() : nullptr;
-	Item* gang = character ? character->getOwner() : nullptr;
-	
+	std::shared_ptr<Item> module = getOwner();
+	std::shared_ptr<Item> ship = module ? module->getOwner() : nullptr;
+	std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
+	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+	std::shared_ptr<Area> area = engine_.lock()->getArea();
 	if (character)
 		environment["Char"] = character;
 	if (ship)
 		environment["Ship"] = ship;
 	if (gang)
 		environment["Gang"] = gang;
-	if (engine_->getArea())
-		environment["Area"] = engine_->getArea();
+	if (area)
+		environment["Area"] = area;
 	if (module)
 		environment["Other"] = module;
 	

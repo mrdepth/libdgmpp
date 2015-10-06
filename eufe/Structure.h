@@ -6,8 +6,11 @@ namespace eufe {
 	class Structure : public Module
 	{
 	public:
-		Structure(Engine* engine, TypeID typeID, Item* owner = NULL);
+		Structure(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<ControlTower> owner = nullptr);
 		virtual ~Structure(void);
+		std::shared_ptr<Structure> shared_from_this() {
+			return std::static_pointer_cast<Structure>(Item::shared_from_this());
+		}
 
 		virtual void setState(State state);
 		

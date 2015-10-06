@@ -18,7 +18,12 @@ namespace eufe {
 			SCAN_TYPE_GRAVIMETRIC,
 			SCAN_TYPE_MULTISPECTRAL
 		};
-		
+		Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner = nullptr);
+		virtual ~Ship(void);
+		std::shared_ptr<Ship> shared_from_this() {
+			return std::static_pointer_cast<Ship>(Item::shared_from_this());
+		}
+
 		std::shared_ptr<Module> addModule(TypeID typeID, bool force = false);
 		std::shared_ptr<Module> replaceModule(std::shared_ptr<Module> oldModule, TypeID typeID);
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
@@ -52,8 +57,8 @@ namespace eufe {
 		void addProjectedDrone(std::shared_ptr<Drone> drone);
 		void removeProjectedDrone(std::shared_ptr<Drone> drone);
 		
-		const CapacitorSimulator& getCapacitorSimulator();
-		const HeatSimulator& getHeatSimulator();
+		std::shared_ptr<CapacitorSimulator> getCapacitorSimulator();
+		std::shared_ptr<HeatSimulator> getHeatSimulator();
 		const DamagePattern& getDamagePattern();
 		void setDamagePattern(const DamagePattern& damagePattern);
 		
@@ -134,18 +139,13 @@ namespace eufe {
 		
 		friend std::ostream& operator<<(std::ostream& os, Ship& ship);
 		
-	protected:
-		friend class Character;
-		Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner = nullptr);
-		virtual ~Ship(void);
-
 	private:
 		ModulesList modules_;
 		DronesList drones_;
 		ModulesList projectedModules_;
 		DronesList projectedDrones_;
-		CapacitorSimulator capacitorSimulator_;
-		HeatSimulator heatSimulator_;
+		std::shared_ptr<CapacitorSimulator> capacitorSimulator_;
+		std::shared_ptr<HeatSimulator> heatSimulator_;
 		DamagePattern damagePattern_;
 		
 		Resistances resistances_;

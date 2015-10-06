@@ -43,9 +43,8 @@ public:
 };
 
 
-Ship::Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), capacitorSimulator_(std::dynamic_pointer_cast<Ship>(shared_from_this()), false, 6 * 60 * 60 * 1000), heatSimulator_(std::dynamic_pointer_cast<Ship>(shared_from_this())), disallowAssistance_(UNKNOWN), disallowOffensiveModifiers_(UNKNOWN)
+Ship::Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), capacitorSimulator_(nullptr), heatSimulator_(nullptr), disallowAssistance_(UNKNOWN), disallowOffensiveModifiers_(UNKNOWN)
 {
-	reset();
 }
 
 Ship::~Ship(void)
@@ -80,7 +79,7 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool force)
 {
 	try
 	{
-		std::shared_ptr<Module> module = std::make_shared<Module>(engine_, typeID, this);
+		std::shared_ptr<Module> module = std::make_shared<Module>(engine_.lock(), typeID, shared_from_this());
 		if (force || canFit(module))
 		{
 			modules_.push_back(module);
@@ -100,7 +99,7 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool force)
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -161,7 +160,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, T
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -177,7 +176,7 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 		}
 		catch(Item::UnknownTypeIDException)
 		{
-			module = NULL;
+			module = nullptr;
 		}
 		
 		modules.push_back(module);
@@ -202,7 +201,7 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 		}
 		catch(Item::UnknownTypeIDException)
 		{
-			module = NULL;
+			module = nullptr;
 		}
 
 		modules.push_back(module);
@@ -227,7 +226,7 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 			break;
 		default:
 			modules.pop_back();
-			modules.push_back(NULL);
+			modules.push_back(nullptr);
 			break;
 		}
 	}
@@ -240,7 +239,7 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 		ModulesList::iterator k, endk;
 		for (k = lists[j]->begin(), endk = lists[j]->end(); k != endk; k++)
 			if (!addModule(*k))
-				std::replace(modules.begin(), modules.end(), *k, (Module*) NULL);
+				std::replace(modules.begin(), modules.end(), *k, (Module*) nullptr);
 	}
 	return modules;*/
 }
@@ -275,7 +274,7 @@ std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine_, typeID, this);
+		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine_.lock(), typeID, shared_from_this());
 		drones_.push_back(drone);
 		drone->addEffects(Effect::CATEGORY_GENERIC);
 		drone->addEffects(Effect::CATEGORY_TARGET);
@@ -285,7 +284,7 @@ std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -491,7 +490,7 @@ Environment Ship::getEnvironment()
 	environment["Self"] = shared_from_this();
 	environment["Ship"] = shared_from_this();
 	std::shared_ptr<Item> character = getOwner();
-	std::shared_ptr<Item> gang = character ? character->getOwner() : NULL;
+	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
 	std::shared_ptr<Area> area = engine_.lock()->getArea();
 	
 	if (character)
@@ -519,8 +518,8 @@ void Ship::reset()
 			(*i)->reset();
 	}
 	
-	capacitorSimulator_.reset();
-	heatSimulator_.reset();
+	getCapacitorSimulator()->reset();
+	getHeatSimulator()->reset();
 	disallowAssistance_ = disallowOffensiveModifiers_ = UNKNOWN;
 	
 	resistances_.armor.em = resistances_.armor.explosive = resistances_.armor.thermal = resistances_.armor.kinetic = -1;
@@ -628,13 +627,17 @@ void Ship::removeProjectedDrone(std::shared_ptr<Drone> drone)
 	engine_.lock()->reset(shared_from_this());
 }
 
-const CapacitorSimulator& Ship::getCapacitorSimulator()
+std::shared_ptr<CapacitorSimulator> Ship::getCapacitorSimulator()
 {
+	if (!capacitorSimulator_)
+		capacitorSimulator_ = std::make_shared<CapacitorSimulator>(shared_from_this(), false, 6 * 60 * 60 * 1000);
 	return capacitorSimulator_;
 }
 
-const HeatSimulator& Ship::getHeatSimulator()
+std::shared_ptr<HeatSimulator> Ship::getHeatSimulator()
 {
+	if (!heatSimulator_)
+		heatSimulator_ = std::make_shared<HeatSimulator>(shared_from_this());
 	return heatSimulator_;
 }
 
@@ -789,27 +792,27 @@ float Ship::getCapCapacity()
 
 bool Ship::isCapStable()
 {
-	return capacitorSimulator_.isCapStable();
+	return getCapacitorSimulator()->isCapStable();
 }
 
 float Ship::getCapLastsTime()
 {
-	return capacitorSimulator_.getCapLastsTime();
+	return getCapacitorSimulator()->getCapLastsTime();
 }
 
 float Ship::getCapStableLevel()
 {
-	return capacitorSimulator_.getCapStableLevel();
+	return getCapacitorSimulator()->getCapStableLevel();
 }
 
 float Ship::getCapUsed()
 {
-	return capacitorSimulator_.getCapUsed();
+	return getCapacitorSimulator()->getCapUsed();
 }
 
 float Ship::getCapRecharge()
 {
-	return capacitorSimulator_.getCapRecharge();
+	return getCapacitorSimulator()->getCapRecharge();
 }
 
 //Tank
@@ -1203,7 +1206,7 @@ void Ship::updateActiveStatus()
 
 void Ship::updateHeatDamage()
 {
-	heatSimulator_.simulate();
+	getHeatSimulator()->simulate();
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)

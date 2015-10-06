@@ -11,6 +11,11 @@ namespace eufe {
         
         typedef std::invalid_argument BadDroneTargetException;
 
+		Drone(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Ship> owner = nullptr);
+		virtual ~Drone(void);
+		std::shared_ptr<Drone> shared_from_this() {
+			return std::static_pointer_cast<Drone>(Item::shared_from_this());
+		}
 		virtual Environment getEnvironment();
 		
 		void setTarget(std::shared_ptr<Ship> target = nullptr);
@@ -38,9 +43,7 @@ namespace eufe {
 		float getTrackingSpeed();
 
 	protected:
-		friend class Ship;
-		Drone(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Ship> owner = nullptr);
-		virtual ~Drone(void);
+		virtual void lazyLoad();
 
 	private:
 		std::weak_ptr<Ship> target_;

@@ -19,15 +19,15 @@ namespace eufe {
 		};
 
 		
-		HeatSimulator(Ship* ship);
+		HeatSimulator(std::shared_ptr<Ship> ship);
 		virtual ~HeatSimulator(void);
 		void simulate();
 		void reset();
 	private:
-		Ship* ship_;
+		std::weak_ptr<Ship> ship_;
 		bool isCalculated_;
-		typedef std::vector<State*> StatesVector;
-		typedef std::vector<Module*> ModulesVector;
+		typedef std::vector<std::shared_ptr<State>> StatesVector;
+		typedef std::vector<std::shared_ptr<Module>> ModulesVector;
 		StatesVector states_;
 
 		void simulate(const ModulesVector& modules);

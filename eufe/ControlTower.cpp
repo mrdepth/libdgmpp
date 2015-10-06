@@ -14,20 +14,19 @@ using namespace eufe;
 
 static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
 
-ControlTower::ControlTower(Engine* engine, TypeID typeID) : Item(engine, typeID, NULL)
+ControlTower::ControlTower(std::shared_ptr<Engine> engine, TypeID typeID) : Item(engine, typeID, nullptr)
 {
-	reset();
 }
 
 ControlTower::~ControlTower(void)
 {
 }
 
-Structure* ControlTower::addStructure(TypeID typeID)
+std::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
 {
 	try
 	{
-		Structure* structure = new Structure(engine_, typeID, this);
+		std::shared_ptr<Structure> structure = std::make_shared<Structure>(engine_.lock(), typeID, shared_from_this());
 		structures_.push_back(structure);
 		
 		structure->addEffects(Effect::CATEGORY_GENERIC);
@@ -35,23 +34,22 @@ Structure* ControlTower::addStructure(TypeID typeID)
 			structure->setState(Structure::STATE_ACTIVE);
 		else if (structure->canHaveState(Structure::STATE_ONLINE))
 			structure->setState(Structure::STATE_ONLINE);
-		engine_->reset(this);
+		engine_.lock()->reset(shared_from_this());
 		return structure;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
-void ControlTower::removeStructure(Structure* structure)
+void ControlTower::removeStructure(std::shared_ptr<Structure> structure)
 {
 	structure->setState(Structure::STATE_OFFLINE);
 	structure->removeEffects(Effect::CATEGORY_GENERIC);
 	
 	structures_.remove(structure);
-	delete structure;
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
 const StructuresList& ControlTower::getStructures()
@@ -59,7 +57,7 @@ const StructuresList& ControlTower::getStructures()
 	return structures_;
 }
 
-bool ControlTower::canFit(Structure* structure)
+bool ControlTower::canFit(std::shared_ptr<Structure> structure)
 {
 	if (structure->getSlot() != Structure::SLOT_STRUCTURE)
 		return false;
@@ -72,11 +70,11 @@ bool ControlTower::canFit(Structure* structure)
 Environment ControlTower::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = this;
-	environment["Ship"] = this;
-	
-	if (engine_->getArea())
-		environment["Area"] = engine_->getArea();
+	environment["Self"] = shared_from_this();
+	environment["Ship"] = shared_from_this();
+	std::shared_ptr<Area> area = engine_.lock()->getArea();
+	if (area)
+		environment["Area"] = area;
 	return environment;
 }
 
@@ -113,7 +111,7 @@ void ControlTower::addEffects(Effect::Category category)
 		for (i = structures_.begin(); i != end; i++)
 			(*i)->addEffects(Effect::CATEGORY_GENERIC);
 //		std::shared_ptr<Area> area = engine_->getArea();
-//		if (area != NULL)
+//		if (area != nullptr)
 //			area->addEffectsToShip(this);
 	}
 }
@@ -127,7 +125,7 @@ void ControlTower::removeEffects(Effect::Category category)
 		for (i = structures_.begin(); i != end; i++)
 			(*i)->removeEffects(Effect::CATEGORY_GENERIC);
 //		std::shared_ptr<Area> area = engine_->getArea();
-//		if (area != NULL)
+//		if (area != nullptr)
 //			area->removeEffectsFromShip(this);
 	}
 }
@@ -140,7 +138,7 @@ const DamagePattern& ControlTower::getDamagePattern()
 void ControlTower::setDamagePattern(const DamagePattern& damagePattern)
 {
 	damagePattern_ = damagePattern;
-	engine_->reset(this);
+	engine_.lock()->reset(shared_from_this());
 }
 
 //Calculations
@@ -378,7 +376,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationGroupModifier*>(*i);
+			os << *std::dynamic_pointer_cast<LocationGroupModifier>(*i);
 		}
 	}
 	
@@ -394,7 +392,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 				isFirst = false;
 			else
 				os << ',';
-			os << *dynamic_cast<LocationRequiredSkillModifier*>(*i);
+			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(*i);
 		}
 	}
 	

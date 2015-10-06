@@ -17,13 +17,6 @@ static const TypeID CHARACTER_TYPE_ID = 1381;
 
 Character::Character(std::shared_ptr<Engine> engine, std::shared_ptr<Gang> owner, const char* characterName) : Item(engine, CHARACTER_TYPE_ID, owner), characterName_(characterName), ship_(nullptr)
 {
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
-	while (result->next())
-	{
-		TypeID skillID = result->getInt(0);
-		addSkill(skillID, 0, false);
-	}
-	engine->reset(shared_from_this());
 }
 
 Character::~Character(void)
@@ -45,7 +38,7 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Ship> ship = std::make_shared<Ship>(engine_, typeID, this);
+		std::shared_ptr<Ship> ship = std::make_shared<Ship>(engine_.lock(), typeID, shared_from_this());
 		
 		removeEffects(Effect::CATEGORY_GENERIC);
 		ship_ = ship;
@@ -83,7 +76,7 @@ Environment Character::getEnvironment()
 void Character::reset()
 {
 	Item::reset();
-	if (ship_ != NULL)
+	if (ship_ != nullptr)
 		ship_->reset();
 	
 	{
@@ -109,15 +102,15 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 {
 	try
 	{
-		std::shared_ptr<Skill> skill = std::make_shared<Skill>(engine_, typeID, skillLevel, isLearned, this);
+		std::shared_ptr<Skill> skill = std::make_shared<Skill>(engine_.lock(), typeID, skillLevel, isLearned, shared_from_this());
 		skills_[typeID] = skill;
-//	if (getOwner() && ship_ != NULL)
+//	if (getOwner() && ship_ != nullptr)
 		skill->addEffects(Effect::CATEGORY_GENERIC);
 		return skill;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -163,7 +156,7 @@ std::shared_ptr<Implant> Character::addImplant(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Implant> implant = std::make_shared<Implant>(engine_, typeID, this);
+		std::shared_ptr<Implant> implant = std::make_shared<Implant>(engine_.lock(), typeID, shared_from_this());
 		std::shared_ptr<Implant> currentImplant = getImplant(implant->getSlot());
 		if (currentImplant)
 			removeImplant(currentImplant);
@@ -183,7 +176,7 @@ std::shared_ptr<Booster> Character::addBooster(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Booster> booster = std::make_shared<Booster>(engine_, typeID, this);
+		std::shared_ptr<Booster> booster = std::make_shared<Booster>(engine_.lock(), typeID, shared_from_this());
 		std::shared_ptr<Booster> currentBooster = getBooster(booster->getSlot());
 		if (currentBooster)
 			removeBooster(currentBooster);
@@ -330,6 +323,16 @@ std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_
 	if (owner)
 		outIterator = owner->getLocationModifiers(attribute, outIterator);
 	return outIterator;
+}
+
+void Character::lazyLoad() {
+	Item::lazyLoad();
+	std::shared_ptr<FetchResult> result = engine_.lock()->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
+	while (result->next())
+	{
+		TypeID skillID = result->getInt(0);
+		addSkill(skillID, 0, false);
+	}
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)

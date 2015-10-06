@@ -82,72 +82,20 @@ public:
 	}
 private:
 	TypeID attributeID_;
-	Attribute* modifier_;
+	std::shared_ptr<Attribute> modifier_;
 	Modifier::Association association_;
 };
 
 
-Item::Item(void) : owner_(), typeID_(0), context_(NULL), engine_()
+Item::Item(void) : owner_(), typeID_(0), context_(nullptr), engine_(), loaded_(false)
 {
 }
 
-Item::Item(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), context_(NULL)
+Item::Item(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), context_(nullptr), loaded_(false)
 {
-	if (typeID == 0)
-		return;
-	
-	std::stringstream sql;
-	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID;
-
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
-	if (result->next())
-	{
-		groupID_ = result->getInt(0);
-		float radius = static_cast<float>(result->getDouble(1));
-		float mass = static_cast<float>(result->getDouble(2));
-		float volume = static_cast<float>(result->getDouble(3));
-		float capacity = static_cast<float>(result->getDouble(4));
-		int raceID = result->getInt(5);
-		categoryID_ = result->getInt(6);
-		
-		typeName_ = result->getText(7);
-		attributes_[RADIUS_ATTRIBUTE_ID]    = std::make_shared<Attribute>(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, this, "radius");
-		attributes_[MASS_ATTRIBUTE_ID]      = std::make_shared<Attribute>(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, this, "mass");
-		attributes_[VOLUME_ATTRIBUTE_ID]    = std::make_shared<Attribute>(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, this, "volume");
-		attributes_[CAPACITY_ATTRIBUTE_ID]  = std::make_shared<Attribute>(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, this, "capacity");
-		attributes_[RACE_ID_ATTRIBUTE_ID]   = std::make_shared<Attribute>(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, this, "raceID");
-
-		sql.str(std::string());
-		sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
-			<< typeID;
-		result = engine->getSqlConnector()->exec(sql.str().c_str());
-		while (result->next())
-		{
-			TypeID attributeID = static_cast<TypeID>(result->getInt(0));
-			TypeID maxAttributeID = static_cast<TypeID>(result->getInt(1));
-			bool isStackable = result->getInt(2) != 0;
-			float value = static_cast<float>(result->getDouble(3));
-			bool highIsGood = result->getInt(4) != 0;
-			std::string attributeName = result->getText(5);
-			attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, this, attributeName.c_str());
-		}
-		
-		sql.str(std::string());
-		sql << "SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = " << typeID;
-		result = engine->getSqlConnector()->exec(sql.str().c_str());
-		while (result->next())
-		{
-			TypeID effectID = static_cast<TypeID>(result->getInt(0));
-			effects_.push_back(Effect::getEffect(engine, effectID));
-		}
-	}
-	else
-	{
-        throw UnknownTypeIDException(std::to_string(typeID));
-	}
 }
 
-Item::Item(std::shared_ptr<Item> owner) : owner_(owner), context_(), engine_()
+Item::Item(std::shared_ptr<Item> owner) : owner_(owner), context_(), engine_(), loaded_(false)
 {
 }
 
@@ -173,21 +121,27 @@ std::shared_ptr<Item> Item::getOwner() const
 
 std::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
 {
+	if (!loaded_)
+		lazyLoad();
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;
 	else
-		return attributes_[attributeID] = std::make_shared<Attribute>(engine_, attributeID, this, true);
+		return attributes_[attributeID] = std::make_shared<Attribute>(engine_.lock(), attributeID, shared_from_this(), true);
 		//throw AttributeDidNotFoundException() << TypeIDExceptionInfo(attributeID);
 }
 
 const AttributesMap &Item::getAttributes()
 {
+	if (!loaded_)
+		lazyLoad();
 	return attributes_;
 }
 
 bool Item::hasAttribute(TypeID attributeID)
 {
+	if (!loaded_)
+		lazyLoad();
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return !i->second->isFakeAttribute();
@@ -197,6 +151,8 @@ bool Item::hasAttribute(TypeID attributeID)
 
 std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 {
+	if (!loaded_)
+		lazyLoad();
 	EffectsList::iterator i, end = effects_.end();
 	for (i = effects_.begin(); i != end; i++)
 		if ((*i)->getEffectID() == effectID)
@@ -207,6 +163,8 @@ std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 
 bool Item::requireSkill(TypeID skillID)
 {
+	if (!loaded_)
+		lazyLoad();
 	try
 	{
 		if (getAttribute(REQUIRED_SKILL1_ATTRIBUTE_ID)->getInitialValue() == skillID)
@@ -230,6 +188,8 @@ bool Item::requireSkill(TypeID skillID)
 
 bool Item::hasEffect(TypeID effectID)
 {
+	if (!loaded_)
+		lazyLoad();
 	EffectsList::iterator i, end = effects_.end();
 	for (i = effects_.begin(); i != end; i++)
 		if ((*i)->getEffectID() == effectID)
@@ -254,6 +214,8 @@ TypeID Item::getCategoryID() const
 
 void Item::addEffects(Effect::Category category)
 {
+	if (!loaded_)
+		lazyLoad();
 	Environment environment = getEnvironment();
 	EffectsList::iterator i, end = effects_.end();
 	for (i = effects_.begin(); i != end; i++)
@@ -263,6 +225,8 @@ void Item::addEffects(Effect::Category category)
 
 void Item::removeEffects(Effect::Category category)
 {
+	if (!loaded_)
+		lazyLoad();
 	Environment environment = getEnvironment();
 	EffectsList::iterator i, end = effects_.end();
 	for (i = effects_.begin(); i != end; i++)
@@ -272,6 +236,8 @@ void Item::removeEffects(Effect::Category category)
 
 void Item::reset()
 {
+	if (!loaded_)
+		lazyLoad();
 	AttributesMap::iterator i, end = attributes_.end();
 	for (i = attributes_.begin(); i != end; i++)
 		i->second->reset();
@@ -366,6 +332,8 @@ void Item::removeLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifie
 
 const char* Item::getTypeName()
 {
+	if (!loaded_)
+		lazyLoad();
 	if (typeName_.size() == 0)
 	{
 		std::stringstream sql;
@@ -384,6 +352,8 @@ const char* Item::getTypeName()
 
 const char* Item::getGroupName()
 {
+	if (!loaded_)
+		lazyLoad();
 	if (groupName_.size() == 0)
 	{
 		std::stringstream sql;
@@ -400,7 +370,64 @@ const char* Item::getGroupName()
 }
 
 std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName) {
-	return attributes_[attributeID] = std::make_shared<Attribute>(engine_, attributeID, maxAttributeID, value, isStackable, highIsGood, this, attributeName, false);
+	return attributes_[attributeID] = std::make_shared<Attribute>(engine_.lock(), attributeID, maxAttributeID, value, isStackable, highIsGood, shared_from_this(), attributeName, false);
+}
+
+void Item::lazyLoad() {
+	loaded_ = true;
+	if (typeID_ == 0)
+		return;
+	
+	std::stringstream sql;
+	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID_;
+	std::shared_ptr<Engine> engine = engine_.lock();
+	
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+	if (result->next())
+	{
+		groupID_ = result->getInt(0);
+		float radius = static_cast<float>(result->getDouble(1));
+		float mass = static_cast<float>(result->getDouble(2));
+		float volume = static_cast<float>(result->getDouble(3));
+		float capacity = static_cast<float>(result->getDouble(4));
+		int raceID = result->getInt(5);
+		categoryID_ = result->getInt(6);
+		
+		typeName_ = result->getText(7);
+		attributes_[RADIUS_ATTRIBUTE_ID]    = std::make_shared<Attribute>(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, shared_from_this(), "radius");
+		attributes_[MASS_ATTRIBUTE_ID]      = std::make_shared<Attribute>(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, shared_from_this(), "mass");
+		attributes_[VOLUME_ATTRIBUTE_ID]    = std::make_shared<Attribute>(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, shared_from_this(), "volume");
+		attributes_[CAPACITY_ATTRIBUTE_ID]  = std::make_shared<Attribute>(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, shared_from_this(), "capacity");
+		attributes_[RACE_ID_ATTRIBUTE_ID]   = std::make_shared<Attribute>(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, shared_from_this(), "raceID");
+		
+		sql.str(std::string());
+		sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
+		<< typeID_;
+		result = engine->getSqlConnector()->exec(sql.str().c_str());
+		while (result->next())
+		{
+			TypeID attributeID = static_cast<TypeID>(result->getInt(0));
+			TypeID maxAttributeID = static_cast<TypeID>(result->getInt(1));
+			bool isStackable = result->getInt(2) != 0;
+			float value = static_cast<float>(result->getDouble(3));
+			bool highIsGood = result->getInt(4) != 0;
+			std::string attributeName = result->getText(5);
+			attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, shared_from_this(), attributeName.c_str());
+		}
+		
+		sql.str(std::string());
+		sql << "SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = " << typeID_;
+		result = engine->getSqlConnector()->exec(sql.str().c_str());
+		while (result->next())
+		{
+			TypeID effectID = static_cast<TypeID>(result->getInt(0));
+			effects_.push_back(Effect::getEffect(engine, effectID));
+		}
+	}
+	else
+	{
+		throw UnknownTypeIDException(std::to_string(typeID_));
+	}
 }
 
 
@@ -418,7 +445,7 @@ std::set<std::shared_ptr<Item>> Item::getAffectors() {
 		auto modifier = modifiers.begin(), end = modifiers.end();
 		for (; modifier != end; modifier++) {
 			std::shared_ptr<Item> item = (*modifier)->getModifier()->getOwner();
-			if (item != this)
+			if (item.get() != this)
 				items.insert((*modifier)->getModifier()->getOwner());
 		}
 	}

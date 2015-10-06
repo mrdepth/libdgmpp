@@ -5,7 +5,7 @@
 
 using namespace eufe;
 
-Engine::Engine(std::shared_ptr<SqlConnector> sqlConnector) : sqlConnector_(sqlConnector), gang_(NULL), area_(NULL), controlTower_(NULL)
+Engine::Engine(std::shared_ptr<SqlConnector> sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr)
 {
 }
 
@@ -30,7 +30,7 @@ std::shared_ptr<SqlConnector> Engine::getSqlConnector()
 std::shared_ptr<Gang> Engine::getGang()
 {
 	if (!gang_)
-		gang_ = std::make_shared<Gang>(this);
+		gang_ = std::make_shared<Gang>(shared_from_this());
 	return gang_;
 }
 
@@ -38,7 +38,7 @@ std::shared_ptr<Area> Engine::setArea(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Area> area = std::make_shared<Area>(this, typeID);
+		std::shared_ptr<Area> area = std::make_shared<Area>(shared_from_this(), typeID);
 		if (area_) {
 			area_->removeEffects(Effect::CATEGORY_SYSTEM);
 		}
@@ -59,7 +59,7 @@ std::shared_ptr<ControlTower> Engine::setControlTower(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<ControlTower> controlTower = std::make_shared<ControlTower>(this, typeID);
+		std::shared_ptr<ControlTower> controlTower = std::make_shared<ControlTower>(shared_from_this(), typeID);
 		if (controlTower_)
 		{
 			controlTower_->removeEffects(Effect::CATEGORY_GENERIC);
