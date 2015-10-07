@@ -17,6 +17,7 @@ Booster::~Booster()
 
 int Booster::getSlot()
 {
+	loadIfNeeded();
 	return slot_;
 }
 

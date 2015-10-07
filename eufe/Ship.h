@@ -170,5 +170,6 @@ namespace eufe {
 		
 		void calculateDamageStats();
 		void updateActiveStatus();
+		void updateEnabledStatus();
 	};
 }

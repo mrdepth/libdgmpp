@@ -70,6 +70,7 @@ std::shared_ptr<Ship> Drone::getTarget()
 
 bool Drone::dealsDamage()
 {
+	loadIfNeeded();
 	if (!isActive_)
 		return false;
 	
@@ -89,6 +90,7 @@ bool Drone::dealsDamage()
 
 std::shared_ptr<Charge> Drone::getCharge()
 {
+	loadIfNeeded();
 	return charge_;
 }
 
@@ -110,11 +112,13 @@ void Drone::setActive(bool active)
 
 bool Drone::isActive()
 {
+	loadIfNeeded();
 	return isActive_;
 }
 
 void Drone::addEffects(Effect::Category category)
 {
+	loadIfNeeded();
 	Item::addEffects(category);
 	if (category == Effect::CATEGORY_GENERIC && charge_)
 		charge_->addEffects(category);
@@ -122,6 +126,7 @@ void Drone::addEffects(Effect::Category category)
 
 void Drone::removeEffects(Effect::Category category)
 {
+	loadIfNeeded();
 	Item::removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC && charge_)
 		charge_->removeEffects(category);
@@ -148,6 +153,7 @@ float Drone::getCycleTime()
 
 float Drone::getVolley()
 {
+	loadIfNeeded();
 	if (volley_ < 0)
 		calculateDamageStats();
 	return volley_;
@@ -155,6 +161,7 @@ float Drone::getVolley()
 
 float Drone::getDps()
 {
+	loadIfNeeded();
 	if (dps_ < 0)
 		calculateDamageStats();
 	return dps_;
@@ -162,6 +169,7 @@ float Drone::getDps()
 
 float Drone::getMaxRange()
 {
+	loadIfNeeded();
 	if (maxRange_ < 0)
 	{
 		TypeID attributes[] = {SHIELD_TRANSFER_RANGE_ATTRIBUTE_ID, POWER_TRANSFER_RANGE_ATTRIBUTE_ID, ENERGY_DESTABILIZATION_RANGE_ATTRIBUTE_ID,
@@ -193,6 +201,7 @@ float Drone::getMaxRange()
 
 float Drone::getFalloff()
 {
+	loadIfNeeded();
 	if (falloff_ < 0)
 	{
 		if (hasAttribute(FALLOFF_ATTRIBUTE_ID))
@@ -205,6 +214,7 @@ float Drone::getFalloff()
 
 float Drone::getTrackingSpeed()
 {
+	loadIfNeeded();
 	if (trackingSpeed_ < 0)
 	{
 		if (hasAttribute(TRACKING_SPEED_ATTRIBUTE_ID))
@@ -217,6 +227,7 @@ float Drone::getTrackingSpeed()
 
 void Drone::calculateDamageStats()
 {
+	loadIfNeeded();
 	if (!dealsDamage() || !isActive_)
 		dps_ = volley_ = 0;
 	else

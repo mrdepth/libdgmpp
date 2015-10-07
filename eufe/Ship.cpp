@@ -85,6 +85,8 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool force)
 			else if (module->canHaveState(Module::STATE_ONLINE))
 				module->setState(Module::STATE_ONLINE);
 			engine_.lock()->reset(shared_from_this());
+			
+			updateEnabledStatus();
 			return module;
 		}
 		else {
@@ -112,9 +114,6 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, T
 		std::shared_ptr<Ship> target = oldModule->getTarget();
 		
 		
-		//removeModule(oldModule);
-		Module::Slot slot = oldModule->getSlot();
-		
 		oldModule->setState(Module::STATE_OFFLINE);
 		oldModule->clearTarget();
 		oldModule->removeEffects(Effect::CATEGORY_GENERIC);
@@ -135,21 +134,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, T
 		}
 		engine_.lock()->reset(shared_from_this());
 		
-		if (slot == Module::SLOT_SUBSYSTEM) {
-			static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
-			for (int i = 0; i < 3; i++) {
-				int n = getFreeSlots(slots[i]);
-				if (n < 0) {
-					ModulesList modules;
-					getModules(slots[i], std::inserter(modules, modules.begin()));
-					auto j = modules.rbegin();
-					for (; n < 0; j++, n++) {
-						removeModule(*j);
-					}
-				}
-			}
-		}
-		
+		updateEnabledStatus();
 		return newModule;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -239,8 +224,6 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 }
 
 void Ship::removeModule(std::shared_ptr<Module> module) {
-	Module::Slot slot = module->getSlot();
-	
 	module->setState(Module::STATE_OFFLINE);
 	module->clearTarget();
 	module->removeEffects(Effect::CATEGORY_GENERIC);
@@ -248,20 +231,7 @@ void Ship::removeModule(std::shared_ptr<Module> module) {
 	modules_.remove(module);
 	engine_.lock()->reset(shared_from_this());
 	
-	if (slot == Module::SLOT_SUBSYSTEM) {
-		static Module::Slot slots[] = {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_HI};
-		for (int i = 0; i < 3; i++) {
-			int n = getFreeSlots(slots[i]);
-			if (n < 0) {
-				ModulesList modules;
-				getModules(slots[i], std::inserter(modules, modules.begin()));
-				auto j = modules.rbegin();
-				for (; n < 0; j++, n++) {
-					removeModule(*j);
-				}
-			}
-		}
-	}
+	updateEnabledStatus();
 }
 
 std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
@@ -1161,6 +1131,27 @@ void Ship::updateActiveStatus()
 			i->setState(Module::STATE_ONLINE);
 	}
 }
+
+void Ship::updateEnabledStatus() {
+	std::vector<int> slots = {getNumberOfSlots(Module::SLOT_HI), getNumberOfSlots(Module::SLOT_MED), getNumberOfSlots(Module::SLOT_LOW)};
+	
+	for (auto module: modules_) {
+		auto slot = module->getSlot();
+		if (slot == Module::SLOT_HI) {
+			slots[0]--;
+			module->setEnabled(slots[0] >= 0);
+		}
+		else if (slot == Module::SLOT_MED) {
+			slots[1]--;
+			module->setEnabled(slots[1] >= 0);
+		}
+		else if (slot == Module::SLOT_LOW) {
+			slots[2]--;
+			module->setEnabled(slots[2] >= 0);
+		}
+	}
+}
+
 
 void Ship::updateHeatDamage()
 {

@@ -114,8 +114,7 @@ std::shared_ptr<Item> Item::getOwner() const
 
 std::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;
@@ -126,15 +125,13 @@ std::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
 
 const AttributesMap &Item::getAttributes()
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	return attributes_;
 }
 
 bool Item::hasAttribute(TypeID attributeID)
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return !i->second->isFakeAttribute();
@@ -144,8 +141,7 @@ bool Item::hasAttribute(TypeID attributeID)
 
 std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	for (auto i: effects_)
 		if (i->getEffectID() == effectID)
 			return i;
@@ -155,8 +151,7 @@ std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 
 bool Item::requireSkill(TypeID skillID)
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	try
 	{
 		if (getAttribute(REQUIRED_SKILL1_ATTRIBUTE_ID)->getInitialValue() == skillID)
@@ -180,8 +175,7 @@ bool Item::requireSkill(TypeID skillID)
 
 bool Item::hasEffect(TypeID effectID)
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	for (auto i: effects_)
 		if (i->getEffectID() == effectID)
 			return true;
@@ -205,8 +199,7 @@ TypeID Item::getCategoryID() const
 
 void Item::addEffects(Effect::Category category)
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	Environment environment = getEnvironment();
 	for (auto i: effects_)
 		if (i->getCategory() == category)
@@ -215,8 +208,7 @@ void Item::addEffects(Effect::Category category)
 
 void Item::removeEffects(Effect::Category category)
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	Environment environment = getEnvironment();
 	for (auto i: effects_)
 		if (i->getCategory() == category)
@@ -225,8 +217,7 @@ void Item::removeEffects(Effect::Category category)
 
 void Item::reset()
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	for (auto i: attributes_)
 		i.second->reset();
 }
@@ -320,8 +311,7 @@ void Item::removeLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifie
 
 const char* Item::getTypeName()
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	if (typeName_.size() == 0)
 	{
 		std::stringstream sql;
@@ -340,8 +330,7 @@ const char* Item::getTypeName()
 
 const char* Item::getGroupName()
 {
-	if (!loaded_)
-		lazyLoad();
+	loadIfNeeded();
 	if (groupName_.size() == 0)
 	{
 		std::stringstream sql;

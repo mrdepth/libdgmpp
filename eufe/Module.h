@@ -62,7 +62,6 @@ namespace eufe {
 		std::shared_ptr<Charge> getCharge();
 		const std::vector<TypeID>& getChargeGroups();
 		int getChargeSize();
-		void removeCharge();
 		bool canFit(std::shared_ptr<Charge> charge);
 		bool requireTarget();
 		void setTarget(std::shared_ptr<Ship> target = nullptr);
@@ -88,6 +87,8 @@ namespace eufe {
 		float getLifeTime();
 		void setLifeTime(float lifeTime);
 		
+		void setEnabled(bool enabled);
+		bool isEnabled();
 
 		friend std::ostream& operator<<(std::ostream& os, Module& module);
 	protected:
@@ -101,6 +102,7 @@ namespace eufe {
 		bool canBeOverloaded_;
 		bool requireTarget_;
 		bool forceReload_;
+		bool enabled_;
 		Slot slot_;
 		Hardpoint hardpoint_;
 		std::shared_ptr<Charge> charge_;

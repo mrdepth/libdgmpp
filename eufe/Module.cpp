@@ -13,7 +13,7 @@
 
 using namespace eufe;
 
-Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN)
+Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true)
 {
 }
 
@@ -34,46 +34,52 @@ Module::~Module(void)
 
 Module::Slot Module::getSlot()
 {
-	if (slot_ == SLOT_UNKNOWN)
-		lazyLoad();
+	loadIfNeeded();
 	return slot_;
 }
 
 Module::Hardpoint Module::getHardpoint()
 {
+	loadIfNeeded();
 	return hardpoint_;
 }
 
 bool Module::canHaveState(State state)
 {
-	bool canHaveState =	 state == STATE_OFFLINE ||
-						(state == STATE_ONLINE && canBeOnline_) ||
-						(state == STATE_ACTIVE && canBeActive_) ||
-						(state == STATE_OVERLOADED && canBeOverloaded_);
-	if (canHaveState && state >= STATE_ACTIVE)
-	{
-		if (getAttribute(ACTIVATION_BLOCKED_ATTRIBUTE_ID)->getValue() > 0)
-			return false;
-			
-		std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
-		
-		if (hasAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID))
+	loadIfNeeded();
+	if (isEnabled()) {
+		bool canHaveState =	 state == STATE_OFFLINE ||
+		(state == STATE_ONLINE && canBeOnline_) ||
+		(state == STATE_ACTIVE && canBeActive_) ||
+		(state == STATE_OVERLOADED && canBeOverloaded_);
+		if (canHaveState && state >= STATE_ACTIVE)
 		{
-			int maxGroupActive = static_cast<int>(getAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID)->getValue()) - 1;
+			if (getAttribute(ACTIVATION_BLOCKED_ATTRIBUTE_ID)->getValue() > 0)
+				return false;
 			
-			for (auto i: ship->getModules())
-				if (i.get() != this && i->getState() >= Module::STATE_ACTIVE && i->getGroupID() == groupID_)
-					maxGroupActive--;
-			if (maxGroupActive < 0)
-				canHaveState = false;
+			std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
+			
+			if (hasAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID))
+			{
+				int maxGroupActive = static_cast<int>(getAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID)->getValue()) - 1;
+				
+				for (auto i: ship->getModules())
+					if (i.get() != this && i->getState() >= Module::STATE_ACTIVE && i->getGroupID() == groupID_)
+						maxGroupActive--;
+				if (maxGroupActive < 0)
+					canHaveState = false;
+			}
 		}
+		return canHaveState;
 	}
-	return canHaveState;
+	else
+		return state == STATE_OFFLINE;
 }
 
 Module::State Module::getState()
 {
-	return state_;
+	loadIfNeeded();
+	return isEnabled() ? state_ : STATE_OFFLINE;
 }
 
 void Module::setState(State state)
@@ -140,6 +146,7 @@ Environment Module::getEnvironment()
 
 void Module::addEffects(Effect::Category category)
 {
+	loadIfNeeded();
 	Environment environment = getEnvironment();
 	
 	for (auto i: effects_)
@@ -168,6 +175,7 @@ void Module::addEffects(Effect::Category category)
 
 void Module::removeEffects(Effect::Category category)
 {
+	loadIfNeeded();
 	Environment environment = getEnvironment();
 
 	for (auto i: effects_)
@@ -207,29 +215,28 @@ void Module::reset()
 
 std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 {
+	loadIfNeeded();
 	try
 	{
-		std::shared_ptr<Charge> charge = typeID ? std::make_shared<Charge>(engine_.lock(), typeID, shared_from_this()) : nullptr;
-		if (charge)
-		{
-			if (canFit(charge))
+		if (typeID) {
+			std::shared_ptr<Charge> charge = std::make_shared<Charge>(engine_.lock(), typeID, shared_from_this());
+			if (charge && canFit(charge))
 			{
-				if (charge_) {
+				if (charge_)
 					charge_->removeEffects(Effect::CATEGORY_GENERIC);
-				}
+				
 				charge_ = charge;
 				charge_->addEffects(Effect::CATEGORY_GENERIC);
-				engine_.lock()->reset(shared_from_this());
-			}
-			else {
-				return nullptr;
 			}
 		}
-		else if (charge_) {
-			charge_->removeEffects(Effect::CATEGORY_GENERIC);
-			charge_ = nullptr;
-			engine_.lock()->reset(shared_from_this());
+		else {
+			if (charge_) {
+				charge_->removeEffects(Effect::CATEGORY_GENERIC);
+				charge_ = nullptr;
+			}
 		}
+		
+		engine_.lock()->reset(shared_from_this());
 		return charge_;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -240,12 +247,7 @@ std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 
 void Module::clearCharge()
 {
-	if (charge_)
-	{
-		charge_->removeEffects(Effect::CATEGORY_GENERIC);
-		charge_ = nullptr;
-		engine_.lock()->reset(shared_from_this());
-	}
+	setCharge(0);
 }
 
 
@@ -256,6 +258,7 @@ std::shared_ptr<Charge> Module::getCharge()
 
 const std::vector<TypeID>& Module::getChargeGroups()
 {
+	loadIfNeeded();
 	return chargeGroups_;
 }
 
@@ -267,13 +270,9 @@ int Module::getChargeSize()
 		return 0;
 }
 
-void Module::removeCharge()
-{
-	setCharge(0);
-}
-
 bool Module::canFit(std::shared_ptr<Charge> charge)
 {
+	loadIfNeeded();
 	if (!charge)
 		return true;
 	if (charge->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() > getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue())
@@ -296,11 +295,13 @@ bool Module::canFit(std::shared_ptr<Charge> charge)
 
 bool Module::requireTarget()
 {
+	loadIfNeeded();
 	return requireTarget_;
 }
 
 void Module::setTarget(std::shared_ptr<Ship> target)
 {
+	loadIfNeeded();
 	if (target == getOwner())
 		throw BadTargetException("self");
 	
@@ -383,6 +384,7 @@ int Module::getCharges()
 
 int Module::getShots()
 {
+	loadIfNeeded();
 	if (!charge_)
 		return 0;
 	if (shots_ < 0)
@@ -408,6 +410,7 @@ int Module::getShots()
 
 float Module::getCapUse()
 {
+	loadIfNeeded();
 	if (state_ >= STATE_ACTIVE)
 	{
 		float capNeed = 0.0;
@@ -433,6 +436,7 @@ float Module::getCapUse()
 
 float Module::getVolley()
 {
+	loadIfNeeded();
 	if (volley_ < 0)
 		calculateDamageStats();
 	return volley_;
@@ -440,6 +444,7 @@ float Module::getVolley()
 
 float Module::getDps()
 {
+	loadIfNeeded();
 	if (dps_ < 0)
 		calculateDamageStats();
 	return dps_;
@@ -447,6 +452,7 @@ float Module::getDps()
 
 float Module::getMaxRange()
 {
+	loadIfNeeded();
 	if (maxRange_ < 0)
 	{
 		TypeID attributes[] = {
@@ -497,6 +503,7 @@ float Module::getMaxRange()
 
 float Module::getFalloff()
 {
+	loadIfNeeded();
 	if (falloff_ < 0)
 	{
 		if (hasAttribute(FALLOFF_ATTRIBUTE_ID))
@@ -511,6 +518,7 @@ float Module::getFalloff()
 
 float Module::getTrackingSpeed()
 {
+	loadIfNeeded();
 	if (trackingSpeed_ < 0)
 	{
 		if (hasAttribute(TRACKING_SPEED_ATTRIBUTE_ID))
@@ -523,6 +531,7 @@ float Module::getTrackingSpeed()
 
 float Module::getLifeTime()
 {
+	loadIfNeeded();
 	if (lifeTime_ < 0)
 	{
 		std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
@@ -536,8 +545,17 @@ void Module::setLifeTime(float lifeTime)
 	lifeTime_ = lifeTime;
 }
 
+void Module::setEnabled(bool enabled) {
+	enabled_ = enabled;
+}
+
+bool Module::isEnabled() {
+	return enabled_;
+}
+
 void Module::calculateDamageStats()
 {
+	loadIfNeeded();
 	if (state_ < STATE_ACTIVE)
 		dps_ = volley_ = 0;
 	else

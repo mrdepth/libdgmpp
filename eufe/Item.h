@@ -101,6 +101,10 @@ namespace eufe {
 		ModifiersList locationRequiredSkillModifiers_;
 		
 		virtual void lazyLoad();
+		void loadIfNeeded() {
+			if (!loaded_)
+				lazyLoad();
+		}
 		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName = "");
 
 		

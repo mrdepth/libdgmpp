@@ -17,8 +17,7 @@ Implant::~Implant()
 
 int Implant::getSlot()
 {
-	if (slot_ == -1)
-		lazyLoad();
+	loadIfNeeded();
 	return slot_;
 }
 
