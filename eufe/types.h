@@ -49,30 +49,50 @@ namespace eufe {
 	
 	struct Tank
 	{
-		float armorRepair;
-		float hullRepair;
-		float shieldRepair;
-		float passiveShield;
+		union {
+			struct {
+				float passiveShield;
+				float shieldRepair;
+				float armorRepair;
+				float hullRepair;
+			};
+			float layers[4];
+		};
 	};
 	
 	struct HitPoints
 	{
-		float armor;
-		float hull;
-		float shield;
+		union {
+			struct {
+				float shield;
+				float armor;
+				float hull;
+			};
+			float layers[3];
+		};
 	};
 
 	struct ResistancesLayer
 	{
-		float em;
-		float explosive;
-		float kinetic;
-		float thermal;
+		union {
+			struct {
+				float em;
+				float thermal;
+				float kinetic;
+				float explosive;
+			};
+			float resistances[4];
+		};
 	};
 	
 	struct Resistances
 	{
-		ResistancesLayer armor, hull, shield;
+		union {
+			struct {
+				ResistancesLayer shield, armor, hull;
+			};
+			ResistancesLayer layers[3];
+		};
 	};
 	
 	enum Opcode

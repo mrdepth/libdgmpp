@@ -167,18 +167,30 @@ std::shared_ptr<Character> Gang::getSquadBooster()
 void Gang::setFleetBooster(std::shared_ptr<Character> fleetBooster)
 {
 	fleetBooster_ = fleetBooster;
+	if (wingBooster_ == fleetBooster)
+		wingBooster_ = nullptr;
+	if (squadBooster_ == fleetBooster)
+		squadBooster_ = nullptr;
 	getEngine()->reset(shared_from_this());
 }
 
 void Gang::setWingBooster(std::shared_ptr<Character> wingBooster)
 {
 	wingBooster_ = wingBooster;
+	if (fleetBooster_ == wingBooster)
+		fleetBooster_ = nullptr;
+	if (squadBooster_ == wingBooster)
+		squadBooster_ = nullptr;
 	getEngine()->reset(shared_from_this());
 }
 
 void Gang::setSquadBooster(std::shared_ptr<Character> squadBooster)
 {
 	squadBooster_ = squadBooster;
+	if (fleetBooster_ == squadBooster)
+		fleetBooster_ = nullptr;
+	if (wingBooster_ == squadBooster)
+		wingBooster_ = nullptr;
 	getEngine()->reset(shared_from_this());
 }
 

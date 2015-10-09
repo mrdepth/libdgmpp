@@ -13,10 +13,15 @@ namespace eufe {
 		HitPoints effectiveHitPoints(const Resistances& resistances, const HitPoints& hitPoints) const;
 		Tank effectiveTank(const Resistances& resistances, const Tank& tank) const;
 
-		float emAmount;
-		float thermalAmount;
-		float kineticAmount;
-		float explosiveAmount;
+		union {
+			struct {
+				float emAmount;
+				float thermalAmount;
+				float kineticAmount;
+				float explosiveAmount;
+			};
+			float damageTypes[4];
+		};
 		
 	private:
 		float effectivity(const ResistancesLayer& resistances, float amount) const;
