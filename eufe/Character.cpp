@@ -252,7 +252,7 @@ void Character::removeEffects(Effect::Category category)
 
 void Character::setCharacterName(const char* characterName)
 {
-	characterName_ = characterName;
+	characterName_ = characterName ?: "";
 }
 
 const char*  Character::getCharacterName()
