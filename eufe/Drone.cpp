@@ -15,30 +15,32 @@ Drone::Drone(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Ship
 
 Drone::~Drone(void)
 {
-	if (target_.lock())
-		clearTarget();
 }
 
 Environment Drone::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = shared_from_this();
-	std::shared_ptr<Item> ship = getOwner();
-	std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
-	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-	std::shared_ptr<Area> area = engine_.lock()->getArea();
-	std::shared_ptr<Item> target = target_.lock();
-	
-	if (character)
-		environment["Char"] = character;
-	if (ship)
-		environment["Ship"] = ship;
-	if (gang)
-		environment["Gang"] = gang;
-	if (area)
-		environment["Area"] = area;
-	if (target)
-		environment["Target"] = target;
+	auto engine = getEngine();
+	if (engine) {
+		environment["Self"] = shared_from_this();
+		std::shared_ptr<Item> ship = getOwner();
+		std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
+		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+		std::shared_ptr<Area> area = engine->getArea();
+		std::shared_ptr<Item> target = target_.lock();
+		
+		if (character)
+			environment["Char"] = character;
+		if (ship)
+			environment["Ship"] = ship;
+		if (gang)
+			environment["Gang"] = gang;
+		if (area)
+			environment["Area"] = area;
+		if (target)
+			environment["Target"] = target;
+	}
+
 	return environment;
 }
 
@@ -55,7 +57,9 @@ void Drone::setTarget(std::shared_ptr<Ship> target)
 	if (target)
 		target->addProjectedDrone(shared_from_this());
 	addEffects(Effect::CATEGORY_TARGET);
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 void Drone::clearTarget()
@@ -107,7 +111,9 @@ void Drone::setActive(bool active)
 		removeEffects(Effect::CATEGORY_TARGET);
 	}
 	isActive_ = active;
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 bool Drone::isActive()
@@ -251,10 +257,14 @@ void Drone::calculateDamageStats()
 
 void Drone::lazyLoad() {
 	Item::lazyLoad();
+	auto engine = getEngine();
+	if (!engine)
+		return;
+
 	if (hasAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID))
 	{
 		TypeID typeID = static_cast<TypeID>(getAttribute(ENTITY_MISSILE_TYPE_ID_ATTRIBUTE_ID)->getValue());
-		charge_ = std::make_shared<Charge>(engine_.lock(), typeID, shared_from_this());
+		charge_ = std::make_shared<Charge>(engine, typeID, shared_from_this());
 		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
 }

@@ -119,6 +119,9 @@ void CapacitorSimulator::internalReset()
 	}
 	
 	std::shared_ptr<Ship> ship = ship_.lock();
+	if (!ship)
+		return;
+	
 	capacitorCapacity_ = ship->getAttribute(CAPACITOR_CAPACITY_ATTRIBUTE_ID)->getValue();
 	capacitorRecharge_ = ship->getAttribute(RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
 	capUsed_ = 0;

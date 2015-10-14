@@ -36,14 +36,20 @@ Modifier::Association Modifier::getAssociation() const
 
 float Modifier::getValue() const
 {
-	float value = modifier_.lock()->getValue();
+	auto modifier = modifier_.lock();
+	if (!modifier)
+		return 0;
+	
+	float value = modifier->getValue();
 	if (association_ == ASSOCIATION_POST_DIV)
 		return static_cast<float>(1.0f / value);
 	else if (association_ == ASSOCIATION_POST_PERCENT)
 		return static_cast<float>(1.0f + value / 100.0f);
 	else if (association_ == ASSOCIATION_ADD_RATE || association_ == ASSOCIATION_SUB_RATE)
 	{
-		std::shared_ptr<Item> item = modifier_.lock()->getOwner();
+		std::shared_ptr<Item> item = modifier->getOwner();
+		if (!item)
+			return 0;
 		float duration;
 		if (item->hasAttribute(DURATION_ATTRIBUTE_ID))
 			duration = static_cast<float>(item->getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0f);
@@ -59,7 +65,8 @@ float Modifier::getValue() const
 
 bool Modifier::isStackable() const
 {
-	return modifier_.lock()->isStackable();
+	auto modifier = modifier_.lock();
+	return modifier ? modifier->isStackable() : false;
 }
 
 std::shared_ptr<Character> Modifier::getCharacter()

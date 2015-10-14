@@ -39,6 +39,8 @@ void HeatSimulator::simulate()
 		ModulesVector medSlot;
 		ModulesVector lowSlot;
 		std::shared_ptr<Ship> ship = ship_.lock();
+		if (!ship)
+			return;
 		hiSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
 		medSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
 		lowSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
@@ -68,6 +70,8 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 	states_.clear();
 
 	std::shared_ptr<Ship> ship = ship_.lock();
+	if (!ship)
+		return;
 	std::shared_ptr<Module> module = *modules.begin();
 	Module::Slot slot = module->getSlot();
 	float heatCapacity = 0;

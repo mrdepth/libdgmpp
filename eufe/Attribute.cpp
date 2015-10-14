@@ -342,6 +342,9 @@ void Attribute::calculate()
 		value_ = forcedValue_;
 	else
 	{
+		auto owner = getOwner();
+		if (!owner)
+			return;
 		if (sync)
 		{
 			std::cout << "Deadlock: " << attributeName_ << std::endl;
@@ -349,7 +352,7 @@ void Attribute::calculate()
 		sync = true;
 		value_ = initialValue_;
 		
-		Environment environment = getOwner()->getEnvironment();
+		Environment environment = owner->getEnvironment();
 		std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
 		std::shared_ptr<Ship> ship = environment.find("Ship") != environment.end() ? std::dynamic_pointer_cast<Ship>(environment["Ship"]) : nullptr;
 		bool isDisallowedAssistance = ship && attributeID_ != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
@@ -372,7 +375,7 @@ void Attribute::calculate()
 		std::vector<float>postDividersStackableNegative;
 		std::vector<float>postPercentsStackableNegative;
 		
-		getOwner()->getModifiers(shared_from_this(), std::inserter(modifiers, modifiers.begin()));
+		owner->getModifiers(shared_from_this(), std::inserter(modifiers, modifiers.begin()));
 		
 //		ModifiersList::iterator i = modifiers.begin(), end = modifiers.end();
 //		if (i != end)
@@ -520,7 +523,7 @@ void Attribute::calculate()
 		value_ = multiply(postPercentsStackableNegative.begin(), postPercentsStackableNegative.end(), value_, true);
 		
 		if (maxAttributeID_ > 0) {
-			float maxValue = getOwner()->getAttribute(maxAttributeID_)->getValue();
+			float maxValue = owner->getAttribute(maxAttributeID_)->getValue();
 			value_ = std::min(value_, maxValue);
 		}
 		sync = false;

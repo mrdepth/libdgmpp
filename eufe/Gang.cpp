@@ -113,31 +113,42 @@ const CharactersList& Gang::getPilots()
 
 std::shared_ptr<Character> Gang::addPilot()
 {
-	std::shared_ptr<Character> character = std::make_shared<Character>(engine_.lock(), shared_from_this());
+	auto engine = getEngine();
+	if (!engine)
+		return nullptr;
+
+	std::shared_ptr<Character> character = std::make_shared<Character>(engine, shared_from_this());
 	character->removeEffects(Effect::CATEGORY_GENERIC);
 	pilots_.push_back(character);
 	character->addEffects(Effect::CATEGORY_GENERIC);
-	getEngine()->reset(shared_from_this());
+	engine->reset(shared_from_this());
 	return character;
 }
 
 
 void Gang::removePilot(std::shared_ptr<Character> character)
 {
+	auto engine = getEngine();
+	if (!engine)
+		return;
 	character->removeEffects(Effect::CATEGORY_GENERIC);
 	pilots_.remove(character);
-	getEngine()->reset(shared_from_this());
+	engine->reset(shared_from_this());
 }
 
 
 Environment Gang::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = shared_from_this();
-	environment["Gang"] = shared_from_this();
-	
-	if (getEngine()->getArea())
-		environment["Area"] = getEngine()->getArea();
+	auto engine = getEngine();
+	if (engine) {
+		environment["Self"] = shared_from_this();
+		environment["Gang"] = shared_from_this();
+		auto area = engine->getArea();
+		if (area)
+			environment["Area"] = area;
+		
+	}
 	return environment;
 }
 
@@ -171,7 +182,9 @@ void Gang::setFleetBooster(std::shared_ptr<Character> fleetBooster)
 		wingBooster_ = nullptr;
 	if (squadBooster_ == fleetBooster)
 		squadBooster_ = nullptr;
-	getEngine()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 void Gang::setWingBooster(std::shared_ptr<Character> wingBooster)
@@ -181,7 +194,9 @@ void Gang::setWingBooster(std::shared_ptr<Character> wingBooster)
 		fleetBooster_ = nullptr;
 	if (squadBooster_ == wingBooster)
 		squadBooster_ = nullptr;
-	getEngine()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 void Gang::setSquadBooster(std::shared_ptr<Character> squadBooster)
@@ -191,24 +206,31 @@ void Gang::setSquadBooster(std::shared_ptr<Character> squadBooster)
 		fleetBooster_ = nullptr;
 	if (wingBooster_ == squadBooster)
 		wingBooster_ = nullptr;
-	getEngine()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 void Gang::removeFleetBooster() {
 	fleetBooster_ = nullptr;
-	getEngine()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 void Gang::removeWingBooster() {
 	wingBooster_ = nullptr;
-	getEngine()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 	
 }
 
 void Gang::removeSquadBooster() {
 	squadBooster_ = nullptr;
-	getEngine()->reset(shared_from_this());
-	
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)

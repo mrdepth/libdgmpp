@@ -11,15 +11,6 @@ Engine::Engine(std::shared_ptr<SqlConnector> sqlConnector) : sqlConnector_(sqlCo
 
 Engine::~Engine(void)
 {
-	std::shared_ptr<Gang> gangTmp = gang_;
-	std::shared_ptr<Area> areaTmp = area_;
-	std::shared_ptr<ControlTower> controlTowerTmp = controlTower_;
-	std::shared_ptr<SqlConnector> sqlConnectorTmp = sqlConnector_;
-	
-	gang_ = nullptr;
-	area_ = nullptr;
-	controlTower_ = nullptr;
-	sqlConnector_ = nullptr;
 }
 
 std::shared_ptr<SqlConnector> Engine::getSqlConnector()

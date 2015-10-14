@@ -115,11 +115,15 @@ std::shared_ptr<Item> Item::getOwner() const
 std::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
 {
 	loadIfNeeded();
+	auto engine = getEngine();
+	if (!engine)
+		return nullptr;
+
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
 		return i->second;
 	else
-		return attributes_[attributeID] = std::make_shared<Attribute>(engine_.lock(), attributeID, shared_from_this(), true);
+		return attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, shared_from_this(), true);
 		//throw AttributeDidNotFoundException() << TypeIDExceptionInfo(attributeID);
 }
 
@@ -347,17 +351,23 @@ const char* Item::getGroupName()
 }
 
 std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName) {
-	return attributes_[attributeID] = std::make_shared<Attribute>(engine_.lock(), attributeID, maxAttributeID, value, isStackable, highIsGood, shared_from_this(), attributeName, false);
+	auto engine = getEngine();
+	if (!engine)
+		return nullptr;
+
+	return attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, shared_from_this(), attributeName, false);
 }
 
 void Item::lazyLoad() {
 	loaded_ = true;
 	if (typeID_ == 0)
 		return;
+	auto engine = getEngine();
+	if (!engine)
+		return;
 	
 	std::stringstream sql;
 	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID_;
-	std::shared_ptr<Engine> engine = engine_.lock();
 	
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
 	if (result->next())

@@ -38,14 +38,18 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Ship> ship = std::make_shared<Ship>(engine_.lock(), typeID, shared_from_this());
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+		
+		std::shared_ptr<Ship> ship = std::make_shared<Ship>(engine, typeID, shared_from_this());
 		
 		removeEffects(Effect::CATEGORY_GENERIC);
 		ship_ = ship;
 		
 		if (ship_)
 			addEffects(Effect::CATEGORY_GENERIC);
-		engine_.lock()->reset(shared_from_this());
+		engine->reset(shared_from_this());
 		return ship;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -57,19 +61,22 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 Environment Character::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = shared_from_this();
-	environment["Char"] = shared_from_this();
-	std::shared_ptr<Item> gang = getOwner();
-	std::shared_ptr<Area> area = engine_.lock()->getArea();
-
-	if (ship_)
-		environment["Ship"] = ship_;
-
-	if (gang)
-		environment["Gang"] = gang;
-	
-	if (area)
-		environment["Area"] = area;
+	auto engine = getEngine();
+	if (engine) {
+		environment["Self"] = shared_from_this();
+		environment["Char"] = shared_from_this();
+		std::shared_ptr<Item> gang = getOwner();
+		std::shared_ptr<Area> area = engine->getArea();
+		
+		if (ship_)
+			environment["Ship"] = ship_;
+		
+		if (gang)
+			environment["Gang"] = gang;
+		
+		if (area)
+			environment["Area"] = area;
+	}
 	return environment;
 }
 
@@ -91,7 +98,11 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 {
 	try
 	{
-		std::shared_ptr<Skill> skill = std::make_shared<Skill>(engine_.lock(), typeID, skillLevel, isLearned, shared_from_this());
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+
+		std::shared_ptr<Skill> skill = std::make_shared<Skill>(engine, typeID, skillLevel, isLearned, shared_from_this());
 		skills_[typeID] = skill;
 //	if (getOwner() && ship_ != nullptr)
 		skill->addEffects(Effect::CATEGORY_GENERIC);
@@ -145,13 +156,17 @@ std::shared_ptr<Implant> Character::addImplant(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Implant> implant = std::make_shared<Implant>(engine_.lock(), typeID, shared_from_this());
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+
+		std::shared_ptr<Implant> implant = std::make_shared<Implant>(engine, typeID, shared_from_this());
 		std::shared_ptr<Implant> currentImplant = getImplant(implant->getSlot());
 		if (currentImplant)
 			removeImplant(currentImplant);
 		implants_.push_back(implant);
 		implant->addEffects(Effect::CATEGORY_GENERIC);
-		engine_.lock()->reset(shared_from_this());
+		engine->reset(shared_from_this());
 		return implant;
 
 	}
@@ -165,13 +180,17 @@ std::shared_ptr<Booster> Character::addBooster(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Booster> booster = std::make_shared<Booster>(engine_.lock(), typeID, shared_from_this());
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+
+		std::shared_ptr<Booster> booster = std::make_shared<Booster>(engine, typeID, shared_from_this());
 		std::shared_ptr<Booster> currentBooster = getBooster(booster->getSlot());
 		if (currentBooster)
 			removeBooster(currentBooster);
 		boosters_.push_back(booster);
 		booster->addEffects(Effect::CATEGORY_GENERIC);
-		engine_.lock()->reset(shared_from_this());
+		engine->reset(shared_from_this());
 		return booster;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -186,7 +205,10 @@ void Character::removeImplant(std::shared_ptr<Implant> implant)
 	{
 		implant->removeEffects(Effect::CATEGORY_GENERIC);
 		implants_.remove(implant);
-		engine_.lock()->reset(shared_from_this());
+
+		auto engine = getEngine();
+		if (engine)
+			engine->reset(shared_from_this());
 	}
 }
 
@@ -196,7 +218,10 @@ void Character::removeBooster(std::shared_ptr<Booster> booster)
 	{
 		booster->removeEffects(Effect::CATEGORY_GENERIC);
 		boosters_.remove(booster);
-		engine_.lock()->reset(shared_from_this());
+		
+		auto engine = getEngine();
+		if (engine)
+			engine->reset(shared_from_this());
 	}
 }
 
@@ -262,6 +287,10 @@ const char*  Character::getCharacterName()
 
 void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 {
+	auto engine = getEngine();
+	if (!engine)
+		return;
+
 	std::map<TypeID, int>::const_iterator j, endj = levels.end();
 	
 	for (auto i: skills_) {
@@ -271,28 +300,36 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 		else
 			i.second->setSkillLevel(0);
 	}
-	engine_.lock()->reset(shared_from_this());
+	engine->reset(shared_from_this());
 }
 
 void Character::setAllSkillsLevel(int level)
 {
+	auto engine = getEngine();
+	if (!engine)
+		return;
 	for (auto i: skills_)
 		i.second->setSkillLevel(level);
-	engine_.lock()->reset(shared_from_this());
+	engine->reset(shared_from_this());
 }
 
 std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	outIterator = Item::getLocationModifiers(attribute, outIterator);
-	std::shared_ptr<Item> owner = owner_.lock();
+	auto owner = getOwner();
 	if (owner)
 		outIterator = owner->getLocationModifiers(attribute, outIterator);
 	return outIterator;
 }
 
 void Character::lazyLoad() {
+	auto engine = getEngine();
+	if (!engine)
+		return;
+
 	Item::lazyLoad();
-	std::shared_ptr<FetchResult> result = engine_.lock()->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
+	
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
 	while (result->next())
 	{
 		TypeID skillID = result->getInt(0);

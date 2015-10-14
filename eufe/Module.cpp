@@ -19,8 +19,6 @@ Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<It
 
 Module::~Module(void)
 {
-	if (target_.lock())
-		clearTarget();
 }
 
 /*Attribute* Module::getAttribute(TypeID attributeID)
@@ -117,30 +115,37 @@ void Module::setState(State state)
 				addEffects(Effect::CATEGORY_OVERLOADED);
 		}
 		state_ = state;
-		engine_.lock()->reset(shared_from_this());
+		auto engine = getEngine();
+		if (engine)
+			engine->reset(shared_from_this());
 	}
 }
 
 Environment Module::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = shared_from_this();
-	std::shared_ptr<Item> ship = getOwner();
-	std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
-	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-	std::shared_ptr<Area> area = engine_.lock()->getArea();
-	std::shared_ptr<Item> target = target_.lock();
-	
-	if (character)
-		environment["Char"] = character;
-	if (ship)
-		environment["Ship"] = ship;
-	if (gang)
-		environment["Gang"] = gang;
-	if (area)
-		environment["Area"] = area;
-	if (target)
-		environment["Target"] = target;
+	auto engine = getEngine();
+	if (engine) {
+		environment["Self"] = shared_from_this();
+		std::shared_ptr<Item> ship = getOwner();
+		std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
+		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+		std::shared_ptr<Area> area = engine->getArea();
+		std::shared_ptr<Item> target = target_.lock();
+		
+		if (character)
+			environment["Char"] = character;
+		if (ship)
+			environment["Ship"] = ship;
+		if (gang)
+			environment["Gang"] = gang;
+		if (area)
+			environment["Area"] = area;
+		if (target)
+			environment["Target"] = target;
+		
+	}
+
 	return environment;
 }
 
@@ -218,8 +223,12 @@ std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 	loadIfNeeded();
 	try
 	{
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+		
 		if (typeID) {
-			std::shared_ptr<Charge> charge = std::make_shared<Charge>(engine_.lock(), typeID, shared_from_this());
+			std::shared_ptr<Charge> charge = std::make_shared<Charge>(engine, typeID, shared_from_this());
 			if (charge && canFit(charge))
 			{
 				if (charge_)
@@ -236,7 +245,7 @@ std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 			}
 		}
 		
-		engine_.lock()->reset(shared_from_this());
+		engine->reset(shared_from_this());
 		return charge_;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -302,7 +311,7 @@ bool Module::requireTarget()
 void Module::setTarget(std::shared_ptr<Ship> target)
 {
 	loadIfNeeded();
-	if (target == getOwner())
+	if (target && target == getOwner())
 		throw BadTargetException("self");
 	
 	std::shared_ptr<Ship> oldTarget = target_.lock();

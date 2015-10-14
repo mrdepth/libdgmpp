@@ -51,11 +51,14 @@ void Area::removeEffectsFromShip(std::shared_ptr<Item> ship)
 
 void Area::addEffects(Effect::Category category)
 {
+	auto engine = getEngine();
+	if (!engine)
+		return;
 	if (category == Effect::CATEGORY_SYSTEM)
 	{
-		for (auto i: getEngine()->getGang()->getPilots())
+		for (auto i: engine->getGang()->getPilots())
 			addEffectsToShip(i->getShip());
-		std::shared_ptr<ControlTower> controlTower = getEngine()->getControlTower();
+		std::shared_ptr<ControlTower> controlTower = engine->getControlTower();
 		if (controlTower)
 			addEffectsToShip(controlTower);
 	}
@@ -63,11 +66,14 @@ void Area::addEffects(Effect::Category category)
 
 void Area::removeEffects(Effect::Category category)
 {
+	auto engine = getEngine();
+	if (!engine)
+		return;
 	if (category == Effect::CATEGORY_SYSTEM)
 	{
-		for (auto i: getEngine()->getGang()->getPilots())
+		for (auto i: engine->getGang()->getPilots())
 			removeEffectsFromShip(i->getShip());
-		std::shared_ptr<ControlTower> controlTower = getEngine()->getControlTower();
+		std::shared_ptr<ControlTower> controlTower = engine->getControlTower();
 		if (controlTower)
 			removeEffectsFromShip(controlTower);
 	}

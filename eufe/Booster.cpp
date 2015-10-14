@@ -24,20 +24,23 @@ int Booster::getSlot()
 Environment Booster::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = shared_from_this();
-	std::shared_ptr<Character> character = std::dynamic_pointer_cast<Character>(getOwner());
-	std::shared_ptr<Item> ship = character ? character->getShip() : nullptr;
-	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-	std::shared_ptr<Area> area = engine_.lock()->getArea();
-	
-	if (character)
-		environment["Char"] = character;
-	if (ship)
-		environment["Ship"] = ship;
-	if (gang)
-		environment["Gang"] = gang;
-	if (area)
-		environment["Area"] = area;
+	auto engine = getEngine();
+	if (engine) {
+		environment["Self"] = shared_from_this();
+		std::shared_ptr<Character> character = std::dynamic_pointer_cast<Character>(getOwner());
+		std::shared_ptr<Item> ship = character ? character->getShip() : nullptr;
+		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+		std::shared_ptr<Area> area = engine->getArea();
+		
+		if (character)
+			environment["Char"] = character;
+		if (ship)
+			environment["Ship"] = ship;
+		if (gang)
+			environment["Gang"] = gang;
+		if (area)
+			environment["Area"] = area;
+	}
 	return environment;
 }
 

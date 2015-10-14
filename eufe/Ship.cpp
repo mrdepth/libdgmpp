@@ -49,6 +49,11 @@ Ship::Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Charac
 
 Ship::~Ship(void)
 {
+	for (auto module: modules_)
+		module->clearTarget();
+	for (auto drone: drones_)
+		drone->clearTarget();
+	
 	if (projectedModules_.size() > 0)
 	{
 		std::list<std::weak_ptr<Module>> projectedModulesCopy = projectedModules_;
@@ -73,7 +78,11 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool force)
 {
 	try
 	{
-		std::shared_ptr<Module> module = std::make_shared<Module>(engine_.lock(), typeID, shared_from_this());
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+
+		std::shared_ptr<Module> module = std::make_shared<Module>(engine, typeID, shared_from_this());
 		if (force || canFit(module))
 		{
 			modules_.push_back(module);
@@ -84,7 +93,7 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool force)
 				module->setState(Module::STATE_ACTIVE);
 			else if (module->canHaveState(Module::STATE_ONLINE))
 				module->setState(Module::STATE_ONLINE);
-			engine_.lock()->reset(shared_from_this());
+			engine->reset(shared_from_this());
 			
 			updateEnabledStatus();
 			return module;
@@ -132,7 +141,9 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, T
 			if (newModule->canHaveState(state))
 				newModule->setState(state);
 		}
-		engine_.lock()->reset(shared_from_this());
+		auto engine = getEngine();
+		if (engine)
+			engine->reset(shared_from_this());
 		
 		updateEnabledStatus();
 		return newModule;
@@ -229,7 +240,9 @@ void Ship::removeModule(std::shared_ptr<Module> module) {
 	module->removeEffects(Effect::CATEGORY_GENERIC);
 	
 	modules_.remove(module);
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 	
 	updateEnabledStatus();
 }
@@ -238,11 +251,14 @@ std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine_.lock(), typeID, shared_from_this());
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, shared_from_this());
 		drones_.push_back(drone);
 		drone->addEffects(Effect::CATEGORY_GENERIC);
 		drone->addEffects(Effect::CATEGORY_TARGET);
-		engine_.lock()->reset(shared_from_this());
+		engine->reset(shared_from_this());
 		
 		return drone;
 	}
@@ -258,7 +274,9 @@ void Ship::removeDrone(std::shared_ptr<Drone> drone)
 	drone->removeEffects(Effect::CATEGORY_GENERIC);
 	
 	drones_.remove(drone);
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 
@@ -281,11 +299,17 @@ const DronesList& Ship::getDrones()
 
 const std::list<std::weak_ptr<Module>>& Ship::getProjectedModules()
 {
+	std::remove_if(projectedModules_.begin(), projectedModules_.end(), [](std::weak_ptr<Module> module) {
+		return module.lock() == nullptr;
+	});
 	return projectedModules_;
 }
 
 const std::list<std::weak_ptr<Drone>>& Ship::getProjectedDrones()
 {
+	std::remove_if(projectedDrones_.begin(), projectedDrones_.end(), [](std::weak_ptr<Drone> drone) {
+		return drone.lock() == nullptr;
+	});
 	return projectedDrones_;
 }
 
@@ -446,18 +470,23 @@ bool Ship::isDisallowedOffensiveModifiers()
 Environment Ship::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = shared_from_this();
-	environment["Ship"] = shared_from_this();
-	std::shared_ptr<Item> character = getOwner();
-	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-	std::shared_ptr<Area> area = engine_.lock()->getArea();
-	
-	if (character)
-		environment["Char"] = character;
-	if (gang)
-		environment["Gang"] = gang;
-	if (area)
-		environment["Area"] = area;
+	auto engine = getEngine();
+	if (engine) {
+		environment["Self"] = shared_from_this();
+		environment["Ship"] = shared_from_this();
+		std::shared_ptr<Item> character = getOwner();
+		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
+		std::shared_ptr<Area> area = engine->getArea();
+		
+		if (character)
+			environment["Char"] = character;
+		if (gang)
+			environment["Gang"] = gang;
+		if (area)
+			environment["Area"] = area;
+		
+	}
+
 	return environment;
 }
 
@@ -490,6 +519,10 @@ void Ship::reset()
 void Ship::addEffects(Effect::Category category)
 {
 	Item::addEffects(category);
+	auto engine = getEngine();
+	if (!engine)
+		return;
+
 	if (category == Effect::CATEGORY_GENERIC)
 	{
 		for (auto i: modules_)
@@ -497,7 +530,7 @@ void Ship::addEffects(Effect::Category category)
 		for (auto i: drones_)
 			i->addEffects(Effect::CATEGORY_GENERIC);
 
-		std::shared_ptr<Area> area = engine_.lock()->getArea();
+		std::shared_ptr<Area> area = engine->getArea();
 		if (area)
 			area->addEffectsToShip(shared_from_this());
 	}
@@ -506,6 +539,10 @@ void Ship::addEffects(Effect::Category category)
 void Ship::removeEffects(Effect::Category category)
 {
 	Item::removeEffects(category);
+	auto engine = getEngine();
+	if (!engine)
+		return;
+
 	if (category == Effect::CATEGORY_GENERIC)
 	{
 		for (auto i: modules_)
@@ -513,7 +550,7 @@ void Ship::removeEffects(Effect::Category category)
 		for (auto i: drones_)
 			i->removeEffects(Effect::CATEGORY_GENERIC);
 
-		std::shared_ptr<Area> area = engine_.lock()->getArea();
+		std::shared_ptr<Area> area = engine->getArea();
 		if (area)
 			area->removeEffectsFromShip(shared_from_this());
 	}
@@ -540,7 +577,9 @@ void Ship::addProjectedModule(std::shared_ptr<Module> module)
 	}))
 	{
 		projectedModules_.push_back(module);
-		engine_.lock()->reset(shared_from_this());
+		auto engine = getEngine();
+		if (engine)
+			engine->reset(shared_from_this());
 	}
 }
 
@@ -549,7 +588,9 @@ void Ship::removeProjectedModule(std::shared_ptr<Module> module)
 	std::remove_if(projectedModules_.begin(), projectedModules_.end(), [=](std::weak_ptr<Module> i ) {
 		return i.lock() == module;
 	});
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 void Ship::addProjectedDrone(std::shared_ptr<Drone> drone)
@@ -559,7 +600,9 @@ void Ship::addProjectedDrone(std::shared_ptr<Drone> drone)
 	}))
 	{
 		projectedDrones_.push_back(drone);
-		engine_.lock()->reset(shared_from_this());
+		auto engine = getEngine();
+		if (engine)
+			engine->reset(shared_from_this());
 	}
 }
 
@@ -568,7 +611,9 @@ void Ship::removeProjectedDrone(std::shared_ptr<Drone> drone)
 	std::remove_if(projectedDrones_.begin(), projectedDrones_.end(), [=](std::weak_ptr<Drone> i ) {
 		return i.lock() == drone;
 	});
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 std::shared_ptr<CapacitorSimulator> Ship::getCapacitorSimulator()
@@ -593,7 +638,9 @@ const DamagePattern& Ship::getDamagePattern()
 void Ship::setDamagePattern(const DamagePattern& damagePattern)
 {
 	damagePattern_ = damagePattern;
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 //Calculations
@@ -1107,7 +1154,8 @@ float Ship::getProbeSize()
 //Drones
 int Ship::getMaxActiveDrones()
 {
-	return static_cast<int>(getOwner()->getAttribute(MAX_ACTIVE_DRONES_ATTRIBUTE_ID)->getValue());
+	auto owner = getOwner();
+	return owner ? static_cast<int>(owner->getAttribute(MAX_ACTIVE_DRONES_ATTRIBUTE_ID)->getValue()) : 0;
 }
 
 int Ship::getActiveDrones()

@@ -26,7 +26,11 @@ std::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Structure> structure = std::make_shared<Structure>(engine_.lock(), typeID, shared_from_this());
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+
+		std::shared_ptr<Structure> structure = std::make_shared<Structure>(engine, typeID, shared_from_this());
 		structures_.push_back(structure);
 		
 		structure->addEffects(Effect::CATEGORY_GENERIC);
@@ -34,7 +38,7 @@ std::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
 			structure->setState(Structure::STATE_ACTIVE);
 		else if (structure->canHaveState(Structure::STATE_ONLINE))
 			structure->setState(Structure::STATE_ONLINE);
-		engine_.lock()->reset(shared_from_this());
+		engine->reset(shared_from_this());
 		return structure;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -49,7 +53,9 @@ void ControlTower::removeStructure(std::shared_ptr<Structure> structure)
 	structure->removeEffects(Effect::CATEGORY_GENERIC);
 	
 	structures_.remove(structure);
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 const StructuresList& ControlTower::getStructures()
@@ -70,11 +76,15 @@ bool ControlTower::canFit(std::shared_ptr<Structure> structure)
 Environment ControlTower::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = shared_from_this();
-	environment["Ship"] = shared_from_this();
-	std::shared_ptr<Area> area = engine_.lock()->getArea();
-	if (area)
-		environment["Area"] = area;
+	auto engine = getEngine();
+	if (engine) {
+		environment["Self"] = shared_from_this();
+		environment["Ship"] = shared_from_this();
+		std::shared_ptr<Area> area = engine->getArea();
+		if (area)
+			environment["Area"] = area;
+	}
+
 	return environment;
 }
 
@@ -135,7 +145,9 @@ const DamagePattern& ControlTower::getDamagePattern()
 void ControlTower::setDamagePattern(const DamagePattern& damagePattern)
 {
 	damagePattern_ = damagePattern;
-	engine_.lock()->reset(shared_from_this());
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 //Calculations
