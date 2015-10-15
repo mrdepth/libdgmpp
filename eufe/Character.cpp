@@ -21,12 +21,6 @@ Character::Character(std::shared_ptr<Engine> engine, std::shared_ptr<Gang> owner
 
 Character::~Character(void)
 {
-	std::shared_ptr<Ship> shipTmp = ship_;
-	ship_ = nullptr;
-	
-	skills_.clear();
-	implants_.clear();
-	boosters_.clear();
 }
 
 std::shared_ptr<Ship> Character::getShip()

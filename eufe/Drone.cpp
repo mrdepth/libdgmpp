@@ -46,17 +46,20 @@ Environment Drone::getEnvironment()
 
 void Drone::setTarget(std::shared_ptr<Ship> target)
 {
-	if (target == getOwner())
+	loadIfNeeded();
+	if (target && target == getOwner())
 		throw BadDroneTargetException("self");
 
-	removeEffects(Effect::CATEGORY_TARGET);
 	std::shared_ptr<Ship> oldTarget = target_.lock();
-	if (oldTarget)
+	if (oldTarget) {
+		removeEffects(Effect::CATEGORY_TARGET);
 		oldTarget->removeProjectedDrone(shared_from_this());
+	}
 	target_ = target;
-	if (target)
+	if (target) {
 		target->addProjectedDrone(shared_from_this());
-	addEffects(Effect::CATEGORY_TARGET);
+		addEffects(Effect::CATEGORY_TARGET);
+	}
 	auto engine = getEngine();
 	if (engine)
 		engine->reset(shared_from_this());

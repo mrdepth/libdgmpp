@@ -326,6 +326,9 @@ void Module::setTarget(std::shared_ptr<Ship> target)
 		target->addProjectedModule(shared_from_this());
 		addEffects(Effect::CATEGORY_TARGET);
 	}
+	auto engine = getEngine();
+	if (engine)
+		engine->reset(shared_from_this());
 }
 
 void Module::clearTarget()
