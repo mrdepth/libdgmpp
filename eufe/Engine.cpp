@@ -62,6 +62,8 @@ std::shared_ptr<ControlTower> Engine::setControlTower(TypeID typeID)
 			controlTower_->addEffects(Effect::CATEGORY_GENERIC);
 			controlTower_->addEffects(Effect::CATEGORY_ACTIVE);
 		}
+		
+		reset(controlTower_);
 		return controlTower_;
 	}
 	catch(Item::UnknownTypeIDException)
