@@ -4,7 +4,9 @@ using namespace eufe;
 
 SqliteConnector::SqliteConnector(const char* databasePath) : db_(nullptr)
 {
-	sqlite3_open(databasePath, &db_);
+	int ret = sqlite3_open_v2(databasePath, &db_, SQLITE_OPEN_READONLY, nullptr);
+	if (ret != SQLITE_OK)
+		throw ret;
 }
 
 SqliteConnector::~SqliteConnector(void)
