@@ -32,13 +32,15 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 {
 	try
 	{
+		loadIfNeeded();
 		auto engine = getEngine();
 		if (!engine)
 			return nullptr;
 		
 		std::shared_ptr<Ship> ship = std::make_shared<Ship>(engine, typeID, shared_from_this());
 		
-		removeEffects(Effect::CATEGORY_GENERIC);
+		if (ship_)
+			removeEffects(Effect::CATEGORY_GENERIC);
 		ship_ = ship;
 		
 		if (ship_)
@@ -99,7 +101,8 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 		std::shared_ptr<Skill> skill = std::make_shared<Skill>(engine, typeID, skillLevel, isLearned, shared_from_this());
 		skills_[typeID] = skill;
 //	if (getOwner() && ship_ != nullptr)
-		skill->addEffects(Effect::CATEGORY_GENERIC);
+		if (ship_)
+			skill->addEffects(Effect::CATEGORY_GENERIC);
 		return skill;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -111,6 +114,7 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 void Character::removeSkill(std::shared_ptr<Skill> skill)
 {
 //	if (getOwner() && ship_ != NULL)
+	if (ship_)
 		skill->removeEffects(Effect::CATEGORY_GENERIC);
 	skills_.erase(skill->getTypeID());
 }
@@ -159,7 +163,8 @@ std::shared_ptr<Implant> Character::addImplant(TypeID typeID)
 		if (currentImplant)
 			removeImplant(currentImplant);
 		implants_.push_back(implant);
-		implant->addEffects(Effect::CATEGORY_GENERIC);
+		if (ship_)
+			implant->addEffects(Effect::CATEGORY_GENERIC);
 		engine->reset(shared_from_this());
 		return implant;
 
@@ -183,7 +188,8 @@ std::shared_ptr<Booster> Character::addBooster(TypeID typeID)
 		if (currentBooster)
 			removeBooster(currentBooster);
 		boosters_.push_back(booster);
-		booster->addEffects(Effect::CATEGORY_GENERIC);
+		if (ship_)
+			booster->addEffects(Effect::CATEGORY_GENERIC);
 		engine->reset(shared_from_this());
 		return booster;
 	}
@@ -197,7 +203,8 @@ void Character::removeImplant(std::shared_ptr<Implant> implant)
 {
 	if (implant != NULL)
 	{
-		implant->removeEffects(Effect::CATEGORY_GENERIC);
+		if (ship_)
+			implant->removeEffects(Effect::CATEGORY_GENERIC);
 		implants_.remove(implant);
 
 		auto engine = getEngine();
@@ -210,7 +217,8 @@ void Character::removeBooster(std::shared_ptr<Booster> booster)
 {
 	if (booster != NULL)
 	{
-		booster->removeEffects(Effect::CATEGORY_GENERIC);
+		if (ship_)
+			booster->removeEffects(Effect::CATEGORY_GENERIC);
 		boosters_.remove(booster);
 		
 		auto engine = getEngine();
@@ -231,7 +239,7 @@ const BoostersList& Character::getBoosters()
 
 void Character::addEffects(Effect::Category category)
 {
-//	if (ship_ != NULL)
+	if (ship_)
 	{
 		Item::addEffects(category);
 		if (category == Effect::CATEGORY_GENERIC)
@@ -251,7 +259,7 @@ void Character::addEffects(Effect::Category category)
 
 void Character::removeEffects(Effect::Category category)
 {
-//	if (ship_ != NULL)
+	if (ship_)
 	{
 		Item::removeEffects(category);
 		if (category == Effect::CATEGORY_GENERIC)
@@ -295,6 +303,7 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 			i.second->setSkillLevel(0);
 	}
 	engine->reset(shared_from_this());
+	updateModulesState();
 }
 
 void Character::setAllSkillsLevel(int level)
@@ -305,6 +314,7 @@ void Character::setAllSkillsLevel(int level)
 	for (auto i: skills_)
 		i.second->setSkillLevel(level);
 	engine->reset(shared_from_this());
+	updateModulesState();
 }
 
 std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
@@ -329,6 +339,24 @@ void Character::lazyLoad() {
 		TypeID skillID = result->getInt(0);
 		addSkill(skillID, 0, false);
 	}
+}
+
+void Character::updateModulesState() {
+	if (ship_)
+		for (auto module: ship_->getModules()) {
+			switch (module->getState()) {
+				case Module::STATE_ACTIVE:
+					if (!module->canHaveState(Module::STATE_ACTIVE))
+						module->setState(Module::STATE_ONLINE);
+					break;
+				case Module::STATE_ONLINE:
+					if (module->canHaveState(Module::STATE_ACTIVE))
+						module->setState(Module::STATE_ACTIVE);
+					break;
+				default:
+					break;
+			}
+		}
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)

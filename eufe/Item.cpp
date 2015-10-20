@@ -14,6 +14,7 @@
 #include "Character.h"
 #include "Gang.h"
 #include "Area.h"
+#include <cassert>
 
 using namespace eufe;
 
@@ -359,6 +360,7 @@ std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, TypeID ma
 }
 
 void Item::lazyLoad() {
+//	assert(loaded_ == false);
 	loaded_ = true;
 	if (typeID_ == 0)
 		return;

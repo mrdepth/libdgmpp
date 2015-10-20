@@ -35,13 +35,20 @@ namespace eufe {
 		void reset(std::shared_ptr<Item> item);
 		
 		friend std::ostream& operator<<(std::ostream& os, Engine& engine);
-
+		
+		std::map<TypeID, std::shared_ptr<eufe::Effect> >& getReusableEffects() {
+			return reusableEffects_;
+		}
+		
 	private:
 		std::shared_ptr<SqlConnector> sqlConnector_;
 		std::shared_ptr<Gang> gang_;
 		std::shared_ptr<Area> area_;
 		std::shared_ptr<ControlTower> controlTower_;
 		std::recursive_mutex mutex_;
+		
+		std::map<TypeID, std::shared_ptr<eufe::Effect> > reusableEffects_;
+
 	};
 
 }

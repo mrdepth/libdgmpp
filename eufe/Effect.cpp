@@ -70,19 +70,20 @@ const TypeID eufe::FUELED_ARMOR_REPAIR__EFFECT_ID = 5275;
 const TypeID eufe::NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID = 10001;
 const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10002;
 
-static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
+//static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
 
 std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> engine, int effectID)
 {
-	std::map<TypeID, std::weak_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
+	std::map<TypeID, std::shared_ptr<eufe::Effect> >& reusableEffects = engine->getReusableEffects();
+	std::map<TypeID, std::shared_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
 	i = reusableEffects.find(effectID);
-	if (i == end || !i->second.lock()) {
-		std::shared_ptr<Effect> effect(new Effect(engine, effectID));
-		reusableEffects[effectID] = std::weak_ptr<Effect>(effect);
+	if (i == end || !i->second) {
+		auto effect = std::make_shared<eufe::Effect>(engine, effectID);
+		reusableEffects[effectID] = effect;
 		return effect;
 	}
 	else {
-		return i->second.lock();
+		return i->second;
 	}
 }
 
@@ -189,7 +190,7 @@ Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID) : engine_(engine
 
 Effect::~Effect(void)
 {
-	reusableEffects.erase(reusableEffects.find(effectID_));
+	//reusableEffects.erase(reusableEffects.find(effectID_));
 }
 
 bool Effect::addEffect(Environment environment)

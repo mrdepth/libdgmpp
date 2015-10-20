@@ -118,7 +118,7 @@ std::shared_ptr<Character> Gang::addPilot()
 		return nullptr;
 
 	std::shared_ptr<Character> character = std::make_shared<Character>(engine, shared_from_this());
-	character->removeEffects(Effect::CATEGORY_GENERIC);
+//	character->removeEffects(Effect::CATEGORY_GENERIC);
 	pilots_.push_back(character);
 	character->addEffects(Effect::CATEGORY_GENERIC);
 	engine->reset(shared_from_this());
