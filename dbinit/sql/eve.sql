@@ -31,7 +31,8 @@ PRIMARY KEY ("categoryID")
 );
 
 INSERT INTO dump.invGroups SELECT groupID, categoryID, groupName  FROM invGroups;
-INSERT INTO dump.invTypes SELECT typeID, groupID, typeName, radius, mass, volume, capacity, portionSize, raceID, published FROM invTypes;
+--INSERT INTO dump.invTypes SELECT typeID, groupID, typeName, radius, mass, volume, capacity, portionSize, raceID, published FROM invTypes;
+INSERT INTO dump.invTypes SELECT typeID, groupID, typeName, 0, mass, volume, capacity, portionSize, raceID, published FROM invTypes;
 INSERT INTO dump.invCategories SELECT * FROM invCategories;
 
 CREATE INDEX dump.invGroups_categoryID ON "invGroups" ("categoryID" ASC);
