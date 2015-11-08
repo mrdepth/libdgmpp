@@ -220,6 +220,10 @@ void Item::removeEffects(Effect::Category category)
 			i->removeEffect(environment);
 }
 
+const EffectsList& Item::getEffects() {
+	return effects_;
+}
+
 void Item::reset()
 {
 	loadIfNeeded();

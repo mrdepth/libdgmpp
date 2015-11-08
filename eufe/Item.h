@@ -61,6 +61,7 @@ namespace eufe {
 		
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
+		const EffectsList& getEffects();
 
 		virtual Environment getEnvironment() = 0;
 		

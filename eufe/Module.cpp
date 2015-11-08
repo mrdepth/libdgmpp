@@ -304,8 +304,20 @@ bool Module::canFit(std::shared_ptr<Charge> charge)
 
 bool Module::requireTarget()
 {
-	loadIfNeeded();
-	return requireTarget_;
+	for (auto i: effects_)
+	{
+		Effect::Category category = i->getCategory();
+		if (category == Effect::CATEGORY_TARGET)
+			return true;
+	}
+	if (charge_)
+		for (auto i: charge_->getEffects()) {
+			Effect::Category category = i->getCategory();
+			if (category == Effect::CATEGORY_TARGET)
+				return true;
+			
+		}
+	return false;
 }
 
 void Module::setTarget(std::shared_ptr<Ship> target)
@@ -638,7 +650,6 @@ void Module::lazyLoad() {
 	
 	canBeActive_ = false;
 	canBeOverloaded_ = false;
-	requireTarget_ = false;
 	int n = 0;
 	
 	for (auto i: effects_)
@@ -655,7 +666,6 @@ void Module::lazyLoad() {
 		else if (category == Effect::CATEGORY_TARGET)
 		{
 			canBeActive_ = true;
-			requireTarget_ = true;
 		}
 		else if (category == Effect::CATEGORY_OVERLOADED)
 		{

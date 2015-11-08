@@ -100,7 +100,6 @@ namespace eufe {
 		bool canBeOnline_;
 		bool canBeActive_;
 		bool canBeOverloaded_;
-		bool requireTarget_;
 		bool forceReload_;
 		bool enabled_;
 		Slot slot_;
