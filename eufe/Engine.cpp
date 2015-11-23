@@ -5,7 +5,7 @@
 
 using namespace eufe;
 
-Engine::Engine(std::shared_ptr<SqlConnector> sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr)
+Engine::Engine(std::shared_ptr<SqlConnector> sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr), generation_()
 {
 }
 
@@ -76,6 +76,7 @@ void Engine::clearArea()
 {
 	if (area_) {
 		area_->removeEffects(Effect::CATEGORY_SYSTEM);
+		reset(getGang());
 	}
 	area_ = nullptr;
 }
@@ -92,6 +93,7 @@ std::shared_ptr<ControlTower> Engine::getControlTower()
 
 void Engine::reset(std::shared_ptr<Item> item)
 {
+	generation_++;
 	if (!item)
 		return;
 	

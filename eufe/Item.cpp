@@ -227,8 +227,8 @@ const EffectsList& Item::getEffects() {
 void Item::reset()
 {
 	loadIfNeeded();
-	for (auto i: attributes_)
-		i.second->reset();
+//	for (auto i: attributes_)
+//		i.second->reset();
 }
 
 std::insert_iterator<ModifiersList> Item::getModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)

@@ -245,6 +245,7 @@ Attribute::Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, TypeID 
 		}
 	}
 	sync = false;
+	reset();
 }
 
 Attribute::Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, std::shared_ptr<Item> owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
@@ -262,6 +263,7 @@ Attribute::Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, std::sh
 		attributeName_ = result->getText(4);
 	}
 	sync = false;
+	reset();
 }
 
 Attribute::~Attribute(void)
@@ -285,8 +287,14 @@ bool Attribute::isFakeAttribute() const
 
 float Attribute::getValue()
 {
-	if (!calculated_)
+	auto engine = engine_.lock();
+	if (!engine)
+		return 0;
+	uint32_t generation = engine->getGeneration();
+	if (generation_ != generation) {
 		calculate();
+		generation_ = generation;
+	}
 	return value_;
 }
 
@@ -330,6 +338,7 @@ void Attribute::setValue(float value)
 
 void Attribute::reset()
 {
+	generation_ = UINT32_MAX;
 	calculated_ = false;
 	value_ = initialValue_;
 	
@@ -375,6 +384,7 @@ void Attribute::calculate()
 		std::vector<float>postDividersStackableNegative;
 		std::vector<float>postPercentsStackableNegative;
 		
+
 		owner->getModifiers(shared_from_this(), std::inserter(modifiers, modifiers.begin()));
 		
 //		ModifiersList::iterator i = modifiers.begin(), end = modifiers.end();

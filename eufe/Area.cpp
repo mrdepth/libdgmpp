@@ -54,6 +54,7 @@ void Area::addEffects(Effect::Category category)
 	auto engine = getEngine();
 	if (!engine)
 		return;
+	loadIfNeeded();
 	if (category == Effect::CATEGORY_SYSTEM)
 	{
 		for (auto i: engine->getGang()->getPilots())
@@ -69,6 +70,7 @@ void Area::removeEffects(Effect::Category category)
 	auto engine = getEngine();
 	if (!engine)
 		return;
+	loadIfNeeded();
 	if (category == Effect::CATEGORY_SYSTEM)
 	{
 		for (auto i: engine->getGang()->getPilots())

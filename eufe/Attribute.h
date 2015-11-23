@@ -232,6 +232,7 @@ namespace eufe {
 
 		bool sync;
 		std::string attributeName_;
+		uint32_t generation_;
 	};
 
 }

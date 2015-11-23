@@ -40,6 +40,10 @@ namespace eufe {
 			return reusableEffects_;
 		}
 		
+		uint32_t getGeneration() const {
+			return generation_;
+		}
+		
 	private:
 		std::shared_ptr<SqlConnector> sqlConnector_;
 		std::shared_ptr<Gang> gang_;
@@ -48,6 +52,7 @@ namespace eufe {
 		std::recursive_mutex mutex_;
 		
 		std::map<TypeID, std::shared_ptr<eufe::Effect> > reusableEffects_;
+		uint32_t generation_;
 
 	};
 
