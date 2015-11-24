@@ -26,8 +26,8 @@ namespace eufe {
 		bool emptyBoosterSlot(int slot);
 		std::shared_ptr<Implant> getImplant(int slot);
 		std::shared_ptr<Booster> getBooster(int slot);
-		std::shared_ptr<Implant> addImplant(TypeID typeID);
-		std::shared_ptr<Booster> addBooster(TypeID typeID);
+		std::shared_ptr<Implant> addImplant(TypeID typeID, bool forced = false);
+		std::shared_ptr<Booster> addBooster(TypeID typeID, bool forced = false);
 		void removeImplant(std::shared_ptr<Implant> implant);
 		void removeBooster(std::shared_ptr<Booster> booster);
 		const ImplantsList& getImplants();

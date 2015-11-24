@@ -24,7 +24,7 @@ namespace eufe {
 			return std::static_pointer_cast<Ship>(Item::shared_from_this());
 		}
 
-		std::shared_ptr<Module> addModule(TypeID typeID, bool force = false);
+		std::shared_ptr<Module> addModule(TypeID typeID, bool forced = false);
 		std::shared_ptr<Module> replaceModule(std::shared_ptr<Module> oldModule, TypeID typeID);
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
 		void removeModule(std::shared_ptr<Module> module);

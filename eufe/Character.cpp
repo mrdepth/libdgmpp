@@ -150,7 +150,7 @@ std::shared_ptr<Booster> Character::getBooster(int slot)
 	return i != boosters_.end() ? *i : nullptr;
 }
 
-std::shared_ptr<Implant> Character::addImplant(TypeID typeID)
+std::shared_ptr<Implant> Character::addImplant(TypeID typeID, bool forced)
 {
 	try
 	{
@@ -160,8 +160,12 @@ std::shared_ptr<Implant> Character::addImplant(TypeID typeID)
 
 		std::shared_ptr<Implant> implant = std::make_shared<Implant>(engine, typeID, shared_from_this());
 		std::shared_ptr<Implant> currentImplant = getImplant(implant->getSlot());
-		if (currentImplant)
-			removeImplant(currentImplant);
+		if (currentImplant) {
+			if (forced)
+				removeImplant(currentImplant);
+			else
+				return currentImplant;
+		}
 		implants_.push_back(implant);
 		if (ship_)
 			implant->addEffects(Effect::CATEGORY_GENERIC);
@@ -175,7 +179,7 @@ std::shared_ptr<Implant> Character::addImplant(TypeID typeID)
 	}
 }
 
-std::shared_ptr<Booster> Character::addBooster(TypeID typeID)
+std::shared_ptr<Booster> Character::addBooster(TypeID typeID, bool forced)
 {
 	try
 	{
@@ -185,8 +189,12 @@ std::shared_ptr<Booster> Character::addBooster(TypeID typeID)
 
 		std::shared_ptr<Booster> booster = std::make_shared<Booster>(engine, typeID, shared_from_this());
 		std::shared_ptr<Booster> currentBooster = getBooster(booster->getSlot());
-		if (currentBooster)
-			removeBooster(currentBooster);
+		if (currentBooster) {
+			if (forced)
+				removeBooster(currentBooster);
+			else
+				return currentBooster;
+		}
 		boosters_.push_back(booster);
 		if (ship_)
 			booster->addEffects(Effect::CATEGORY_GENERIC);
