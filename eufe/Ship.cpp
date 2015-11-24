@@ -74,7 +74,7 @@ Ship::~Ship(void)
 	}
 }
 
-std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool force)
+std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 {
 	try
 	{
@@ -83,7 +83,7 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool force)
 			return nullptr;
 
 		std::shared_ptr<Module> module = std::make_shared<Module>(engine, typeID, shared_from_this());
-		if (force || canFit(module))
+		if (forced || canFit(module))
 		{
 			modules_.push_back(module);
 			//module->setOwner(this);
