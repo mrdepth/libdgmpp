@@ -58,6 +58,5 @@ namespace eufe {
 
 		std::shared_ptr<Skill> addSkill(TypeID typeID, int skillLevel, bool isLearned);
 		void removeSkill(std::shared_ptr<Skill> skill);
-		void updateModulesState();
 	};
 }

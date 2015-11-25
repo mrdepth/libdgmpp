@@ -10,10 +10,11 @@
 #include "LocationRequiredSkillModifier.h"
 #include "HeatSimulator.h"
 #include <algorithm>
+#include <cmath>
 
 using namespace eufe;
 
-Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true)
+Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true)
 {
 }
 
@@ -119,6 +120,15 @@ void Module::setState(State state)
 		if (engine)
 			engine->reset(shared_from_this());
 	}
+}
+
+Module::State Module::getPreferredState() {
+	return preferredState_;
+}
+
+void Module::setPreferredState(State state) {
+	preferredState_ = state;
+	setState(state);
 }
 
 Environment Module::getEnvironment()
@@ -466,11 +476,34 @@ float Module::getVolley()
 	return volley_;
 }
 
-float Module::getDps()
+float Module::getDps(float range, float angularSpeed, float targetSignature)
 {
 	loadIfNeeded();
 	if (dps_ < 0)
 		calculateDamageStats();
+	if (getHardpoint() == HARDPOINT_TURRET && (range > 0 || angularSpeed > 0 || targetSignature > 0)) {
+		float trackingSpeed = getTrackingSpeed();
+		float a = trackingSpeed > 0 ? angularSpeed / trackingSpeed : 0;
+		
+		if (targetSignature > 0) {
+			float signatureResolution = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
+			if (signatureResolution > 0)
+				a *= targetSignature / signatureResolution;
+		}
+		
+		float maxRange = getMaxRange();
+		float falloff = getFalloff();
+		float b = falloff > 0 ? std::max(0.0f, (range - maxRange) / falloff) : 0;
+		
+		float blob = a * a + b * b;
+		float hitChance = std::pow(0.5f, blob);
+		float relativeDPS;
+		if (hitChance > 0.01)
+			relativeDPS = (hitChance - 0.01) * (0.5 + (hitChance + 0.49)) / 2 + 0.01 * 3;
+		else
+			relativeDPS = hitChance * 3;
+		return dps_ * relativeDPS;
+	}
 	return dps_;
 }
 

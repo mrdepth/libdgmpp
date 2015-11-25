@@ -48,8 +48,8 @@ namespace eufe {
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
-		virtual void addLocationGroupModifier(std::shared_ptr<Modifier> modifier);
-		virtual void addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier);
+//		virtual void addLocationGroupModifier(std::shared_ptr<Modifier> modifier);
+//		virtual void addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier);
 
 		
 		void addProjectedModule(std::shared_ptr<Module> module);
@@ -104,7 +104,7 @@ namespace eufe {
 		float getShieldRecharge();
 
 		//DPS
-		float getWeaponDps();
+		float getWeaponDps(float range = 0, float angularSpeed = 0, float targetSignature = 0);
 		float getWeaponVolley();
 		float getDroneDps();
 		float getDroneVolley();
@@ -119,7 +119,7 @@ namespace eufe {
 		float getVolume();
 		float getAgility();
 		float getMaxVelocityInOrbit(float r);
-		float getOrbitRadiusWithLinearVelocity(float v);
+		float getOrbitRadiusWithTransverseVelocity(float v);
 		float getOrbitRadiusWithAngularVelocity(float v);
 		
 		//Targeting
@@ -157,19 +157,14 @@ namespace eufe {
 		HitPoints effectiveHitPoints_;
 		float shieldRecharge_;
 		
-		float weaponDps_;
-		float weaponVolley_;
-		float droneDps_;
-		float droneVolley_;
-		
 		enum {
 			UNKNOWN = -1,
 			ALLOWED,
 			DISALLOWED
 		} disallowAssistance_, disallowOffensiveModifiers_;
 		
-		void calculateDamageStats();
-		void updateActiveStatus();
+		void updateModulesState();
 		void updateEnabledStatus();
+
 	};
 }

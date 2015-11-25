@@ -101,6 +101,7 @@ namespace eufe {
 	extern const TypeID FALLOFF_ATTRIBUTE_ID;
 	extern const TypeID SHIP_SCAN_FALLOFF_ATTRIBUTE_ID;
 	extern const TypeID TRACKING_SPEED_ATTRIBUTE_ID;
+	extern const TypeID OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID;
 	
 	extern const TypeID MAX_VELOCITY_ATTRIBUTE_ID;
 	extern const TypeID EXPLOSION_DELAY_ATTRIBUTE_ID;

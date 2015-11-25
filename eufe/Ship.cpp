@@ -117,7 +117,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, T
 			return nullptr;
 		i--;
 		
-		Module::State state = oldModule->getState();
+		Module::State state = oldModule->getPreferredState();
 		std::shared_ptr<Charge> charge = oldModule->getCharge();
 		TypeID chargeTypeID = charge ? charge->getTypeID() : 0;
 		std::shared_ptr<Ship> target = oldModule->getTarget();
@@ -138,8 +138,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, T
 				newModule->setCharge(chargeTypeID);
 			if (target)
 				newModule->setTarget();
-			if (newModule->canHaveState(state))
-				newModule->setState(state);
+			newModule->setPreferredState(state);
 		}
 		auto engine = getEngine();
 		if (engine)
@@ -513,7 +512,7 @@ void Ship::reset()
 	
 	shieldRecharge_ = -1;
 	
-	weaponDps_ = weaponVolley_ = droneDps_ = droneVolley_ = -1;
+	updateModulesState();
 }
 
 void Ship::addEffects(Effect::Category category)
@@ -556,7 +555,7 @@ void Ship::removeEffects(Effect::Category category)
 	}
 }
 
-void Ship::addLocationGroupModifier(std::shared_ptr<Modifier> modifier)
+/*void Ship::addLocationGroupModifier(std::shared_ptr<Modifier> modifier)
 {
 	Item::addLocationGroupModifier(modifier);
 	if (modifier->getAttributeID() == ACTIVATION_BLOCKED_ATTRIBUTE_ID)
@@ -568,7 +567,7 @@ void Ship::addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier)
 	Item::addLocationRequiredSkillModifier(modifier);
 	if (modifier->getAttributeID() == ACTIVATION_BLOCKED_ATTRIBUTE_ID)
 		updateActiveStatus();
-}
+}*/
 
 void Ship::addProjectedModule(std::shared_ptr<Module> module)
 {
@@ -958,48 +957,36 @@ float Ship::getShieldRecharge()
 
 //DPS
 
-float Ship::getWeaponDps()
+float Ship::getWeaponDps(float range, float angularSpeed, float targetSignature)
 {
-	if (weaponDps_ < 0)
-		calculateDamageStats();
-	return weaponDps_;
+	float weaponDps = 0;
+	for (auto i: modules_)
+		weaponDps += i->getDps(range, angularSpeed, targetSignature);
+	return weaponDps;
 }
 
 float Ship::getWeaponVolley()
 {
-	if (weaponVolley_ < 0)
-		calculateDamageStats();
-	return weaponVolley_;
+	float weaponVolley = 0;
+	for (auto i: modules_)
+		weaponVolley += i->getVolley();
+	return weaponVolley;
 }
 
 float Ship::getDroneDps()
 {
-	if (droneDps_ < 0)
-		calculateDamageStats();
-	return droneDps_;
+	float droneDps = 0;
+	for (auto i: drones_)
+		droneDps += i->getDps();
+	return droneDps;
 }
 
 float Ship::getDroneVolley()
 {
-	if (droneVolley_ < 0)
-		calculateDamageStats();
-	return droneVolley_;
-}
-
-void Ship::calculateDamageStats()
-{
-	weaponDps_ = weaponVolley_ = 0;
-	for (auto i: modules_)
-	{
-		weaponDps_ += i->getDps();
-		weaponVolley_ += i->getVolley();
-	}
-	
-	droneDps_ = droneVolley_ = 0;
-	for (auto i: drones_) {
-		droneDps_ += i->getDps();
-		droneVolley_ += i->getVolley();
-	}
+	float droneVolley = 0;
+	for (auto i: drones_)
+		droneVolley += i->getVolley();
+	return droneVolley;
 }
 
 //mobility
@@ -1064,7 +1051,7 @@ float Ship::getMaxVelocityInOrbit(float r) {
 	return sqrt((sqrt(4 * i2 * m2 * r2 * v2 + r4) / (2 * i2 * m2)) - r2 / (2 * i2 * m2));
 }
 
-float Ship::getOrbitRadiusWithLinearVelocity(float v) {
+float Ship::getOrbitRadiusWithTransverseVelocity(float v) {
 	double i = getAgility();
 	double m = getMass() / 1000000.0;
 	double vm = getVelocity();
@@ -1170,13 +1157,16 @@ int Ship::getActiveDrones()
 
 //Other
 
-void Ship::updateActiveStatus()
+void Ship::updateModulesState()
 {
 	for (auto i: modules_)
 	{
 		Module::State state = i->getState();
-		if (state >= Module::STATE_ACTIVE && !i->canHaveState(state))
-			i->setState(Module::STATE_ONLINE);
+		Module::State preferredState = i->getPreferredState();
+		Module::State newState;
+		for (newState = preferredState != Module::STATE_UNKNOWN ? preferredState : state; newState > Module::STATE_OFFLINE && !i->canHaveState(newState); newState = static_cast<Module::State>(static_cast<int>(newState) - 1));
+		if (newState != state)
+			i->setState(newState);
 	}
 }
 

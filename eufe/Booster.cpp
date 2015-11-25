@@ -46,5 +46,5 @@ Environment Booster::getEnvironment()
 
 void Booster::lazyLoad() {
 	Item::lazyLoad();
-	slot_ = static_cast<int>(getAttribute(IMPLANTNESS_ATTRIBUTE_ID)->getValue());
+	slot_ = static_cast<int>(getAttribute(BOOSTERNESS_ATTRIBUTE_ID)->getValue());
 }

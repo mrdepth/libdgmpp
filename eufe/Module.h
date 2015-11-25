@@ -21,6 +21,7 @@ namespace eufe {
 
 		enum State
 		{
+			STATE_UNKNOWN = -1,
 			STATE_OFFLINE,
 			STATE_ONLINE,
 			STATE_ACTIVE,
@@ -49,6 +50,11 @@ namespace eufe {
 		virtual bool canHaveState(State state);
 		State getState();
 		virtual void setState(State state);
+		State getPreferredState();
+		void setPreferredState(State state);
+		bool canBeOnline() {return canBeOnline_;};
+		bool canBeActive() {return canBeActive_;};
+		bool canBeOverloaded() {return canBeOverloaded_;};
 
 		virtual Environment getEnvironment();
 
@@ -79,7 +85,8 @@ namespace eufe {
 		float getCapUse();
 		
 		float getVolley();
-		float getDps();
+		float getDps(float range = 0, float angularSpeed = 0, float targetSignature = 0);
+		//float getDps(float range, float angularSpeed, float targetSignature);
 		float getMaxRange();
 		float getFalloff();
 		float getTrackingSpeed();
@@ -93,6 +100,7 @@ namespace eufe {
 		friend std::ostream& operator<<(std::ostream& os, Module& module);
 	protected:
 		State state_;
+		State preferredState_;
 		virtual void lazyLoad();
 
 		

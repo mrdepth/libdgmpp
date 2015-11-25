@@ -311,7 +311,6 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 			i.second->setSkillLevel(0);
 	}
 	engine->reset(shared_from_this());
-	updateModulesState();
 }
 
 void Character::setAllSkillsLevel(int level)
@@ -322,7 +321,6 @@ void Character::setAllSkillsLevel(int level)
 	for (auto i: skills_)
 		i.second->setSkillLevel(level);
 	engine->reset(shared_from_this());
-	updateModulesState();
 }
 
 std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
@@ -347,24 +345,6 @@ void Character::lazyLoad() {
 		TypeID skillID = result->getInt(0);
 		addSkill(skillID, 0, false);
 	}
-}
-
-void Character::updateModulesState() {
-	if (ship_)
-		for (auto module: ship_->getModules()) {
-			switch (module->getState()) {
-				case Module::STATE_ACTIVE:
-					if (!module->canHaveState(Module::STATE_ACTIVE))
-						module->setState(Module::STATE_ONLINE);
-					break;
-				case Module::STATE_ONLINE:
-					if (module->canHaveState(Module::STATE_ACTIVE))
-						module->setState(Module::STATE_ACTIVE);
-					break;
-				default:
-					break;
-			}
-		}
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
