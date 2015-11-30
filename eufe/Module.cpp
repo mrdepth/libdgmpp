@@ -488,7 +488,7 @@ float Module::getDps(float range, float angularSpeed, float targetSignature)
 		if (targetSignature > 0) {
 			float signatureResolution = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
 			if (signatureResolution > 0)
-				a *= targetSignature / signatureResolution;
+				a *= signatureResolution / targetSignature;
 		}
 		
 		float maxRange = getMaxRange();
