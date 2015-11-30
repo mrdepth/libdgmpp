@@ -476,24 +476,32 @@ float Module::getVolley()
 	return volley_;
 }
 
-float Module::getDps(float range, float angularSpeed, float targetSignature)
+float Module::getDps(const HostileTarget& target)
 {
 	loadIfNeeded();
 	if (dps_ < 0)
 		calculateDamageStats();
-	if (getHardpoint() == HARDPOINT_TURRET && (range > 0 || angularSpeed > 0 || targetSignature > 0)) {
-		float trackingSpeed = getTrackingSpeed();
-		float a = trackingSpeed > 0 ? angularSpeed / trackingSpeed : 0;
-		
-		if (targetSignature > 0) {
-			float signatureResolution = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
-			if (signatureResolution > 0)
-				a *= signatureResolution / targetSignature;
+	auto hardpoint = getHardpoint();
+	if (hardpoint == HARDPOINT_TURRET && (target.range > 0 || target.angularVelocity > 0 || target.signature > 0)) {
+		float a = 0;
+		if (target.angularVelocity > 0) {
+			float trackingSpeed = getTrackingSpeed();
+			a = trackingSpeed > 0 ? target.angularVelocity / trackingSpeed : 0;
 		}
 		
-		float maxRange = getMaxRange();
-		float falloff = getFalloff();
-		float b = falloff > 0 ? std::max(0.0f, (range - maxRange) / falloff) : 0;
+		if (target.signature > 0) {
+			float signatureResolution = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
+			if (signatureResolution > 0)
+				a *= signatureResolution / target.signature;
+		}
+
+		float b = 0;
+		if (target.range > 0) {
+			float maxRange = getMaxRange();
+			float falloff = getFalloff();
+			b = falloff > 0 ? std::max(0.0f, (target.range - maxRange) / falloff) : 0;
+			
+		}
 		
 		float blob = a * a + b * b;
 		float hitChance = std::pow(0.5f, blob);
@@ -503,6 +511,26 @@ float Module::getDps(float range, float angularSpeed, float targetSignature)
 		else
 			relativeDPS = hitChance * 3;
 		return dps_ * relativeDPS;
+	}
+	else if (hardpoint == HARDPOINT_LAUNCHER) {
+		auto charge = getCharge();
+		if (charge) {
+			float a = 1;
+			if (target.signature > 0) {
+				float e = charge->getAttribute(AOE_CLOUD_SIZE_ATTRIBUTE_ID)->getValue();
+				a = target.signature / e;
+			}
+			float b = 1;
+			if (target.velocity > 0) {
+				float v = charge->getAttribute(AOE_VELOCITY_ATTRIBUTE_ID)->getValue();
+				float drf = charge->getAttribute(AOE_DAMAGE_REDUCTION_FACTOR_ATTRIBUTE_ID)->getValue();
+				float drs = charge->getAttribute(AOE_DAMAGE_REDUCTION_SENSITIVITY_ATTRIBUTE_ID)->getValue();
+				if (drf > 0 && drs > 0 && v > 0)
+					b = std::pow(a * v / target.velocity, std::log(drf)/std::log(drs));
+			}
+			float relativeDPS = std::min(1.0f, std::min(a, b));
+			return dps_ * relativeDPS;
+		}
 	}
 	return dps_;
 }

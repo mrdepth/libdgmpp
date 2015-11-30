@@ -200,6 +200,10 @@ const TypeID eufe::CHARGE_ARMOR_DAMAGE_MULTIPLIER_ATTRIBUTE_ID = 1886;
 
 const TypeID eufe::TACTICAL_MODES_ATTRIBUTE_ID = 10000;
 
+const TypeID eufe::AOE_DAMAGE_REDUCTION_FACTOR_ATTRIBUTE_ID = 1355;
+const TypeID eufe::AOE_DAMAGE_REDUCTION_SENSITIVITY_ATTRIBUTE_ID = 1354;
+const TypeID eufe::AOE_CLOUD_SIZE_ATTRIBUTE_ID = 654;
+const TypeID eufe::AOE_VELOCITY_ATTRIBUTE_ID = 653;
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)

@@ -1,5 +1,6 @@
 #pragma once
 #include "Item.h"
+#include "HostileTarget.h"
 
 namespace eufe {
 	
@@ -85,7 +86,7 @@ namespace eufe {
 		float getCapUse();
 		
 		float getVolley();
-		float getDps(float range = 0, float angularSpeed = 0, float targetSignature = 0);
+		float getDps(const HostileTarget& target = HostileTarget::defaultTarget);
 		//float getDps(float range, float angularSpeed, float targetSignature);
 		float getMaxRange();
 		float getFalloff();

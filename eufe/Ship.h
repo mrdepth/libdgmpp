@@ -48,10 +48,6 @@ namespace eufe {
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
-//		virtual void addLocationGroupModifier(std::shared_ptr<Modifier> modifier);
-//		virtual void addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier);
-
-		
 		void addProjectedModule(std::shared_ptr<Module> module);
 		void removeProjectedModule(std::shared_ptr<Module> module);
 		void addProjectedDrone(std::shared_ptr<Drone> drone);
@@ -104,7 +100,7 @@ namespace eufe {
 		float getShieldRecharge();
 
 		//DPS
-		float getWeaponDps(float range = 0, float angularSpeed = 0, float targetSignature = 0);
+		float getWeaponDps(const HostileTarget& target = HostileTarget::defaultTarget);
 		float getWeaponVolley();
 		float getDroneDps();
 		float getDroneVolley();

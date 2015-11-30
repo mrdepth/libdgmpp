@@ -957,11 +957,11 @@ float Ship::getShieldRecharge()
 
 //DPS
 
-float Ship::getWeaponDps(float range, float angularSpeed, float targetSignature)
+float Ship::getWeaponDps(const HostileTarget& target)
 {
 	float weaponDps = 0;
 	for (auto i: modules_)
-		weaponDps += i->getDps(range, angularSpeed, targetSignature);
+		weaponDps += i->getDps(target);
 	return weaponDps;
 }
 

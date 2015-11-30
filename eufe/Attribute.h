@@ -190,6 +190,11 @@ namespace eufe {
 	extern const TypeID CHARGE_ARMOR_DAMAGE_MULTIPLIER_ATTRIBUTE_ID;
 
 	extern const TypeID TACTICAL_MODES_ATTRIBUTE_ID;
+	
+	extern const TypeID AOE_DAMAGE_REDUCTION_FACTOR_ATTRIBUTE_ID;
+	extern const TypeID AOE_DAMAGE_REDUCTION_SENSITIVITY_ATTRIBUTE_ID;
+	extern const TypeID AOE_CLOUD_SIZE_ATTRIBUTE_ID;
+	extern const TypeID AOE_VELOCITY_ATTRIBUTE_ID;
 
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
