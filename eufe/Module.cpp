@@ -222,7 +222,7 @@ void Module::reset()
 {
 	Item::reset();
 	shots_ = -1;
-	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = -1;
 	lifeTime_ = -1;
 	if (charge_)
 		charge_->reset();
@@ -468,7 +468,7 @@ float Module::getCapUse()
 		return 0.0f;
 }
 
-float Module::getVolley()
+DamageVector Module::getVolley()
 {
 	loadIfNeeded();
 	if (volley_ < 0)
@@ -476,7 +476,7 @@ float Module::getVolley()
 	return volley_;
 }
 
-float Module::getDps(const HostileTarget& target)
+DamageVector Module::getDps(const HostileTarget& target)
 {
 	loadIfNeeded();
 	if (dps_ < 0)
@@ -649,13 +649,13 @@ void Module::calculateDamageStats()
 		dps_ = 0;
 		std::shared_ptr<Item> item = charge_ ?: std::static_pointer_cast<Item>(shared_from_this());
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
-			volley_ += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
+			volley_.emAmount += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))
-			volley_ += item->getAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID)->getValue();
+			volley_.kineticAmount += item->getAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID))
-			volley_ += item->getAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID)->getValue();
+			volley_.explosiveAmount += item->getAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID))
-			volley_ += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
+			volley_.thermalAmount += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
 			volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
 		else if (hasAttribute(MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
@@ -737,7 +737,7 @@ void Module::lazyLoad() {
 	forceReload_ = groupID_ == CAPACITOR_BOOSTER_GROUP_ID;
 	
 	shots_ = -1;
-	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = -1;
 	
 	TypeID attributes[] = {CHARGE_GROUP1_ATTRIBUTE_ID, CHARGE_GROUP2_ATTRIBUTE_ID, CHARGE_GROUP3_ATTRIBUTE_ID, CHARGE_GROUP4_ATTRIBUTE_ID, CHARGE_GROUP5_ATTRIBUTE_ID};
 	for (int i = 0; i < 5; i++)

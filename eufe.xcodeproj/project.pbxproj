@@ -90,6 +90,8 @@
 		12564BFE1B84B07F000F68D8 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D6C1473CA5E006B18D7 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B0A0501C0C386C00194715 /* HostileTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A04E1C0C386C00194715 /* HostileTarget.cpp */; };
 		12B0A0511C0C386C00194715 /* HostileTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A04F1C0C386C00194715 /* HostileTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A0611C0C9C5600194715 /* DamageVector.cpp */; };
+		12B0A0641C0C9C5600194715 /* DamageVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A0621C0C9C5600194715 /* DamageVector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37B33D441473CA0D006B18D7 /* eufe.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37B33D431473CA0D006B18D7 /* eufe.1 */; };
 		37C1C4301475511F002AC3E7 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C42E1475511E002AC3E7 /* Compiler.cpp */; };
 /* End PBXBuildFile section */
@@ -162,6 +164,8 @@
 		12A3C723177C2FAF0067E00C /* compiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = compiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		12B0A04E1C0C386C00194715 /* HostileTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HostileTarget.cpp; sourceTree = "<group>"; };
 		12B0A04F1C0C386C00194715 /* HostileTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostileTarget.h; sourceTree = "<group>"; };
+		12B0A0611C0C9C5600194715 /* DamageVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DamageVector.cpp; sourceTree = "<group>"; };
+		12B0A0621C0C9C5600194715 /* DamageVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamageVector.h; sourceTree = "<group>"; };
 		12C51772196D0C360004CF96 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		12C51775196D0C360004CF96 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		12C51788196D10CE0004CF96 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
@@ -453,6 +457,8 @@
 				371FA1D214F543080043E813 /* HeatSimulator.h */,
 				12B0A04E1C0C386C00194715 /* HostileTarget.cpp */,
 				12B0A04F1C0C386C00194715 /* HostileTarget.h */,
+				12B0A0611C0C9C5600194715 /* DamageVector.cpp */,
+				12B0A0621C0C9C5600194715 /* DamageVector.h */,
 			);
 			name = Ship;
 			sourceTree = "<group>";
@@ -575,6 +581,7 @@
 				12564BF11B84B07F000F68D8 /* Blob.h in Headers */,
 				12564BF21B84B07F000F68D8 /* FetchResult.h in Headers */,
 				12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */,
+				12B0A0641C0C9C5600194715 /* DamageVector.h in Headers */,
 				12564BF41B84B07F000F68D8 /* SqliteConnector.h in Headers */,
 				12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */,
 				12564BF91B84B07F000F68D8 /* Area.h in Headers */,
@@ -718,6 +725,7 @@
 				12564BBD1B84B027000F68D8 /* Module.cpp in Sources */,
 				12564BBC1B84B027000F68D8 /* Drone.cpp in Sources */,
 				12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */,
+				12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */,
 				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
 				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
 				12564BBB1B84B027000F68D8 /* DamagePattern.cpp in Sources */,

@@ -3,11 +3,15 @@
 
 using namespace eufe;
 
-DamagePattern::DamagePattern() : emAmount(0.25), thermalAmount(0.25), kineticAmount(0.25), explosiveAmount(0.25)
+DamagePattern::DamagePattern() : DamageVector(0.25)
 {
 }
 
-DamagePattern::DamagePattern(float em, float thermal, float kinetic, float explosive) : emAmount(em), thermalAmount(thermal), kineticAmount(kinetic), explosiveAmount(explosive)
+DamagePattern::DamagePattern(const DamageVector& damage)  : DamageVector(damage)
+{
+}
+
+DamagePattern::DamagePattern(float em, float thermal, float kinetic, float explosive) : DamageVector(em, thermal, kinetic, explosive)
 {
 }
 

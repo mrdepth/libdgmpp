@@ -100,10 +100,10 @@ namespace eufe {
 		float getShieldRecharge();
 
 		//DPS
-		float getWeaponDps(const HostileTarget& target = HostileTarget::defaultTarget);
-		float getWeaponVolley();
-		float getDroneDps();
-		float getDroneVolley();
+		DamageVector getWeaponDps(const HostileTarget& target = HostileTarget::defaultTarget);
+		DamageVector getWeaponVolley();
+		DamageVector getDroneDps();
+		DamageVector getDroneVolley();
 		
 		//Mobility
 		float getAlignTime();

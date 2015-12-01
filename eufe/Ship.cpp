@@ -957,33 +957,33 @@ float Ship::getShieldRecharge()
 
 //DPS
 
-float Ship::getWeaponDps(const HostileTarget& target)
+DamageVector Ship::getWeaponDps(const HostileTarget& target)
 {
-	float weaponDps = 0;
+	DamageVector weaponDps = 0;
 	for (auto i: modules_)
 		weaponDps += i->getDps(target);
 	return weaponDps;
 }
 
-float Ship::getWeaponVolley()
+DamageVector Ship::getWeaponVolley()
 {
-	float weaponVolley = 0;
+	DamageVector weaponVolley = 0;
 	for (auto i: modules_)
 		weaponVolley += i->getVolley();
 	return weaponVolley;
 }
 
-float Ship::getDroneDps()
+DamageVector Ship::getDroneDps()
 {
-	float droneDps = 0;
+	DamageVector droneDps = 0;
 	for (auto i: drones_)
 		droneDps += i->getDps();
 	return droneDps;
 }
 
-float Ship::getDroneVolley()
+DamageVector Ship::getDroneVolley()
 {
-	float droneVolley = 0;
+	DamageVector droneVolley = 0;
 	for (auto i: drones_)
 		droneVolley += i->getVolley();
 	return droneVolley;

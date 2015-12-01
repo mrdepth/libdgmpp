@@ -49,8 +49,8 @@ namespace eufe {
 		float getShieldRecharge();
 		
 		//DPS
-		float getWeaponDps();
-		float getWeaponVolley();
+		DamageVector getWeaponDps();
+		DamageVector getWeaponVolley();
 		
 		friend std::ostream& operator<<(std::ostream& os, ControlTower& controlTower);
 		
@@ -65,8 +65,8 @@ namespace eufe {
 		HitPoints effectiveHitPoints_;
 		float shieldRecharge_;
 		
-		float weaponDps_;
-		float weaponVolley_;
+		DamageVector weaponDps_;
+		DamageVector weaponVolley_;
 		
 		float cpuUsed_;
 		float powerGridUsed_;

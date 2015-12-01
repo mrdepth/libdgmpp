@@ -264,14 +264,14 @@ float ControlTower::getShieldRecharge()
 
 //DPS
 
-float ControlTower::getWeaponDps()
+DamageVector ControlTower::getWeaponDps()
 {
 	if (weaponDps_ < 0)
 		calculateDamageStats();
 	return weaponDps_;
 }
 
-float ControlTower::getWeaponVolley()
+DamageVector ControlTower::getWeaponVolley()
 {
 	if (weaponVolley_ < 0)
 		calculateDamageStats();

@@ -1,5 +1,6 @@
 #pragma once
 #include "Item.h"
+#include "DamageVector.h"
 
 namespace eufe {
 	
@@ -36,8 +37,8 @@ namespace eufe {
 		
 		float getCycleTime();
 		
-		float getVolley();
-		float getDps();
+		DamageVector getVolley();
+		DamageVector getDps();
 		float getMaxRange();
 		float getFalloff();
 		float getTrackingSpeed();
@@ -49,8 +50,8 @@ namespace eufe {
 		std::weak_ptr<Ship> target_;
 		std::shared_ptr<Charge> charge_;
 		
-		float volley_;
-		float dps_;
+		DamageVector volley_;
+		DamageVector dps_;
 		float maxRange_;
 		float falloff_;
 		float trackingSpeed_;

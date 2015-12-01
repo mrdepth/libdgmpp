@@ -1,6 +1,7 @@
 #pragma once
 #include "Item.h"
 #include "HostileTarget.h"
+#include "DamageVector.h"
 
 namespace eufe {
 	
@@ -85,8 +86,8 @@ namespace eufe {
 		int getShots();
 		float getCapUse();
 		
-		float getVolley();
-		float getDps(const HostileTarget& target = HostileTarget::defaultTarget);
+		DamageVector getVolley();
+		DamageVector getDps(const HostileTarget& target = HostileTarget::defaultTarget);
 		//float getDps(float range, float angularSpeed, float targetSignature);
 		float getMaxRange();
 		float getFalloff();
@@ -119,8 +120,8 @@ namespace eufe {
 		float reloadTime_;
 		int shots_;
 		
-		float volley_;
-		float dps_;
+		DamageVector volley_;
+		DamageVector dps_;
 		float maxRange_;
 		float falloff_;
 		float trackingSpeed_;

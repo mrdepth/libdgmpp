@@ -1,28 +1,19 @@
 #pragma once
-#include "types.h"
+#include "DamageVector.h"
 
 namespace eufe {
 	
-	class DamagePattern
+	class DamagePattern: public DamageVector
 	{
 	public:
 		DamagePattern();
+		DamagePattern(const DamageVector& damage);
 		DamagePattern(float em, float thermal, float kinetic, float explosive);
 		~DamagePattern(void);
 		
 		HitPoints effectiveHitPoints(const Resistances& resistances, const HitPoints& hitPoints) const;
 		Tank effectiveTank(const Resistances& resistances, const Tank& tank) const;
 
-		union {
-			struct {
-				float emAmount;
-				float thermalAmount;
-				float kineticAmount;
-				float explosiveAmount;
-			};
-			float damageTypes[4];
-		};
-		
 	private:
 		float effectivity(const ResistancesLayer& resistances, float amount) const;
 	};

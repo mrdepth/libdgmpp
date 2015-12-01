@@ -143,7 +143,7 @@ void Drone::removeEffects(Effect::Category category)
 
 void Drone::reset() {
 	Item::reset();
-	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = -1;
 	if (charge_)
 		charge_->reset();
 }
@@ -160,7 +160,7 @@ float Drone::getCycleTime()
 		return 0;
 }
 
-float Drone::getVolley()
+DamageVector Drone::getVolley()
 {
 	loadIfNeeded();
 	if (volley_ < 0)
@@ -168,7 +168,7 @@ float Drone::getVolley()
 	return volley_;
 }
 
-float Drone::getDps()
+DamageVector Drone::getDps()
 {
 	loadIfNeeded();
 	if (dps_ < 0)
@@ -245,13 +245,13 @@ void Drone::calculateDamageStats()
 		dps_ = 0;
 		std::shared_ptr<Item> item = charge_ ?: std::static_pointer_cast<Item>(shared_from_this());
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
-			volley_ += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
+			volley_.emAmount += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))
-			volley_ += item->getAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID)->getValue();
+			volley_.kineticAmount += item->getAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID))
-			volley_ += item->getAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID)->getValue();
+			volley_.explosiveAmount += item->getAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID))
-			volley_ += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
+			volley_.thermalAmount += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
 			volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
 		dps_ = volley_ / (getCycleTime() / 1000.0f);
