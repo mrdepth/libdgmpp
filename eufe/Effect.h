@@ -73,6 +73,8 @@ namespace eufe {
 		Category getCategory() const;
 		const char* getEffectName() const;
 		friend std::ostream& operator<<(std::ostream& os, Effect& effect);
+		bool isAssistance() {return isAssistance_;};
+		bool isOffensive() {return isOffensive_;};
 	private:
 		std::weak_ptr<Engine> engine_;
 		
@@ -80,5 +82,7 @@ namespace eufe {
 		TypeID effectID_;
 		std::shared_ptr<EffectInterpreter> interpreter_;
 		std::string effectName_;
+		bool isAssistance_;
+		bool isOffensive_;
 	};
 }

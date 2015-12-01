@@ -28,7 +28,9 @@ namespace eufe {
 		
 		void setActive(bool active);
 		bool isActive();
-		
+		bool isAssistance();
+		bool isOffensive();
+
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		virtual void reset();

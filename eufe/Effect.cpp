@@ -130,7 +130,7 @@ std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> engine, 
 	}
 }*/
 
-Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID) : engine_(engine), effectID_(effectID)
+Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID) : engine_(engine), effectID_(effectID), isAssistance_(false), isOffensive_(false)
 {
 	std::stringstream sql;
 	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
@@ -185,6 +185,8 @@ Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID) : engine_(engine
 			if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
 				i = ' ';
 		}
+		isAssistance_ = isAssistance;
+		isOffensive_ = isOffensive;
 	}
 }
 

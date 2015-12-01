@@ -30,6 +30,7 @@ FOUNDATION_EXPORT const unsigned char eufeVersionString[];
 #include <eufe/Implant.h>
 #include <eufe/Booster.h>
 #include <eufe/Attribute.h>
+#include <eufe/DamageVector.h>
 #include <eufe/DamagePattern.h>
 #include <eufe/CapacitorSimulator.h>
 #include <eufe/Effect.h>

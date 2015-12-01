@@ -14,6 +14,20 @@ Charge::~Charge()
 {
 }
 
+bool Charge::isAssistance() {
+	for (auto effect: getEffects())
+		if (effect->isAssistance())
+			return true;
+	return false;
+}
+
+bool Charge::isOffensive() {
+	for (auto effect: getEffects())
+		if (effect->isOffensive())
+			return true;
+	return false;
+}
+
 Environment Charge::getEnvironment()
 {
 	Environment environment;

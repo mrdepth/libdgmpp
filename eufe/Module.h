@@ -57,6 +57,8 @@ namespace eufe {
 		bool canBeOnline() {return canBeOnline_;};
 		bool canBeActive() {return canBeActive_;};
 		bool canBeOverloaded() {return canBeOverloaded_;};
+		bool isAssistance();
+		bool isOffensive();
 
 		virtual Environment getEnvironment();
 

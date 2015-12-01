@@ -92,6 +92,8 @@
 		12B0A0511C0C386C00194715 /* HostileTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A04F1C0C386C00194715 /* HostileTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A0611C0C9C5600194715 /* DamageVector.cpp */; };
 		12B0A0641C0C9C5600194715 /* DamageVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A0621C0C9C5600194715 /* DamageVector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B0A3001C0DC5CC00194715 /* CombatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */; };
+		12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37B33D441473CA0D006B18D7 /* eufe.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37B33D431473CA0D006B18D7 /* eufe.1 */; };
 		37C1C4301475511F002AC3E7 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C42E1475511E002AC3E7 /* Compiler.cpp */; };
 /* End PBXBuildFile section */
@@ -166,6 +168,8 @@
 		12B0A04F1C0C386C00194715 /* HostileTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostileTarget.h; sourceTree = "<group>"; };
 		12B0A0611C0C9C5600194715 /* DamageVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DamageVector.cpp; sourceTree = "<group>"; };
 		12B0A0621C0C9C5600194715 /* DamageVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamageVector.h; sourceTree = "<group>"; };
+		12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombatSimulator.cpp; sourceTree = "<group>"; };
+		12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatSimulator.h; sourceTree = "<group>"; };
 		12C51772196D0C360004CF96 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		12C51775196D0C360004CF96 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		12C51788196D10CE0004CF96 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
@@ -395,6 +399,8 @@
 				37B9AB65147A5DDF006F1F8E /* Gang.h */,
 				37B33D551473CA5E006B18D7 /* Item.cpp */,
 				37B33D561473CA5E006B18D7 /* Item.h */,
+				12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */,
+				12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */,
 				37B33D6C1473CA5E006B18D7 /* types.h */,
 			);
 			name = eufe;
@@ -566,6 +572,7 @@
 				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
 				12564BE41B84B07F000F68D8 /* Booster.h in Headers */,
 				12B0A0511C0C386C00194715 /* HostileTarget.h in Headers */,
+				12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */,
 				12564BE51B84B07F000F68D8 /* Character.h in Headers */,
 				12564BE61B84B07F000F68D8 /* Implant.h in Headers */,
 				12564BE71B84B07F000F68D8 /* Skill.h in Headers */,
@@ -732,6 +739,7 @@
 				12564BC21B84B027000F68D8 /* Blob.cpp in Sources */,
 				12564BB81B84B027000F68D8 /* Skill.cpp in Sources */,
 				12564BAB1B84B027000F68D8 /* EffectLeechInterpreter.cpp in Sources */,
+				12B0A3001C0DC5CC00194715 /* CombatSimulator.cpp in Sources */,
 				12564BAD1B84B027000F68D8 /* EffectEnergyTransferInterpreter.cpp in Sources */,
 				12564BBA1B84B027000F68D8 /* Charge.cpp in Sources */,
 				12564BA91B84B027000F68D8 /* Effect.cpp in Sources */,

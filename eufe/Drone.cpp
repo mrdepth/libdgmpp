@@ -125,6 +125,26 @@ bool Drone::isActive()
 	return isActive_;
 }
 
+bool Drone::isAssistance() {
+	for (auto effect: getEffects())
+		if (effect->isAssistance())
+			return true;
+	auto charge = getCharge();
+	if (charge)
+		return charge->isAssistance();
+	return false;
+}
+
+bool Drone::isOffensive() {
+	for (auto effect: getEffects())
+		if (effect->isOffensive())
+			return true;
+	auto charge = getCharge();
+	if (charge)
+		return charge->isOffensive();
+	return false;
+}
+
 void Drone::addEffects(Effect::Category category)
 {
 	loadIfNeeded();

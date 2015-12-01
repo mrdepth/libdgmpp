@@ -131,6 +131,26 @@ void Module::setPreferredState(State state) {
 	setState(state);
 }
 
+bool Module::isAssistance() {
+	for (auto effect: getEffects())
+		if (effect->isAssistance())
+			return true;
+	auto charge = getCharge();
+	if (charge)
+		return charge->isAssistance();
+	return false;
+}
+
+bool Module::isOffensive() {
+	for (auto effect: getEffects())
+		if (effect->isOffensive())
+			return true;
+	auto charge = getCharge();
+	if (charge)
+		return charge->isOffensive();
+	return false;
+}
+
 Environment Module::getEnvironment()
 {
 	Environment environment;

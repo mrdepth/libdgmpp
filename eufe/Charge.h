@@ -12,6 +12,9 @@ namespace eufe {
 		std::shared_ptr<Charge> shared_from_this() {
 			return std::static_pointer_cast<Charge>(Item::shared_from_this());
 		}
+		bool isAssistance();
+		bool isOffensive();
+
 		virtual Environment getEnvironment();
 	protected:
 	};
