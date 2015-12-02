@@ -25,7 +25,7 @@ DamageVector DamageVector::effectiveDamage(const ResistancesLayer& resistances) 
 }
 
 DamageVector& DamageVector::operator=(float value) {
-	emAmount = thermalAmount = kineticAmount = explosiveAmount = value;
+	emAmount = thermalAmount = kineticAmount = explosiveAmount = value / 4;
 	return *this;
 }
 
@@ -38,12 +38,31 @@ DamageVector DamageVector::operator*(float value) const {
 }
 
 DamageVector DamageVector::operator+(float value) const {
+	value /= 4;
 	return DamageVector(emAmount + value, thermalAmount + value, kineticAmount + value, explosiveAmount + value);
 }
 
 DamageVector DamageVector::operator-(float value)  const{
+	value /= 4;
 	return DamageVector(emAmount - value, thermalAmount - value, kineticAmount - value, explosiveAmount - value);
 }
+
+DamageVector DamageVector::operator/(const DamageVector& value) const {
+	return DamageVector(emAmount / value.emAmount, thermalAmount / value.thermalAmount, kineticAmount / value.kineticAmount, explosiveAmount / value.explosiveAmount);
+}
+
+DamageVector DamageVector::operator*(const DamageVector& value) const {
+	return DamageVector(emAmount * value.emAmount, thermalAmount * value.thermalAmount, kineticAmount * value.kineticAmount, explosiveAmount * value.explosiveAmount);
+}
+
+DamageVector DamageVector::operator+(const DamageVector& value) const {
+	return DamageVector(emAmount + value.emAmount, thermalAmount + value.thermalAmount, kineticAmount + value.kineticAmount, explosiveAmount + value.explosiveAmount);
+}
+
+DamageVector DamageVector::operator-(const DamageVector& value) const {
+	return DamageVector(emAmount - value.emAmount, thermalAmount - value.thermalAmount, kineticAmount - value.kineticAmount, explosiveAmount - value.explosiveAmount);
+}
+
 
 DamageVector& DamageVector::operator/=(float value) {
 	emAmount /= value;

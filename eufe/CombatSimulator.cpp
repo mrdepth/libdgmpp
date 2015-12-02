@@ -117,13 +117,13 @@ DamageVector CombatSimulator::dealtDPS() {
 	float range = state_.range();
 	float angularVelocity = state_.angularVelocity();
 	HostileTarget target = HostileTarget(range, angularVelocity, target_->getSignatureRadius(), state_.targetVelocity.length());
-	return attacker_->getWeaponDps(target) + attacker_->getDroneDps();
+	return attacker_->getWeaponDps(target) + attacker_->getDroneDps(target);
 }
 
 DamageVector CombatSimulator::receivedDPS() {
 	float range = state_.range();
 	float angularVelocity = state_.angularVelocity();
 	HostileTarget target = HostileTarget(range, angularVelocity, attacker_->getSignatureRadius(), state_.attackerVelocity.length());
-	return target_->getWeaponDps(target) + target_->getDroneDps();
+	return target_->getWeaponDps(target) + target_->getDroneDps(target);
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Item.h"
 #include "DamageVector.h"
+#include "HostileTarget.h"
 
 namespace eufe {
 	
@@ -40,7 +41,7 @@ namespace eufe {
 		float getCycleTime();
 		
 		DamageVector getVolley();
-		DamageVector getDps();
+		DamageVector getDps(const HostileTarget& target = HostileTarget::defaultTarget);
 		float getMaxRange();
 		float getFalloff();
 		float getTrackingSpeed();

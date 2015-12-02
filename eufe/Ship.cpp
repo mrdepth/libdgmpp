@@ -973,11 +973,11 @@ DamageVector Ship::getWeaponVolley()
 	return weaponVolley;
 }
 
-DamageVector Ship::getDroneDps()
+DamageVector Ship::getDroneDps(const HostileTarget& target)
 {
 	DamageVector droneDps = 0;
 	for (auto i: drones_)
-		droneDps += i->getDps();
+		droneDps += i->getDps(target);
 	return droneDps;
 }
 

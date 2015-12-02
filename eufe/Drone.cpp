@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Area.h"
 #include "Charge.h"
+#include <cmath>
 
 using namespace eufe;
 
@@ -188,11 +189,45 @@ DamageVector Drone::getVolley()
 	return volley_;
 }
 
-DamageVector Drone::getDps()
+DamageVector Drone::getDps(const HostileTarget& target)
 {
 	loadIfNeeded();
 	if (dps_ < 0)
 		calculateDamageStats();
+	
+	if (dps_ > 0  && target.signature > 0) {
+		float range = getAttribute(ENTITY_FLY_RANGE_ATTRIBUTE_ID)->getValue();
+		float velocity = getAttribute(ENTITY_CRUISE_SPEED_ATTRIBUTE_ID)->getValue();
+		float angularVelocity = range > 0 ? velocity / range : 0;
+		
+		float a = 0;
+		if (angularVelocity > 0) {
+			float trackingSpeed = getTrackingSpeed();
+			a = trackingSpeed > 0 ? angularVelocity / trackingSpeed : 0;
+		}
+		
+		float signatureResolution = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
+		if (signatureResolution > 0)
+			a *= signatureResolution / target.signature;
+		
+		float b = 0;
+		if (target.range > 0) {
+			float maxRange = getMaxRange();
+			float falloff = getFalloff();
+			b = falloff > 0 ? std::max(0.0f, (range - maxRange) / falloff) : 0;
+			
+		}
+		
+		float blob = a * a + b * b;
+		float hitChance = std::pow(0.5f, blob);
+		float relativeDPS;
+		if (hitChance > 0.01)
+			relativeDPS = (hitChance - 0.01) * (0.5 + (hitChance + 0.49)) / 2 + 0.01 * 3;
+		else
+			relativeDPS = hitChance * 3;
+		return dps_ * relativeDPS;
+	}
+	
 	return dps_;
 }
 

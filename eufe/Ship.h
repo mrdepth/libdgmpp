@@ -102,7 +102,7 @@ namespace eufe {
 		//DPS
 		DamageVector getWeaponDps(const HostileTarget& target = HostileTarget::defaultTarget);
 		DamageVector getWeaponVolley();
-		DamageVector getDroneDps();
+		DamageVector getDroneDps(const HostileTarget& target = HostileTarget::defaultTarget);
 		DamageVector getDroneVolley();
 		
 		//Mobility

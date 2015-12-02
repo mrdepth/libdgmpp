@@ -26,6 +26,11 @@ namespace eufe {
 		DamageVector operator*(float value) const;
 		DamageVector operator+(float value) const;
 		DamageVector operator-(float value) const;
+
+		DamageVector operator/(const DamageVector& value) const;
+		DamageVector operator*(const DamageVector& value) const;
+		DamageVector operator+(const DamageVector& value) const;
+		DamageVector operator-(const DamageVector& value) const;
 		
 		DamageVector& operator/=(float value);
 		DamageVector& operator*=(float value);
@@ -36,6 +41,7 @@ namespace eufe {
 		DamageVector& operator*=(const DamageVector& value);
 		DamageVector& operator+=(const DamageVector& value);
 		DamageVector& operator-=(const DamageVector& value);
+		
 		
 		operator float() const;
 
