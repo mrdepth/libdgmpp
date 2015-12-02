@@ -37,3 +37,4 @@ FOUNDATION_EXPORT const unsigned char eufeVersionString[];
 #include <eufe/ControlTower.h>
 #include <eufe/Structure.h>
 #include <eufe/SqliteConnector.h>
+#include <eufe/CombatSimulator.h>

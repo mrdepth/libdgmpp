@@ -2,6 +2,7 @@
 #include "types.h"
 #include <cmath>
 #include "DamageVector.h"
+#include "Ship.h"
 
 namespace eufe {
 	struct Vector;
@@ -30,7 +31,7 @@ namespace eufe {
 	
 	class CombatSimulator {
 	public:
-		struct CombatSimulatorState {
+		struct State {
 			Point attackerPosition;
 			Point targetPosition;
 			Vector attackerVelocity;
@@ -42,7 +43,9 @@ namespace eufe {
 		};
 		
 		CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr<Ship> target);
-		void setState(const CombatSimulatorState& state);
+		virtual ~CombatSimulator();
+		
+		void setState(const State& state);
 		DamageVector dealtDPS();
 		DamageVector receivedDPS();
 	private:
@@ -50,7 +53,9 @@ namespace eufe {
 		std::shared_ptr<Ship> target_;
 		ModulesList attackerOffensiveModules_;
 		ModulesList targetOffensiveModules_;
-		CombatSimulatorState state_;
+		State state_;
+		std::map<std::shared_ptr<Module>, Module::State> states_;
+		std::map<std::shared_ptr<Module>, std::shared_ptr<Ship>> targets_;
 		
 	};
 }

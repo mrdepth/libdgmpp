@@ -39,11 +39,11 @@ Vector Vector::operator/(float v) const {
 	return Vector(dx / v, dy / v);
 }
 
-float CombatSimulator::CombatSimulatorState::range() const {
+float CombatSimulator::State::range() const {
 	return (attackerPosition - targetPosition).length();
 }
 
-float CombatSimulator::CombatSimulatorState::transversalVelocity() const {
+float CombatSimulator::State::transversalVelocity() const {
 	if (targetPosition == attackerPosition)
 		return 0;
 	
@@ -56,14 +56,17 @@ float CombatSimulator::CombatSimulatorState::transversalVelocity() const {
 	return sqrt(l * l - pr * pr);
 }
 
-float CombatSimulator::CombatSimulatorState::angularVelocity() const {
+float CombatSimulator::State::angularVelocity() const {
 	float r = range();
 	return r > 0 ? transversalVelocity() / r : 0;
 }
 
 CombatSimulator::CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr<Ship> target): attacker_(attacker), target_(target) {
-	auto analyze = [](std::shared_ptr<Ship> attacker, std::shared_ptr<Ship> target, ModulesList& modulesList) {
+	auto analyze = [&](std::shared_ptr<Ship> attacker, std::shared_ptr<Ship> target, ModulesList& modulesList) {
 		for (auto module: attacker->getModules()) {
+			states_[module] = module->getPreferredState();
+			targets_[module] = module->getTarget();
+			
 			if (module->getState() > Module::STATE_ONLINE && module->requireTarget()) {
 				if (module->isOffensive() && !module->isAssistance()) {
 					module->setTarget(target);
@@ -71,7 +74,7 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr
 						modulesList.push_back(module);
 				}
 				else
-					module->setState(Module::STATE_ONLINE);
+					module->setPreferredState(Module::STATE_ONLINE);
 			}
 		}
 	};
@@ -80,16 +83,23 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr
 	analyze(target, attacker, targetOffensiveModules_);
 }
 
-void CombatSimulator::setState(const CombatSimulatorState& state) {
+CombatSimulator::~CombatSimulator() {
+	for (auto module: attacker_->getModules()) {
+		module->setPreferredState(states_[module]);
+		module->setTarget(targets_[module]);
+	}
+}
+
+void CombatSimulator::setState(const State& state) {
 	state_ = state;
 	float range = state.range();
 	for (auto module: attackerOffensiveModules_) {
 		float maxRange = module->getMaxRange();
-		module->setState(range > maxRange ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
+		module->setPreferredState(range > maxRange ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
 	}
 	for (auto module: targetOffensiveModules_) {
 		float maxRange = module->getMaxRange();
-		module->setState(range > maxRange ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
+		module->setPreferredState(range > maxRange ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
 	}
 	
 	float v0 = state.attackerVelocity.length();
