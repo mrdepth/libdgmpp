@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1242EC211A4DFF5C00FD488A /* dbpatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1242EC201A4DFF5C00FD488A /* dbpatch.cpp */; };
 		124FAFBD1B17208800B7FE95 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1242EC251A4DFF9800FD488A /* libsqlite3.dylib */; };
-		12564B931B84AF15000F68D8 /* eufe.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564B921B84AF15000F68D8 /* eufe.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BA91B84B027000F68D8 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D531473CA5E006B18D7 /* Effect.cpp */; };
 		12564BAA1B84B027000F68D8 /* EffectByteCodeInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CBD14978B9B00B13A9D /* EffectByteCodeInterpreter.cpp */; };
 		12564BAB1B84B027000F68D8 /* EffectLeechInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CC31497988F00B13A9D /* EffectLeechInterpreter.cpp */; };
@@ -94,6 +93,7 @@
 		12B0A0641C0C9C5600194715 /* DamageVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A0621C0C9C5600194715 /* DamageVector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B0A3001C0DC5CC00194715 /* CombatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */; };
 		12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B0A30C1C0EEC8400194715 /* eufe.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* eufe.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37B33D441473CA0D006B18D7 /* eufe.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37B33D431473CA0D006B18D7 /* eufe.1 */; };
 		37C1C4301475511F002AC3E7 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C42E1475511E002AC3E7 /* Compiler.cpp */; };
 /* End PBXBuildFile section */
@@ -553,8 +553,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12564B931B84AF15000F68D8 /* eufe.h in Headers */,
 				12564BD41B84B07E000F68D8 /* Effect.h in Headers */,
+				12B0A30C1C0EEC8400194715 /* eufe.h in Headers */,
 				12564BD51B84B07E000F68D8 /* EffectInterpreter.h in Headers */,
 				12564BD61B84B07E000F68D8 /* EffectByteCodeInterpreter.h in Headers */,
 				12564BD71B84B07E000F68D8 /* EffectLeechInterpreter.h in Headers */,

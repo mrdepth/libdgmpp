@@ -70,8 +70,10 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr
 			if (module->getState() > Module::STATE_ONLINE && module->requireTarget()) {
 				if (module->isOffensive() && !module->isAssistance()) {
 					module->setTarget(target);
-					if (module->getDps() == 0)
+					if (module->getDps() == 0) {
 						modulesList.push_back(module);
+						module->setPreferredState(Module::STATE_ONLINE);
+					}
 				}
 				else
 					module->setPreferredState(Module::STATE_ONLINE);
@@ -85,8 +87,12 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr
 
 CombatSimulator::~CombatSimulator() {
 	for (auto module: attacker_->getModules()) {
-		module->setPreferredState(states_[module]);
 		module->setTarget(targets_[module]);
+		module->setPreferredState(states_[module]);
+	}
+	for (auto module: target_->getModules()) {
+		module->setTarget(targets_[module]);
+		module->setPreferredState(states_[module]);
 	}
 }
 
@@ -103,27 +109,59 @@ void CombatSimulator::setState(const State& state) {
 	}
 	
 	float v0 = state.attackerVelocity.length();
-	float v1 = attacker_->getVelocity();
+	float v1 = attacker_->getMaxVelocityInOrbit(range);
+	
 	if (v1 < v0)
 		state_.attackerVelocity = state_.attackerVelocity * (v1 / v0);
 	
 	v0 = state.targetVelocity.length();
-	v1 = target_->getVelocity();
+	v1 = target_->getMaxVelocityInOrbit(range);
 	if (v1 < v0)
 		state_.targetVelocity = state_.targetVelocity * (v1 / v0);
-}
 
-DamageVector CombatSimulator::dealtDPS() {
-	float range = state_.range();
 	float angularVelocity = state_.angularVelocity();
-	HostileTarget target = HostileTarget(range, angularVelocity, target_->getSignatureRadius(), state_.targetVelocity.length());
-	return attacker_->getWeaponDps(target) + attacker_->getDroneDps(target);
+	attackersHostileTarget_ = HostileTarget(range, angularVelocity, target_->getSignatureRadius(), state_.targetVelocity.length());
+	targetsHostileTarget_ = HostileTarget(range, angularVelocity,  attacker_->getSignatureRadius(), state_.attackerVelocity.length());
 }
 
-DamageVector CombatSimulator::receivedDPS() {
-	float range = state_.range();
-	float angularVelocity = state_.angularVelocity();
-	HostileTarget target = HostileTarget(range, angularVelocity, attacker_->getSignatureRadius(), state_.attackerVelocity.length());
-	return target_->getWeaponDps(target) + target_->getDroneDps(target);
+DamageVector CombatSimulator::dealtDps() {
+	return attacker_->getWeaponDps(attackersHostileTarget_) + attacker_->getDroneDps(attackersHostileTarget_);
 }
 
+DamageVector CombatSimulator::receivedDps() {
+	return target_->getWeaponDps(targetsHostileTarget_) + target_->getDroneDps(targetsHostileTarget_);
+}
+
+float CombatSimulator::timeToKill() {
+	auto vdps = dealtDps();
+	float dps = vdps;
+	DamagePattern pattern(dps);
+	auto resistances = target_->getResistances();
+	auto ehp = pattern.effectiveHitPoints(resistances, target_->getHitPoints());
+	auto etank = pattern.effectiveTank(resistances, target_->getTank());
+	
+	auto shieldDPS = dps - (etank.passiveShield + etank.shieldRepair);
+	auto armorDPS = shieldDPS - etank.armorRepair;
+	auto hullDPS = armorDPS - etank.hullRepair;
+	if (shieldDPS > 0 && armorDPS > 0 && hullDPS > 0)
+		return ehp.shield / shieldDPS + ehp.armor / armorDPS + ehp.hull / hullDPS;
+	else
+		return -1;
+}
+
+float CombatSimulator::timeToDie() {
+	auto vdps = receivedDps();
+	float dps = vdps;
+	DamagePattern pattern(dps);
+	auto resistances = attacker_->getResistances();
+	auto ehp = pattern.effectiveHitPoints(resistances, attacker_->getHitPoints());
+	auto etank = pattern.effectiveTank(resistances, attacker_->getTank());
+	
+	auto shieldDPS = dps - (etank.passiveShield + etank.shieldRepair);
+	auto armorDPS = shieldDPS - etank.armorRepair;
+	auto hullDPS = armorDPS - etank.hullRepair;
+	if (shieldDPS > 0 && armorDPS > 0 && hullDPS > 0)
+		return ehp.shield / shieldDPS + ehp.armor / armorDPS + ehp.hull / hullDPS;
+	else
+		return -1;
+}

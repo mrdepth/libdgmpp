@@ -48,6 +48,9 @@ void Structure::setState(State state)
 				addEffects(Effect::CATEGORY_TARGET);
 			}
 		}
+		else
+			return;
+		
 		state_ = state;
 		auto engine = getEngine();
 		if (engine)

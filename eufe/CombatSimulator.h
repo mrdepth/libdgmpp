@@ -28,7 +28,6 @@ namespace eufe {
 		Vector operator/(float v) const;
 	};
 
-	
 	class CombatSimulator {
 	public:
 		struct State {
@@ -46,8 +45,10 @@ namespace eufe {
 		virtual ~CombatSimulator();
 		
 		void setState(const State& state);
-		DamageVector dealtDPS();
-		DamageVector receivedDPS();
+		DamageVector dealtDps();
+		DamageVector receivedDps();
+		float timeToKill();
+		float timeToDie();
 	private:
 		std::shared_ptr<Ship> attacker_;
 		std::shared_ptr<Ship> target_;
@@ -56,6 +57,7 @@ namespace eufe {
 		State state_;
 		std::map<std::shared_ptr<Module>, Module::State> states_;
 		std::map<std::shared_ptr<Module>, std::shared_ptr<Ship>> targets_;
-		
+		HostileTarget attackersHostileTarget_;
+		HostileTarget targetsHostileTarget_;
 	};
 }
