@@ -62,10 +62,10 @@ namespace eufe {
 			CATEGORY_SYSTEM			= 7
 		};
 		
-		static std::shared_ptr<Effect> getEffect(std::shared_ptr<Engine> engine, int effectID);
+		static std::shared_ptr<Effect> getEffect(std::shared_ptr<Engine> const& engine, int effectID);
 		
 //		Effect(std::shared_ptr<Engine> engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName = "");
-		Effect(std::shared_ptr<Engine> engine, TypeID effectID);
+		Effect(std::shared_ptr<Engine> const& engine, TypeID effectID);
 		virtual ~Effect(void);
 		bool addEffect(Environment environment);
 		bool removeEffect(Environment environment);

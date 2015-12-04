@@ -7,7 +7,7 @@ namespace eufe {
 	class Charge : public Item
 	{
 	public:
-		Charge(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner);
+		Charge(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner);
 		virtual ~Charge(void);
 		std::shared_ptr<Charge> shared_from_this() {
 			return std::static_pointer_cast<Charge>(Item::shared_from_this());

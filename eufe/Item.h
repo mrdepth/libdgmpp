@@ -39,9 +39,7 @@ namespace eufe {
         typedef std::runtime_error NoOwnerException;
 
 
-		Item();
-		Item(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner = nullptr);
-		Item(std::shared_ptr<Item> owner);
+		Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = nullptr);
 		virtual ~Item(void);
 		std::shared_ptr<Engine> getEngine();
 		std::shared_ptr<Item> getOwner() const;
@@ -67,25 +65,25 @@ namespace eufe {
 		
 		virtual void reset();
 		
-		virtual std::insert_iterator<ModifiersList> getModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
 		
-		virtual void addItemModifier(std::shared_ptr<Modifier> modifier);
-		virtual void addLocationModifier(std::shared_ptr<Modifier> modifier);
-		virtual void addLocationGroupModifier(std::shared_ptr<Modifier> modifier);
-		virtual void addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier);
+		virtual void addItemModifier(std::shared_ptr<Modifier> const& modifier);
+		virtual void addLocationModifier(std::shared_ptr<Modifier> const& modifier);
+		virtual void addLocationGroupModifier(std::shared_ptr<Modifier> const& modifier);
+		virtual void addLocationRequiredSkillModifier(std::shared_ptr<Modifier> const& modifier);
 
-		virtual void removeItemModifier(std::shared_ptr<Modifier> modifier);
-		virtual void removeLocationModifier(std::shared_ptr<Modifier> modifier);
-		virtual void removeLocationGroupModifier(std::shared_ptr<Modifier> modifier);
-		virtual void removeLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier);
+		virtual void removeItemModifier(std::shared_ptr<Modifier> const& modifier);
+		virtual void removeLocationModifier(std::shared_ptr<Modifier> const& modifier);
+		virtual void removeLocationGroupModifier(std::shared_ptr<Modifier> const& modifier);
+		virtual void removeLocationRequiredSkillModifier(std::shared_ptr<Modifier> const& modifier);
 		
 		virtual const char* getTypeName();
 		virtual const char* getGroupName();
 		
 		std::set<std::shared_ptr<Item>> getAffectors();
 		friend std::ostream& operator<<(std::ostream& os, Item& item);
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
-		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
 
 	protected:
 		std::weak_ptr<Engine> engine_;

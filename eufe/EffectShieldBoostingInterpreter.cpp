@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-EffectShieldBoostingInterpreter::EffectShieldBoostingInterpreter(std::shared_ptr<Engine> engine, bool isProjected, bool isAssistance, bool isOffensive) : engine_(engine), isProjected_(isProjected), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectShieldBoostingInterpreter::EffectShieldBoostingInterpreter(std::shared_ptr<Engine> const& engine, bool isProjected, bool isAssistance, bool isOffensive) : engine_(engine), isProjected_(isProjected), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 

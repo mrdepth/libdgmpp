@@ -9,7 +9,7 @@
 
 using namespace eufe;
 
-Drone::Drone(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Ship> owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr)
+Drone::Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Ship> const& owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr)
 {
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
@@ -45,13 +45,16 @@ Environment Drone::getEnvironment()
 	return environment;
 }
 
-void Drone::setTarget(std::shared_ptr<Ship> target)
+void Drone::setTarget(std::shared_ptr<Ship> const& target)
 {
 	loadIfNeeded();
+	std::shared_ptr<Ship> oldTarget = target_.lock();
+	if (oldTarget == target)
+		return;
+	
 	if (target && target == getOwner())
 		throw BadDroneTargetException("self");
 
-	std::shared_ptr<Ship> oldTarget = target_.lock();
 	if (oldTarget) {
 		removeEffects(Effect::CATEGORY_TARGET);
 		oldTarget->removeProjectedDrone(shared_from_this());
@@ -104,6 +107,9 @@ std::shared_ptr<Charge> Drone::getCharge()
 
 void Drone::setActive(bool active)
 {
+	if (isActive_ == active)
+		return;
+	
 	if (!isActive_ && active)
 	{
 		addEffects(Effect::CATEGORY_GENERIC);
@@ -127,7 +133,7 @@ bool Drone::isActive()
 }
 
 bool Drone::isAssistance() {
-	for (auto effect: getEffects())
+	for (const auto& effect: getEffects())
 		if (effect->isAssistance())
 			return true;
 	auto charge = getCharge();
@@ -137,7 +143,7 @@ bool Drone::isAssistance() {
 }
 
 bool Drone::isOffensive() {
-	for (auto effect: getEffects())
+	for (const auto& effect: getEffects())
 		if (effect->isOffensive())
 			return true;
 	auto charge = getCharge();

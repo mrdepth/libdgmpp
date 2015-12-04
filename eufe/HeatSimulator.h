@@ -19,7 +19,7 @@ namespace eufe {
 		};
 
 		
-		HeatSimulator(std::shared_ptr<Ship> ship);
+		HeatSimulator(std::shared_ptr<Ship> const& ship);
 		virtual ~HeatSimulator(void);
 		void simulate();
 		void reset();

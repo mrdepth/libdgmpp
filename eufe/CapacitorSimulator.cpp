@@ -11,16 +11,16 @@ using namespace eufe;
 
 static const float CAPACITOR_PEAK_RECHARGE = sqrtf(0.25);
 
-class StateCompareFunction : public std::binary_function<std::shared_ptr<const CapacitorSimulator::State>, std::shared_ptr<const CapacitorSimulator::State>, bool>
+class StateCompareFunction : public std::binary_function<std::shared_ptr<const CapacitorSimulator::State> const&, std::shared_ptr<const CapacitorSimulator::State> const&, bool>
 {
 public:
-	bool operator() (std::shared_ptr<const CapacitorSimulator::State> a, std::shared_ptr<const CapacitorSimulator::State> b)
+	bool operator() (std::shared_ptr<const CapacitorSimulator::State> const& a, std::shared_ptr<const CapacitorSimulator::State> const& b)
 	{
 		return a->tNow > b->tNow;
 	}
 };
 
-CapacitorSimulator::CapacitorSimulator(std::shared_ptr<Ship> ship, bool reload, int maxTime) : ship_(ship), reload_(reload), maxTime_(maxTime), isCalculated_(false), capacitorCapacity_(0), capacitorRecharge_(0), iterations_(0)
+CapacitorSimulator::CapacitorSimulator(std::shared_ptr<Ship> const& ship, bool reload, int maxTime) : ship_(ship), reload_(reload), maxTime_(maxTime), isCalculated_(false), capacitorCapacity_(0), capacitorRecharge_(0), iterations_(0)
 {
 }
 
@@ -132,13 +132,13 @@ void CapacitorSimulator::internalReset()
 	
 	std::list<std::shared_ptr<Module>> drains;
 	std::list<std::shared_ptr<Drone>> drainDrones;
-	for (auto i: ship->getModules())
+	for (const auto& i: ship->getModules())
 	{
 		if (i->getState() >= Module::STATE_ACTIVE)
 			drains.push_back(i);
 	}
 	
-	for (auto i: ship->getProjectedModules())
+	for (const auto& i: ship->getProjectedModules())
 	{
 		auto module = i.lock();
 		if (module && module->getState() >= Module::STATE_ACTIVE)
@@ -147,7 +147,7 @@ void CapacitorSimulator::internalReset()
 	
 	if (!isDisallowedOffensiveModifiers)
 	{
-		for (auto i: ship->getProjectedDrones())
+		for (const auto& i: ship->getProjectedDrones())
 		{
 			auto drone = i.lock();
 			if (drone && drone->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
@@ -162,7 +162,7 @@ void CapacitorSimulator::internalReset()
 	
 	bool disablePeriod = false;
 	
-	for (auto module: drains)
+	for (const auto& module: drains)
 	{
 		bool projected = module->getOwner() != ship;
 		int duration = static_cast<int>(module->getCycleTime());
@@ -218,7 +218,7 @@ void CapacitorSimulator::internalReset()
 		std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
 	}
 	
-	for (auto drone: drainDrones)
+	for (const auto& drone: drainDrones)
 	{
 		int duration = static_cast<int>(drone->getCycleTime());
 		float capNeed = capNeed = drone->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue();
@@ -311,7 +311,7 @@ void CapacitorSimulator::run()
 		
 		float avgDrain = 0;
 		
-		for (auto i: states_)
+		for (const auto& i: states_)
 			avgDrain += i->capNeed / i->duration;
 		
 		float a = - (2.0f * avgDrain * tau - capacitorCapacity_) / capacitorCapacity_;

@@ -6,7 +6,7 @@
 
 using namespace eufe;
 
-Charge::Charge(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner)
+Charge::Charge(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner)
 {
 }
 
@@ -15,14 +15,14 @@ Charge::~Charge()
 }
 
 bool Charge::isAssistance() {
-	for (auto effect: getEffects())
+	for (const auto& effect: getEffects())
 		if (effect->isAssistance())
 			return true;
 	return false;
 }
 
 bool Charge::isOffensive() {
-	for (auto effect: getEffects())
+	for (const auto& effect: getEffects())
 		if (effect->isOffensive())
 			return true;
 	return false;

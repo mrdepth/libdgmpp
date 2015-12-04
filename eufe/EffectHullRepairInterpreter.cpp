@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-EffectHullRepairInterpreter::EffectHullRepairInterpreter(std::shared_ptr<Engine> engine, bool isProjected, bool isAssistance, bool isOffensive) : engine_(engine), isProjected_(isProjected), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectHullRepairInterpreter::EffectHullRepairInterpreter(std::shared_ptr<Engine> const& engine, bool isProjected, bool isAssistance, bool isOffensive) : engine_(engine), isProjected_(isProjected), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 

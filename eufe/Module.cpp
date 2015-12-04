@@ -14,7 +14,7 @@
 
 using namespace eufe;
 
-Module::Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true)
+Module::Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true)
 {
 }
 
@@ -62,7 +62,7 @@ bool Module::canHaveState(State state)
 			{
 				int maxGroupActive = static_cast<int>(getAttribute(MAX_GROUP_ACTIVE_ATTRIBUTE_ID)->getValue()) - 1;
 				
-				for (auto i: ship->getModules())
+				for (const auto& i: ship->getModules())
 					if (i.get() != this && i->getState() >= Module::STATE_ACTIVE && i->getGroupID() == groupID_)
 						maxGroupActive--;
 				if (maxGroupActive < 0)
@@ -83,6 +83,8 @@ Module::State Module::getState()
 
 void Module::setState(State state)
 {
+	if (state == state_)
+		return;
 	if (canHaveState(state))
 	{
 		if (state < state_)
@@ -132,7 +134,7 @@ void Module::setPreferredState(State state) {
 }
 
 bool Module::isAssistance() {
-	for (auto effect: getEffects())
+	for (const auto& effect: getEffects())
 		if (effect->isAssistance())
 			return true;
 	auto charge = getCharge();
@@ -142,7 +144,7 @@ bool Module::isAssistance() {
 }
 
 bool Module::isOffensive() {
-	for (auto effect: getEffects())
+	for (const auto& effect: getEffects())
 		if (effect->isOffensive())
 			return true;
 	auto charge = getCharge();
@@ -184,7 +186,7 @@ void Module::addEffects(Effect::Category category)
 	loadIfNeeded();
 	Environment environment = getEnvironment();
 	
-	for (auto i: effects_)
+	for (const auto& i: effects_)
 		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
 			i->addEffect(environment);
 	
@@ -213,7 +215,7 @@ void Module::removeEffects(Effect::Category category)
 	loadIfNeeded();
 	Environment environment = getEnvironment();
 
-	for (auto i: effects_)
+	for (const auto& i: effects_)
 		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
 			i->removeEffect(environment);
 //	if (category == Effect::CATEGORY_GENERIC && charge_ != nullptr)
@@ -309,7 +311,7 @@ int Module::getChargeSize()
 		return 0;
 }
 
-bool Module::canFit(std::shared_ptr<Charge> charge)
+bool Module::canFit(std::shared_ptr<Charge> const& charge)
 {
 	loadIfNeeded();
 	if (!charge)
@@ -326,7 +328,7 @@ bool Module::canFit(std::shared_ptr<Charge> charge)
 	
 	TypeID chargeGroup = charge->getGroupID();
 	
-	for (auto i: chargeGroups_)
+	for (const auto& i: chargeGroups_)
 		if (i == chargeGroup)
 			return true;
 	return false;
@@ -334,14 +336,14 @@ bool Module::canFit(std::shared_ptr<Charge> charge)
 
 bool Module::requireTarget()
 {
-	for (auto i: effects_)
+	for (const auto& i: effects_)
 	{
 		Effect::Category category = i->getCategory();
 		if (category == Effect::CATEGORY_TARGET)
 			return true;
 	}
 	if (charge_)
-		for (auto i: charge_->getEffects()) {
+		for (const auto& i: charge_->getEffects()) {
 			Effect::Category category = i->getCategory();
 			if (category == Effect::CATEGORY_TARGET)
 				return true;
@@ -350,13 +352,17 @@ bool Module::requireTarget()
 	return false;
 }
 
-void Module::setTarget(std::shared_ptr<Ship> target)
+void Module::setTarget(std::shared_ptr<Ship> const& target)
 {
 	loadIfNeeded();
+	std::shared_ptr<Ship> oldTarget = target_.lock();
+	if (oldTarget == target)
+		return;
+
 	if (target && target == getOwner())
 		throw BadTargetException("self");
 	
-	std::shared_ptr<Ship> oldTarget = target_.lock();
+	
 	if (oldTarget)
 	{
 		removeEffects(Effect::CATEGORY_TARGET);
@@ -520,7 +526,6 @@ DamageVector Module::getDps(const HostileTarget& target)
 			float maxRange = getMaxRange();
 			float falloff = getFalloff();
 			b = falloff > 0 ? std::max(0.0f, (target.range - maxRange) / falloff) : 0;
-			
 		}
 		
 		float blob = a * a + b * b;
@@ -551,6 +556,11 @@ DamageVector Module::getDps(const HostileTarget& target)
 			float relativeDPS = std::min(1.0f, std::min(a, b));
 			return dps_ * relativeDPS;
 		}
+	}
+	else if (dps_ > 0) {
+		float maxRange = getMaxRange();
+		if (maxRange < target.range)
+			return 0;
 	}
 	return dps_;
 }
@@ -733,7 +743,7 @@ void Module::lazyLoad() {
 	canBeOverloaded_ = false;
 	int n = 0;
 	
-	for (auto i: effects_)
+	for (const auto& i: effects_)
 	{
 		Effect::Category category = i->getCategory();
 		if (category == Effect::CATEGORY_ACTIVE)
@@ -780,7 +790,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.attributes_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: module.attributes_)
+		for (const auto& i: module.attributes_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -795,7 +805,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.effects_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: module.effects_)
+		for (const auto& i: module.effects_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -815,7 +825,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: module.itemModifiers_)
+		for (const auto& i: module.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -830,7 +840,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: module.locationModifiers_)
+		for (const auto& i: module.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -845,7 +855,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: module.locationGroupModifiers_)
+		for (const auto& i: module.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -860,7 +870,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: module.locationRequiredSkillModifiers_)
+		for (const auto& i: module.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;

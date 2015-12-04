@@ -6,7 +6,7 @@ namespace eufe {
 	class EffectShieldBoostingInterpreter : public EffectInterpreter
 	{
 	public:
-		EffectShieldBoostingInterpreter(std::shared_ptr<Engine> engine, bool isProjected, bool isAssistance, bool isOffensive);
+		EffectShieldBoostingInterpreter(std::shared_ptr<Engine> const& engine, bool isProjected, bool isAssistance, bool isOffensive);
 		virtual ~EffectShieldBoostingInterpreter();
 		virtual bool addEffect(const Environment& environment);
 		virtual bool removeEffect(const Environment& environment);

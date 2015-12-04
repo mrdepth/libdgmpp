@@ -64,7 +64,7 @@ void Compiler::compile()
 
 			std::cout << "Compiling expressions..." << std::endl;
 			
-			for (auto i: expressions_)
+			for (const auto& i: expressions_)
 				compiledExpressionsMap_[i.first] = compileExpression(i.second);
 			
 			std::cout << "Compiling effects..." << std::endl;
@@ -75,7 +75,7 @@ void Compiler::compile()
 			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" SMALLINT(6) NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" SMALLINT(6) NOT NULL, \"isOffensive\" BOOL NOT NULL, \"isAssistance\" BOOL NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
 			os << "BEGIN TRANSACTION;" << std::endl;
 
-			for (auto i: effects_)
+			for (const auto& i: effects_)
 			{
 				Row& effect = i.second;
 				MemoryBlock compiledEffect = compileEffect(effect);
@@ -228,7 +228,7 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 	
 	int offset = sizeof(int) * 2;
 
-	for (auto i: expressionsMap)
+	for (const auto& i: expressionsMap)
 	{
 		offsets[i.first] = offset;
 		offset += i.second.length();
@@ -239,7 +239,7 @@ Compiler::MemoryBlock Compiler::compileEffect(Row& effect)
 	offset = offsets[effect["postExpression"]];
 	compiledEffect.append(reinterpret_cast<unsigned char*>(&offset), sizeof(int));
 
-	for (auto i: expressionsMap)
+	for (const auto& i: expressionsMap)
 	{
 		size_t len = i.second.length();
 		Byte* data = new Byte[len];

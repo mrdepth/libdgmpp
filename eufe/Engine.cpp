@@ -5,7 +5,7 @@
 
 using namespace eufe;
 
-Engine::Engine(std::shared_ptr<SqlConnector> sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr), generation_()
+Engine::Engine(std::shared_ptr<SqlConnector> const& sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr), generation_(), updatesCounter_(0)
 {
 }
 
@@ -93,6 +93,8 @@ std::shared_ptr<ControlTower> Engine::getControlTower()
 
 void Engine::reset(std::shared_ptr<Item> item)
 {
+	if (updatesCounter_ > 0)
+		return;
 	generation_++;
 	if (!item)
 		return;
@@ -105,6 +107,19 @@ void Engine::reset(std::shared_ptr<Item> item)
 	}
 	item->reset();
 }
+
+void Engine::beginUpdates() {
+	updatesCounter_++;
+}
+
+void Engine::commitUpdates() {
+	updatesCounter_--;
+	if (updatesCounter_ <= 0) {
+		updatesCounter_ = 0;
+		reset(gang_);
+	}
+}
+
 
 //std::lock_guard<std::recursive_mutex> Engine::lock() {
 //	return std::lock_guard<std::recursive_mutex>(mutex_);

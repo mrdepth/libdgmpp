@@ -41,7 +41,7 @@ namespace eufe {
 			float angularVelocity() const;
 		};
 		
-		CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr<Ship> target);
+		CombatSimulator(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target);
 		virtual ~CombatSimulator();
 		
 		void setState(const State& state);

@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-EffectArmorRepairInterpreter::EffectArmorRepairInterpreter(std::shared_ptr<Engine> engine, bool isProjected, bool isAssistance, bool isOffensive) : engine_(engine), isProjected_(isProjected), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectArmorRepairInterpreter::EffectArmorRepairInterpreter(std::shared_ptr<Engine> const& engine, bool isProjected, bool isAssistance, bool isOffensive) : engine_(engine), isProjected_(isProjected), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 

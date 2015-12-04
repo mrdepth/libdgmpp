@@ -7,7 +7,7 @@ namespace eufe {
 	class Character : public Item
 	{
 	public:
-		Character(std::shared_ptr<Engine> engine, std::shared_ptr<Gang> owner = nullptr, const char* characterName = "");
+		Character(std::shared_ptr<Engine> const& engine, std::shared_ptr<Gang> const& owner = nullptr, const char* characterName = "");
 		virtual ~Character(void);
 		std::shared_ptr<Character> shared_from_this() {
 			return std::static_pointer_cast<Character>(Item::shared_from_this());
@@ -28,8 +28,8 @@ namespace eufe {
 		std::shared_ptr<Booster> getBooster(int slot);
 		std::shared_ptr<Implant> addImplant(TypeID typeID, bool forced = false);
 		std::shared_ptr<Booster> addBooster(TypeID typeID, bool forced = false);
-		void removeImplant(std::shared_ptr<Implant> implant);
-		void removeBooster(std::shared_ptr<Booster> booster);
+		void removeImplant(std::shared_ptr<Implant> const& implant);
+		void removeBooster(std::shared_ptr<Booster> const& booster);
 		const ImplantsList& getImplants();
 		const BoostersList& getBoosters();
 		
@@ -46,7 +46,7 @@ namespace eufe {
 	protected:
 		friend class Gang;
 
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
 		virtual void lazyLoad();
 
 	private:
@@ -57,6 +57,6 @@ namespace eufe {
 		std::string characterName_;
 
 		std::shared_ptr<Skill> addSkill(TypeID typeID, int skillLevel, bool isLearned);
-		void removeSkill(std::shared_ptr<Skill> skill);
+		void removeSkill(std::shared_ptr<Skill> const& skill);
 	};
 }

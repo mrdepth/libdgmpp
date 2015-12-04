@@ -13,7 +13,7 @@ namespace eufe {
 		class ItemWrapper
 		{
 		public:
-			ItemWrapper(std::shared_ptr<Item> item) : item_(item) {}
+			ItemWrapper(std::shared_ptr<Item> const& item) : item_(item) {}
 			std::shared_ptr<Item> getItem() const {return item_.lock();}
 			TypeID getGroupID() const {return groupID_;}
 			TypeID getRequiredSkillID() const {return requiredSkillID_;}
@@ -28,7 +28,7 @@ namespace eufe {
 		class AttributeWrapper
 		{
 		public:
-			AttributeWrapper(std::shared_ptr<ItemWrapper>& item, TypeID attributeID) : item_(item), attributeID_(attributeID) {}
+			AttributeWrapper(std::shared_ptr<ItemWrapper> const& item, TypeID attributeID) : item_(item), attributeID_(attributeID) {}
 			float getValue();
 			void setValue(float value);
 			void inc(float value);
@@ -43,7 +43,7 @@ namespace eufe {
 		class AssociationWrapper
 		{
 		public:
-			AssociationWrapper(std::shared_ptr<AttributeWrapper>& attribute, const std::string& name);
+			AssociationWrapper(std::shared_ptr<AttributeWrapper> const& attribute, const std::string& name);
 			std::shared_ptr<AttributeWrapper> getAttribute() {return attribute_;}
 			Modifier::Association getAssociation() {return association_;}
 			
@@ -91,9 +91,9 @@ namespace eufe {
 			Argument(float value);
 			Argument(const char* value);
 			Argument(const std::string& value);
-			Argument(std::shared_ptr<ItemWrapper> value);
-			Argument(std::shared_ptr<AttributeWrapper> value);
-			Argument(std::shared_ptr<AssociationWrapper> value);
+			Argument(std::shared_ptr<ItemWrapper> const& value);
+			Argument(std::shared_ptr<AttributeWrapper> const& value);
+			Argument(std::shared_ptr<AssociationWrapper> const& value);
 			
 			Type getType();
 			
@@ -127,7 +127,7 @@ namespace eufe {
         typedef std::invalid_argument BadOperandException;
         typedef std::invalid_argument UnknownTypeNameException;
 
-		EffectByteCodeInterpreter(std::shared_ptr<Engine> engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive);
+		EffectByteCodeInterpreter(std::shared_ptr<Engine> const& engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive);
 		EffectByteCodeInterpreter(const EffectByteCodeInterpreter& from);
 		virtual ~EffectByteCodeInterpreter();
 		

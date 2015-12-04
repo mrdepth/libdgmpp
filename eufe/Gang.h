@@ -7,7 +7,7 @@ namespace eufe {
 	class Gang : public Item
 	{
 	public:
-		Gang(std::shared_ptr<Engine> engine);
+		Gang(std::shared_ptr<Engine> const& engine);
 		virtual ~Gang(void);
 		std::shared_ptr<Gang> shared_from_this() {
 			return std::static_pointer_cast<Gang>(Item::shared_from_this());
@@ -15,7 +15,7 @@ namespace eufe {
 
 		const CharactersList& getPilots();
 		std::shared_ptr<Character> addPilot();
-		void removePilot(std::shared_ptr<Character> character);
+		void removePilot(std::shared_ptr<Character> const& character);
 		
 		virtual Environment getEnvironment();
 		
@@ -24,9 +24,9 @@ namespace eufe {
 		std::shared_ptr<Character> getFleetBooster();
 		std::shared_ptr<Character> getWingBooster();
 		std::shared_ptr<Character> getSquadBooster();
-		void setFleetBooster(std::shared_ptr<Character> fleetBooster);
-		void setWingBooster(std::shared_ptr<Character> wingBooster);
-		void setSquadBooster(std::shared_ptr<Character> squadBooster);
+		void setFleetBooster(std::shared_ptr<Character> const& fleetBooster);
+		void setWingBooster(std::shared_ptr<Character> const& wingBooster);
+		void setSquadBooster(std::shared_ptr<Character> const& squadBooster);
 		void removeFleetBooster();
 		void removeWingBooster();
 		void removeSquadBooster();
@@ -35,8 +35,8 @@ namespace eufe {
 		
 	protected:
 
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
-		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(std::shared_ptr<Item> item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
 		
 	private:
 		CharactersList pilots_;

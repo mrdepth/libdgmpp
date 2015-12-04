@@ -15,7 +15,7 @@ using namespace eufe;
 
 static const TypeID CHARACTER_TYPE_ID = 1381;
 
-Character::Character(std::shared_ptr<Engine> engine, std::shared_ptr<Gang> owner, const char* characterName) : Item(engine, CHARACTER_TYPE_ID, owner), characterName_(characterName), ship_(nullptr)
+Character::Character(std::shared_ptr<Engine> const& engine, std::shared_ptr<Gang> const& owner, const char* characterName) : Item(engine, CHARACTER_TYPE_ID, owner), characterName_(characterName), ship_(nullptr)
 {
 }
 
@@ -82,11 +82,12 @@ void Character::reset()
 	if (ship_ != nullptr)
 		ship_->reset();
 	
-	for (auto i: skills_)
+	//for (const std::pair<int, const std::shared_ptr<Skill>&>& i: skills_)
+	for (const auto& i: skills_)
 		i.second->reset();
-	for (auto i: implants_)
+	for (const auto& i: implants_)
 		i->reset();
-	for (auto i: boosters_)
+	for (const auto& i: boosters_)
 		i->reset();
 }
 
@@ -111,7 +112,7 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 	}
 }
 
-void Character::removeSkill(std::shared_ptr<Skill> skill)
+void Character::removeSkill(std::shared_ptr<Skill> const& skill)
 {
 //	if (getOwner() && ship_ != NULL)
 	if (ship_)
@@ -207,7 +208,7 @@ std::shared_ptr<Booster> Character::addBooster(TypeID typeID, bool forced)
 	}
 }
 
-void Character::removeImplant(std::shared_ptr<Implant> implant)
+void Character::removeImplant(std::shared_ptr<Implant> const& implant)
 {
 	if (implant != NULL)
 	{
@@ -221,7 +222,7 @@ void Character::removeImplant(std::shared_ptr<Implant> implant)
 	}
 }
 
-void Character::removeBooster(std::shared_ptr<Booster> booster)
+void Character::removeBooster(std::shared_ptr<Booster> const& booster)
 {
 	if (booster != NULL)
 	{
@@ -255,11 +256,11 @@ void Character::addEffects(Effect::Category category)
 			if (ship_)
 				ship_->addEffects(Effect::CATEGORY_GENERIC);
 
-			for (auto i: skills_)
+			for (const auto& i: skills_)
 				i.second->addEffects(Effect::CATEGORY_GENERIC);
-			for (auto i: implants_)
+			for (const auto& i: implants_)
 				i->addEffects(Effect::CATEGORY_GENERIC);
-			for (auto i: boosters_)
+			for (const auto& i: boosters_)
 				i->addEffects(Effect::CATEGORY_GENERIC);
 		}
 	}
@@ -275,11 +276,11 @@ void Character::removeEffects(Effect::Category category)
 			if (ship_)
 				ship_->removeEffects(Effect::CATEGORY_GENERIC);
 
-			for (auto i: skills_)
+			for (const auto& i: skills_)
 				i.second->removeEffects(Effect::CATEGORY_GENERIC);
-			for (auto i: implants_)
+			for (const auto& i: implants_)
 				i->removeEffects(Effect::CATEGORY_GENERIC);
-			for (auto i: boosters_)
+			for (const auto& i: boosters_)
 				i->removeEffects(Effect::CATEGORY_GENERIC);
 		}
 	}
@@ -303,7 +304,7 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 
 	std::map<TypeID, int>::const_iterator j, endj = levels.end();
 	
-	for (auto i: skills_) {
+	for (const auto& i: skills_) {
 		j = levels.find(i.first);
 		if (j != endj)
 			i.second->setSkillLevel(j->second);
@@ -318,12 +319,12 @@ void Character::setAllSkillsLevel(int level)
 	auto engine = getEngine();
 	if (!engine)
 		return;
-	for (auto i: skills_)
+	for (const auto& i: skills_)
 		i.second->setSkillLevel(level);
 	engine->reset(shared_from_this());
 }
 
-std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	outIterator = Item::getLocationModifiers(attribute, outIterator);
 	auto owner = getOwner();
@@ -354,7 +355,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.attributes_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: character.attributes_)
+		for (const auto& i: character.attributes_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -369,7 +370,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.effects_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: character.effects_)
+		for (const auto& i: character.effects_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -386,7 +387,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: character.itemModifiers_)
+		for (const auto& i: character.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -401,7 +402,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: character.locationModifiers_)
+		for (const auto& i: character.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -416,7 +417,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: character.locationGroupModifiers_)
+		for (const auto& i: character.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -431,7 +432,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: character.locationRequiredSkillModifiers_)
+		for (const auto& i: character.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;

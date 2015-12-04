@@ -6,7 +6,7 @@ namespace eufe {
 	class EffectSlotModifierInterpreter : public EffectInterpreter
 	{
 	public:
-		EffectSlotModifierInterpreter(std::shared_ptr<Engine> engine, bool isAssistance, bool isOffensive);
+		EffectSlotModifierInterpreter(std::shared_ptr<Engine> const& engine, bool isAssistance, bool isOffensive);
 		virtual ~EffectSlotModifierInterpreter();
 		virtual bool addEffect(const Environment& environment);
 		virtual bool removeEffect(const Environment& environment);

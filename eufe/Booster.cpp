@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-Booster::Booster(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), slot_(-1)
+Booster::Booster(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner) : Item(engine, typeID, owner), slot_(-1)
 {
 }
 

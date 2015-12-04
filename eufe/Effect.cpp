@@ -72,7 +72,7 @@ const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10002;
 
 //static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
 
-std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> engine, int effectID)
+std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, int effectID)
 {
 	std::map<TypeID, std::shared_ptr<eufe::Effect> >& reusableEffects = engine->getReusableEffects();
 	std::map<TypeID, std::shared_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
@@ -130,7 +130,7 @@ std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> engine, 
 	}
 }*/
 
-Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID) : engine_(engine), effectID_(effectID), isAssistance_(false), isOffensive_(false)
+Effect::Effect(std::shared_ptr<Engine> const& engine, TypeID effectID) : engine_(engine), effectID_(effectID), isAssistance_(false), isOffensive_(false)
 {
 	std::stringstream sql;
 	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;

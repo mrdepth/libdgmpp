@@ -238,7 +238,7 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	return value;
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> owner, const char* attributeName, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), attributeName_(attributeName), isFakeAttribute_(isFakeAttribute)
+Attribute::Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner, const char* attributeName, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), attributeName_(attributeName), isFakeAttribute_(isFakeAttribute)
 {
 	forcedValue_ = std::numeric_limits<float>::infinity();
 	
@@ -256,7 +256,7 @@ Attribute::Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, TypeID 
 	reset();
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> engine, TypeID attributeID, std::shared_ptr<Item> owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
+Attribute::Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
 {
 	forcedValue_ = std::numeric_limits<float>::infinity();
 
@@ -401,7 +401,7 @@ void Attribute::calculate()
 		if (modifiers.size() > 0)
 			isFakeAttribute_ = false;
 		
-		for (auto i: modifiers)
+		for (const auto& i: modifiers)
 		{
 			std::shared_ptr<Item> character = i->getCharacter();
 			bool projected = character && currentCharacter && character != currentCharacter;
@@ -523,7 +523,7 @@ void Attribute::calculate()
 		if (postAssignments.size() > 0)
 			value_ = postAssignments[0];
 
-		for (auto j: modAdds)
+		for (const auto& j: modAdds)
 			value_ += j;
 		
 		value_ = multiply(preMultipliers.begin(), preMultipliers.end(), value_, false);

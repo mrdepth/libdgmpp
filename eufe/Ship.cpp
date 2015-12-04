@@ -43,21 +43,21 @@ public:
 };
 
 
-Ship::Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), capacitorSimulator_(nullptr), heatSimulator_(nullptr), disallowAssistance_(UNKNOWN), disallowOffensiveModifiers_(UNKNOWN)
+Ship::Ship(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner) : Item(engine, typeID, owner), capacitorSimulator_(nullptr), heatSimulator_(nullptr), disallowAssistance_(UNKNOWN), disallowOffensiveModifiers_(UNKNOWN)
 {
 }
 
 Ship::~Ship(void)
 {
-	for (auto module: modules_)
+	for (const auto& module: modules_)
 		module->clearTarget();
-	for (auto drone: drones_)
+	for (const auto& drone: drones_)
 		drone->clearTarget();
 	
 	if (projectedModules_.size() > 0)
 	{
 		std::list<std::weak_ptr<Module>> projectedModulesCopy = projectedModules_;
-		for (auto i: projectedModulesCopy) {
+		for (const auto& i: projectedModulesCopy) {
 			auto module = i.lock();
 			if (module)
 				module->clearTarget();
@@ -66,7 +66,7 @@ Ship::~Ship(void)
 	if (projectedDrones_.size() > 0)
 	{
 		std::list<std::weak_ptr<Drone>> projectedDronesCopy = projectedDrones_;
-		for (auto i: projectedDronesCopy) {
+		for (const auto& i: projectedDronesCopy) {
 			auto drone = i.lock();
 			if (drone)
 				drone->clearTarget();
@@ -108,7 +108,7 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 	}
 }
 
-std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, TypeID typeID) {
+std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldModule, TypeID typeID) {
 	try
 	{
 		//Module* newModule =  new Module(engine_, typeID, this);
@@ -156,7 +156,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> oldModule, T
 ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 {
 	ModulesList modules;
-	for (auto i: typeIDs)
+	for (const auto& i: typeIDs)
 	{
 		std::shared_ptr<Module> module;
 		try
@@ -233,7 +233,7 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 	return modules;*/
 }
 
-void Ship::removeModule(std::shared_ptr<Module> module) {
+void Ship::removeModule(std::shared_ptr<Module> const& module) {
 	module->setState(Module::STATE_OFFLINE);
 	module->clearTarget();
 	module->removeEffects(Effect::CATEGORY_GENERIC);
@@ -267,7 +267,7 @@ std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
 	}
 }
 
-void Ship::removeDrone(std::shared_ptr<Drone> drone)
+void Ship::removeDrone(std::shared_ptr<Drone> const& drone)
 {
 	drone->removeEffects(Effect::CATEGORY_TARGET);
 	drone->removeEffects(Effect::CATEGORY_GENERIC);
@@ -286,7 +286,7 @@ const ModulesList& Ship::getModules()
 
 void Ship::getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator)
 {
-	for (auto i: modules_)
+	for (const auto& i: modules_)
 		if (i->getSlot() == slot)
 			*outIterator++ = i;
 }
@@ -312,7 +312,7 @@ const std::list<std::weak_ptr<Drone>>& Ship::getProjectedDrones()
 	return projectedDrones_;
 }
 
-bool Ship::canFit(std::shared_ptr<Module> module)
+bool Ship::canFit(std::shared_ptr<Module> const& module)
 {
 	if (getFreeSlots(module->getSlot()) == 0)
 		return false;
@@ -385,7 +385,7 @@ bool Ship::canFit(std::shared_ptr<Module> module)
 		case Module::SLOT_SUBSYSTEM:
 		{
 			int subsystemSlot = static_cast<int>(module->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue());
-			for (auto i: modules_)
+			for (const auto& i: modules_)
 				if (i->getSlot() == Module::SLOT_SUBSYSTEM && static_cast<int>(i->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue()) == subsystemSlot)
 					return false;
 			break;
@@ -404,7 +404,7 @@ bool Ship::canFit(std::shared_ptr<Module> module)
 	{
 		int maxGroupFitted = static_cast<int>(module->getAttribute(MAX_GROUP_FITTED_ATTRIBUTE_ID)->getValue()) - 1;
 		TypeID groupID = module->getGroupID();
-		for (auto i: modules_)
+		for (const auto& i: modules_)
 			if (i->getGroupID() == groupID)
 			{
 				maxGroupFitted--;
@@ -425,7 +425,7 @@ bool Ship::isDisallowedAssistance()
 		else
 		{
 			disallowAssistance_ = ALLOWED;
-			for (auto i: modules_)
+			for (const auto& i: modules_)
 			{
 				if (i->getState() >= Module::STATE_ACTIVE &&
 					i->hasAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID) &&
@@ -451,7 +451,7 @@ bool Ship::isDisallowedOffensiveModifiers()
 		else
 		{
 			disallowOffensiveModifiers_ = ALLOWED;
-			for (auto i: modules_)
+			for (const auto& i: modules_)
 			{
 				if (i->getState() >= Module::STATE_ACTIVE &&
 					i->hasAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID) &&
@@ -492,9 +492,9 @@ Environment Ship::getEnvironment()
 void Ship::reset()
 {
 	Item::reset();
-	for (auto i: modules_)
+	for (const auto& i: modules_)
 		i->reset();
-	for (auto i: drones_)
+	for (const auto& i: drones_)
 		i->reset();
 	
 	getCapacitorSimulator()->reset();
@@ -524,9 +524,9 @@ void Ship::addEffects(Effect::Category category)
 
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (auto i: modules_)
+		for (const auto& i: modules_)
 			i->addEffects(Effect::CATEGORY_GENERIC);
-		for (auto i: drones_)
+		for (const auto& i: drones_)
 			i->addEffects(Effect::CATEGORY_GENERIC);
 
 		std::shared_ptr<Area> area = engine->getArea();
@@ -544,9 +544,9 @@ void Ship::removeEffects(Effect::Category category)
 
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (auto i: modules_)
+		for (const auto& i: modules_)
 			i->removeEffects(Effect::CATEGORY_GENERIC);
-		for (auto i: drones_)
+		for (const auto& i: drones_)
 			i->removeEffects(Effect::CATEGORY_GENERIC);
 
 		std::shared_ptr<Area> area = engine->getArea();
@@ -569,7 +569,7 @@ void Ship::addLocationRequiredSkillModifier(std::shared_ptr<Modifier> modifier)
 		updateActiveStatus();
 }*/
 
-void Ship::addProjectedModule(std::shared_ptr<Module> module)
+void Ship::addProjectedModule(std::shared_ptr<Module> const& module)
 {
 	if (std::none_of(projectedModules_.begin(), projectedModules_.end(), [=](std::weak_ptr<Module> i) {
 		return i.lock() == module;
@@ -582,7 +582,7 @@ void Ship::addProjectedModule(std::shared_ptr<Module> module)
 	}
 }
 
-void Ship::removeProjectedModule(std::shared_ptr<Module> module)
+void Ship::removeProjectedModule(std::shared_ptr<Module> const& module)
 {
 	std::remove_if(projectedModules_.begin(), projectedModules_.end(), [=](std::weak_ptr<Module> i ) {
 		return i.lock() == module;
@@ -592,7 +592,7 @@ void Ship::removeProjectedModule(std::shared_ptr<Module> module)
 		engine->reset(shared_from_this());
 }
 
-void Ship::addProjectedDrone(std::shared_ptr<Drone> drone)
+void Ship::addProjectedDrone(std::shared_ptr<Drone> const& drone)
 {
 	if (std::none_of(projectedDrones_.begin(), projectedDrones_.end(), [=](std::weak_ptr<Drone> i) {
 		return i.lock() == drone;
@@ -605,7 +605,7 @@ void Ship::addProjectedDrone(std::shared_ptr<Drone> drone)
 	}
 }
 
-void Ship::removeProjectedDrone(std::shared_ptr<Drone> drone)
+void Ship::removeProjectedDrone(std::shared_ptr<Drone> const& drone)
 {
 	std::remove_if(projectedDrones_.begin(), projectedDrones_.end(), [=](std::weak_ptr<Drone> i ) {
 		return i.lock() == drone;
@@ -674,7 +674,7 @@ int Ship::getFreeSlots(Module::Slot slot)
 int Ship::getUsedSlots(Module::Slot slot)
 {
 	int n = 0;
-	for (auto i: modules_)
+	for (const auto& i: modules_)
 		if (i->getSlot() == slot)
 			n++;
 	return n;
@@ -701,7 +701,7 @@ int Ship::getFreeHardpoints(Module::Hardpoint hardpoint)
 int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 {
 	int n = 0;
-	for (auto i: modules_)
+	for (const auto& i: modules_)
 		if (i->getHardpoint() == hardpoint)
 			n++;
 	return n;
@@ -710,7 +710,7 @@ int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 float Ship::getCalibrationUsed()
 {
 	float calibration = 0;
-	for (auto i: modules_)
+	for (const auto& i: modules_)
 		if (i->getSlot() == Module::SLOT_RIG)
 			calibration += i->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
 	return calibration;
@@ -744,7 +744,7 @@ float Ship::getTotalCpu()
 float Ship::getDroneBandwidthUsed()
 {
 	float bandwidth = 0;
-	for (auto i: drones_)
+	for (const auto& i: drones_)
 		if (i->isActive())
 			bandwidth += i->getAttribute(DRONE_BANDWIDTH_USED_ATTRIBUTE_ID)->getValue();
 	return bandwidth;
@@ -758,7 +758,7 @@ float Ship::getTotalDroneBandwidth()
 float Ship::getDroneBayUsed()
 {
 	float volume = 0;
-	for (auto i: drones_)
+	for (const auto& i: drones_)
 		volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
@@ -866,7 +866,7 @@ const Tank& Ship::getSustainableTank()
 			{
 				ModifiersList modifiers;
 				getModifiers(getAttribute(attributes[i]), std::inserter(modifiers, modifiers.begin()));
-				for (auto j: modifiers)
+				for (const auto& j: modifiers)
 				{
 					Modifier::Association association = j->getAssociation();
 					if (association == Modifier::ASSOCIATION_ADD_RATE || Modifier::ASSOCIATION_SUB_RATE)
@@ -896,7 +896,7 @@ const Tank& Ship::getSustainableTank()
 			
 			float totalPeakRecharge = getCapRecharge();
 
-			for (auto repairer: repairers)
+			for (const auto& repairer: repairers)
 			{
 				if (capUsed > totalPeakRecharge)
 					break;
@@ -960,7 +960,7 @@ float Ship::getShieldRecharge()
 DamageVector Ship::getWeaponDps(const HostileTarget& target)
 {
 	DamageVector weaponDps = 0;
-	for (auto i: modules_)
+	for (const auto& i: modules_)
 		weaponDps += i->getDps(target);
 	return weaponDps;
 }
@@ -968,7 +968,7 @@ DamageVector Ship::getWeaponDps(const HostileTarget& target)
 DamageVector Ship::getWeaponVolley()
 {
 	DamageVector weaponVolley = 0;
-	for (auto i: modules_)
+	for (const auto& i: modules_)
 		weaponVolley += i->getVolley();
 	return weaponVolley;
 }
@@ -976,7 +976,7 @@ DamageVector Ship::getWeaponVolley()
 DamageVector Ship::getDroneDps(const HostileTarget& target)
 {
 	DamageVector droneDps = 0;
-	for (auto i: drones_)
+	for (const auto& i: drones_)
 		droneDps += i->getDps(target);
 	return droneDps;
 }
@@ -984,7 +984,7 @@ DamageVector Ship::getDroneDps(const HostileTarget& target)
 DamageVector Ship::getDroneVolley()
 {
 	DamageVector droneVolley = 0;
-	for (auto i: drones_)
+	for (const auto& i: drones_)
 		droneVolley += i->getVolley();
 	return droneVolley;
 }
@@ -1148,7 +1148,7 @@ int Ship::getMaxActiveDrones()
 int Ship::getActiveDrones()
 {
 	int n = 0;
-	for (auto i: drones_)
+	for (const auto& i: drones_)
 		if (i->isActive())
 			n++;
 	return n;
@@ -1159,7 +1159,7 @@ int Ship::getActiveDrones()
 
 void Ship::updateModulesState()
 {
-	for (auto i: modules_)
+	for (const auto& i: modules_)
 	{
 		Module::State state = i->getState();
 		Module::State preferredState = i->getPreferredState();
@@ -1173,7 +1173,7 @@ void Ship::updateModulesState()
 void Ship::updateEnabledStatus() {
 	std::vector<int> slots = {getNumberOfSlots(Module::SLOT_HI), getNumberOfSlots(Module::SLOT_MED), getNumberOfSlots(Module::SLOT_LOW)};
 	
-	for (auto module: modules_) {
+	for (const auto& module: modules_) {
 		auto slot = module->getSlot();
 		if (slot == Module::SLOT_HI) {
 			slots[0]--;
@@ -1203,7 +1203,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.attributes_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: ship.attributes_)
+		for (const auto& i: ship.attributes_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -1218,7 +1218,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.effects_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: ship.effects_)
+		for (const auto& i: ship.effects_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -1233,7 +1233,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.modules_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: ship.modules_)
+		for (const auto& i: ship.modules_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -1248,7 +1248,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: ship.itemModifiers_)
+		for (const auto& i: ship.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -1263,7 +1263,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: ship.locationModifiers_)
+		for (const auto& i: ship.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -1278,7 +1278,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: ship.locationGroupModifiers_)
+		for (const auto& i: ship.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -1293,7 +1293,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: ship.locationRequiredSkillModifiers_)
+		for (const auto& i: ship.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;

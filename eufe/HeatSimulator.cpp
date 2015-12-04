@@ -7,16 +7,16 @@
 
 using namespace eufe;
 
-class StateCompareFunction : public std::binary_function<std::shared_ptr<const HeatSimulator::State>, std::shared_ptr<const HeatSimulator::State>, bool>
+class StateCompareFunction : public std::binary_function<std::shared_ptr<const HeatSimulator::State> const&, std::shared_ptr<const HeatSimulator::State> const&, bool>
 {
 public:
-	bool operator() (std::shared_ptr<const HeatSimulator::State> a, std::shared_ptr<const HeatSimulator::State> b)
+	bool operator() (std::shared_ptr<const HeatSimulator::State> const& a, std::shared_ptr<const HeatSimulator::State> const& b)
 	{
 		return a->tNow > b->tNow;
 	}
 };
 
-HeatSimulator::HeatSimulator(std::shared_ptr<Ship> ship) : ship_(ship)
+HeatSimulator::HeatSimulator(std::shared_ptr<Ship> const& ship) : ship_(ship)
 {
 }
 
@@ -45,7 +45,7 @@ void HeatSimulator::simulate()
 		medSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
 		lowSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
 		
-		for (auto i: ship->getModules())
+		for (const auto& i: ship->getModules())
 		{
 			Module::Slot slot = i->getSlot();
 			if (slot == Module::SLOT_HI)

@@ -36,7 +36,7 @@ namespace eufe {
 			HARDPOINT_LAUNCHER,
 			HARDPOINT_TURRET
 		};
-		Module(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Item> owner = nullptr);
+		Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = nullptr);
 		virtual ~Module(void);
 		std::shared_ptr<Module> shared_from_this() {
 			return std::static_pointer_cast<Module>(Item::shared_from_this());
@@ -72,9 +72,9 @@ namespace eufe {
 		std::shared_ptr<Charge> getCharge();
 		const std::vector<TypeID>& getChargeGroups();
 		int getChargeSize();
-		bool canFit(std::shared_ptr<Charge> charge);
+		bool canFit(std::shared_ptr<Charge> const& charge);
 		bool requireTarget();
-		void setTarget(std::shared_ptr<Ship> target = nullptr);
+		void setTarget(std::shared_ptr<Ship> const& target = nullptr);
 		void clearTarget();
 		std::shared_ptr<Ship> getTarget();
 		float getReloadTime();

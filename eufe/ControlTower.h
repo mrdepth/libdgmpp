@@ -9,17 +9,17 @@ namespace eufe {
 	{
 	public:
 		
-		ControlTower(std::shared_ptr<Engine> engine, TypeID typeID);
+		ControlTower(std::shared_ptr<Engine> const& engine, TypeID typeID);
 		virtual ~ControlTower(void);
 		std::shared_ptr<ControlTower> shared_from_this() {
 			return std::static_pointer_cast<ControlTower>(Item::shared_from_this());
 		}
 
 		std::shared_ptr<Structure> addStructure(TypeID typeID);
-		void removeStructure(std::shared_ptr<Structure> structure);
+		void removeStructure(std::shared_ptr<Structure> const& structure);
 		
 		const StructuresList& getStructures();
-		bool canFit(std::shared_ptr<Structure> structure);
+		bool canFit(std::shared_ptr<Structure> const& structure);
 
 		virtual Environment getEnvironment();
 		

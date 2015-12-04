@@ -10,7 +10,7 @@ using namespace eufe;
 
 static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
 
-Structure::Structure(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<ControlTower> owner) : Module(engine, typeID, owner)
+Structure::Structure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<ControlTower> const& owner) : Module(engine, typeID, owner)
 {
 }
 

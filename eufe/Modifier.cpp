@@ -5,7 +5,7 @@
 
 using namespace eufe;
 
-Modifier::Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> modifier, bool isAssistance, bool isOffensive, std::shared_ptr<Character> character) : attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
+Modifier::Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, std::shared_ptr<Character> const& character) : attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
 {
 }
 
@@ -13,7 +13,7 @@ Modifier::~Modifier()
 {
 }
 
-bool Modifier::isMatch(std::shared_ptr<Item> item) const
+bool Modifier::isMatch(std::shared_ptr<Item> const& item) const
 {
 	return true;
 }

@@ -6,7 +6,7 @@ namespace eufe {
 	class EffectHardPointModifierEffectInterpreter : public EffectInterpreter
 	{
 	public:
-		EffectHardPointModifierEffectInterpreter(std::shared_ptr<Engine> engine, bool isAssistance, bool isOffensive);
+		EffectHardPointModifierEffectInterpreter(std::shared_ptr<Engine> const& engine, bool isAssistance, bool isOffensive);
 		virtual ~EffectHardPointModifierEffectInterpreter();
 		virtual bool addEffect(const Environment& environment);
 		virtual bool removeEffect(const Environment& environment);

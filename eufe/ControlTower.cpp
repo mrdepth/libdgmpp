@@ -14,7 +14,7 @@ using namespace eufe;
 
 static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
 
-ControlTower::ControlTower(std::shared_ptr<Engine> engine, TypeID typeID) : Item(engine, typeID, nullptr)
+ControlTower::ControlTower(std::shared_ptr<Engine> const& engine, TypeID typeID) : Item(engine, typeID, nullptr)
 {
 }
 
@@ -47,7 +47,7 @@ std::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
 	}
 }
 
-void ControlTower::removeStructure(std::shared_ptr<Structure> structure)
+void ControlTower::removeStructure(std::shared_ptr<Structure> const& structure)
 {
 	structure->setState(Structure::STATE_OFFLINE);
 	structure->removeEffects(Effect::CATEGORY_GENERIC);
@@ -63,7 +63,7 @@ const StructuresList& ControlTower::getStructures()
 	return structures_;
 }
 
-bool ControlTower::canFit(std::shared_ptr<Structure> structure)
+bool ControlTower::canFit(std::shared_ptr<Structure> const& structure)
 {
 	if (structure->getSlot() != Structure::SLOT_STRUCTURE)
 		return false;
@@ -92,7 +92,7 @@ void ControlTower::reset()
 {
 	Item::reset();
 	
-	for (auto i: structures_)
+	for (const auto& i: structures_)
 		i->reset();
 	
 	resistances_.armor.em = resistances_.armor.explosive = resistances_.armor.thermal = resistances_.armor.kinetic = -1;
@@ -116,7 +116,7 @@ void ControlTower::addEffects(Effect::Category category)
 	Item::addEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (auto i: structures_)
+		for (const auto& i: structures_)
 			i->addEffects(Effect::CATEGORY_GENERIC);
 //		std::shared_ptr<Area> area = engine_->getArea();
 //		if (area != nullptr)
@@ -129,7 +129,7 @@ void ControlTower::removeEffects(Effect::Category category)
 	Item::removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (auto i: structures_)
+		for (const auto& i: structures_)
 			i->removeEffects(Effect::CATEGORY_GENERIC);
 //		std::shared_ptr<Area> area = engine_->getArea();
 //		if (area != nullptr)
@@ -157,7 +157,7 @@ float ControlTower::getPowerGridUsed()
 	if (powerGridUsed_ < 0)
 	{
 		powerGridUsed_ = 0;
-		for (auto i: structures_)
+		for (const auto& i: structures_)
 		{
 			if (i->getState() >= Module::STATE_ONLINE)
 				powerGridUsed_ += i->getAttribute(POWER_ATTRIBUTE_ID)->getValue();
@@ -176,7 +176,7 @@ float ControlTower::getCpuUsed()
 	if (cpuUsed_ < 0)
 	{
 		cpuUsed_ = 0;
-		for (auto i: structures_)
+		for (const auto& i: structures_)
 		{
 			if (i->getState() >= Module::STATE_ONLINE)
 				cpuUsed_ += i->getAttribute(CPU_ATTRIBUTE_ID)->getValue();
@@ -281,7 +281,7 @@ DamageVector ControlTower::getWeaponVolley()
 void ControlTower::calculateDamageStats()
 {
 	weaponDps_ = weaponVolley_ = 0;
-	for (auto i: structures_)
+	for (const auto& i: structures_)
 	{
 		weaponDps_ += i->getDps();
 		weaponVolley_ += i->getVolley();
@@ -295,7 +295,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.attributes_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: controlTower.attributes_)
+		for (const auto& i: controlTower.attributes_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -310,7 +310,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.effects_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: controlTower.effects_)
+		for (const auto& i: controlTower.effects_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -325,7 +325,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.structures_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: controlTower.structures_)
+		for (const auto& i: controlTower.structures_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -340,7 +340,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: controlTower.itemModifiers_)
+		for (const auto& i: controlTower.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -355,7 +355,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: controlTower.locationModifiers_)
+		for (const auto& i: controlTower.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -370,7 +370,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: controlTower.locationGroupModifiers_)
+		for (const auto& i: controlTower.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -385,7 +385,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: controlTower.locationRequiredSkillModifiers_)
+		for (const auto& i: controlTower.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;

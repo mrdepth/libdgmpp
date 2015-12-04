@@ -15,14 +15,14 @@ namespace eufe {
 	public:
 		class ScopedLock : public std::lock_guard<std::recursive_mutex> {
 		public:
-			ScopedLock(std::shared_ptr<Engine> engine): std::lock_guard<std::recursive_mutex>(engine->mutex_) {
+			ScopedLock(std::shared_ptr<Engine> const& engine): std::lock_guard<std::recursive_mutex>(engine->mutex_) {
 			};
 		};
 		
 		//struct SqliteException : virtual boost::exception {};
         typedef std::runtime_error SqliteException;
 
-		Engine(std::shared_ptr<SqlConnector> sqlConnector);
+		Engine(std::shared_ptr<SqlConnector> const& sqlConnector);
 		virtual ~Engine(void);
 		std::shared_ptr<SqlConnector> getSqlConnector();
 		std::shared_ptr<Area> setArea(TypeID typeID);
@@ -33,6 +33,8 @@ namespace eufe {
 		std::shared_ptr<ControlTower> getControlTower();
 		
 		void reset(std::shared_ptr<Item> item);
+		void beginUpdates();
+		void commitUpdates();
 		
 		friend std::ostream& operator<<(std::ostream& os, Engine& engine);
 		
@@ -53,6 +55,7 @@ namespace eufe {
 		
 		std::map<TypeID, std::shared_ptr<eufe::Effect> > reusableEffects_;
 		uint32_t generation_;
+		int32_t updatesCounter_;
 
 	};
 

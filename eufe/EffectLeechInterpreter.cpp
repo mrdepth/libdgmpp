@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-EffectLeechInterpreter::EffectLeechInterpreter(std::shared_ptr<Engine> engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectLeechInterpreter::EffectLeechInterpreter(std::shared_ptr<Engine> const& engine, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 }
 

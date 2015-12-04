@@ -1,5 +1,6 @@
 #include "CombatSimulator.h"
 #include "Ship.h"
+#include "Engine.h"
 
 using namespace eufe;
 
@@ -61,9 +62,11 @@ float CombatSimulator::State::angularVelocity() const {
 	return r > 0 ? transversalVelocity() / r : 0;
 }
 
-CombatSimulator::CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr<Ship> target): attacker_(attacker), target_(target) {
+CombatSimulator::CombatSimulator(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target): attacker_(attacker), target_(target) {
+	auto engine = attacker->getEngine();
+	engine->beginUpdates();
 	auto analyze = [&](std::shared_ptr<Ship> attacker, std::shared_ptr<Ship> target, ModulesList& modulesList) {
-		for (auto module: attacker->getModules()) {
+		for (const auto& module: attacker->getModules()) {
 			states_[module] = module->getPreferredState();
 			targets_[module] = module->getTarget();
 			
@@ -83,29 +86,36 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> attacker, std::shared_ptr
 	
 	analyze(attacker, target, attackerOffensiveModules_);
 	analyze(target, attacker, targetOffensiveModules_);
+	engine->commitUpdates();
 }
 
 CombatSimulator::~CombatSimulator() {
-	for (auto module: attacker_->getModules()) {
+	auto engine = attacker_->getEngine();
+	engine->beginUpdates();
+
+	for (const auto& module: attacker_->getModules()) {
 		module->setTarget(targets_[module]);
 		module->setPreferredState(states_[module]);
 	}
-	for (auto module: target_->getModules()) {
+	for (const auto& module: target_->getModules()) {
 		module->setTarget(targets_[module]);
 		module->setPreferredState(states_[module]);
 	}
+	engine->commitUpdates();
 }
 
 void CombatSimulator::setState(const State& state) {
 	state_ = state;
 	float range = state.range();
-	for (auto module: attackerOffensiveModules_) {
+	for (const auto& module: attackerOffensiveModules_) {
 		float maxRange = module->getMaxRange();
-		module->setPreferredState(range > maxRange ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
+		float falloff = module->getFalloff();
+		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
 	}
-	for (auto module: targetOffensiveModules_) {
+	for (const auto& module: targetOffensiveModules_) {
 		float maxRange = module->getMaxRange();
-		module->setPreferredState(range > maxRange ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
+		float falloff = module->getFalloff();
+		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
 	}
 	
 	float v0 = state.attackerVelocity.length();

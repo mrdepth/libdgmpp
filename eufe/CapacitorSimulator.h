@@ -11,7 +11,7 @@ namespace eufe {
 		class Drain
 		{
 		public:
-			Drain(std::shared_ptr<Module> module, float cycleTime = 0, float capacitorNeed = 0, float clipSize = 0, float reloadTime = 0) : cycleTime_(cycleTime), capacitorNeed_(capacitorNeed), clipSize_(clipSize), reloadTime_(reloadTime), module_(module) {};
+			Drain(std::shared_ptr<Module> const& module, float cycleTime = 0, float capacitorNeed = 0, float clipSize = 0, float reloadTime = 0) : cycleTime_(cycleTime), capacitorNeed_(capacitorNeed), clipSize_(clipSize), reloadTime_(reloadTime), module_(module) {};
 			
 			bool operator == (const Drain& other)
 			{
@@ -36,7 +36,7 @@ namespace eufe {
 		};
 
 		
-		CapacitorSimulator(std::shared_ptr<Ship> ship, bool reload, int maxTime);
+		CapacitorSimulator(std::shared_ptr<Ship> const& ship, bool reload, int maxTime);
 		virtual ~CapacitorSimulator(void);
 		
 		void reset();

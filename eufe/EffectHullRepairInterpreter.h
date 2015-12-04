@@ -6,7 +6,7 @@ namespace eufe {
 	class EffectHullRepairInterpreter : public EffectInterpreter
 	{
 	public:
-		EffectHullRepairInterpreter(std::shared_ptr<Engine> engine, bool isProjected, bool isAssistance, bool isOffensive);
+		EffectHullRepairInterpreter(std::shared_ptr<Engine> const& engine, bool isProjected, bool isAssistance, bool isOffensive);
 		virtual ~EffectHullRepairInterpreter();
 		virtual bool addEffect(const Environment& environment);
 		virtual bool removeEffect(const Environment& environment);

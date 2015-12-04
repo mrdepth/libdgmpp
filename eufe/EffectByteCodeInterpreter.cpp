@@ -94,7 +94,7 @@ EffectByteCodeInterpreter::OperandsVector EffectByteCodeInterpreter::InitOperand
 	return operands;
 }
 
-EffectByteCodeInterpreter::EffectByteCodeInterpreter(std::shared_ptr<Engine> engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
+EffectByteCodeInterpreter::EffectByteCodeInterpreter(std::shared_ptr<Engine> const& engine, const void* byteCode, size_t size, bool isAssistance, bool isOffensive) : engine_(engine), isAssistance_(isAssistance), isOffensive_(isOffensive)
 {
 	byteCode_ = new Byte[size];
 	memcpy(byteCode_, byteCode, size);
@@ -1380,7 +1380,7 @@ void EffectByteCodeInterpreter::AttributeWrapper::dec(float value)
 	item_->getItem()->getAttribute(attributeID_)->dec(value);
 }
 
-EffectByteCodeInterpreter::AssociationWrapper::AssociationWrapper(std::shared_ptr<AttributeWrapper>& attribute, const std::string& name) : attribute_(attribute)
+EffectByteCodeInterpreter::AssociationWrapper::AssociationWrapper(std::shared_ptr<AttributeWrapper> const& attribute, const std::string& name) : attribute_(attribute)
 {
 	if (name == "PreAssignment")
 		association_ = Modifier::ASSOCIATION_POST_ASSIGNMENT;
@@ -1589,9 +1589,9 @@ EffectByteCodeInterpreter::Argument::Argument(bool value)			: type_(TYPE_BOOL),	
 EffectByteCodeInterpreter::Argument::Argument(float value)			: type_(TYPE_FLOAT),	floatValue_(value) {}
 EffectByteCodeInterpreter::Argument::Argument(const char* value)	: type_(TYPE_STRING),	stringValue_(value) {}
 EffectByteCodeInterpreter::Argument::Argument(const std::string& value)						: type_(TYPE_STRING),		stringValue_(value) {}
-EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<ItemWrapper> value)			: type_(TYPE_ITEM),			itemValue_(value) {}
-EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<AttributeWrapper> value)	: type_(TYPE_ATTRIBUTE),	attributeValue_(value) {}
-EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<AssociationWrapper> value)	: type_(TYPE_ASSOCIATION),	associationValue_(value) {}
+EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<ItemWrapper> const& value)			: type_(TYPE_ITEM),			itemValue_(value) {}
+EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<AttributeWrapper> const& value)	: type_(TYPE_ATTRIBUTE),	attributeValue_(value) {}
+EffectByteCodeInterpreter::Argument::Argument(std::shared_ptr<AssociationWrapper> const& value)	: type_(TYPE_ASSOCIATION),	associationValue_(value) {}
 
 EffectByteCodeInterpreter::Argument::Type EffectByteCodeInterpreter::Argument::getType()
 {

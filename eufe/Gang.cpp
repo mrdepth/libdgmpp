@@ -14,11 +14,11 @@
 
 using namespace eufe;
 
-class GangModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier>, bool>
+class GangModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
-	GangModifierMatchFunction(TypeID attributeID, std::shared_ptr<Character> fleetBooster, std::shared_ptr<Character> wingBooster, std::shared_ptr<Character> squadBooster) : attributeID_(attributeID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
-	bool operator() (std::shared_ptr<Modifier> modifier)
+	GangModifierMatchFunction(TypeID attributeID, std::shared_ptr<Character> const& fleetBooster, std::shared_ptr<Character> const& wingBooster, std::shared_ptr<Character> const& squadBooster) : attributeID_(attributeID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
+	bool operator() (std::shared_ptr<Modifier> const& modifier)
 	{
 		std::shared_ptr<Character> character = modifier->getCharacter();
 		bool isBooster = character == fleetBooster_ || character == squadBooster_ || character == wingBooster_ ;
@@ -31,11 +31,11 @@ private:
 	std::shared_ptr<Character> squadBooster_;
 };
 
-class GangLocationGroupModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier>, bool>
+class GangLocationGroupModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
-	GangLocationGroupModifierMatchFunction(TypeID attributeID, TypeID groupID, std::shared_ptr<Character> fleetBooster, std::shared_ptr<Character> wingBooster, std::shared_ptr<Character> squadBooster) : attributeID_(attributeID), groupID_(groupID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
-	bool operator() (std::shared_ptr<Modifier> modifier)
+	GangLocationGroupModifierMatchFunction(TypeID attributeID, TypeID groupID, std::shared_ptr<Character> const& fleetBooster, std::shared_ptr<Character> const& wingBooster, std::shared_ptr<Character> const& squadBooster) : attributeID_(attributeID), groupID_(groupID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
+	bool operator() (std::shared_ptr<Modifier> const& modifier)
 	{
 		std::shared_ptr<Character> character = modifier->getCharacter();
 		bool isBooster = character == fleetBooster_ || character == squadBooster_ || character == wingBooster_ ;
@@ -49,11 +49,11 @@ private:
 	std::shared_ptr<Character> squadBooster_;
 };
 
-class GangLocationRequiredSkillModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier>, bool>
+class GangLocationRequiredSkillModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
-	GangLocationRequiredSkillModifierMatchFunction(TypeID attributeID, std::shared_ptr<Item> item, std::shared_ptr<Character> fleetBooster, std::shared_ptr<Character> wingBooster, std::shared_ptr<Character> squadBooster) : attributeID_(attributeID), item_(item), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
-	bool operator() (std::shared_ptr<Modifier> modifier)
+	GangLocationRequiredSkillModifierMatchFunction(TypeID attributeID, std::shared_ptr<Item> const& item, std::shared_ptr<Character> const& fleetBooster, std::shared_ptr<Character> const& wingBooster, std::shared_ptr<Character> const& squadBooster) : attributeID_(attributeID), item_(item), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
+	bool operator() (std::shared_ptr<Modifier> const& modifier)
 	{
 		std::shared_ptr<Character> character = modifier->getCharacter();
 		bool isBooster = character == fleetBooster_ || character == squadBooster_ || character == wingBooster_ ;
@@ -67,11 +67,11 @@ private:
 	std::shared_ptr<Character> squadBooster_;
 };
 
-class ModifiersFindFunction : public std::unary_function<std::shared_ptr<Modifier>, bool>
+class ModifiersFindFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
-	ModifiersFindFunction(std::shared_ptr<Modifier> modifier) : attributeID_(modifier->getAttributeID()), modifier_(modifier->getModifier()), association_(modifier->getAssociation())	{};
-	bool operator() (std::shared_ptr<Modifier> modifier)
+	ModifiersFindFunction(std::shared_ptr<Modifier> const& modifier) : attributeID_(modifier->getAttributeID()), modifier_(modifier->getModifier()), association_(modifier->getAssociation())	{};
+	bool operator() (std::shared_ptr<Modifier> const& modifier)
 	{
 		return modifier->getAttributeID() == attributeID_ && modifier->getAssociation() == association_ && modifier->getModifier() == modifier_;
 	}
@@ -81,11 +81,11 @@ private:
 	Modifier::Association association_;
 };
 
-class ModifiersCompareFunction : public std::binary_function<std::shared_ptr<Modifier>, std::shared_ptr<Modifier>, bool>
+class ModifiersCompareFunction : public std::binary_function<std::shared_ptr<Modifier> const&, std::shared_ptr<Modifier> const&, bool>
 {
 public:
 	ModifiersCompareFunction(bool highIsGood) : highIsGood_(highIsGood) {}
-	bool operator() (std::shared_ptr<Modifier> arg1, std::shared_ptr<Modifier> arg2)
+	bool operator() (std::shared_ptr<Modifier> const& arg1, std::shared_ptr<Modifier> const& arg2)
 	{
 /*		if (highIsGood_)
 			return arg1->getValue() < arg2->getValue();
@@ -98,7 +98,7 @@ private:
 	bool highIsGood_;
 };
 
-Gang::Gang(std::shared_ptr<Engine> engine) : Item(engine, 0, nullptr), fleetBooster_(nullptr), wingBooster_(nullptr), squadBooster_(nullptr)
+Gang::Gang(std::shared_ptr<Engine> const& engine) : Item(engine, 0, nullptr), fleetBooster_(nullptr), wingBooster_(nullptr), squadBooster_(nullptr)
 {
 }
 
@@ -126,7 +126,7 @@ std::shared_ptr<Character> Gang::addPilot()
 }
 
 
-void Gang::removePilot(std::shared_ptr<Character> character)
+void Gang::removePilot(std::shared_ptr<Character> const& character)
 {
 	auto engine = getEngine();
 	if (!engine)
@@ -156,7 +156,7 @@ void Gang::reset()
 {
 	Item::reset();
 	
-	for (auto i: pilots_)
+	for (const auto& i: pilots_)
 		i->reset();
 }
 
@@ -175,7 +175,7 @@ std::shared_ptr<Character> Gang::getSquadBooster()
 	return squadBooster_;
 }
 
-void Gang::setFleetBooster(std::shared_ptr<Character> fleetBooster)
+void Gang::setFleetBooster(std::shared_ptr<Character> const& fleetBooster)
 {
 	fleetBooster_ = fleetBooster;
 	if (wingBooster_ == fleetBooster)
@@ -187,7 +187,7 @@ void Gang::setFleetBooster(std::shared_ptr<Character> fleetBooster)
 		engine->reset(shared_from_this());
 }
 
-void Gang::setWingBooster(std::shared_ptr<Character> wingBooster)
+void Gang::setWingBooster(std::shared_ptr<Character> const& wingBooster)
 {
 	wingBooster_ = wingBooster;
 	if (fleetBooster_ == wingBooster)
@@ -199,7 +199,7 @@ void Gang::setWingBooster(std::shared_ptr<Character> wingBooster)
 		engine->reset(shared_from_this());
 }
 
-void Gang::setSquadBooster(std::shared_ptr<Character> squadBooster)
+void Gang::setSquadBooster(std::shared_ptr<Character> const& squadBooster)
 {
 	squadBooster_ = squadBooster;
 	if (fleetBooster_ == squadBooster)
@@ -233,7 +233,7 @@ void Gang::removeSquadBooster() {
 		engine->reset(shared_from_this());
 }
 
-std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	ModifiersList list;
 	std::remove_copy_if(locationModifiers_.begin(),
@@ -246,7 +246,7 @@ std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<A
 	return outIterator;
 }
 
-std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(std::shared_ptr<Item> item, std::shared_ptr<Attribute> attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	ModifiersList list1;
 	std::remove_copy_if(locationGroupModifiers_.begin(),
@@ -277,7 +277,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	if (gang.pilots_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: gang.pilots_)
+		for (const auto& i: gang.pilots_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -292,7 +292,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	if (gang.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: gang.itemModifiers_)
+		for (const auto& i: gang.itemModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -307,7 +307,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	if (gang.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: gang.locationModifiers_)
+		for (const auto& i: gang.locationModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -322,7 +322,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	if (gang.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: gang.locationGroupModifiers_)
+		for (const auto& i: gang.locationGroupModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;
@@ -337,7 +337,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	if (gang.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (auto i: gang.locationRequiredSkillModifiers_)
+		for (const auto& i: gang.locationRequiredSkillModifiers_)
 		{
 			if (isFirst)
 				isFirst = false;

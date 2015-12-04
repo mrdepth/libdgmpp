@@ -18,26 +18,26 @@ namespace eufe {
 			SCAN_TYPE_GRAVIMETRIC,
 			SCAN_TYPE_MULTISPECTRAL
 		};
-		Ship(std::shared_ptr<Engine> engine, TypeID typeID, std::shared_ptr<Character> owner = nullptr);
+		Ship(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner = nullptr);
 		virtual ~Ship(void);
 		std::shared_ptr<Ship> shared_from_this() {
 			return std::static_pointer_cast<Ship>(Item::shared_from_this());
 		}
 
 		std::shared_ptr<Module> addModule(TypeID typeID, bool forced = false);
-		std::shared_ptr<Module> replaceModule(std::shared_ptr<Module> oldModule, TypeID typeID);
+		std::shared_ptr<Module> replaceModule(std::shared_ptr<Module> const& oldModule, TypeID typeID);
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
-		void removeModule(std::shared_ptr<Module> module);
+		void removeModule(std::shared_ptr<Module> const& module);
 		
 		std::shared_ptr<Drone> addDrone(TypeID typeID);
-		void removeDrone(std::shared_ptr<Drone> drone);
+		void removeDrone(std::shared_ptr<Drone> const& drone);
 		
 		const ModulesList& getModules();
 		void getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator);
 		const DronesList& getDrones();
 		const std::list<std::weak_ptr<Module>>& getProjectedModules();
 		const std::list<std::weak_ptr<Drone>>& getProjectedDrones();
-		bool canFit(std::shared_ptr<Module> module);
+		bool canFit(std::shared_ptr<Module> const& module);
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();
 
@@ -48,10 +48,10 @@ namespace eufe {
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
-		void addProjectedModule(std::shared_ptr<Module> module);
-		void removeProjectedModule(std::shared_ptr<Module> module);
-		void addProjectedDrone(std::shared_ptr<Drone> drone);
-		void removeProjectedDrone(std::shared_ptr<Drone> drone);
+		void addProjectedModule(std::shared_ptr<Module> const& module);
+		void removeProjectedModule(std::shared_ptr<Module> const& module);
+		void addProjectedDrone(std::shared_ptr<Drone> const& drone);
+		void removeProjectedDrone(std::shared_ptr<Drone> const& drone);
 		
 		std::shared_ptr<CapacitorSimulator> getCapacitorSimulator();
 		std::shared_ptr<HeatSimulator> getHeatSimulator();

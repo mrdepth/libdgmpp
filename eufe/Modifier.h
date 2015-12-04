@@ -22,9 +22,9 @@ namespace eufe {
 			ASSOCIATION_SUB_RATE
 		};
 
-		Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> modifier, bool isAssistance, bool isOffensive, std::shared_ptr<Character> character = nullptr);
+		Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, std::shared_ptr<Character> const& character = nullptr);
 		virtual ~Modifier(void);
-		virtual bool isMatch(std::shared_ptr<Item> item) const;
+		virtual bool isMatch(std::shared_ptr<Item> const& item) const;
 		TypeID getAttributeID() const;
 		std::shared_ptr<Attribute> getModifier() const;
 		Association getAssociation() const;

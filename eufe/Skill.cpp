@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-Skill::Skill(std::shared_ptr<Engine> engine, TypeID typeID, int skillLevel, bool isLearned, std::shared_ptr<Character> owner) : Item(engine, typeID, owner), isLearned_(isLearned), skillLevel_(skillLevel)
+Skill::Skill(std::shared_ptr<Engine> const& engine, TypeID typeID, int skillLevel, bool isLearned, std::shared_ptr<Character> const& owner) : Item(engine, typeID, owner), isLearned_(isLearned), skillLevel_(skillLevel)
 {
 }
 

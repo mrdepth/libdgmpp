@@ -7,7 +7,7 @@
 
 using namespace eufe;
 
-Area::Area(std::shared_ptr<Engine> engine, TypeID typeID) : Item(engine, typeID, nullptr)
+Area::Area(std::shared_ptr<Engine> const& engine, TypeID typeID) : Item(engine, typeID, nullptr)
 {
 }
 
@@ -15,7 +15,7 @@ Area::~Area()
 {
 }
 
-void Area::addEffectsToShip(std::shared_ptr<Item> ship)
+void Area::addEffectsToShip(std::shared_ptr<Item> const&ship)
 {
 	Environment environment = getEnvironment();
 	std::shared_ptr<Item> character = ship->getOwner();
@@ -27,12 +27,12 @@ void Area::addEffectsToShip(std::shared_ptr<Item> ship)
 	if (gang)
 		environment["Gang"] = gang;
 	
-	for (auto i: effects_)
+	for (const auto& i: effects_)
 		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
 			i->addEffect(environment);
 }
 
-void Area::removeEffectsFromShip(std::shared_ptr<Item> ship)
+void Area::removeEffectsFromShip(std::shared_ptr<Item> const& ship)
 {
 	Environment environment = getEnvironment();
 	std::shared_ptr<Item> character = ship->getOwner();
@@ -44,7 +44,7 @@ void Area::removeEffectsFromShip(std::shared_ptr<Item> ship)
 	if (gang)
 		environment["Gang"] = gang;
 	
-	for (auto i: effects_)
+	for (const auto& i: effects_)
 		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
 			i->removeEffect(environment);
 }
@@ -57,7 +57,7 @@ void Area::addEffects(Effect::Category category)
 	loadIfNeeded();
 	if (category == Effect::CATEGORY_SYSTEM)
 	{
-		for (auto i: engine->getGang()->getPilots())
+		for (const auto& i: engine->getGang()->getPilots())
 			addEffectsToShip(i->getShip());
 		std::shared_ptr<ControlTower> controlTower = engine->getControlTower();
 		if (controlTower)
@@ -73,7 +73,7 @@ void Area::removeEffects(Effect::Category category)
 	loadIfNeeded();
 	if (category == Effect::CATEGORY_SYSTEM)
 	{
-		for (auto i: engine->getGang()->getPilots())
+		for (const auto& i: engine->getGang()->getPilots())
 			removeEffectsFromShip(i->getShip());
 		std::shared_ptr<ControlTower> controlTower = engine->getControlTower();
 		if (controlTower)
