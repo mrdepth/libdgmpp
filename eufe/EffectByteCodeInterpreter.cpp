@@ -1417,7 +1417,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addItemModifier(const Enviro
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 
-	std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->addItemModifier(modifier);
 	return true;
 }
@@ -1436,7 +1436,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(con
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 
-	std::shared_ptr<Modifier> modifier = std::make_shared<LocationGroupModifier>(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<LocationGroupModifier>(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
 	item->addLocationGroupModifier(modifier);
 	return true;
 }
@@ -1453,7 +1453,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationModifier(const En
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->addLocationModifier(modifier);
 	return true;
 }
@@ -1471,7 +1471,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationRequiredSkillModi
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	std::shared_ptr<Modifier> modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->addLocationRequiredSkillModifier(modifier);
 	return true;
 }
@@ -1489,7 +1489,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifie
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	std::shared_ptr<Modifier> modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->addLocationRequiredSkillModifier(modifier);
 	return true;
 }
@@ -1506,7 +1506,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeItemModifier(const Env
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->removeItemModifier(modifier);
 	return true;
 }
@@ -1524,7 +1524,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	std::shared_ptr<Modifier> modifier = std::make_shared<LocationGroupModifier>(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<LocationGroupModifier>(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
 	item->removeLocationGroupModifier(modifier);
 	return true;
 }
@@ -1541,7 +1541,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationModifier(const
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->removeLocationModifier(modifier);
 	return true;
 }
@@ -1559,7 +1559,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationRequiredSkillM
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	std::shared_ptr<Modifier> modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->removeLocationRequiredSkillModifier(modifier);
 	return true;
 }
@@ -1577,7 +1577,7 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeOwnerRequiredSkillModi
 	if (Char != end)
 		character = std::dynamic_pointer_cast<Character>(Char->second);
 	
-	std::shared_ptr<Modifier> modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
+	auto modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->removeLocationRequiredSkillModifier(modifier);
 	return true;
 }

@@ -340,13 +340,15 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: controlTower.itemModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: controlTower.itemModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -355,13 +357,15 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: controlTower.locationModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: controlTower.locationModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -370,13 +374,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: controlTower.locationGroupModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
+		for (const auto& map: controlTower.locationGroupModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 	
@@ -385,13 +393,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTowe
 	if (controlTower.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: controlTower.locationRequiredSkillModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
+		for (const auto& map: controlTower.locationRequiredSkillModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 	

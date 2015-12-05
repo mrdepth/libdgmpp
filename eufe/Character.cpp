@@ -382,18 +382,19 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 
 	
 	os << "], \"itemModifiers\":[";
-
 	
 	if (character.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: character.itemModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: character.itemModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -402,13 +403,15 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: character.locationModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: character.locationModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -417,13 +420,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: character.locationGroupModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
+		for (const auto& map: character.locationGroupModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 	
@@ -432,16 +439,19 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)
 	if (character.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: character.locationRequiredSkillModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
+		for (const auto& map: character.locationRequiredSkillModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
-
 	
 /*	os << "],\"skills\":[";
 	

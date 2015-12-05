@@ -45,6 +45,7 @@ namespace eufe {
 	typedef std::list<std::shared_ptr<Implant>> ImplantsList;
 	typedef std::list<std::shared_ptr<Booster>> BoostersList;
 	typedef std::list<std::shared_ptr<Modifier>> ModifiersList;
+	typedef std::map<int32_t, ModifiersList> ModifiersMap;
 	typedef std::list<std::shared_ptr<Structure>> StructuresList;
 	
 	struct Tank

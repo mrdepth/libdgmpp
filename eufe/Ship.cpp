@@ -1248,13 +1248,15 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: ship.itemModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: ship.itemModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -1263,13 +1265,15 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: ship.locationModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: ship.locationModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -1278,13 +1282,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: ship.locationGroupModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
+		for (const auto& map: ship.locationGroupModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 	
@@ -1293,13 +1301,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 	if (ship.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: ship.locationRequiredSkillModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
+		for (const auto& map: ship.locationRequiredSkillModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 

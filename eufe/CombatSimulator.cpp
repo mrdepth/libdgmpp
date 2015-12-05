@@ -40,6 +40,13 @@ Vector Vector::operator/(float v) const {
 	return Vector(dx / v, dy / v);
 }
 
+CombatSimulator::State::State() {
+	
+}
+
+CombatSimulator::State::State(float range, float attackerVelocity, float targetVelocity): targetPosition(0, 0),  attackerPosition(range, 0),  attackerVelocity(0, attackerVelocity), targetVelocity(0, targetVelocity) {
+}
+
 float CombatSimulator::State::range() const {
 	return (attackerPosition - targetPosition).length();
 }

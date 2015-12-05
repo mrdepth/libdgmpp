@@ -69,13 +69,13 @@ namespace eufe {
 		
 		virtual void addItemModifier(std::shared_ptr<Modifier> const& modifier);
 		virtual void addLocationModifier(std::shared_ptr<Modifier> const& modifier);
-		virtual void addLocationGroupModifier(std::shared_ptr<Modifier> const& modifier);
-		virtual void addLocationRequiredSkillModifier(std::shared_ptr<Modifier> const& modifier);
+		virtual void addLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier);
+		virtual void addLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier);
 
 		virtual void removeItemModifier(std::shared_ptr<Modifier> const& modifier);
 		virtual void removeLocationModifier(std::shared_ptr<Modifier> const& modifier);
-		virtual void removeLocationGroupModifier(std::shared_ptr<Modifier> const& modifier);
-		virtual void removeLocationRequiredSkillModifier(std::shared_ptr<Modifier> const& modifier);
+		virtual void removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier);
+		virtual void removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier);
 		
 		virtual const char* getTypeName();
 		virtual const char* getGroupName();
@@ -93,11 +93,17 @@ namespace eufe {
 		TypeID categoryID_;
 		EffectsList effects_;
 		std::weak_ptr<Item> owner_;
+		
+		typedef int32_t AttributeID;
+		typedef int32_t GroupID;
+		typedef int32_t SkillID;
+		
 
-		ModifiersList itemModifiers_;
-		ModifiersList locationModifiers_;
-		ModifiersList locationGroupModifiers_;
-		ModifiersList locationRequiredSkillModifiers_;
+		std::map<AttributeID, std::list<std::shared_ptr<Modifier>>> itemModifiers_;
+		std::map<AttributeID, std::list<std::shared_ptr<Modifier>>> locationModifiers_;
+		
+		std::map<AttributeID, std::map<GroupID, std::list<std::shared_ptr<LocationGroupModifier>>>> locationGroupModifiers_;
+		std::map<AttributeID, std::map<SkillID, std::list<std::shared_ptr<LocationRequiredSkillModifier>>>> locationRequiredSkillModifiers_;
 		
 		virtual void lazyLoad();
 		void loadIfNeeded() {

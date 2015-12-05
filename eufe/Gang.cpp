@@ -236,10 +236,12 @@ void Gang::removeSquadBooster() {
 std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	ModifiersList list;
-	std::remove_copy_if(locationModifiers_.begin(),
-						locationModifiers_.end(),
+	const auto& modifiers = locationModifiers_[attribute->getAttributeID()];
+	std::copy(modifiers.begin(), modifiers.end(), outIterator);
+	/*std::remove_copy_if(modifiers.begin(),
+						modifiers.end(),
 						std::inserter(list, list.end()),
-						GangModifierMatchFunction(attribute->getAttributeID(), fleetBooster_, wingBooster_, squadBooster_));
+						GangModifierMatchFunction(attribute->getAttributeID(), fleetBooster_, wingBooster_, squadBooster_));*/
 	ModifiersList::iterator i = std::max_element(list.begin(), list.end(), ModifiersCompareFunction(attribute->highIsGood()));
 	if (i != list.end())
 		*outIterator++ = *i;
@@ -249,22 +251,35 @@ std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<A
 std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	ModifiersList list1;
-	std::remove_copy_if(locationGroupModifiers_.begin(),
-						locationGroupModifiers_.end(),
-						std::inserter(list1, list1.end()),
-						GangLocationGroupModifierMatchFunction(attribute->getAttributeID(), item->getGroupID(), fleetBooster_, wingBooster_, squadBooster_));
-	ModifiersList::iterator i = std::max_element(list1.begin(), list1.end(), ModifiersCompareFunction(attribute->highIsGood()));
-	if (i != list1.end())
-		*outIterator++ = *i;
+
+	{
+		const auto& list = locationGroupModifiers_[attribute->getAttributeID()][item->getGroupID()];
+		std::remove_copy_if(list.begin(),
+							list.end(),
+							std::inserter(list1, list1.end()),
+							GangModifierMatchFunction(attribute->getAttributeID(), fleetBooster_, wingBooster_, squadBooster_));
+		ModifiersList::iterator i = std::max_element(list1.begin(), list1.end(), ModifiersCompareFunction(attribute->highIsGood()));
+		if (i != list1.end())
+			*outIterator++ = *i;
+	}
 
 	ModifiersList list2;
-	std::remove_copy_if(locationRequiredSkillModifiers_.begin(),
-						locationRequiredSkillModifiers_.end(),
-						std::inserter(list2, list2.end()),
-						GangLocationRequiredSkillModifierMatchFunction(attribute->getAttributeID(), item, fleetBooster_, wingBooster_, squadBooster_));
-	ModifiersList::iterator j = std::max_element(list2.begin(), list2.end(), ModifiersCompareFunction(attribute->highIsGood()));
-	if (j != list2.end())
-		*outIterator++ = *j;
+	{
+		auto outIterator = std::inserter(list2, list2.end());
+		for (const auto& map: locationRequiredSkillModifiers_[attribute->getAttributeID()]) {
+			if (item->requireSkill(map.first)) {
+				const auto& list = map.second;
+				outIterator = std::remove_copy_if(list.begin(),
+												  list.end(),
+												  outIterator,
+												  GangModifierMatchFunction(attribute->getAttributeID(), fleetBooster_, wingBooster_, squadBooster_));
+			}
+		}
+		
+		ModifiersList::iterator j = std::max_element(list2.begin(), list2.end(), ModifiersCompareFunction(attribute->highIsGood()));
+		if (j != list2.end())
+			*outIterator++ = *j;
+	}
 	
 	return outIterator;
 }
@@ -292,28 +307,32 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	if (gang.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: gang.itemModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: gang.itemModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
-
+	
 	os << "], \"locationModifiers\":[";
 	
 	if (gang.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: gang.locationModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: gang.locationModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -322,13 +341,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	if (gang.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: gang.locationGroupModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
+		for (const auto& map: gang.locationGroupModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 	
@@ -337,13 +360,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Gang& gang)
 	if (gang.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: gang.locationRequiredSkillModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
+		for (const auto& map: gang.locationRequiredSkillModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 	

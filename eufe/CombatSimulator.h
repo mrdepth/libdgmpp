@@ -31,6 +31,8 @@ namespace eufe {
 	class CombatSimulator {
 	public:
 		struct State {
+			State();
+			State(float range, float attackerVelocity, float targetVelocity);
 			Point attackerPosition;
 			Point targetPosition;
 			Vector attackerVelocity;

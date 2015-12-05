@@ -820,18 +820,20 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.charge_)
 		os << "\"charge\":" << *module.charge_ << ",";
 
-	os << "\"itemModifiers\":[";
+	os << "], \"itemModifiers\":[";
 	
 	if (module.itemModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: module.itemModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: module.itemModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -840,13 +842,15 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.locationModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: module.locationModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
+		for (const auto& list: module.locationModifiers_) {
+			for (const auto& i: list.second)
+			{
+				if (isFirst)
+					isFirst = false;
+				else
+					os << ',';
+				os << *i;
+			}
 		}
 	}
 	
@@ -855,13 +859,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.locationGroupModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: module.locationGroupModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationGroupModifier>(i);
+		for (const auto& map: module.locationGroupModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 	
@@ -870,13 +878,17 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.locationRequiredSkillModifiers_.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: module.locationRequiredSkillModifiers_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *std::dynamic_pointer_cast<LocationRequiredSkillModifier>(i);
+		for (const auto& map: module.locationRequiredSkillModifiers_) {
+			for (const auto& list: map.second) {
+				for (const auto& i: list.second)
+				{
+					if (isFirst)
+						isFirst = false;
+					else
+						os << ',';
+					os << *i;
+				}
+			}
 		}
 	}
 	
