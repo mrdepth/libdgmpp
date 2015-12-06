@@ -134,8 +134,8 @@ bool Drone::isActive()
 
 bool Drone::isAssistance() {
 	for (const auto& effect: getEffects())
-		if (effect->isAssistance())
-			return true;
+		if (effect->getCategory() == Effect::CATEGORY_TARGET)
+			return  effect->isAssistance();
 	auto charge = getCharge();
 	if (charge)
 		return charge->isAssistance();
@@ -144,8 +144,8 @@ bool Drone::isAssistance() {
 
 bool Drone::isOffensive() {
 	for (const auto& effect: getEffects())
-		if (effect->isOffensive())
-			return true;
+		if (effect->getCategory() == Effect::CATEGORY_TARGET)
+			return effect->isOffensive();
 	auto charge = getCharge();
 	if (charge)
 		return charge->isOffensive();

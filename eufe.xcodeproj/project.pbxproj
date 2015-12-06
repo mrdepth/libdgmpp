@@ -399,8 +399,6 @@
 				37B9AB65147A5DDF006F1F8E /* Gang.h */,
 				37B33D551473CA5E006B18D7 /* Item.cpp */,
 				37B33D561473CA5E006B18D7 /* Item.h */,
-				12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */,
-				12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */,
 				37B33D6C1473CA5E006B18D7 /* types.h */,
 			);
 			name = eufe;
@@ -465,6 +463,8 @@
 				12B0A04F1C0C386C00194715 /* HostileTarget.h */,
 				12B0A0611C0C9C5600194715 /* DamageVector.cpp */,
 				12B0A0621C0C9C5600194715 /* DamageVector.h */,
+				12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */,
+				12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */,
 			);
 			name = Ship;
 			sourceTree = "<group>";

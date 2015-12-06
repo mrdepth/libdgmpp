@@ -1,6 +1,7 @@
 #include "CombatSimulator.h"
 #include "Ship.h"
 #include "Engine.h"
+#include <limits>
 
 using namespace eufe;
 
@@ -78,7 +79,7 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> const& attacker, std::sha
 			targets_[module] = module->getTarget();
 			
 			if (module->getState() > Module::STATE_ONLINE && module->requireTarget()) {
-				if (module->isOffensive() && !module->isAssistance()) {
+				if (module->isOffensive()) {
 					module->setTarget(target);
 					if (module->getDps() == 0) {
 						modulesList.push_back(module);
@@ -87,6 +88,12 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> const& attacker, std::sha
 				}
 				else
 					module->setPreferredState(Module::STATE_ONLINE);
+			}
+		}
+		for (const auto& drone: attacker->getDrones()) {
+			if (drone->isActive() && drone->isOffensive() && !drone->isAssistance()) {
+				targets_[drone] = drone->getTarget();
+				drone->setTarget(target);
 			}
 		}
 	};
@@ -107,6 +114,16 @@ CombatSimulator::~CombatSimulator() {
 	for (const auto& module: target_->getModules()) {
 		module->setTarget(targets_[module]);
 		module->setPreferredState(states_[module]);
+	}
+	for (const auto& drone: attacker_->getDrones()) {
+		if (drone->isActive() && drone->isOffensive() && !drone->isAssistance()) {
+			drone->setTarget(targets_[drone]);
+		}
+	}
+	for (const auto& drone: target_->getDrones()) {
+		if (drone->isActive() && drone->isOffensive() && !drone->isAssistance()) {
+			drone->setTarget(targets_[drone]);
+		}
 	}
 	engine->commitUpdates();
 }
@@ -141,16 +158,16 @@ void CombatSimulator::setState(const State& state) {
 	targetsHostileTarget_ = HostileTarget(range, angularVelocity,  attacker_->getSignatureRadius(), state_.attackerVelocity.length());
 }
 
-DamageVector CombatSimulator::dealtDps() {
+DamageVector CombatSimulator::outgoingDps() {
 	return attacker_->getWeaponDps(attackersHostileTarget_) + attacker_->getDroneDps(attackersHostileTarget_);
 }
 
-DamageVector CombatSimulator::receivedDps() {
+DamageVector CombatSimulator::incomingDps() {
 	return target_->getWeaponDps(targetsHostileTarget_) + target_->getDroneDps(targetsHostileTarget_);
 }
 
 float CombatSimulator::timeToKill() {
-	auto vdps = dealtDps();
+	auto vdps = outgoingDps();
 	float dps = vdps;
 	DamagePattern pattern(dps);
 	auto resistances = target_->getResistances();
@@ -163,11 +180,11 @@ float CombatSimulator::timeToKill() {
 	if (shieldDPS > 0 && armorDPS > 0 && hullDPS > 0)
 		return ehp.shield / shieldDPS + ehp.armor / armorDPS + ehp.hull / hullDPS;
 	else
-		return -1;
+		return std::numeric_limits<float>::infinity();
 }
 
 float CombatSimulator::timeToDie() {
-	auto vdps = receivedDps();
+	auto vdps = incomingDps();
 	float dps = vdps;
 	DamagePattern pattern(dps);
 	auto resistances = attacker_->getResistances();
@@ -180,5 +197,5 @@ float CombatSimulator::timeToDie() {
 	if (shieldDPS > 0 && armorDPS > 0 && hullDPS > 0)
 		return ehp.shield / shieldDPS + ehp.armor / armorDPS + ehp.hull / hullDPS;
 	else
-		return -1;
+		return std::numeric_limits<float>::infinity();
 }

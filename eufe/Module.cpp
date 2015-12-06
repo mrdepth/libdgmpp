@@ -135,8 +135,8 @@ void Module::setPreferredState(State state) {
 
 bool Module::isAssistance() {
 	for (const auto& effect: getEffects())
-		if (effect->isAssistance())
-			return true;
+		if (effect->getCategory() == Effect::CATEGORY_TARGET)
+			return  effect->isAssistance();
 	auto charge = getCharge();
 	if (charge)
 		return charge->isAssistance();
@@ -145,8 +145,8 @@ bool Module::isAssistance() {
 
 bool Module::isOffensive() {
 	for (const auto& effect: getEffects())
-		if (effect->isOffensive())
-			return true;
+		if (effect->getCategory() == Effect::CATEGORY_TARGET)
+			return  effect->isOffensive();
 	auto charge = getCharge();
 	if (charge)
 		return charge->isOffensive();
@@ -820,7 +820,7 @@ std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 	if (module.charge_)
 		os << "\"charge\":" << *module.charge_ << ",";
 
-	os << "], \"itemModifiers\":[";
+	os << "\"itemModifiers\":[";
 	
 	if (module.itemModifiers_.size() > 0)
 	{

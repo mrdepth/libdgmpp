@@ -1,6 +1,7 @@
 #pragma once
 #include "Item.h"
 #include "Module.h"
+#include "Drone.h"
 #include "CapacitorSimulator.h"
 #include "HeatSimulator.h"
 #include "DamagePattern.h"

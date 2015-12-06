@@ -47,8 +47,8 @@ namespace eufe {
 		virtual ~CombatSimulator();
 		
 		void setState(const State& state);
-		DamageVector dealtDps();
-		DamageVector receivedDps();
+		DamageVector outgoingDps();
+		DamageVector incomingDps();
 		float timeToKill();
 		float timeToDie();
 	private:
@@ -58,7 +58,7 @@ namespace eufe {
 		ModulesList targetOffensiveModules_;
 		State state_;
 		std::map<std::shared_ptr<Module>, Module::State> states_;
-		std::map<std::shared_ptr<Module>, std::shared_ptr<Ship>> targets_;
+		std::map<std::shared_ptr<Item>, std::shared_ptr<Ship>> targets_;
 		HostileTarget attackersHostileTarget_;
 		HostileTarget targetsHostileTarget_;
 	};

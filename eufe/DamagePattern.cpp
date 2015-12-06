@@ -7,7 +7,7 @@ DamagePattern::DamagePattern() : DamageVector(0.25)
 {
 }
 
-DamagePattern::DamagePattern(const DamageVector& damage)  : DamageVector(damage)
+DamagePattern::DamagePattern(const DamageVector& damage)  : DamageVector(damage > 0 ? damage / static_cast<float>(damage) : DamageVector(0))
 {
 }
 

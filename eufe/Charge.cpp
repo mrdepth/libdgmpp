@@ -16,15 +16,15 @@ Charge::~Charge()
 
 bool Charge::isAssistance() {
 	for (const auto& effect: getEffects())
-		if (effect->isAssistance())
-			return true;
+		if (effect->getCategory() == Effect::CATEGORY_TARGET)
+			return  effect->isAssistance();
 	return false;
 }
 
 bool Charge::isOffensive() {
 	for (const auto& effect: getEffects())
-		if (effect->isOffensive())
-			return true;
+		if (effect->getCategory() == Effect::CATEGORY_TARGET)
+			return  effect->isOffensive();
 	return false;
 }
 

@@ -332,7 +332,7 @@ void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> co
 
 void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
 {
-	auto& list = locationGroupModifiers_[modifier->getAttributeID()][modifier->getSkillID()];
+	auto& list = locationRequiredSkillModifiers_[modifier->getAttributeID()][modifier->getSkillID()];
 	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
 	if (i != list.end())
 		list.erase(i);
