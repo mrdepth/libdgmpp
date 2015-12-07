@@ -64,7 +64,7 @@ void Compiler::compile()
 
 			std::cout << "Compiling expressions..." << std::endl;
 			
-			for (const auto& i: expressions_)
+			for (auto& i: expressions_)
 				compiledExpressionsMap_[i.first] = compileExpression(i.second);
 			
 			std::cout << "Compiling effects..." << std::endl;
@@ -75,7 +75,7 @@ void Compiler::compile()
 			os << "CREATE TABLE \"dgmCompiledEffects\" (\"effectID\" SMALLINT(6) NOT NULL, \"effectName\" TEXT(400), \"effectCategory\" SMALLINT(6) NOT NULL, \"isOffensive\" BOOL NOT NULL, \"isAssistance\" BOOL NOT NULL, \"byteCode\" BLOB, PRIMARY KEY (\"effectID\"));" << std::endl;
 			os << "BEGIN TRANSACTION;" << std::endl;
 
-			for (const auto& i: effects_)
+			for (auto& i: effects_)
 			{
 				Row& effect = i.second;
 				MemoryBlock compiledEffect = compileEffect(effect);

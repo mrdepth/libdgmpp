@@ -94,6 +94,7 @@
 		12B0A3001C0DC5CC00194715 /* CombatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */; };
 		12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B0A30C1C0EEC8400194715 /* eufe.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* eufe.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12DDFBAD1C157E42005F1382 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
 		37B33D441473CA0D006B18D7 /* eufe.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37B33D431473CA0D006B18D7 /* eufe.1 */; };
 		37C1C4301475511F002AC3E7 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37C1C42E1475511E002AC3E7 /* Compiler.cpp */; };
 /* End PBXBuildFile section */
@@ -175,6 +176,7 @@
 		12C51788196D10CE0004CF96 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectNaniteRepairPasteArmorDamageBonus.cpp; sourceTree = "<group>"; };
 		12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectNaniteRepairPasteArmorDamageBonus.h; sourceTree = "<group>"; };
+		12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3708AE3B14892DCC005492F5 /* Charge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12DDFBAD1C157E42005F1382 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +328,7 @@
 		12A3C6B0177C283E0067E00C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */,
 				12564BD21B84B04B000F68D8 /* libsqlite3.dylib */,
 				1242EC251A4DFF9800FD488A /* libsqlite3.dylib */,
 				12C51788196D10CE0004CF96 /* libsqlite3.dylib */,
