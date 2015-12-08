@@ -75,13 +75,18 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> const& attacker, std::sha
 	engine->beginUpdates();
 	auto analyze = [&](std::shared_ptr<Ship> attacker, std::shared_ptr<Ship> target, ModulesList& modulesList) {
 		for (const auto& module: attacker->getModules()) {
-			states_[module] = module->getPreferredState();
+			auto state = module->getPreferredState();
+			if (state == Module::STATE_UNKNOWN)
+				state = module->getState();
+			
+			states_[module] = state;
 			targets_[module] = module->getTarget();
 			
 			if (module->getState() > Module::STATE_ONLINE && module->requireTarget()) {
 				if (module->isOffensive()) {
 					module->setTarget(target);
 					if (module->getDps() == 0) {
+						preferredStates_[module] = module->getPreferredState();
 						modulesList.push_back(module);
 						module->setPreferredState(Module::STATE_ONLINE);
 					}
@@ -134,12 +139,12 @@ void CombatSimulator::setState(const State& state) {
 	for (const auto& module: attackerOffensiveModules_) {
 		float maxRange = module->getMaxRange();
 		float falloff = module->getFalloff();
-		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
+		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
 	}
 	for (const auto& module: targetOffensiveModules_) {
 		float maxRange = module->getMaxRange();
 		float falloff = module->getFalloff();
-		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : Module::STATE_ACTIVE);
+		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
 	}
 	
 	float v0 = state.attackerVelocity.length();
@@ -198,4 +203,24 @@ float CombatSimulator::timeToDie() {
 		return ehp.shield / shieldDPS + ehp.armor / armorDPS + ehp.hull / hullDPS;
 	else
 		return std::numeric_limits<float>::infinity();
+}
+
+float CombatSimulator::attackerModulesLifeTime() {
+	float lifeTime = std::numeric_limits<float>::infinity();
+	for (const auto& module: attacker_->getModules()) {
+		float v = module->getLifeTime();
+		if (v > 0)
+			lifeTime = std::min(lifeTime, v);
+	}
+	return lifeTime;
+}
+
+float CombatSimulator::targetModulesLifeTime() {
+	float lifeTime = std::numeric_limits<float>::infinity();
+	for (const auto& module: target_->getModules()) {
+		float v = module->getLifeTime();
+		if (v > 0)
+			lifeTime = std::min(lifeTime, v);
+	}
+	return lifeTime;
 }

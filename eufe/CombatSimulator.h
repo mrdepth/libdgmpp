@@ -51,6 +51,8 @@ namespace eufe {
 		DamageVector incomingDps();
 		float timeToKill();
 		float timeToDie();
+		float attackerModulesLifeTime();
+		float targetModulesLifeTime();
 	private:
 		std::shared_ptr<Ship> attacker_;
 		std::shared_ptr<Ship> target_;
@@ -61,5 +63,6 @@ namespace eufe {
 		std::map<std::shared_ptr<Item>, std::shared_ptr<Ship>> targets_;
 		HostileTarget attackersHostileTarget_;
 		HostileTarget targetsHostileTarget_;
+		std::map<std::shared_ptr<Module>, Module::State> preferredStates_;
 	};
 }

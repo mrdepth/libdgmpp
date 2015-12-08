@@ -207,6 +207,7 @@ const TypeID eufe::AOE_VELOCITY_ATTRIBUTE_ID = 653;
 const TypeID eufe::ENTITY_FLY_RANGE_ATTRIBUTE_ID = 416;
 const TypeID eufe::ENTITY_CRUISE_SPEED_ATTRIBUTE_ID = 508;
 const TypeID eufe::WARP_SCRAMBLE_STRENGTH_ATTRIBUTE_ID = 105;
+const TypeID eufe::WARP_SCRAMBLE_STRENGTH_HIDDEN_ATTRIBUTE_ID = 1318;
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)

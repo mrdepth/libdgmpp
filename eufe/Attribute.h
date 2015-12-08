@@ -198,6 +198,7 @@ namespace eufe {
 	extern const TypeID ENTITY_FLY_RANGE_ATTRIBUTE_ID;
 	extern const TypeID ENTITY_CRUISE_SPEED_ATTRIBUTE_ID;
 	extern const TypeID WARP_SCRAMBLE_STRENGTH_ATTRIBUTE_ID;
+	extern const TypeID WARP_SCRAMBLE_STRENGTH_HIDDEN_ATTRIBUTE_ID;
 
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
