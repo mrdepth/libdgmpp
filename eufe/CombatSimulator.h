@@ -30,18 +30,62 @@ namespace eufe {
 
 	class CombatSimulator {
 	public:
-		struct State {
-			State();
-			State(float range, float attackerVelocity, float targetVelocity);
+		class State {
+		public:
+			State(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target);
+			virtual float range() const = 0;
+			virtual float transversalVelocity() const = 0;
+			virtual float angularVelocity() const = 0;
+			virtual float targetVelocity() const = 0;
+			virtual float attackerVelocity() const = 0;
+		protected:
+			std::shared_ptr<Ship> attacker_;
+			std::shared_ptr<Ship> target_;
+		};
+		
+		class OrbitState: public State {
+		public:
+			OrbitState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float orbitRadius, float attackerVelocity);
+			void setOrbitRadius(float orbitRadius);
+			virtual float range() const;
+			virtual float transversalVelocity() const;
+			virtual float angularVelocity() const;
+			virtual float targetVelocity() const;
+			virtual float attackerVelocity() const;
+		private:
+			float orbitRadius_;
+			float attackerVelocity_;
+			mutable float calculatedAttackerVelocity_;
+			mutable uint32_t generation_;
+		};
+		
+		class KeepAtRangeState: public State {
+		public:
+			KeepAtRangeState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float range);
+			void setRange(float range);
+			virtual float range() const;
+			virtual float transversalVelocity() const;
+			virtual float angularVelocity() const;
+			virtual float targetVelocity() const;
+			virtual float attackerVelocity() const;
+		private:
+			float range_;
+		};
+		
+		class ManualState: public State {
+		public:
+			ManualState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float range = 0, float attackerVelocity = 0, float targetVelocity = 0);
 			Point attackerPosition;
 			Point targetPosition;
-			Vector attackerVelocity;
-			Vector targetVelocity;
-
-			float range() const;
-			float transversalVelocity() const;
-			float angularVelocity() const;
+			Vector attackerVelocityVector;
+			Vector targetVelocityVector;
+			virtual float range() const;
+			virtual float transversalVelocity() const;
+			virtual float angularVelocity() const;
+			virtual float targetVelocity() const;
+			virtual float attackerVelocity() const;
 		};
+		
 		
 		CombatSimulator(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target);
 		virtual ~CombatSimulator();
@@ -58,7 +102,6 @@ namespace eufe {
 		std::shared_ptr<Ship> target_;
 		ModulesList attackerOffensiveModules_;
 		ModulesList targetOffensiveModules_;
-		State state_;
 		std::map<std::shared_ptr<Module>, Module::State> states_;
 		std::map<std::shared_ptr<Item>, std::shared_ptr<Ship>> targets_;
 		HostileTarget attackersHostileTarget_;

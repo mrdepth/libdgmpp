@@ -41,22 +41,86 @@ Vector Vector::operator/(float v) const {
 	return Vector(dx / v, dy / v);
 }
 
-CombatSimulator::State::State() {
-	
+CombatSimulator::State::State(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target) : attacker_(attacker), target_(target) {
 }
 
-CombatSimulator::State::State(float range, float attackerVelocity, float targetVelocity): targetPosition(0, 0),  attackerPosition(range, 0),  attackerVelocity(0, attackerVelocity), targetVelocity(0, targetVelocity) {
+CombatSimulator::OrbitState::OrbitState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float orbitRadius, float attackerVelocity) : State(attacker, target), orbitRadius_(orbitRadius), attackerVelocity_(attackerVelocity), calculatedAttackerVelocity_(-1), generation_(0) {
 }
 
-float CombatSimulator::State::range() const {
+void CombatSimulator::OrbitState::setOrbitRadius(float orbitRadius) {
+	orbitRadius_ = orbitRadius;
+	calculatedAttackerVelocity_ = -1;
+	generation_ = 0;
+}
+
+
+float CombatSimulator::OrbitState::range() const {
+	return orbitRadius_;
+}
+
+float CombatSimulator::OrbitState::transversalVelocity() const {
+	float Va = attackerVelocity();
+	float Vt = targetVelocity();
+	return Va > Vt ? sqrt(Va * Va - Vt * Vt) : 0;
+}
+
+float CombatSimulator::OrbitState::angularVelocity() const {
+	float r = range();
+	return r > 0 ? transversalVelocity() / r : 0;
+}
+
+float CombatSimulator::OrbitState::targetVelocity() const {
+	return target_->getVelocity();
+}
+
+float CombatSimulator::OrbitState::attackerVelocity() const {
+	auto g = target_->getEngine()->getGeneration();
+	if (g != generation_ || calculatedAttackerVelocity_ < 0) {
+		calculatedAttackerVelocity_ = std::min(attacker_->getMaxVelocityInOrbit(orbitRadius_), attackerVelocity_);
+		generation_ = g;
+	}
+	return calculatedAttackerVelocity_;
+}
+
+CombatSimulator::KeepAtRangeState::KeepAtRangeState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float range) : State(attacker, target), range_(range) {
+}
+
+void CombatSimulator::KeepAtRangeState::setRange(float range) {
+	range_ = range;
+}
+
+float CombatSimulator::KeepAtRangeState::range() const {
+	return range_;
+}
+
+float CombatSimulator::KeepAtRangeState::transversalVelocity() const {
+	return 0;
+}
+
+float CombatSimulator::KeepAtRangeState::angularVelocity() const {
+	return 0;
+}
+
+float CombatSimulator::KeepAtRangeState::targetVelocity() const {
+	return target_->getVelocity();
+}
+
+float CombatSimulator::KeepAtRangeState::attackerVelocity() const {
+	return std::min(attacker_->getVelocity(), targetVelocity());
+}
+
+CombatSimulator::ManualState::ManualState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float range, float attackerVelocity, float targetVelocity) : State(attacker, target), targetPosition(0, 0),  attackerPosition(range, 0),  attackerVelocityVector(0, attackerVelocity), targetVelocityVector(0, targetVelocity) {
+}
+
+float CombatSimulator::ManualState::range() const {
 	return (attackerPosition - targetPosition).length();
 }
 
-float CombatSimulator::State::transversalVelocity() const {
+float CombatSimulator::ManualState::transversalVelocity() const {
 	if (targetPosition == attackerPosition)
 		return 0;
 	
-	Vector dv = targetVelocity - attackerVelocity;
+	Vector dv = targetVelocityVector - attackerVelocityVector;
 	float l = dv.length();
 	if (l == 0)
 		return 0;
@@ -65,10 +129,19 @@ float CombatSimulator::State::transversalVelocity() const {
 	return sqrt(l * l - pr * pr);
 }
 
-float CombatSimulator::State::angularVelocity() const {
+float CombatSimulator::ManualState::angularVelocity() const {
 	float r = range();
 	return r > 0 ? transversalVelocity() / r : 0;
 }
+
+float CombatSimulator::ManualState::targetVelocity() const {
+	return targetVelocityVector.length();
+}
+
+float CombatSimulator::ManualState::attackerVelocity() const {
+	return attackerVelocityVector.length();
+}
+
 
 CombatSimulator::CombatSimulator(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target): attacker_(attacker), target_(target) {
 	auto engine = attacker->getEngine();
@@ -86,7 +159,7 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> const& attacker, std::sha
 				if (module->isOffensive()) {
 					module->setTarget(target);
 					if (module->getDps() == 0) {
-						preferredStates_[module] = module->getPreferredState();
+						preferredStates_[module] = state;
 						modulesList.push_back(module);
 						module->setPreferredState(Module::STATE_ONLINE);
 					}
@@ -134,8 +207,9 @@ CombatSimulator::~CombatSimulator() {
 }
 
 void CombatSimulator::setState(const State& state) {
-	state_ = state;
 	float range = state.range();
+	auto engine = attacker_->getEngine();
+	engine->beginUpdates();
 	for (const auto& module: attackerOffensiveModules_) {
 		float maxRange = module->getMaxRange();
 		float falloff = module->getFalloff();
@@ -146,21 +220,14 @@ void CombatSimulator::setState(const State& state) {
 		float falloff = module->getFalloff();
 		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
 	}
-	
-	float v0 = state.attackerVelocity.length();
-	float v1 = attacker_->getMaxVelocityInOrbit(range);
-	
-	if (v1 < v0)
-		state_.attackerVelocity = state_.attackerVelocity * (v1 / v0);
-	
-	v0 = state.targetVelocity.length();
-	v1 = target_->getMaxVelocityInOrbit(range);
-	if (v1 < v0)
-		state_.targetVelocity = state_.targetVelocity * (v1 / v0);
+	engine->commitUpdates();
 
-	float angularVelocity = state_.angularVelocity();
-	attackersHostileTarget_ = HostileTarget(range, angularVelocity, target_->getSignatureRadius(), state_.targetVelocity.length());
-	targetsHostileTarget_ = HostileTarget(range, angularVelocity,  attacker_->getSignatureRadius(), state_.attackerVelocity.length());
+	float targetVelocity = state.targetVelocity();
+	float attackerVelocity = state.attackerVelocity();
+	float angularVelocity = state.angularVelocity();
+	
+	attackersHostileTarget_ = HostileTarget(range, angularVelocity, target_->getSignatureRadius(), targetVelocity);
+	targetsHostileTarget_ = HostileTarget(range, angularVelocity,  attacker_->getSignatureRadius(), attackerVelocity);
 }
 
 DamageVector CombatSimulator::outgoingDps() {
