@@ -634,8 +634,10 @@ float Module::getFalloff()
 	{
 		if (hasAttribute(FALLOFF_ATTRIBUTE_ID))
 			falloff_ = getAttribute(FALLOFF_ATTRIBUTE_ID)->getValue();
-		else if (hasAttribute(SHIP_SCAN_RANGE_ATTRIBUTE_ID))
-			falloff_ = getAttribute(SHIP_SCAN_RANGE_ATTRIBUTE_ID)->getValue();
+		else if (hasAttribute(SHIP_SCAN_FALLOFF_ATTRIBUTE_ID))
+			falloff_ = getAttribute(SHIP_SCAN_FALLOFF_ATTRIBUTE_ID)->getValue();
+		else if (hasAttribute(FALLOFF_EFFECTIVENESS_ATTRIBUTE_ID))
+			falloff_ = getAttribute(FALLOFF_EFFECTIVENESS_ATTRIBUTE_ID)->getValue();
 		else
 			falloff_ = 0;
 	}
