@@ -540,6 +540,17 @@ DamageVector Module::getDps(const HostileTarget& target)
 	else if (hardpoint == HARDPOINT_LAUNCHER) {
 		auto charge = getCharge();
 		if (charge) {
+			if (target.range > getMaxRange())
+				return 0;
+			if (target.velocity > 0) {
+				float missileEntityVelocityMultiplier = 1;
+				if (hasAttribute(MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID))
+					missileEntityVelocityMultiplier = getAttribute(MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+				float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue() * missileEntityVelocityMultiplier;
+				if (maxVelocity < target.velocity)
+					return 0;
+			}
+			
 			float a = 1;
 			if (target.signature > 0) {
 				float e = charge->getAttribute(AOE_CLOUD_SIZE_ATTRIBUTE_ID)->getValue();

@@ -61,7 +61,7 @@ float CombatSimulator::OrbitState::range() const {
 float CombatSimulator::OrbitState::transversalVelocity() const {
 	float Va = attackerVelocity();
 	float Vt = targetVelocity();
-	return Va > Vt ? sqrt(Va * Va - Vt * Vt) : 0;
+	return Va > Vt ? std::sqrt(Va * Va - Vt * Vt) : 0;
 }
 
 float CombatSimulator::OrbitState::angularVelocity() const {
@@ -126,7 +126,7 @@ float CombatSimulator::ManualState::transversalVelocity() const {
 		return 0;
 	
 	float pr = (attackerPosition - targetPosition).project(dv);
-	return sqrt(l * l - pr * pr);
+	return std::sqrt(l * l - pr * pr);
 }
 
 float CombatSimulator::ManualState::angularVelocity() const {

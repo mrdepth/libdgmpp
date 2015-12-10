@@ -203,8 +203,19 @@ DamageVector Drone::getDps(const HostileTarget& target)
 	
 	if (dps_ > 0  && target.signature > 0) {
 		float range = getAttribute(ENTITY_FLY_RANGE_ATTRIBUTE_ID)->getValue();
-		float velocity = getAttribute(ENTITY_CRUISE_SPEED_ATTRIBUTE_ID)->getValue();
-		float angularVelocity = range > 0 ? velocity / range : 0;
+		float orbitVelocity = getAttribute(ENTITY_CRUISE_SPEED_ATTRIBUTE_ID)->getValue();
+		
+		if (target.velocity > 0) {
+			float velocity = getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
+			
+			if (velocity < target.velocity)
+				return 0;
+			
+			float v = sqrtf(velocity * velocity - target.velocity * target.velocity);
+			orbitVelocity = std::min(orbitVelocity, v);
+		}
+		
+		float angularVelocity = range > 0 ? orbitVelocity / range : 0;
 		
 		float a = 0;
 		if (angularVelocity > 0) {
