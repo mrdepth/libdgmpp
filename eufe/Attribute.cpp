@@ -216,7 +216,7 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	{
 		static int precalculatedExp = 0;
 		static float* pExp = nullptr;
-		long n = last - first;
+		long n = std::distance(first, last);
 		if (n > precalculatedExp) {
 			if (pExp)
 				delete[] pExp;
@@ -371,12 +371,30 @@ void Attribute::calculate()
 		value_ = initialValue_;
 		
 		Environment environment = owner->getEnvironment();
-		std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
-		std::shared_ptr<Ship> ship = environment.find("Ship") != environment.end() ? std::dynamic_pointer_cast<Ship>(environment["Ship"]) : nullptr;
+		//std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
+		Item* currentCharacter = environment.character;
+		Ship* ship = dynamic_cast<Ship*>(environment.ship);
+		
+//		std::shared_ptr<Ship> ship = environment.find("Ship") != environment.end() ? std::dynamic_pointer_cast<Ship>(environment["Ship"]) : nullptr;
 		bool isDisallowedAssistance = ship && attributeID_ != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
 		bool isDisallowedOffensiveModifiers = ship && attributeID_ != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
 		
-		ModifiersList modifiers;
+		/*std::list<float>preAssignments;
+		std::list<float>postAssignments;
+		std::list<float>modAdds;
+		std::list<float>preMultipliers;
+		std::list<float>preMultipliersStackable;
+		std::list<float>preDividersStackable;
+		std::list<float>preMultipliersStackableNegative;
+		std::list<float>preDividersStackableNegative;
+		std::list<float>postMultipliers;
+		std::list<float>postMultipliersStackable;
+		std::list<float>postDividersStackable;
+		std::list<float>postPercentsStackable;
+		std::list<float>postMultipliersStackableNegative;
+		std::list<float>postDividersStackableNegative;
+		std::list<float>postPercentsStackableNegative;*/
+		
 		std::vector<float>preAssignments;
 		std::vector<float>postAssignments;
 		std::vector<float>modAdds;
@@ -393,8 +411,9 @@ void Attribute::calculate()
 		std::vector<float>postDividersStackableNegative;
 		std::vector<float>postPercentsStackableNegative;
 		
+		ModifiersList modifiers = owner->getModifiers(shared_from_this());
+		
 
-		owner->getModifiers(shared_from_this(), std::inserter(modifiers, modifiers.begin()));
 		
 //		ModifiersList::iterator i = modifiers.begin(), end = modifiers.end();
 //		if (i != end)
@@ -404,7 +423,7 @@ void Attribute::calculate()
 		
 		for (const auto& i: modifiers)
 		{
-			std::shared_ptr<Item> character = i->getCharacter();
+			Item* character = i->getCharacter();
 			bool projected = character && currentCharacter && character != currentCharacter;
 			if (projected && ((i->isAssistance() && isDisallowedAssistance) || (i->isOffensive() && isDisallowedOffensiveModifiers)))
 				continue;
@@ -491,6 +510,18 @@ void Attribute::calculate()
 		
 		if (highIsGood_)
 		{
+			/*preMultipliersStackable.sort(std::greater<float>());
+			preDividersStackable.sort(std::greater<float>());
+			postMultipliersStackable.sort(std::greater<float>());
+			postDividersStackable.sort(std::greater<float>());
+			postPercentsStackable.sort(std::greater<float>());
+			
+			preMultipliersStackableNegative.sort(std::less<float>());
+			preDividersStackableNegative.sort(std::less<float>());
+			postMultipliersStackableNegative.sort(std::less<float>());
+			postDividersStackableNegative.sort(std::less<float>());
+			postPercentsStackableNegative.sort(std::less<float>());*/
+
 			std::sort(preMultipliersStackable.begin(), preMultipliersStackable.end(), std::greater<float>());
 			std::sort(preDividersStackable.begin(), preDividersStackable.end(), std::greater<float>());
 			std::sort(postMultipliersStackable.begin(), postMultipliersStackable.end(), std::greater<float>());
@@ -505,6 +536,18 @@ void Attribute::calculate()
 		}
 		else
 		{
+			/*preMultipliersStackable.sort(std::less<float>());
+			preDividersStackable.sort(std::less<float>());
+			postMultipliersStackable.sort(std::less<float>());
+			postDividersStackable.sort(std::less<float>());
+			postPercentsStackable.sort(std::less<float>());
+
+			preMultipliersStackableNegative.sort(std::greater<float>());
+			preDividersStackableNegative.sort(std::greater<float>());
+			postMultipliersStackableNegative.sort(std::greater<float>());
+			postDividersStackableNegative.sort(std::greater<float>());
+			postPercentsStackableNegative.sort(std::greater<float>());*/
+
 			std::sort(preMultipliersStackable.begin(), preMultipliersStackable.end(), std::less<float>());
 			std::sort(preDividersStackable.begin(), preDividersStackable.end(), std::less<float>());
 			std::sort(postMultipliersStackable.begin(), postMultipliersStackable.end(), std::less<float>());
@@ -519,10 +562,10 @@ void Attribute::calculate()
 		}
 		
 		if (preAssignments.size() > 0)
-			value_ = preAssignments[0];
+			value_ = preAssignments.front();
 		
 		if (postAssignments.size() > 0)
-			value_ = postAssignments[0];
+			value_ = postAssignments.front();
 
 		for (const auto& j: modAdds)
 			value_ += j;

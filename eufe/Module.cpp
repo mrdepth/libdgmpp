@@ -120,7 +120,7 @@ void Module::setState(State state)
 		state_ = state;
 		auto engine = getEngine();
 		if (engine)
-			engine->reset(shared_from_this());
+			engine->reset();
 	}
 }
 
@@ -158,7 +158,7 @@ Environment Module::getEnvironment()
 	Environment environment;
 	auto engine = getEngine();
 	if (engine) {
-		environment["Self"] = shared_from_this();
+		/*environment["Self"] = shared_from_this();
 		std::shared_ptr<Item> ship = getOwner();
 		std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
 		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
@@ -174,8 +174,14 @@ Environment Module::getEnvironment()
 		if (area)
 			environment["Area"] = area;
 		if (target)
-			environment["Target"] = target;
+			environment["Target"] = target;*/
 		
+		environment.self = this;
+		environment.ship = getOwner().get();
+		environment.character = environment.ship ? environment.ship->getOwner().get() : nullptr;
+		environment.gang = environment.character ? environment.character->getOwner().get() : nullptr;
+		environment.area = engine->getArea().get();
+		environment.target = target_.lock().get();
 	}
 
 	return environment;
@@ -277,7 +283,7 @@ std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 			}
 		}
 		
-		engine->reset(shared_from_this());
+		engine->reset();
 		return charge_;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -376,7 +382,7 @@ void Module::setTarget(std::shared_ptr<Ship> const& target)
 	}
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 void Module::clearTarget()

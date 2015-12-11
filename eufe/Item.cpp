@@ -105,12 +105,12 @@ std::shared_ptr<Item> Item::getOwner() const
 	return owner_.lock();
 }
 
-std::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
+const std::shared_ptr<Attribute>& Item::getAttribute(TypeID attributeID)
 {
 	loadIfNeeded();
 	auto engine = getEngine();
-	if (!engine)
-		return nullptr;
+//	if (!engine)
+//		return nullptr;
 
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
@@ -151,7 +151,7 @@ bool Item::requireSkill(TypeID skillID)
 	loadIfNeeded();
 	try
 	{
-		if (getAttribute(REQUIRED_SKILL1_ATTRIBUTE_ID)->getInitialValue() == skillID)
+		/*if (getAttribute(REQUIRED_SKILL1_ATTRIBUTE_ID)->getInitialValue() == skillID)
 			return true;
 		else if (getAttribute(REQUIRED_SKILL2_ATTRIBUTE_ID)->getInitialValue() == skillID)
 			return true;
@@ -162,7 +162,8 @@ bool Item::requireSkill(TypeID skillID)
 		else if (getAttribute(REQUIRED_SKILL5_ATTRIBUTE_ID)->getInitialValue() == skillID)
 			return true;
 		else if (getAttribute(REQUIRED_SKILL6_ATTRIBUTE_ID)->getInitialValue() == skillID)
-			return true;
+			return true;*/
+		return std::find(requiredSkills_.begin(), requiredSkills_.end(), skillID) != requiredSkills_.end();
 	}
 	catch (AttributeDidNotFoundException&)
 	{
@@ -179,18 +180,21 @@ bool Item::hasEffect(TypeID effectID)
 	return false;
 }
 
-TypeID Item::getTypeID() const
+TypeID Item::getTypeID()
 {
+	loadIfNeeded();
 	return typeID_;
 }
 
-TypeID Item::getGroupID() const
+TypeID Item::getGroupID()
 {
+	loadIfNeeded();
 	return groupID_;
 }
 
-TypeID Item::getCategoryID() const
+TypeID Item::getCategoryID()
 {
+	loadIfNeeded();
 	return categoryID_;
 }
 
@@ -223,47 +227,58 @@ void Item::reset()
 //		i.second->reset();
 }
 
-std::insert_iterator<ModifiersList> Item::getModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+ModifiersList Item::getModifiers(std::shared_ptr<Attribute> const& attribute)
 {
-	const auto& list = itemModifiers_[attribute->getAttributeID()];
-	outIterator = std::copy(list.begin(), list.end(), outIterator);
-	auto owner = getOwner();
-	if (owner)
-	{
-		outIterator = owner->getLocationModifiers(attribute, outIterator);
-		outIterator = owner->getModifiersMatchingItem(this, attribute, outIterator);
+	auto i = itemModifiers_.find(attribute->getAttributeID());
+	if (i != itemModifiers_.end()) {
+		ModifiersList list(i->second);
+		auto owner = getOwner();
+		if (owner)
+		{
+			list.splice(list.end(), owner->getLocationModifiers(attribute));
+			list.splice(list.end(), owner->getModifiersMatchingItem(this, attribute));
+		}
+		return list;
 	}
-	return outIterator;
+	else
+		return ModifiersList();
 }
 
-std::insert_iterator<ModifiersList> Item::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+ModifiersList Item::getLocationModifiers(std::shared_ptr<Attribute> const& attribute)
 {
-	const auto& list = locationModifiers_[attribute->getAttributeID()];
-	outIterator = std::copy(list.begin(), list.end(), outIterator);
-
-	//outIterator = std::remove_copy_if(locationModifiers_.begin(), locationModifiers_.end(), outIterator, ModifierMatchFunction(attribute->getAttributeID()));
-//	if (owner_)
-//		outIterator = owner_->getLocationModifiers(attribute, outIterator);
-	return outIterator;
-
+	auto i = locationModifiers_.find(attribute->getAttributeID());
+	if (i != locationModifiers_.end())
+		return i->second;
+	else
+		return ModifiersList();
 }
 
-std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+ModifiersList Item::getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute)
 {
-	const auto& list = locationGroupModifiers_[attribute->getAttributeID()][item->getGroupID()];
-	outIterator = std::copy(list.begin(), list.end(), outIterator);
+	ModifiersList list;
+	auto outIterator = std::inserter(list, list.begin());
 	
-	for (const auto& map: locationRequiredSkillModifiers_[attribute->getAttributeID()]) {
-		if (item->requireSkill(map.first))
-			outIterator = std::copy(map.second.begin(), map.second.end(), outIterator);
+	auto i = locationGroupModifiers_.find(attribute->getAttributeID());
+	if (i != locationGroupModifiers_.end()) {
+		auto j = i->second.find(item->getGroupID());
+		if (j != i->second.end()) {
+			outIterator = std::copy(j->second.begin(), j->second.end(), outIterator);
+		}
 	}
-
-	//outIterator = std::remove_copy_if(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), outIterator, LocationGroupModifierMatchFunction(attribute->getAttributeID(), item->getGroupID()));
-	//outIterator = std::remove_copy_if(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), outIterator, LocationRequiredSkillModifierMatchFunction(attribute->getAttributeID(), item));
+	
+	
+	auto j = locationRequiredSkillModifiers_.find(attribute->getAttributeID());
+	if (j != locationRequiredSkillModifiers_.end()) {
+		for (const auto& map: j->second) {
+			if (item->requireSkill(map.first))
+				outIterator = std::copy(map.second.begin(), map.second.end(), outIterator);
+		}
+	}
+	
 	auto owner = getOwner();
 	if (owner)
-		outIterator = owner->getModifiersMatchingItem(item, attribute, outIterator);
-	return outIterator;
+		list.splice(list.end(), owner->getModifiersMatchingItem(item, attribute));
+	return list;
 }
 
 void Item::addItemModifier(std::shared_ptr<Modifier> const& modifier)
@@ -295,6 +310,8 @@ void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
 	if (i != list.end())
 		list.erase(i);
+	if (list.size() == 0)
+		itemModifiers_.erase(modifier->getAttributeID());
 	/*ModifiersList::iterator i = std::find_if(itemModifiers_.begin(), itemModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != itemModifiers_.end())
 	{
@@ -308,6 +325,8 @@ void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
 	if (i != list.end())
 		list.erase(i);
+	if (list.size() == 0)
+		locationModifiers_.erase(modifier->getAttributeID());
 
 	/*ModifiersList::iterator i = std::find_if(locationModifiers_.begin(), locationModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationModifiers_.end())
@@ -318,11 +337,18 @@ void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 
 void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
 {
-	auto& list = locationGroupModifiers_[modifier->getAttributeID()][modifier->getGroupID()];
+	auto& map = locationGroupModifiers_[modifier->getAttributeID()];
+	auto& list = map[modifier->getGroupID()];
 	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
 	if (i != list.end())
 		list.erase(i);
 
+	if (list.size() == 0) {
+		map.erase(modifier->getGroupID());
+		if (map.size() == 0)
+			locationGroupModifiers_.erase(modifier->getAttributeID());
+	}
+	
 	/*ModifiersList::iterator i = std::find_if(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationGroupModifiers_.end())
 	{
@@ -332,10 +358,17 @@ void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> co
 
 void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
 {
-	auto& list = locationRequiredSkillModifiers_[modifier->getAttributeID()][modifier->getSkillID()];
+	auto& map = locationRequiredSkillModifiers_[modifier->getAttributeID()];
+	auto& list = map[modifier->getSkillID()];
 	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
 	if (i != list.end())
 		list.erase(i);
+
+	if (list.size() == 0) {
+		map.erase(modifier->getSkillID());
+		if (map.size() == 0)
+			locationGroupModifiers_.erase(modifier->getAttributeID());
+	}
 
 	/*ModifiersList::iterator i = std::find_if(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), ModifiersFindFunction(modifier));
 	if (i != locationRequiredSkillModifiers_.end())
@@ -442,6 +475,21 @@ void Item::lazyLoad() {
 			TypeID effectID = static_cast<TypeID>(result->getInt(0));
 			effects_.push_back(Effect::getEffect(engine, effectID));
 		}
+		static const auto requirements = {
+			REQUIRED_SKILL1_ATTRIBUTE_ID,
+			REQUIRED_SKILL2_ATTRIBUTE_ID,
+			REQUIRED_SKILL3_ATTRIBUTE_ID,
+			REQUIRED_SKILL4_ATTRIBUTE_ID,
+			REQUIRED_SKILL5_ATTRIBUTE_ID,
+			REQUIRED_SKILL6_ATTRIBUTE_ID};
+		
+		for (TypeID attributeID: requirements)
+		{
+			TypeID skillID = static_cast<TypeID>(getAttribute(attributeID)->getInitialValue());
+			if (skillID > 0)
+				requiredSkills_.push_back(skillID);
+		}
+		requiredSkills_.shrink_to_fit();
 	}
 	else
 	{
@@ -454,7 +502,7 @@ std::set<std::shared_ptr<Item>> Item::getAffectors() {
 	ModifiersList modifiers;
 	{
 		for (const auto& i: getAttributes())
-			getModifiers(i.second, std::inserter(modifiers, modifiers.begin()));
+			modifiers.splice(modifiers.end(), getModifiers(i.second));
 		}
 	
 	std::set<std::shared_ptr<Item>> items;

@@ -45,7 +45,7 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 		
 		if (ship_)
 			addEffects(Effect::CATEGORY_GENERIC);
-		engine->reset(shared_from_this());
+		engine->reset();
 		return ship;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -59,7 +59,7 @@ Environment Character::getEnvironment()
 	Environment environment;
 	auto engine = getEngine();
 	if (engine) {
-		environment["Self"] = shared_from_this();
+		/*environment["Self"] = shared_from_this();
 		environment["Char"] = shared_from_this();
 		std::shared_ptr<Item> gang = getOwner();
 		std::shared_ptr<Area> area = engine->getArea();
@@ -71,7 +71,12 @@ Environment Character::getEnvironment()
 			environment["Gang"] = gang;
 		
 		if (area)
-			environment["Area"] = area;
+			environment["Area"] = area;*/
+		environment.self = this;
+		environment.character = this;
+		environment.gang = getOwner().get();
+		environment.area = engine->getArea().get();
+		environment.ship = ship_.get();
 	}
 	return environment;
 }
@@ -170,7 +175,7 @@ std::shared_ptr<Implant> Character::addImplant(TypeID typeID, bool forced)
 		implants_.push_back(implant);
 		if (ship_)
 			implant->addEffects(Effect::CATEGORY_GENERIC);
-		engine->reset(shared_from_this());
+		engine->reset();
 		return implant;
 
 	}
@@ -199,7 +204,7 @@ std::shared_ptr<Booster> Character::addBooster(TypeID typeID, bool forced)
 		boosters_.push_back(booster);
 		if (ship_)
 			booster->addEffects(Effect::CATEGORY_GENERIC);
-		engine->reset(shared_from_this());
+		engine->reset();
 		return booster;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -214,11 +219,12 @@ void Character::removeImplant(std::shared_ptr<Implant> const& implant)
 	{
 		if (ship_)
 			implant->removeEffects(Effect::CATEGORY_GENERIC);
-		implants_.remove(implant);
+		//implants_.remove(implant);
+		implants_.erase(std::find(implants_.begin(), implants_.end(), implant));
 
 		auto engine = getEngine();
 		if (engine)
-			engine->reset(shared_from_this());
+			engine->reset();
 	}
 }
 
@@ -228,11 +234,12 @@ void Character::removeBooster(std::shared_ptr<Booster> const& booster)
 	{
 		if (ship_)
 			booster->removeEffects(Effect::CATEGORY_GENERIC);
-		boosters_.remove(booster);
-		
+		//boosters_.remove(booster);
+		boosters_.erase(std::find(boosters_.begin(), boosters_.end(), booster));
+
 		auto engine = getEngine();
 		if (engine)
-			engine->reset(shared_from_this());
+			engine->reset();
 	}
 }
 
@@ -311,7 +318,7 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 		else
 			i.second->setSkillLevel(0);
 	}
-	engine->reset(shared_from_this());
+	engine->reset();
 }
 
 void Character::setAllSkillsLevel(int level)
@@ -321,16 +328,16 @@ void Character::setAllSkillsLevel(int level)
 		return;
 	for (const auto& i: skills_)
 		i.second->setSkillLevel(level);
-	engine->reset(shared_from_this());
+	engine->reset();
 }
 
-std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+ModifiersList Character::getLocationModifiers(std::shared_ptr<Attribute> const& attribute)
 {
-	outIterator = Item::getLocationModifiers(attribute, outIterator);
+	ModifiersList list = Item::getLocationModifiers(attribute);
 	auto owner = getOwner();
 	if (owner)
-		outIterator = owner->getLocationModifiers(attribute, outIterator);
-	return outIterator;
+		list.splice(list.end(), owner->getLocationModifiers(attribute));
+	return list;
 }
 
 void Character::lazyLoad() {

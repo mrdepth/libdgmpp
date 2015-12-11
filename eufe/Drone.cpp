@@ -23,7 +23,7 @@ Environment Drone::getEnvironment()
 	Environment environment;
 	auto engine = getEngine();
 	if (engine) {
-		environment["Self"] = shared_from_this();
+		/*environment["Self"] = shared_from_this();
 		std::shared_ptr<Item> ship = getOwner();
 		std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
 		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
@@ -39,7 +39,13 @@ Environment Drone::getEnvironment()
 		if (area)
 			environment["Area"] = area;
 		if (target)
-			environment["Target"] = target;
+			environment["Target"] = target;*/
+		environment.self = this;
+		environment.ship = getOwner().get();
+		environment.character = environment.ship ? environment.ship->getOwner().get() : nullptr;
+		environment.gang = environment.character ? environment.character->getOwner().get() : nullptr;
+		environment.area = engine->getArea().get();
+		environment.target = target_.lock().get();
 	}
 
 	return environment;
@@ -66,7 +72,7 @@ void Drone::setTarget(std::shared_ptr<Ship> const& target)
 	}
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 void Drone::clearTarget()
@@ -123,7 +129,7 @@ void Drone::setActive(bool active)
 	isActive_ = active;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 bool Drone::isActive()

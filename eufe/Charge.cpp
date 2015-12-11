@@ -33,7 +33,7 @@ Environment Charge::getEnvironment()
 	Environment environment;
 	auto engine = getEngine();
 	if (engine) {
-		environment["Self"] = shared_from_this();
+		/*environment["Self"] = shared_from_this();
 		
 		std::shared_ptr<Item> module = getOwner();
 		std::shared_ptr<Item> ship = module ? module->getOwner() : nullptr;
@@ -49,7 +49,13 @@ Environment Charge::getEnvironment()
 		if (area)
 			environment["Area"] = area;
 		if (module)
-			environment["Other"] = module;
+			environment["Other"] = module;*/
+		environment.self = this;
+		environment.other = getOwner().get();
+		environment.ship = environment.other ? environment.other->getOwner().get() : nullptr;
+		environment.character = environment.ship ? environment.ship->getOwner().get() : nullptr;
+		environment.gang = environment.character ? environment.character->getOwner().get() : nullptr;
+		environment.area = engine->getArea().get();
 	}
 	
 	return environment;

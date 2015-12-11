@@ -13,14 +13,14 @@ namespace eufe {
 		class ItemWrapper
 		{
 		public:
-			ItemWrapper(std::shared_ptr<Item> const& item) : item_(item) {}
-			std::shared_ptr<Item> getItem() const {return item_.lock();}
+			ItemWrapper(Item* item) : item_(item) {}
+			Item* getItem() const {return item_;}
 			TypeID getGroupID() const {return groupID_;}
 			TypeID getRequiredSkillID() const {return requiredSkillID_;}
 			void setGroupID(TypeID groupID) {groupID_ = groupID;}
 			void setRequiredSkillID(TypeID requiredSkillID) {requiredSkillID_ = requiredSkillID;}
 		private:
-			std::weak_ptr<Item> item_;
+			Item* item_;
 			TypeID groupID_;
 			TypeID requiredSkillID_;
 		};

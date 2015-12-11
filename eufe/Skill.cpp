@@ -35,7 +35,7 @@ Environment Skill::getEnvironment()
 	Environment environment;
 	auto engine = getEngine();
 	if (engine) {
-		environment["Self"] = shared_from_this();
+		/*environment["Self"] = shared_from_this();
 		std::shared_ptr<Character> character = std::dynamic_pointer_cast<Character>(getOwner());
 		std::shared_ptr<Item> ship = character ? character->getShip() : nullptr;
 		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
@@ -48,7 +48,12 @@ Environment Skill::getEnvironment()
 		if (gang)
 			environment["Gang"] = gang;
 		if (area)
-			environment["Area"] = area;
+			environment["Area"] = area;*/
+		environment.self = this;
+		environment.character = getOwner().get();
+		environment.ship = environment.character ? dynamic_cast<Character*>(environment.character)->getShip().get() : nullptr;
+		environment.gang = environment.character ? environment.character->getOwner().get() : nullptr;
+		environment.area = engine->getArea().get();
 	}
 
 	return environment;
