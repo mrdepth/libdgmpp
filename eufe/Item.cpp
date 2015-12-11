@@ -229,19 +229,20 @@ void Item::reset()
 
 ModifiersList Item::getModifiers(std::shared_ptr<Attribute> const& attribute)
 {
+	ModifiersList list;
+	auto outIterator = std::inserter(list, list.begin());
+
 	auto i = itemModifiers_.find(attribute->getAttributeID());
 	if (i != itemModifiers_.end()) {
-		ModifiersList list(i->second);
-		auto owner = getOwner();
-		if (owner)
-		{
-			list.splice(list.end(), owner->getLocationModifiers(attribute));
-			list.splice(list.end(), owner->getModifiersMatchingItem(this, attribute));
-		}
-		return list;
+		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
 	}
-	else
-		return ModifiersList();
+	auto owner = getOwner();
+	if (owner)
+	{
+		list.splice(list.end(), owner->getLocationModifiers(attribute));
+		list.splice(list.end(), owner->getModifiersMatchingItem(this, attribute));
+	}
+	return list;
 }
 
 ModifiersList Item::getLocationModifiers(std::shared_ptr<Attribute> const& attribute)
