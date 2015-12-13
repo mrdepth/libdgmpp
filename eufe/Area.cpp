@@ -21,12 +21,16 @@ void Area::addEffectsToShip(std::shared_ptr<Item> const&ship)
 	std::shared_ptr<Item> character = ship->getOwner();
 	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
 
-	environment["Ship"] = ship;
+	/*environment["Ship"] = ship;
 	if (character)
 		environment["Char"] = character;
 	if (gang)
-		environment["Gang"] = gang;
-	
+		environment["Gang"] = gang;*/
+
+	environment.ship = ship.get();
+	environment.character = character.get();
+	environment.gang = gang.get();
+
 	for (const auto& i: effects_)
 		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
 			i->addEffect(environment);
@@ -38,11 +42,15 @@ void Area::removeEffectsFromShip(std::shared_ptr<Item> const& ship)
 	std::shared_ptr<Item> character = ship->getOwner();
 	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
 	
-	environment["Ship"] = ship;
+/*	environment["Ship"] = ship;
 	if (character)
 		environment["Char"] = character;
 	if (gang)
-		environment["Gang"] = gang;
+		environment["Gang"] = gang;*/
+	environment.ship = ship.get();
+	environment.character = character.get();
+	environment.gang = gang.get();
+
 	
 	for (const auto& i: effects_)
 		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
@@ -84,7 +92,9 @@ void Area::removeEffects(Effect::Category category)
 Environment Area::getEnvironment()
 {
 	Environment environment;
-	environment["Self"] = shared_from_this();
-	environment["Area"] = shared_from_this();
+	//environment["Self"] = shared_from_this();
+	//environment["Area"] = shared_from_this();
+	environment.self = this;
+	environment.area = this;
 	return environment;
 }

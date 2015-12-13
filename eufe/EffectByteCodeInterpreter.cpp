@@ -501,7 +501,8 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand18()
 		return false;
 	
 	std::shared_ptr<AttributeWrapper> attribute = arg1;
-	float value = environment_["Self"]->getAttribute(arg2)->getValue();
+	//float value = environment_["Self"]->getAttribute(arg2)->getValue();
+	float value = environment_.self->getAttribute(arg2)->getValue();
 	attribute->dec(value);
 	return true;
 }
@@ -580,8 +581,9 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand24()
 	if (arg1.getType() == Argument::TYPE_EXPRESSION)
 		arg1 = execute(byteCode_ + static_cast<int>(arg1));
 	std::string key = arg1;
-	if (environment_.find(key) != environment_.end())
-		return std::shared_ptr<ItemWrapper>(new ItemWrapper(environment_[key]));
+	Item* item = environment_[key];
+	if (item)
+		return std::shared_ptr<ItemWrapper>(new ItemWrapper(item));
 	else
 		return false;
 }
@@ -642,10 +644,13 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 	if (arg1.getType() == Argument::TYPE_STRING)
 	{
 		std::string typeName = arg1;
-		std::stringstream sql;
-		sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
+		//std::stringstream sql;
+		//sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
+		auto engine = engine_.lock();
+		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes WHERE typeName = ?");
+		stmt->bindText(1, typeName);
 		
-		std::shared_ptr<FetchResult> result = engine_.lock()->getSqlConnector()->exec(sql.str().c_str());
+		std::shared_ptr<FetchResult> result = engine_.lock()->getSqlConnector()->exec(stmt);
 		if (result->next())
 		{
 			TypeID typeID = result->getInt(0);
@@ -723,13 +728,12 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand34()
 	if (arg2.getType() == Argument::TYPE_EXPRESSION)
 		arg2 = execute(byteCode_ + static_cast<int>(arg2));
 	
-	if (environment_.find("Gang") == environment_.end())
+	if (!environment_.gang)
 		return false;
 	
-	std::shared_ptr<Item> gang = environment_["Gang"];
 	TypeID groupID = arg1;
 	TypeID attributeID = arg2;
-	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(gang);
+	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(environment_.gang);
 	item->setGroupID(groupID);
 	return std::make_shared<AttributeWrapper>(item, attributeID);
 }
@@ -832,12 +836,11 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand40()
 	if (arg1.getType() == Argument::TYPE_EXPRESSION)
 		arg1 = execute(byteCode_ + static_cast<int>(arg1));
 	
-	if (environment_.find("Gang") == environment_.end())
+	if (!environment_.gang)
 		return false;
 	
-	std::shared_ptr<Item> gang = environment_["Gang"];
 	TypeID attributeID = arg1;
-	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(gang);
+	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(environment_.gang);
 	return std::make_shared<AttributeWrapper>(item, attributeID);
 }
 
@@ -877,7 +880,7 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand42()
 		return false;
 	
 	std::shared_ptr<AttributeWrapper> attribute = arg1;
-	float value = environment_["Self"]->getAttribute(arg2)->getValue();
+	float value = environment_.self->getAttribute(arg2)->getValue();
 	attribute->inc(value);
 	return true;
 }
@@ -1252,13 +1255,12 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand64()
 	if (arg2.getType() == Argument::TYPE_EXPRESSION)
 		arg2 = execute(byteCode_ + static_cast<int>(arg2));
 	
-	if (environment_.find("Gang") == environment_.end())
+	if (!environment_.gang)
 		return false;
 	
-	std::shared_ptr<Item> gang = environment_["Gang"];
 	TypeID skillID = arg1;
 	TypeID attributeID = arg2;
-	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(gang);
+	std::shared_ptr<ItemWrapper> item = std::make_shared<ItemWrapper>(environment_.gang);
 	item->setRequiredSkillID(skillID);
 	return std::make_shared<AttributeWrapper>(item, attributeID);
 	
@@ -1406,16 +1408,9 @@ EffectByteCodeInterpreter::AssociationWrapper::AssociationWrapper(std::shared_pt
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
-
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 
 	auto modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->addItemModifier(modifier);
@@ -1424,17 +1419,10 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addItemModifier(const Enviro
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
+	Item* item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
-
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 
 	auto modifier = std::make_shared<LocationGroupModifier>(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
 	item->addLocationGroupModifier(modifier);
@@ -1443,15 +1431,9 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationGroupModifier(con
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 	
 	auto modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->addLocationModifier(modifier);
@@ -1460,16 +1442,10 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationModifier(const En
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addLocationRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
+	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 	
 	auto modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->addLocationRequiredSkillModifier(modifier);
@@ -1478,16 +1454,10 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addLocationRequiredSkillModi
 
 bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
+	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 	
 	auto modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->addLocationRequiredSkillModifier(modifier);
@@ -1496,15 +1466,9 @@ bool EffectByteCodeInterpreter::AssociationWrapper::addOwnerRequiredSkillModifie
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeItemModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 	
 	auto modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->removeItemModifier(modifier);
@@ -1513,16 +1477,10 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeItemModifier(const Env
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
+	Item* item = attribute_->getItem()->getItem();
 	TypeID groupID = getAttribute()->getItem()->getGroupID();
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 	
 	auto modifier = std::make_shared<LocationGroupModifier>(attribute_->getAttributeID(), association_, attribute, groupID, isAssistance, isOffensive, character);
 	item->removeLocationGroupModifier(modifier);
@@ -1531,15 +1489,9 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationGroupModifier(
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	Item* item = attribute_->getItem()->getItem();
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 	
 	auto modifier = std::make_shared<Modifier>(attribute_->getAttributeID(), association_, attribute, isAssistance, isOffensive, character);
 	item->removeLocationModifier(modifier);
@@ -1548,16 +1500,10 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationModifier(const
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
+	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 	
 	auto modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->removeLocationRequiredSkillModifier(modifier);
@@ -1566,16 +1512,10 @@ bool EffectByteCodeInterpreter::AssociationWrapper::removeLocationRequiredSkillM
 
 bool EffectByteCodeInterpreter::AssociationWrapper::removeOwnerRequiredSkillModifier(const Environment& environment, TypeID attributeID, bool isAssistance, bool isOffensive)
 {
-	std::shared_ptr<Item> item = attribute_->getItem()->getItem();
+	Item* item = attribute_->getItem()->getItem();
 	TypeID skillID = getAttribute()->getItem()->getRequiredSkillID();
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
-	std::shared_ptr<Attribute> attribute = Self->second->getAttribute(attributeID);
-	
-	std::shared_ptr<Character> character = nullptr;
-	if (Char != end)
-		character = std::dynamic_pointer_cast<Character>(Char->second);
+	std::shared_ptr<Attribute> attribute = environment.self->getAttribute(attributeID);
+	Character* character = dynamic_cast<Character*>(environment.character);
 	
 	auto modifier = std::make_shared<LocationRequiredSkillModifier>(attribute_->getAttributeID(), association_, attribute, skillID, isAssistance, isOffensive, character);
 	item->removeLocationRequiredSkillModifier(modifier);

@@ -44,10 +44,10 @@ namespace eufe {
 		std::shared_ptr<Engine> getEngine();
 		std::shared_ptr<Item> getOwner() const;
 
-		virtual TypeID getTypeID() const;
-		virtual TypeID getGroupID() const;
-		virtual TypeID getCategoryID() const;
-		virtual std::shared_ptr<Attribute> getAttribute(TypeID attributeID);
+		virtual TypeID getTypeID();
+		virtual TypeID getGroupID();
+		virtual TypeID getCategoryID();
+		virtual const std::shared_ptr<Attribute>& getAttribute(TypeID attributeID);
 		const AttributesMap &getAttributes();
 		bool hasAttribute(TypeID attributeID);
 		std::shared_ptr<Effect> getEffect(TypeID effectID);
@@ -65,7 +65,6 @@ namespace eufe {
 		
 		virtual void reset();
 		
-		virtual std::insert_iterator<ModifiersList> getModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
 		
 		virtual void addItemModifier(std::shared_ptr<Modifier> const& modifier);
 		virtual void addLocationModifier(std::shared_ptr<Modifier> const& modifier);
@@ -82,8 +81,10 @@ namespace eufe {
 		
 		std::set<std::shared_ptr<Item>> getAffectors();
 		friend std::ostream& operator<<(std::ostream& os, Item& item);
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
-		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+
+		virtual ModifiersList getModifiers(std::shared_ptr<Attribute> const& attribute);
+		virtual ModifiersList getLocationModifiers(std::shared_ptr<Attribute> const& attribute);
+		virtual ModifiersList getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute);
 
 	protected:
 		std::weak_ptr<Engine> engine_;
@@ -99,11 +100,11 @@ namespace eufe {
 		typedef int32_t SkillID;
 		
 
-		std::map<AttributeID, std::list<std::shared_ptr<Modifier>>> itemModifiers_;
-		std::map<AttributeID, std::list<std::shared_ptr<Modifier>>> locationModifiers_;
+		std::map<AttributeID, ModifiersList> itemModifiers_;
+		std::map<AttributeID, ModifiersList> locationModifiers_;
 		
-		std::map<AttributeID, std::map<GroupID, std::list<std::shared_ptr<LocationGroupModifier>>>> locationGroupModifiers_;
-		std::map<AttributeID, std::map<SkillID, std::list<std::shared_ptr<LocationRequiredSkillModifier>>>> locationRequiredSkillModifiers_;
+		std::map<AttributeID, std::map<GroupID, ModifiersList>> locationGroupModifiers_;
+		std::map<AttributeID, std::map<SkillID, ModifiersList>> locationRequiredSkillModifiers_;
 		
 		virtual void lazyLoad();
 		void loadIfNeeded() {
@@ -116,6 +117,7 @@ namespace eufe {
 	private:
 		const Context* context_;
 		bool loaded_;
+		std::vector<TypeID> requiredSkills_;
 		
 		std::string typeName_;
 		std::string groupName_;

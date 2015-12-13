@@ -8,6 +8,7 @@
 #include <iterator>
 #include <set>
 #include <memory>
+#include <cassert>
 
 namespace eufe {
 	class Item;
@@ -35,9 +36,8 @@ namespace eufe {
 	typedef int TypeID;
 	
 	typedef std::map<eufe::TypeID, std::shared_ptr<Attribute>> AttributesMap;
-	typedef std::list<std::shared_ptr<Attribute>> AttributesList;
 	typedef std::list<std::shared_ptr<Effect> > EffectsList;
-	typedef std::map<std::string, std::shared_ptr<Item>> Environment;
+	//typedef std::map<std::string, std::shared_ptr<Item>> Environment;
 	typedef std::list<std::shared_ptr<Module>> ModulesList;
 	typedef std::list<std::shared_ptr<Drone>> DronesList;
 	typedef std::list<std::shared_ptr<Character>> CharactersList;
@@ -47,6 +47,37 @@ namespace eufe {
 	typedef std::list<std::shared_ptr<Modifier>> ModifiersList;
 	typedef std::map<int32_t, ModifiersList> ModifiersMap;
 	typedef std::list<std::shared_ptr<Structure>> StructuresList;
+	
+	struct Environment {
+		Environment() : character(nullptr), ship(nullptr), gang(nullptr), self(nullptr), area(nullptr), target(nullptr), other(nullptr) {};
+		Item* character;
+		Item* ship;
+		Item* gang;
+		Item* self;
+		Item* area;
+		Item* target;
+		Item* other;
+		Item* operator[](const std::string& s) {
+			if (s == "Self")
+				return self;
+			else if (s == "Ship")
+				return ship;
+			else if (s == "Char")
+				return character;
+			else if (s == "Other")
+				return other;
+			else if (s == "Target")
+				return target;
+			else if (s == "Area")
+				return area;
+			else if (s == "Gang")
+				return gang;
+			else {
+				assert(nullptr);
+				return nullptr;
+			}
+		}
+	};
 	
 	struct Tank
 	{

@@ -217,7 +217,7 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	{
 		static int precalculatedExp = 0;
 		static float* pExp = nullptr;
-		long n = last - first;
+		long n = std::distance(first, last);
 		if (n > precalculatedExp) {
 			if (pExp)
 				delete[] pExp;
@@ -240,15 +240,26 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	return value;
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner, const char* attributeName, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), attributeName_(attributeName), isFakeAttribute_(isFakeAttribute)
+Attribute::Attribute(std::shared_ptr<Engine> const& engine,
+					 TypeID attributeID,
+					 TypeID maxAttributeID,
+					 float value,
+					 bool isStackable,
+					 bool highIsGood,
+					 std::shared_ptr<Item> const& owner,
+					 const char* attributeName,
+					 bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), attributeName_(attributeName), isFakeAttribute_(isFakeAttribute)
 {
 	forcedValue_ = std::numeric_limits<float>::infinity();
 	
 	if (attributeName[0] == 0 && attributeID != 0)
 	{
-        std::stringstream sql;
-		sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-		std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+        //std::stringstream sql;
+		//sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
+		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = ?");
+		stmt->bindInt(1, attributeID_);
+
+		std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 		if (result->next()) {
 			attributeName_ = result->getText(0);
 			isStackable_ = result->getInt(1) != 0;
@@ -258,13 +269,19 @@ Attribute::Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, 
 	reset();
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
+Attribute::Attribute(std::shared_ptr<Engine> const& engine,
+					 TypeID attributeID,
+					 std::shared_ptr<Item> const& owner,
+					 bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
 {
 	forcedValue_ = std::numeric_limits<float>::infinity();
 
-	std::stringstream sql;
-	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+//	std::stringstream sql;
+//	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
+	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = ?");
+	stmt->bindInt(1, attributeID_);
+
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 	if (result->next()) {
 		isStackable_ = result->getInt(0) != 0;
 		maxAttributeID_ = static_cast<eufe::TypeID>(result->getInt(1));
@@ -372,12 +389,30 @@ void Attribute::calculate()
 		value_ = initialValue_;
 		
 		Environment environment = owner->getEnvironment();
-		std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
-		std::shared_ptr<Ship> ship = environment.find("Ship") != environment.end() ? std::dynamic_pointer_cast<Ship>(environment["Ship"]) : nullptr;
+		//std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
+		Item* currentCharacter = environment.character;
+		Ship* ship = dynamic_cast<Ship*>(environment.ship);
+		
+//		std::shared_ptr<Ship> ship = environment.find("Ship") != environment.end() ? std::dynamic_pointer_cast<Ship>(environment["Ship"]) : nullptr;
 		bool isDisallowedAssistance = ship && attributeID_ != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
 		bool isDisallowedOffensiveModifiers = ship && attributeID_ != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
 		
-		ModifiersList modifiers;
+		/*std::list<float>preAssignments;
+		std::list<float>postAssignments;
+		std::list<float>modAdds;
+		std::list<float>preMultipliers;
+		std::list<float>preMultipliersStackable;
+		std::list<float>preDividersStackable;
+		std::list<float>preMultipliersStackableNegative;
+		std::list<float>preDividersStackableNegative;
+		std::list<float>postMultipliers;
+		std::list<float>postMultipliersStackable;
+		std::list<float>postDividersStackable;
+		std::list<float>postPercentsStackable;
+		std::list<float>postMultipliersStackableNegative;
+		std::list<float>postDividersStackableNegative;
+		std::list<float>postPercentsStackableNegative;*/
+		
 		std::vector<float>preAssignments;
 		std::vector<float>postAssignments;
 		std::vector<float>modAdds;
@@ -394,8 +429,9 @@ void Attribute::calculate()
 		std::vector<float>postDividersStackableNegative;
 		std::vector<float>postPercentsStackableNegative;
 		
+		ModifiersList modifiers = owner->getModifiers(shared_from_this());
+		
 
-		owner->getModifiers(shared_from_this(), std::inserter(modifiers, modifiers.begin()));
 		
 //		ModifiersList::iterator i = modifiers.begin(), end = modifiers.end();
 //		if (i != end)
@@ -405,7 +441,7 @@ void Attribute::calculate()
 		
 		for (const auto& i: modifiers)
 		{
-			std::shared_ptr<Item> character = i->getCharacter();
+			Item* character = i->getCharacter();
 			bool projected = character && currentCharacter && character != currentCharacter;
 			if (projected && ((i->isAssistance() && isDisallowedAssistance) || (i->isOffensive() && isDisallowedOffensiveModifiers)))
 				continue;
@@ -492,6 +528,18 @@ void Attribute::calculate()
 		
 		if (highIsGood_)
 		{
+			/*preMultipliersStackable.sort(std::greater<float>());
+			preDividersStackable.sort(std::greater<float>());
+			postMultipliersStackable.sort(std::greater<float>());
+			postDividersStackable.sort(std::greater<float>());
+			postPercentsStackable.sort(std::greater<float>());
+			
+			preMultipliersStackableNegative.sort(std::less<float>());
+			preDividersStackableNegative.sort(std::less<float>());
+			postMultipliersStackableNegative.sort(std::less<float>());
+			postDividersStackableNegative.sort(std::less<float>());
+			postPercentsStackableNegative.sort(std::less<float>());*/
+
 			std::sort(preMultipliersStackable.begin(), preMultipliersStackable.end(), std::greater<float>());
 			std::sort(preDividersStackable.begin(), preDividersStackable.end(), std::greater<float>());
 			std::sort(postMultipliersStackable.begin(), postMultipliersStackable.end(), std::greater<float>());
@@ -506,6 +554,18 @@ void Attribute::calculate()
 		}
 		else
 		{
+			/*preMultipliersStackable.sort(std::less<float>());
+			preDividersStackable.sort(std::less<float>());
+			postMultipliersStackable.sort(std::less<float>());
+			postDividersStackable.sort(std::less<float>());
+			postPercentsStackable.sort(std::less<float>());
+
+			preMultipliersStackableNegative.sort(std::greater<float>());
+			preDividersStackableNegative.sort(std::greater<float>());
+			postMultipliersStackableNegative.sort(std::greater<float>());
+			postDividersStackableNegative.sort(std::greater<float>());
+			postPercentsStackableNegative.sort(std::greater<float>());*/
+
 			std::sort(preMultipliersStackable.begin(), preMultipliersStackable.end(), std::less<float>());
 			std::sort(preDividersStackable.begin(), preDividersStackable.end(), std::less<float>());
 			std::sort(postMultipliersStackable.begin(), postMultipliersStackable.end(), std::less<float>());
@@ -520,10 +580,10 @@ void Attribute::calculate()
 		}
 		
 		if (preAssignments.size() > 0)
-			value_ = preAssignments[0];
+			value_ = preAssignments.front();
 		
 		if (postAssignments.size() > 0)
-			value_ = postAssignments[0];
+			value_ = postAssignments.front();
 
 		for (const auto& j: modAdds)
 			value_ += j;

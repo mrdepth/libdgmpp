@@ -38,7 +38,7 @@ std::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
 			structure->setState(Structure::STATE_ACTIVE);
 		else if (structure->canHaveState(Structure::STATE_ONLINE))
 			structure->setState(Structure::STATE_ONLINE);
-		engine->reset(shared_from_this());
+		engine->reset();
 		return structure;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -52,10 +52,11 @@ void ControlTower::removeStructure(std::shared_ptr<Structure> const& structure)
 	structure->setState(Structure::STATE_OFFLINE);
 	structure->removeEffects(Effect::CATEGORY_GENERIC);
 	
-	structures_.remove(structure);
+	//structures_.remove(structure);
+	structures_.erase(std::find(structures_.begin(), structures_.end(), structure));
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 const StructuresList& ControlTower::getStructures()
@@ -78,11 +79,14 @@ Environment ControlTower::getEnvironment()
 	Environment environment;
 	auto engine = getEngine();
 	if (engine) {
-		environment["Self"] = shared_from_this();
+		/*environment["Self"] = shared_from_this();
 		environment["Ship"] = shared_from_this();
 		std::shared_ptr<Area> area = engine->getArea();
 		if (area)
-			environment["Area"] = area;
+			environment["Area"] = area;*/
+		environment.self = this;
+		environment.ship = this;
+		environment.area = engine->getArea().get();
 	}
 
 	return environment;
@@ -147,7 +151,7 @@ void ControlTower::setDamagePattern(const DamagePattern& damagePattern)
 	damagePattern_ = damagePattern;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 //Calculations

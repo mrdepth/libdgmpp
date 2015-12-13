@@ -17,40 +17,50 @@ EffectShieldBoostingInterpreter::~EffectShieldBoostingInterpreter(void)
 
 bool EffectShieldBoostingInterpreter::addEffect(const Environment& environment)
 {
-	const char* key = isProjected_ ? "Target" : "Ship";
+	/*const char* key = isProjected_ ? "Target" : "Ship";
 	
 	Environment::const_iterator Target = environment.find(key);
 	Environment::const_iterator Self = environment.find("Self");
 	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
+	Environment::const_iterator end = environment.end();*/
+	auto Target = isProjected_ ? environment.target : environment.ship;
+	auto Self = environment.self;
+	auto Char = environment.character;
+	Item* end = nullptr;
+	
 	if (Target != end && Self != end && Char != end) {
 		std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(SHIELD_CHARGE_ATTRIBUTE_ID,
 																		Modifier::ASSOCIATION_ADD_RATE,
-																		Self->second->getAttribute(SHIELD_BONUS_ATTRIBUTE_ID),
+																		Self->getAttribute(SHIELD_BONUS_ATTRIBUTE_ID),
 																		isAssistance_,
 																		isOffensive_,
-																		std::dynamic_pointer_cast<Character>(Char->second));
-		Target->second->addItemModifier(modifier);
+																		dynamic_cast<Character*>(Char));
+		Target->addItemModifier(modifier);
 	}
 	return 1;
 }
 
 bool EffectShieldBoostingInterpreter::removeEffect(const Environment& environment)
 {
-	const char* key = isProjected_ ? "Target" : "Ship";
+	/*const char* key = isProjected_ ? "Target" : "Ship";
+	 
+	 Environment::const_iterator Target = environment.find(key);
+	 Environment::const_iterator Self = environment.find("Self");
+	 Environment::const_iterator Char = environment.find("Char");
+	 Environment::const_iterator end = environment.end();*/
+	auto Target = isProjected_ ? environment.target : environment.ship;
+	auto Self = environment.self;
+	auto Char = environment.character;
+	Item* end = nullptr;
 	
-	Environment::const_iterator Target = environment.find(key);
-	Environment::const_iterator Self = environment.find("Self");
-	Environment::const_iterator Char = environment.find("Char");
-	Environment::const_iterator end = environment.end();
 	if (Target != end && Self != end && Char != end) {
 		std::shared_ptr<Modifier> modifier = std::make_shared<Modifier>(SHIELD_CHARGE_ATTRIBUTE_ID,
 																		Modifier::ASSOCIATION_ADD_RATE,
-																		Self->second->getAttribute(SHIELD_BONUS_ATTRIBUTE_ID),
+																		Self->getAttribute(SHIELD_BONUS_ATTRIBUTE_ID),
 																		isAssistance_,
 																		isOffensive_,
-																		std::dynamic_pointer_cast<Character>(Char->second));
-		Target->second->removeItemModifier(modifier);
+																		dynamic_cast<Character*>(Char));
+		Target->removeItemModifier(modifier);
 	}
 	return 1;
 }

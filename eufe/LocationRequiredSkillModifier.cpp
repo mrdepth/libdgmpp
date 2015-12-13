@@ -4,7 +4,7 @@
 
 using namespace eufe;
 
-LocationRequiredSkillModifier::LocationRequiredSkillModifier(TypeID attributeID, Association association, std::shared_ptr<Attribute>  const&modifier, TypeID skillID, bool isAssistance, bool isOffensive, std::shared_ptr<Character> const& character) : Modifier(attributeID, association, modifier, isAssistance, isOffensive, character), skillID_(skillID)
+LocationRequiredSkillModifier::LocationRequiredSkillModifier(TypeID attributeID, Association association, std::shared_ptr<Attribute>  const&modifier, TypeID skillID, bool isAssistance, bool isOffensive, Character* character) : Modifier(attributeID, association, modifier, isAssistance, isOffensive, character), skillID_(skillID)
 {
 	
 }

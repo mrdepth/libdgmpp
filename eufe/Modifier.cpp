@@ -5,7 +5,7 @@
 
 using namespace eufe;
 
-Modifier::Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, std::shared_ptr<Character> const& character) : attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
+Modifier::Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character) : attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
 {
 }
 
@@ -69,9 +69,9 @@ bool Modifier::isStackable() const
 	return modifier ? modifier->isStackable() : false;
 }
 
-std::shared_ptr<Character> Modifier::getCharacter()
+Character* Modifier::getCharacter()
 {
-	return character_.lock();
+	return character_;
 }
 
 bool Modifier::isOffensive()

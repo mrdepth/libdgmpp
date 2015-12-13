@@ -1,13 +1,14 @@
 #pragma once
 #include <sqlite3.h>
 #include "FetchResult.h"
+#include "SqliteFetchRequest.h"
 
 namespace eufe {
 
 	class SqliteFetchResult: public FetchResult
 	{
 	public:
-		SqliteFetchResult(sqlite3_stmt* stmt);
+		SqliteFetchResult(const std::shared_ptr<SqliteFetchRequest>& request);
 		virtual ~SqliteFetchResult(void);
 		virtual bool next();
 		virtual int getInt(int columnIndex);
@@ -16,6 +17,6 @@ namespace eufe {
 		virtual Blob getBlob(int columnIndex);
 		virtual void finalize();
 	private:
-		sqlite3_stmt* stmt_;
+		std::shared_ptr<SqliteFetchRequest> request_;
 	};
 }

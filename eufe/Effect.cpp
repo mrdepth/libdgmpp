@@ -132,10 +132,12 @@ std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& e
 
 Effect::Effect(std::shared_ptr<Engine> const& engine, TypeID effectID) : engine_(engine), effectID_(effectID), isAssistance_(false), isOffensive_(false)
 {
-	std::stringstream sql;
-	sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
+	//std::stringstream sql;
+	//sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
+	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = ?");
+	stmt->bindInt(1, effectID);
 	
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 
 	if (result->next())
 	{

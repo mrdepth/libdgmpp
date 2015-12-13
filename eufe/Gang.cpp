@@ -17,21 +17,21 @@ using namespace eufe;
 class GangModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
-	GangModifierMatchFunction(TypeID attributeID, std::shared_ptr<Character> const& fleetBooster, std::shared_ptr<Character> const& wingBooster, std::shared_ptr<Character> const& squadBooster) : attributeID_(attributeID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
+	GangModifierMatchFunction(TypeID attributeID, Character* fleetBooster, Character* wingBooster, Character* squadBooster) : attributeID_(attributeID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
 	bool operator() (std::shared_ptr<Modifier> const& modifier)
 	{
-		std::shared_ptr<Character> character = modifier->getCharacter();
+		Character* character = modifier->getCharacter();
 		bool isBooster = character == fleetBooster_ || character == squadBooster_ || character == wingBooster_ ;
-		return !(modifier->getAttributeID() == attributeID_ && isBooster);
+		return (modifier->getAttributeID() == attributeID_ && isBooster);
 	}
 private:
 	TypeID attributeID_;
-	std::shared_ptr<Character> fleetBooster_;
-	std::shared_ptr<Character> wingBooster_;
-	std::shared_ptr<Character> squadBooster_;
+	Character* fleetBooster_;
+	Character* wingBooster_;
+	Character* squadBooster_;
 };
 
-class GangLocationGroupModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
+/*class GangLocationGroupModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
 	GangLocationGroupModifierMatchFunction(TypeID attributeID, TypeID groupID, std::shared_ptr<Character> const& fleetBooster, std::shared_ptr<Character> const& wingBooster, std::shared_ptr<Character> const& squadBooster) : attributeID_(attributeID), groupID_(groupID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
@@ -65,7 +65,7 @@ private:
 	std::shared_ptr<Character> fleetBooster_;
 	std::shared_ptr<Character> wingBooster_;
 	std::shared_ptr<Character> squadBooster_;
-};
+};*/
 
 class ModifiersFindFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
@@ -121,7 +121,7 @@ std::shared_ptr<Character> Gang::addPilot()
 //	character->removeEffects(Effect::CATEGORY_GENERIC);
 	pilots_.push_back(character);
 	character->addEffects(Effect::CATEGORY_GENERIC);
-	engine->reset(shared_from_this());
+	engine->reset();
 	return character;
 }
 
@@ -132,8 +132,9 @@ void Gang::removePilot(std::shared_ptr<Character> const& character)
 	if (!engine)
 		return;
 	character->removeEffects(Effect::CATEGORY_GENERIC);
-	pilots_.remove(character);
-	engine->reset(shared_from_this());
+	//pilots_.remove(character);
+	pilots_.erase(std::find(pilots_.begin(), pilots_.end(), character));
+	engine->reset();
 }
 
 
@@ -142,11 +143,14 @@ Environment Gang::getEnvironment()
 	Environment environment;
 	auto engine = getEngine();
 	if (engine) {
-		environment["Self"] = shared_from_this();
+		/*environment["Self"] = shared_from_this();
 		environment["Gang"] = shared_from_this();
 		auto area = engine->getArea();
 		if (area)
-			environment["Area"] = area;
+			environment["Area"] = area;*/
+		environment.self = this;
+		environment.gang = this;
+		environment.area = engine->getArea().get();
 		
 	}
 	return environment;
@@ -184,7 +188,7 @@ void Gang::setFleetBooster(std::shared_ptr<Character> const& fleetBooster)
 		squadBooster_ = nullptr;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 void Gang::setWingBooster(std::shared_ptr<Character> const& wingBooster)
@@ -196,7 +200,7 @@ void Gang::setWingBooster(std::shared_ptr<Character> const& wingBooster)
 		squadBooster_ = nullptr;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 void Gang::setSquadBooster(std::shared_ptr<Character> const& squadBooster)
@@ -208,21 +212,21 @@ void Gang::setSquadBooster(std::shared_ptr<Character> const& squadBooster)
 		wingBooster_ = nullptr;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 void Gang::removeFleetBooster() {
 	fleetBooster_ = nullptr;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 void Gang::removeWingBooster() {
 	wingBooster_ = nullptr;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 	
 }
 
@@ -230,58 +234,83 @@ void Gang::removeSquadBooster() {
 	squadBooster_ = nullptr;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
-std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+ModifiersList Gang::getLocationModifiers(std::shared_ptr<Attribute> const& attribute)
 {
-	ModifiersList list;
-	const auto& modifiers = locationModifiers_[attribute->getAttributeID()];
-	std::copy(modifiers.begin(), modifiers.end(), outIterator);
-	/*std::remove_copy_if(modifiers.begin(),
-						modifiers.end(),
-						std::inserter(list, list.end()),
-						GangModifierMatchFunction(attribute->getAttributeID(), fleetBooster_, wingBooster_, squadBooster_));*/
-	ModifiersList::iterator i = std::max_element(list.begin(), list.end(), ModifiersCompareFunction(attribute->highIsGood()));
-	if (i != list.end())
-		*outIterator++ = *i;
-	return outIterator;
-}
+	GangModifierMatchFunction match (attribute->getAttributeID(), fleetBooster_.get(), wingBooster_.get(), squadBooster_.get());
+	ModifiersCompareFunction cmp (attribute->highIsGood());
+	
+	std::shared_ptr<Modifier> max = nullptr;
 
-std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
-{
-	ModifiersList list1;
-
-	{
-		const auto& list = locationGroupModifiers_[attribute->getAttributeID()][item->getGroupID()];
-		std::remove_copy_if(list.begin(),
-							list.end(),
-							std::inserter(list1, list1.end()),
-							GangModifierMatchFunction(attribute->getAttributeID(), fleetBooster_, wingBooster_, squadBooster_));
-		ModifiersList::iterator i = std::max_element(list1.begin(), list1.end(), ModifiersCompareFunction(attribute->highIsGood()));
-		if (i != list1.end())
-			*outIterator++ = *i;
+	auto i = locationModifiers_.find(attribute->getAttributeID());
+	if (i != locationModifiers_.end()) {
+		for (const auto& modifier: i->second) {
+			if (match(modifier)) {
+				if (!max || cmp(modifier, max))
+					max = modifier;
+			}
+		}
 	}
 
-	ModifiersList list2;
+	ModifiersList result;
+	if (max)
+		result.push_back(max);
+	return result;
+}
+
+ModifiersList Gang::getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute)
+{
+	GangModifierMatchFunction match (attribute->getAttributeID(), fleetBooster_.get(), wingBooster_.get(), squadBooster_.get());
+	ModifiersCompareFunction cmp (attribute->highIsGood());
+	ModifiersList result;
+
 	{
-		auto outIterator = std::inserter(list2, list2.end());
-		for (const auto& map: locationRequiredSkillModifiers_[attribute->getAttributeID()]) {
-			if (item->requireSkill(map.first)) {
-				const auto& list = map.second;
-				outIterator = std::remove_copy_if(list.begin(),
-												  list.end(),
-												  outIterator,
-												  GangModifierMatchFunction(attribute->getAttributeID(), fleetBooster_, wingBooster_, squadBooster_));
+		std::shared_ptr<Modifier> max = nullptr;
+
+		auto i = locationGroupModifiers_.find(attribute->getAttributeID());
+		if (i != locationGroupModifiers_.end()) {
+			auto j = i->second.find(item->getGroupID());
+			if (j != i->second.end()) {
+				for (const auto& modifier: j->second) {
+					if (match(modifier)) {
+						if (!max || cmp(modifier, max))
+							max = modifier;
+					}
+				}
+				
 			}
 		}
 		
-		ModifiersList::iterator j = std::max_element(list2.begin(), list2.end(), ModifiersCompareFunction(attribute->highIsGood()));
-		if (j != list2.end())
-			*outIterator++ = *j;
+		if (max)
+			result.push_back(max);
+	}
+
+	{
+		std::shared_ptr<Modifier> max = nullptr;
+
+		auto i = locationRequiredSkillModifiers_.find(attribute->getAttributeID());
+		if (i != locationRequiredSkillModifiers_.end()) {
+			for (const auto& map: i->second) {
+				if (item->requireSkill(map.first)) {
+					const auto& list = map.second;
+					for (const auto& modifier: list) {
+						if (match(modifier)) {
+							if (!max || cmp(modifier, max))
+								max = modifier;
+						}
+					}
+				}
+			}
+			
+		}
+		
+		if (max)
+			result.push_back(max);
 	}
 	
-	return outIterator;
+	return result;
 }
 
 

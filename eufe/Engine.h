@@ -32,7 +32,7 @@ namespace eufe {
 		std::shared_ptr<Area> getArea();
 		std::shared_ptr<ControlTower> getControlTower();
 		
-		void reset(std::shared_ptr<Item> item);
+		void reset();
 		void beginUpdates();
 		void commitUpdates();
 		

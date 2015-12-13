@@ -83,7 +83,8 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 			return nullptr;
 
 		std::shared_ptr<Module> module = std::make_shared<Module>(engine, typeID, shared_from_this());
-		if (forced || canFit(module))
+		bool isModule = module->getCategoryID() == MODULE_CATEGORY_ID || module->getCategoryID() == SUBSYSTEM_CATEGORY_ID;
+		if (isModule && (forced || canFit(module)))
 		{
 			modules_.push_back(module);
 			//module->setOwner(this);
@@ -93,14 +94,13 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 				module->setState(Module::STATE_ACTIVE);
 			else if (module->canHaveState(Module::STATE_ONLINE))
 				module->setState(Module::STATE_ONLINE);
-			engine->reset(shared_from_this());
+			engine->reset();
 			
 			updateEnabledStatus();
 			return module;
 		}
-		else {
+		else
 			return nullptr;
-		}
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -127,11 +127,13 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 		oldModule->clearTarget();
 		oldModule->removeEffects(Effect::CATEGORY_GENERIC);
 		
-		modules_.remove(oldModule);
-		
+		//modules_.remove(oldModule);
+		modules_.erase(std::find(modules_.begin(), modules_.end(), oldModule));
+
 		std::shared_ptr<Module> newModule = addModule(typeID);
 		if (newModule) {
-			modules_.remove(newModule);
+			//modules_.remove(newModule);
+			modules_.erase(std::find(modules_.begin(), modules_.end(), newModule));
 			i++;
 			modules_.insert(i, newModule);
 			if (chargeTypeID)
@@ -142,7 +144,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 		}
 		auto engine = getEngine();
 		if (engine)
-			engine->reset(shared_from_this());
+			engine->reset();
 		
 		updateEnabledStatus();
 		return newModule;
@@ -238,10 +240,11 @@ void Ship::removeModule(std::shared_ptr<Module> const& module) {
 	module->clearTarget();
 	module->removeEffects(Effect::CATEGORY_GENERIC);
 	
-	modules_.remove(module);
+	//modules_.remove(module);
+	modules_.erase(std::find(modules_.begin(), modules_.end(), module));
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 	
 	updateEnabledStatus();
 }
@@ -254,12 +257,15 @@ std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
 		if (!engine)
 			return nullptr;
 		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, shared_from_this());
-		drones_.push_back(drone);
-		drone->addEffects(Effect::CATEGORY_GENERIC);
-		drone->addEffects(Effect::CATEGORY_TARGET);
-		engine->reset(shared_from_this());
-		
-		return drone;
+		if (drone->getCategoryID() == DRONE_CATEGORY_ID) {
+			drones_.push_back(drone);
+			drone->addEffects(Effect::CATEGORY_GENERIC);
+			drone->addEffects(Effect::CATEGORY_TARGET);
+			engine->reset();
+			return drone;
+		}
+		else
+			return nullptr;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -272,10 +278,11 @@ void Ship::removeDrone(std::shared_ptr<Drone> const& drone)
 	drone->removeEffects(Effect::CATEGORY_TARGET);
 	drone->removeEffects(Effect::CATEGORY_GENERIC);
 	
-	drones_.remove(drone);
+	//drones_.remove(drone);
+	drones_.erase(std::find(drones_.begin(), drones_.end(), drone));
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 
@@ -471,7 +478,7 @@ Environment Ship::getEnvironment()
 	Environment environment;
 	auto engine = getEngine();
 	if (engine) {
-		environment["Self"] = shared_from_this();
+		/*environment["Self"] = shared_from_this();
 		environment["Ship"] = shared_from_this();
 		std::shared_ptr<Item> character = getOwner();
 		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
@@ -482,8 +489,12 @@ Environment Ship::getEnvironment()
 		if (gang)
 			environment["Gang"] = gang;
 		if (area)
-			environment["Area"] = area;
-		
+			environment["Area"] = area;*/
+		environment.self = this;
+		environment.ship = this;
+		environment.character = getOwner().get();
+		environment.gang = environment.character->getOwner().get();
+		environment.area = engine->getArea().get();
 	}
 
 	return environment;
@@ -578,7 +589,7 @@ void Ship::addProjectedModule(std::shared_ptr<Module> const& module)
 		projectedModules_.push_back(module);
 		auto engine = getEngine();
 		if (engine)
-			engine->reset(shared_from_this());
+			engine->reset();
 	}
 }
 
@@ -589,7 +600,7 @@ void Ship::removeProjectedModule(std::shared_ptr<Module> const& module)
 	});
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 void Ship::addProjectedDrone(std::shared_ptr<Drone> const& drone)
@@ -601,7 +612,7 @@ void Ship::addProjectedDrone(std::shared_ptr<Drone> const& drone)
 		projectedDrones_.push_back(drone);
 		auto engine = getEngine();
 		if (engine)
-			engine->reset(shared_from_this());
+			engine->reset();
 	}
 }
 
@@ -612,7 +623,7 @@ void Ship::removeProjectedDrone(std::shared_ptr<Drone> const& drone)
 	});
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 std::shared_ptr<CapacitorSimulator> Ship::getCapacitorSimulator()
@@ -639,7 +650,7 @@ void Ship::setDamagePattern(const DamagePattern& damagePattern)
 	damagePattern_ = damagePattern;
 	auto engine = getEngine();
 	if (engine)
-		engine->reset(shared_from_this());
+		engine->reset();
 }
 
 //Calculations
@@ -851,7 +862,7 @@ const Tank& Ship::getSustainableTank()
 			sustainableTank_ = getTank();
 		else
 		{
-			std::shared_ptr<Item> currentCharacter = getOwner();
+			Item* currentCharacter = getOwner().get();
 
 			sustainableTank_ = getTank();
 			
@@ -864,14 +875,13 @@ const Tank& Ship::getSustainableTank()
 			
 			for (int i = 0; i < 3; i++)
 			{
-				ModifiersList modifiers;
-				getModifiers(getAttribute(attributes[i]), std::inserter(modifiers, modifiers.begin()));
+				ModifiersList modifiers = getModifiers(getAttribute(attributes[i]));
 				for (const auto& j: modifiers)
 				{
 					Modifier::Association association = j->getAssociation();
 					if (association == Modifier::ASSOCIATION_ADD_RATE || Modifier::ASSOCIATION_SUB_RATE)
 					{
-						std::shared_ptr<Item> character = j->getCharacter();
+						Item* character = j->getCharacter();
 						bool projected = character && character != currentCharacter;
 						
 						std::shared_ptr<Item> item = j->getModifier()->getOwner();

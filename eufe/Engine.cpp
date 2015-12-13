@@ -36,7 +36,7 @@ std::shared_ptr<Area> Engine::setArea(TypeID typeID)
 		area_ = area;
 		if (area_)
 			area_->addEffects(Effect::CATEGORY_SYSTEM);
-		reset(getGang());
+		reset();
 		
 		return area_;
 	}
@@ -63,7 +63,7 @@ std::shared_ptr<ControlTower> Engine::setControlTower(TypeID typeID)
 			controlTower_->addEffects(Effect::CATEGORY_ACTIVE);
 		}
 		
-		reset(controlTower_);
+		reset();
 		return controlTower_;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -76,7 +76,7 @@ void Engine::clearArea()
 {
 	if (area_) {
 		area_->removeEffects(Effect::CATEGORY_SYSTEM);
-		reset(getGang());
+		reset();
 	}
 	area_ = nullptr;
 }
@@ -91,21 +91,15 @@ std::shared_ptr<ControlTower> Engine::getControlTower()
 	return controlTower_;
 }
 
-void Engine::reset(std::shared_ptr<Item> item)
+void Engine::reset()
 {
 	if (updatesCounter_ > 0)
 		return;
 	generation_++;
-	if (!item)
-		return;
-	
-	std::shared_ptr<Item> owner = item->getOwner();
-	
-	while (owner) {
-		item = owner;
-		owner = item->getOwner();
-	}
-	item->reset();
+	if (gang_)
+		gang_->reset();
+	if (controlTower_)
+		controlTower_->reset();
 }
 
 void Engine::beginUpdates() {
@@ -116,7 +110,7 @@ void Engine::commitUpdates() {
 	updatesCounter_--;
 	if (updatesCounter_ <= 0) {
 		updatesCounter_ = 0;
-		reset(gang_);
+		reset();
 	}
 }
 

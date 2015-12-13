@@ -54,7 +54,7 @@ void Structure::setState(State state)
 		state_ = state;
 		auto engine = getEngine();
 		if (engine)
-			engine->reset(shared_from_this());
+			engine->reset();
 	}
 }
 
