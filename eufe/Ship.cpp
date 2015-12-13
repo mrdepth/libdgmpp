@@ -96,7 +96,7 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 				module->setState(Module::STATE_ONLINE);
 			engine->reset();
 			
-			updateEnabledStatus();
+			//updateEnabledStatus();
 			return module;
 		}
 		else
@@ -146,7 +146,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 		if (engine)
 			engine->reset();
 		
-		updateEnabledStatus();
+		//updateEnabledStatus();
 		return newModule;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -246,7 +246,7 @@ void Ship::removeModule(std::shared_ptr<Module> const& module) {
 	if (engine)
 		engine->reset();
 	
-	updateEnabledStatus();
+	//updateEnabledStatus();
 }
 
 std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
@@ -523,6 +523,7 @@ void Ship::reset()
 	
 	shieldRecharge_ = -1;
 	
+	updateEnabledStatus();
 	updateModulesState();
 }
 
