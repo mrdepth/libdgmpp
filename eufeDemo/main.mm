@@ -10,6 +10,8 @@
 #import <eufe/eufe.h>
 #import <QuartzCore/QuartzCore.h>
 #include <fstream>
+#include <string>
+#include <unordered_map>
 
 using namespace eufe;
 
@@ -22,6 +24,7 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna) {
 	pilot->setAllSkillsLevel(5);
 	auto ship = pilot->setShip(shipTypeID);
 	
+	//engine->beginUpdates();
 	std::list<TypeID> chargeIDs;
 	for (NSString* component in components) {
 		NSArray* c = [component componentsSeparatedByString:@";"];
@@ -56,6 +59,7 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna) {
 				module->setCharge(typeID);
 		}
 	}
+	//engine->commitUpdates();
 	return ship;
 }
 
@@ -66,15 +70,19 @@ int main(int argc, const char * argv[]) {
 		NSString* vigilantDNA = @"17722:3146;5:5439;1:4025;1:6160;1:5975;1:10190;3:4405;2:2048;1:31546;1:31055;1:2185;5:12789;5:29011;1::";
 		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
 		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
+		CFTimeInterval t0 = CACurrentMediaTime();
 		auto garmur = addShip(engine, garmurDNA);
 		auto ishkur = addShip(engine, ishkurDNA);
 		auto vigilant = addShip(engine, vigilantDNA);
+		CFTimeInterval t1 = CACurrentMediaTime();
+		NSLog(@"load %f", t1 - t0);
+
+//		std::ofstream os;
+//		os.open("/Users/shimanski/work/vigilant.json");
+//		os << *vigilant << std::endl;
+//		os.close();
 		
-		std::ofstream os;
-		os.open("/Users/shimanski/work/vigilant.json");
-		os << *vigilant << std::endl;
-		os.close();
-		
+		auto hp = vigilant->getHitPoints();
 		float dps = vigilant->getWeaponDps();
 		
 		for (int j = 0; j < 5; j++) {

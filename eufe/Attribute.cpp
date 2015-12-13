@@ -239,15 +239,26 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	return value;
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner, const char* attributeName, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), attributeName_(attributeName), isFakeAttribute_(isFakeAttribute)
+Attribute::Attribute(std::shared_ptr<Engine> const& engine,
+					 TypeID attributeID,
+					 TypeID maxAttributeID,
+					 float value,
+					 bool isStackable,
+					 bool highIsGood,
+					 std::shared_ptr<Item> const& owner,
+					 const char* attributeName,
+					 bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), attributeName_(attributeName), isFakeAttribute_(isFakeAttribute)
 {
 	forcedValue_ = std::numeric_limits<float>::infinity();
 	
 	if (attributeName[0] == 0 && attributeID != 0)
 	{
-        std::stringstream sql;
-		sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-		std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+        //std::stringstream sql;
+		//sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
+		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = ?");
+		stmt->bindInt(1, attributeID_);
+
+		std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 		if (result->next()) {
 			attributeName_ = result->getText(0);
 			isStackable_ = result->getInt(1) != 0;
@@ -257,13 +268,19 @@ Attribute::Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, 
 	reset();
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
+Attribute::Attribute(std::shared_ptr<Engine> const& engine,
+					 TypeID attributeID,
+					 std::shared_ptr<Item> const& owner,
+					 bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
 {
 	forcedValue_ = std::numeric_limits<float>::infinity();
 
-	std::stringstream sql;
-	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+//	std::stringstream sql;
+//	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
+	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = ?");
+	stmt->bindInt(1, attributeID_);
+
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 	if (result->next()) {
 		isStackable_ = result->getInt(0) != 0;
 		maxAttributeID_ = static_cast<eufe::TypeID>(result->getInt(1));

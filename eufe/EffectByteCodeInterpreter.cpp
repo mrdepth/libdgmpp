@@ -644,10 +644,13 @@ EffectByteCodeInterpreter::Argument EffectByteCodeInterpreter::operand29()
 	if (arg1.getType() == Argument::TYPE_STRING)
 	{
 		std::string typeName = arg1;
-		std::stringstream sql;
-		sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
+		//std::stringstream sql;
+		//sql << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\"";
+		auto engine = engine_.lock();
+		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes WHERE typeName = ?");
+		stmt->bindText(1, typeName);
 		
-		std::shared_ptr<FetchResult> result = engine_.lock()->getSqlConnector()->exec(sql.str().c_str());
+		std::shared_ptr<FetchResult> result = engine_.lock()->getSqlConnector()->exec(stmt);
 		if (result->next())
 		{
 			TypeID typeID = result->getInt(0);

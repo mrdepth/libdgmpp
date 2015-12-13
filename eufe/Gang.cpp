@@ -22,7 +22,7 @@ public:
 	{
 		Character* character = modifier->getCharacter();
 		bool isBooster = character == fleetBooster_ || character == squadBooster_ || character == wingBooster_ ;
-		return !(modifier->getAttributeID() == attributeID_ && isBooster);
+		return (modifier->getAttributeID() == attributeID_ && isBooster);
 	}
 private:
 	TypeID attributeID_;

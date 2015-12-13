@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */; };
+		12215B421C1D7643003B6DA5 /* FetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */; };
+		12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B401C1D7643003B6DA5 /* FetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12215B441C1D7643003B6DA5 /* FetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B401C1D7643003B6DA5 /* FetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */; };
+		12215B481C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */; };
+		12215B491C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12215B4A1C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1242EC211A4DFF5C00FD488A /* dbpatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1242EC201A4DFF5C00FD488A /* dbpatch.cpp */; };
 		12564BA91B84B027000F68D8 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D531473CA5E006B18D7 /* Effect.cpp */; };
 		12564BAA1B84B027000F68D8 /* EffectByteCodeInterpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D72CBD14978B9B00B13A9D /* EffectByteCodeInterpreter.cpp */; };
@@ -245,6 +253,10 @@
 		1220F1BA15F0F9A600DF4A62 /* DamagePattern.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = DamagePattern.i; sourceTree = "<group>"; };
 		1220F1BB15F0F9D900DF4A62 /* ControlTower.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = ControlTower.i; sourceTree = "<group>"; };
 		1220F1BD15F0FA0900DF4A62 /* Structure.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = Structure.i; sourceTree = "<group>"; };
+		12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FetchRequest.cpp; sourceTree = "<group>"; };
+		12215B401C1D7643003B6DA5 /* FetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchRequest.h; sourceTree = "<group>"; };
+		12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SqliteFetchRequest.cpp; sourceTree = "<group>"; };
+		12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteFetchRequest.h; sourceTree = "<group>"; };
 		1242EC1E1A4DFF5B00FD488A /* dbpatch */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dbpatch; sourceTree = BUILT_PRODUCTS_DIR; };
 		1242EC201A4DFF5C00FD488A /* dbpatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = dbpatch.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		12564B8E1B84AF15000F68D8 /* eufe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = eufe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -484,12 +496,16 @@
 				12A3C6BE177C28A90067E00C /* Blob.h */,
 				12A3C6C3177C28A90067E00C /* FetchResult.cpp */,
 				12A3C6C4177C28A90067E00C /* FetchResult.h */,
+				12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */,
+				12215B401C1D7643003B6DA5 /* FetchRequest.h */,
 				12A3C6C5177C28A90067E00C /* SqlConnector.cpp */,
 				12A3C6C6177C28A90067E00C /* SqlConnector.h */,
 				12A3C6C7177C28A90067E00C /* SqliteConnector.cpp */,
 				12A3C6C8177C28A90067E00C /* SqliteConnector.h */,
 				12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */,
 				12A3C6CA177C28A90067E00C /* SqliteFetchResult.h */,
+				12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */,
+				12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */,
 			);
 			name = SQL;
 			sourceTree = "<group>";
@@ -731,6 +747,8 @@
 				12564BF91B84B07F000F68D8 /* Area.h in Headers */,
 				12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */,
 				12564BFB1B84B07F000F68D8 /* Engine.h in Headers */,
+				12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */,
+				12215B491C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */,
 				12564BFC1B84B07F000F68D8 /* Gang.h in Headers */,
 				12564BFD1B84B07F000F68D8 /* Item.h in Headers */,
 				12564BFE1B84B07F000F68D8 /* types.h in Headers */,
@@ -782,6 +800,8 @@
 				12EFCCC51C1AB334003ECA7F /* Area.h in Headers */,
 				12EFCCC61C1AB334003ECA7F /* Attribute.h in Headers */,
 				12EFCCC71C1AB334003ECA7F /* Engine.h in Headers */,
+				12215B441C1D7643003B6DA5 /* FetchRequest.h in Headers */,
+				12215B4A1C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */,
 				12EFCCC81C1AB334003ECA7F /* Gang.h in Headers */,
 				12EFCCC91C1AB334003ECA7F /* Item.h in Headers */,
 				12EFCCCA1C1AB334003ECA7F /* types.h in Headers */,
@@ -971,6 +991,8 @@
 				12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */,
 				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
 				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
+				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
+				12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */,
 				12564BBB1B84B027000F68D8 /* DamagePattern.cpp in Sources */,
 				12564BC21B84B027000F68D8 /* Blob.cpp in Sources */,
 				12564BB81B84B027000F68D8 /* Skill.cpp in Sources */,
@@ -1027,6 +1049,8 @@
 				12EFCC881C1AB334003ECA7F /* Booster.cpp in Sources */,
 				12EFCC891C1AB334003ECA7F /* FetchResult.cpp in Sources */,
 				12EFCC8A1C1AB334003ECA7F /* DamagePattern.cpp in Sources */,
+				12215B421C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
+				12215B481C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */,
 				12EFCC8B1C1AB334003ECA7F /* Blob.cpp in Sources */,
 				12EFCC8C1C1AB334003ECA7F /* Skill.cpp in Sources */,
 				12EFCCE01C1B0BC9003ECA7F /* EffectByteCodeInterpreter.cpp in Sources */,

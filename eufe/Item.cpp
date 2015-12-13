@@ -383,12 +383,14 @@ const char* Item::getTypeName()
 	loadIfNeeded();
 	if (typeName_.size() == 0)
 	{
-		std::stringstream sql;
-		sql << "SELECT typeName FROM invTypes WHERE typeID = " << typeID_;
-
+		//std::stringstream sql;
+		//sql << "SELECT typeName FROM invTypes WHERE typeID = " << typeID_;
 		auto engine = getEngine();
 		if (engine) {
-			std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+			auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeName FROM invTypes WHERE typeID = ?");
+			stmt->bindInt(1, typeID_);
+
+			std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 			if (result->next()) {
 				typeName_ = result->getText(0);
 			}
@@ -402,11 +404,14 @@ const char* Item::getGroupName()
 	loadIfNeeded();
 	if (groupName_.size() == 0)
 	{
-		std::stringstream sql;
-		sql << "SELECT groupName FROM invTypes AS A, invGroups AS B WHERE A.groupID=B.groupID AND typeID = " << typeID_;
+//		std::stringstream sql;
+//		sql << "SELECT groupName FROM invTypes AS A, invGroups AS B WHERE A.groupID=B.groupID AND typeID = " << typeID_;
 		auto engine = getEngine();
 		if (engine) {
-			std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+			auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT groupName FROM invTypes AS A, invGroups AS B WHERE A.groupID=B.groupID AND typeID = ?");
+			stmt->bindInt(1, typeID_);
+
+			std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 			if (result->next()) {
 				groupName_ = result->getText(0);
 			}
@@ -432,10 +437,12 @@ void Item::lazyLoad() {
 	if (!engine)
 		return;
 	
-	std::stringstream sql;
-	sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID_;
+	//std::stringstream sql;
+	//sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID_;
+	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = ?");
+	stmt->bindInt(1, typeID_);
 	
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(sql.str().c_str());
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 	if (result->next())
 	{
 		groupID_ = result->getInt(0);
@@ -453,10 +460,13 @@ void Item::lazyLoad() {
 		attributes_[CAPACITY_ATTRIBUTE_ID]  = std::make_shared<Attribute>(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, shared_from_this(), "capacity");
 		attributes_[RACE_ID_ATTRIBUTE_ID]   = std::make_shared<Attribute>(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, shared_from_this(), "raceID");
 		
-		sql.str(std::string());
-		sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
-		<< typeID_;
-		result = engine->getSqlConnector()->exec(sql.str().c_str());
+		//sql.str(std::string());
+		//sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
+		//<< typeID_;
+		stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = ?");
+		stmt->bindInt(1, typeID_);
+		result = engine->getSqlConnector()->exec(stmt);
+		
 		while (result->next())
 		{
 			TypeID attributeID = static_cast<TypeID>(result->getInt(0));
@@ -468,14 +478,19 @@ void Item::lazyLoad() {
 			attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, shared_from_this(), attributeName.c_str());
 		}
 		
-		sql.str(std::string());
-		sql << "SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = " << typeID_;
-		result = engine->getSqlConnector()->exec(sql.str().c_str());
+		//sql.str(std::string());
+		//sql << "SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = " << typeID_;
+		stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = ?");
+		stmt->bindInt(1, typeID_);
+		result = engine->getSqlConnector()->exec(stmt);
+
 		while (result->next())
 		{
 			TypeID effectID = static_cast<TypeID>(result->getInt(0));
 			effects_.push_back(Effect::getEffect(engine, effectID));
 		}
+		result = nullptr;
+		
 		static const auto requirements = {
 			REQUIRED_SKILL1_ATTRIBUTE_ID,
 			REQUIRED_SKILL2_ATTRIBUTE_ID,

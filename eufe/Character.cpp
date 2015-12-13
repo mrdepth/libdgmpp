@@ -347,7 +347,9 @@ void Character::lazyLoad() {
 
 	Item::lazyLoad();
 	
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
+	//std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
+	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes, invGroups WHERE invTypes.groupID = invGroups.groupID AND invGroups.categoryID = 16 AND invTypes.published = 1");
+	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 	while (result->next())
 	{
 		TypeID skillID = result->getInt(0);
