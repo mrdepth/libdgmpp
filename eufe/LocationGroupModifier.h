@@ -11,7 +11,7 @@ namespace eufe {
 		virtual bool isMatch(std::shared_ptr<Item> const& item) const;
 		TypeID getGroupID() const {return groupID_;}
 		
-		friend std::ostream& operator<<(std::ostream& os, LocationGroupModifier& modifier);
+		virtual std::string print();
 		
 	private:
 		TypeID groupID_;

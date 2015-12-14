@@ -2,6 +2,7 @@
 #include "Attribute.h"
 #include "Item.h"
 #include "Module.h"
+#include <sstream>
 
 using namespace eufe;
 
@@ -117,11 +118,18 @@ std::string Modifier::getAssociationName()
 	}
 }
 
+std::string Modifier::print() {
+	std::stringstream s;
+	s << "{\"association\":\"" << getAssociationName()
+	<< "\", \"attributeID\":\"" << attributeID_
+	<< "\", \"modifier\":" << *modifier_.lock() << "}";
+	return s.str();
+}
+
+
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Modifier& modifier)
 {
-	os	<< "{\"association\":\"" << modifier.getAssociationName()
-	<< "\", \"attributeID\":\"" << modifier.attributeID_
-	<< "\", \"modifier\":" << *modifier.modifier_.lock() << "}";
+	os << modifier.print();
 	return os;
 }
 

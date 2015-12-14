@@ -1,6 +1,7 @@
 #include "LocationRequiredSkillModifier.h"
 #include "Item.h"
 #include "Attribute.h"
+#include <sstream>
 
 using namespace eufe;
 
@@ -18,12 +19,12 @@ bool LocationRequiredSkillModifier::isMatch(std::shared_ptr<Item> const& item) c
 	return item->requireSkill(skillID_);
 }
 
-std::ostream& eufe::operator<<(std::ostream& os, eufe::LocationRequiredSkillModifier& modifier)
-{
-	os	<< "{\"skillID\":\"" << modifier.skillID_
-	<< "\", \"association\":\"" << modifier.getAssociationName()
-	<< "\", \"attributeID\":\"" << modifier.getAttributeID()
-	<< "\", \"modifier\":" << *modifier.getModifier() << "}";
-	return os;
+std::string LocationRequiredSkillModifier::print() {
+	std::stringstream s;
+	s << "{\"skillID\":\"" << skillID_
+	<< "\", \"association\":\"" << getAssociationName()
+	<< "\", \"attributeID\":\"" << getAttributeID()
+	<< "\", \"modifier\":" << *getModifier() << "}";
+	return s.str();
 }
 

@@ -68,8 +68,8 @@ int main(int argc, const char * argv[]) {
 		NSString* garmurDNA = @"33816:2404;3:14248;1:1952;1:19349;1:28746;1:31936;1:2605;1:2048;1:31183;1:31153;1:31111;1:29009;1:27371;3::";
 		NSString* ishkurDNA = @"12042:3178;3:5973;1:448;1:4025;1:1183;1:1447;1:10190;1:2048;1:31538;1:31526;1:2456;5:12612;3::";
 		NSString* vigilantDNA = @"17722:3146;5:5439;1:4025;1:6160;1:5975;1:10190;3:4405;2:2048;1:31546;1:31055;1:2185;5:12789;5:29011;1::";
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
+		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
 		CFTimeInterval t0 = CACurrentMediaTime();
 		auto garmur = addShip(engine, garmurDNA);
 		auto ishkur = addShip(engine, ishkurDNA);
@@ -77,19 +77,19 @@ int main(int argc, const char * argv[]) {
 		CFTimeInterval t1 = CACurrentMediaTime();
 		NSLog(@"load %f", t1 - t0);
 
-//		std::ofstream os;
-//		os.open("/Users/shimanski/work/vigilant.json");
-//		os << *vigilant << std::endl;
-//		os.close();
+		/*std::ofstream os;
+		os.open("/Users/shimanski/tmp/vigilant.json");
+		os << *vigilant << std::endl;
+		os.close();*/
 		
-		auto hp = vigilant->getHitPoints();
-		float dps = vigilant->getWeaponDps();
+//		auto hp = vigilant->getHitPoints();
+//		float dps = vigilant->getWeaponDps();
 		
 		for (int j = 0; j < 5; j++) {
 			CFTimeInterval t0 = CACurrentMediaTime();
 			CombatSimulator simulator(garmur, ishkur);
 			CombatSimulator::OrbitState state(garmur, ishkur, 0, 5000);
-			int n = 300;
+			int n = 500;
 			float dx = 50000 / n;
 			float x = dx;
 			for (int i = 0; i < n; i++) {
@@ -105,3 +105,14 @@ int main(int argc, const char * argv[]) {
 	}
     return 0;
 }
+
+/*
+
+ 2015-12-14 13:20:07.863 eufeDemo[7185:846124] load 0.321260
+ 2015-12-14 13:20:08.490 eufeDemo[7185:846124] 0.613162
+ 2015-12-14 13:20:09.085 eufeDemo[7185:846124] 0.595061
+ 2015-12-14 13:20:09.679 eufeDemo[7185:846124] 0.593356
+ 2015-12-14 13:20:10.267 eufeDemo[7185:846124] 0.587562
+ 2015-12-14 13:20:10.849 eufeDemo[7185:846124] 0.581632
+ Program ended with exit code: 0
+*/

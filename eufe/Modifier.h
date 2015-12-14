@@ -36,6 +36,8 @@ namespace eufe {
 
 		std::string getAssociationName();
 		friend std::ostream& operator<<(std::ostream& os, Modifier& modifier);
+		
+		virtual std::string print();
 
 	private:
 		TypeID attributeID_;
