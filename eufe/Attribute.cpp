@@ -214,10 +214,15 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 {
 	if (stacking)
 	{
-		static int precalculatedExp = 0;
-		static float* pExp = nullptr;
+		//static int precalculatedExp = 0;
+		//static float* pExp = nullptr;
+		static std::vector<float> pExp;
 		long n = std::distance(first, last);
-		if (n > precalculatedExp) {
+		for (long i = pExp.size(); i < n; i++) {
+			float j = i;
+			pExp.push_back(expf(- j * j / 7.1289f));
+		}
+		/*if (n > precalculatedExp) {
 			if (pExp)
 				delete[] pExp;
 			precalculatedExp += 20;
@@ -225,9 +230,9 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 			float j = 0;
 			for (int i = 0; i < precalculatedExp; i++, j++)
 				pExp[i] = expf(- j * j / 7.1289f);
-		}
+		}*/
 		
-		if (pExp)
+//		if (pExp)
 			for (int i = 0; first != last; first++, i++)
 				value *= static_cast<float>(1.0 + (*first - 1.0) * pExp[i]);
 	}
@@ -428,14 +433,16 @@ void Attribute::calculate()
 		std::vector<float>postDividersStackableNegative;
 		std::vector<float>postPercentsStackableNegative;
 		
-		ModifiersList modifiers = owner->getModifiers(shared_from_this());
-		
+		//ModifiersList modifiers = owner->getModifiers(shared_from_this());
+		ModifiersList modifiers;
+		owner->getModifiers(shared_from_this(), std::inserter(modifiers, modifiers.end()));
+
 
 		
 //		ModifiersList::iterator i = modifiers.begin(), end = modifiers.end();
 //		if (i != end)
 //			isFakeAttribute_ = false;
-		if (modifiers.size() > 0)
+		if (std::distance(modifiers.begin(), modifiers.end()) > 0)
 			isFakeAttribute_ = false;
 		
 		for (const auto& i: modifiers)

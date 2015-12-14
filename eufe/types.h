@@ -9,6 +9,7 @@
 #include <set>
 #include <memory>
 #include <cassert>
+#include <vector>
 
 namespace eufe {
 	class Item;

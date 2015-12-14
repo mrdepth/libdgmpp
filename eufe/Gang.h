@@ -35,8 +35,8 @@ namespace eufe {
 		
 	protected:
 
-		virtual ModifiersList getLocationModifiers(std::shared_ptr<Attribute> const& attribute);
-		virtual ModifiersList getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
 		
 	private:
 		CharactersList pilots_;

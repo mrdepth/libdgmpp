@@ -46,7 +46,7 @@ namespace eufe {
 	protected:
 		friend class Gang;
 
-		virtual ModifiersList getLocationModifiers(std::shared_ptr<Attribute> const& attribute);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
 		virtual void lazyLoad();
 
 	private:

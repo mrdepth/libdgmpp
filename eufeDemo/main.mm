@@ -82,8 +82,8 @@ int main(int argc, const char * argv[]) {
 		os << *vigilant << std::endl;
 		os.close();*/
 		
-//		auto hp = vigilant->getHitPoints();
-//		float dps = vigilant->getWeaponDps();
+		auto hp = vigilant->getHitPoints();
+		float dps = vigilant->getWeaponDps();
 		
 		for (int j = 0; j < 5; j++) {
 			CFTimeInterval t0 = CACurrentMediaTime();

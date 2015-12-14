@@ -875,7 +875,8 @@ const Tank& Ship::getSustainableTank()
 			
 			for (int i = 0; i < 3; i++)
 			{
-				ModifiersList modifiers = getModifiers(getAttribute(attributes[i]));
+				ModifiersList modifiers;
+				getModifiers(getAttribute(attributes[i]), std::inserter(modifiers, modifiers.end()));
 				for (const auto& j: modifiers)
 				{
 					Modifier::Association association = j->getAssociation();

@@ -237,7 +237,7 @@ void Gang::removeSquadBooster() {
 		engine->reset();
 }
 
-ModifiersList Gang::getLocationModifiers(std::shared_ptr<Attribute> const& attribute)
+std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	GangModifierMatchFunction match (attribute->getAttributeID(), fleetBooster_.get(), wingBooster_.get(), squadBooster_.get());
 	ModifiersCompareFunction cmp (attribute->highIsGood());
@@ -254,13 +254,12 @@ ModifiersList Gang::getLocationModifiers(std::shared_ptr<Attribute> const& attri
 		}
 	}
 
-	ModifiersList result;
 	if (max)
-		result.push_back(max);
-	return result;
+		(*outIterator++) = max;
+	return outIterator;
 }
 
-ModifiersList Gang::getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute)
+std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(std::shared_ptr<Item> const& item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	GangModifierMatchFunction match (attribute->getAttributeID(), fleetBooster_.get(), wingBooster_.get(), squadBooster_.get());
 	ModifiersCompareFunction cmp (attribute->highIsGood());
@@ -284,7 +283,7 @@ ModifiersList Gang::getModifiersMatchingItem(std::shared_ptr<Item> const& item, 
 		}
 		
 		if (max)
-			result.push_back(max);
+			(*outIterator++) = max;
 	}
 
 	{
@@ -307,10 +306,10 @@ ModifiersList Gang::getModifiersMatchingItem(std::shared_ptr<Item> const& item, 
 		}
 		
 		if (max)
-			result.push_back(max);
+			(*outIterator++) = max;
 	}
 	
-	return result;
+	return outIterator;
 }
 
 

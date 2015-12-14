@@ -331,13 +331,13 @@ void Character::setAllSkillsLevel(int level)
 	engine->reset();
 }
 
-ModifiersList Character::getLocationModifiers(std::shared_ptr<Attribute> const& attribute)
+std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	ModifiersList list = Item::getLocationModifiers(attribute);
+	outIterator = Item::getLocationModifiers(attribute, outIterator);
 	auto owner = getOwner();
 	if (owner)
-		list.splice(list.end(), owner->getLocationModifiers(attribute));
-	return list;
+		outIterator = owner->getLocationModifiers(attribute, outIterator);
+	return outIterator;
 }
 
 void Character::lazyLoad() {

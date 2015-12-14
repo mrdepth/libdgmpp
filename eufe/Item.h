@@ -82,9 +82,9 @@ namespace eufe {
 		std::set<std::shared_ptr<Item>> getAffectors();
 		friend std::ostream& operator<<(std::ostream& os, Item& item);
 
-		virtual ModifiersList getModifiers(std::shared_ptr<Attribute> const& attribute);
-		virtual ModifiersList getLocationModifiers(std::shared_ptr<Attribute> const& attribute);
-		virtual ModifiersList getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute);
+		virtual std::insert_iterator<ModifiersList> getModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
 
 	protected:
 		std::weak_ptr<Engine> engine_;

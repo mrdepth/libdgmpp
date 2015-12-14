@@ -227,11 +227,8 @@ void Item::reset()
 //		i.second->reset();
 }
 
-ModifiersList Item::getModifiers(std::shared_ptr<Attribute> const& attribute)
+std::insert_iterator<ModifiersList> Item::getModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	ModifiersList list;
-	auto outIterator = std::inserter(list, list.begin());
-
 	auto i = itemModifiers_.find(attribute->getAttributeID());
 	if (i != itemModifiers_.end()) {
 		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
@@ -239,26 +236,23 @@ ModifiersList Item::getModifiers(std::shared_ptr<Attribute> const& attribute)
 	auto owner = getOwner();
 	if (owner)
 	{
-		list.splice(list.end(), owner->getLocationModifiers(attribute));
-		list.splice(list.end(), owner->getModifiersMatchingItem(this, attribute));
+		outIterator = owner->getLocationModifiers(attribute, outIterator);
+		outIterator = owner->getModifiersMatchingItem(this, attribute, outIterator);
 	}
-	return list;
+	return outIterator;
 }
 
-ModifiersList Item::getLocationModifiers(std::shared_ptr<Attribute> const& attribute)
+std::insert_iterator<ModifiersList> Item::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	auto i = locationModifiers_.find(attribute->getAttributeID());
 	if (i != locationModifiers_.end())
-		return i->second;
-	else
-		return ModifiersList();
+		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
+	return outIterator;
 }
 
-ModifiersList Item::getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute)
+std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	ModifiersList list;
-	auto outIterator = std::inserter(list, list.begin());
-	
+
 	auto i = locationGroupModifiers_.find(attribute->getAttributeID());
 	if (i != locationGroupModifiers_.end()) {
 		auto j = i->second.find(item->getGroupID());
@@ -278,8 +272,8 @@ ModifiersList Item::getModifiersMatchingItem(Item* item, std::shared_ptr<Attribu
 	
 	auto owner = getOwner();
 	if (owner)
-		list.splice(list.end(), owner->getModifiersMatchingItem(item, attribute));
-	return list;
+		outIterator = owner->getModifiersMatchingItem(item, attribute, outIterator);
+	return outIterator;
 }
 
 void Item::addItemModifier(std::shared_ptr<Modifier> const& modifier)
@@ -516,9 +510,10 @@ void Item::lazyLoad() {
 
 std::set<std::shared_ptr<Item>> Item::getAffectors() {
 	ModifiersList modifiers;
+	auto outIterator = std::inserter(modifiers, modifiers.end());
 	{
 		for (const auto& i: getAttributes())
-			modifiers.splice(modifiers.end(), getModifiers(i.second));
+			outIterator = getModifiers(i.second, outIterator);
 		}
 	
 	std::set<std::shared_ptr<Item>> items;
