@@ -43,6 +43,7 @@ namespace eufe {
 	extern const TypeID CAN_FIT_SHIP_GROUP6_ATTRIBUTE_ID;
 	extern const TypeID CAN_FIT_SHIP_GROUP7_ATTRIBUTE_ID;
 	extern const TypeID CAN_FIT_SHIP_GROUP8_ATTRIBUTE_ID;
+	extern const TypeID CAN_FIT_SHIP_GROUP9_ATTRIBUTE_ID;
 	
 	extern const TypeID SUBSYSTEM_SLOT_ATTRIBUTE_ID;
 	extern const TypeID RIG_SIZE_ATTRIBUTE_ID;

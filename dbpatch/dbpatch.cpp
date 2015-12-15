@@ -141,11 +141,24 @@ public:
 	DefType(const std::string& type) : Operator1("DEFTYPEID", type) {};
 };
 
+class DefGroup : public Operator1<std::string> {
+public:
+	DefGroup(const std::string& type) : Operator1("DEFGROUP", type) {};
+};
+
 template <typename T> class LS : public Operator2<T, DefType>{
 public:
 	LS(const T& arg1, const DefType& arg2) : Operator2<T, DefType>("LS", arg1, arg2) {};
 	ATT<LS<T> > attr(const std::string& attr) {
 		return ATT<LS<T> >(*this, DefAttr(attr));
+	}
+};
+
+template <typename T> class LG : public Operator2<T, DefGroup>{
+public:
+	LG(const T& arg1, const DefGroup& arg2) : Operator2<T, DefGroup>("LG", arg1, arg2) {};
+	ATT<LG<T> > attr(const std::string& attr) {
+		return ATT<LG<T> >(*this, DefAttr(attr));
 	}
 };
 
@@ -158,6 +171,9 @@ public:
 	}
 	LS<DefEnv> locationSkill(const std::string& skill) {
 		return LS<DefEnv>(*this, DefType(skill));
+	}
+	LG<DefEnv> locationGroup(const std::string& group) {
+		return LG<DefEnv>(*this, DefGroup(group));
 	}
 };
 
@@ -249,6 +265,9 @@ public:
 		else if (operatorName == "DEFTYPEID") {
 			os << "select expressionID from dgmExpressions where operandID = " << operatorID << " and expressionTypeID = " << expressionTypeID();
 		}
+		else if (operatorName == "DEFGROUP") {
+			os << "select expressionID from dgmExpressions where operandID = " << operatorID << " and expressionGroupID = " << expressionGroupID();
+		}
 		else {
 			os << "select expressionID from dgmExpressions where operandID = " << operatorID << " and expressionValue = \"" << expressionValue << "\"";
 		}
@@ -297,7 +316,18 @@ public:
 					return false;
 				});
 			}
-			
+			else if (operatorName == "DEFGROUP") {
+				std::stringstream os;
+				os << "insert into dgmExpressions (expressionID, operandID, expressionGroupID, description, expressionName) values (" <<
+				expressionID << ", " <<
+				operatorID << ", " <<
+				expressionGroupID() << ", " <<
+				"\"eufe\"" << ", " <<
+				"\"" << *this << "\"" << ")";
+				exec(os.str(), [](sqlite3_stmt* stmt) -> bool {
+					return false;
+				});
+			}
 		}
 		
 		return expressionID;
@@ -569,6 +599,7 @@ int patch(const char* databasePath) {
            DefEnv("Ship").locationSkill("Small Hybrid Turret").attr("maxRange").assoc("PostDiv").RLRSM("modeMaxRangePostDiv"));
 
 
+#include <dbpatch.h>
 	return 0;
 }
 

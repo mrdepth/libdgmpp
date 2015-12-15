@@ -365,9 +365,10 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 		CAN_FIT_SHIP_GROUP5_ATTRIBUTE_ID,
 		CAN_FIT_SHIP_GROUP6_ATTRIBUTE_ID,
 		CAN_FIT_SHIP_GROUP7_ATTRIBUTE_ID,
-		CAN_FIT_SHIP_GROUP8_ATTRIBUTE_ID};
+		CAN_FIT_SHIP_GROUP8_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_GROUP9_ATTRIBUTE_ID};
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 9; i++) {
 		if (module->hasAttribute(canFitShipGroupAttribute[i]))
 			fitsOn.push_back(static_cast<int>(module->getAttribute(canFitShipGroupAttribute[i])->getValue()));
 		

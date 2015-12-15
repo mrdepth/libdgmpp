@@ -46,8 +46,18 @@ namespace eufe {
 	typedef std::list<std::shared_ptr<Implant>> ImplantsList;
 	typedef std::list<std::shared_ptr<Booster>> BoostersList;
 	typedef std::list<std::shared_ptr<Modifier>> ModifiersList;
-	typedef std::map<int32_t, ModifiersList> ModifiersMap;
 	typedef std::list<std::shared_ptr<Structure>> StructuresList;
+	
+	typedef eufe::TypeID AttributeID;
+	typedef eufe::TypeID GroupID;
+	typedef eufe::TypeID SkillID;
+
+	typedef std::map<AttributeID, ModifiersList> ItemModifiers;
+	typedef ItemModifiers LocationModifiers;
+	typedef std::map<SkillID, ItemModifiers> LocationRequiredSkillModifiers;
+	typedef std::map<GroupID, ItemModifiers> LocationGroupModifiers;
+	
+	typedef std::vector<const ModifiersList*> ModifiersListVector;
 	
 	struct Environment {
 		Environment() : character(nullptr), ship(nullptr), gang(nullptr), self(nullptr), area(nullptr), target(nullptr), other(nullptr) {};

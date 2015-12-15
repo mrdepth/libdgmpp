@@ -52,6 +52,7 @@ const TypeID eufe::CAN_FIT_SHIP_GROUP5_ATTRIBUTE_ID = 1872;
 const TypeID eufe::CAN_FIT_SHIP_GROUP6_ATTRIBUTE_ID = 1879;
 const TypeID eufe::CAN_FIT_SHIP_GROUP7_ATTRIBUTE_ID = 1880;
 const TypeID eufe::CAN_FIT_SHIP_GROUP8_ATTRIBUTE_ID = 1881;
+const TypeID eufe::CAN_FIT_SHIP_GROUP9_ATTRIBUTE_ID = 2065;
 
 const TypeID eufe::SUBSYSTEM_SLOT_ATTRIBUTE_ID = 1366;
 const TypeID eufe::RIG_SIZE_ATTRIBUTE_ID = 1547;
@@ -444,7 +445,6 @@ void Attribute::calculate()
 //			isFakeAttribute_ = false;
 		if (std::distance(modifiers.begin(), modifiers.end()) > 0)
 			isFakeAttribute_ = false;
-		
 		for (const auto& i: modifiers)
 		{
 			Item* character = i->getCharacter();
