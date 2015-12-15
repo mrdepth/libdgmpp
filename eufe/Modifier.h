@@ -21,7 +21,7 @@ namespace eufe {
 			ASSOCIATION_ADD_RATE,
 			ASSOCIATION_SUB_RATE
 		};
-
+		
 		Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character = nullptr);
 		virtual ~Modifier(void);
 		virtual bool isMatch(std::shared_ptr<Item> const& item) const;
@@ -36,7 +36,9 @@ namespace eufe {
 
 		std::string getAssociationName();
 		friend std::ostream& operator<<(std::ostream& os, Modifier& modifier);
-
+		
+		virtual std::string print();
+		
 	private:
 		TypeID attributeID_;
 		std::weak_ptr<Attribute> modifier_;

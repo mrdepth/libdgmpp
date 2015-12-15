@@ -11,7 +11,7 @@ namespace eufe {
 		virtual bool isMatch(std::shared_ptr<Item> const& item) const;
 		TypeID getSkillID() const {return skillID_;}
 
-		friend std::ostream& operator<<(std::ostream& os, LocationRequiredSkillModifier& modifier);
+		virtual std::string print();
 
 	private:
 		TypeID skillID_;

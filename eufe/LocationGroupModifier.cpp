@@ -1,6 +1,7 @@
 #include "LocationGroupModifier.h"
 #include "Item.h"
 #include "Attribute.h"
+#include <sstream>
 
 using namespace eufe;
 
@@ -18,11 +19,11 @@ bool LocationGroupModifier::isMatch(std::shared_ptr<Item> const& item) const
 	return item->getGroupID() == groupID_;
 }
 
-std::ostream& eufe::operator<<(std::ostream& os, eufe::LocationGroupModifier& modifier)
-{
-	os	<< "{\"groupID\":\"" << modifier.groupID_
-	<< "\", \"association\":\"" << modifier.getAssociationName()
-	<< "\", \"attributeID\":\"" << modifier.getAttributeID()
-	<< "\", \"modifier\":" << *modifier.getModifier() << "}";
-	return os;
+std::string LocationGroupModifier::print() {
+	std::stringstream s;
+	s << "{\"groupID\":\"" << groupID_
+	<< "\", \"association\":\"" << getAssociationName()
+	<< "\", \"attributeID\":\"" << getAttributeID()
+	<< "\", \"modifier\":" << *getModifier() << "}";
+	return s.str();
 }
