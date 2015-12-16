@@ -477,56 +477,56 @@ void Attribute::calculate()
 					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
 					{
 						if (isNegative)
-							preMultipliersStackableNegative.push_back(i->getValue());
+							preMultipliersStackableNegative.push_back(value);
 						else
-							preMultipliersStackable.push_back(i->getValue());
+							preMultipliersStackable.push_back(value);
 					}
 					else
-						preMultipliers.push_back(i->getValue());
+						preMultipliers.push_back(value);
 					break;
 				case Modifier::ASSOCIATION_PRE_DIV:
 					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
 					{
 						if (isNegative)
-							preDividersStackableNegative.push_back(i->getValue());
+							preDividersStackableNegative.push_back(value);
 						else
-							preDividersStackable.push_back(i->getValue());
+							preDividersStackable.push_back(value);
 					}
 					else
-						preMultipliers.push_back(i->getValue());
+						preMultipliers.push_back(value);
 					break;
 				case Modifier::ASSOCIATION_POST_MUL:
 					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
 					{
 						if (isNegative)
-							postMultipliersStackableNegative.push_back(i->getValue());
+							postMultipliersStackableNegative.push_back(value);
 						else
-							postMultipliersStackable.push_back(i->getValue());
+							postMultipliersStackable.push_back(value);
 					}
 					else
-						postMultipliers.push_back(i->getValue());
+						postMultipliers.push_back(value);
 					break;
 				case Modifier::ASSOCIATION_POST_DIV:
 					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
 					{
 						if (isNegative)
-							postDividersStackableNegative.push_back(i->getValue());
+							postDividersStackableNegative.push_back(value);
 						else
-							postDividersStackable.push_back(i->getValue());
+							postDividersStackable.push_back(value);
 					}
 					else
-						postMultipliers.push_back(i->getValue());
+						postMultipliers.push_back(value);
 					break;
 				case Modifier::ASSOCIATION_POST_PERCENT:
 					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
 					{
 						if (isNegative)
-							postPercentsStackableNegative.push_back(i->getValue());
+							postPercentsStackableNegative.push_back(value);
 						else
-							postPercentsStackable.push_back(i->getValue());
+							postPercentsStackable.push_back(value);
 					}
 					else
-						postMultipliers.push_back(i->getValue());
+						postMultipliers.push_back(value);
 					break;
 				default:
 					break;

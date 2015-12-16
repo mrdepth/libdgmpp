@@ -475,9 +475,13 @@ void Item::lazyLoad() {
 		
 		for (TypeID attributeID: requirements)
 		{
-			TypeID skillID = static_cast<TypeID>(getAttribute(attributeID)->getInitialValue());
-			if (skillID > 0)
-				requiredSkills_.push_back(skillID);
+			auto i = attributes_.find(attributeID);
+			if (i != attributes_.end()) {
+				TypeID skillID = i->second->getInitialValue();
+				if (skillID > 0)
+					requiredSkills_.push_back(skillID);
+			}
+
 		}
 		requiredSkills_.shrink_to_fit();
 	}
