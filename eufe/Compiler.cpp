@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <limits>
 #include <sstream>
+#include "Modifier.h"
 
 using namespace eufe;
 
@@ -361,6 +362,99 @@ std::string Compiler::stringRepresentation(const MemoryBlock& memoryBlock)
 	delete[] buf;
 	return s;
 }
+////////////////////////////////////
+
+
+
+sqlite3 *db = NULL;
+
+
+void exec(const std::string sql, std::function<bool (sqlite3_stmt* stmt)> callback) {
+	sqlite3_stmt* stmt = NULL;
+	sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, NULL);
+	if (stmt) {
+		while (sqlite3_step(stmt) == SQLITE_ROW) {
+			if (callback && !callback(stmt))
+				break;
+		}
+		sqlite3_finalize(stmt);
+	}
+}
+
+
+namespace Compiler {
+	
+	class Argument {
+	public:
+	};
+	
+	struct ArgumentCategory {
+		typedef struct {} String;
+		struct AttributeID {};
+		struct Attribute {};
+		struct Value {};
+		struct Association {};
+		struct Domain {};
+		struct GroupID {};
+		struct TypeID {};
+	};
+	
+	typedef std::function<Argument(const class Expression& expression)> Operand;
+	/*
+	 argumentCategory:
+	 1: string
+	 2: attributeID
+	 3: attribute
+	 4: value
+	 5: association
+	 6: domain(item)
+	 8: groupID
+	 9: typeID
+	 */
+	
+	class Expression {
+	public:
+		Argument exec();
+		
+		template <class R, class T, int N> R get();
+		
+	private:
+		TypeID expressionID_;
+		TypeID arg1_;
+		TypeID arg2_;
+		TypeID typeID_;
+		TypeID groupID_;
+		TypeID attributeID_;
+		int16_t operandID;
+		std::string string_;
+	};
+	
+	class Domain {
+	public:
+		Domain(const std::string& domain) : domain_(domain) {};
+	private:
+		std::string domain_;
+	};
+	
+	class Attribute {
+	public:
+		Attribute(const std::shared_ptr<Domain> domain, TypeID attributeID) : domain_(domain), attributeID_(attributeID) {};
+		void set(float value);
+		void inc(float value);
+		void dec(float value);
+	private:
+		TypeID attributeID_;
+		std::shared_ptr<Domain> domain_;
+	};
+	
+	class Association {
+	public:
+		Association(std::shared_ptr<Attribute> const& attribute, const std::string& name);
+	private:
+		std::shared_ptr<Attribute> attribute_;
+		Modifier::Association association_;
+	};
+}
 
 int main(int argc, char* argv[])
 {
@@ -368,7 +462,10 @@ int main(int argc, char* argv[])
 		std::cout<<"Usage: compiler source_database.sqlite output_dir"<<std::endl;
 		return 0;
 	}
-	Compiler compiler = Compiler(argv[1], argv[2]);
-	compiler.compile();
+	const char* databasePath = argv[1];
+	int res = sqlite3_open(databasePath, &db);
+
+	//Compiler compiler = Compiler(argv[1], argv[2]);
+	//compiler.compile();
 	return 0;
 }
