@@ -1,4 +1,5 @@
 #include "Compiler.h"
+#include <sqlite3.h>
 #include <iostream>
 #include <fstream>
 #include <ios>
@@ -7,6 +8,7 @@
 #include <limits>
 #include <sstream>
 #include "Modifier.h"
+#include <memory>
 
 using namespace eufe;
 
@@ -15,7 +17,7 @@ template<typename T> std::string to_string(const T& t) {
 	s << t;
 	return s.str();
 };
-
+/*
 Compiler::Compiler(const std::string& databasePath, const std::string& outputPath) : databasePath_(databasePath), outputPath_(outputPath)
 {
 	char c = outputPath_[outputPath_.size() - 1];
@@ -361,7 +363,7 @@ std::string Compiler::stringRepresentation(const MemoryBlock& memoryBlock)
 	std::string s(buf);
 	delete[] buf;
 	return s;
-}
+}*/
 ////////////////////////////////////
 
 
@@ -369,101 +371,181 @@ std::string Compiler::stringRepresentation(const MemoryBlock& memoryBlock)
 sqlite3 *db = NULL;
 
 
-void exec(const std::string sql, std::function<bool (sqlite3_stmt* stmt)> callback) {
-	sqlite3_stmt* stmt = NULL;
-	sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, NULL);
-	if (stmt) {
-		while (sqlite3_step(stmt) == SQLITE_ROW) {
-			if (callback && !callback(stmt))
-				break;
-		}
-		sqlite3_finalize(stmt);
-	}
-}
 
 
 namespace Compiler {
+	void exec(const std::string sql, std::function<bool (sqlite3_stmt* stmt)> callback) {
+		sqlite3_stmt* stmt = NULL;
+		sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, NULL);
+		if (stmt) {
+			while (sqlite3_step(stmt) == SQLITE_ROW) {
+				if (callback && !callback(stmt))
+					break;
+			}
+			sqlite3_finalize(stmt);
+		}
+	}
 	
-	class Argument {
-	public:
+	int32_t getAttributeID(const std::string& attributeName) {
+		std::stringstream s;
+		s << "select attributeID from dgmAttributeTypes where attributeName= \"" << attributeName << "\"";
+		int32_t attributeID = 0;
+		exec(s.str(), [&](sqlite3_stmt * stmt) -> bool {
+			attributeID = sqlite3_column_int(stmt, 0);
+			return false;
+		});
+		return attributeID;
+	}
+
+	int32_t getGroupID(const std::string& groupName) {
+		std::stringstream s;
+		s << "select groupID from invGroups where groupName= \"" << groupName << "\"";
+		int32_t groupID = 0;
+		exec(s.str(), [&](sqlite3_stmt * stmt) -> bool {
+			groupID = sqlite3_column_int(stmt, 0);
+			return false;
+		});
+		return groupID;
+	}
+
+	int32_t getTypeID(const std::string& typeName) {
+		std::stringstream s;
+		s << "select typeID from invTypes where typeName= \"" << typeName << "\"";
+		int32_t typeID = 0;
+		exec(s.str(), [&](sqlite3_stmt * stmt) -> bool {
+			typeID = sqlite3_column_int(stmt, 0);
+			return false;
+		});
+		return typeID;
+	}
+
+	Attribute Domain::getAttribute(const AttributeID& attributeID) {
+		return Attribute(*this, attributeID);
+	}
+	
+	TypeID Domain::getTypeID() {
+		return TypeID(domain_);
+	}
+	
+	Domain Domain::getLocationGroup(const GroupID& groupID) {
+		return Domain(*this, groupID);
+	}
+	
+	Domain Domain::getRequiredSkill(const TypeID& typeID) {
+		return Domain(*this, typeID);
+	}
+
+	bool Attribute::set(float value) {
+		return true;
+	}
+	bool Attribute::inc(float value) {
+		return true;
+	}
+	bool Attribute::dec(float value) {
+		return true;
+	}
+	bool Attribute::dec(const AttributeID& attributeID) {
+		return true;
+	}
+	bool Attribute::inc(const AttributeID& attributeID) {
+		return true;
+	}
+	bool Attribute::set(const AttributeID& attributeID) {
+		return true;
+	}
+	Association Attribute::getAssociation(const std::string& name) {
+		return Association(*this, name);
+	}
+
+	bool Association::addItemModifier(const AttributeID attributeID) {
+		return true;
+	}
+	bool Association::addLocationGroupModifier(const AttributeID attributeID) {
+		return true;
+	}
+	bool Association::addLocationModifier(const AttributeID attributeID) {
+		return true;
+	}
+	bool Association::addLocationRequiredSkillModifier(const AttributeID attributeID) {
+		return true;
+	}
+	bool Association::addOwnerRequiredSkillModifier(const AttributeID attributeID) {
+		return true;
+	}
+
+
+	Value::operator float() {
+		switch (valueType_) {
+			case VALUE_TYPE_INT:
+				return i_;
+			case VALUE_TYPE_FLOAT:
+				return f_;
+			case VALUE_TYPE_BOOL:
+				return b_;
+			default:
+				assert(0);
+		}
 	};
 	
-	struct ArgumentCategory {
-		typedef struct {} String;
-		struct AttributeID {};
-		struct Attribute {};
-		struct Value {};
-		struct Association {};
-		struct Domain {};
-		struct GroupID {};
-		struct TypeID {};
+	Value::operator bool () {
+		switch (valueType_) {
+			case VALUE_TYPE_INT:
+				return i_;
+			case VALUE_TYPE_FLOAT:
+				return f_;
+			case VALUE_TYPE_BOOL:
+				return b_;
+			default:
+				assert(0);
+		}
 	};
 	
-	typedef std::function<Argument(const class Expression& expression)> Operand;
-	/*
-	 argumentCategory:
-	 1: string
-	 2: attributeID
-	 3: attribute
-	 4: value
-	 5: association
-	 6: domain(item)
-	 8: groupID
-	 9: typeID
-	 */
-	
-	class Expression {
-	public:
-		Argument exec();
-		
-		template <class R, class T, int N> R get();
-		
-	private:
-		TypeID expressionID_;
-		TypeID arg1_;
-		TypeID arg2_;
-		TypeID typeID_;
-		TypeID groupID_;
-		TypeID attributeID_;
-		int16_t operandID;
-		std::string string_;
+	Value::operator int() {
+		switch (valueType_) {
+			case VALUE_TYPE_INT:
+				return i_;
+			case VALUE_TYPE_FLOAT:
+				return f_;
+			case VALUE_TYPE_BOOL:
+				return b_;
+			default:
+				assert(0);
+		}
 	};
 	
-	class Domain {
-	public:
-		Domain(const std::string& domain) : domain_(domain) {};
-	private:
-		std::string domain_;
-	};
+	Value::operator const std::string&() {
+		return s_;
+	}
 	
-	class Attribute {
-	public:
-		Attribute(const std::shared_ptr<Domain> domain, TypeID attributeID) : domain_(domain), attributeID_(attributeID) {};
-		void set(float value);
-		void inc(float value);
-		void dec(float value);
-	private:
-		TypeID attributeID_;
-		std::shared_ptr<Domain> domain_;
-	};
 	
-	class Association {
-	public:
-		Association(std::shared_ptr<Attribute> const& attribute, const std::string& name);
-	private:
-		std::shared_ptr<Attribute> attribute_;
-		Modifier::Association association_;
-	};
+	std::map<int32_t, std::shared_ptr<Expression>> expressions;
+
 }
+
+using namespace Compiler;
+
 
 int main(int argc, char* argv[])
 {
+	
 	if (argc != 3) {
 		std::cout<<"Usage: compiler source_database.sqlite output_dir"<<std::endl;
 		return 0;
 	}
 	const char* databasePath = argv[1];
 	int res = sqlite3_open(databasePath, &db);
+	
+	exec("select expressionID, operandID, arg1, arg2, expressionValue, expressionName, expressionTypeID, expressionGroupID, expressionAttributeID from dgmExpressions", [&](sqlite3_stmt* stmt) -> bool {
+		auto expression = std::make_shared<Expression>();
+		expression->operandID = sqlite3_column_int(stmt, 1);
+		expression->arg1 = sqlite3_column_int(stmt, 2);
+		expression->arg2 = sqlite3_column_int(stmt, 3);
+		expression->value = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
+		expression->name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
+		expression->typeID = sqlite3_column_int(stmt, 6);
+		expression->groupID = sqlite3_column_int(stmt, 7);
+		expressions[sqlite3_column_int(stmt, 0)] = expression;
+	});
 
 	//Compiler compiler = Compiler(argv[1], argv[2]);
 	//compiler.compile();
