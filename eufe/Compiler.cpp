@@ -9,6 +9,8 @@
 #include <sstream>
 #include "Modifier.h"
 #include <memory>
+#include <typeinfo>
+#include <type_traits>
 
 using namespace eufe;
 
@@ -418,6 +420,10 @@ namespace Compiler {
 		});
 		return typeID;
 	}
+	
+	int32_t currentExpressionID;
+	std::map<int32_t, std::list<Modifier>> modifiers;
+	std::map<int32_t, std::list<Mutator>> mutators;
 
 	Attribute Domain::getAttribute(const AttributeID& attributeID) {
 		return Attribute(*this, attributeID);
@@ -436,21 +442,27 @@ namespace Compiler {
 	}
 
 	bool Attribute::set(float value) {
+		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeSet));
 		return true;
 	}
 	bool Attribute::inc(float value) {
+		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeInc));
 		return true;
 	}
 	bool Attribute::dec(float value) {
+		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeDec));
 		return true;
 	}
 	bool Attribute::dec(const AttributeID& attributeID) {
+		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeDec));
 		return true;
 	}
 	bool Attribute::inc(const AttributeID& attributeID) {
+		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeInc));
 		return true;
 	}
 	bool Attribute::set(const AttributeID& attributeID) {
+		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeSet));
 		return true;
 	}
 	Association Attribute::getAssociation(const std::string& name) {
@@ -458,65 +470,35 @@ namespace Compiler {
 	}
 
 	bool Association::addItemModifier(const AttributeID attributeID) {
+		modifiers[currentExpressionID].push_back(Modifier(*this, attributeID));
+//		std::cout << attribute_.domain_.domain_ << "(" << attribute_.attributeID_.attributeID_ << ")" << ".AI(" << attributeID.attributeID_ << ")" << std::endl;
 		return true;
 	}
 	bool Association::addLocationGroupModifier(const AttributeID attributeID) {
+		modifiers[currentExpressionID].push_back(Modifier(*this, attributeID));
 		return true;
 	}
 	bool Association::addLocationModifier(const AttributeID attributeID) {
+		modifiers[currentExpressionID].push_back(Modifier(*this, attributeID));
 		return true;
 	}
 	bool Association::addLocationRequiredSkillModifier(const AttributeID attributeID) {
+		modifiers[currentExpressionID].push_back(Modifier(*this, attributeID));
 		return true;
 	}
 	bool Association::addOwnerRequiredSkillModifier(const AttributeID attributeID) {
+		modifiers[currentExpressionID].push_back(Modifier(*this, attributeID));
 		return true;
 	}
-
-
-	Value::operator float() {
-		switch (valueType_) {
-			case VALUE_TYPE_INT:
-				return i_;
-			case VALUE_TYPE_FLOAT:
-				return f_;
-			case VALUE_TYPE_BOOL:
-				return b_;
-			default:
-				assert(0);
-		}
-	};
 	
-	Value::operator bool () {
-		switch (valueType_) {
-			case VALUE_TYPE_INT:
-				return i_;
-			case VALUE_TYPE_FLOAT:
-				return f_;
-			case VALUE_TYPE_BOOL:
-				return b_;
-			default:
-				assert(0);
-		}
-	};
-	
-	Value::operator int() {
-		switch (valueType_) {
-			case VALUE_TYPE_INT:
-				return i_;
-			case VALUE_TYPE_FLOAT:
-				return f_;
-			case VALUE_TYPE_BOOL:
-				return b_;
-			default:
-				assert(0);
-		}
-	};
-	
-	Value::operator const std::string&() {
-		return s_;
+	std::ostream& operator<<(std::ostream& os, Modifier& modifier) {
+		os << "INSERT INTO dgmModifiers (modifierID, domain, modifiedAttributeID, modifyingAttributeID, association, requiredSkillID, locationGroupID, requiredSkillDomain) VALUES ("
+		<< modifier.modifierID << ","
+		<< '"' << modifier.modifiedAssociation.attribute_.domain_.domain_ << '"';
+		
+		return os;
 	}
-	
+
 	
 	std::map<int32_t, std::shared_ptr<Expression>> expressions;
 
@@ -540,11 +522,21 @@ int main(int argc, char* argv[])
 		expression->operandID = sqlite3_column_int(stmt, 1);
 		expression->arg1 = sqlite3_column_int(stmt, 2);
 		expression->arg2 = sqlite3_column_int(stmt, 3);
-		expression->value = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
-		expression->name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
+		expression->value = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)) ?: "";
+		expression->name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5)) ?: "";
 		expression->typeID = sqlite3_column_int(stmt, 6);
 		expression->groupID = sqlite3_column_int(stmt, 7);
 		expressions[sqlite3_column_int(stmt, 0)] = expression;
+		return true;
+	});
+	
+	exec("select effectID, preExpression from dgmEffects", [&](sqlite3_stmt* stmt) -> bool {
+		int32_t effectID = sqlite3_column_int(stmt, 0);
+		int32_t preExpression = sqlite3_column_int(stmt, 1);
+		currentExpressionID = preExpression;
+		if (mutators.find((currentExpressionID)) == mutators.end() && modifiers.find(currentExpressionID) == modifiers.end())
+			expressions[preExpression]->exec();
+		return true;
 	});
 
 	//Compiler compiler = Compiler(argv[1], argv[2]);

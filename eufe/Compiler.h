@@ -3,6 +3,7 @@
 #include "types.h"
 #include <sqlite3.h>
 #include <cstdlib>
+#include <iostream>
 
 //#include "ThirdParty/sqlite3.h"
 
@@ -61,6 +62,173 @@ namespace Compiler {
 	int32_t getGroupID(const std::string& groupName);
 	int32_t getTypeID(const std::string& typeName);
 
+	template <size_t arg1, size_t ... others>
+	struct static_max;
+	
+	template <size_t arg>
+	struct static_max<arg>
+	{
+		static const size_t value = arg;
+	};
+	
+	template <size_t arg1, size_t arg2, size_t ... others>
+	struct static_max<arg1, arg2, others...>
+	{
+		static const size_t value = arg1 >= arg2 ? static_max<arg1, others...>::value :
+		static_max<arg2, others...>::value;
+	};
+	
+	template<typename... Ts>
+	struct variant_helper;
+	
+	template<typename F, typename... Ts>
+	struct variant_helper<F, Ts...> {
+		inline static void destroy(size_t id, void * data)
+		{
+			if (id == typeid(F).hash_code())
+				reinterpret_cast<F*>(data)->~F();
+			else
+				variant_helper<Ts...>::destroy(id, data);
+		}
+		
+		inline static void move(size_t old_t, void * old_v, void * new_v)
+		{
+			if (old_t == typeid(F).hash_code())
+				new (new_v) F(std::move(*reinterpret_cast<F*>(old_v)));
+			else
+				variant_helper<Ts...>::move(old_t, old_v, new_v);
+		}
+		
+		inline static void copy(size_t old_t, const void * old_v, void * new_v)
+		{
+			if (old_t == typeid(F).hash_code())
+				new (new_v) F(*reinterpret_cast<const F*>(old_v));
+			else
+				variant_helper<Ts...>::copy(old_t, old_v, new_v);
+		}
+		
+		template<typename T>
+		inline static typename std::enable_if<std::is_trivially_constructible<T, F>::value, T>::type
+		cast(size_t typeID, const void* data) {
+			if (typeID == typeid(F).hash_code()) {
+				return static_cast<T>(*reinterpret_cast<const F*>(data));
+			}
+			else
+				return variant_helper<Ts...>::template cast<T>(typeID, data);
+		}
+		
+		template<typename T>
+		inline static typename std::enable_if<!std::is_trivially_constructible<T, F>::value, T>::type
+		cast(size_t typeID, const void* data) {
+			throw std::bad_cast();
+		}
+	};
+	
+
+	template<typename... Ts>
+	struct variant_contains;
+
+	template<typename T1, typename T2, typename... Ts>
+	struct variant_contains<T1, T2, Ts...> {
+		static const bool value = std::is_same<T1, T2>::value ? true : variant_contains<T1, Ts...>::value;
+	};
+	
+	template<typename T1, typename T2>
+	struct variant_contains<T1, T2> {
+		static const bool value = std::is_same<T1, T2>::value;
+	};
+
+	template<> struct variant_helper<>  {
+		inline static void destroy(size_t id, void * data) { }
+		inline static void move(size_t old_t, void * old_v, void * new_v) { }
+		inline static void copy(size_t old_t, const void * old_v, void * new_v) { }
+		template<typename T>
+		inline static T cast(size_t typeID, const void* data) {return T();};
+
+	};
+	
+	template<typename... Ts>
+	struct variant {
+	private:
+		static const size_t data_size = static_max<sizeof(Ts)...>::value;
+		static const size_t data_align = static_max<alignof(Ts)...>::value;
+		
+		using data_t = typename std::aligned_storage<data_size, data_align>::type;
+		
+		using helper_t = variant_helper<Ts...>;
+		
+		static inline size_t invalid_type() {
+			return typeid(void).hash_code();
+		}
+		
+		size_t type_id;
+		data_t data;
+	public:
+		variant() : type_id(invalid_type()) {   }
+		
+		variant(const variant<Ts...>& old) : type_id(old.type_id)
+		{
+			helper_t::copy(old.type_id, &old.data, &data);
+		}
+		
+		variant(variant<Ts...>&& old) : type_id(old.type_id)
+		{
+			helper_t::move(old.type_id, &old.data, &data);
+		}
+		
+		
+		template<typename T>
+		variant(const T& value, typename std::enable_if<variant_contains<T, Ts...>::value>::type* = 0) : type_id(typeid(T).hash_code()) {
+			helper_t::copy(type_id, &value, &data);
+		}
+		
+		template<typename T>
+		typename std::enable_if<variant_contains<T, Ts...>::value, variant<Ts...>&>::type operator=(const T& value) {
+			set<T>(value);
+		};
+		
+		// Serves as both the move and the copy asignment operator.
+		variant<Ts...>& operator= (variant<Ts...> old)
+		{
+			std::swap(type_id, old.type_id);
+			std::swap(data, old.data);
+			
+			return *this;
+		}
+		
+		template<typename T>
+		void is() {
+			return (type_id == typeid(T).hash_code());
+		}
+		
+		void valid() {
+			return (type_id != invalid_type());
+		}
+		
+		template<typename T, typename... Args>
+		void set(Args&&... args)
+		{
+			// First we destroy the current contents
+			helper_t::destroy(type_id, &data);
+			new (&data) T(std::forward<Args>(args)...);
+			type_id = typeid(T).hash_code();
+		}
+		
+		template<typename T>
+		T get() const
+		{
+			// It is a dynamic_cast-like behaviour
+			if (type_id == typeid(T).hash_code())
+				return *reinterpret_cast<const T*>(&data);
+			else
+				return helper_t::template cast<T>(type_id, &data);
+		}
+		
+		~variant() {
+			helper_t::destroy(type_id, &data);
+		}
+	};
+	
 	class AttributeID;
 	class Attribute;
 	class Association;
@@ -96,7 +264,7 @@ namespace Compiler {
 		Domain getLocationGroup(const GroupID& groupID);
 		Domain getRequiredSkill(const TypeID& typeID);
 		
-	private:
+//	private:
 		std::string domain_;
 		GroupID locationGroup_;
 		TypeID requiredSkill_;
@@ -106,7 +274,7 @@ namespace Compiler {
 	public:
 		AttributeID() : attributeID_(0) {};
 		AttributeID(int32_t attributeID) : attributeID_(attributeID) {};
-	private:
+	//private:
 		int32_t attributeID_;
 	};
 
@@ -122,7 +290,7 @@ namespace Compiler {
 		bool inc(const AttributeID& attributeID);
 		bool set(const AttributeID& attributeID);
 		Association getAssociation(const std::string& name);
-	private:
+//	private:
 		AttributeID attributeID_;
 		Domain domain_;
 	};
@@ -139,130 +307,20 @@ namespace Compiler {
 		bool addLocationModifier(const AttributeID attributeID);
 		bool addLocationRequiredSkillModifier(const AttributeID attributeID);
 		bool addOwnerRequiredSkillModifier(const AttributeID attributeID);
-	private:
+//	private:
 		Attribute attribute_;
 		std::string name_;
 	};
 	
-	class Value {
-	public:
-		enum ValueType {
-			VALUE_TYPE_UNKNOWN,
-			VALUE_TYPE_INT,
-			VALUE_TYPE_FLOAT,
-			VALUE_TYPE_BOOL,
-			VALUE_TYPE_STRING
-		};
-		Value() : valueType_(VALUE_TYPE_UNKNOWN) {};
-		Value(int v) : i_(v), valueType_(VALUE_TYPE_INT) {};
-		Value(bool v) : b_(v), valueType_(VALUE_TYPE_BOOL) {};
-		Value(float v) : f_(v), valueType_(VALUE_TYPE_FLOAT) {};
-		Value(double v) : f_(v), valueType_(VALUE_TYPE_FLOAT) {};
-		Value(const std::string& v) : s_(v), valueType_(VALUE_TYPE_STRING) {};
-		
-		operator float();
-		explicit operator bool ();
-		explicit operator int();
-		operator const std::string&();
-		
-	private:
-		union {
-			int i_;
-			float f_;
-			bool b_;
-		};
-		std::string s_;
-		ValueType valueType_;
-	};
+	using Value = variant<int, double, bool, std::string>;
+	using Argument = variant<AssociationName, AttributeID, Attribute, Value, Association, Domain, GroupID, TypeID>;
 	
-	class Argument  {
-	public:
-		enum ArgumentType {
-			ARGUMENT_TYPE_ASSOCIATION_NAME,
-			ARGUMENT_TYPE_ATTRIBUTE_ID,
-			ARGUMENT_TYPE_ATTRIBUTE,
-			ARGUMENT_TYPE_VALUE,
-			ARGUMENT_TYPE_ASSOCIATION,
-			ARGUMENT_TYPE_DOMAIN,
-			ARGUMENT_TYPE_GROUP_ID,
-			ARGUMENT_TYPE_TYPE_ID
-		};
-		
-		template<typename V> Argument(V v) : Argument(Value(v)) {};
-		
-		Argument(const AssociationName& v): associationName_(v), argumentType_(ARGUMENT_TYPE_ASSOCIATION_NAME) {};
-		Argument(const AttributeID& v): attributeID_(v), argumentType_(ARGUMENT_TYPE_ATTRIBUTE_ID) {};
-		Argument(const Attribute& v): attribute_(v), argumentType_(ARGUMENT_TYPE_ATTRIBUTE) {};
-		Argument(const Value& v): value_(v), argumentType_(ARGUMENT_TYPE_VALUE) {};
-		Argument(const Association& v): association_(v), argumentType_(ARGUMENT_TYPE_ASSOCIATION) {};
-		Argument(const Domain& v): domain_(v), argumentType_(ARGUMENT_TYPE_DOMAIN) {};
-		Argument(const GroupID& v): groupID_(v), argumentType_(ARGUMENT_TYPE_GROUP_ID) {};
-		Argument(const TypeID& v): typeID_(v), argumentType_(ARGUMENT_TYPE_TYPE_ID) {};
-		
-		explicit operator AssociationName& () {
-			assert(argumentType_ == ARGUMENT_TYPE_ASSOCIATION_NAME);
-			return associationName_;
-		}
-		explicit operator AttributeID& () {
-			assert(argumentType_ == ARGUMENT_TYPE_ATTRIBUTE_ID);
-			return attributeID_;
-		}
-		explicit operator Attribute& () {
-			assert(argumentType_ == ARGUMENT_TYPE_ATTRIBUTE);
-			return attribute_;
-		}
-		explicit operator Value& () {
-			assert(argumentType_ == ARGUMENT_TYPE_VALUE);
-			return value_;
-		}
-		explicit operator Association& () {
-			assert(argumentType_ == ARGUMENT_TYPE_ASSOCIATION);
-			return association_;
-		}
-		explicit operator Domain& () {
-			assert(argumentType_ == ARGUMENT_TYPE_DOMAIN);
-			return domain_;
-		}
-		explicit operator GroupID& () {
-			assert(argumentType_ == ARGUMENT_TYPE_GROUP_ID);
-			return groupID_;
-		}
-		explicit operator TypeID& () {
-			assert(argumentType_ == ARGUMENT_TYPE_TYPE_ID);
-			return typeID_;
-		}
-		
-	private:
-		AssociationName associationName_;
-		AttributeID attributeID_;
-		Attribute attribute_;
-		Value value_;
-		Association association_;
-		Domain domain_;
-		GroupID groupID_;
-		TypeID typeID_;
-		ArgumentType argumentType_;
-	};
-	
-	//typedef std::function<Argument(const class Expression& expression)> Operand;
-	/*
-	 argumentCategory:
-	 0: none
-	 1: string
-	 2: attributeID
-	 3: attribute
-	 4: value
-	 5: association
-	 6: domain(item)
-	 8: groupID
-	 9: typeID
-	 */
 	
 	class Expression;
 	typedef std::function<Argument(const Expression&)> Operator;
 	
 	template<int N> Argument operand(const class Expression& expression) {
-		assert(0);
+		return Value(true);
 	};
 
 	template<int N> Operator getOperator(int n);
@@ -287,6 +345,17 @@ namespace Compiler {
 			return getOperator<74>(operandID)(*this);
 		}
 		
+		template<typename T, int N>
+		T get() const
+		{
+			if (N == 0)
+				return expressions[arg1]->exec().get<T>();
+			else if (N == 1)
+				return expressions[arg2]->exec().get<T>();
+			else
+				throw std::bad_cast();
+		}
+
 		//private:
 		int32_t expressionID;
 		int32_t arg1;
@@ -297,6 +366,47 @@ namespace Compiler {
 		int16_t operandID;
 		std::string value;
 		std::string name;
+	};
+	
+	class Modifier {
+	public:
+		Modifier(const Association& association, const AttributeID& attributeID): modifiedAssociation(association), modifyingAttributeID(attributeID) {
+			static int32_t modifierIDCounter = 0;
+			modifierID = ++modifierIDCounter;
+			std::cout << modifierID << " " << std::endl;
+		}
+		
+		friend std::ostream& operator<<(std::ostream& os, Modifier& modifier);
+		
+		Association modifiedAssociation;
+		AttributeID modifyingAttributeID;
+		int32_t modifierID;
+	private:
+	};
+	
+	class Mutator {
+	public:
+		enum MutatorType{
+			MutatorTypeInc,
+			MutatorTypeDec,
+			MutatorTypeSet
+		};
+
+		Mutator(const Attribute& attribute, float value, MutatorType type) : modifiedAttribute(attribute), modifyingValue(value), type(type) {};
+
+		Mutator(const Attribute& attribute, const AttributeID& attributeID, MutatorType type) : modifiedAttribute(attribute), modifyingAttributeID(attributeID), type(type), modifyingValue(0) {};
+
+		Attribute modifiedAttribute;
+		AttributeID modifyingAttributeID;
+		float modifyingValue;
+		MutatorType type;
+	};
+	
+	class Effect {
+	public:
+		int32_t effectID;
+		std::list<Modifier> modifiers;
+		std::list<Mutator> mutators;
 	};
 	
 #include "Operands.hpp"
