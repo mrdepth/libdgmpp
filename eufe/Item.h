@@ -62,7 +62,8 @@ namespace eufe {
 		virtual void removeEffects(Effect::Category category);
 		const EffectsList& getEffects();
 
-		virtual Environment getEnvironment() = 0;
+		const Environment& getEnvironment();
+		virtual Environment buildEnvironment() = 0;
 		
 		virtual void reset();
 		
@@ -116,6 +117,7 @@ namespace eufe {
 		const Context* context_;
 		bool loaded_;
 		std::vector<TypeID> requiredSkills_;
+		std::shared_ptr<Environment> environment_;
 		
 		std::string typeName_;
 		std::string groupName_;

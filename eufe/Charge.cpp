@@ -3,6 +3,7 @@
 #include "Area.h"
 #include "Gang.h"
 #include "Module.h"
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -28,7 +29,7 @@ bool Charge::isOffensive() {
 	return false;
 }
 
-Environment Charge::getEnvironment()
+Environment Charge::buildEnvironment()
 {
 	Environment environment;
 	auto engine = getEngine();

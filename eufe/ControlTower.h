@@ -21,7 +21,7 @@ namespace eufe {
 		const StructuresList& getStructures();
 		bool canFit(std::shared_ptr<Structure> const& structure);
 
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 		
 		virtual void reset();
 		

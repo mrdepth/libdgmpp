@@ -9,6 +9,7 @@
 #include "LocationRequiredSkillModifier.h"
 #include <math.h>
 #include <algorithm>
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -74,7 +75,7 @@ bool ControlTower::canFit(std::shared_ptr<Structure> const& structure)
 		return false;
 }
 
-Environment ControlTower::getEnvironment()
+Environment ControlTower::buildEnvironment()
 {
 	Environment environment;
 	auto engine = getEngine();

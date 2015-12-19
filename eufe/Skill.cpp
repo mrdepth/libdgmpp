@@ -4,6 +4,7 @@
 #include "Ship.h"
 #include "Engine.h"
 #include "Area.h"
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -30,7 +31,7 @@ void Skill::setSkillLevel(int level)
 	getAttribute(SKILL_LEVEL_ATTRIBUTE_ID)->setValue(static_cast<float>(level));
 }
 
-Environment Skill::getEnvironment()
+Environment Skill::buildEnvironment()
 {
 	Environment environment;
 	auto engine = getEngine();

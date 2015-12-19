@@ -174,7 +174,7 @@ void CapacitorSimulator::internalReset()
 
 		if (projected)
 		{
-			if (module->hasEffect(LEECH_EFFECT_ID))
+			if (module->hasEffect(ENERGY_NOSFERATU_FALLOFF))
 				capNeed = static_cast<float>(module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
 			else if (module->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
 				capNeed = static_cast<float>(module->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue());

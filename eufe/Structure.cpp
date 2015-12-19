@@ -5,6 +5,7 @@
 #include "ControlTower.h"
 #include "DamagePattern.h"
 #include <math.h>
+#include "Environment.hpp"
 
 using namespace eufe;
 

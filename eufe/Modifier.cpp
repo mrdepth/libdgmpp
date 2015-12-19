@@ -6,7 +6,7 @@
 
 using namespace eufe;
 
-Modifier::Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character) : attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
+Modifier::Modifier(Domain domain, TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character) : domain_(domain), attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
 {
 }
 
@@ -17,6 +17,10 @@ Modifier::~Modifier()
 bool Modifier::isMatch(std::shared_ptr<Item> const& item) const
 {
 	return true;
+}
+
+Modifier::Domain Modifier::getDomain() {
+	return domain_;
 }
 
 TypeID Modifier::getAttributeID() const

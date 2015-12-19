@@ -7,6 +7,16 @@ namespace eufe {
 	{
 	public:
 		
+		enum Domain {
+			DOMAIN_SELF,
+			DOMAIN_CHAR,
+			DOMAIN_SHIP,
+			DOMAIN_GANG,
+			DOMAIN_AREA,
+			DOMAIN_TARGET,
+			DOMAIN_OTHER,
+		};
+
 		enum Association {
 			ASSOCIATION_PRE_ASSIGNMENT,
 			ASSOCIATION_MOD_ADD,
@@ -22,9 +32,19 @@ namespace eufe {
 			ASSOCIATION_SUB_RATE
 		};
 		
-		Modifier(TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character = nullptr);
+		enum Type {
+			ITEM_MODIFIER,
+			LOCATION_MODIFIER,
+			LOCATION_GROUP_MODIFIER,
+			LOCATION_REQUIRED_SKILL_MODIFIER,
+			OWNER_REQUIRED_SKILL_MODIFIER,
+			LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER,
+		};
+		
+		Modifier(Domain domain, TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character = nullptr);
 		virtual ~Modifier(void);
 		virtual bool isMatch(std::shared_ptr<Item> const& item) const;
+		Domain getDomain();
 		TypeID getAttributeID() const;
 		std::shared_ptr<Attribute> getModifier() const;
 		Association getAssociation() const;
@@ -41,6 +61,7 @@ namespace eufe {
 		
 	private:
 		TypeID attributeID_;
+		Domain domain_;
 		std::weak_ptr<Attribute> modifier_;
 		Association association_;
 		Character* character_;

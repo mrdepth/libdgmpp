@@ -15,6 +15,7 @@ namespace eufe {
 	class Item;
 	class Attribute;
 	class Effect;
+	class EffectPrototype;
 	class Ship;
 	class Module;
 	class Gang;
@@ -32,6 +33,7 @@ namespace eufe {
 	class EffectInterpreter;
 	class ControlTower;
 	class Structure;
+	class Environment;
 
 	typedef unsigned char Byte;
 	typedef int TypeID;
@@ -58,37 +60,6 @@ namespace eufe {
 	typedef std::map<GroupID, ItemModifiers> LocationGroupModifiers;
 	
 	typedef std::vector<const ModifiersList*> ModifiersListVector;
-	
-	struct Environment {
-		Environment() : character(nullptr), ship(nullptr), gang(nullptr), self(nullptr), area(nullptr), target(nullptr), other(nullptr) {};
-		Item* character;
-		Item* ship;
-		Item* gang;
-		Item* self;
-		Item* area;
-		Item* target;
-		Item* other;
-		Item* operator[](const std::string& s) {
-			if (s == "Self")
-				return self;
-			else if (s == "Ship")
-				return ship;
-			else if (s == "Char")
-				return character;
-			else if (s == "Other")
-				return other;
-			else if (s == "Target")
-				return target;
-			else if (s == "Area")
-				return area;
-			else if (s == "Gang")
-				return gang;
-			else {
-				assert(nullptr);
-				return nullptr;
-			}
-		}
-	};
 	
 	struct Tank
 	{

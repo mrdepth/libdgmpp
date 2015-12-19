@@ -4,6 +4,7 @@
 #include <sqlite3.h>
 #include <cstdlib>
 #include <iostream>
+#include "Modifier.h"
 
 //#include "ThirdParty/sqlite3.h"
 
@@ -61,6 +62,9 @@ namespace Compiler {
 	int32_t getAttributeID(const std::string& attributeName);
 	int32_t getGroupID(const std::string& groupName);
 	int32_t getTypeID(const std::string& typeName);
+	eufe::Modifier::Domain getDomainID(const std::string& domain);
+	eufe::Modifier::Association getAssociationID(const std::string& association);
+	std::ostream& operator<<(std::ostream& os, const class Modifier& modifier);
 
 	template <size_t arg1, size_t ... others>
 	struct static_max;
@@ -238,8 +242,17 @@ namespace Compiler {
 	public:
 		GroupID() : groupID_(0) {};
 		GroupID(int32_t groupID) : groupID_(groupID) {};
-	private:
+//	private:
 		int32_t groupID_;
+		bool operator == (const GroupID& other) const {
+			return groupID_ == other.groupID_;
+		}
+		bool operator > (const GroupID& other) const {
+			return groupID_ > other.groupID_;
+		}
+		bool operator < (const GroupID& other) const {
+			return groupID_ < other.groupID_;
+		}
 	};
 	
 	class TypeID {
@@ -247,9 +260,26 @@ namespace Compiler {
 		TypeID() : typeID_(0) {};
 		TypeID(const std::string& domain) : typeID_(0), domain_(domain) {}
 		TypeID(int32_t typeID) : typeID_(typeID) {};
-	private:
+//	private:
 		int32_t typeID_;
 		std::string domain_;
+		bool operator == (const TypeID& other) const {
+			return typeID_ == other.typeID_ && domain_ == other.domain_;
+		}
+		
+		bool operator > (const TypeID& other) const {
+			if (typeID_ == other.typeID_)
+				return domain_ > other.domain_;
+			else
+				return typeID_ > other.typeID_;
+		}
+		bool operator < (const TypeID& other) const {
+			if (typeID_ == other.typeID_)
+				return domain_ < other.domain_;
+			else
+				return typeID_ < other.typeID_;
+		}
+
 	};
 	
 	class Domain {
@@ -268,7 +298,31 @@ namespace Compiler {
 		std::string domain_;
 		GroupID locationGroup_;
 		TypeID requiredSkill_;
-	};
+		bool operator == (const Domain& other) const {
+			return domain_ == other.domain_ && locationGroup_ == other.locationGroup_ && requiredSkill_ == other.requiredSkill_;
+		}
+		bool operator > (const Domain& other) const {
+			if (domain_ == other.domain_) {
+				if (locationGroup_ == other.locationGroup_)
+					return requiredSkill_ > other.requiredSkill_;
+				else
+					return locationGroup_ > other.locationGroup_;
+			}
+			else
+				return domain_ > other.domain_;
+		}
+
+		bool operator < (const Domain& other) const {
+			if (domain_ == other.domain_) {
+				if (locationGroup_ == other.locationGroup_)
+					return requiredSkill_ < other.requiredSkill_;
+				else
+					return locationGroup_ < other.locationGroup_;
+			}
+			else
+				return domain_ < other.domain_;
+		}
+};
 	
 	class AttributeID {
 	public:
@@ -276,6 +330,16 @@ namespace Compiler {
 		AttributeID(int32_t attributeID) : attributeID_(attributeID) {};
 	//private:
 		int32_t attributeID_;
+		bool operator == (const AttributeID& other) const {
+			return attributeID_ == other.attributeID_;
+		}
+		
+		bool operator > (const AttributeID& other) const {
+			return attributeID_ > other.attributeID_;
+		}
+		bool operator < (const AttributeID& other) const {
+			return attributeID_ < other.attributeID_;
+		}
 	};
 
 	class Attribute {
@@ -293,6 +357,22 @@ namespace Compiler {
 //	private:
 		AttributeID attributeID_;
 		Domain domain_;
+		bool operator == (const Attribute& other) const {
+			return attributeID_ == other.attributeID_ && domain_ == other.domain_;
+		}
+		
+		bool operator > (const Attribute& other) const {
+			if (attributeID_ == other.attributeID_)
+				return domain_ > other.domain_;
+			else
+				return attributeID_ > other.attributeID_;
+		}
+		bool operator < (const Attribute& other) const {
+			if (attributeID_ == other.attributeID_)
+				return domain_ < other.domain_;
+			else
+				return attributeID_ < other.attributeID_;
+		}
 	};
 	
 	typedef std::string AssociationName;
@@ -310,6 +390,23 @@ namespace Compiler {
 //	private:
 		Attribute attribute_;
 		std::string name_;
+		
+		bool operator == (const Association& other) const {
+			return attribute_ == other.attribute_ && name_ == other.name_;
+		}
+		bool operator > (const Association& other) const {
+			if (attribute_ == other.attribute_)
+				return name_ > other.name_;
+			else
+				return attribute_ > other.attribute_;
+		}
+		bool operator < (const Association& other) const {
+			if (attribute_ == other.attribute_)
+				return name_ < other.name_;
+			else
+				return attribute_ < other.attribute_;
+		}
+
 	};
 	
 	using Value = variant<int, double, bool, std::string>;
@@ -370,17 +467,31 @@ namespace Compiler {
 	
 	class Modifier {
 	public:
-		Modifier(const Association& association, const AttributeID& attributeID): modifiedAssociation(association), modifyingAttributeID(attributeID) {
-			static int32_t modifierIDCounter = 0;
-			modifierID = ++modifierIDCounter;
-			std::cout << modifierID << " " << std::endl;
-		}
+		Modifier(eufe::Modifier::Type type, const Association& association, const AttributeID& attributeID, int32_t modifierID): type(type), modifiedAssociation(association), modifyingAttributeID(attributeID), modifierID(modifierID) {}
 		
-		friend std::ostream& operator<<(std::ostream& os, Modifier& modifier);
+		//friend std::ostream& operator<<(std::ostream& os, Modifier& modifier);
 		
 		Association modifiedAssociation;
 		AttributeID modifyingAttributeID;
 		int32_t modifierID;
+		eufe::Modifier::Type type;
+		
+		
+		bool operator == (const Modifier& other) const {
+			return modifiedAssociation == other.modifiedAssociation && modifyingAttributeID == other.modifyingAttributeID;
+		}
+		bool operator > (const Modifier& other) const {
+			if (modifyingAttributeID == other.modifyingAttributeID)
+				return modifiedAssociation > other.modifiedAssociation;
+			else
+				return modifyingAttributeID > other.modifyingAttributeID;
+		}
+		bool operator < (const Modifier& other) const {
+			if (modifyingAttributeID == other.modifyingAttributeID)
+				return modifiedAssociation < other.modifiedAssociation;
+			else
+				return modifyingAttributeID < other.modifyingAttributeID;
+		}
 	private:
 	};
 	

@@ -17,7 +17,7 @@ namespace eufe {
 		std::shared_ptr<Character> addPilot();
 		void removePilot(std::shared_ptr<Character> const& character);
 		
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 		
 		virtual void reset();
 		

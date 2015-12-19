@@ -22,6 +22,7 @@ namespace eufe {
 	extern const TypeID USE_MISSILES_EFFECT_ID;
 	
 	extern const TypeID LEECH_EFFECT_ID;
+	extern const TypeID ENERGY_NOSFERATU_FALLOFF;
 	extern const TypeID ENERGY_DESTABILIZATION_NEW_EFFECT_ID;
 	extern const TypeID ENERGY_DESTABILIZATION_NEW_EFFECT_ID;
 	extern const TypeID ENERGY_TRANSFER_EFFECT_ID;
@@ -47,6 +48,8 @@ namespace eufe {
 	extern const TypeID TACTICAL_MODE_EFFECT_ID;
 	extern const TypeID NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID;
 
+	class EffectPrototype;
+	
 	class Effect
 	{
 
@@ -62,27 +65,22 @@ namespace eufe {
 			CATEGORY_SYSTEM			= 7
 		};
 		
-		static std::shared_ptr<Effect> getEffect(std::shared_ptr<Engine> const& engine, int effectID);
+		static std::shared_ptr<Effect> getEffect(std::shared_ptr<Engine> const& engine, int effectID, std::shared_ptr<Item> const& owner);
 		
-//		Effect(std::shared_ptr<Engine> engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName = "");
-		Effect(std::shared_ptr<Engine> const& engine, TypeID effectID);
+		Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectPrototype> const& prototype, std::shared_ptr<Item> const& owner);
 		virtual ~Effect(void);
-		bool addEffect(Environment environment);
-		bool removeEffect(Environment environment);
+		bool addEffect(const Environment& environment);
+		bool removeEffect(const Environment&  environment);
 		TypeID getEffectID() const;
 		Category getCategory() const;
 		const char* getEffectName() const;
 		friend std::ostream& operator<<(std::ostream& os, Effect& effect);
-		bool isAssistance() {return isAssistance_;};
-		bool isOffensive() {return isOffensive_;};
+		bool isAssistance() const;
+		bool isOffensive() const;
 	private:
 		std::weak_ptr<Engine> engine_;
-		
-		Category category_;
-		TypeID effectID_;
-		std::shared_ptr<EffectInterpreter> interpreter_;
-		std::string effectName_;
-		bool isAssistance_;
-		bool isOffensive_;
+		std::weak_ptr<Item> owner_;
+		std::shared_ptr<EffectPrototype> prototype_;
+		std::map<Modifier::Type, ModifiersList> modifiers_;
 	};
 }

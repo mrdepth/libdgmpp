@@ -70,8 +70,8 @@ int main(int argc, const char * argv[]) {
 		NSString* vigilantDNA = @"17722:3146;5:5439;1:4025;1:6160;1:5975;1:10190;3:4405;2:2048;1:31546;1:31055;1:2185;5:12789;5:29011;1::";
 		//NSString* vigilantDNA = @"17722:3146;5:5439;1:4025;1:10850;1:5975;1:3530;1:4405;2:10190;3:31546;1:31055;1:2185;5:12789;5::";
 		NSString* magusDNA = @"37483:4284;1:4282;1:4280;1:11014;2::";
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
+		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/eufe.sqlite"));
 		CFTimeInterval t0 = CACurrentMediaTime();
 		auto garmur = addShip(engine, garmurDNA);
 		auto ishkur = addShip(engine, ishkurDNA);
@@ -97,10 +97,10 @@ int main(int argc, const char * argv[]) {
 		HitPoints hp15 = vigilant->getHitPoints();
 		float cap15 = vigilant->getCapUsed();*/
 		
-		/*std::ofstream os;
+		std::ofstream os;
 		os.open("/Users/shimanski/tmp/gang.json");
 		os << *engine->getGang() << std::endl;
-		os.close();*/
+		os.close();
 		
 		auto hp = vigilant->getHitPoints();
 		float dps = vigilant->getWeaponDps();

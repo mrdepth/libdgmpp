@@ -29,12 +29,13 @@ dbpatch.h: modifiersdump
 dump.sqlite: dbpatch
 	$(T)/dbpatch $(T)/dump.sqlite
 
-dgmCompiledEffects.sql: dump.sqlite compiler
+dgmModifiers.sql: dump.sqlite compiler
 	$(T)/compiler $(T)/dump.sqlite $(T)/
 
-eufe.sqlite: dgmCompiledEffects.sql
+eufe.sqlite: dgmModifiers.sql
 	sqlite3 $(T)/dump.sqlite ".read $(SQL)/eufe.sql"
-	sqlite3 eufe.sqlite ".read $(T)/dgmCompiledEffects.sql"
+	sqlite3 eufe.sqlite ".read $(T)/dgmModifiers.sql"
+	sqlite3 eufe.sqlite ".read $(T)/dgmEffectModifiers.sql"
 	mv ./eufe.sqlite $(OUTPUT_DIR)/eufe.sqlite
 
 tmp:

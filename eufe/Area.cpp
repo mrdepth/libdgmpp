@@ -4,6 +4,7 @@
 #include "Ship.h"
 #include "Character.h"
 #include "ControlTower.h"
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -89,7 +90,7 @@ void Area::removeEffects(Effect::Category category)
 	}
 }
 
-Environment Area::getEnvironment()
+Environment Area::buildEnvironment()
 {
 	Environment environment;
 	//environment["Self"] = shared_from_this();

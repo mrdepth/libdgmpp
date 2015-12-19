@@ -16,7 +16,7 @@ namespace eufe {
 		std::shared_ptr<Ship> getShip();
 		std::shared_ptr<Ship> setShip(TypeID typeID);
 
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 		
 		virtual void reset();
 		

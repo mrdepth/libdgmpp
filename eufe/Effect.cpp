@@ -16,8 +16,9 @@
 #include "Modifier.h"
 #include "LocationGroupModifier.h"
 #include "LocationRequiredSkillModifier.h"
+#include "Environment.hpp"
 
-#include "EffectByteCodeInterpreter.h"
+/*#include "EffectByteCodeInterpreter.h"
 #include "EffectLeechInterpreter.h"
 #include "EffectEnergyDestabilizationNewInterpreter.h"
 #include "EffectEnergyTransferInterpreter.h"
@@ -27,7 +28,8 @@
 #include "EffectSlotModifierInterpreter.h"
 #include "EffectHardPointModifierEffectInterpreter.h"
 #include "EffectAdaptiveArmorHardener.h"
-#include "EffectNaniteRepairPasteArmorDamageBonus.h"
+#include "EffectNaniteRepairPasteArmorDamageBonus.h"*/
+#include "EffectPrototype.h"
 
 using namespace eufe;
 
@@ -47,6 +49,7 @@ const TypeID eufe::TARGET_ATTACK_EFFECT_ID = 10;
 const TypeID eufe::USE_MISSILES_EFFECT_ID = 101;
 
 const TypeID eufe::LEECH_EFFECT_ID = 3250;
+const TypeID eufe::ENERGY_NOSFERATU_FALLOFF = 6197;
 const TypeID eufe::ENERGY_DESTABILIZATION_NEW_EFFECT_ID = 2303;
 const TypeID eufe::ENERGY_TRANSFER_EFFECT_ID = 31;
 
@@ -72,19 +75,9 @@ const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10002;
 
 //static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
 
-std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, int effectID)
+std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, int effectID, std::shared_ptr<Item> const& owner)
 {
-	std::map<TypeID, std::shared_ptr<eufe::Effect> >& reusableEffects = engine->getReusableEffects();
-	std::map<TypeID, std::shared_ptr<eufe::Effect> >::iterator i, end = reusableEffects.end();
-	i = reusableEffects.find(effectID);
-	if (i == end || !i->second) {
-		auto effect = std::make_shared<eufe::Effect>(engine, effectID);
-		reusableEffects[effectID] = effect;
-		return effect;
-	}
-	else {
-		return i->second;
-	}
+	return std::make_shared<Effect>(engine, EffectPrototype::getEffectPrototype(engine, effectID), owner);
 }
 
 /*Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
@@ -130,9 +123,61 @@ std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& e
 	}
 }*/
 
-Effect::Effect(std::shared_ptr<Engine> const& engine, TypeID effectID) : engine_(engine), effectID_(effectID), isAssistance_(false), isOffensive_(false)
+Effect::Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectPrototype> const& prototype, std::shared_ptr<Item> const& owner) : engine_(engine), prototype_(prototype), owner_(owner)
 {
-	//std::stringstream sql;
+	for (const auto& modifierPrototype: prototype->getModifierPrototypes()) {
+		const auto& env = owner->getEnvironment();
+		std::shared_ptr<Modifier> modifier;
+		switch (modifierPrototype->type) {
+			case Modifier::ITEM_MODIFIER:
+			case Modifier::LOCATION_MODIFIER:
+				modifier = std::make_shared<Modifier>(modifierPrototype->domain,
+													  modifierPrototype->modifiedAttributeID,
+													  modifierPrototype->association,
+													  env.self->getAttribute(modifierPrototype->modifyingAttributeID),
+													  isAssistance(),
+													  isOffensive(),
+													  dynamic_cast<Character*>(env.character));
+				break;
+			case Modifier::LOCATION_GROUP_MODIFIER:
+				modifier = std::make_shared<LocationGroupModifier>(modifierPrototype->domain,
+																   modifierPrototype->modifiedAttributeID,
+																   modifierPrototype->association,
+																   env.self->getAttribute(modifierPrototype->modifyingAttributeID),
+																   modifierPrototype->requiredID,
+																   isAssistance(),
+																   isOffensive(),
+																   dynamic_cast<Character*>(env.character));
+				break;
+			case Modifier::LOCATION_REQUIRED_SKILL_MODIFIER:
+			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
+				modifier = std::make_shared<LocationRequiredSkillModifier>(modifierPrototype->domain,
+																		   modifierPrototype->modifiedAttributeID,
+																		   modifierPrototype->association,
+																		   env.self->getAttribute(modifierPrototype->modifyingAttributeID),
+																		   modifierPrototype->requiredID,
+																		   isAssistance(),
+																		   isOffensive(),
+																		   dynamic_cast<Character*>(env.character));
+				break;
+			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
+				modifier = std::make_shared<LocationRequiredSkillModifier>(modifierPrototype->domain,
+																		   modifierPrototype->modifiedAttributeID,
+																		   modifierPrototype->association,
+																		   env.self->getAttribute(modifierPrototype->modifyingAttributeID),
+																		   env[static_cast<Modifier::Domain>(modifierPrototype->requiredID)]->getTypeID(),
+																		   isAssistance(),
+																		   isOffensive(),
+																		   dynamic_cast<Character*>(env.character));
+				break;
+			default:
+				throw std::bad_typeid();
+				break;
+		}
+		modifiers_[modifierPrototype->type].push_back(modifier);
+	}
+	
+/*	//std::stringstream sql;
 	//sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
 	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = ?");
 	stmt->bindInt(1, effectID);
@@ -189,7 +234,7 @@ Effect::Effect(std::shared_ptr<Engine> const& engine, TypeID effectID) : engine_
 		}
 		isAssistance_ = isAssistance;
 		isOffensive_ = isOffensive;
-	}
+	}*/
 }
 
 Effect::~Effect(void)
@@ -197,33 +242,113 @@ Effect::~Effect(void)
 	//reusableEffects.erase(reusableEffects.find(effectID_));
 }
 
-bool Effect::addEffect(Environment environment)
+bool Effect::addEffect(const Environment& env)
 {
-	return interpreter_->addEffect(environment);
+	for (const auto& i: modifiers_) {
+		switch (i.first) {
+			case Modifier::ITEM_MODIFIER:
+				for (const auto& modifier: i.second) {
+					auto item = env[modifier->getDomain()];
+					if (item)
+						item->addItemModifier(modifier);
+				}
+				break;
+			case Modifier::LOCATION_MODIFIER:
+				for (const auto& modifier: i.second) {
+					auto item = env[modifier->getDomain()];
+					if (item)
+						item->addLocationModifier(modifier);
+				}
+				break;
+			case Modifier::LOCATION_GROUP_MODIFIER:
+				for (const auto& modifier: i.second) {
+					auto item = env[modifier->getDomain()];
+					if (item)
+						item->addLocationGroupModifier(std::dynamic_pointer_cast<LocationGroupModifier> (modifier));
+				}
+				break;
+			case Modifier::LOCATION_REQUIRED_SKILL_MODIFIER:
+			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
+			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
+				for (const auto& modifier: i.second) {
+					auto item = env[modifier->getDomain()];
+					if (item)
+						item->addLocationRequiredSkillModifier(std::dynamic_pointer_cast<LocationRequiredSkillModifier> (modifier));
+				}
+				break;
+			default:
+				break;
+		}
+	}
+	return true;
 }
 
-bool Effect::removeEffect(Environment environment)
+bool Effect::removeEffect(const Environment& env)
 {
-	return interpreter_->removeEffect(environment);
+	for (const auto& i: modifiers_) {
+		switch (i.first) {
+			case Modifier::ITEM_MODIFIER:
+				for (const auto& modifier: i.second) {
+					auto item = env[modifier->getDomain()];
+					if (item)
+						item->removeItemModifier(modifier);
+				}
+				break;
+			case Modifier::LOCATION_MODIFIER:
+				for (const auto& modifier: i.second) {
+					auto item = env[modifier->getDomain()];
+					if (item)
+						item->removeLocationModifier(modifier);
+				}
+				break;
+			case Modifier::LOCATION_GROUP_MODIFIER:
+				for (const auto& modifier: i.second) {
+					auto item = env[modifier->getDomain()];
+					if (item)
+						item->removeLocationGroupModifier(std::dynamic_pointer_cast<LocationGroupModifier> (modifier));
+				}
+				break;
+			case Modifier::LOCATION_REQUIRED_SKILL_MODIFIER:
+			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
+			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
+				for (const auto& modifier: i.second) {
+					auto item = env[modifier->getDomain()];
+					if (item)
+						item->removeLocationRequiredSkillModifier(std::dynamic_pointer_cast<LocationRequiredSkillModifier> (modifier));
+				}
+				break;
+			default:
+				break;
+		}
+	}
+	return true;
 }
 
 TypeID Effect::getEffectID() const
 {
-	return effectID_;
+	return prototype_->getEffectID();
 }
 
 Effect::Category Effect::getCategory() const
 {
-	return category_;
+	return prototype_->getCategory();
 }
 
 const char* Effect::getEffectName() const
 {
-	return effectName_.c_str();
+	return prototype_->getEffectName();
+}
+
+bool Effect::isAssistance() const {
+	return prototype_->isAssistance();
+}
+
+bool Effect::isOffensive() const {
+	return prototype_->isOffensive();
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Effect& effect)
 {
-	os << "{\"effectName\":\"" << effect.effectName_<< "\", \"effectID\":\"" << effect.effectID_ << "\"}";
+	os << "{\"effectName\":\"" << effect.getEffectName()<< "\", \"effectID\":\"" << effect.getEffectID() << "\"}";
 	return os;
 }

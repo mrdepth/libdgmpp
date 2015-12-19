@@ -65,6 +65,17 @@ CREATE TABLE eufe.invCategories (
 PRIMARY KEY ("categoryID")
 );
 
+DROP TABLE IF EXISTS eufe.dgmEffects;
+CREATE TABLE eufe.dgmEffects (
+"effectID"  INTEGER NOT NULL,
+"effectName"  TEXT(400),
+"effectCategory"  INTEGER,
+"preExpression"  INTEGER,
+"postExpression"  INTEGER,
+"isOffensive"  INTEGER,
+"isAssistance"  INTEGER,
+PRIMARY KEY ("effectID")
+);
 
 INSERT INTO eufe.invGroups SELECT groupID, categoryID, groupName  FROM invGroups;
 INSERT INTO eufe.invTypes SELECT typeID, groupID, typeName, radius, mass, volume, capacity, portionSize, raceID, published FROM invTypes;
@@ -72,6 +83,7 @@ INSERT INTO eufe.dgmAttributeTypes SELECT attributeID, attributeName, displayNam
 INSERT INTO eufe.dgmTypeAttributes SELECT * FROM dgmTypeAttributes;
 INSERT INTO eufe.dgmTypeEffects SELECT * FROM dgmTypeEffects;
 INSERT INTO eufe.invCategories SELECT * FROM invCategories;
+INSERT INTO eufe.dgmEffects SELECT effectID, effectName, effectCategory, preExpression, postExpression, isOffensive, isAssistance  FROM dgmEffects;
 
 CREATE INDEX eufe.invGroups_categoryID ON "invGroups" ("categoryID" ASC);
 CREATE INDEX eufe.invTypes_groupID_published ON "invTypes" ("groupID" ASC, "published" ASC);

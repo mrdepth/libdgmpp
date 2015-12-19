@@ -10,6 +10,7 @@
 #include "LocationRequiredSkillModifier.h"
 #include "Implant.h"
 #include "Booster.h"
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -54,7 +55,7 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 	}
 }
 
-Environment Character::getEnvironment()
+Environment Character::buildEnvironment()
 {
 	Environment environment;
 	auto engine = getEngine();

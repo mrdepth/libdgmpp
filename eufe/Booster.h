@@ -14,7 +14,7 @@ namespace eufe {
 		}
 		int getSlot();
 		
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 	protected:
 		virtual void lazyLoad();
 

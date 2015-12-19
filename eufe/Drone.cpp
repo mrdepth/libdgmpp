@@ -6,6 +6,7 @@
 #include "Area.h"
 #include "Charge.h"
 #include <cmath>
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -18,7 +19,7 @@ Drone::~Drone(void)
 {
 }
 
-Environment Drone::getEnvironment()
+Environment Drone::buildEnvironment()
 {
 	Environment environment;
 	auto engine = getEngine();

@@ -15,7 +15,7 @@ namespace eufe {
 		bool isAssistance();
 		bool isOffensive();
 
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 	protected:
 	};
 	

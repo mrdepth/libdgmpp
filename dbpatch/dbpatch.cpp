@@ -29,6 +29,8 @@ void exec(const std::string sql, std::function<bool (sqlite3_stmt* stmt)> callba
 		}
 		sqlite3_finalize(stmt);
 	}
+	else
+		std::cout << sqlite3_errmsg(db) << std::endl;
 }
 
 class Operator {
@@ -41,14 +43,12 @@ protected:
 template <typename T> class Operator1: public Operator {
 public:
 	Operator1(const std::string& name, const T& arg1) : Operator(name), arg1_(arg1) {};
-	//protected:
 	T arg1_;
 };
 
 template <typename T1, typename T2> class Operator2 : public Operator {
 public:
 	Operator2(const std::string& name, const T1& arg1, const T2& arg2) : Operator(name), arg1_(arg1), arg2_(arg2) {};
-	//protected:
 	T1 arg1_;
 	T2 arg2_;
 };
@@ -328,6 +328,21 @@ public:
 					return false;
 				});
 			}
+			else if (operatorName == "DEFASSOCIATION") {
+				std::stringstream os;
+				os << "insert into dgmExpressions (expressionID, operandID, expressionValue, description, expressionName) values (" <<
+				expressionID << ", " <<
+				operatorID << ", " <<
+				'"' << expressionValue << "\", " <<
+				"\"eufe\"" << ", " <<
+				"\"" << *this << "\"" << ")";
+				exec(os.str(), [](sqlite3_stmt* stmt) -> bool {
+					return false;
+				});
+			}
+			else {
+				throw std::bad_typeid();
+			}
 		}
 		
 		return expressionID;
@@ -479,10 +494,69 @@ int patch(const char* databasePath) {
 					 DefEnv("Ship").attr("armorKineticDamageResonance").assoc("PostMul").RIM("armorKineticDamageResonance"),
 					 DefEnv("Ship").attr("armorThermalDamageResonance").assoc("PostMul").RIM("armorThermalDamageResonance"))));
 
-//	update("naniteRepairPasteArmorDamageBonus",
-//		   DefEnv("Other").attr("armorDamageAmount").assoc("PostMul").AIM("chargedArmorDamageMultiplier"),
-//		   DefEnv("Other").attr("armorDamageAmount").assoc("PostMul").RIM("chargedArmorDamageMultiplier"));
+	update("fueledArmorRepairBonus",
+		   COMB(
+				DefEnv("Self").attr("chargedArmorDamageMultiplier").assoc("PostDiv").AIM("chargedArmorDamageMultiplierPostDiv"),
+				DefEnv("Self").attr("armorDamageAmount").assoc("PostMul").AIM("chargedArmorDamageMultiplier")
+				),
+		   COMB(
+				DefEnv("Self").attr("chargedArmorDamageMultiplier").assoc("PostDiv").RIM("chargedArmorDamageMultiplierPostDiv"),
+				DefEnv("Self").attr("armorDamageAmount").assoc("PostMul").RIM("chargedArmorDamageMultiplier")
+		   ));
+	update("naniteRepairPasteArmorDamageBonus",
+		   DefEnv("Other").attr("chargedArmorDamageMultiplierPostDiv").assoc("PostAssignment").AIM("chargedArmorDamageMultiplierPostDiv"),
+		   DefEnv("Other").attr("chargedArmorDamageMultiplierPostDiv").assoc("PostAssignment").RIM("chargedArmorDamageMultiplierPostDiv"));
+	
 
+	//Repairers
+	update("armorRepair",
+		   DefEnv("Ship").attr("armorDamage").assoc("SubRate").AIM("armorDamageAmount"),
+		   DefEnv("Ship").attr("armorDamage").assoc("SubRate").RIM("armorDamageAmount"));
+	update("targetArmorRepair",
+		   DefEnv("Target").attr("armorDamage").assoc("SubRate").AIM("armorDamageAmount"),
+		   DefEnv("Target").attr("armorDamage").assoc("SubRate").RIM("armorDamageAmount"));
+	update("remoteArmorRepairFalloff",
+		   DefEnv("Target").attr("armorDamage").assoc("SubRate").AIM("armorDamageAmount"),
+		   DefEnv("Target").attr("armorDamage").assoc("SubRate").RIM("armorDamageAmount"));
+	update("fueledArmorRepair",
+		   DefEnv("Ship").attr("armorDamage").assoc("SubRate").AIM("armorDamageAmount"),
+		   DefEnv("Ship").attr("armorDamage").assoc("SubRate").RIM("armorDamageAmount"));
+	
+	update("shieldBoosting",
+		   DefEnv("Ship").attr("shieldCharge").assoc("AddRate").AIM("shieldBonus"),
+		   DefEnv("Ship").attr("shieldCharge").assoc("AddRate").RIM("shieldBonus"));
+	update("shieldTransfer",
+		   DefEnv("Target").attr("shieldCharge").assoc("AddRate").AIM("shieldBonus"),
+		   DefEnv("Target").attr("shieldCharge").assoc("AddRate").RIM("shieldBonus"));
+	update("remoteShieldTransferFalloff",
+		   DefEnv("Target").attr("shieldCharge").assoc("AddRate").AIM("shieldBonus"),
+		   DefEnv("Target").attr("shieldCharge").assoc("AddRate").RIM("shieldBonus"));
+	update("fueledShieldBoosting",
+		   DefEnv("Ship").attr("shieldCharge").assoc("AddRate").AIM("shieldBonus"),
+		   DefEnv("Ship").attr("shieldCharge").assoc("AddRate").RIM("shieldBonus"));
+	
+
+	update("structureRepair",
+		   DefEnv("Ship").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
+		   DefEnv("Ship").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
+	update("remoteHullRepair",
+		   DefEnv("Target").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
+		   DefEnv("Target").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
+	update("remoteHullRepairFalloff",
+		   DefEnv("Target").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
+		   DefEnv("Target").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
+
+
+	//Energy Transfers
+	update("energyTransfer",
+		   DefEnv("Target").attr("charge").assoc("AddRate").AIM("powerTransferAmount"),
+		   DefEnv("Target").attr("charge").assoc("AddRate").RIM("powerTransferAmount"));
+	update("energyDestabilizationNew",
+		   DefEnv("Target").attr("charge").assoc("SubRate").AIM("powerTransferAmount"),
+		   DefEnv("Target").attr("charge").assoc("SubRate").RIM("powerTransferAmount"));
+	update("energyNosferatuFalloff",
+		   DefEnv("Target").attr("charge").assoc("SubRate").AIM("powerTransferAmount"),
+		   DefEnv("Target").attr("charge").assoc("SubRate").RIM("powerTransferAmount"));
 	
 	//Confessor
 	update("modeVelocityPostDiv",

@@ -13,6 +13,7 @@
 #include <algorithm>
 #include "Charge.h"
 #include <cassert>
+#include "Environment.hpp";
 
 using namespace eufe;
 
@@ -474,7 +475,7 @@ bool Ship::isDisallowedOffensiveModifiers()
 	return disallowOffensiveModifiers_ == DISALLOWED;
 }
 
-Environment Ship::getEnvironment()
+Environment Ship::buildEnvironment()
 {
 	Environment environment;
 	auto engine = getEngine();

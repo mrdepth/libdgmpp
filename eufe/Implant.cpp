@@ -4,6 +4,7 @@
 #include "Ship.h"
 #include "Engine.h"
 #include "Area.h"
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -21,7 +22,7 @@ int Implant::getSlot()
 	return slot_;
 }
 
-Environment Implant::getEnvironment()
+Environment Implant::buildEnvironment()
 {
 	Environment environment;
 	auto engine = getEngine();

@@ -9,6 +9,7 @@
 #include "Character.h"
 #include <sstream>
 #include <functional>
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -394,7 +395,7 @@ void Attribute::calculate()
 		sync = true;
 		value_ = initialValue_;
 		
-		Environment environment = owner->getEnvironment();
+		const auto& environment = owner->getEnvironment();
 		//std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
 		Item* currentCharacter = environment.character;
 		Ship* ship = dynamic_cast<Ship*>(environment.ship);

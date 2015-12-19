@@ -10,6 +10,7 @@
 #include <functional>
 #include <math.h>
 #include <algorithm>
+#include "Environment.hpp"
 
 
 using namespace eufe;
@@ -155,7 +156,7 @@ void Gang::removePilot(std::shared_ptr<Character> const& character)
 }
 
 
-Environment Gang::getEnvironment()
+Environment Gang::buildEnvironment()
 {
 	Environment environment;
 	auto engine = getEngine();

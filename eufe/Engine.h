@@ -4,12 +4,11 @@
 #include <stdexcept>
 #include <mutex>
 #include "SqlConnector.h"
-
+#include "EffectPrototype.h"
 
 //#define FACTOR_RELOAD
 
 namespace eufe {
-
 	class Engine : public std::enable_shared_from_this<Engine>
 	{
 	public:
@@ -38,8 +37,11 @@ namespace eufe {
 		
 		friend std::ostream& operator<<(std::ostream& os, Engine& engine);
 		
-		std::map<TypeID, std::shared_ptr<eufe::Effect> >& getReusableEffects() {
-			return reusableEffects_;
+		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype> >& getReusableEffectPrototypes() {
+			return reusableEffectPrototypes_;
+		}
+		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype::ModifierPrototype> >& getReusableModifierPrototypes() {
+			return reusableModifierPrototypes_;
 		}
 		
 		uint32_t getGeneration() const {
@@ -53,7 +55,8 @@ namespace eufe {
 		std::shared_ptr<ControlTower> controlTower_;
 		std::recursive_mutex mutex_;
 		
-		std::map<TypeID, std::shared_ptr<eufe::Effect> > reusableEffects_;
+		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype> > reusableEffectPrototypes_;
+		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype::ModifierPrototype> > reusableModifierPrototypes_;
 		uint32_t generation_;
 		int32_t updatesCounter_;
 

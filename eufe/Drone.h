@@ -18,7 +18,7 @@ namespace eufe {
 		std::shared_ptr<Drone> shared_from_this() {
 			return std::static_pointer_cast<Drone>(Item::shared_from_this());
 		}
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 		
 		void setTarget(std::shared_ptr<Ship> const& target = nullptr);
 		void clearTarget();

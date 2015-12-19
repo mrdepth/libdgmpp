@@ -42,7 +42,7 @@ namespace eufe {
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();
 
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 		
 		virtual void reset();
 		

@@ -17,7 +17,7 @@ namespace eufe {
 
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 		
 	};
 

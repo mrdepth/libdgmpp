@@ -15,6 +15,7 @@
 #include "Gang.h"
 #include "Area.h"
 #include <cassert>
+#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -145,6 +146,12 @@ std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
     throw EffectDidNotFoundException(std::to_string(effectID));
 }
 
+const Environment& Item::getEnvironment() {
+	if (!environment_)
+		environment_ = std::make_shared<Environment>(buildEnvironment());
+	return *environment_;
+}
+
 
 bool Item::requireSkill(TypeID skillID)
 {
@@ -229,6 +236,7 @@ const EffectsList& Item::getEffects() {
 void Item::reset()
 {
 	loadIfNeeded();
+	environment_ = nullptr;
 //	for (const auto& i: attributes_)
 //		i.second->reset();
 }
@@ -305,7 +313,7 @@ void Item::addLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkil
 void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 {
 	auto& list = itemModifiers_[modifier->getAttributeID()];
-	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
+	auto i = std::find(list.begin(), list.end(), modifier);
 	if (i != list.end())
 		list.erase(i);
 	if (list.size() == 0)
@@ -315,7 +323,7 @@ void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 {
 	auto& list = locationModifiers_[modifier->getAttributeID()];
-	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
+	auto i = std::find(list.begin(), list.end(), modifier);
 	if (i != list.end())
 		list.erase(i);
 	if (list.size() == 0)
@@ -326,7 +334,7 @@ void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> co
 {
 	auto& map = locationGroupModifiers_[modifier->getGroupID()];
 	auto& list = map[modifier->getAttributeID()];
-	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
+	auto i = std::find(list.begin(), list.end(), modifier);
 	if (i != list.end())
 		list.erase(i);
 
@@ -341,7 +349,7 @@ void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredS
 {
 	auto& map = locationRequiredSkillModifiers_[modifier->getSkillID()];
 	auto& list = map[modifier->getAttributeID()];
-	auto i = std::find_if(list.begin(), list.end(), ModifiersFindFunction(modifier));
+	auto i = std::find(list.begin(), list.end(), modifier);
 	if (i != list.end())
 		list.erase(i);
 
@@ -461,7 +469,7 @@ void Item::lazyLoad() {
 		while (result->next())
 		{
 			TypeID effectID = static_cast<TypeID>(result->getInt(0));
-			effects_.push_back(Effect::getEffect(engine, effectID));
+			effects_.push_back(Effect::getEffect(engine, effectID, shared_from_this()));
 		}
 		result = nullptr;
 		

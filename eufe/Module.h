@@ -60,7 +60,7 @@ namespace eufe {
 		bool isAssistance();
 		bool isOffensive();
 
-		virtual Environment getEnvironment();
+		virtual Environment buildEnvironment();
 
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
