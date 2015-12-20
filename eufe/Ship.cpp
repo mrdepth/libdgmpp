@@ -13,7 +13,6 @@
 #include <algorithm>
 #include "Charge.h"
 #include <cassert>
-#include "Environment.hpp";
 
 using namespace eufe;
 
@@ -475,33 +474,6 @@ bool Ship::isDisallowedOffensiveModifiers()
 	return disallowOffensiveModifiers_ == DISALLOWED;
 }
 
-Environment Ship::buildEnvironment()
-{
-	Environment environment;
-	auto engine = getEngine();
-	if (engine) {
-		/*environment["Self"] = shared_from_this();
-		environment["Ship"] = shared_from_this();
-		std::shared_ptr<Item> character = getOwner();
-		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-		std::shared_ptr<Area> area = engine->getArea();
-		
-		if (character)
-			environment["Char"] = character;
-		if (gang)
-			environment["Gang"] = gang;
-		if (area)
-			environment["Area"] = area;*/
-		environment.self = this;
-		environment.ship = this;
-		environment.character = getOwner().get();
-		environment.gang = environment.character->getOwner().get();
-		environment.area = engine->getArea().get();
-	}
-
-	return environment;
-}
-
 void Ship::reset()
 {
 	Item::reset();
@@ -879,7 +851,7 @@ const Tank& Ship::getSustainableTank()
 			for (int i = 0; i < 3; i++)
 			{
 				ModifiersList modifiers;
-				getModifiers(getAttribute(attributes[i]), std::inserter(modifiers, modifiers.end()));
+				getModifiers(getAttribute(attributes[i]).get(), std::inserter(modifiers, modifiers.end()));
 				for (const auto& j: modifiers)
 				{
 					Modifier::Association association = j->getAssociation();
@@ -1209,6 +1181,15 @@ void Ship::updateHeatDamage()
 {
 	getHeatSimulator()->simulate();
 }
+
+Item* Ship::character() {
+	return getOwner().get();
+}
+
+Item* Ship::ship() {
+	return this;
+}
+
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Ship& ship)
 {

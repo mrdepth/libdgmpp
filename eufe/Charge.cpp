@@ -3,7 +3,6 @@
 #include "Area.h"
 #include "Gang.h"
 #include "Module.h"
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -29,35 +28,14 @@ bool Charge::isOffensive() {
 	return false;
 }
 
-Environment Charge::buildEnvironment()
-{
-	Environment environment;
-	auto engine = getEngine();
-	if (engine) {
-		/*environment["Self"] = shared_from_this();
-		
-		std::shared_ptr<Item> module = getOwner();
-		std::shared_ptr<Item> ship = module ? module->getOwner() : nullptr;
-		std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
-		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-		std::shared_ptr<Area> area = engine->getArea();
-		if (character)
-			environment["Char"] = character;
-		if (ship)
-			environment["Ship"] = ship;
-		if (gang)
-			environment["Gang"] = gang;
-		if (area)
-			environment["Area"] = area;
-		if (module)
-			environment["Other"] = module;*/
-		environment.self = this;
-		environment.other = getOwner().get();
-		environment.ship = environment.other ? environment.other->getOwner().get() : nullptr;
-		environment.character = environment.ship ? environment.ship->getOwner().get() : nullptr;
-		environment.gang = environment.character ? environment.character->getOwner().get() : nullptr;
-		environment.area = engine->getArea().get();
-	}
-	
-	return environment;
+Item* Charge::ship() {
+	return other()->getOwner().get();
+}
+
+Item* Charge::character() {
+	return ship()->character();
+}
+
+Item* Charge::other() {
+	return getOwner().get();
 }

@@ -10,7 +10,6 @@
 #include "LocationRequiredSkillModifier.h"
 #include "Implant.h"
 #include "Booster.h"
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -55,32 +54,6 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 	}
 }
 
-Environment Character::buildEnvironment()
-{
-	Environment environment;
-	auto engine = getEngine();
-	if (engine) {
-		/*environment["Self"] = shared_from_this();
-		environment["Char"] = shared_from_this();
-		std::shared_ptr<Item> gang = getOwner();
-		std::shared_ptr<Area> area = engine->getArea();
-		
-		if (ship_)
-			environment["Ship"] = ship_;
-		
-		if (gang)
-			environment["Gang"] = gang;
-		
-		if (area)
-			environment["Area"] = area;*/
-		environment.self = this;
-		environment.character = this;
-		environment.gang = getOwner().get();
-		environment.area = engine->getArea().get();
-		environment.ship = ship_.get();
-	}
-	return environment;
-}
 
 void Character::reset()
 {
@@ -332,7 +305,7 @@ void Character::setAllSkillsLevel(int level)
 	engine->reset();
 }
 
-std::insert_iterator<ModifiersList> Character::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Character::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	outIterator = Item::getLocationModifiers(attribute, outIterator);
 	auto owner = getOwner();
@@ -356,6 +329,14 @@ void Character::lazyLoad() {
 		TypeID skillID = result->getInt(0);
 		addSkill(skillID, 0, false);
 	}
+}
+
+Item* Character::character() {
+	return this;
+}
+
+Item* Character::ship() {
+	return getShip().get();
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Character& character)

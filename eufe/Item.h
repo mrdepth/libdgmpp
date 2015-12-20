@@ -4,6 +4,8 @@
 #include <sqlite3.h>
 #include <iostream>
 #include "Effect.h"
+#include "Environment.h"
+#include "Engine.h"
 
 namespace eufe {
 	
@@ -23,7 +25,7 @@ namespace eufe {
 
 	extern const TypeID MISSILE_LAUNCHER_OPERATION_TYPE_ID;
 
-	class Item: public std::enable_shared_from_this<Item>
+	class Item: public Environment, public std::enable_shared_from_this<Item>
 	{
 	public:
 		
@@ -62,11 +64,7 @@ namespace eufe {
 		virtual void removeEffects(Effect::Category category);
 		const EffectsList& getEffects();
 
-		const Environment& getEnvironment();
-		virtual Environment buildEnvironment() = 0;
-		
 		virtual void reset();
-		
 		
 		virtual void addItemModifier(std::shared_ptr<Modifier> const& modifier);
 		virtual void addLocationModifier(std::shared_ptr<Modifier> const& modifier);
@@ -84,9 +82,13 @@ namespace eufe {
 		std::set<std::shared_ptr<Item>> getAffectors();
 		friend std::ostream& operator<<(std::ostream& os, Item& item);
 
-		virtual std::insert_iterator<ModifiersList> getModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> ModifiersListVector);
-		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> ModifiersListVector);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
+		
+		virtual Item* self();
+		virtual Item* gang();
+		virtual Item* area();
 
 	protected:
 		std::weak_ptr<Engine> engine_;
@@ -110,14 +112,13 @@ namespace eufe {
 			if (!loaded_)
 				lazyLoad();
 		}
-		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName = "");
+		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, float value);
 
 		
 	private:
 		const Context* context_;
 		bool loaded_;
 		std::vector<TypeID> requiredSkills_;
-		std::shared_ptr<Environment> environment_;
 		
 		std::string typeName_;
 		std::string groupName_;

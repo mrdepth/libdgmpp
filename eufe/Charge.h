@@ -15,7 +15,9 @@ namespace eufe {
 		bool isAssistance();
 		bool isOffensive();
 
-		virtual Environment buildEnvironment();
+		virtual Item* ship();
+		virtual Item* character();
+		virtual Item* other();
 	protected:
 	};
 	

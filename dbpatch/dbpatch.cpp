@@ -29,8 +29,10 @@ void exec(const std::string sql, std::function<bool (sqlite3_stmt* stmt)> callba
 		}
 		sqlite3_finalize(stmt);
 	}
-	else
-		std::cout << sqlite3_errmsg(db) << std::endl;
+	else {
+		std::cout << "error:" << sqlite3_errmsg(db) << std::endl;
+		throw std::bad_exception();
+	}
 }
 
 class Operator {
@@ -56,6 +58,11 @@ public:
 class DefAttr : public Operator1<std::string> {
 public:
 	DefAttr(const std::string& env) : Operator1("DEFATTRIBUTE", env) {};
+};
+
+class DefInt : public Operator1<int> {
+public:
+	DefInt(int value) : Operator1("DEFINT", value) {};
 };
 
 template <typename T> class Modifier : public Operator2<T, DefAttr> {
@@ -433,12 +440,125 @@ template <typename T1, typename T2> void update(const std::string& effectName, T
 	exec(os.str(), nullptr);
 }
 
+void addEffect(int32_t effectID, const std::string& effectName, int32_t effectCategory, bool isOffensive, bool isAssistance) {
+	std::stringstream os;
+	os << "INSERT INTO \"dgmEffects\" (effectID,effectName,effectCategory,preExpression,postExpression,description,isOffensive,isAssistance)\
+	VALUES (\"" << effectID << "\",\"" << effectName << "\"," << effectCategory << ",0, 0, \"eufe\"," << isOffensive << "," << isAssistance << ");";
+	exec(os.str(), nullptr);
+}
+
+void addAttribute(int32_t attributeID, const std::string& attributeName, int32_t attributeCategory, int32_t unitID, bool stackable, bool highIsGood) {
+	std::stringstream os;
+	os << "INSERT INTO \"dgmAttributeTypes\" (attributeID,attributeName,attributeCategory,published,unitID,displayName,description,stackable,highIsGood,categoryID,iconID)\
+	VALUES (" << attributeID << ", \"" << attributeName << "\"," << attributeCategory << ",0, " << unitID << ", NULL, \"eufe\", " << stackable << "," << highIsGood << ", NULL, NULL);";
+	exec(os.str(), nullptr);
+}
+
+void addEffect(const std::string& typeName, int32_t effectID) {
+	std::stringstream os;
+	os << "INSERT INTO dgmTypeEffects SELECT typeID, " << effectID << " as effectID, 1 as isDefault FROM invTypes WHERE typeName = \"" << typeName << "\";";
+	exec(os.str(), nullptr);
+}
+
+void addEffectGroup(int32_t groupID, int32_t effectID) {
+	std::stringstream os;
+	os << "INSERT INTO dgmTypeEffects SELECT typeID, " << effectID << " as effectID, 1 as isDefault FROM invTypes WHERE groupID = " << groupID << ";";
+	exec(os.str(), nullptr);
+}
+
+void addAttribute(const std::string& typeName, int32_t attributeID, float value) {
+	std::stringstream os;
+	os << "INSERT INTO dgmTypeAttributes SELECT typeID, " << attributeID << " as attributeID," << value << " as value FROM invTypes WHERE typeName = \"" << typeName << "\";";
+	exec(os.str(), nullptr);
+}
+
+void addAttributeGroup(int32_t groupID, int32_t attributeID, float value) {
+	std::stringstream os;
+	os << "INSERT INTO dgmTypeAttributes SELECT typeID, " << attributeID << " as attributeID," << value << " as value FROM invTypes WHERE groupID = " << groupID << ";";
+	exec(os.str(), nullptr);
+}
+
+int32_t getTypeID(const std::string& typeName) {
+	std::stringstream os;
+	os << "SELECT typeID FROM invTypes WHERE typeName = \"" << typeName << "\";";
+	int32_t typeID = 0;
+	exec(os.str(), [&](sqlite3_stmt* stmt) -> bool {
+		typeID = sqlite3_column_int(stmt, 0);
+		return false;
+	});
+	return typeID;
+}
+
 int patch(const char* databasePath) {
 	int res = sqlite3_open(databasePath, &db);
 	if (!db)
 		return res;
 	
 	sqlite3_exec(db, "delete from dgmExpressions where expressionID >= 20000", NULL, NULL, NULL);
+	sqlite3_exec(db, "delete from dgmEffects where effectID >= 10000", NULL, NULL, NULL);
+	sqlite3_exec(db, "delete from dgmTypeEffects where effectID >= 10000", NULL, NULL, NULL);
+	sqlite3_exec(db, "delete from dgmAttributeTypes where attributeID >= 10000", NULL, NULL, NULL);
+	sqlite3_exec(db, "delete from dgmTypeAttributes where attributeID >= 10000", NULL, NULL, NULL);
+	
+	addEffect(10000, "characterDamageMissiles", 0, 0, 0);
+	addEffect("CharacterStatic", 10000);
+	
+	sqlite3_exec(db, "DELETE FROM dgmTypeEffects WHERE effectID=3461;", NULL, NULL, NULL);
+	addEffectGroup(899, 3461);
+
+	addEffect(10002, "tacticalMode", 0, 0, 0);
+	addAttribute(10000, "tacticalModes", 4, 122, 1, 1);
+	
+	addEffect("Confessor Defense Mode", 10002);
+	addEffect("Confessor Sharpshooter Mode", 10002);
+	addEffect("Confessor Propulsion Mode", 10002);
+	addAttribute("Confessor Defense Mode", 1302, getTypeID("Confessor"));
+	addAttribute("Confessor Sharpshooter Mode", 1302, getTypeID("Confessor"));
+	addAttribute("Confessor Propulsion Mode", 1302, getTypeID("Confessor"));
+	
+	addEffect("Svipul Defense Mode", 10002);
+	addEffect("Svipul Sharpshooter Mode", 10002);
+	addEffect("Svipul Propulsion Mode", 10002);
+	addAttribute("Svipul Defense Mode", 1302, getTypeID("Svipul"));
+	addAttribute("Svipul Sharpshooter Mode", 1302, getTypeID("Svipul"));
+	addAttribute("Svipul Propulsion Mode", 1302, getTypeID("Svipul"));
+
+	addEffect("Jackdaw Defense Mode", 10002);
+	addEffect("Jackdaw Sharpshooter Mode", 10002);
+	addEffect("Jackdaw Propulsion Mode", 10002);
+	addAttribute("Jackdaw Defense Mode", 1302, getTypeID("Jackdaw"));
+	addAttribute("Jackdaw Sharpshooter Mode", 1302, getTypeID("Jackdaw"));
+	addAttribute("Jackdaw Propulsion Mode", 1302, getTypeID("Jackdaw"));
+
+	addEffect("Hecate Defense Mode", 10002);
+	addEffect("Hecate Sharpshooter Mode", 10002);
+	addEffect("Hecate Propulsion Mode", 10002);
+	addAttribute("Hecate Defense Mode", 1302, getTypeID("Hecate"));
+	addAttribute("Hecate Sharpshooter Mode", 1302, getTypeID("Hecate"));
+	addAttribute("Hecate Propulsion Mode", 1302, getTypeID("Hecate"));
+
+	//Ancillary Armor Repairer fix
+	addEffect(10001, "naniteRepairPasteArmorDamageBonus", 0, 0, 0);
+	addEffect(10003, "fueledArmorRepairBonus", 0, 0, 0);
+	addAttribute(10002, "chargedArmorDamageMultiplierPostDiv", 5, 0, 1, 1);
+
+	
+	
+	exec("INSERT INTO dgmTypeAttributes SELECT typeID, 10002 as attributeID, value FROM dgmTypeAttributes WHERE attributeID=1886", nullptr);
+	exec("INSERT INTO dgmTypeEffects SELECT typeID, 10003, 1 FROM dgmTypeEffects WHERE effectID=5275", nullptr);
+	
+	addEffect("Nanite Repair Paste", 10001);
+	addAttribute("Nanite Repair Paste", 10002, 1);
+	
+	
+	update("online",
+		   COMB(
+				DefEnv("Ship").attr("cpuLoad").assoc("ModAdd").AIM("cpu"),
+				DefEnv("Ship").attr("powerLoad").assoc("ModAdd").AIM("power")),
+		   COMB(
+				DefEnv("Ship").attr("cpuLoad").assoc("ModAdd").RIM("cpu"),
+				DefEnv("Ship").attr("powerLoad").assoc("ModAdd").RIM("power"))
+		   );
 	
 	update("characterDamageMissiles",
 		   COMB(
@@ -509,6 +629,7 @@ int patch(const char* databasePath) {
 	
 
 	//Repairers
+	//update("armorRepair", DefInt(1), DefInt(1));
 	update("armorRepair",
 		   DefEnv("Ship").attr("armorDamage").assoc("SubRate").AIM("armorDamageAmount"),
 		   DefEnv("Ship").attr("armorDamage").assoc("SubRate").RIM("armorDamageAmount"));

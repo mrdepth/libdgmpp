@@ -11,7 +11,6 @@
 #include "HeatSimulator.h"
 #include <algorithm>
 #include <cmath>
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -100,7 +99,7 @@ void Module::setState(State state)
 			if (state_ >= STATE_ONLINE && state < STATE_ONLINE)
 			{
 				removeEffects(Effect::CATEGORY_PASSIVE);
-				getEffect(ONLINE_EFFECT_ID)->removeEffect(getEnvironment());
+				getEffect(ONLINE_EFFECT_ID)->removeEffect(this);
 			}
 		}
 		else if (state > state_)
@@ -108,7 +107,7 @@ void Module::setState(State state)
 			if (state_ < STATE_ONLINE && state >= STATE_ONLINE)
 			{
 				addEffects(Effect::CATEGORY_PASSIVE);
-				getEffect(ONLINE_EFFECT_ID)->addEffect(getEnvironment());
+				getEffect(ONLINE_EFFECT_ID)->addEffect(this);
 			}
 			if (state_ < STATE_ACTIVE && state >= STATE_ACTIVE)
 			{
@@ -154,55 +153,20 @@ bool Module::isOffensive() {
 	return false;
 }
 
-Environment Module::buildEnvironment()
-{
-	Environment environment;
-	auto engine = getEngine();
-	if (engine) {
-		/*environment["Self"] = shared_from_this();
-		std::shared_ptr<Item> ship = getOwner();
-		std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
-		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-		std::shared_ptr<Area> area = engine->getArea();
-		std::shared_ptr<Item> target = target_.lock();
-		
-		if (character)
-			environment["Char"] = character;
-		if (ship)
-			environment["Ship"] = ship;
-		if (gang)
-			environment["Gang"] = gang;
-		if (area)
-			environment["Area"] = area;
-		if (target)
-			environment["Target"] = target;*/
-		
-		environment.self = this;
-		environment.ship = getOwner().get();
-		environment.character = environment.ship ? environment.ship->getOwner().get() : nullptr;
-		environment.gang = environment.character ? environment.character->getOwner().get() : nullptr;
-		environment.area = engine->getArea().get();
-		environment.target = target_.lock().get();
-	}
-
-	return environment;
-}
-
 void Module::addEffects(Effect::Category category)
 {
 	loadIfNeeded();
-	Environment environment = getEnvironment();
 	
 	for (const auto& i: effects_)
 		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
-			i->addEffect(environment);
+			i->addEffect(this);
 	
 	if (category == Effect::CATEGORY_GENERIC)
 	{
 		if (state_ >= STATE_ONLINE)
 		{
 			addEffects(Effect::CATEGORY_PASSIVE);
-			getEffect(ONLINE_EFFECT_ID)->addEffect(getEnvironment());
+			getEffect(ONLINE_EFFECT_ID)->addEffect(this);
 		}
 		if (state_ >= STATE_ACTIVE)
 		{
@@ -220,11 +184,10 @@ void Module::addEffects(Effect::Category category)
 void Module::removeEffects(Effect::Category category)
 {
 	loadIfNeeded();
-	Environment environment = getEnvironment();
 
 	for (const auto& i: effects_)
 		if (i->getEffectID() != ONLINE_EFFECT_ID && i->getCategory() == category)
-			i->removeEffect(environment);
+			i->removeEffect(this);
 //	if (category == Effect::CATEGORY_GENERIC && charge_ != nullptr)
 //		charge_->removeEffects(category);
 	if (category == Effect::CATEGORY_GENERIC)
@@ -239,7 +202,7 @@ void Module::removeEffects(Effect::Category category)
 		if (state_ >= STATE_ONLINE)
 		{
 			removeEffects(Effect::CATEGORY_PASSIVE);
-			getEffect(ONLINE_EFFECT_ID)->removeEffect(getEnvironment());
+			getEffect(ONLINE_EFFECT_ID)->removeEffect(this);
 		}
 		
 		if (charge_)
@@ -719,7 +682,7 @@ void Module::calculateDamageStats()
 
 void Module::lazyLoad() {
 	Item::lazyLoad();
-	addExtraAttribute(IS_ONLINE_ATTRIBUTE_ID, 0, 0.0, true, true, "isOnline");
+	addExtraAttribute(IS_ONLINE_ATTRIBUTE_ID, 0.0);
 	
 	if (hasEffect(LO_POWER_EFFECT_ID))
 		slot_ = SLOT_LOW;
@@ -802,6 +765,19 @@ void Module::lazyLoad() {
 		}
 	std::sort(chargeGroups_.begin(), chargeGroups_.end());
 }
+
+Item* Module::ship() {
+	return getOwner().get();
+}
+
+Item* Module::character() {
+	return ship()->character();
+}
+
+Item* Module::target() {
+	return getTarget().get();
+}
+
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Module& module)
 {

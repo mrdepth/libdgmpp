@@ -18,7 +18,8 @@ namespace eufe {
 		void setSkillLevel(int level);
 		//virtual Attribute getAttribute(TypeID attributeID);
 
-		virtual Environment buildEnvironment();
+		virtual Item* character();
+		virtual Item* ship();
 		
 	protected:
 		virtual void lazyLoad();

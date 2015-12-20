@@ -18,7 +18,6 @@ namespace eufe {
 		std::shared_ptr<Drone> shared_from_this() {
 			return std::static_pointer_cast<Drone>(Item::shared_from_this());
 		}
-		virtual Environment buildEnvironment();
 		
 		void setTarget(std::shared_ptr<Ship> const& target = nullptr);
 		void clearTarget();
@@ -45,6 +44,10 @@ namespace eufe {
 		float getMaxRange();
 		float getFalloff();
 		float getTrackingSpeed();
+
+		virtual Item* ship();
+		virtual Item* character();
+		virtual Item* target();
 
 	protected:
 		virtual void lazyLoad();

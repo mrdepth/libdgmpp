@@ -15,7 +15,6 @@
 #include "Gang.h"
 #include "Area.h"
 #include <cassert>
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -117,7 +116,8 @@ const std::shared_ptr<Attribute>& Item::getAttribute(TypeID attributeID)
 	if (i != attributes_.end())
 		return i->second;
 	else
-		return attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, shared_from_this(), true);
+		return attributes_[attributeID] = Attribute::getAttribute(engine, attributeID, shared_from_this(), true);
+		//return attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, shared_from_this(), true);
 		//throw AttributeDidNotFoundException() << TypeIDExceptionInfo(attributeID);
 }
 
@@ -145,13 +145,6 @@ std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 			return i;
     throw EffectDidNotFoundException(std::to_string(effectID));
 }
-
-const Environment& Item::getEnvironment() {
-	if (!environment_)
-		environment_ = std::make_shared<Environment>(buildEnvironment());
-	return *environment_;
-}
-
 
 bool Item::requireSkill(TypeID skillID)
 {
@@ -214,19 +207,17 @@ TypeID Item::getCategoryID()
 void Item::addEffects(Effect::Category category)
 {
 	loadIfNeeded();
-	Environment environment = getEnvironment();
 	for (const auto& i: effects_)
 		if (i->getCategory() == category)
-			i->addEffect(environment);
+			i->addEffect(this);
 }
 
 void Item::removeEffects(Effect::Category category)
 {
 	loadIfNeeded();
-	Environment environment = getEnvironment();
 	for (const auto& i: effects_)
 		if (i->getCategory() == category)
-			i->removeEffect(environment);
+			i->removeEffect(this);
 }
 
 const EffectsList& Item::getEffects() {
@@ -236,12 +227,11 @@ const EffectsList& Item::getEffects() {
 void Item::reset()
 {
 	loadIfNeeded();
-	environment_ = nullptr;
 //	for (const auto& i: attributes_)
 //		i.second->reset();
 }
 
-std::insert_iterator<ModifiersList> Item::getModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	auto i = itemModifiers_.find(attribute->getAttributeID());
 	if (i != itemModifiers_.end()) {
@@ -256,7 +246,7 @@ std::insert_iterator<ModifiersList> Item::getModifiers(std::shared_ptr<Attribute
 	return outIterator;
 }
 
-std::insert_iterator<ModifiersList> Item::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	auto i = locationModifiers_.find(attribute->getAttributeID());
 	if (i != locationModifiers_.end())
@@ -264,7 +254,7 @@ std::insert_iterator<ModifiersList> Item::getLocationModifiers(std::shared_ptr<A
 	return outIterator;
 }
 
-std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 
 	auto i = locationGroupModifiers_.find(item->getGroupID());
@@ -402,12 +392,12 @@ const char* Item::getGroupName()
 	return groupName_.c_str();
 }
 
-std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, const char* attributeName) {
+std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, float value) {
 	auto engine = getEngine();
 	if (!engine)
 		return nullptr;
 
-	return attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, shared_from_this(), attributeName, false);
+	return attributes_[attributeID] = Attribute::getAttribute(engine, attributeID, shared_from_this(), false, value);
 }
 
 void Item::lazyLoad() {
@@ -436,28 +426,24 @@ void Item::lazyLoad() {
 		categoryID_ = result->getInt(6);
 		
 		typeName_ = result->getText(7);
-		attributes_[RADIUS_ATTRIBUTE_ID]    = std::make_shared<Attribute>(engine, RADIUS_ATTRIBUTE_ID,    0, radius,   true,  true, shared_from_this(), "radius");
-		attributes_[MASS_ATTRIBUTE_ID]      = std::make_shared<Attribute>(engine, MASS_ATTRIBUTE_ID,      0, mass,     false, true, shared_from_this(), "mass");
-		attributes_[VOLUME_ATTRIBUTE_ID]    = std::make_shared<Attribute>(engine, VOLUME_ATTRIBUTE_ID,    0, volume,   true,  true, shared_from_this(), "volume");
-		attributes_[CAPACITY_ATTRIBUTE_ID]  = std::make_shared<Attribute>(engine, CAPACITY_ATTRIBUTE_ID,  0, capacity, true,  true, shared_from_this(), "capacity");
-		attributes_[RACE_ID_ATTRIBUTE_ID]   = std::make_shared<Attribute>(engine, RACE_ID_ATTRIBUTE_ID,   0, static_cast<float>(raceID), true, true, shared_from_this(), "raceID");
+		attributes_[RADIUS_ATTRIBUTE_ID] = Attribute::getAttribute(engine, RADIUS_ATTRIBUTE_ID,  shared_from_this(), false, radius);
+		attributes_[MASS_ATTRIBUTE_ID] = Attribute::getAttribute(engine, MASS_ATTRIBUTE_ID,  shared_from_this(), false, mass);
+		attributes_[VOLUME_ATTRIBUTE_ID] = Attribute::getAttribute(engine, VOLUME_ATTRIBUTE_ID,  shared_from_this(), false, volume);
+		attributes_[CAPACITY_ATTRIBUTE_ID] = Attribute::getAttribute(engine, CAPACITY_ATTRIBUTE_ID,  shared_from_this(), false, capacity);
+		attributes_[RACE_ID_ATTRIBUTE_ID] = Attribute::getAttribute(engine, RACE_ID_ATTRIBUTE_ID,  shared_from_this(), false, static_cast<float>(raceID));
 		
 		//sql.str(std::string());
 		//sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
 		//<< typeID_;
-		stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = ?");
+		stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT attributeID, value FROM dgmTypeAttributes WHERE typeID = ?");
 		stmt->bindInt(1, typeID_);
 		result = engine->getSqlConnector()->exec(stmt);
 		
 		while (result->next())
 		{
 			TypeID attributeID = static_cast<TypeID>(result->getInt(0));
-			TypeID maxAttributeID = static_cast<TypeID>(result->getInt(1));
-			bool isStackable = result->getInt(2) != 0;
-			float value = static_cast<float>(result->getDouble(3));
-			bool highIsGood = result->getInt(4) != 0;
-			std::string attributeName = result->getText(5);
-			attributes_[attributeID] = std::make_shared<Attribute>(engine, attributeID, maxAttributeID, value, isStackable, highIsGood, shared_from_this(), attributeName.c_str());
+			float value = static_cast<float>(result->getDouble(1));
+			attributes_[attributeID] = Attribute::getAttribute(engine, attributeID, shared_from_this(), false, value);
 		}
 		
 		//sql.str(std::string());
@@ -505,7 +491,7 @@ std::set<std::shared_ptr<Item>> Item::getAffectors() {
 	auto outIterator = std::inserter(modifiers, modifiers.end());
 	{
 		for (const auto& i: getAttributes())
-			outIterator = getModifiers(i.second, outIterator);
+			outIterator = getModifiers(i.second.get(), outIterator);
 		}
 	
 	std::set<std::shared_ptr<Item>> items;
@@ -519,6 +505,18 @@ std::set<std::shared_ptr<Item>> Item::getAffectors() {
 	}
 	
 	return items;
+}
+
+Item* Item::self() {
+	return this;
+}
+
+Item* Item::gang() {
+	return getEngine()->getGang().get();
+}
+
+Item* Item::area() {
+	return getEngine()->getArea().get();
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Item& item)

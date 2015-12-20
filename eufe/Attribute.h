@@ -1,5 +1,6 @@
 #pragma once
 #include "types.h"
+#include "AttributePrototype.h"
 
 namespace eufe {
 
@@ -205,8 +206,12 @@ namespace eufe {
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
-		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner = nullptr, const char* attributeName = "", bool isFakeAttribute = false);
-		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner = nullptr, bool isFakeAttribute = false);
+		static std::shared_ptr<Attribute> getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute = false, float value = std::numeric_limits<float>::quiet_NaN());
+
+		Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, float value);
+		
+//		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner = nullptr, const char* attributeName = "", bool isFakeAttribute = false);
+//		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner = nullptr, bool isFakeAttribute = false);
 		virtual ~Attribute(void);
 		std::shared_ptr<Item> getOwner() const;
 		TypeID getAttributeID() const;
@@ -228,22 +233,18 @@ namespace eufe {
 	protected:
 	private:
 		std::weak_ptr<Engine> engine_;
-		TypeID attributeID_;
-		TypeID maxAttributeID_;
 		float value_;
 		float initialValue_;
 		float forcedValue_;
-		bool isStackable_;
 		bool calculated_;
-		bool highIsGood_;
 		bool isFakeAttribute_;
 		
 		std::weak_ptr<Item> owner_;
-		
+		std::shared_ptr<AttributePrototype> prototype_;
+
 		void calculate();
 
 		bool sync;
-		std::string attributeName_;
 		uint32_t generation_;
 	};
 

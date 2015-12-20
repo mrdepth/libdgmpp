@@ -17,8 +17,6 @@ namespace eufe {
 		std::shared_ptr<Character> addPilot();
 		void removePilot(std::shared_ptr<Character> const& character);
 		
-		virtual Environment buildEnvironment();
-		
 		virtual void reset();
 		
 		std::shared_ptr<Character> getFleetBooster();
@@ -44,8 +42,8 @@ namespace eufe {
 		
 	protected:
 
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
-		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 		
 	private:
 		CharactersList pilots_;

@@ -44,15 +44,6 @@
 		12564BD01B84B03C000F68D8 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F9F147D1ACF00ADC4CE /* Character.cpp */; };
 		12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE3E1489310C005492F5 /* Implant.cpp */; };
 		12564BD41B84B07E000F68D8 /* Effect.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D541473CA5E006B18D7 /* Effect.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BD51B84B07E000F68D8 /* EffectInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CB31497799600B13A9D /* EffectInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BD61B84B07E000F68D8 /* EffectByteCodeInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CBE14978B9C00B13A9D /* EffectByteCodeInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BD71B84B07E000F68D8 /* EffectLeechInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CC51497989C00B13A9D /* EffectLeechInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BD81B84B07E000F68D8 /* EffectEnergyDestabilizationNewInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CC814979FC100B13A9D /* EffectEnergyDestabilizationNewInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BD91B84B07E000F68D8 /* EffectEnergyTransferInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CCC1497A07900B13A9D /* EffectEnergyTransferInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BDA1B84B07E000F68D8 /* EffectArmorRepairInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC807B1498EDA800CB0411 /* EffectArmorRepairInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BDB1B84B07E000F68D8 /* EffectShieldBoostingInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC808F1499063500CB0411 /* EffectShieldBoostingInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BDC1B84B07E000F68D8 /* EffectHullRepairInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC8092149906B600CB0411 /* EffectHullRepairInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12564BE01B84B07E000F68D8 /* EffectNaniteRepairPasteArmorDamageBonus.h in Headers */ = {isa = PBXBuildFile; fileRef = 12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BE11B84B07E000F68D8 /* Modifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 3700DA7014869A570026EA83 /* Modifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AE79961487AD2E003FB98A /* LocationGroupModifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AE799C1487AFA7003FB98A /* LocationRequiredSkillModifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -82,14 +73,18 @@
 		12564BFE1B84B07F000F68D8 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D6C1473CA5E006B18D7 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		129F2BD91C1FFE62007FC666 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129F2BD81C1FFE62007FC666 /* main.cpp */; };
 		129F2BDD1C1FFE8B007FC666 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
-		12AEEFC61C25A26D00FB7B1D /* EffectPrototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFC41C25A26D00FB7B1D /* EffectPrototype.cpp */; };
-		12AEEFC71C25A26D00FB7B1D /* EffectPrototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFC41C25A26D00FB7B1D /* EffectPrototype.cpp */; };
-		12AEEFC81C25A26D00FB7B1D /* EffectPrototype.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFC51C25A26D00FB7B1D /* EffectPrototype.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12AEEFC91C25A26D00FB7B1D /* EffectPrototype.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFC51C25A26D00FB7B1D /* EffectPrototype.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12AEEFCC1C25BAC200FB7B1D /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */; };
 		12AEEFCD1C25BAC200FB7B1D /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */; };
-		12AEEFCE1C25BAC200FB7B1D /* Environment.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFCB1C25BAC200FB7B1D /* Environment.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		12AEEFCF1C25BAC200FB7B1D /* Environment.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFCB1C25BAC200FB7B1D /* Environment.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12AEEFCE1C25BAC200FB7B1D /* Environment.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFCB1C25BAC200FB7B1D /* Environment.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12AEEFCF1C25BAC200FB7B1D /* Environment.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFCB1C25BAC200FB7B1D /* Environment.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12AEEFDA1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFD81C26B8AA00FB7B1D /* AttributePrototype.cpp */; };
+		12AEEFDB1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFD81C26B8AA00FB7B1D /* AttributePrototype.cpp */; };
+		12AEEFDC1C26B8AA00FB7B1D /* AttributePrototype.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFD91C26B8AA00FB7B1D /* AttributePrototype.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12AEEFDD1C26B8AA00FB7B1D /* AttributePrototype.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFD91C26B8AA00FB7B1D /* AttributePrototype.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12AEEFE41C26C54200FB7B1D /* EffectPrototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFE21C26C54200FB7B1D /* EffectPrototype.cpp */; };
+		12AEEFE51C26C54200FB7B1D /* EffectPrototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFE21C26C54200FB7B1D /* EffectPrototype.cpp */; };
+		12AEEFE61C26C54200FB7B1D /* EffectPrototype.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFE31C26C54200FB7B1D /* EffectPrototype.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12AEEFE71C26C54200FB7B1D /* EffectPrototype.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFE31C26C54200FB7B1D /* EffectPrototype.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B0A0501C0C386C00194715 /* HostileTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A04E1C0C386C00194715 /* HostileTarget.cpp */; };
 		12B0A0511C0C386C00194715 /* HostileTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A04F1C0C386C00194715 /* HostileTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A0611C0C9C5600194715 /* DamageVector.cpp */; };
@@ -133,15 +128,6 @@
 		12EFCC9A1C1AB334003ECA7F /* SqliteConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C7177C28A90067E00C /* SqliteConnector.cpp */; };
 		12EFCC9F1C1AB334003ECA7F /* Effect.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D541473CA5E006B18D7 /* Effect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12EFCCA01C1AB334003ECA7F /* eufe.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* eufe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCA11C1AB334003ECA7F /* EffectInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CB31497799600B13A9D /* EffectInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCA21C1AB334003ECA7F /* EffectByteCodeInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CBE14978B9C00B13A9D /* EffectByteCodeInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCA31C1AB334003ECA7F /* EffectLeechInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CC51497989C00B13A9D /* EffectLeechInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCA41C1AB334003ECA7F /* EffectEnergyDestabilizationNewInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CC814979FC100B13A9D /* EffectEnergyDestabilizationNewInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCA51C1AB334003ECA7F /* EffectEnergyTransferInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CCC1497A07900B13A9D /* EffectEnergyTransferInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCA61C1AB334003ECA7F /* EffectArmorRepairInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC807B1498EDA800CB0411 /* EffectArmorRepairInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCA71C1AB334003ECA7F /* EffectShieldBoostingInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC808F1499063500CB0411 /* EffectShieldBoostingInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCA81C1AB334003ECA7F /* EffectHullRepairInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AC8092149906B600CB0411 /* EffectHullRepairInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12EFCCAC1C1AB334003ECA7F /* EffectNaniteRepairPasteArmorDamageBonus.h in Headers */ = {isa = PBXBuildFile; fileRef = 12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12EFCCAD1C1AB334003ECA7F /* Modifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 3700DA7014869A570026EA83 /* Modifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12EFCCAE1C1AB334003ECA7F /* LocationGroupModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AE79961487AD2E003FB98A /* LocationGroupModifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12EFCCAF1C1AB334003ECA7F /* LocationRequiredSkillModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 37AE799C1487AFA7003FB98A /* LocationRequiredSkillModifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -273,18 +259,18 @@
 		12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = SqliteFetchResult.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		12A3C6CA177C28A90067E00C /* SqliteFetchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteFetchResult.h; sourceTree = "<group>"; };
 		12A3C723177C2FAF0067E00C /* compiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = compiler; sourceTree = BUILT_PRODUCTS_DIR; };
-		12AEEFC41C25A26D00FB7B1D /* EffectPrototype.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectPrototype.cpp; sourceTree = "<group>"; };
-		12AEEFC51C25A26D00FB7B1D /* EffectPrototype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectPrototype.h; sourceTree = "<group>"; };
 		12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Environment.cpp; sourceTree = "<group>"; };
-		12AEEFCB1C25BAC200FB7B1D /* Environment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Environment.hpp; sourceTree = "<group>"; };
+		12AEEFCB1C25BAC200FB7B1D /* Environment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Environment.h; sourceTree = "<group>"; };
+		12AEEFD81C26B8AA00FB7B1D /* AttributePrototype.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttributePrototype.cpp; sourceTree = "<group>"; };
+		12AEEFD91C26B8AA00FB7B1D /* AttributePrototype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributePrototype.h; sourceTree = "<group>"; };
+		12AEEFE21C26C54200FB7B1D /* EffectPrototype.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectPrototype.cpp; sourceTree = "<group>"; };
+		12AEEFE31C26C54200FB7B1D /* EffectPrototype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectPrototype.h; sourceTree = "<group>"; };
 		12B0A04E1C0C386C00194715 /* HostileTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HostileTarget.cpp; sourceTree = "<group>"; };
 		12B0A04F1C0C386C00194715 /* HostileTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostileTarget.h; sourceTree = "<group>"; };
 		12B0A0611C0C9C5600194715 /* DamageVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DamageVector.cpp; sourceTree = "<group>"; };
 		12B0A0621C0C9C5600194715 /* DamageVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamageVector.h; sourceTree = "<group>"; };
 		12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombatSimulator.cpp; sourceTree = "<group>"; };
 		12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatSimulator.h; sourceTree = "<group>"; };
-		12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectNaniteRepairPasteArmorDamageBonus.cpp; sourceTree = "<group>"; };
-		12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectNaniteRepairPasteArmorDamageBonus.h; sourceTree = "<group>"; };
 		12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		12EFCC661C1AB060003ECA7F /* eufeDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = eufeDemo; sourceTree = BUILT_PRODUCTS_DIR; };
 		12EFCC681C1AB060003ECA7F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -307,12 +293,6 @@
 		37A9C17B1490F2950048A52A /* CapacitorSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CapacitorSimulator.h; sourceTree = "<group>"; };
 		37A9EC51147FA61C00B12A7F /* Area.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Area.cpp; sourceTree = "<group>"; };
 		37A9EC52147FA61C00B12A7F /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
-		37AC807B1498EDA800CB0411 /* EffectArmorRepairInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectArmorRepairInterpreter.h; sourceTree = "<group>"; };
-		37AC807D1498EDB200CB0411 /* EffectArmorRepairInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectArmorRepairInterpreter.cpp; sourceTree = "<group>"; };
-		37AC808C1499062B00CB0411 /* EffectShieldBoostingInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectShieldBoostingInterpreter.cpp; sourceTree = "<group>"; };
-		37AC808F1499063500CB0411 /* EffectShieldBoostingInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectShieldBoostingInterpreter.h; sourceTree = "<group>"; };
-		37AC8090149906AD00CB0411 /* EffectHullRepairInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectHullRepairInterpreter.cpp; sourceTree = "<group>"; };
-		37AC8092149906B600CB0411 /* EffectHullRepairInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectHullRepairInterpreter.h; sourceTree = "<group>"; };
 		37AE79961487AD2E003FB98A /* LocationGroupModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LocationGroupModifier.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		37AE79981487AD39003FB98A /* LocationGroupModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LocationGroupModifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37AE799A1487AF9D003FB98A /* LocationRequiredSkillModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LocationRequiredSkillModifier.cpp; sourceTree = "<group>"; };
@@ -342,22 +322,13 @@
 		37BBC5961512068400EDE204 /* ControlTower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ControlTower.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37BBC598151219B500EDE204 /* Structure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Structure.cpp; sourceTree = "<group>"; };
 		37BBC59A151219C200EDE204 /* Structure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Structure.h; sourceTree = "<group>"; };
-		37C1C42E1475511E002AC3E7 /* Compiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Compiler.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		37C1C42E1475511E002AC3E7 /* Compiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Compiler.cpp; sourceTree = "<group>"; };
 		37C1C42F1475511E002AC3E7 /* Compiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compiler.h; sourceTree = "<group>"; };
 		37C1C43214755128002AC3E7 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = sqlite3.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		37C1C43314755128002AC3E7 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = sqlite3.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		37C1C43414755128002AC3E7 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		37D72CAF1497770C00B13A9D /* DamagePattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DamagePattern.cpp; sourceTree = "<group>"; };
 		37D72CB21497771600B13A9D /* DamagePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamagePattern.h; sourceTree = "<group>"; };
-		37D72CB31497799600B13A9D /* EffectInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectInterpreter.h; sourceTree = "<group>"; };
-		37D72CBD14978B9B00B13A9D /* EffectByteCodeInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectByteCodeInterpreter.cpp; sourceTree = "<group>"; };
-		37D72CBE14978B9C00B13A9D /* EffectByteCodeInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectByteCodeInterpreter.h; sourceTree = "<group>"; };
-		37D72CC31497988F00B13A9D /* EffectLeechInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectLeechInterpreter.cpp; sourceTree = "<group>"; };
-		37D72CC51497989C00B13A9D /* EffectLeechInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectLeechInterpreter.h; sourceTree = "<group>"; };
-		37D72CC614979FB600B13A9D /* EffectEnergyDestabilizationNewInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectEnergyDestabilizationNewInterpreter.cpp; sourceTree = "<group>"; };
-		37D72CC814979FC100B13A9D /* EffectEnergyDestabilizationNewInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectEnergyDestabilizationNewInterpreter.h; sourceTree = "<group>"; };
-		37D72CCA1497A06D00B13A9D /* EffectEnergyTransferInterpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectEnergyTransferInterpreter.cpp; sourceTree = "<group>"; };
-		37D72CCC1497A07900B13A9D /* EffectEnergyTransferInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectEnergyTransferInterpreter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,6 +521,8 @@
 				37A9EC52147FA61C00B12A7F /* Area.h */,
 				37B33D511473CA5E006B18D7 /* Attribute.cpp */,
 				37B33D521473CA5E006B18D7 /* Attribute.h */,
+				12AEEFD81C26B8AA00FB7B1D /* AttributePrototype.cpp */,
+				12AEEFD91C26B8AA00FB7B1D /* AttributePrototype.h */,
 				37BA6F98147D10E200ADC4CE /* Engine.cpp */,
 				37BA6F99147D10E200ADC4CE /* Engine.h */,
 				37B9AB64147A5DDF006F1F8E /* Gang.cpp */,
@@ -557,7 +530,7 @@
 				37B33D551473CA5E006B18D7 /* Item.cpp */,
 				37B33D561473CA5E006B18D7 /* Item.h */,
 				12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */,
-				12AEEFCB1C25BAC200FB7B1D /* Environment.hpp */,
+				12AEEFCB1C25BAC200FB7B1D /* Environment.h */,
 				37B33D6C1473CA5E006B18D7 /* types.h */,
 			);
 			name = eufe;
@@ -685,25 +658,8 @@
 			children = (
 				37B33D531473CA5E006B18D7 /* Effect.cpp */,
 				37B33D541473CA5E006B18D7 /* Effect.h */,
-				12AEEFC41C25A26D00FB7B1D /* EffectPrototype.cpp */,
-				12AEEFC51C25A26D00FB7B1D /* EffectPrototype.h */,
-				37D72CB31497799600B13A9D /* EffectInterpreter.h */,
-				37D72CBD14978B9B00B13A9D /* EffectByteCodeInterpreter.cpp */,
-				37D72CBE14978B9C00B13A9D /* EffectByteCodeInterpreter.h */,
-				37D72CC31497988F00B13A9D /* EffectLeechInterpreter.cpp */,
-				37D72CC51497989C00B13A9D /* EffectLeechInterpreter.h */,
-				37D72CC614979FB600B13A9D /* EffectEnergyDestabilizationNewInterpreter.cpp */,
-				37D72CC814979FC100B13A9D /* EffectEnergyDestabilizationNewInterpreter.h */,
-				37D72CCA1497A06D00B13A9D /* EffectEnergyTransferInterpreter.cpp */,
-				37D72CCC1497A07900B13A9D /* EffectEnergyTransferInterpreter.h */,
-				37AC807D1498EDB200CB0411 /* EffectArmorRepairInterpreter.cpp */,
-				37AC807B1498EDA800CB0411 /* EffectArmorRepairInterpreter.h */,
-				37AC808C1499062B00CB0411 /* EffectShieldBoostingInterpreter.cpp */,
-				37AC808F1499063500CB0411 /* EffectShieldBoostingInterpreter.h */,
-				37AC8090149906AD00CB0411 /* EffectHullRepairInterpreter.cpp */,
-				37AC8092149906B600CB0411 /* EffectHullRepairInterpreter.h */,
-				12D43FB917D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.cpp */,
-				12D43FBA17D733A20076872B /* EffectNaniteRepairPasteArmorDamageBonus.h */,
+				12AEEFE21C26C54200FB7B1D /* EffectPrototype.cpp */,
+				12AEEFE31C26C54200FB7B1D /* EffectPrototype.h */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -715,17 +671,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12AEEFDC1C26B8AA00FB7B1D /* AttributePrototype.h in Headers */,
 				12564BD41B84B07E000F68D8 /* Effect.h in Headers */,
 				12B0A30C1C0EEC8400194715 /* eufe.h in Headers */,
-				12564BD51B84B07E000F68D8 /* EffectInterpreter.h in Headers */,
-				12564BD61B84B07E000F68D8 /* EffectByteCodeInterpreter.h in Headers */,
-				12564BD71B84B07E000F68D8 /* EffectLeechInterpreter.h in Headers */,
-				12564BD81B84B07E000F68D8 /* EffectEnergyDestabilizationNewInterpreter.h in Headers */,
-				12564BD91B84B07E000F68D8 /* EffectEnergyTransferInterpreter.h in Headers */,
-				12564BDA1B84B07E000F68D8 /* EffectArmorRepairInterpreter.h in Headers */,
-				12564BDB1B84B07E000F68D8 /* EffectShieldBoostingInterpreter.h in Headers */,
-				12564BDC1B84B07E000F68D8 /* EffectHullRepairInterpreter.h in Headers */,
-				12564BE01B84B07E000F68D8 /* EffectNaniteRepairPasteArmorDamageBonus.h in Headers */,
 				12564BE11B84B07E000F68D8 /* Modifier.h in Headers */,
 				12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */,
 				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
@@ -744,7 +692,6 @@
 				12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */,
 				12564BEF1B84B07F000F68D8 /* ControlTower.h in Headers */,
 				12564BF01B84B07F000F68D8 /* Structure.h in Headers */,
-				12AEEFC81C25A26D00FB7B1D /* EffectPrototype.h in Headers */,
 				12564BF11B84B07F000F68D8 /* Blob.h in Headers */,
 				12564BF21B84B07F000F68D8 /* FetchResult.h in Headers */,
 				12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */,
@@ -754,12 +701,13 @@
 				12564BF91B84B07F000F68D8 /* Area.h in Headers */,
 				12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */,
 				12564BFB1B84B07F000F68D8 /* Engine.h in Headers */,
-				12AEEFCE1C25BAC200FB7B1D /* Environment.hpp in Headers */,
+				12AEEFCE1C25BAC200FB7B1D /* Environment.h in Headers */,
 				12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */,
 				12215B491C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */,
 				12564BFC1B84B07F000F68D8 /* Gang.h in Headers */,
 				12564BFD1B84B07F000F68D8 /* Item.h in Headers */,
 				12564BFE1B84B07F000F68D8 /* types.h in Headers */,
+				12AEEFE61C26C54200FB7B1D /* EffectPrototype.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,17 +715,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12AEEFDD1C26B8AA00FB7B1D /* AttributePrototype.h in Headers */,
 				12EFCC9F1C1AB334003ECA7F /* Effect.h in Headers */,
 				12EFCCA01C1AB334003ECA7F /* eufe.h in Headers */,
-				12EFCCA11C1AB334003ECA7F /* EffectInterpreter.h in Headers */,
-				12EFCCA21C1AB334003ECA7F /* EffectByteCodeInterpreter.h in Headers */,
-				12EFCCA31C1AB334003ECA7F /* EffectLeechInterpreter.h in Headers */,
-				12EFCCA41C1AB334003ECA7F /* EffectEnergyDestabilizationNewInterpreter.h in Headers */,
-				12EFCCA51C1AB334003ECA7F /* EffectEnergyTransferInterpreter.h in Headers */,
-				12EFCCA61C1AB334003ECA7F /* EffectArmorRepairInterpreter.h in Headers */,
-				12EFCCA71C1AB334003ECA7F /* EffectShieldBoostingInterpreter.h in Headers */,
-				12EFCCA81C1AB334003ECA7F /* EffectHullRepairInterpreter.h in Headers */,
-				12EFCCAC1C1AB334003ECA7F /* EffectNaniteRepairPasteArmorDamageBonus.h in Headers */,
 				12EFCCAD1C1AB334003ECA7F /* Modifier.h in Headers */,
 				12EFCCAE1C1AB334003ECA7F /* LocationGroupModifier.h in Headers */,
 				12EFCCAF1C1AB334003ECA7F /* LocationRequiredSkillModifier.h in Headers */,
@@ -796,7 +736,6 @@
 				12EFCCBC1C1AB334003ECA7F /* HeatSimulator.h in Headers */,
 				12EFCCBD1C1AB334003ECA7F /* ControlTower.h in Headers */,
 				12EFCCBE1C1AB334003ECA7F /* Structure.h in Headers */,
-				12AEEFC91C25A26D00FB7B1D /* EffectPrototype.h in Headers */,
 				12EFCCBF1C1AB334003ECA7F /* Blob.h in Headers */,
 				12EFCCC01C1AB334003ECA7F /* FetchResult.h in Headers */,
 				12EFCCC11C1AB334003ECA7F /* SqlConnector.h in Headers */,
@@ -806,12 +745,13 @@
 				12EFCCC51C1AB334003ECA7F /* Area.h in Headers */,
 				12EFCCC61C1AB334003ECA7F /* Attribute.h in Headers */,
 				12EFCCC71C1AB334003ECA7F /* Engine.h in Headers */,
-				12AEEFCF1C25BAC200FB7B1D /* Environment.hpp in Headers */,
+				12AEEFCF1C25BAC200FB7B1D /* Environment.h in Headers */,
 				12215B441C1D7643003B6DA5 /* FetchRequest.h in Headers */,
 				12215B4A1C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */,
 				12EFCCC81C1AB334003ECA7F /* Gang.h in Headers */,
 				12EFCCC91C1AB334003ECA7F /* Item.h in Headers */,
 				12EFCCCA1C1AB334003ECA7F /* types.h in Headers */,
+				12AEEFE71C26C54200FB7B1D /* EffectPrototype.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -999,7 +939,6 @@
 			files = (
 				12564BC61B84B027000F68D8 /* SqliteFetchResult.cpp in Sources */,
 				12564BCA1B84B027000F68D8 /* Area.cpp in Sources */,
-				12AEEFC61C25A26D00FB7B1D /* EffectPrototype.cpp in Sources */,
 				12564BD01B84B03C000F68D8 /* Character.cpp in Sources */,
 				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
 				12564BBE1B84B027000F68D8 /* Ship.cpp in Sources */,
@@ -1009,11 +948,13 @@
 				12564BB71B84B027000F68D8 /* LocationRequiredSkillModifier.cpp in Sources */,
 				12564BC41B84B027000F68D8 /* SqlConnector.cpp in Sources */,
 				12564BB61B84B027000F68D8 /* LocationGroupModifier.cpp in Sources */,
+				12AEEFE41C26C54200FB7B1D /* EffectPrototype.cpp in Sources */,
 				12564BBD1B84B027000F68D8 /* Module.cpp in Sources */,
 				12564BBC1B84B027000F68D8 /* Drone.cpp in Sources */,
 				12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */,
 				12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */,
 				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
+				12AEEFDA1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
 				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
 				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
 				12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */,
@@ -1057,7 +998,6 @@
 				12EFCC751C1AB334003ECA7F /* SqliteFetchResult.cpp in Sources */,
 				12EFCC761C1AB334003ECA7F /* Area.cpp in Sources */,
 				12EFCC771C1AB334003ECA7F /* Character.cpp in Sources */,
-				12AEEFC71C25A26D00FB7B1D /* EffectPrototype.cpp in Sources */,
 				12EFCC7A1C1AB334003ECA7F /* Modifier.cpp in Sources */,
 				12EFCC7C1C1AB334003ECA7F /* Ship.cpp in Sources */,
 				12EFCC7D1C1AB334003ECA7F /* HostileTarget.cpp in Sources */,
@@ -1066,11 +1006,13 @@
 				12AEEFCD1C25BAC200FB7B1D /* Environment.cpp in Sources */,
 				12EFCC801C1AB334003ECA7F /* SqlConnector.cpp in Sources */,
 				12EFCC831C1AB334003ECA7F /* LocationGroupModifier.cpp in Sources */,
+				12AEEFE51C26C54200FB7B1D /* EffectPrototype.cpp in Sources */,
 				12EFCC841C1AB334003ECA7F /* Module.cpp in Sources */,
 				12EFCC851C1AB334003ECA7F /* Drone.cpp in Sources */,
 				12EFCC861C1AB334003ECA7F /* Attribute.cpp in Sources */,
 				12EFCC871C1AB334003ECA7F /* DamageVector.cpp in Sources */,
 				12EFCC881C1AB334003ECA7F /* Booster.cpp in Sources */,
+				12AEEFDB1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
 				12EFCC891C1AB334003ECA7F /* FetchResult.cpp in Sources */,
 				12EFCC8A1C1AB334003ECA7F /* DamagePattern.cpp in Sources */,
 				12215B421C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,

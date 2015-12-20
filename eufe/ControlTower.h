@@ -21,8 +21,6 @@ namespace eufe {
 		const StructuresList& getStructures();
 		bool canFit(std::shared_ptr<Structure> const& structure);
 
-		virtual Environment buildEnvironment();
-		
 		virtual void reset();
 		
 		virtual void addEffects(Effect::Category category);
@@ -52,6 +50,7 @@ namespace eufe {
 		DamageVector getWeaponDps();
 		DamageVector getWeaponVolley();
 		
+		virtual Item* ship();
 		friend std::ostream& operator<<(std::ostream& os, ControlTower& controlTower);
 		
 	private:

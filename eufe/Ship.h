@@ -42,8 +42,6 @@ namespace eufe {
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();
 
-		virtual Environment buildEnvironment();
-		
 		virtual void reset();
 		
 		virtual void addEffects(Effect::Category category);
@@ -134,6 +132,9 @@ namespace eufe {
 		//Other
 		void updateHeatDamage();
 		
+		virtual Item* ship();
+		virtual Item* character();
+
 		friend std::ostream& operator<<(std::ostream& os, Ship& ship);
 		
 	private:

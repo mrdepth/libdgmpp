@@ -60,8 +60,6 @@ namespace eufe {
 		bool isAssistance();
 		bool isOffensive();
 
-		virtual Environment buildEnvironment();
-
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
@@ -100,6 +98,10 @@ namespace eufe {
 		
 		void setEnabled(bool enabled);
 		bool isEnabled();
+
+		virtual Item* ship();
+		virtual Item* character();
+		virtual Item* target();
 
 		friend std::ostream& operator<<(std::ostream& os, Module& module);
 	protected:

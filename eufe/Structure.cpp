@@ -5,7 +5,6 @@
 #include "ControlTower.h"
 #include "DamagePattern.h"
 #include <math.h>
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -33,7 +32,7 @@ void Structure::setState(State state)
 			if (state_ >= STATE_ONLINE && state < STATE_ONLINE)
 			{
 				removeEffects(Effect::CATEGORY_PASSIVE);
-				getEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID)->removeEffect(getEnvironment());
+				getEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID)->removeEffect(this);
 			}
 		}
 		else if (state > state_)
@@ -41,7 +40,7 @@ void Structure::setState(State state)
 			if (state_ < STATE_ONLINE && state >= STATE_ONLINE)
 			{
 				addEffects(Effect::CATEGORY_PASSIVE);
-				getEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID)->addEffect(getEnvironment());
+				getEffect(ONLINE_FOR_STRUCTURES_EFFECT_ID)->addEffect(this);
 			}
 			if (state_ < STATE_ACTIVE && state >= STATE_ACTIVE)
 			{

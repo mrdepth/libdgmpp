@@ -10,7 +10,6 @@
 #include <functional>
 #include <math.h>
 #include <algorithm>
-#include "Environment.hpp"
 
 
 using namespace eufe;
@@ -155,24 +154,6 @@ void Gang::removePilot(std::shared_ptr<Character> const& character)
 	engine->reset();
 }
 
-
-Environment Gang::buildEnvironment()
-{
-	Environment environment;
-	auto engine = getEngine();
-	if (engine) {
-		/*environment["Self"] = shared_from_this();
-		environment["Gang"] = shared_from_this();
-		auto area = engine->getArea();
-		if (area)
-			environment["Area"] = area;*/
-		environment.self = this;
-		environment.gang = this;
-		environment.area = engine->getArea().get();
-		
-	}
-	return environment;
-}
 
 void Gang::reset()
 {
@@ -353,7 +334,7 @@ void Gang::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredS
 	}
 }
 
-std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Gang::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	ModifiersCompareFunction cmp (attribute->highIsGood());
 
@@ -378,7 +359,7 @@ std::insert_iterator<ModifiersList> Gang::getLocationModifiers(std::shared_ptr<A
 	return outIterator;
 }
 
-std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(Item* item, std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator)
+std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	ModifiersCompareFunction cmp (attribute->highIsGood());
 	

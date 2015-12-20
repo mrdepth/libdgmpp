@@ -3,7 +3,7 @@
 
 using namespace eufe;
 
-std::shared_ptr<eufe::EffectPrototype> EffectPrototype::getEffectPrototype(std::shared_ptr<Engine> const& engine, int effectID)
+std::shared_ptr<eufe::EffectPrototype> EffectPrototype::getEffectPrototype(std::shared_ptr<Engine> const& engine, TypeID effectID)
 {
 	auto& reusableEffectPrototypes = engine->getReusableEffectPrototypes();
 	auto i = reusableEffectPrototypes.find(effectID);

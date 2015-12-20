@@ -9,7 +9,6 @@
 #include "Character.h"
 #include <sstream>
 #include <functional>
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -247,55 +246,13 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	return value;
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> const& engine,
-					 TypeID attributeID,
-					 TypeID maxAttributeID,
-					 float value,
-					 bool isStackable,
-					 bool highIsGood,
-					 std::shared_ptr<Item> const& owner,
-					 const char* attributeName,
-					 bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), maxAttributeID_(maxAttributeID), value_(value), initialValue_(value), isStackable_(isStackable), highIsGood_(highIsGood), calculated_(false), attributeName_(attributeName), isFakeAttribute_(isFakeAttribute)
-{
-	forcedValue_ = std::numeric_limits<float>::infinity();
-	
-	if (attributeName[0] == 0 && attributeID != 0)
-	{
-        //std::stringstream sql;
-		//sql << "SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT attributeName, stackable FROM dgmAttributeTypes WHERE attributeID = ?");
-		stmt->bindInt(1, attributeID_);
-
-		std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
-		if (result->next()) {
-			attributeName_ = result->getText(0);
-			isStackable_ = result->getInt(1) != 0;
-		}
-	}
-	sync = false;
-	reset();
+std::shared_ptr<Attribute> Attribute::getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute, float value) {
+	return std::make_shared<Attribute>(engine, AttributePrototype::getAttributePrototype(engine, attributeID), owner, isFakeAttribute, value);
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> const& engine,
-					 TypeID attributeID,
-					 std::shared_ptr<Item> const& owner,
-					 bool isFakeAttribute) : engine_(engine), owner_(owner), attributeID_(attributeID), value_(0), initialValue_(0), isStackable_(false), calculated_(false), isFakeAttribute_(isFakeAttribute)
-{
-	forcedValue_ = std::numeric_limits<float>::infinity();
-
-//	std::stringstream sql;
-//	sql << "SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = " << attributeID_;
-	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT stackable, maxAttributeID, defaultValue, highIsGood, attributeName FROM dgmAttributeTypes WHERE attributeID = ?");
-	stmt->bindInt(1, attributeID_);
-
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
-	if (result->next()) {
-		isStackable_ = result->getInt(0) != 0;
-		maxAttributeID_ = static_cast<eufe::TypeID>(result->getInt(1));
-		value_ = initialValue_ = static_cast<float>(result->getDouble(2));
-		highIsGood_ = result->getInt(3) != 0;
-		attributeName_ = result->getText(4);
-	}
+Attribute::Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, float value): engine_(engine), prototype_(prototype), owner_(owner), isFakeAttribute_(isFakeAttribute), value_(value), initialValue_(value), calculated_(false), forcedValue_(std::numeric_limits<float>::quiet_NaN()) {
+	if (std::isnan(value))
+		initialValue_ = prototype_->getDefaultValue();
 	sync = false;
 	reset();
 }
@@ -311,7 +268,7 @@ std::shared_ptr<Item> Attribute::getOwner() const
 
 TypeID Attribute::getAttributeID() const
 {
-	return attributeID_;
+	return prototype_->getAttributeID();
 }
 
 bool Attribute::isFakeAttribute() const
@@ -339,17 +296,17 @@ float Attribute::getInitialValue() const
 
 bool Attribute::isStackable() const
 {
-	return isStackable_;
+	return prototype_->isStackable();
 }
 
 bool Attribute::highIsGood() const
 {
-	return highIsGood_;
+	return prototype_->highIsGood();
 }
 
 float Attribute::dec(float value)
 {
-	if (forcedValue_ == std::numeric_limits<float>::infinity())
+	if (std::isnan(forcedValue_))
 		forcedValue_ = initialValue_;
 	isFakeAttribute_ = false;
 	return forcedValue_ -= value;
@@ -357,7 +314,7 @@ float Attribute::dec(float value)
 
 float Attribute::inc(float value)
 {
-	if (forcedValue_ == std::numeric_limits<float>::infinity())
+	if (std::isnan(forcedValue_))
 		forcedValue_ = initialValue_;
 	isFakeAttribute_ = false;
 	return forcedValue_ += value;
@@ -381,7 +338,7 @@ void Attribute::reset()
 
 void Attribute::calculate()
 {
-	if (forcedValue_ != std::numeric_limits<float>::infinity())
+	if (!std::isnan(forcedValue_))
 		value_ = forcedValue_;
 	else
 	{
@@ -390,19 +347,22 @@ void Attribute::calculate()
 			return;
 		if (sync)
 		{
-			std::cout << "Deadlock: " << attributeName_ << std::endl;
+			std::cout << "Deadlock: " << prototype_->getAttributeName() << std::endl;
 		}
 		sync = true;
 		value_ = initialValue_;
 		
-		const auto& environment = owner->getEnvironment();
+		auto environment = owner;
 		//std::shared_ptr<Item> currentCharacter = environment.find("Char") != environment.end() ? environment["Char"] : nullptr;
-		Item* currentCharacter = environment.character;
-		Ship* ship = dynamic_cast<Ship*>(environment.ship);
+		Item* currentCharacter = environment->character();
+		Ship* ship = dynamic_cast<Ship*>(environment->ship());
 		
 //		std::shared_ptr<Ship> ship = environment.find("Ship") != environment.end() ? std::dynamic_pointer_cast<Ship>(environment["Ship"]) : nullptr;
-		bool isDisallowedAssistance = ship && attributeID_ != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
-		bool isDisallowedOffensiveModifiers = ship && attributeID_ != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
+		auto attributeID = prototype_->getAttributeID();
+		auto highIsGood = prototype_->highIsGood();
+		auto isStackable = prototype_->isStackable();
+		bool isDisallowedAssistance = ship && attributeID != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
+		bool isDisallowedOffensiveModifiers = ship && attributeID != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
 		
 		/*std::list<float>preAssignments;
 		std::list<float>postAssignments;
@@ -438,7 +398,7 @@ void Attribute::calculate()
 		
 		//ModifiersList modifiers = owner->getModifiers(shared_from_this());
 		ModifiersList modifiers;
-		owner->getModifiers(shared_from_this(), std::inserter(modifiers, modifiers.end()));
+		owner->getModifiers(this, std::inserter(modifiers, modifiers.end()));
 
 
 		
@@ -457,7 +417,7 @@ void Attribute::calculate()
 			TypeID categoryID = i->getModifier()->getOwner()->getCategoryID();
 			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID || categoryID == STRUCTURE_CATEGORY_ID;
 			float value = i->getValue();
-			bool isNegative = (highIsGood_ && value < 1.0) || (!highIsGood_ && value > 1.0);
+			bool isNegative = (highIsGood && value < 1.0) || (!highIsGood && value > 1.0);
 
 			switch (i->getAssociation()) {
 				case Modifier::ASSOCIATION_PRE_ASSIGNMENT:
@@ -475,7 +435,7 @@ void Attribute::calculate()
 					modAdds.push_back(-value);
 					break;
 				case Modifier::ASSOCIATION_PRE_MUL:
-					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
+					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
 							preMultipliersStackableNegative.push_back(value);
@@ -486,7 +446,7 @@ void Attribute::calculate()
 						preMultipliers.push_back(value);
 					break;
 				case Modifier::ASSOCIATION_PRE_DIV:
-					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
+					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
 							preDividersStackableNegative.push_back(value);
@@ -497,7 +457,7 @@ void Attribute::calculate()
 						preMultipliers.push_back(value);
 					break;
 				case Modifier::ASSOCIATION_POST_MUL:
-					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
+					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
 							postMultipliersStackableNegative.push_back(value);
@@ -508,7 +468,7 @@ void Attribute::calculate()
 						postMultipliers.push_back(value);
 					break;
 				case Modifier::ASSOCIATION_POST_DIV:
-					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
+					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
 							postDividersStackableNegative.push_back(value);
@@ -519,7 +479,7 @@ void Attribute::calculate()
 						postMultipliers.push_back(value);
 					break;
 				case Modifier::ASSOCIATION_POST_PERCENT:
-					if (needsStackingCheck && !isStackable_)// && !(*i)->isStackable())
+					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
 							postPercentsStackableNegative.push_back(value);
@@ -534,7 +494,7 @@ void Attribute::calculate()
 			}
 		}
 		
-		if (highIsGood_)
+		if (highIsGood)
 		{
 			/*preMultipliersStackable.sort(std::greater<float>());
 			preDividersStackable.sort(std::greater<float>());
@@ -610,8 +570,9 @@ void Attribute::calculate()
 		value_ = multiply(postDividersStackableNegative.begin(), postDividersStackableNegative.end(), value_, true);
 		value_ = multiply(postPercentsStackableNegative.begin(), postPercentsStackableNegative.end(), value_, true);
 		
-		if (maxAttributeID_ > 0) {
-			float maxValue = owner->getAttribute(maxAttributeID_)->getValue();
+		auto maxAttributeID = prototype_->getMaxAttributeID();
+		if (maxAttributeID > 0) {
+			float maxValue = owner->getAttribute(maxAttributeID)->getValue();
 			value_ = std::min(value_, maxValue);
 		}
 		sync = false;
@@ -622,16 +583,16 @@ void Attribute::calculate()
 
 const char* Attribute::getAttributeName() const
 {
-	return attributeName_.c_str();
+	return prototype_->getAttributeName();
 }
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::Attribute& attribute)
 {
-	os	<< "{\"attributeName\":\"" << attribute.attributeName_
+	os	<< "{\"attributeName\":\"" << attribute.prototype_->getAttributeName()
 		<< "\", \"typeName\":\"" << attribute.getOwner()->getTypeName()
-		<< "\", \"attributeID\":\"" << attribute.attributeID_
+		<< "\", \"attributeID\":\"" << attribute.prototype_->getAttributeID()
 		<< "\", \"value\":\"" << attribute.getValue()
 		<< "\", \"initialValue\":\"" << attribute.getInitialValue()
-		<< "\", \"stackable\":\"" << attribute.isStackable_ << "\"}";
+		<< "\", \"stackable\":\"" << attribute.prototype_->isStackable() << "\"}";
 	return os;
 }

@@ -14,7 +14,8 @@ namespace eufe {
 		}
 		int getSlot();
 		
-		virtual Environment buildEnvironment();
+		virtual Item* character();
+		virtual Item* ship();
 	protected:
 		virtual void lazyLoad();
 	private:

@@ -8,7 +8,7 @@
 namespace eufe {
 	class EffectPrototype {
 	public:
-		static std::shared_ptr<EffectPrototype> getEffectPrototype(std::shared_ptr<Engine> const& engine, int effectID);
+		static std::shared_ptr<EffectPrototype> getEffectPrototype(std::shared_ptr<Engine> const& engine, TypeID effectID);
 
 		class ModifierPrototype {
 		public:

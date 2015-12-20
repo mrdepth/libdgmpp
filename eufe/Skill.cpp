@@ -4,7 +4,6 @@
 #include "Ship.h"
 #include "Engine.h"
 #include "Area.h"
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -31,35 +30,6 @@ void Skill::setSkillLevel(int level)
 	getAttribute(SKILL_LEVEL_ATTRIBUTE_ID)->setValue(static_cast<float>(level));
 }
 
-Environment Skill::buildEnvironment()
-{
-	Environment environment;
-	auto engine = getEngine();
-	if (engine) {
-		/*environment["Self"] = shared_from_this();
-		std::shared_ptr<Character> character = std::dynamic_pointer_cast<Character>(getOwner());
-		std::shared_ptr<Item> ship = character ? character->getShip() : nullptr;
-		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-		std::shared_ptr<Area> area = engine->getArea();
-		
-		if (character)
-			environment["Char"] = character;
-		if (ship)
-			environment["Ship"] = ship;
-		if (gang)
-			environment["Gang"] = gang;
-		if (area)
-			environment["Area"] = area;*/
-		environment.self = this;
-		environment.character = getOwner().get();
-		environment.ship = environment.character ? dynamic_cast<Character*>(environment.character)->getShip().get() : nullptr;
-		environment.gang = environment.character ? environment.character->getOwner().get() : nullptr;
-		environment.area = engine->getArea().get();
-	}
-
-	return environment;
-}
-
 void Skill::lazyLoad() {
 	Item::lazyLoad();
 	AttributesMap::iterator i = attributes_.find(SKILL_LEVEL_ATTRIBUTE_ID);
@@ -67,6 +37,14 @@ void Skill::lazyLoad() {
 	if (i != attributes_.end())
 		attribute = i->second;
 	else
-		attribute = addExtraAttribute(SKILL_LEVEL_ATTRIBUTE_ID, 0, 0, true, true);
+		attribute = addExtraAttribute(SKILL_LEVEL_ATTRIBUTE_ID, 0);
 	attribute->setValue(static_cast<float>(skillLevel_));
+}
+
+Item* Skill::character() {
+	return getOwner().get();
+}
+
+Item* Skill::ship() {
+	return character()->ship();
 }

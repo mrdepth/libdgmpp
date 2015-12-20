@@ -5,6 +5,7 @@
 #include <mutex>
 #include "SqlConnector.h"
 #include "EffectPrototype.h"
+#include "AttributePrototype.h"
 
 //#define FACTOR_RELOAD
 
@@ -43,6 +44,9 @@ namespace eufe {
 		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype::ModifierPrototype> >& getReusableModifierPrototypes() {
 			return reusableModifierPrototypes_;
 		}
+		std::map<TypeID, std::shared_ptr<eufe::AttributePrototype> >& getReusableAttributePrototypes() {
+			return reusableAttributePrototypes_;
+		}
 		
 		uint32_t getGeneration() const {
 			return generation_;
@@ -57,6 +61,7 @@ namespace eufe {
 		
 		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype> > reusableEffectPrototypes_;
 		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype::ModifierPrototype> > reusableModifierPrototypes_;
+		std::map<TypeID, std::shared_ptr<eufe::AttributePrototype> > reusableAttributePrototypes_;
 		uint32_t generation_;
 		int32_t updatesCounter_;
 

@@ -16,8 +16,6 @@ namespace eufe {
 		std::shared_ptr<Ship> getShip();
 		std::shared_ptr<Ship> setShip(TypeID typeID);
 
-		virtual Environment buildEnvironment();
-		
 		virtual void reset();
 		
 		std::shared_ptr<Skill> getSkill(TypeID typeID);
@@ -42,11 +40,14 @@ namespace eufe {
 		void setSkillLevels(const std::map<TypeID, int>& levels);
 		void setAllSkillsLevel(int level);
 		
+		virtual Item* character();
+		virtual Item* ship();
+
 		friend std::ostream& operator<<(std::ostream& os, Character& character);
 	protected:
 		friend class Gang;
 
-		virtual std::insert_iterator<ModifiersList> getLocationModifiers(std::shared_ptr<Attribute> const& attribute, std::insert_iterator<ModifiersList> outIterator);
+		virtual std::insert_iterator<ModifiersList> getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 		virtual void lazyLoad();
 
 	private:

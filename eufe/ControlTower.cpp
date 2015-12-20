@@ -9,7 +9,6 @@
 #include "LocationRequiredSkillModifier.h"
 #include <math.h>
 #include <algorithm>
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -73,24 +72,6 @@ bool ControlTower::canFit(std::shared_ptr<Structure> const& structure)
 		return true;
 	else
 		return false;
-}
-
-Environment ControlTower::buildEnvironment()
-{
-	Environment environment;
-	auto engine = getEngine();
-	if (engine) {
-		/*environment["Self"] = shared_from_this();
-		environment["Ship"] = shared_from_this();
-		std::shared_ptr<Area> area = engine->getArea();
-		if (area)
-			environment["Area"] = area;*/
-		environment.self = this;
-		environment.ship = this;
-		environment.area = engine->getArea().get();
-	}
-
-	return environment;
 }
 
 void ControlTower::reset()
@@ -292,6 +273,11 @@ void ControlTower::calculateDamageStats()
 		weaponVolley_ += i->getVolley();
 	}
 }
+
+Item* ControlTower::ship() {
+	return this;
+}
+
 
 std::ostream& eufe::operator<<(std::ostream& os, eufe::ControlTower& controlTower)
 {

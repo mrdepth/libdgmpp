@@ -4,9 +4,37 @@
 #include "Ship.h"
 #include "Character.h"
 #include "ControlTower.h"
-#include "Environment.hpp"
 
 using namespace eufe;
+
+class AreaEnvironment: public Environment {
+public:
+	AreaEnvironment(Item* area, Item* ship) {
+		area_ = area;
+		ship_ = ship;
+		character_ = ship ? ship->getOwner().get() : nullptr;
+		gang_ = ship->getEngine()->getGang().get();
+	}
+	Item* ship_;
+	Item* character_;
+	Item* gang_;
+	Item* area_;
+	virtual Item* ship() {
+		return ship_;
+	}
+	virtual Item* character() {
+		return character_;
+	}
+	virtual Item* gang() {
+		return gang_;
+	}
+	virtual Item* area() {
+		return area_;
+	}
+	virtual Item* self() {
+		return area_;
+	}
+};
 
 Area::Area(std::shared_ptr<Engine> const& engine, TypeID typeID) : Item(engine, typeID, nullptr)
 {
@@ -18,44 +46,20 @@ Area::~Area()
 
 void Area::addEffectsToShip(std::shared_ptr<Item> const&ship)
 {
-	Environment environment = getEnvironment();
-	std::shared_ptr<Item> character = ship->getOwner();
-	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-
-	/*environment["Ship"] = ship;
-	if (character)
-		environment["Char"] = character;
-	if (gang)
-		environment["Gang"] = gang;*/
-
-	environment.ship = ship.get();
-	environment.character = character.get();
-	environment.gang = gang.get();
+	AreaEnvironment environment(this, ship.get());
 
 	for (const auto& i: effects_)
 		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
-			i->addEffect(environment);
+			i->addEffect(&environment);
 }
 
 void Area::removeEffectsFromShip(std::shared_ptr<Item> const& ship)
 {
-	Environment environment = getEnvironment();
-	std::shared_ptr<Item> character = ship->getOwner();
-	std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-	
-/*	environment["Ship"] = ship;
-	if (character)
-		environment["Char"] = character;
-	if (gang)
-		environment["Gang"] = gang;*/
-	environment.ship = ship.get();
-	environment.character = character.get();
-	environment.gang = gang.get();
+	AreaEnvironment environment(this, ship.get());
 
-	
 	for (const auto& i: effects_)
 		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
-			i->removeEffect(environment);
+			i->removeEffect(&environment);
 }
 
 void Area::addEffects(Effect::Category category)
@@ -88,14 +92,4 @@ void Area::removeEffects(Effect::Category category)
 		if (controlTower)
 			removeEffectsFromShip(controlTower);
 	}
-}
-
-Environment Area::buildEnvironment()
-{
-	Environment environment;
-	//environment["Self"] = shared_from_this();
-	//environment["Area"] = shared_from_this();
-	environment.self = this;
-	environment.area = this;
-	return environment;
 }

@@ -16,7 +16,6 @@
 #include "Modifier.h"
 #include "LocationGroupModifier.h"
 #include "LocationRequiredSkillModifier.h"
-#include "Environment.hpp"
 
 /*#include "EffectByteCodeInterpreter.h"
 #include "EffectLeechInterpreter.h"
@@ -75,7 +74,7 @@ const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10002;
 
 //static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
 
-std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, int effectID, std::shared_ptr<Item> const& owner)
+std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, TypeID effectID, std::shared_ptr<Item> const& owner)
 {
 	return std::make_shared<Effect>(engine, EffectPrototype::getEffectPrototype(engine, effectID), owner);
 }
@@ -125,8 +124,9 @@ std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& e
 
 Effect::Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectPrototype> const& prototype, std::shared_ptr<Item> const& owner) : engine_(engine), prototype_(prototype), owner_(owner)
 {
+	auto env = owner.get();
+
 	for (const auto& modifierPrototype: prototype->getModifierPrototypes()) {
-		const auto& env = owner->getEnvironment();
 		std::shared_ptr<Modifier> modifier;
 		switch (modifierPrototype->type) {
 			case Modifier::ITEM_MODIFIER:
@@ -134,41 +134,41 @@ Effect::Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectProt
 				modifier = std::make_shared<Modifier>(modifierPrototype->domain,
 													  modifierPrototype->modifiedAttributeID,
 													  modifierPrototype->association,
-													  env.self->getAttribute(modifierPrototype->modifyingAttributeID),
+													  env->self()->getAttribute(modifierPrototype->modifyingAttributeID),
 													  isAssistance(),
 													  isOffensive(),
-													  dynamic_cast<Character*>(env.character));
+													  dynamic_cast<Character*>(env->character()));
 				break;
 			case Modifier::LOCATION_GROUP_MODIFIER:
 				modifier = std::make_shared<LocationGroupModifier>(modifierPrototype->domain,
 																   modifierPrototype->modifiedAttributeID,
 																   modifierPrototype->association,
-																   env.self->getAttribute(modifierPrototype->modifyingAttributeID),
+																   env->self()->getAttribute(modifierPrototype->modifyingAttributeID),
 																   modifierPrototype->requiredID,
 																   isAssistance(),
 																   isOffensive(),
-																   dynamic_cast<Character*>(env.character));
+																   dynamic_cast<Character*>(env->character()));
 				break;
 			case Modifier::LOCATION_REQUIRED_SKILL_MODIFIER:
 			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
 				modifier = std::make_shared<LocationRequiredSkillModifier>(modifierPrototype->domain,
 																		   modifierPrototype->modifiedAttributeID,
 																		   modifierPrototype->association,
-																		   env.self->getAttribute(modifierPrototype->modifyingAttributeID),
+																		   env->self()->getAttribute(modifierPrototype->modifyingAttributeID),
 																		   modifierPrototype->requiredID,
 																		   isAssistance(),
 																		   isOffensive(),
-																		   dynamic_cast<Character*>(env.character));
+																		   dynamic_cast<Character*>(env->character()));
 				break;
 			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
 				modifier = std::make_shared<LocationRequiredSkillModifier>(modifierPrototype->domain,
 																		   modifierPrototype->modifiedAttributeID,
 																		   modifierPrototype->association,
-																		   env.self->getAttribute(modifierPrototype->modifyingAttributeID),
-																		   env[static_cast<Modifier::Domain>(modifierPrototype->requiredID)]->getTypeID(),
+																		   env->self()->getAttribute(modifierPrototype->modifyingAttributeID),
+																		   (*env)[static_cast<Modifier::Domain>(modifierPrototype->requiredID)]->getTypeID(),
 																		   isAssistance(),
 																		   isOffensive(),
-																		   dynamic_cast<Character*>(env.character));
+																		   dynamic_cast<Character*>(env->character()));
 				break;
 			default:
 				throw std::bad_typeid();
@@ -242,27 +242,27 @@ Effect::~Effect(void)
 	//reusableEffects.erase(reusableEffects.find(effectID_));
 }
 
-bool Effect::addEffect(const Environment& env)
+bool Effect::addEffect(Environment* env)
 {
 	for (const auto& i: modifiers_) {
 		switch (i.first) {
 			case Modifier::ITEM_MODIFIER:
 				for (const auto& modifier: i.second) {
-					auto item = env[modifier->getDomain()];
+					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->addItemModifier(modifier);
 				}
 				break;
 			case Modifier::LOCATION_MODIFIER:
 				for (const auto& modifier: i.second) {
-					auto item = env[modifier->getDomain()];
+					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->addLocationModifier(modifier);
 				}
 				break;
 			case Modifier::LOCATION_GROUP_MODIFIER:
 				for (const auto& modifier: i.second) {
-					auto item = env[modifier->getDomain()];
+					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->addLocationGroupModifier(std::dynamic_pointer_cast<LocationGroupModifier> (modifier));
 				}
@@ -271,7 +271,7 @@ bool Effect::addEffect(const Environment& env)
 			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
 			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
 				for (const auto& modifier: i.second) {
-					auto item = env[modifier->getDomain()];
+					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->addLocationRequiredSkillModifier(std::dynamic_pointer_cast<LocationRequiredSkillModifier> (modifier));
 				}
@@ -283,27 +283,27 @@ bool Effect::addEffect(const Environment& env)
 	return true;
 }
 
-bool Effect::removeEffect(const Environment& env)
+bool Effect::removeEffect(Environment* env)
 {
 	for (const auto& i: modifiers_) {
 		switch (i.first) {
 			case Modifier::ITEM_MODIFIER:
 				for (const auto& modifier: i.second) {
-					auto item = env[modifier->getDomain()];
+					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->removeItemModifier(modifier);
 				}
 				break;
 			case Modifier::LOCATION_MODIFIER:
 				for (const auto& modifier: i.second) {
-					auto item = env[modifier->getDomain()];
+					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->removeLocationModifier(modifier);
 				}
 				break;
 			case Modifier::LOCATION_GROUP_MODIFIER:
 				for (const auto& modifier: i.second) {
-					auto item = env[modifier->getDomain()];
+					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->removeLocationGroupModifier(std::dynamic_pointer_cast<LocationGroupModifier> (modifier));
 				}
@@ -312,7 +312,7 @@ bool Effect::removeEffect(const Environment& env)
 			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
 			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
 				for (const auto& modifier: i.second) {
-					auto item = env[modifier->getDomain()];
+					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->removeLocationRequiredSkillModifier(std::dynamic_pointer_cast<LocationRequiredSkillModifier> (modifier));
 				}

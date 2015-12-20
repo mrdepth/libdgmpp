@@ -6,7 +6,6 @@
 #include "Area.h"
 #include "Charge.h"
 #include <cmath>
-#include "Environment.hpp"
 
 using namespace eufe;
 
@@ -19,38 +18,6 @@ Drone::~Drone(void)
 {
 }
 
-Environment Drone::buildEnvironment()
-{
-	Environment environment;
-	auto engine = getEngine();
-	if (engine) {
-		/*environment["Self"] = shared_from_this();
-		std::shared_ptr<Item> ship = getOwner();
-		std::shared_ptr<Item> character = ship ? ship->getOwner() : nullptr;
-		std::shared_ptr<Item> gang = character ? character->getOwner() : nullptr;
-		std::shared_ptr<Area> area = engine->getArea();
-		std::shared_ptr<Item> target = target_.lock();
-		
-		if (character)
-			environment["Char"] = character;
-		if (ship)
-			environment["Ship"] = ship;
-		if (gang)
-			environment["Gang"] = gang;
-		if (area)
-			environment["Area"] = area;
-		if (target)
-			environment["Target"] = target;*/
-		environment.self = this;
-		environment.ship = getOwner().get();
-		environment.character = environment.ship ? environment.ship->getOwner().get() : nullptr;
-		environment.gang = environment.character ? environment.character->getOwner().get() : nullptr;
-		environment.area = engine->getArea().get();
-		environment.target = target_.lock().get();
-	}
-
-	return environment;
-}
 
 void Drone::setTarget(std::shared_ptr<Ship> const& target)
 {
@@ -349,4 +316,16 @@ void Drone::lazyLoad() {
 		charge_ = std::make_shared<Charge>(engine, typeID, shared_from_this());
 		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
+}
+
+Item* Drone::ship() {
+	return getOwner().get();
+}
+
+Item* Drone::character() {
+	return ship()->character();
+}
+
+Item* Drone::target() {
+	return getTarget().get();
 }
