@@ -824,7 +824,7 @@ int patch(const char* databasePath) {
 #include <dbpatch.h>
 	
 	//Suppress
-	update("shieldBoostingForEntities", DefInt(1), DefInt(1));
+/*	update("shieldBoostingForEntities", DefInt(1), DefInt(1));
 	update("armorRepairForEntities", DefInt(1), DefInt(1));
 	update("entityCapacitorDrain", DefInt(1), DefInt(1));
 	update("entityShieldBoostingSmall", DefInt(1), DefInt(1));
@@ -832,7 +832,7 @@ int patch(const char* databasePath) {
 	update("entityShieldBoostingLarge", DefInt(1), DefInt(1));
 	update("entityArmorRepairingSmall", DefInt(1), DefInt(1));
 	update("entityArmorRepairingMedium", DefInt(1), DefInt(1));
-	update("entityArmorRepairingLarge", DefInt(1), DefInt(1));
+	update("entityArmorRepairingLarge", DefInt(1), DefInt(1));*/
 	update("energyDestabilizationForStructure", DefInt(1), DefInt(1));
 	return 0;
 }

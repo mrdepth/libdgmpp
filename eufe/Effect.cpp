@@ -72,55 +72,10 @@ const TypeID eufe::FUELED_ARMOR_REPAIR__EFFECT_ID = 5275;
 const TypeID eufe::NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID = 10001;
 const TypeID eufe::TACTICAL_MODE_EFFECT_ID = 10002;
 
-//static std::map<TypeID, std::weak_ptr<eufe::Effect> > reusableEffects;
-
 std::shared_ptr<eufe::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, TypeID effectID, std::shared_ptr<Item> const& owner)
 {
 	return std::make_shared<Effect>(engine, EffectPrototype::getEffectPrototype(engine, effectID), owner);
 }
-
-/*Effect::Effect(std::shared_ptr<Engine> engine, TypeID effectID, Category category, const void* byteCode, size_t size, bool isAssistance, bool isOffensive, const char* effectName) : engine_(engine), effectID_(effectID), category_(category), effectName_(effectName)
-{
-	if (effectID == LEECH_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectLeechInterpreter>(engine, isAssistance, isOffensive);
-	else if (effectID == ENERGY_DESTABILIZATION_NEW_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectEnergyDestabilizationNewInterpreter>(engine, isAssistance, isOffensive);
-	else if (effectID == ENERGY_TRANSFER_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectEnergyTransferInterpreter>(engine, isAssistance, isOffensive);
-	else if (effectID == ARMOR_REPAIR_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, false, isAssistance, isOffensive);
-	else if (effectID == TARGET_ARMOR_REPAIR_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, true, isAssistance, isOffensive);
-	else if (effectID == STRUCTURE_REPAIR_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectHullRepairInterpreter>(engine, false, isAssistance, isOffensive);
-	else if (effectID == REMOTE_HULL_REPAIR_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectHullRepairInterpreter>(engine, true, isAssistance, isOffensive);
-	else if (effectID == SHIELD_BOOSTING_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, false, isAssistance, isOffensive);
-	else if (effectID == SHIELD_TRANSFER_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, true, isAssistance, isOffensive);
-//	else if (effectID == SLOT_MODIFIER_EFFECT_ID)
-//		interpreter_ = new EffectSlotModifierInterpreter(engine, isAssistance, isOffensive);
-//	else if (effectID == HARD_POINT_MODIFIER_EFFECT_EFFECT_ID)
-//		interpreter_ = new EffectHardPointModifierEffectInterpreter(engine, isAssistance, isOffensive);
-//	else if (effectID == ADAPTIVE_ARMOR_HARDENER_EFFECT_ID)
-//		interpreter_ = new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive);
-	else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, false, isAssistance, isOffensive);
-	else if (effectID == FUELED_ARMOR_REPAIR__EFFECT_ID)
-		interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, false, isAssistance, isOffensive);
-	else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID)
-		interpreter_ = std::make_shared<EffectNaniteRepairPasteArmorDamageBonus>(engine, isAssistance, isOffensive);
-	else
-		interpreter_ = std::make_shared<EffectByteCodeInterpreter>(engine, byteCode, size, isAssistance, isOffensive);
-	std::string::iterator i, end = effectName_.end();
-	for (i = effectName_.begin(); i != end; i++)
-	{
-		char c = *i;
-		if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
-			*i = ' ';
-	}
-}*/
 
 Effect::Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectPrototype> const& prototype, std::shared_ptr<Item> const& owner) : engine_(engine), prototype_(prototype), owner_(owner)
 {
@@ -176,65 +131,6 @@ Effect::Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectProt
 		}
 		modifiers_[modifierPrototype->type].push_back(modifier);
 	}
-	
-/*	//std::stringstream sql;
-	//sql << "SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = " << effectID;
-	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT effectCategory, isOffensive, isAssistance, byteCode, effectName FROM dgmCompiledEffects WHERE effectID = ?");
-	stmt->bindInt(1, effectID);
-	
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
-
-	if (result->next())
-	{
-		category_ = static_cast<Effect::Category>(result->getInt(0));
-		bool isAssistance = result->getInt(2) != 0;
-		bool isOffensive = result->getInt(1) != 0;
-		Blob blob = result->getBlob(3);
-		
-		if (effectID == LEECH_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectLeechInterpreter>(engine, isAssistance, isOffensive);
-		else if (effectID == ENERGY_DESTABILIZATION_NEW_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectEnergyDestabilizationNewInterpreter>(engine, isAssistance, isOffensive);
-		else if (effectID == ENERGY_TRANSFER_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectEnergyTransferInterpreter>(engine, isAssistance, isOffensive);
-		else if (effectID == ARMOR_REPAIR_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, false, isAssistance, isOffensive);
-		else if (effectID == TARGET_ARMOR_REPAIR_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, true, isAssistance, isOffensive);
-		else if (effectID == STRUCTURE_REPAIR_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectHullRepairInterpreter>(engine, false, isAssistance, isOffensive);
-		else if (effectID == REMOTE_HULL_REPAIR_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectHullRepairInterpreter>(engine, true, isAssistance, isOffensive);
-		else if (effectID == SHIELD_BOOSTING_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, false, isAssistance, isOffensive);
-		else if (effectID == SHIELD_TRANSFER_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, true, isAssistance, isOffensive);
-//		else if (effectID == SLOT_MODIFIER_EFFECT_ID)
-//			interpreter_ = new EffectSlotModifierInterpreter(engine, isAssistance, isOffensive);
-//		else if (effectID == HARD_POINT_MODIFIER_EFFECT_EFFECT_ID)
-//			interpreter_ = new EffectHardPointModifierEffectInterpreter(engine, isAssistance, isOffensive);
-//		else if (effectID == ADAPTIVE_ARMOR_HARDENER_EFFECT_ID)
-//			interpreter_ = new EffectAdaptiveArmorHardener(engine, isAssistance, isOffensive);
-		else if (effectID == FUELED_SHIELD_BOOSTING_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectShieldBoostingInterpreter>(engine, false, isAssistance, isOffensive);
-		else if (effectID == FUELED_ARMOR_REPAIR__EFFECT_ID)
-			interpreter_ = std::make_shared<EffectArmorRepairInterpreter>(engine, false, isAssistance, isOffensive);
-		else if (effectID == NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID)
-			interpreter_ = std::make_shared<EffectNaniteRepairPasteArmorDamageBonus>(engine, isAssistance, isOffensive);
-		else
-			interpreter_ = std::make_shared<EffectByteCodeInterpreter>(engine, reinterpret_cast<const Byte*>(blob.getMemory()), blob.getSize(), isAssistance, isOffensive);
-		
-		
-		effectName_ = result->getText(4);
-		for (auto i: effectName_)
-		{
-			char c = i;
-			if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))
-				i = ' ';
-		}
-		isAssistance_ = isAssistance;
-		isOffensive_ = isOffensive;
-	}*/
 }
 
 Effect::~Effect(void)

@@ -97,10 +97,10 @@ int main(int argc, const char * argv[]) {
 		HitPoints hp15 = vigilant->getHitPoints();
 		float cap15 = vigilant->getCapUsed();*/
 		
-		std::ofstream os;
+/*		std::ofstream os;
 		os.open("/Users/shimanski/tmp/gang.json");
 		os << *engine->getGang() << std::endl;
-		os.close();
+		os.close();*/
 		
 		auto hp = vigilant->getHitPoints();
 		float dps = vigilant->getWeaponDps();
