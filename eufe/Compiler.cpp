@@ -134,28 +134,34 @@ namespace Compiler {
 	}
 
 	bool Attribute::set(float value) {
-		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeSet));
-		return true;
+		throw *this;
+//		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeSet));
+//		return true;
 	}
 	bool Attribute::inc(float value) {
-		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeInc));
-		return true;
+		throw *this;
+//		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeInc));
+//		return true;
 	}
 	bool Attribute::dec(float value) {
-		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeDec));
-		return true;
+		throw *this;
+//		mutators[currentExpressionID].push_back(Mutator(*this, value, Mutator::MutatorTypeDec));
+//		return true;
 	}
 	bool Attribute::dec(const AttributeID& attributeID) {
-		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeDec));
-		return true;
+		throw *this;
+//		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeDec));
+//		return true;
 	}
 	bool Attribute::inc(const AttributeID& attributeID) {
-		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeInc));
-		return true;
+		throw *this;
+//		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeInc));
+//		return true;
 	}
 	bool Attribute::set(const AttributeID& attributeID) {
-		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeSet));
-		return true;
+		throw *this;
+//		mutators[currentExpressionID].push_back(Mutator(*this, attributeID, Mutator::MutatorTypeSet));
+//		return true;
 	}
 	Association Attribute::getAssociation(const std::string& name) {
 		return Association(*this, name);
@@ -272,15 +278,20 @@ int main(int argc, char* argv[])
 	PRIMARY KEY (\"effectID\", \"modifierID\"));" << std::endl;
 
 	
-	exec("select a.effectID, preExpression from dgmEffects as a, dgmTypeEffects as b where a.effectID=b.effectID group by a.effectID", [&](sqlite3_stmt* stmt) -> bool {
+	exec("select a.effectID, preExpression, effectName from dgmEffects as a, dgmTypeEffects as b where a.effectID=b.effectID group by a.effectID", [&](sqlite3_stmt* stmt) -> bool {
 		int32_t effectID = sqlite3_column_int(stmt, 0);
 		int32_t preExpression = sqlite3_column_int(stmt, 1);
 		currentExpressionID = preExpression;
-		if (mutators.find((preExpression)) == mutators.end() && modifiers.find(preExpression) == modifiers.end())
-			expressions[preExpression]->exec();
 		
-		for (const auto& modifier: modifiers[preExpression]) {
-			effectModifiersStream << "INSERT INTO dgmEffectModifiers VALUES (" << effectID << "," << modifier.modifierID << ");" << std::endl;
+		try {
+			if (mutators.find((preExpression)) == mutators.end() && modifiers.find(preExpression) == modifiers.end())
+				expressions[preExpression]->exec();
+			
+			for (const auto& modifier: modifiers[preExpression]) {
+				effectModifiersStream << "INSERT INTO dgmEffectModifiers VALUES (" << effectID << "," << modifier.modifierID << ");" << std::endl;
+			}
+		} catch (...) {
+			std::cout << sqlite3_column_text(stmt, 2) << std::endl;
 		}
 		return true;
 	});
