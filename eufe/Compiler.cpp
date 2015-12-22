@@ -83,7 +83,7 @@ namespace Compiler {
 	
 	eufe::Modifier::Association getAssociationID(const std::string& association) {
 		if (association == "PreAssignment")
-			return eufe::Modifier::ASSOCIATION_POST_ASSIGNMENT;
+			return eufe::Modifier::ASSOCIATION_PRE_ASSIGNMENT;
 		else if (association == "PreDiv")
 			return eufe::Modifier::ASSOCIATION_PRE_DIV;
 		else if (association == "PreMul")

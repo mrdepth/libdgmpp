@@ -550,9 +550,6 @@ void Attribute::calculate()
 		if (preAssignments.size() > 0)
 			value_ = preAssignments.front();
 		
-		if (postAssignments.size() > 0)
-			value_ = postAssignments.front();
-
 		for (const auto& j: modAdds)
 			value_ += j;
 		
@@ -562,6 +559,9 @@ void Attribute::calculate()
 		value_ = multiply(preMultipliersStackableNegative.begin(), preMultipliersStackableNegative.end(), value_, true);
 		value_ = multiply(preDividersStackable.begin(), preDividersStackable.end(), value_, true);
 		
+		if (postAssignments.size() > 0)
+			value_ = postAssignments.front();
+
 		value_ = multiply(postMultipliers.begin(), postMultipliers.end(), value_, false);
 		value_ = multiply(postMultipliersStackable.begin(), postMultipliersStackable.end(), value_, true);
 		value_ = multiply(postDividersStackable.begin(), postDividersStackable.end(), value_, true);
