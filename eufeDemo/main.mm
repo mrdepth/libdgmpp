@@ -24,7 +24,7 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 	pilot->setAllSkillsLevel(level);
 	auto ship = pilot->setShip(shipTypeID);
 	
-	//engine->beginUpdates();
+	engine->beginUpdates();
 	std::list<TypeID> chargeIDs;
 	for (NSString* component in components) {
 		NSArray* c = [component componentsSeparatedByString:@";"];
@@ -59,7 +59,7 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 				module->setCharge(typeID);
 		}
 	}
-	//engine->commitUpdates();
+	engine->commitUpdates();
 	return ship;
 }
 
@@ -105,7 +105,7 @@ int main(int argc, const char * argv[]) {
 		os.open("/Users/shimanski/tmp/gang.json");
 		os << *engine->getGang() << std::endl;
 		os.close();*/
-		
+		return 0;
 		auto velocity = dramiel->getVelocity();
 		auto hp = vigilant->getHitPoints();
 		float dps = vigilant->getWeaponDps();

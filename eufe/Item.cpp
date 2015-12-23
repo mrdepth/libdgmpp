@@ -411,7 +411,7 @@ void Item::lazyLoad() {
 	
 	//std::stringstream sql;
 	//sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID_;
-	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = ?");
+	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = ? LIMIT 1");
 	stmt->bindInt(1, typeID_);
 	
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
