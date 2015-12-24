@@ -183,12 +183,12 @@ namespace Compiler {
 		return true;
 	}
 	bool Association::addLocationRequiredSkillModifier(const AttributeID attributeID) {
-		auto modifier = uniqueModifiers.emplace(eufe::Modifier::LOCATION_REQUIRED_SKILL_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
+		auto modifier = uniqueModifiers.emplace(attribute_.domain_.requiredSkill_.typeID_ > 0 ? eufe::Modifier::LOCATION_REQUIRED_SKILL_MODIFIER : eufe::Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
 		modifiers[currentExpressionID].insert(*modifier.first);
 		return true;
 	}
 	bool Association::addOwnerRequiredSkillModifier(const AttributeID attributeID) {
-		auto modifier = uniqueModifiers.emplace(eufe::Modifier::OWNER_REQUIRED_SKILL_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
+		auto modifier = uniqueModifiers.emplace(attribute_.domain_.requiredSkill_.typeID_ > 0 ? eufe::Modifier::OWNER_REQUIRED_SKILL_MODIFIER : eufe::Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
 		modifiers[currentExpressionID].insert(*modifier.first);
 		return true;
 	}
@@ -214,7 +214,7 @@ namespace Compiler {
 				os << modifier.modifiedAssociation.attribute_.domain_.requiredSkill_.typeID_;
 				break;
 			case eufe::Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
-				os << modifier.modifiedAssociation.attribute_.domain_.requiredSkill_.domain_;
+				os << getDomainID(modifier.modifiedAssociation.attribute_.domain_.requiredSkill_.domain_);
 				break;
 			default:
 				throw std::bad_typeid();
