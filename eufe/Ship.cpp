@@ -1041,7 +1041,10 @@ float Ship::getOrbitRadiusWithTransverseVelocity(float v) {
 	double i = getAgility();
 	double m = getMass() / 1000000.0;
 	double vm = getVelocity();
-	return (i * m * v * v) / sqrt(vm * vm - v * v);
+	double s = vm * vm - v * v;
+	if (s <= 0)
+		return 0;
+	return (i * m * v * v) / sqrt(s);
 }
 
 float Ship::getOrbitRadiusWithAngularVelocity(float v) {
