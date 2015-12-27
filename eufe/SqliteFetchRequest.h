@@ -1,5 +1,9 @@
 #pragma once
+#if _WIN32
+#include "ThirdParty\sqlite3.h"
+#else
 #include <sqlite3.h>
+#endif
 #include "FetchRequest.h"
 
 namespace eufe {

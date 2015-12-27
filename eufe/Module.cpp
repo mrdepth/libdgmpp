@@ -660,7 +660,7 @@ void Module::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		std::shared_ptr<Item> item = charge_ ?: std::static_pointer_cast<Item>(shared_from_this());
+		std::shared_ptr<Item> item = charge_ ? charge_  : std::static_pointer_cast<Item>(shared_from_this());
 		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
 			volley_.emAmount += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
 		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))

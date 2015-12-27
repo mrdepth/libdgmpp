@@ -10,6 +10,7 @@
 #include "LocationRequiredSkillModifier.h"
 #include "Implant.h"
 #include "Booster.h"
+#include <algorithm>
 
 using namespace eufe;
 
@@ -269,7 +270,7 @@ void Character::removeEffects(Effect::Category category)
 
 void Character::setCharacterName(const char* characterName)
 {
-	characterName_ = characterName ?: "";
+	characterName_ = characterName ? characterName  : "";
 }
 
 const char*  Character::getCharacterName()

@@ -1,7 +1,11 @@
 #pragma once
 #include "types.h"
 #include <stdexcept>
+#if _WIN32
+#include "ThirdParty\sqlite3.h"
+#else
 #include <sqlite3.h>
+#endif
 #include <iostream>
 #include "Effect.h"
 #include "Environment.h"
@@ -41,7 +45,7 @@ namespace eufe {
         typedef std::runtime_error NoOwnerException;
 
 
-		Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = nullptr);
+		Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = std::shared_ptr<Item>(nullptr));
 		virtual ~Item(void);
 		std::shared_ptr<Engine> getEngine();
 		std::shared_ptr<Item> getOwner() const;

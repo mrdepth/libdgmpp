@@ -13,13 +13,13 @@ namespace eufe {
         
         typedef std::invalid_argument BadDroneTargetException;
 
-		Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Ship> const& owner = nullptr);
+		Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Ship> const& owner = std::shared_ptr<Ship>(nullptr));
 		virtual ~Drone(void);
 		std::shared_ptr<Drone> shared_from_this() {
 			return std::static_pointer_cast<Drone>(Item::shared_from_this());
 		}
 		
-		void setTarget(std::shared_ptr<Ship> const& target = nullptr);
+		void setTarget(std::shared_ptr<Ship> const& target = std::shared_ptr<Ship>(nullptr));
 		void clearTarget();
 		std::shared_ptr<Ship> getTarget();
 

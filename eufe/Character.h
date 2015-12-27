@@ -7,7 +7,7 @@ namespace eufe {
 	class Character : public Item
 	{
 	public:
-		Character(std::shared_ptr<Engine> const& engine, std::shared_ptr<Gang> const& owner = nullptr, const char* characterName = "");
+		Character(std::shared_ptr<Engine> const& engine, std::shared_ptr<Gang> const& owner = std::shared_ptr<Gang>(nullptr), const char* characterName = "");
 		virtual ~Character(void);
 		std::shared_ptr<Character> shared_from_this() {
 			return std::static_pointer_cast<Character>(Item::shared_from_this());

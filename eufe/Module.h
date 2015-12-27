@@ -18,7 +18,7 @@ namespace eufe {
 			SLOT_RIG,
 			SLOT_SUBSYSTEM,
 			SLOT_STRUCTURE,
-			SLOT_MODE,
+			SLOT_MODE
 		};
 
 		enum State
@@ -36,7 +36,7 @@ namespace eufe {
 			HARDPOINT_LAUNCHER,
 			HARDPOINT_TURRET
 		};
-		Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = nullptr);
+		Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = std::shared_ptr<Item>(nullptr));
 		virtual ~Module(void);
 		std::shared_ptr<Module> shared_from_this() {
 			return std::static_pointer_cast<Module>(Item::shared_from_this());
@@ -72,7 +72,7 @@ namespace eufe {
 		int getChargeSize();
 		bool canFit(std::shared_ptr<Charge> const& charge);
 		bool requireTarget();
-		void setTarget(std::shared_ptr<Ship> const& target = nullptr);
+		void setTarget(std::shared_ptr<Ship> const& target = std::shared_ptr<Ship>(nullptr));
 		void clearTarget();
 		std::shared_ptr<Ship> getTarget();
 		float getReloadTime();

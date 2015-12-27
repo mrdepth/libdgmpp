@@ -2,6 +2,7 @@
 #include "Ship.h"
 #include "Engine.h"
 #include <limits>
+#include <algorithm>
 
 using namespace eufe;
 

@@ -1,8 +1,14 @@
 #pragma once
 #include "types.h"
+#if _WIN32
+#include "ThirdParty\sqlite3.h"
+#else
 #include <sqlite3.h>
+#endif
 #include <stdexcept>
+#if !_M_CEE
 #include <mutex>
+#endif
 #include "SqlConnector.h"
 #include "EffectPrototype.h"
 #include "AttributePrototype.h"
@@ -13,11 +19,14 @@ namespace eufe {
 	class Engine : public std::enable_shared_from_this<Engine>
 	{
 	public:
+#if !_M_CEE
+
 		class ScopedLock : public std::lock_guard<std::recursive_mutex> {
 		public:
 			ScopedLock(std::shared_ptr<Engine> const& engine): std::lock_guard<std::recursive_mutex>(engine->mutex_) {
 			};
 		};
+#endif
 		
 		//struct SqliteException : virtual boost::exception {};
         typedef std::runtime_error SqliteException;
@@ -57,8 +66,9 @@ namespace eufe {
 		std::shared_ptr<Gang> gang_;
 		std::shared_ptr<Area> area_;
 		std::shared_ptr<ControlTower> controlTower_;
+#if !_M_CEE
 		std::recursive_mutex mutex_;
-		
+#endif		
 		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype> > reusableEffectPrototypes_;
 		std::map<TypeID, std::shared_ptr<eufe::EffectPrototype::ModifierPrototype> > reusableModifierPrototypes_;
 		std::map<TypeID, std::shared_ptr<eufe::AttributePrototype> > reusableAttributePrototypes_;

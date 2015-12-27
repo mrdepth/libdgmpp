@@ -19,7 +19,7 @@ namespace eufe {
 			SCAN_TYPE_GRAVIMETRIC,
 			SCAN_TYPE_MULTISPECTRAL
 		};
-		Ship(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner = nullptr);
+		Ship(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner = std::shared_ptr<Character>(nullptr));
 		virtual ~Ship(void);
 		std::shared_ptr<Ship> shared_from_this() {
 			return std::static_pointer_cast<Ship>(Item::shared_from_this());
