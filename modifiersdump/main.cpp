@@ -80,8 +80,8 @@ std::set<std::string> funcs;
 
 std::string association(const std::string& operatorID) {
 	int i = std::atoi(operatorID.c_str());
-	const char* v[] = {"PreMul", "PreDiv", "ModAdd", "ModSub", "PostMul", "PostDiv", "PostPercent", "PreAssignment", "PostAssignment"};
-	return v[i];
+	const char* v[] = {"PreAssignment", "PreMul", "PreDiv", "ModAdd", "ModSub", "PostMul", "PostDiv", "PostPercent", "PostAssignment"};
+	return v[i + 1];
 }
 
 std::string attr(const std::string& attributeID) {
