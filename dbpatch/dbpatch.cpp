@@ -293,7 +293,7 @@ public:
 				operatorID << ", " <<
 				arg1->expressionID() << ", " <<
 				arg2->expressionID() << ", " <<
-				"\"eufe\"" << ", " <<
+				"\"dgmpp\"" << ", " <<
 				"\"" << *this << "\"" << ")";
 				exec(os.str(), [](sqlite3_stmt* stmt) -> bool {
 					return false;
@@ -305,7 +305,7 @@ public:
 				expressionID << ", " <<
 				operatorID << ", " <<
 				expressionAttributeID() << ", " <<
-				"\"eufe\"" << ", " <<
+				"\"dgmpp\"" << ", " <<
 				"\"" << *this << "\"" << ")";
 				exec(os.str(), [](sqlite3_stmt* stmt) -> bool {
 					return false;
@@ -317,7 +317,7 @@ public:
 				expressionID << ", " <<
 				operatorID << ", " <<
 				expressionTypeID() << ", " <<
-				"\"eufe\"" << ", " <<
+				"\"dgmpp\"" << ", " <<
 				"\"" << *this << "\"" << ")";
 				exec(os.str(), [](sqlite3_stmt* stmt) -> bool {
 					return false;
@@ -329,7 +329,7 @@ public:
 				expressionID << ", " <<
 				operatorID << ", " <<
 				expressionGroupID() << ", " <<
-				"\"eufe\"" << ", " <<
+				"\"dgmpp\"" << ", " <<
 				"\"" << *this << "\"" << ")";
 				exec(os.str(), [](sqlite3_stmt* stmt) -> bool {
 					return false;
@@ -341,7 +341,7 @@ public:
 				expressionID << ", " <<
 				operatorID << ", " <<
 				'"' << expressionValue << "\", " <<
-				"\"eufe\"" << ", " <<
+				"\"dgmpp\"" << ", " <<
 				"\"" << *this << "\"" << ")";
 				exec(os.str(), [](sqlite3_stmt* stmt) -> bool {
 					return false;
@@ -448,14 +448,14 @@ template <typename T1, typename T2> void update(const std::string& effectName, T
 void addEffect(int32_t effectID, const std::string& effectName, int32_t effectCategory, bool isOffensive, bool isAssistance) {
 	std::stringstream os;
 	os << "INSERT INTO \"dgmEffects\" (effectID,effectName,effectCategory,preExpression,postExpression,description,isOffensive,isAssistance)\
-	VALUES (\"" << effectID << "\",\"" << effectName << "\"," << effectCategory << ",131, 131, \"eufe\"," << isOffensive << "," << isAssistance << ");";
+	VALUES (\"" << effectID << "\",\"" << effectName << "\"," << effectCategory << ",131, 131, \"dgmpp\"," << isOffensive << "," << isAssistance << ");";
 	exec(os.str(), nullptr);
 }
 
 void addAttribute(int32_t attributeID, const std::string& attributeName, int32_t attributeCategory, int32_t unitID, bool stackable, bool highIsGood) {
 	std::stringstream os;
 	os << "INSERT INTO \"dgmAttributeTypes\" (attributeID,attributeName,attributeCategory,published,unitID,displayName,description,stackable,highIsGood,categoryID,iconID)\
-	VALUES (" << attributeID << ", \"" << attributeName << "\"," << attributeCategory << ",0, " << unitID << ", NULL, \"eufe\", " << stackable << "," << highIsGood << ", NULL, NULL);";
+	VALUES (" << attributeID << ", \"" << attributeName << "\"," << attributeCategory << ",0, " << unitID << ", NULL, \"dgmpp\", " << stackable << "," << highIsGood << ", NULL, NULL);";
 	exec(os.str(), nullptr);
 }
 

@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'eufe' target in the 'eufe' project
-//
-
-#ifdef __OBJC__
-	#import <Foundation/Foundation.h>
-#endif

@@ -8,13 +8,13 @@ SQL=${PWD}/sql
 SDE+=${PWD}/sde/eve.sqlite
 T+=${PWD}/tmp
 
-all: eufe.sqlite
+all: dgm.sqlite
 
 dbpatch: dbpatch.h
 	$(CC) $(CFLAGS) ../dbpatch/dbpatch.cpp -o $(T)/$@ -lsqlite3 -I $(T)/
 
 compiler: tmp
-	$(CC) $(CFLAGS) ../eufe/Compiler.cpp -o $(T)/$@ -lsqlite3
+	$(CC) $(CFLAGS) ../Compiler/Compiler.cpp -o $(T)/$@ -lsqlite3 -I "../dgmpp/"
 
 modifiersdump: tmp
 	$(CC) $(CFLAGS) ../modifiersdump/main.cpp -o $(T)/$@ -lsqlite3
@@ -30,18 +30,18 @@ dump.sqlite: dbpatch
 	$(T)/dbpatch $(T)/dump.sqlite
 
 
-eufedump.sqlite: dump.sqlite
-	cp $(T)/dump.sqlite $(T)/eufedump.sqlite
-	sqlite3 $(T)/eufedump.sqlite ".read $(SQL)/eufeDumpPatch.sql"
+dgmppdump.sqlite: dump.sqlite
+	cp $(T)/dump.sqlite $(T)/dgmppdump.sqlite
+	sqlite3 $(T)/dgmppdump.sqlite ".read $(SQL)/dgmppDumpPatch.sql"
 
-dgmModifiers.sql: eufedump.sqlite compiler
-	$(T)/compiler $(T)/eufedump.sqlite $(T)/
+dgmModifiers.sql: dgmppdump.sqlite compiler
+	$(T)/compiler $(T)/dgmppdump.sqlite $(T)/
 
-eufe.sqlite: dgmModifiers.sql
-	sqlite3 $(T)/eufedump.sqlite ".read $(SQL)/eufe.sql"
-	sqlite3 eufe.sqlite ".read $(T)/dgmModifiers.sql"
-	sqlite3 eufe.sqlite ".read $(T)/dgmEffectModifiers.sql"
-	mv ./eufe.sqlite $(OUTPUT_DIR)/eufe.sqlite
+dgm.sqlite: dgmModifiers.sql
+	sqlite3 $(T)/dgmppdump.sqlite ".read $(SQL)/dgmpp.sql"
+	sqlite3 dgm.sqlite ".read $(T)/dgmModifiers.sql"
+	sqlite3 dgm.sqlite ".read $(T)/dgmEffectModifiers.sql"
+	mv ./dgm.sqlite $(OUTPUT_DIR)/dgm.sqlite
 
 tmp:
 	mkdir -p $(T)
