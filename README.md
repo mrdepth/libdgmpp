@@ -1,6 +1,6 @@
 # Dogma++
 
-Fitting engine for EVE Online writen on C++
+Fitting engine for EVE Online written on C++
 
 -------------------------------------------------------------------------------
 
