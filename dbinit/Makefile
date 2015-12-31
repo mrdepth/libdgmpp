@@ -20,7 +20,7 @@ modifiersdump: tmp
 	$(CC) $(CFLAGS) ../modifiersdump/main.cpp -o $(T)/$@ -lsqlite3
 
 dbpatch.h: modifiersdump
-	cd $(DUMP); sqlite3 $(SDE) ".read $(SQL)/eve.sql"; mv dump.sqlite $(T)/dump.sqlite
+#cd $(DUMP); sqlite3 $(SDE) ".read $(SQL)/eve.sql"; mv dump.sqlite $(T)/dump.sqlite
 	cd $(DUMP); sqlite3 $(T)/dump.sqlite ".read $(SQL)/dump.sql"
 	sqlite3 $(T)/dump.sqlite ".read $(SQL)/dumpPatch.sql"
 	$(T)/modifiersdump $(T)/dump.sqlite $(T)/dbpatch.h
