@@ -41,6 +41,7 @@ dgm.sqlite: dgmModifiers.sql
 	sqlite3 $(T)/dgmppdump.sqlite ".read $(SQL)/dgmpp.sql"
 	sqlite3 dgm.sqlite ".read $(T)/dgmModifiers.sql"
 	sqlite3 dgm.sqlite ".read $(T)/dgmEffectModifiers.sql"
+	sqlite3 dgm.sqlite "vacuum"
 	mv ./dgm.sqlite $(OUTPUT_DIR)/dgm.sqlite
 
 tmp:

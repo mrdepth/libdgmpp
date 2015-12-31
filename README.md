@@ -15,7 +15,6 @@ Fitting engine for EVE Online written on C++
 ## Installing
 - Change the EVEPATH variable in ./dbinit/dump/datadump.py to your EVE Online game client path.
 - Run ./dbinit/dump/datadump.py to grab latest game data (works only under Windows)
-- Download and extract latest sqlite SDE conversion https://www.fuzzwork.co.uk/dump/sqlite-latest.sqlite.bz2 to ./dbinit/sde/eve.sqlite
 - Run ./dbinit/build.sh to build dgm.sqlite (requires Cygwin or OS X/Linux)
 
 -------------------------------------------------------------------------------

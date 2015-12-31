@@ -67,7 +67,7 @@ def dump(table, header, lines):
 	elif (table == "dgmTypeEffects"):
 		f.append("DROP TABLE IF EXISTS \"dgmTypeEffects\";\nCREATE TABLE \"dgmTypeEffects\" (\n\"typeID\"  INTEGER NOT NULL,\n\"effectID\"  INTEGER NOT NULL,\n\"isDefault\"  INTEGER,\nPRIMARY KEY (\"typeID\", \"effectID\")\n);")
 	elif (table == "invCategories"):
-		f.append("DROP TABLE IF EXISTS \"invCategories\";\nCREATE TABLE \"invCategories\" (\n\"categoryID\"  INTEGER NOT NULL,\n\"categoryName\"  TEXT(100),\n\"description\"  TEXT(3000),\n\"published\"  INTEGER,\n\"iconID\" smallint(6) default NULL,\n\"categoryNameID\" smallint(6) default NULL,\n\"dataID\" smallint(6) default NULL,\nPRIMARY KEY (\"categoryID\")\n);")
+		f.append("DROP TABLE IF EXISTS \"invCategories\";\nCREATE TABLE \"invCategories\" (\n\"categoryID\"  INTEGER NOT NULL,\n\"categoryName\"  TEXT(100),\n\"published\"  INTEGER,\n\"iconID\" smallint(6) default NULL,\nPRIMARY KEY (\"categoryID\")\n);")
 	elif (table == "invGroups"):
 		f.append("DROP TABLE IF EXISTS \"invGroups\";\nCREATE TABLE \"invGroups\" (\n\"groupID\" INTEGER NOT NULL,\n\"categoryID\"  INTEGER,\n\"groupName\"  TEXT(100),\n\"description\"  TEXT(3000),\n\"useBasePrice\"  INTEGER,\n\"allowManufacture\"  INTEGER,\n\"allowRecycler\"  INTEGER,\n\"anchored\"  INTEGER,\n\"anchorable\"  INTEGER,\n\"fittableNonSingleton\"  INTEGER,\n\"published\"  INTEGER,\n\"iconID\"   smallint(6) default NULL,\n\"groupNameID\"   smallint(6) default NULL,\n\"dataID\"   smallint(6) default NULL,\nPRIMARY KEY (\"groupID\")\n);")
 	elif (table == "invControlTowerResources"):
@@ -80,7 +80,7 @@ def dump(table, header, lines):
 	# create XML file and dump the lines.
 	try:
 		for line in lines:
-			line = ','.join([sqlstr(getattr(line, x) if hasattr(line,x) else 'null') for x in header])
+			line = ','.join([sqlstr(getattr(line, x) if hasattr(line,x) else None) for x in header])
 			f.append("INSERT INTO %s (%s) VALUES(%s);" % (item, ','.join(header), line))
 
 
@@ -96,16 +96,17 @@ def dump(table, header, lines):
 def map(header, objects):
 	return [objects.Get(key) for key in objects.keys()]
 
-c = eve.getcachemgr()
-
-res = c.LoadCachedMethodCall(("dogma", "GetOperandsForChar"));
+cache = eve.getcachemgr()
+res = cache.LoadCachedMethodCall(("dogma", "GetOperandsForChar"));
+dgmOperands = cache.LoadCachedMethodCall(("dogma", "GetOperandsForChar"))["lret"].values()
+dgmOperandsHeader = dgmOperands[0].__header__.Keys()
 
 #dump (cfg.dgmexpressions, "dgmExpressions")
 
 #invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "raceID", "published", "marketGroupID")
-invTypesHeader = ("typeID", "groupID", "typeName", "radius", "mass", "volume", "raceID", "published", "marketGroupID")
+invTypesHeader = ("typeID", "groupID", "typeName", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID")
 invGroupsHeader = ("groupID", "groupName", "categoryID", "published")
-invCategoriesHeader = ("categoryID", "categoryName", "published")
+invCategoriesHeader = ("categoryID", "categoryName", "published", "iconID")
 invTypeAttributesHeader = ("typeID", "attributeID", "value")
 invTypeEffectsHeader = ("typeID", "effectID", "isDefault")
 
@@ -115,6 +116,7 @@ invCategories = map(invCategoriesHeader, cfg.invcategories)
 invTypeAttributes = [r for rows in cfg.dgmtypeattribs.values() for r in rows]
 invTypeEffects = [r for rows in cfg.dgmtypeeffects.values() for r in rows]
 
+dump ("dgmOperands", dgmOperandsHeader, dgmOperands)
 dump ("invCategories", invCategoriesHeader, invCategories)
 dump ("invGroups", invGroupsHeader, invGroups)
 dump ("invTypes", invTypesHeader, invTypes)
