@@ -70,8 +70,6 @@ CREATE TABLE dgmpp.dgmEffects (
 "effectID"  INTEGER NOT NULL,
 "effectName"  TEXT(400),
 "effectCategory"  INTEGER,
-"preExpression"  INTEGER,
-"postExpression"  INTEGER,
 "isOffensive"  INTEGER,
 "isAssistance"  INTEGER,
 PRIMARY KEY ("effectID")
@@ -82,8 +80,8 @@ INSERT INTO dgmpp.invTypes SELECT typeID, groupID, typeName, radius, mass, volum
 INSERT INTO dgmpp.dgmAttributeTypes SELECT attributeID, attributeName, displayName, maxAttributeID, defaultValue, stackable, highIsGood, categoryID FROM dgmAttributeTypes;
 INSERT INTO dgmpp.dgmTypeAttributes SELECT * FROM dgmTypeAttributes;
 INSERT INTO dgmpp.dgmTypeEffects SELECT * FROM dgmTypeEffects;
-INSERT INTO dgmpp.invCategories SELECT * FROM invCategories;
-INSERT INTO dgmpp.dgmEffects SELECT effectID, effectName, effectCategory, preExpression, postExpression, isOffensive, isAssistance  FROM dgmEffects;
+INSERT INTO dgmpp.invCategories SELECT categoryID, categoryName, iconID, published FROM invCategories;
+INSERT INTO dgmpp.dgmEffects SELECT effectID, effectName, effectCategory, isOffensive, isAssistance  FROM dgmEffects;
 
 CREATE INDEX dgmpp.invGroups_categoryID ON "invGroups" ("categoryID" ASC);
 CREATE INDEX dgmpp.invTypes_groupID_published ON "invTypes" ("groupID" ASC, "published" ASC);

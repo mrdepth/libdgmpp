@@ -51,7 +51,6 @@ namespace dgmpp {
 		Hardpoint getHardpoint();
 		virtual bool canHaveState(State state);
 		State getState();
-		virtual void setState(State state);
 		State getPreferredState();
 		void setPreferredState(State state);
 		bool canBeOnline() {return canBeOnline_;};
@@ -108,6 +107,9 @@ namespace dgmpp {
 		State state_;
 		State preferredState_;
 		virtual void lazyLoad();
+
+		friend class Ship;
+		virtual void setState(State state);
 
 		
 	private:
