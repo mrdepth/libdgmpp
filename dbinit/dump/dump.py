@@ -4,6 +4,7 @@ from os.path import expanduser
 import glob
 import sys
 import os
+import ConfigParser
 
 from reverence import blue
 
@@ -53,7 +54,6 @@ def dump(table, header, lines):
 	f.append("BEGIN TRANSACTION;")
 	if (table == "dgmExpressions"):
 			f.append("DROP TABLE IF EXISTS dgmExpressions;\nCREATE TABLE \"dgmExpressions\" (\n\"expressionID\"  INTEGER NOT NULL,\n\"operandID\"  INTEGER NOT NULL,\n\"arg1\"  INTEGER,\n\"arg2\"  INTEGER,\n\"expressionValue\"  TEXT,\n\"description\"  TEXT,\n\"expressionName\"  TEXT,\n\"expressionTypeID\"  INTEGER,\n\"expressionGroupID\"  INTEGER,\n\"expressionAttributeID\"  INTEGER,\nPRIMARY KEY (\"expressionID\")\n);")
-	#	f.append("DROP TABLE IF EXISTS dgmExpressions;\nCREATE TABLE \"dgmExpressions\" (\n\"expressionID\"  INTEGER NOT NULL,\n\"operandID\"  INTEGER NOT NULL,\n\"operandKey\"  TEXT,\n\"arg1\"  INTEGER,\n\"arg2\"  INTEGER,\n\"expressionValue\"  TEXT,\n\"description\"  TEXT,\n\"expressionName\"  TEXT,\n\"expressionTypeID\"  INTEGER,\n\"expressionGroupID\"  INTEGER,\n\"expressionAttributeID\"  INTEGER,\n\"expressionCategoryID\"  INTEGER,\nPRIMARY KEY (\"expressionID\")\n);")
 	elif (table == "dgmOperands"):
 		f.append("DROP TABLE IF EXISTS dgmOperands;\nCREATE TABLE \"dgmOperands\" (\n\"operandID\"  INTEGER NOT NULL,\n\"operandKey\"  TEXT,\n\"description\"  TEXT,\n\"format\"  TEXT,\n\"arg1categoryID\"  INTEGER,\n\"arg2categoryID\"  INTEGER,\n\"resultCategoryID\"  INTEGER,\n\"pythonFormat\"  TEXT,\nPRIMARY KEY (\"operandID\")\n);")
 	elif (table == "invTypes"):
@@ -67,7 +67,7 @@ def dump(table, header, lines):
 	elif (table == "dgmTypeEffects"):
 		f.append("DROP TABLE IF EXISTS \"dgmTypeEffects\";\nCREATE TABLE \"dgmTypeEffects\" (\n\"typeID\"  INTEGER NOT NULL,\n\"effectID\"  INTEGER NOT NULL,\n\"isDefault\"  INTEGER,\nPRIMARY KEY (\"typeID\", \"effectID\")\n);")
 	elif (table == "invCategories"):
-		f.append("DROP TABLE IF EXISTS \"invCategories\";\nCREATE TABLE \"invCategories\" (\n\"categoryID\"  INTEGER NOT NULL,\n\"categoryName\"  TEXT(100),\n\"published\"  INTEGER,\n\"iconID\" smallint(6) default NULL,\nPRIMARY KEY (\"categoryID\")\n);")
+		f.append("DROP TABLE IF EXISTS \"invCategories\";\nCREATE TABLE \"invCategories\" (\n\"categoryID\"  INTEGER NOT NULL,\n\"categoryName\"  TEXT(100),\n\"description\"  TEXT(3000),\n\"published\"  INTEGER,\n\"iconID\" smallint(6) default NULL,\n\"categoryNameID\" smallint(6) default NULL,\n\"dataID\" smallint(6) default NULL,\nPRIMARY KEY (\"categoryID\")\n);")
 	elif (table == "invGroups"):
 		f.append("DROP TABLE IF EXISTS \"invGroups\";\nCREATE TABLE \"invGroups\" (\n\"groupID\" INTEGER NOT NULL,\n\"categoryID\"  INTEGER,\n\"groupName\"  TEXT(100),\n\"description\"  TEXT(3000),\n\"useBasePrice\"  INTEGER,\n\"allowManufacture\"  INTEGER,\n\"allowRecycler\"  INTEGER,\n\"anchored\"  INTEGER,\n\"anchorable\"  INTEGER,\n\"fittableNonSingleton\"  INTEGER,\n\"published\"  INTEGER,\n\"iconID\"   smallint(6) default NULL,\n\"groupNameID\"   smallint(6) default NULL,\n\"dataID\"   smallint(6) default NULL,\nPRIMARY KEY (\"groupID\")\n);")
 	elif (table == "invControlTowerResources"):
@@ -96,6 +96,17 @@ def dump(table, header, lines):
 def map(header, objects):
 	return [objects.Get(key) for key in objects.keys()]
 
+config = ConfigParser.RawConfigParser(allow_no_value=True)
+config.read(os.path.join(EVEPATH, "start.ini"))
+version = config.get("main", "version")
+build = config.get("main", "build")
+
+f = open( os.path.join(OUTPATH, "version.sql"), "w")
+print >>f, "DROP TABLE IF EXISTS version;\nCREATE TABLE \"version\" (\n\"build\"  INTEGER NOT NULL,\n\"version\"  TEXT,\nPRIMARY KEY (\"build\"));"
+print >>f, "INSERT INTO version (build, version) VALUES (%s, \"%s\");" % (build, version)
+f.close()
+
+
 cache = eve.getcachemgr()
 res = cache.LoadCachedMethodCall(("dogma", "GetOperandsForChar"));
 dgmOperands = cache.LoadCachedMethodCall(("dogma", "GetOperandsForChar"))["lret"].values()
@@ -103,9 +114,8 @@ dgmOperandsHeader = dgmOperands[0].__header__.Keys()
 
 #dump (cfg.dgmexpressions, "dgmExpressions")
 
-#invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "raceID", "published", "marketGroupID")
-invTypesHeader = ("typeID", "groupID", "typeName", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID")
-invGroupsHeader = ("groupID", "groupName", "categoryID", "published")
+invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID", "iconID")
+invGroupsHeader = ("groupID", "groupName", "categoryID", "published", "iconID")
 invCategoriesHeader = ("categoryID", "categoryName", "published", "iconID")
 invTypeAttributesHeader = ("typeID", "attributeID", "value")
 invTypeEffectsHeader = ("typeID", "effectID", "isDefault")
