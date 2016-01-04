@@ -14,7 +14,7 @@
 
 using namespace dgmpp;
 
-Module::Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true)
+Module::Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true), factorReload_(false)
 {
 }
 
@@ -374,10 +374,7 @@ float Module::getCycleTime()
 	float reactivation = hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue() : 0;
 	float speed = getRawCycleTime() + reactivation;
 	
-	bool factorReload = forceReload_;
-#ifdef FACTOR_RELOAD
-	factorReload = true;
-#endif
+	bool factorReload = forceReload_ || factorReload_;
 	float reload = charge_ ? getReloadTime() : 0;
 	if (factorReload && reactivation < reload)
 	{
@@ -398,6 +395,14 @@ float Module::getRawCycleTime()
 		return getAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID)->getValue();
 	else
 		return 0;
+}
+
+bool Module::factorReload() {
+	return factorReload_;
+}
+
+void Module::setFactorReload(bool factorReload) {
+	factorReload_ = factorReload;
 }
 
 int Module::getCharges()

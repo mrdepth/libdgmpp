@@ -337,7 +337,8 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 		CAN_FIT_SHIP_TYPE2_ATTRIBUTE_ID,
 		CAN_FIT_SHIP_TYPE3_ATTRIBUTE_ID,
 		CAN_FIT_SHIP_TYPE4_ATTRIBUTE_ID,
-		CAN_FIT_SHIP_TYPE5_ATTRIBUTE_ID};
+		CAN_FIT_SHIP_TYPE5_ATTRIBUTE_ID,
+		CAN_FIT_SHIP_TYPE6_ATTRIBUTE_ID};
 
 	for (int i = 0; i < 6; i++) {
 		if (module->hasAttribute(canFitToShipTypeAttribute[i]))

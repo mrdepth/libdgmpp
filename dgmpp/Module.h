@@ -80,6 +80,8 @@ namespace dgmpp {
 		
 		float getCycleTime();
 		float getRawCycleTime();
+		bool factorReload();
+		void setFactorReload(bool factorReload);
 		
 		int getCharges();
 		int getShots();
@@ -117,6 +119,7 @@ namespace dgmpp {
 		bool canBeActive_;
 		bool canBeOverloaded_;
 		bool forceReload_;
+		bool factorReload_;
 		bool enabled_;
 		Slot slot_;
 		Hardpoint hardpoint_;

@@ -35,6 +35,7 @@ namespace dgmpp {
 	extern const TypeID CAN_FIT_SHIP_TYPE3_ATTRIBUTE_ID;
 	extern const TypeID CAN_FIT_SHIP_TYPE4_ATTRIBUTE_ID;
 	extern const TypeID CAN_FIT_SHIP_TYPE5_ATTRIBUTE_ID;
+	extern const TypeID CAN_FIT_SHIP_TYPE6_ATTRIBUTE_ID;
 
 	extern const TypeID CAN_FIT_SHIP_GROUP1_ATTRIBUTE_ID;
 	extern const TypeID CAN_FIT_SHIP_GROUP2_ATTRIBUTE_ID;
