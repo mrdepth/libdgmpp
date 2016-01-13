@@ -75,6 +75,30 @@ CREATE TABLE dgmpp.dgmEffects (
 PRIMARY KEY ("effectID")
 );
 
+DROP TABLE IF EXISTS dgmpp.planetSchematics;
+CREATE TABLE dgmpp.planetSchematics (
+"schematicID" integer NOT NULL,
+"schematicName" varchar(255) DEFAULT NULL,
+"cycleTime" integer DEFAULT NULL,
+PRIMARY KEY ("schematicID")
+);
+
+DROP TABLE IF EXISTS dgmpp.planetSchematicsPinMap;
+CREATE TABLE dgmpp.planetSchematicsPinMap (
+"schematicID" integer NOT NULL,
+"pinTypeID" integer NOT NULL,
+PRIMARY KEY ("schematicID","pinTypeID")
+);
+
+DROP TABLE IF EXISTS dgmpp.planetSchematicsTypeMap;
+CREATE TABLE dgmpp.planetSchematicsTypeMap (
+"schematicID" integer NOT NULL,
+"typeID" integer NOT NULL,
+"quantity" integer DEFAULT NULL,
+"isInput" integer DEFAULT NULL,
+PRIMARY KEY ("schematicID","typeID")
+);
+
 INSERT INTO dgmpp.invGroups SELECT groupID, categoryID, groupName  FROM invGroups;
 INSERT INTO dgmpp.invTypes SELECT typeID, groupID, typeName, radius, mass, volume, capacity, portionSize, raceID, published FROM invTypes;
 INSERT INTO dgmpp.dgmAttributeTypes SELECT attributeID, attributeName, displayName, maxAttributeID, defaultValue, stackable, highIsGood, categoryID FROM dgmAttributeTypes;
@@ -82,6 +106,9 @@ INSERT INTO dgmpp.dgmTypeAttributes SELECT * FROM dgmTypeAttributes;
 INSERT INTO dgmpp.dgmTypeEffects SELECT * FROM dgmTypeEffects;
 INSERT INTO dgmpp.invCategories SELECT categoryID, categoryName, iconID, published FROM invCategories;
 INSERT INTO dgmpp.dgmEffects SELECT effectID, effectName, effectCategory, isOffensive, isAssistance  FROM dgmEffects;
+INSERT INTO dgmpp.planetSchematics SELECT * FROM planetSchematics;
+INSERT INTO dgmpp.planetSchematicsPinMap SELECT * FROM planetSchematicsPinMap;
+INSERT INTO dgmpp.planetSchematicsTypeMap SELECT * FROM planetSchematicsTypeMap;
 
 CREATE INDEX dgmpp.invGroups_categoryID ON "invGroups" ("categoryID" ASC);
 CREATE INDEX dgmpp.invTypes_groupID_published ON "invTypes" ("groupID" ASC, "published" ASC);
