@@ -114,7 +114,7 @@ dgmOperandsHeader = dgmOperands[0].__header__.Keys()
 
 #dump (cfg.dgmexpressions, "dgmExpressions")
 
-invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID", "iconID")
+invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID", "iconID", "basePrice")
 invGroupsHeader = ("groupID", "groupName", "categoryID", "published", "iconID")
 invCategoriesHeader = ("categoryID", "categoryName", "published", "iconID")
 invTypeAttributesHeader = ("typeID", "attributeID", "value")
