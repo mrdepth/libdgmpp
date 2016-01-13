@@ -48,3 +48,4 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <dgmpp/Commodity.h>
 #include <dgmpp/Schematic.h>
 #include <dgmpp/Route.h>
+#include <dgmpp/Planet.h>

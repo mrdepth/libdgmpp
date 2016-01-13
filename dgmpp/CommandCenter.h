@@ -5,14 +5,10 @@
 namespace dgmpp {
 	class CommandCenter: public Facility {
 	public:
-		CommandCenter(std::shared_ptr<Engine> const& engine, TypeID typeID);
-		std::shared_ptr<Facility> addFacility(TypeID typeID);
-		void removeFacility(std::shared_ptr<Facility> const& facility);
-		std::shared_ptr<Route> addRoute(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, TypeID contentTypeID);
-		void removeRoute(std::shared_ptr<Route> const& route);
-		
-	private:
-		FacilitiesList facilities_;
-		RoutesList routes_;
+		enum {
+			GROUP_ID = 1027
+		};
+		CommandCenter(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner = std::shared_ptr<Planet>(nullptr), int64_t identifier = 0);
+		virtual TypeID getGroupID() {return GROUP_ID;};
 	};
 }

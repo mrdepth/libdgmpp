@@ -65,7 +65,46 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
+		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		
+		auto planet = engine->setPlanet(2016);
+		planet->addFacility(2524, 1019338918550);
+		planet->addFacility(2541, 1019339001861);
+		planet->addFacility(2474, 1019339001862);
+		planet->addFacility(2544, 1019339001863);
+		planet->addFacility(2474, 1019339001865);
+		planet->addFacility(2473, 1019339001870);
+		planet->addFacility(2473, 1019339001873);
+		planet->addFacility(2473, 1019339001877);
+		planet->addFacility(2848, 1019339001881);
+		planet->addFacility(2473, 1019339001884);
+		planet->addFacility(2473, 1019339001885);
+		planet->addFacility(2473, 1019339001888);
+		planet->addFacility(2474, 1019586416755);
+		planet->addFacility(2848, 1019741064685);
+		
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001877), 2270);
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001873), 2270);
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001870), 2270);
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001865), 2399);
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001862), 2399);
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), 2399);
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), 2399);
+		
+		planet->addRoute(planet->findFacility(1019339001862), planet->findFacility(1019339001863), 3689);
+		planet->addRoute(planet->findFacility(1019339001865), planet->findFacility(1019339001863), 2329);
+		planet->addRoute(planet->findFacility(1019339001870), planet->findFacility(1019339001861), 2399);
+		planet->addRoute(planet->findFacility(1019339001873), planet->findFacility(1019339001861), 2399);
+		planet->addRoute(planet->findFacility(1019339001877), planet->findFacility(1019339001861), 2399);
+		planet->addRoute(planet->findFacility(1019339001881), planet->findFacility(1019339001861), 2270);
+		planet->addRoute(planet->findFacility(1019339001884), planet->findFacility(1019339001861), 2396);
+		planet->addRoute(planet->findFacility(1019339001885), planet->findFacility(1019339001861), 2396);
+		planet->addRoute(planet->findFacility(1019339001888), planet->findFacility(1019339001861), 2396);
+		planet->addRoute(planet->findFacility(1019586416755), planet->findFacility(1019339001863), 2329);
+		planet->addRoute(planet->findFacility(1019741064685), planet->findFacility(1019339001861), 2288);
+		
+		return 0;
 		NSString* garmurDNA = @"33816:2404;3:14248;1:1952;1:19349;1:28746;1:31936;1:2605;1:2048;1:31183;1:31153;1:31111;1:29009;1:27371;3::";
 		NSString* ishkurDNA = @"12042:3178;3:5973;1:448;1:4025;1:1183;1:1447;1:10190;1:2048;1:31538;1:31526;1:2456;5:12612;3::";
 		NSString* vigilantDNA = @"17722:3146;5:5439;1:4025;1:6160;1:5975;1:10190;3:4405;2:2048;1:31546;1:31055;1:2185;5:12789;5:29011;1::";
@@ -73,8 +112,6 @@ int main(int argc, const char * argv[]) {
 		NSString* magusDNA = @"37483:4284;1:4282;1:4280;1:11014;2::";
 		//NSString* morosDNA = @"19724:4292;1::";
 		NSString* dramielDNA = @"17932:34595;1:12084;1::";
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgmpp.sqlite"));
 		CFTimeInterval t0 = CACurrentMediaTime();
 		auto garmur = addShip(engine, garmurDNA);
 		auto ishkur = addShip(engine, ishkurDNA);

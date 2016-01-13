@@ -71,6 +71,10 @@
 		12564BFC1B84B07F000F68D8 /* Gang.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B9AB65147A5DDF006F1F8E /* Gang.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BFD1B84B07F000F68D8 /* Item.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D561473CA5E006B18D7 /* Item.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BFE1B84B07F000F68D8 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D6C1473CA5E006B18D7 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1293C4291C46C10A00B33378 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1293C4271C46C10A00B33378 /* Planet.cpp */; };
+		1293C42A1C46C10A00B33378 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1293C4271C46C10A00B33378 /* Planet.cpp */; };
+		1293C42B1C46C10A00B33378 /* Planet.h in Headers */ = {isa = PBXBuildFile; fileRef = 1293C4281C46C10A00B33378 /* Planet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1293C42C1C46C10A00B33378 /* Planet.h in Headers */ = {isa = PBXBuildFile; fileRef = 1293C4281C46C10A00B33378 /* Planet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		129F2BD91C1FFE62007FC666 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129F2BD81C1FFE62007FC666 /* main.cpp */; };
 		129F2BDD1C1FFE8B007FC666 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
 		12A156781C464E6400C3CF0B /* CommandCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A156761C464E6400C3CF0B /* CommandCenter.cpp */; };
@@ -260,8 +264,9 @@
 		1242EC1E1A4DFF5B00FD488A /* dbpatch */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dbpatch; sourceTree = BUILT_PRODUCTS_DIR; };
 		1242EC201A4DFF5C00FD488A /* dbpatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = dbpatch.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		12564B8E1B84AF15000F68D8 /* dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		12564B921B84AF15000F68D8 /* dgmpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dgmpp.h; sourceTree = "<group>"; };
 		12564BA71B84AFAD000F68D8 /* dgmpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dgmpp.h; sourceTree = SOURCE_ROOT; };
+		1293C4271C46C10A00B33378 /* Planet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Planet.cpp; sourceTree = "<group>"; };
+		1293C4281C46C10A00B33378 /* Planet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Planet.h; sourceTree = "<group>"; };
 		129F2BD61C1FFE62007FC666 /* modifiersdump */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = modifiersdump; sourceTree = BUILT_PRODUCTS_DIR; };
 		129F2BD81C1FFE62007FC666 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		12A156761C464E6400C3CF0B /* CommandCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandCenter.cpp; sourceTree = "<group>"; };
@@ -427,22 +432,6 @@
 			path = dbpatch;
 			sourceTree = "<group>";
 		};
-		12564B8F1B84AF15000F68D8 /* dgmpp */ = {
-			isa = PBXGroup;
-			children = (
-				12564B921B84AF15000F68D8 /* dgmpp.h */,
-				12564B901B84AF15000F68D8 /* Supporting Files */,
-			);
-			path = dgmpp;
-			sourceTree = "<group>";
-		};
-		12564B901B84AF15000F68D8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		129F2BD71C1FFE62007FC666 /* modifiersdump */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +443,10 @@
 		12A156751C464E2600C3CF0B /* PlanetaryInteraction */ = {
 			isa = PBXGroup;
 			children = (
+				1293C4271C46C10A00B33378 /* Planet.cpp */,
+				1293C4281C46C10A00B33378 /* Planet.h */,
+				12A156941C4650A700C3CF0B /* Facility.cpp */,
+				12A156951C4650A700C3CF0B /* Facility.h */,
 				12A156761C464E6400C3CF0B /* CommandCenter.cpp */,
 				12A156771C464E6400C3CF0B /* CommandCenter.h */,
 				12A1567C1C464EE800C3CF0B /* ExtractorControlUnit.cpp */,
@@ -464,8 +457,6 @@
 				12A156891C464FC400C3CF0B /* StorageFacility.h */,
 				12A1568E1C464FD300C3CF0B /* Spaceport.cpp */,
 				12A1568F1C464FD300C3CF0B /* Spaceport.h */,
-				12A156941C4650A700C3CF0B /* Facility.cpp */,
-				12A156951C4650A700C3CF0B /* Facility.h */,
 				12A156A01C46518000C3CF0B /* Commodity.cpp */,
 				12A156A11C46518000C3CF0B /* Commodity.h */,
 				12A156A61C4651C000C3CF0B /* Schematic.cpp */,
@@ -586,7 +577,6 @@
 			children = (
 				37B33D401473CA0D006B18D7 /* dgmpp */,
 				1242EC1F1A4DFF5C00FD488A /* dbpatch */,
-				12564B8F1B84AF15000F68D8 /* dgmpp */,
 				12EFCC671C1AB060003ECA7F /* dgmppDemo */,
 				129F2BD71C1FFE62007FC666 /* modifiersdump */,
 				12A3C6B0177C283E0067E00C /* Frameworks */,
@@ -700,6 +690,7 @@
 				12564BD41B84B07E000F68D8 /* Effect.h in Headers */,
 				12B0A30C1C0EEC8400194715 /* dgmpp.h in Headers */,
 				12564BE11B84B07E000F68D8 /* Modifier.h in Headers */,
+				1293C42B1C46C10A00B33378 /* Planet.h in Headers */,
 				12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */,
 				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
 				12564BE41B84B07F000F68D8 /* Booster.h in Headers */,
@@ -754,6 +745,7 @@
 				12EFCC9F1C1AB334003ECA7F /* Effect.h in Headers */,
 				12EFCCA01C1AB334003ECA7F /* dgmpp.h in Headers */,
 				12EFCCAD1C1AB334003ECA7F /* Modifier.h in Headers */,
+				1293C42C1C46C10A00B33378 /* Planet.h in Headers */,
 				12EFCCAE1C1AB334003ECA7F /* LocationGroupModifier.h in Headers */,
 				12EFCCAF1C1AB334003ECA7F /* LocationRequiredSkillModifier.h in Headers */,
 				12EFCCB01C1AB334003ECA7F /* Booster.h in Headers */,
@@ -1005,6 +997,7 @@
 				12AEEFDA1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
 				12A156A21C46518000C3CF0B /* Commodity.cpp in Sources */,
 				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
+				1293C4291C46C10A00B33378 /* Planet.cpp in Sources */,
 				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
 				12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */,
 				12A156961C4650A700C3CF0B /* Facility.cpp in Sources */,
@@ -1073,6 +1066,7 @@
 				12AEEFDB1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
 				12A156A31C46518000C3CF0B /* Commodity.cpp in Sources */,
 				12EFCC891C1AB334003ECA7F /* FetchResult.cpp in Sources */,
+				1293C42A1C46C10A00B33378 /* Planet.cpp in Sources */,
 				12EFCC8A1C1AB334003ECA7F /* DamagePattern.cpp in Sources */,
 				12215B421C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
 				12A156971C4650A700C3CF0B /* Facility.cpp in Sources */,

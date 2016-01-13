@@ -35,6 +35,7 @@ namespace dgmpp {
 	class Structure;
 	class Environment;
 	
+	class Planet;
 	class Facility;
 	class CommandCenter;
 	class Route;
@@ -63,7 +64,7 @@ namespace dgmpp {
 	typedef std::map<GroupID, ItemModifiers> LocationGroupModifiers;
 	
 	typedef std::list<std::shared_ptr<Facility>> FacilitiesList;
-	typedef std::list<std::shared_ptr<Route>> RoutesList;
+	typedef std::list<std::shared_ptr<const Route>> RoutesList;
 
 	struct Tank
 	{

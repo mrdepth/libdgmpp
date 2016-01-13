@@ -2,6 +2,7 @@
 #include "Gang.h"
 #include "Area.h"
 #include "ControlTower.h"
+#include "Planet.h"
 
 using namespace dgmpp;
 
@@ -90,6 +91,16 @@ std::shared_ptr<ControlTower> Engine::getControlTower()
 {
 	return controlTower_;
 }
+
+std::shared_ptr<Planet> Engine::setPlanet(TypeID typeID) {
+	planet_ = std::make_shared<Planet>(shared_from_this(), typeID);
+	return planet_;
+}
+
+std::shared_ptr<Planet> Engine::getPlanet() {
+	return planet_;
+}
+
 
 void Engine::reset()
 {
