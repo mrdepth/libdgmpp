@@ -34,6 +34,11 @@ namespace dgmpp {
 	class ControlTower;
 	class Structure;
 	class Environment;
+	
+	class Facility;
+	class CommandCenter;
+	class Route;
+	class Commodity;
 
 	typedef int TypeID;
 	
@@ -57,6 +62,9 @@ namespace dgmpp {
 	typedef std::map<SkillID, ItemModifiers> LocationRequiredSkillModifiers;
 	typedef std::map<GroupID, ItemModifiers> LocationGroupModifiers;
 	
+	typedef std::list<std::shared_ptr<Facility>> FacilitiesList;
+	typedef std::list<std::shared_ptr<Route>> RoutesList;
+
 	struct Tank
 	{
 		union {
