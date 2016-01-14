@@ -14,6 +14,7 @@
 #include "IndustryFacility.h"
 #include "StorageFacility.h"
 #include "Spaceport.h"
+#include <cmath>
 
 using namespace dgmpp;
 
@@ -107,3 +108,28 @@ void Planet::setLastUpdate(double lastUpdate) {
 double Planet::getLastUpdate() {
 	return lastUpdate_;
 }
+
+double Planet::getNextCycleTime() {
+	double nextCycleTime = std::numeric_limits<double>::infinity();
+	for (auto facility: facilities_) {
+		double time = facility->getCycleEndTime();
+		if (time > lastUpdate_)
+			nextCycleTime = std::min(time, nextCycleTime);
+	}
+	return nextCycleTime > lastUpdate_ && !std::isinf(nextCycleTime) ? nextCycleTime : 0;
+}
+
+void Planet::runCycle(double cycleTime) {
+	for (auto facility: facilities_) {
+		double cycleEndTime = facility->getCycleEndTime();
+		if (cycleEndTime > 0 && std::fabs(cycleEndTime - cycleEndTime) < 0.5) {
+			facility->finishCycle();
+		}
+	}
+	for (auto facility: facilities_) {
+		double lastLaunchTime = facility->getLastLaunchTime();
+		if (lastLaunchTime == 0)
+			facility->startCycle(cycleTime);
+	}
+}
+

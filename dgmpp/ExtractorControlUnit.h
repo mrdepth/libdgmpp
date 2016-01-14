@@ -8,20 +8,27 @@ namespace dgmpp {
 			GROUP_ID = 1063
 		};
 		ExtractorControlUnit(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner = std::shared_ptr<Planet>(nullptr), int64_t identifier = 0);
-		virtual TypeID getGroupID() {return GROUP_ID;};
+		virtual TypeID getGroupID() const {return GROUP_ID;};
 		
 		void setLastLaunchTime(double lastLaunchTime) {lastLaunchTime_ = lastLaunchTime;};
-		double getLastLaunchTime() const {return lastLaunchTime_;};
+
+		virtual double getLastLaunchTime() const {return lastLaunchTime_;};
+		virtual double getInstallTime() const {return installTime_;};
+		virtual double getExpiryTime() const {return expiryTime_;};
+		virtual double getCycleTime() const {return cycleTime_;};
+
 		void setInstallTime(double installTime) {installTime_ = installTime;};
-		double getInstallTime() const {return installTime_;};
 		void setExpiryTime(double expiryTime) {expiryTime_ = expiryTime;};
-		double getExpiryTime() const {return expiryTime_;};
-		void setCycleTime(double cycleTime) {cycleTime_ = cycleTime;};
-		double getCycleTime() const {return cycleTime_;};
+		void setCycleTime(double cycleTime);
 		void setQuantityPerCycle(double quantityPerCycle);
 		double getQuantityPerCycle() const {return quantityPerCycle_;};
 		
-		double getYieldAtTime(double time) const;
+		int32_t getYieldAtTime(double time) const;
+		
+		virtual double getCycleEndTime() const;
+		virtual void finishCycle();
+		virtual void startCycle(double cycleTime);
+		virtual int priority() const {return 2;};
 	private:
 		double lastLaunchTime_;
 		double installTime_;
@@ -30,6 +37,8 @@ namespace dgmpp {
 		double quantityPerCycle_;
 		float decayFactor_;
 		float noiseFactor_;
+		
 		double phaseShift_;
+		double w_;
 	};
 }

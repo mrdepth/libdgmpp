@@ -125,13 +125,21 @@ int main(int argc, const char * argv[]) {
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setQuantityPerCycle(6425);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setLastLaunchTime(1452068276);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setInstallTime(1452068276);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setExpiryTime(1452500276);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setExpiryTime(1452500276);
 
-
-		auto extractor = std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881));
-		extractor->setQuantityPerCycle(5222);
-		for (double t = extractor->getInstallTime(); t < extractor->getExpiryTime(); t += extractor->getCycleTime()) {
-			std::cout << extractor->getYieldAtTime(t) << std::endl;
+		while (1) {
+			double nextCycleTime = planet->getNextCycleTime();
+			if (nextCycleTime > 0) {
+				planet->runCycle(nextCycleTime);
+			}
+			else
+				break;
+		}
+		
+		for (auto facility: planet->getFacilities()) {
+			for (auto commodity: facility->getCommodities()) {
+				std::cout << facility->getTypeName() << ": " << commodity->getTypeName() << " = " << commodity->getQuantity() << std::endl;
+			}
 		}
 
 		return 0;

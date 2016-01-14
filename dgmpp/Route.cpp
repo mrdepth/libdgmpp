@@ -8,10 +8,13 @@
 
 #include "Route.h"
 #include "Facility.h"
+#include "Planet.h"
+#include "Commodity.h"
 
 using namespace dgmpp;
 
-Route::Route(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, TypeID contentTypeID, int64_t identifier) : source_(source.get()), destination_(destination.get()), contentTypeID_(contentTypeID), identifier_(identifier) {
+Route::Route(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, TypeID contentTypeID, int64_t identifier) : source_(source.get()), destination_(destination.get()), identifier_(identifier) {
+	commodity_ = std::make_shared<Commodity>(source->getOwner()->getEngine(), contentTypeID);
 };
 
 std::shared_ptr<Facility> Route::getSource() const {

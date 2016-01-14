@@ -12,7 +12,7 @@
 
 using namespace dgmpp;
 
-Commodity::Commodity(std::shared_ptr<Engine> const& engine, TypeID typeID) : typeID_(typeID), quantity_(0), volume_(0) {
+Commodity::Commodity(std::shared_ptr<Engine> const& engine, TypeID typeID, int32_t quantity) : typeID_(typeID), quantity_(quantity), volume_(0) {
 	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT volume, typeName FROM invTypes WHERE typeID = ? LIMIT 1");
 	stmt->bindInt(1, typeID);
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
@@ -39,11 +39,9 @@ void Commodity::add(int32_t quantity) {
 	quantity_ += quantity;
 }
 
-std::shared_ptr<Commodity> Commodity::extract(int32_t quantity) {
+void Commodity::extract(int32_t quantity) {
 	if (quantity > quantity_)
 		throw  NotEnoughCommodities(std::to_string(quantity_ - quantity));
-	else {
+	else
 		quantity_ -= quantity;
-		return std::make_shared<Commodity>(*this, quantity);
-	}
 }

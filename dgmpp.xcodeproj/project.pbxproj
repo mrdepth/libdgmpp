@@ -113,10 +113,6 @@
 		12A156AF1C46548D00C3CF0B /* Route.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A156AC1C46548D00C3CF0B /* Route.cpp */; };
 		12A156B01C46548D00C3CF0B /* Route.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156AD1C46548D00C3CF0B /* Route.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12A156B11C46548D00C3CF0B /* Route.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156AD1C46548D00C3CF0B /* Route.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12A156B41C46789B00C3CF0B /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A156B21C46789B00C3CF0B /* Storage.cpp */; };
-		12A156B51C46789B00C3CF0B /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A156B21C46789B00C3CF0B /* Storage.cpp */; };
-		12A156B61C46789B00C3CF0B /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156B31C46789B00C3CF0B /* Storage.h */; };
-		12A156B71C46789B00C3CF0B /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156B31C46789B00C3CF0B /* Storage.h */; };
 		12AEEFCC1C25BAC200FB7B1D /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */; };
 		12AEEFCD1C25BAC200FB7B1D /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */; };
 		12AEEFCE1C25BAC200FB7B1D /* Environment.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFCB1C25BAC200FB7B1D /* Environment.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -287,8 +283,6 @@
 		12A156A71C4651C000C3CF0B /* Schematic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Schematic.h; sourceTree = "<group>"; };
 		12A156AC1C46548D00C3CF0B /* Route.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Route.cpp; sourceTree = "<group>"; };
 		12A156AD1C46548D00C3CF0B /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
-		12A156B21C46789B00C3CF0B /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
-		12A156B31C46789B00C3CF0B /* Storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		12A3C6B1177C283E0067E00C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		12A3C6BD177C28A90067E00C /* Blob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Blob.cpp; sourceTree = "<group>"; };
 		12A3C6BE177C28A90067E00C /* Blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blob.h; sourceTree = "<group>"; };
@@ -463,8 +457,6 @@
 				12A156A71C4651C000C3CF0B /* Schematic.h */,
 				12A156AC1C46548D00C3CF0B /* Route.cpp */,
 				12A156AD1C46548D00C3CF0B /* Route.h */,
-				12A156B21C46789B00C3CF0B /* Storage.cpp */,
-				12A156B31C46789B00C3CF0B /* Storage.h */,
 			);
 			name = PlanetaryInteraction;
 			sourceTree = "<group>";
@@ -727,7 +719,6 @@
 				12A156AA1C4651C000C3CF0B /* Schematic.h in Headers */,
 				12A156861C464FA400C3CF0B /* IndustryFacility.h in Headers */,
 				12564BFC1B84B07F000F68D8 /* Gang.h in Headers */,
-				12A156B61C46789B00C3CF0B /* Storage.h in Headers */,
 				12A156801C464EE800C3CF0B /* ExtractorControlUnit.h in Headers */,
 				12564BFD1B84B07F000F68D8 /* Item.h in Headers */,
 				12A156B01C46548D00C3CF0B /* Route.h in Headers */,
@@ -782,7 +773,6 @@
 				12A156AB1C4651C000C3CF0B /* Schematic.h in Headers */,
 				12A156871C464FA400C3CF0B /* IndustryFacility.h in Headers */,
 				12EFCCC81C1AB334003ECA7F /* Gang.h in Headers */,
-				12A156B71C46789B00C3CF0B /* Storage.h in Headers */,
 				12A156811C464EE800C3CF0B /* ExtractorControlUnit.h in Headers */,
 				12EFCCC91C1AB334003ECA7F /* Item.h in Headers */,
 				12A156B11C46548D00C3CF0B /* Route.h in Headers */,
@@ -1008,7 +998,6 @@
 				12A156A81C4651C000C3CF0B /* Schematic.cpp in Sources */,
 				12B0A3001C0DC5CC00194715 /* CombatSimulator.cpp in Sources */,
 				12564BBA1B84B027000F68D8 /* Charge.cpp in Sources */,
-				12A156B41C46789B00C3CF0B /* Storage.cpp in Sources */,
 				12564BA91B84B027000F68D8 /* Effect.cpp in Sources */,
 				12564BCD1B84B027000F68D8 /* Gang.cpp in Sources */,
 				12564BCC1B84B027000F68D8 /* Engine.cpp in Sources */,
@@ -1077,7 +1066,6 @@
 				12A156A91C4651C000C3CF0B /* Schematic.cpp in Sources */,
 				12EFCC8E1C1AB334003ECA7F /* CombatSimulator.cpp in Sources */,
 				12EFCC901C1AB334003ECA7F /* Charge.cpp in Sources */,
-				12A156B51C46789B00C3CF0B /* Storage.cpp in Sources */,
 				12EFCC911C1AB334003ECA7F /* Effect.cpp in Sources */,
 				12EFCC921C1AB334003ECA7F /* Gang.cpp in Sources */,
 				12EFCC931C1AB334003ECA7F /* Engine.cpp in Sources */,

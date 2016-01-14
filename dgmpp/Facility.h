@@ -1,5 +1,6 @@
 #pragma once
 #include "types.h"
+#include "Commodity.h"
 
 namespace dgmpp {
 	class Facility : public std::enable_shared_from_this<Facility> {
@@ -15,9 +16,33 @@ namespace dgmpp {
 		double getCapacity() const {return capacity_;};
 		int64_t getIdentifier() const {return identifier_;};
 		std::shared_ptr<Planet> getOwner() const {return owner_.lock();};
+
+		const std::list<const Route*>& getInputs() const {return inputs_;};
+		const std::list<const Route*>& getOutputs() const {return outputs_;};
+
+		virtual double getLastLaunchTime() const {return 0;};
+		virtual double getInstallTime() const {return 0;};
+		virtual double getExpiryTime() const {return 0;};
+		virtual double getCycleTime() const {return 0;};
+		
+		virtual double getCycleEndTime() const;
+		virtual void finishCycle() {};
+		virtual void startCycle(double cycleTime) {};
+		
+		virtual int priority() const {return 0;};
+		
+		virtual void addCommodity(const Commodity& commodity);
+		virtual void extractCommodity(const Commodity& commodity);
+		virtual void clear();
+		std::list<std::shared_ptr<const Commodity>> getCommodities() const;
+		const Commodity& getCommodity(const Commodity& commodity) const;
+		virtual int32_t getFreeStorage(const Commodity& commodity) const;
+		virtual double getFreeVolume() const;
+
 	protected:
 		std::list<const Route*> inputs_;
 		std::list<const Route*> outputs_;
+		mutable std::map<TypeID, std::shared_ptr<Commodity>> commodities_;
 	private:
 		std::weak_ptr<Planet> owner_;
 		TypeID typeID_;

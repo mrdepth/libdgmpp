@@ -32,11 +32,10 @@ Schematic::Schematic(std::shared_ptr<Engine> const& engine, TypeID schematicID) 
 		TypeID typeID = result->getInt(0);
 		double quantity = result->getDouble(1);
 		bool isInput = result->getInt(2);
-		auto commodity = std::make_shared<Commodity>(engine, typeID);
-		commodity->add(quantity);
+		Commodity commodity (engine, typeID, quantity);
 		if (isInput)
 			inputs_.push_back(commodity);
 		else
-			output_ = commodity;
+			output_ = std::make_shared<Commodity>(commodity);
 	}
 }
