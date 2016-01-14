@@ -2,7 +2,7 @@
 #include "types.h"
 
 namespace dgmpp {
-	class Facility {
+	class Facility : public std::enable_shared_from_this<Facility> {
 	public:
 		Facility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner = std::shared_ptr<Planet>(nullptr), int64_t identifier = 0);
 		void addInput(const Route* route);
@@ -14,6 +14,7 @@ namespace dgmpp {
 		virtual TypeID getGroupID() const {return 0;};
 		double getCapacity() const {return capacity_;};
 		int64_t getIdentifier() const {return identifier_;};
+		std::shared_ptr<Planet> getOwner() const {return owner_.lock();};
 	protected:
 		std::list<const Route*> inputs_;
 		std::list<const Route*> outputs_;

@@ -29,7 +29,10 @@ Commodity::Commodity(const Commodity& other, int32_t quantity) {
 	volume_ = other.volume_;
 	typeID_ = other.typeID_;
 	typeName_ = other.typeName_;
-	quantity_ = quantity;
+	if (quantity >= 0)
+		quantity_ = quantity;
+	else
+		quantity_ = other.getQuantity();
 }
 
 void Commodity::add(int32_t quantity) {

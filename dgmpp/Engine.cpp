@@ -3,10 +3,12 @@
 #include "Area.h"
 #include "ControlTower.h"
 #include "Planet.h"
+#include <cmath>
+#include "Attribute.h"
 
 using namespace dgmpp;
 
-Engine::Engine(std::shared_ptr<SqlConnector> const& sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr), generation_(), updatesCounter_(0)
+Engine::Engine(std::shared_ptr<SqlConnector> const& sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr), generation_(), updatesCounter_(0), decayFactor_(std::numeric_limits<float>::quiet_NaN()), noiseFactor_(std::numeric_limits<float>::quiet_NaN())
 {
 }
 
@@ -14,7 +16,7 @@ Engine::~Engine(void)
 {
 }
 
-std::shared_ptr<SqlConnector> Engine::getSqlConnector()
+std::shared_ptr<SqlConnector> Engine::getSqlConnector() const
 {
 	return sqlConnector_;
 }
@@ -125,6 +127,25 @@ void Engine::commitUpdates() {
 	}
 }
 
+float Engine::decayFactor() const {
+	if (std::isnan(decayFactor_)) {
+		auto stmt = getSqlConnector()->getReusableFetchRequest("SELECT defaultValue FROM dgmAttributeTypes WHERE attributeID = ? LIMIT 1");
+		stmt->bindInt(1, ECU_DECAY_FACTOR_ATTRIBUTE_ID);
+		auto result = getSqlConnector()->exec(stmt);
+		decayFactor_ = result->next()  ? result->getDouble(0) : 0;
+	}
+	return decayFactor_;
+}
+
+float Engine::noiseFactor() const {
+	if (std::isnan(noiseFactor_)) {
+		auto stmt = getSqlConnector()->getReusableFetchRequest("SELECT defaultValue FROM dgmAttributeTypes WHERE attributeID = ? LIMIT 1");
+		stmt->bindInt(1, ECU_NOISE_FACTOR_ATTRIBUTE_ID);
+		auto result = getSqlConnector()->exec(stmt);
+		noiseFactor_ = result->next()  ? result->getDouble(0) : 1;
+	}
+	return noiseFactor_;
+}
 
 //std::lock_guard<std::recursive_mutex> Engine::lock() {
 //	return std::lock_guard<std::recursive_mutex>(mutex_);

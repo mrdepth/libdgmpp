@@ -7,7 +7,7 @@ namespace dgmpp {
 		typedef std::runtime_error NotEnoughCommodities;
 
 		Commodity(std::shared_ptr<Engine> const& engine, TypeID typeID);
-		Commodity(const Commodity& other, int32_t quantity);
+		Commodity(const Commodity& other, int32_t quantity = -1);
 		void add(int32_t quantity);
 		std::shared_ptr<Commodity> extract(int32_t quantity);
 		

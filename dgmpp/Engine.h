@@ -28,7 +28,7 @@ namespace dgmpp {
 
 		Engine(std::shared_ptr<SqlConnector> const& sqlConnector);
 		virtual ~Engine(void);
-		std::shared_ptr<SqlConnector> getSqlConnector();
+		std::shared_ptr<SqlConnector> getSqlConnector() const;
 		std::shared_ptr<Area> setArea(TypeID typeID);
 		std::shared_ptr<ControlTower> setControlTower(TypeID typeID);
 		void clearArea();
@@ -59,6 +59,9 @@ namespace dgmpp {
 			return generation_;
 		}
 		
+		float decayFactor() const;
+		float noiseFactor() const;
+		
 	private:
 		std::shared_ptr<SqlConnector> sqlConnector_;
 		std::shared_ptr<Gang> gang_;
@@ -73,6 +76,8 @@ namespace dgmpp {
 		std::map<TypeID, std::shared_ptr<dgmpp::AttributePrototype> > reusableAttributePrototypes_;
 		uint32_t generation_;
 		int32_t updatesCounter_;
+		mutable float decayFactor_;
+		mutable float noiseFactor_;
 
 	};
 

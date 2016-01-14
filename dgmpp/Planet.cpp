@@ -99,3 +99,11 @@ std::shared_ptr<Facility> Planet::findFacility(int64_t identifier) {
 			return facility;
 	return nullptr;
 }
+
+void Planet::setLastUpdate(double lastUpdate) {
+	lastUpdate_ = lastUpdate;
+}
+
+double Planet::getLastUpdate() {
+	return lastUpdate_;
+}

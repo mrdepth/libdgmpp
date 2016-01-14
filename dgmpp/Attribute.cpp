@@ -211,6 +211,9 @@ const TypeID dgmpp::ENTITY_CRUISE_SPEED_ATTRIBUTE_ID = 508;
 const TypeID dgmpp::WARP_SCRAMBLE_STRENGTH_ATTRIBUTE_ID = 105;
 const TypeID dgmpp::WARP_SCRAMBLE_STRENGTH_HIDDEN_ATTRIBUTE_ID = 1318;
 
+const TypeID dgmpp::ECU_DECAY_FACTOR_ATTRIBUTE_ID = 1683;
+const TypeID dgmpp::ECU_NOISE_FACTOR_ATTRIBUTE_ID = 1687;
+
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)
 {

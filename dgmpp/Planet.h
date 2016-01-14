@@ -11,10 +11,13 @@ namespace dgmpp {
 		void removeRoute(std::shared_ptr<Route> const& route);
 		std::shared_ptr<Engine> getEngine() const;
 		std::shared_ptr<Facility> findFacility(int64_t identifier);
+		void setLastUpdate(double lastUpdate);
+		double getLastUpdate();
 	private:
 		FacilitiesList facilities_;
 		RoutesList routes_;
 		std::weak_ptr<Engine> engine_;
+		double lastUpdate_;
 
 	};
 }

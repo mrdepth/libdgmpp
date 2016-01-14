@@ -4,9 +4,12 @@
 namespace dgmpp {
 	class Schematic {
 	public:
-		Schematic(std::shared_ptr<Engine> const& engine, TypeID typeID);
+		Schematic(std::shared_ptr<Engine> const& engine, TypeID schematicID);
 	private:
+		TypeID schematicID_;
+		double cycleTime_;
+		std::string schematicName_;
 		std::list<std::shared_ptr<const Commodity>> inputs_;
-		std::shared_ptr<Commodity> output_;
+		std::shared_ptr<const Commodity> output_;
 	};
 }

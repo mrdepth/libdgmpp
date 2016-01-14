@@ -204,6 +204,9 @@ namespace dgmpp {
 	extern const TypeID WARP_SCRAMBLE_STRENGTH_ATTRIBUTE_ID;
 	extern const TypeID WARP_SCRAMBLE_STRENGTH_HIDDEN_ATTRIBUTE_ID;
 
+	extern const TypeID ECU_DECAY_FACTOR_ATTRIBUTE_ID;
+	extern const TypeID ECU_NOISE_FACTOR_ATTRIBUTE_ID;
+
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
