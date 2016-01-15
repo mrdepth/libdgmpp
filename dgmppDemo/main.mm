@@ -136,11 +136,7 @@ int main(int argc, const char * argv[]) {
 				break;
 		}
 		
-		for (auto facility: planet->getFacilities()) {
-			for (auto commodity: facility->getCommodities()) {
-				std::cout << facility->getTypeName() << ": " << commodity->getTypeName() << " = " << commodity->getQuantity() << std::endl;
-			}
-		}
+		std::cout << *planet << std::endl;
 
 		return 0;
 		NSString* garmurDNA = @"33816:2404;3:14248;1:1952;1:19349;1:28746;1:31936;1:2605;1:2048;1:31183;1:31153;1:31111;1:29009;1:27371;3::";

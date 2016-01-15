@@ -17,6 +17,10 @@ namespace dgmpp {
 		
 		double getNextCycleTime();
 		void runCycle(double cycleTime);
+		
+		virtual std::string toJSONString() const;
+		friend std::ostream& operator<<(std::ostream& os, const Planet& planet);
+
 	private:
 		FacilitiesList facilities_;
 		RoutesList routes_;

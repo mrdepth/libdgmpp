@@ -45,3 +45,7 @@ void Commodity::extract(int32_t quantity) {
 	else
 		quantity_ -= quantity;
 }
+
+std::ostream& dgmpp::operator<<(std::ostream& os, const Commodity& commodity) {
+	return os << "{\"typeName\":\"" << commodity.getTypeName() << "\", \"quantity\":" << commodity.getQuantity() << "}";
+}

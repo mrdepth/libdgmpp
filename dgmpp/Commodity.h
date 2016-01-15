@@ -15,13 +15,14 @@ namespace dgmpp {
 		TypeID getTypeID() const {return typeID_;};
 		const std::string& getTypeName() const  {return *typeName_;};
 		int32_t getQuantity() const {return quantity_;};
-		int32_t getItemVolume() const {return volume_;};
-		int32_t getVolume() const {return volume_ * quantity_;};
+		double getItemVolume() const {return volume_;};
+		double getVolume() const {return volume_ * quantity_;};
 		
+		friend std::ostream& operator<<(std::ostream& os, const Commodity& commodity);
 	private:
 		TypeID typeID_;
 		std::shared_ptr<std::string> typeName_;
 		int32_t quantity_;
-		float volume_;
+		double volume_;
 	};
 }

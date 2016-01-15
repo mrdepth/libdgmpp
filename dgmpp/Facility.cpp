@@ -8,6 +8,8 @@
 
 #include "Facility.h"
 #include <cmath>
+#include "Planet.h"
+#include <sstream>
 
 using namespace dgmpp;
 
@@ -40,6 +42,10 @@ void Facility::addCommodity(const Commodity& commodity) {
 		i->second->add(commodity.getQuantity());
 	else
 		commodities_[commodity.getTypeID()] = std::make_shared<Commodity>(commodity);
+}
+
+void Facility::addCommodity(TypeID typeID, int32_t quantity) {
+	addCommodity(Commodity(getOwner()->getEngine(), typeID, quantity));
 }
 
 void Facility::extractCommodity(const Commodity& commodity) {
@@ -89,4 +95,28 @@ double Facility::getFreeVolume() const {
 	for (auto commodity: commodities_)
 		capacity -= commodity.second->getVolume();
 	return capacity;
+}
+
+std::string Facility::toJSONString() const {
+	std::stringstream os;
+	os << "\"typeName\":\"" << getTypeName() << "\",";
+	if (getCapacity() > 0)
+		os << "\"free\":" << getFreeVolume() << ",";
+	os << "\"commodities\":[";
+	bool isFirst = true;
+	for (const auto& commodity: commodities_) {
+		if (commodity.second->getQuantity() > 0) {
+			if (isFirst)
+				isFirst = false;
+			else
+				os << "," << std::endl;;
+			os << *commodity.second;
+		}
+	}
+	os << "]" << std::endl;
+	return os.str();
+}
+
+std::ostream& dgmpp::operator<<(std::ostream& os, const Facility& facility) {
+	return os << "{" << facility.toJSONString() << "}" << std::endl;
 }

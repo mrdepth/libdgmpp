@@ -32,12 +32,17 @@ namespace dgmpp {
 		virtual int priority() const {return 0;};
 		
 		virtual void addCommodity(const Commodity& commodity);
+		virtual void addCommodity(TypeID typeID, int32_t quantity);
 		virtual void extractCommodity(const Commodity& commodity);
 		virtual void clear();
 		std::list<std::shared_ptr<const Commodity>> getCommodities() const;
 		const Commodity& getCommodity(const Commodity& commodity) const;
+		
 		virtual int32_t getFreeStorage(const Commodity& commodity) const;
 		virtual double getFreeVolume() const;
+
+		virtual std::string toJSONString() const;
+		friend std::ostream& operator<<(std::ostream& os, const Facility& facility);
 
 	protected:
 		std::list<const Route*> inputs_;

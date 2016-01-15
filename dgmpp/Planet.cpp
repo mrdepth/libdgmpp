@@ -15,6 +15,7 @@
 #include "StorageFacility.h"
 #include "Spaceport.h"
 #include <cmath>
+#include <sstream>
 
 using namespace dgmpp;
 
@@ -133,3 +134,22 @@ void Planet::runCycle(double cycleTime) {
 	}
 }
 
+
+std::string Planet::toJSONString() const {
+	std::stringstream os;
+	bool isFirst = true;
+	os << "\"facilities\":[";
+	for (const auto& facility: facilities_) {
+		if (isFirst)
+			isFirst = false;
+		else
+			os << "," << std::endl;;
+		os << *facility;
+	}
+	os << "]" << std::endl;
+	return os.str();
+}
+
+std::ostream& dgmpp::operator<<(std::ostream& os, const Planet& planet) {
+	return os << "{" << planet.toJSONString() << "}" << std::endl;
+}
