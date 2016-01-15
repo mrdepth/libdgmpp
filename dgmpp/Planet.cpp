@@ -124,7 +124,7 @@ void Planet::runCycle(double cycleTime) {
 	for (auto facility: facilities_) {
 		double cycleEndTime = facility->getCycleEndTime();
 		if (cycleEndTime > 0 && std::fabs(cycleEndTime - cycleEndTime) < 0.5) {
-			facility->finishCycle();
+			facility->finishCycle(cycleTime);
 		}
 	}
 	for (auto facility: facilities_) {
@@ -132,6 +132,10 @@ void Planet::runCycle(double cycleTime) {
 		if (lastLaunchTime == 0)
 			facility->startCycle(cycleTime);
 	}
+}
+
+void Planet::reportWarning(const std::shared_ptr<const Warning>& warning) {
+	warnings_.push_back(warning);
 }
 
 

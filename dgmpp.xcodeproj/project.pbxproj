@@ -113,6 +113,10 @@
 		12A156AF1C46548D00C3CF0B /* Route.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A156AC1C46548D00C3CF0B /* Route.cpp */; };
 		12A156B01C46548D00C3CF0B /* Route.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156AD1C46548D00C3CF0B /* Route.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12A156B11C46548D00C3CF0B /* Route.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156AD1C46548D00C3CF0B /* Route.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12A156CA1C48F85D00C3CF0B /* Warning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A156C81C48F85D00C3CF0B /* Warning.cpp */; };
+		12A156CB1C48F85D00C3CF0B /* Warning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A156C81C48F85D00C3CF0B /* Warning.cpp */; };
+		12A156CC1C48F85D00C3CF0B /* Warning.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156C91C48F85D00C3CF0B /* Warning.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12A156CD1C48F85D00C3CF0B /* Warning.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156C91C48F85D00C3CF0B /* Warning.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12AEEFCC1C25BAC200FB7B1D /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */; };
 		12AEEFCD1C25BAC200FB7B1D /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */; };
 		12AEEFCE1C25BAC200FB7B1D /* Environment.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFCB1C25BAC200FB7B1D /* Environment.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -283,6 +287,8 @@
 		12A156A71C4651C000C3CF0B /* Schematic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Schematic.h; sourceTree = "<group>"; };
 		12A156AC1C46548D00C3CF0B /* Route.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Route.cpp; sourceTree = "<group>"; };
 		12A156AD1C46548D00C3CF0B /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
+		12A156C81C48F85D00C3CF0B /* Warning.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Warning.cpp; sourceTree = "<group>"; };
+		12A156C91C48F85D00C3CF0B /* Warning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Warning.h; sourceTree = "<group>"; };
 		12A3C6B1177C283E0067E00C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		12A3C6BD177C28A90067E00C /* Blob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Blob.cpp; sourceTree = "<group>"; };
 		12A3C6BE177C28A90067E00C /* Blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blob.h; sourceTree = "<group>"; };
@@ -457,6 +463,8 @@
 				12A156A71C4651C000C3CF0B /* Schematic.h */,
 				12A156AC1C46548D00C3CF0B /* Route.cpp */,
 				12A156AD1C46548D00C3CF0B /* Route.h */,
+				12A156C81C48F85D00C3CF0B /* Warning.cpp */,
+				12A156C91C48F85D00C3CF0B /* Warning.h */,
 			);
 			name = PlanetaryInteraction;
 			sourceTree = "<group>";
@@ -701,6 +709,7 @@
 				12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */,
 				12564BEF1B84B07F000F68D8 /* ControlTower.h in Headers */,
 				12564BF01B84B07F000F68D8 /* Structure.h in Headers */,
+				12A156CC1C48F85D00C3CF0B /* Warning.h in Headers */,
 				12564BF11B84B07F000F68D8 /* Blob.h in Headers */,
 				12564BF21B84B07F000F68D8 /* FetchResult.h in Headers */,
 				12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */,
@@ -755,6 +764,7 @@
 				12EFCCBC1C1AB334003ECA7F /* HeatSimulator.h in Headers */,
 				12EFCCBD1C1AB334003ECA7F /* ControlTower.h in Headers */,
 				12EFCCBE1C1AB334003ECA7F /* Structure.h in Headers */,
+				12A156CD1C48F85D00C3CF0B /* Warning.h in Headers */,
 				12EFCCBF1C1AB334003ECA7F /* Blob.h in Headers */,
 				12EFCCC01C1AB334003ECA7F /* FetchResult.h in Headers */,
 				12EFCCC11C1AB334003ECA7F /* SqlConnector.h in Headers */,
@@ -996,6 +1006,7 @@
 				12564BC21B84B027000F68D8 /* Blob.cpp in Sources */,
 				12564BB81B84B027000F68D8 /* Skill.cpp in Sources */,
 				12A156A81C4651C000C3CF0B /* Schematic.cpp in Sources */,
+				12A156CA1C48F85D00C3CF0B /* Warning.cpp in Sources */,
 				12B0A3001C0DC5CC00194715 /* CombatSimulator.cpp in Sources */,
 				12564BBA1B84B027000F68D8 /* Charge.cpp in Sources */,
 				12564BA91B84B027000F68D8 /* Effect.cpp in Sources */,
@@ -1064,6 +1075,7 @@
 				12EFCC8B1C1AB334003ECA7F /* Blob.cpp in Sources */,
 				12EFCC8C1C1AB334003ECA7F /* Skill.cpp in Sources */,
 				12A156A91C4651C000C3CF0B /* Schematic.cpp in Sources */,
+				12A156CB1C48F85D00C3CF0B /* Warning.cpp in Sources */,
 				12EFCC8E1C1AB334003ECA7F /* CombatSimulator.cpp in Sources */,
 				12EFCC901C1AB334003ECA7F /* Charge.cpp in Sources */,
 				12EFCC911C1AB334003ECA7F /* Effect.cpp in Sources */,

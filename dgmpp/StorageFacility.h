@@ -12,5 +12,6 @@ namespace dgmpp {
 		virtual void startCycle(double cycleTime);
 		virtual int priority() const {return 3;};
 	private:
+		bool full_;
 	};
 }

@@ -26,7 +26,7 @@ namespace dgmpp {
 		virtual double getCycleTime() const {return 0;};
 		
 		virtual double getCycleEndTime() const;
-		virtual void finishCycle() {};
+		virtual void finishCycle(double cycleTime) {};
 		virtual void startCycle(double cycleTime) {};
 		
 		virtual int priority() const {return 0;};

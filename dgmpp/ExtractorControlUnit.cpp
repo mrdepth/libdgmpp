@@ -12,6 +12,7 @@
 #include "Route.h"
 #include "Commodity.h"
 #include <cmath>
+#include <iostream>
 
 using namespace dgmpp;
 
@@ -21,7 +22,7 @@ ExtractorControlUnit::ExtractorControlUnit(TypeID typeID, const std::string& typ
 }
 
 void ExtractorControlUnit::setCycleTime(double cycleTime) {
-	cycleTime_ = cycleTime;
+	cycleTime_ = std::max(cycleTime, 0.0);
 	double cycleTimeMinutes = std::trunc(cycleTime_ / 60);
 	w_ = cycleTimeMinutes / 15;
 };
@@ -57,10 +58,11 @@ double ExtractorControlUnit::getCycleEndTime() const {
 		return 0;
 }
 
-void ExtractorControlUnit::finishCycle() {
+void ExtractorControlUnit::finishCycle(double cycleTime) {
 	auto outputs = getOutputs();
 	if (outputs.size() > 0) {
-		Commodity commodity = Commodity(outputs.front()->getCommodity(), getYieldAtTime(getLastLaunchTime()));
+		int32_t yield = getYieldAtTime(getLastLaunchTime());
+		Commodity commodity = Commodity(outputs.front()->getCommodity(), yield);
 		for (auto output: getOutputs()) {
 			if (commodity.getQuantity() > 0) {
 				int32_t free = output->getDestination()->getFreeStorage(commodity);
@@ -71,6 +73,8 @@ void ExtractorControlUnit::finishCycle() {
 				}
 			}
 		}
+		if (commodity.getQuantity() > 0)
+			getOwner()->reportWarning(std::make_shared<Warning>(shared_from_this(), Warning::CODE_WASTED, cycleTime, static_cast<double>(commodity.getQuantity()) / static_cast<double>(yield)));
 	}
 	setLastLaunchTime(0);
 }

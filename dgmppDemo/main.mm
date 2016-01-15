@@ -68,8 +68,9 @@ int main(int argc, const char * argv[]) {
 		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		
+		double lastUpdateTime = 1452068276;
 		auto planet = engine->setPlanet(2016);
-		planet->setLastUpdate(1452068276);
+		planet->setLastUpdate(lastUpdateTime);
 		planet->addFacility(2524, 1019338918550);
 		planet->addFacility(2541, 1019339001861);
 		planet->addFacility(2474, 1019339001862);
@@ -136,7 +137,23 @@ int main(int argc, const char * argv[]) {
 				break;
 		}
 		
-		std::cout << *planet << std::endl;
+		for (const auto& warning: planet->getWarnings()) {
+			switch (warning->getCode()) {
+				case Warning::CODE_WASTED:
+					std::cout << (int64_t) (warning->getTimeStamp() - lastUpdateTime) << " Wasted: " << warning->getSource()->getTypeName() << " " << (int32_t) (warning->getArg() * 100) << "%" << std::endl;
+					break;
+				case Warning::CODE_PRODUCTION_STOPPED:
+					std::cout << (int64_t) (warning->getTimeStamp() - lastUpdateTime) << " Production stopped: " << warning->getSource()->getTypeName() << std::endl;
+					break;
+				case Warning::CODE_STORAGE_IS_FULL:
+					std::cout << (int64_t) (warning->getTimeStamp() - lastUpdateTime) << " Storage is full: " << warning->getSource()->getTypeName() << " " << (warning->getArg() * 100.0) << "%" << std::endl;
+					break;
+				default:
+					break;
+			}
+		}
+		
+		//std::cout << *planet << std::endl;
 
 		return 0;
 		NSString* garmurDNA = @"33816:2404;3:14248;1:1952;1:19349;1:28746;1:31936;1:2605;1:2048;1:31183;1:31153;1:31111;1:29009;1:27371;3::";

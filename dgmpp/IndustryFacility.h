@@ -14,18 +14,19 @@ namespace dgmpp {
 		std::shared_ptr<Schematic> setSchematic(TypeID schematicID);
 		std::shared_ptr<Schematic> getSchematic() const {return schematic_;};
 		
-		void setLastLaunchTime(double lastLaunchTime) {lastLaunchTime_ = lastLaunchTime;};
 		virtual double getLastLaunchTime() const {return lastLaunchTime_;};
 		virtual double getCycleTime() const;
 		int32_t getQuantityPerCycle() const;
+		void setLastLaunchTime(double lastLaunchTime);
 		
 		virtual double getCycleEndTime() const;
-		virtual void finishCycle();
+		virtual void finishCycle(double cycleTime);
 		virtual void startCycle(double cycleTime);
 		virtual int32_t getFreeStorage(const Commodity& commodity) const;
 		virtual int priority() const {return 1;};
 	private:
 		double lastLaunchTime_;
 		std::shared_ptr<Schematic> schematic_;
+		bool idle_;
 	};
 }
