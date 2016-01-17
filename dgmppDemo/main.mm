@@ -65,8 +65,8 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		
 		double lastUpdateTime = 1452068276;
 		auto planet = engine->setPlanet(2016);
@@ -118,24 +118,17 @@ int main(int argc, const char * argv[]) {
 
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setCycleTime(120 * 60);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setQuantityPerCycle(4741);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setLastLaunchTime(1452068276);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setLaunchTime(1452068276);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setInstallTime(1452068276);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setExpiryTime(1452500276);
 		
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setCycleTime(120 * 60);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setQuantityPerCycle(6425);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setLastLaunchTime(1452068276);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setLaunchTime(1452068276);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setInstallTime(1452068276);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setExpiryTime(1452500276);
 
-		while (1) {
-			double nextCycleTime = planet->getNextCycleTime();
-			if (nextCycleTime > 0) {
-				planet->runCycle(nextCycleTime);
-			}
-			else
-				break;
-		}
+		double endTime = planet->simulate() - lastUpdateTime;
 		
 		for (const auto& warning: planet->getWarnings()) {
 			switch (warning->getCode()) {

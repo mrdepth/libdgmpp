@@ -32,7 +32,7 @@ void StorageFacility::startCycle(double cycleTime) {
 			}
 		}
 	}
-	double maxVolume = 0;
+	/*double maxVolume = 0;
 	for (const auto& input: getInputs())
 		maxVolume = std::max(input->getCommodity().getItemVolume(), maxVolume);
 	double freeVolume = getFreeVolume();
@@ -43,5 +43,33 @@ void StorageFacility::startCycle(double cycleTime) {
 		}
 	}
 	else
-		full_ = false;
+		full_ = false;*/
+	if (cycles_.size() > 0) {
+		auto lastCycle = std::dynamic_pointer_cast<StorageCycle>(cycles_.back());
+		const auto& lastCycleCommodities = lastCycle->getCommodities();
+		const auto& commodities = getCommodities();
+
+		bool equals = false;
+		if (lastCycleCommodities.size() == commodities.size()) {
+			bool e = false;
+			for (const auto& a: commodities) {
+				for (const auto& b: lastCycleCommodities) {
+					if (a == b) {
+						e = true;
+						break;
+					}
+				}
+				if (!e)
+					break;
+			}
+			equals = e;
+		}
+
+		lastCycle->setCycleTime(cycleTime - lastCycle->getLaunchTime());
+		
+		if (!equals)
+			cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, cycleTime, getCommodities()));
+	}
+	else
+		cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, cycleTime, getCommodities()));
 }

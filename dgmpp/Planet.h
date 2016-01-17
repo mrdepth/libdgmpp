@@ -21,6 +21,8 @@ namespace dgmpp {
 		void reportWarning(const std::shared_ptr<const Warning>& warning);
 		const std::list<std::shared_ptr<const Warning>>& getWarnings() const {return warnings_;};
 		
+		double simulate();
+		
 		virtual std::string toJSONString() const;
 		friend std::ostream& operator<<(std::ostream& os, const Planet& planet);
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "types.h"
 #include "Commodity.h"
+#include "Cycle.h"
 
 namespace dgmpp {
 	class Facility : public std::enable_shared_from_this<Facility> {
@@ -20,7 +21,7 @@ namespace dgmpp {
 		const std::list<const Route*>& getInputs() const {return inputs_;};
 		const std::list<const Route*>& getOutputs() const {return outputs_;};
 
-		virtual double getLastLaunchTime() const {return 0;};
+		virtual double getLaunchTime() const {return 0;};
 		virtual double getInstallTime() const {return 0;};
 		virtual double getExpiryTime() const {return 0;};
 		virtual double getCycleTime() const {return 0;};
@@ -32,7 +33,7 @@ namespace dgmpp {
 		virtual int priority() const {return 0;};
 		
 		virtual void addCommodity(const Commodity& commodity);
-		virtual void addCommodity(TypeID typeID, int32_t quantity);
+		virtual void addCommodity(TypeID typeID, uint32_t quantity);
 		virtual void extractCommodity(const Commodity& commodity);
 		virtual void clear();
 		std::list<std::shared_ptr<const Commodity>> getCommodities() const;
@@ -43,10 +44,13 @@ namespace dgmpp {
 
 		virtual std::string toJSONString() const;
 		friend std::ostream& operator<<(std::ostream& os, const Facility& facility);
+		
+		int32_t numberOfCycles() const;
 
 	protected:
 		std::list<const Route*> inputs_;
 		std::list<const Route*> outputs_;
+		std::vector<std::shared_ptr<Cycle>> cycles_;
 		mutable std::map<TypeID, std::shared_ptr<Commodity>> commodities_;
 	private:
 		std::weak_ptr<Planet> owner_;

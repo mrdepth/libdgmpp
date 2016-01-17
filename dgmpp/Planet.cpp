@@ -128,8 +128,8 @@ void Planet::runCycle(double cycleTime) {
 		}
 	}
 	for (auto facility: facilities_) {
-		double lastLaunchTime = facility->getLastLaunchTime();
-		if (lastLaunchTime == 0)
+		double launchTime = facility->getLaunchTime();
+		if (launchTime == 0)
 			facility->startCycle(cycleTime);
 	}
 }
@@ -138,6 +138,19 @@ void Planet::reportWarning(const std::shared_ptr<const Warning>& warning) {
 	warnings_.push_back(warning);
 }
 
+double Planet::simulate() {
+	double endTime = getLastUpdate();
+	while (1) {
+		double nextCycleTime = getNextCycleTime();
+		if (nextCycleTime > 0) {
+			runCycle(nextCycleTime);
+			endTime = nextCycleTime;
+		}
+		else
+			break;
+	}
+	return endTime;
+}
 
 std::string Planet::toJSONString() const {
 	std::stringstream os;

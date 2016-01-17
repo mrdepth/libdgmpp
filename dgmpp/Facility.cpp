@@ -33,7 +33,8 @@ void Facility::removeOutput(const Route* route) {
 }
 
 double Facility::getCycleEndTime() const {
-	return getLastLaunchTime() + getCycleTime();
+	double launchTime = getLaunchTime();
+	return launchTime > 0 ? launchTime + getCycleTime() : 0;
 }
 
 void Facility::addCommodity(const Commodity& commodity) {
@@ -44,7 +45,7 @@ void Facility::addCommodity(const Commodity& commodity) {
 		commodities_[commodity.getTypeID()] = std::make_shared<Commodity>(commodity);
 }
 
-void Facility::addCommodity(TypeID typeID, int32_t quantity) {
+void Facility::addCommodity(TypeID typeID, uint32_t quantity) {
 	addCommodity(Commodity(getOwner()->getEngine(), typeID, quantity));
 }
 

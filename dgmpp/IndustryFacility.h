@@ -1,6 +1,7 @@
 #pragma once
 #include "Facility.h"
 #include "Schematic.h"
+#include "ProductionCycle.h"
 
 namespace dgmpp {
 	class IndustryFacility: public Facility {
@@ -14,10 +15,10 @@ namespace dgmpp {
 		std::shared_ptr<Schematic> setSchematic(TypeID schematicID);
 		std::shared_ptr<Schematic> getSchematic() const {return schematic_;};
 		
-		virtual double getLastLaunchTime() const {return lastLaunchTime_;};
+		virtual double getLaunchTime() const {return launchTime_;};
 		virtual double getCycleTime() const;
 		int32_t getQuantityPerCycle() const;
-		void setLastLaunchTime(double lastLaunchTime);
+		void setLaunchTime(double launchTime);
 		
 		virtual double getCycleEndTime() const;
 		virtual void finishCycle(double cycleTime);
@@ -25,7 +26,7 @@ namespace dgmpp {
 		virtual int32_t getFreeStorage(const Commodity& commodity) const;
 		virtual int priority() const {return 1;};
 	private:
-		double lastLaunchTime_;
+		double launchTime_;
 		std::shared_ptr<Schematic> schematic_;
 		bool idle_;
 	};

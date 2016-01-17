@@ -71,6 +71,18 @@
 		12564BFC1B84B07F000F68D8 /* Gang.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B9AB65147A5DDF006F1F8E /* Gang.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BFD1B84B07F000F68D8 /* Item.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D561473CA5E006B18D7 /* Item.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BFE1B84B07F000F68D8 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D6C1473CA5E006B18D7 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		125ECFD01C4A28DD00A1CDA9 /* Cycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */; };
+		125ECFD11C4A28DD00A1CDA9 /* Cycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */; };
+		125ECFD21C4A28DD00A1CDA9 /* Cycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		125ECFD31C4A28DD00A1CDA9 /* Cycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		125ECFD61C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */; };
+		125ECFD71C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */; };
+		125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		125ECFD91C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		125ECFDC1C4A2C0500A1CDA9 /* StorageCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFDA1C4A2C0500A1CDA9 /* StorageCycle.cpp */; };
+		125ECFDD1C4A2C0500A1CDA9 /* StorageCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFDA1C4A2C0500A1CDA9 /* StorageCycle.cpp */; };
+		125ECFDE1C4A2C0500A1CDA9 /* StorageCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFDB1C4A2C0500A1CDA9 /* StorageCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		125ECFDF1C4A2C0500A1CDA9 /* StorageCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFDB1C4A2C0500A1CDA9 /* StorageCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1293C4291C46C10A00B33378 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1293C4271C46C10A00B33378 /* Planet.cpp */; };
 		1293C42A1C46C10A00B33378 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1293C4271C46C10A00B33378 /* Planet.cpp */; };
 		1293C42B1C46C10A00B33378 /* Planet.h in Headers */ = {isa = PBXBuildFile; fileRef = 1293C4281C46C10A00B33378 /* Planet.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -265,6 +277,12 @@
 		1242EC201A4DFF5C00FD488A /* dbpatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = dbpatch.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		12564B8E1B84AF15000F68D8 /* dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12564BA71B84AFAD000F68D8 /* dgmpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dgmpp.h; sourceTree = SOURCE_ROOT; };
+		125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cycle.cpp; sourceTree = "<group>"; };
+		125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cycle.h; sourceTree = "<group>"; };
+		125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionCycle.cpp; sourceTree = "<group>"; };
+		125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductionCycle.h; sourceTree = "<group>"; };
+		125ECFDA1C4A2C0500A1CDA9 /* StorageCycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StorageCycle.cpp; sourceTree = "<group>"; };
+		125ECFDB1C4A2C0500A1CDA9 /* StorageCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageCycle.h; sourceTree = "<group>"; };
 		1293C4271C46C10A00B33378 /* Planet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Planet.cpp; sourceTree = "<group>"; };
 		1293C4281C46C10A00B33378 /* Planet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Planet.h; sourceTree = "<group>"; };
 		129F2BD61C1FFE62007FC666 /* modifiersdump */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = modifiersdump; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -465,6 +483,12 @@
 				12A156AD1C46548D00C3CF0B /* Route.h */,
 				12A156C81C48F85D00C3CF0B /* Warning.cpp */,
 				12A156C91C48F85D00C3CF0B /* Warning.h */,
+				125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */,
+				125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */,
+				125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */,
+				125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */,
+				125ECFDA1C4A2C0500A1CDA9 /* StorageCycle.cpp */,
+				125ECFDB1C4A2C0500A1CDA9 /* StorageCycle.h */,
 			);
 			name = PlanetaryInteraction;
 			sourceTree = "<group>";
@@ -690,10 +714,12 @@
 				12564BD41B84B07E000F68D8 /* Effect.h in Headers */,
 				12B0A30C1C0EEC8400194715 /* dgmpp.h in Headers */,
 				12564BE11B84B07E000F68D8 /* Modifier.h in Headers */,
+				125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */,
 				1293C42B1C46C10A00B33378 /* Planet.h in Headers */,
 				12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */,
 				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
 				12564BE41B84B07F000F68D8 /* Booster.h in Headers */,
+				125ECFD21C4A28DD00A1CDA9 /* Cycle.h in Headers */,
 				12B0A0511C0C386C00194715 /* HostileTarget.h in Headers */,
 				12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */,
 				12564BE51B84B07F000F68D8 /* Character.h in Headers */,
@@ -709,6 +735,7 @@
 				12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */,
 				12564BEF1B84B07F000F68D8 /* ControlTower.h in Headers */,
 				12564BF01B84B07F000F68D8 /* Structure.h in Headers */,
+				125ECFDE1C4A2C0500A1CDA9 /* StorageCycle.h in Headers */,
 				12A156CC1C48F85D00C3CF0B /* Warning.h in Headers */,
 				12564BF11B84B07F000F68D8 /* Blob.h in Headers */,
 				12564BF21B84B07F000F68D8 /* FetchResult.h in Headers */,
@@ -745,10 +772,12 @@
 				12EFCC9F1C1AB334003ECA7F /* Effect.h in Headers */,
 				12EFCCA01C1AB334003ECA7F /* dgmpp.h in Headers */,
 				12EFCCAD1C1AB334003ECA7F /* Modifier.h in Headers */,
+				125ECFD91C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */,
 				1293C42C1C46C10A00B33378 /* Planet.h in Headers */,
 				12EFCCAE1C1AB334003ECA7F /* LocationGroupModifier.h in Headers */,
 				12EFCCAF1C1AB334003ECA7F /* LocationRequiredSkillModifier.h in Headers */,
 				12EFCCB01C1AB334003ECA7F /* Booster.h in Headers */,
+				125ECFD31C4A28DD00A1CDA9 /* Cycle.h in Headers */,
 				12EFCCB11C1AB334003ECA7F /* HostileTarget.h in Headers */,
 				12EFCCB21C1AB334003ECA7F /* CombatSimulator.h in Headers */,
 				12EFCCB31C1AB334003ECA7F /* Character.h in Headers */,
@@ -764,6 +793,7 @@
 				12EFCCBC1C1AB334003ECA7F /* HeatSimulator.h in Headers */,
 				12EFCCBD1C1AB334003ECA7F /* ControlTower.h in Headers */,
 				12EFCCBE1C1AB334003ECA7F /* Structure.h in Headers */,
+				125ECFDF1C4A2C0500A1CDA9 /* StorageCycle.h in Headers */,
 				12A156CD1C48F85D00C3CF0B /* Warning.h in Headers */,
 				12EFCCBF1C1AB334003ECA7F /* Blob.h in Headers */,
 				12EFCCC01C1AB334003ECA7F /* FetchResult.h in Headers */,
@@ -976,6 +1006,7 @@
 			files = (
 				12564BC61B84B027000F68D8 /* SqliteFetchResult.cpp in Sources */,
 				12564BCA1B84B027000F68D8 /* Area.cpp in Sources */,
+				125ECFD01C4A28DD00A1CDA9 /* Cycle.cpp in Sources */,
 				12564BD01B84B03C000F68D8 /* Character.cpp in Sources */,
 				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
 				12564BBE1B84B027000F68D8 /* Ship.cpp in Sources */,
@@ -1016,6 +1047,8 @@
 				12A156841C464FA400C3CF0B /* IndustryFacility.cpp in Sources */,
 				12564BC01B84B027000F68D8 /* ControlTower.cpp in Sources */,
 				12564BCE1B84B027000F68D8 /* Item.cpp in Sources */,
+				125ECFD61C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */,
+				125ECFDC1C4A2C0500A1CDA9 /* StorageCycle.cpp in Sources */,
 				12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */,
 				12A156AE1C46548D00C3CF0B /* Route.cpp in Sources */,
 				12564BBF1B84B027000F68D8 /* HeatSimulator.cpp in Sources */,
@@ -1045,6 +1078,7 @@
 			files = (
 				12EFCC751C1AB334003ECA7F /* SqliteFetchResult.cpp in Sources */,
 				12EFCC761C1AB334003ECA7F /* Area.cpp in Sources */,
+				125ECFD11C4A28DD00A1CDA9 /* Cycle.cpp in Sources */,
 				12EFCC771C1AB334003ECA7F /* Character.cpp in Sources */,
 				12EFCC7A1C1AB334003ECA7F /* Modifier.cpp in Sources */,
 				12EFCC7C1C1AB334003ECA7F /* Ship.cpp in Sources */,
@@ -1085,6 +1119,8 @@
 				12A156851C464FA400C3CF0B /* IndustryFacility.cpp in Sources */,
 				12EFCC951C1AB334003ECA7F /* ControlTower.cpp in Sources */,
 				12EFCC961C1AB334003ECA7F /* Item.cpp in Sources */,
+				125ECFD71C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */,
+				125ECFDD1C4A2C0500A1CDA9 /* StorageCycle.cpp in Sources */,
 				12EFCC981C1AB334003ECA7F /* Implant.cpp in Sources */,
 				12A156AF1C46548D00C3CF0B /* Route.cpp in Sources */,
 				12EFCC991C1AB334003ECA7F /* HeatSimulator.cpp in Sources */,

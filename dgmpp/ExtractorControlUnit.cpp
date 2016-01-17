@@ -16,7 +16,7 @@
 
 using namespace dgmpp;
 
-ExtractorControlUnit::ExtractorControlUnit(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), lastLaunchTime_(0), installTime_(0), expiryTime_(0), cycleTime_(0), quantityPerCycle_(0) {
+ExtractorControlUnit::ExtractorControlUnit(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), installTime_(0), expiryTime_(0), cycleTime_(0), quantityPerCycle_(0) {
 	decayFactor_ = owner->getEngine()->decayFactor();
 	noiseFactor_ = owner->getEngine()->noiseFactor();
 }
@@ -61,25 +61,26 @@ double ExtractorControlUnit::getCycleEndTime() const {
 void ExtractorControlUnit::finishCycle(double cycleTime) {
 	auto outputs = getOutputs();
 	if (outputs.size() > 0) {
-		int32_t yield = getYieldAtTime(getLastLaunchTime());
-		Commodity commodity = Commodity(outputs.front()->getCommodity(), yield);
+		int32_t yield = getYieldAtTime(getLaunchTime());
+		Commodity left = Commodity(outputs.front()->getCommodity(), yield);
 		for (auto output: getOutputs()) {
-			if (commodity.getQuantity() > 0) {
-				int32_t free = output->getDestination()->getFreeStorage(commodity);
+			if (left.getQuantity() > 0) {
+				int32_t free = output->getDestination()->getFreeStorage(left);
 				if (free > 0) {
-					int32_t quantity = std::min(commodity.getQuantity(), free);
-					output->getDestination()->addCommodity(Commodity(commodity, quantity));
-					commodity.extract(quantity);
+					int32_t quantity = std::min(left.getQuantity(), free);
+					output->getDestination()->addCommodity(Commodity(left, quantity));
+					left.extract(quantity);
 				}
 			}
 		}
-		if (commodity.getQuantity() > 0)
-			getOwner()->reportWarning(std::make_shared<Warning>(shared_from_this(), Warning::CODE_WASTED, cycleTime, static_cast<double>(commodity.getQuantity()) / static_cast<double>(yield)));
+		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), Commodity(left, yield), left));
+		//if (commodity.getQuantity() > 0)
+		//	getOwner()->reportWarning(std::make_shared<Warning>(shared_from_this(), Warning::CODE_WASTED, cycleTime, static_cast<double>(commodity.getQuantity()) / static_cast<double>(yield)));
 	}
-	setLastLaunchTime(0);
+	setLaunchTime(0);
 }
 
 void ExtractorControlUnit::startCycle(double cycleTime) {
 	if (cycleTime + getCycleTime() <= getExpiryTime())
-		setLastLaunchTime(cycleTime);
+		setLaunchTime(cycleTime);
 }

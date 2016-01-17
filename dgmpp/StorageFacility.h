@@ -1,5 +1,6 @@
 #pragma once
 #include "Facility.h"
+#include "StorageCycle.h"
 
 namespace dgmpp {
 	class StorageFacility: public Facility {
