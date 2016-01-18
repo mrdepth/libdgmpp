@@ -73,9 +73,7 @@ void ExtractorControlUnit::finishCycle(double cycleTime) {
 				}
 			}
 		}
-		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), Commodity(left, yield), left));
-		//if (commodity.getQuantity() > 0)
-		//	getOwner()->reportWarning(std::make_shared<Warning>(shared_from_this(), Warning::CODE_WASTED, cycleTime, static_cast<double>(commodity.getQuantity()) / static_cast<double>(yield)));
+		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), Commodity(left, yield - left.getQuantity()), left));
 	}
 	setLaunchTime(0);
 }
@@ -83,4 +81,20 @@ void ExtractorControlUnit::finishCycle(double cycleTime) {
 void ExtractorControlUnit::startCycle(double cycleTime) {
 	if (cycleTime + getCycleTime() <= getExpiryTime())
 		setLaunchTime(cycleTime);
+}
+
+std::shared_ptr<const ProductionCycle> ExtractorControlUnit::getCycle(size_t index) const {
+	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(index));
+}
+
+std::shared_ptr<const ProductionCycle> ExtractorControlUnit::getCycle(double timeStamp) const {
+	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(timeStamp));
+}
+
+Commodity ExtractorControlUnit::getOutput() const {
+	auto outputs = getOutputs();
+	if (outputs.size() > 0)
+		return outputs.front()->getCommodity();
+	else
+		return Commodity::InvalidCommodity();
 }

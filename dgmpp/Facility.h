@@ -26,11 +26,10 @@ namespace dgmpp {
 		virtual double getExpiryTime() const {return 0;};
 		virtual double getCycleTime() const {return 0;};
 		
-		virtual double getCycleEndTime() const;
-		virtual void finishCycle(double cycleTime) {};
-		virtual void startCycle(double cycleTime) {};
+		size_t numberOfCycles() const {return cycles_.size();};
+		std::shared_ptr<const Cycle> getCycle(size_t index) const {return cycles_[index];};
+		std::shared_ptr<const Cycle> getCycle(double timeStamp) const;
 		
-		virtual int priority() const {return 0;};
 		
 		virtual void addCommodity(const Commodity& commodity);
 		virtual void addCommodity(TypeID typeID, uint32_t quantity);
@@ -41,17 +40,23 @@ namespace dgmpp {
 		
 		virtual int32_t getFreeStorage(const Commodity& commodity) const;
 		virtual double getFreeVolume() const;
+		virtual double getVolume() const;
 
 		virtual std::string toJSONString() const;
 		friend std::ostream& operator<<(std::ostream& os, const Facility& facility);
 		
-		int32_t numberOfCycles() const;
-
 	protected:
 		std::list<const Route*> inputs_;
 		std::list<const Route*> outputs_;
 		std::vector<std::shared_ptr<Cycle>> cycles_;
 		mutable std::map<TypeID, std::shared_ptr<Commodity>> commodities_;
+		
+		virtual double getCycleEndTime() const;
+		virtual void finishCycle(double cycleTime) {};
+		virtual void startCycle(double cycleTime) {};
+		virtual int priority() const {return 0;};
+		
+		friend class Planet;
 	private:
 		std::weak_ptr<Planet> owner_;
 		TypeID typeID_;

@@ -65,8 +65,8 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		
 		double lastUpdateTime = 1452068276;
 		auto planet = engine->setPlanet(2016);
@@ -128,9 +128,12 @@ int main(int argc, const char * argv[]) {
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setInstallTime(1452068276);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setExpiryTime(1452500276);
 
-		double endTime = planet->simulate() - lastUpdateTime;
+		double endTime = planet->simulate();
 		
-		for (const auto& warning: planet->getWarnings()) {
+
+		auto storage = planet->findFacility(1019339001861);
+		size_t n = storage->numberOfCycles();
+/*		for (const auto& warning: planet->getWarnings()) {
 			switch (warning->getCode()) {
 				case Warning::CODE_WASTED:
 					std::cout << (int64_t) (warning->getTimeStamp() - lastUpdateTime) << " Wasted: " << warning->getSource()->getTypeName() << " " << (int32_t) (warning->getArg() * 100) << "%" << std::endl;
@@ -144,10 +147,11 @@ int main(int argc, const char * argv[]) {
 				default:
 					break;
 			}
-		}
+		}*/
 		
 		//std::cout << *planet << std::endl;
-
+		auto cycle = storage->getCycle(endTime);
+		auto free = storage->getFreeVolume();
 		return 0;
 		NSString* garmurDNA = @"33816:2404;3:14248;1:1952;1:19349;1:28746;1:31936;1:2605;1:2048;1:31183;1:31153;1:31111;1:29009;1:27371;3::";
 		NSString* ishkurDNA = @"12042:3178;3:5973;1:448;1:4025;1:1183;1:1447;1:10190;1:2048;1:31538;1:31526;1:2456;5:12612;3::";

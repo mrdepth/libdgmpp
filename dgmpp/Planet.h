@@ -1,6 +1,5 @@
 #pragma once
 #include "types.h"
-#include "Warning.h"
 
 namespace dgmpp {
 	class Planet : public std::enable_shared_from_this<Planet> {
@@ -13,13 +12,9 @@ namespace dgmpp {
 		void removeRoute(std::shared_ptr<Route> const& route);
 		std::shared_ptr<Engine> getEngine() const;
 		std::shared_ptr<Facility> findFacility(int64_t identifier);
+		
 		void setLastUpdate(double lastUpdate);
 		double getLastUpdate();
-		
-		double getNextCycleTime();
-		void runCycle(double cycleTime);
-		void reportWarning(const std::shared_ptr<const Warning>& warning);
-		const std::list<std::shared_ptr<const Warning>>& getWarnings() const {return warnings_;};
 		
 		double simulate();
 		
@@ -30,8 +25,10 @@ namespace dgmpp {
 		FacilitiesList facilities_;
 		RoutesList routes_;
 		std::weak_ptr<Engine> engine_;
-		std::list<std::shared_ptr<const Warning>> warnings_;
 		double lastUpdate_;
+		
+		double getNextCycleTime();
+		void runCycle(double cycleTime);
 
 	};
 }

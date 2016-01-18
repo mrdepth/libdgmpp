@@ -6,7 +6,7 @@
 namespace dgmpp {
 	class IndustryFacility: public Facility {
 	public:
-		enum {
+		enum: TypeID {
 			GROUP_ID = 1028
 		};
 		IndustryFacility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner = std::shared_ptr<Planet>(nullptr), int64_t identifier = 0);
@@ -20,10 +20,16 @@ namespace dgmpp {
 		int32_t getQuantityPerCycle() const;
 		void setLaunchTime(double launchTime);
 		
+		virtual int32_t getFreeStorage(const Commodity& commodity) const;
+		
+		std::shared_ptr<const ProductionCycle> getCycle(size_t index) const;
+		std::shared_ptr<const ProductionCycle> getCycle(double timeStamp) const;
+		Commodity getOutput() const;
+
+	protected:
 		virtual double getCycleEndTime() const;
 		virtual void finishCycle(double cycleTime);
 		virtual void startCycle(double cycleTime);
-		virtual int32_t getFreeStorage(const Commodity& commodity) const;
 		virtual int priority() const {return 1;};
 	private:
 		double launchTime_;

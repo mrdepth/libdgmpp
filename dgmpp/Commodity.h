@@ -5,7 +5,7 @@ namespace dgmpp {
 	class Commodity {
 	public:
 		typedef std::runtime_error NotEnoughCommodities;
-
+		static Commodity InvalidCommodity();
 		Commodity(std::shared_ptr<Engine> const& engine, TypeID typeID, uint32_t quantity = 0);
 		Commodity(const Commodity& other, uint32_t quantity);
 		Commodity(const Commodity& other);

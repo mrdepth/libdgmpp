@@ -6,6 +6,7 @@ namespace dgmpp {
 	public:
 		StorageCycle(double launchTime, double cycleTime, const std::list<std::shared_ptr<const Commodity>>& commodities);
 		const std::list<std::shared_ptr<const Commodity>>& getCommodities() const {return commodities_;};
+		double getVolume() const;
 
 	private:
 		std::list<std::shared_ptr<const Commodity>> commodities_;

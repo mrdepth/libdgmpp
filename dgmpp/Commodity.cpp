@@ -12,16 +12,22 @@
 
 using namespace dgmpp;
 
+Commodity Commodity::InvalidCommodity() {
+	return Commodity(nullptr, 0);
+}
+
 Commodity::Commodity(std::shared_ptr<Engine> const& engine, TypeID typeID, uint32_t quantity) : typeID_(typeID), quantity_(quantity), volume_(0) {
-	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT volume, typeName FROM invTypes WHERE typeID = ? LIMIT 1");
-	stmt->bindInt(1, typeID);
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
-	if (result->next()) {
-		volume_ = result->getDouble(0);
-		typeName_ = std::make_shared<std::string>(result->getText(1));
-	}
-	else {
-		throw Item::UnknownTypeIDException(std::to_string(typeID));
+	if (engine) {
+		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT volume, typeName FROM invTypes WHERE typeID = ? LIMIT 1");
+		stmt->bindInt(1, typeID);
+		std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
+		if (result->next()) {
+			volume_ = result->getDouble(0);
+			typeName_ = std::make_shared<std::string>(result->getText(1));
+		}
+		else {
+			throw Item::UnknownTypeIDException(std::to_string(typeID));
+		}
 	}
 }
 

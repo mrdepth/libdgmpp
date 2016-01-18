@@ -75,7 +75,6 @@ void IndustryFacility::startCycle(double cycleTime) {
 			const auto& c = getCommodity(input);
 			if (c.getQuantity() < input.getQuantity()) {
 				if (!idle_) {
-					getOwner()->reportWarning(std::make_shared<Warning>(shared_from_this(), Warning::CODE_PRODUCTION_STOPPED, cycleTime, 0));
 					idle_ = true;
 					Commodity commodity = schematic_->getOutput();
 					commodity.setQuantity(0);
@@ -143,4 +142,19 @@ int32_t IndustryFacility::getFreeStorage(const Commodity& commodity) const {
 	}
 	else
 		return 0;
+}
+
+std::shared_ptr<const ProductionCycle> IndustryFacility::getCycle(size_t index) const {
+	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(index));
+}
+
+std::shared_ptr<const ProductionCycle> IndustryFacility::getCycle(double timeStamp) const {
+	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(timeStamp));
+}
+
+Commodity IndustryFacility::getOutput() const {
+	if (schematic_)
+		return schematic_->getOutput();
+	else
+		return Commodity::InvalidCommodity();
 }

@@ -76,7 +76,7 @@ std::list<std::shared_ptr<const Commodity>> Facility::getCommodities() const {
 	std::list<std::shared_ptr<const Commodity>> list;
 	for (const auto& commodity: commodities_) {
 		if (commodity.second->getQuantity() > 0)
-			list.push_back(commodity.second);
+			list.push_back(std::make_shared<const Commodity>(*commodity.second));
 	}
 	return list;
 }
@@ -92,10 +92,31 @@ int32_t Facility::getFreeStorage(const Commodity& commodity) const {
 }
 
 double Facility::getFreeVolume() const {
-	double capacity = getCapacity();
+	return getCapacity() - getVolume();
+}
+
+double Facility::getVolume() const {
+	double volume = 0;
 	for (auto commodity: commodities_)
-		capacity -= commodity.second->getVolume();
-	return capacity;
+		volume += commodity.second->getVolume();
+	return volume;
+}
+
+
+std::shared_ptr<const Cycle> Facility::getCycle(double timeStamp) const {
+	std::shared_ptr<Cycle> last;
+	for (const auto& cycle: cycles_) {
+		double from = cycle->getLaunchTime();
+		if (timeStamp >= from) {
+			double to = cycle->getCycleTime();
+			if (timeStamp < to)
+				return cycle;
+		}
+		else
+			return last;
+		last = cycle;
+	}
+	return last;
 }
 
 std::string Facility::toJSONString() const {

@@ -134,10 +134,6 @@ void Planet::runCycle(double cycleTime) {
 	}
 }
 
-void Planet::reportWarning(const std::shared_ptr<const Warning>& warning) {
-	warnings_.push_back(warning);
-}
-
 double Planet::simulate() {
 	double endTime = getLastUpdate();
 	while (1) {

@@ -32,18 +32,6 @@ void StorageFacility::startCycle(double cycleTime) {
 			}
 		}
 	}
-	/*double maxVolume = 0;
-	for (const auto& input: getInputs())
-		maxVolume = std::max(input->getCommodity().getItemVolume(), maxVolume);
-	double freeVolume = getFreeVolume();
-	if (getFreeVolume() < maxVolume) {
-		if (!full_) {
-			full_ = true;
-			getOwner()->reportWarning(std::make_shared<Warning>(shared_from_this(), Warning::CODE_STORAGE_IS_FULL, cycleTime, 1.0 - freeVolume / getCapacity()));
-		}
-	}
-	else
-		full_ = false;*/
 	if (cycles_.size() > 0) {
 		auto lastCycle = std::dynamic_pointer_cast<StorageCycle>(cycles_.back());
 		const auto& lastCycleCommodities = lastCycle->getCommodities();
@@ -51,11 +39,11 @@ void StorageFacility::startCycle(double cycleTime) {
 
 		bool equals = false;
 		if (lastCycleCommodities.size() == commodities.size()) {
-			bool e = false;
+			bool e = true;
 			for (const auto& a: commodities) {
 				for (const auto& b: lastCycleCommodities) {
-					if (a == b) {
-						e = true;
+					if (a != b) {
+						e = false;
 						break;
 					}
 				}
@@ -72,4 +60,12 @@ void StorageFacility::startCycle(double cycleTime) {
 	}
 	else
 		cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, cycleTime, getCommodities()));
+}
+
+std::shared_ptr<const StorageCycle> StorageFacility::getCycle(size_t index) const {
+	return std::dynamic_pointer_cast<const StorageCycle>(Facility::getCycle(index));
+}
+
+std::shared_ptr<const StorageCycle> StorageFacility::getCycle(double timeStamp) const {
+	return std::dynamic_pointer_cast<const StorageCycle>(Facility::getCycle(timeStamp));
 }

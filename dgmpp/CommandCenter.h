@@ -5,7 +5,7 @@
 namespace dgmpp {
 	class CommandCenter: public Facility {
 	public:
-		enum {
+		enum: TypeID {
 			GROUP_ID = 1027
 		};
 		CommandCenter(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner = std::shared_ptr<Planet>(nullptr), int64_t identifier = 0);
