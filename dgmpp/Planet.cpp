@@ -123,7 +123,7 @@ double Planet::getNextCycleTime() {
 void Planet::runCycle(double cycleTime) {
 	for (auto facility: facilities_) {
 		double cycleEndTime = facility->getCycleEndTime();
-		if (cycleEndTime > 0 && std::fabs(cycleEndTime - cycleEndTime) < 0.5) {
+		if (cycleEndTime > 0 && std::fabs(cycleEndTime - cycleTime) < 0.5) {
 			facility->finishCycle(cycleTime);
 		}
 	}

@@ -56,10 +56,10 @@ void StorageFacility::startCycle(double cycleTime) {
 		lastCycle->setCycleTime(cycleTime - lastCycle->getLaunchTime());
 		
 		if (!equals)
-			cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, cycleTime, getCommodities()));
+			cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, 60, getCommodities()));
 	}
 	else
-		cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, cycleTime, getCommodities()));
+		cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, 60, getCommodities()));
 }
 
 std::shared_ptr<const StorageCycle> StorageFacility::getCycle(size_t index) const {

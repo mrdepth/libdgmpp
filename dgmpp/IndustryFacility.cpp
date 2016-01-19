@@ -46,6 +46,8 @@ double IndustryFacility::getCycleEndTime() const {
 }
 
 void IndustryFacility::finishCycle(double cycleTime) {
+	if(getIdentifier() == 1019339001884 && cycleTime >= 475560862)
+		getIdentifier();
 	if (schematic_) {
 		Commodity left = schematic_->getOutput();
 		int32_t yield = left.getQuantity();
@@ -59,7 +61,7 @@ void IndustryFacility::finishCycle(double cycleTime) {
 				}
 			}
 		}
-		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), getCommodities(), Commodity(left, yield), left));
+		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), getCommodities(), Commodity(left, yield - left.getQuantity()), left));
 		clear();
 
 //		if (commodity.getQuantity() > 0)
@@ -70,6 +72,8 @@ void IndustryFacility::finishCycle(double cycleTime) {
 }
 
 void IndustryFacility::startCycle(double cycleTime) {
+	if(getIdentifier() == 1019339001885 && cycleTime >= 475560862)
+		getIdentifier();
 	if (schematic_) {
 		for (const auto& input: schematic_->getInputs()) {
 			const auto& c = getCommodity(input);
@@ -78,21 +82,22 @@ void IndustryFacility::startCycle(double cycleTime) {
 					idle_ = true;
 					Commodity commodity = schematic_->getOutput();
 					commodity.setQuantity(0);
-					cycles_.push_back(std::make_shared<ProductionCycle>(cycleTime, cycleTime, getCommodities(), commodity, commodity));
+					cycles_.push_back(std::make_shared<ProductionCycle>(cycleTime, getCycleTime(), getCommodities(), commodity, commodity));
 				}
 				else {
 					bool equals = false;
 
 					if (cycles_.size() > 0) {
+						equals = true;
 						auto lastCycle = std::dynamic_pointer_cast<ProductionCycle>(cycles_.back());
 						const auto& lastCycleMaterials = lastCycle->getMaterials();
 						const auto& materials = getCommodities();
 						
-						if (lastCycleMaterials.size() == materials.size()) {
+						if (lastCycleMaterials.size() == materials.size() && lastCycleMaterials.size() > 0) {
 							bool e = false;
 							for (const auto& a: materials) {
 								for (const auto& b: lastCycleMaterials) {
-									if (a == b) {
+									if (*a == *b) {
 										e = true;
 										break;
 									}
@@ -109,7 +114,7 @@ void IndustryFacility::startCycle(double cycleTime) {
 					if (!equals) {
 						Commodity commodity = schematic_->getOutput();
 						commodity.setQuantity(0);
-						cycles_.push_back(std::make_shared<ProductionCycle>(cycleTime, cycleTime, getCommodities(), commodity, commodity));
+						cycles_.push_back(std::make_shared<ProductionCycle>(cycleTime, getCycleTime(), getCommodities(), commodity, commodity));
 					}
 				}
 				setLaunchTime(0);

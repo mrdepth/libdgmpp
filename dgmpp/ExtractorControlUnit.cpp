@@ -33,6 +33,8 @@ void ExtractorControlUnit::setQuantityPerCycle(double quantityPerCycle) {
 }
 
 int32_t ExtractorControlUnit::getYieldAtTime(double time) const {
+	if (time >= expiryTime_)
+		return 0;
 	int cycleIndex = (time - installTime_) / cycleTime_;
 	double t = (cycleIndex + 0.5) * w_;
 	
