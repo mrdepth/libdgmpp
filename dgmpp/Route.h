@@ -9,8 +9,8 @@ namespace dgmpp {
 		std::shared_ptr<Facility> getDestination() const;
 		const Commodity& getCommodity() const {return *commodity_;};
 	private:
-		Facility* source_;
-		Facility* destination_;
+		std::weak_ptr<Facility> source_;
+		std::weak_ptr<Facility> destination_;
 		std::shared_ptr<Commodity> commodity_;
 		int64_t identifier_;
 	};

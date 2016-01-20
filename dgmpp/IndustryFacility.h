@@ -22,7 +22,6 @@ namespace dgmpp {
 		
 		virtual int32_t getFreeStorage(const Commodity& commodity) const;
 		
-		std::shared_ptr<const ProductionCycle> getCycle(size_t index) const;
 		std::shared_ptr<const ProductionCycle> getCycle(double timeStamp) const;
 		Commodity getOutput() const;
 

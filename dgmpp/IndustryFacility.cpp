@@ -46,8 +46,6 @@ double IndustryFacility::getCycleEndTime() const {
 }
 
 void IndustryFacility::finishCycle(double cycleTime) {
-	if(getIdentifier() == 1019339001884 && cycleTime >= 475560862)
-		getIdentifier();
 	if (schematic_) {
 		Commodity left = schematic_->getOutput();
 		int32_t yield = left.getQuantity();
@@ -72,8 +70,6 @@ void IndustryFacility::finishCycle(double cycleTime) {
 }
 
 void IndustryFacility::startCycle(double cycleTime) {
-	if(getIdentifier() == 1019339001885 && cycleTime >= 475560862)
-		getIdentifier();
 	if (schematic_) {
 		for (const auto& input: schematic_->getInputs()) {
 			const auto& c = getCommodity(input);
@@ -147,10 +143,6 @@ int32_t IndustryFacility::getFreeStorage(const Commodity& commodity) const {
 	}
 	else
 		return 0;
-}
-
-std::shared_ptr<const ProductionCycle> IndustryFacility::getCycle(size_t index) const {
-	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(index));
 }
 
 std::shared_ptr<const ProductionCycle> IndustryFacility::getCycle(double timeStamp) const {

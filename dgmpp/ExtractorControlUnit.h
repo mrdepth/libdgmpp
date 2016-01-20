@@ -26,7 +26,6 @@ namespace dgmpp {
 		
 		int32_t getYieldAtTime(double time) const;
 		
-		std::shared_ptr<const ProductionCycle> getCycle(size_t index) const;
 		std::shared_ptr<const ProductionCycle> getCycle(double timeStamp) const;
 		Commodity getOutput() const;
 

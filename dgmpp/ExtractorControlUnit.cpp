@@ -85,10 +85,6 @@ void ExtractorControlUnit::startCycle(double cycleTime) {
 		setLaunchTime(cycleTime);
 }
 
-std::shared_ptr<const ProductionCycle> ExtractorControlUnit::getCycle(size_t index) const {
-	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(index));
-}
-
 std::shared_ptr<const ProductionCycle> ExtractorControlUnit::getCycle(double timeStamp) const {
 	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(timeStamp));
 }

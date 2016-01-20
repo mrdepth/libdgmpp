@@ -71,9 +71,9 @@ void Planet::removeFacility(std::shared_ptr<Facility> const& facility) {
 	RoutesList routes;
 	for (auto route: routes_) {
 		if (route->getSource() == facility)
-			route->getDestination()->removeInput(route.get());
+			route->getDestination()->removeInput(route);
 		else if (route->getDestination() == facility)
-			route->getSource()->removeOutput(route.get());
+			route->getSource()->removeOutput(route);
 		else
 			routes.push_back(route);
 	}
@@ -83,15 +83,15 @@ void Planet::removeFacility(std::shared_ptr<Facility> const& facility) {
 
 std::shared_ptr<Route> Planet::addRoute(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, TypeID contentTypeID, int64_t identifier) {
 	auto route = std::make_shared<Route>(source, destination, contentTypeID, identifier);
-	source->addOutput(route.get());
-	destination->addInput(route.get());
+	source->addOutput(route);
+	destination->addInput(route);
 	routes_.push_back(route);
 	return route;
 }
 
 void Planet::removeRoute(std::shared_ptr<Route> const& route) {
-	route->getSource()->removeOutput(route.get());
-	route->getDestination()->removeInput(route.get());
+	route->getSource()->removeOutput(route);
+	route->getDestination()->removeInput(route);
 	routes_.remove(route);
 }
 
@@ -123,7 +123,7 @@ double Planet::getNextCycleTime() {
 void Planet::runCycle(double cycleTime) {
 	for (auto facility: facilities_) {
 		double cycleEndTime = facility->getCycleEndTime();
-		if (cycleEndTime > 0 && std::fabs(cycleEndTime - cycleTime) < 0.5) {
+		if (cycleEndTime > 0 && cycleEndTime - cycleTime < 0.5) {
 			facility->finishCycle(cycleTime);
 		}
 	}

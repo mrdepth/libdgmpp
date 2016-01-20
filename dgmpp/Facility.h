@@ -2,15 +2,16 @@
 #include "types.h"
 #include "Commodity.h"
 #include "Cycle.h"
+#include <iterator>
 
 namespace dgmpp {
 	class Facility : public std::enable_shared_from_this<Facility> {
 	public:
 		Facility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner = std::shared_ptr<Planet>(nullptr), int64_t identifier = 0);
-		void addInput(const Route* route);
-		void addOutput(const Route* route);
-		void removeInput(const Route* route);
-		void removeOutput(const Route* route);
+		void addInput(const std::shared_ptr<const Route>& route);
+		void addOutput(const std::shared_ptr<const Route>& route);
+		void removeInput(const std::shared_ptr<const Route>& route);
+		void removeOutput(const std::shared_ptr<const Route>& route);
 		TypeID getTypeID() const {return typeID_;};
 		const std::string& getTypeName() const  {return typeName_;};
 		virtual TypeID getGroupID() const {return 0;};
@@ -18,8 +19,8 @@ namespace dgmpp {
 		int64_t getIdentifier() const {return identifier_;};
 		std::shared_ptr<Planet> getOwner() const {return owner_.lock();};
 
-		const std::list<const Route*>& getInputs() const {return inputs_;};
-		const std::list<const Route*>& getOutputs() const {return outputs_;};
+		const std::list<std::shared_ptr<const Route>>& getInputs() const {return inputs_;};
+		const std::list<std::shared_ptr<const Route>>& getOutputs() const {return outputs_;};
 
 		virtual double getLaunchTime() const {return 0;};
 		virtual double getInstallTime() const {return 0;};
@@ -27,9 +28,9 @@ namespace dgmpp {
 		virtual double getCycleTime() const {return 0;};
 		
 		size_t numberOfCycles() const {return cycles_.size();};
-		std::shared_ptr<const Cycle> getCycle(size_t index) const {return cycles_[index];};
 		std::shared_ptr<const Cycle> getCycle(double timeStamp) const;
-		
+		const std::list<std::shared_ptr<Cycle>>& getCycles() const {return cycles_;};
+
 		
 		virtual void addCommodity(const Commodity& commodity);
 		virtual void addCommodity(TypeID typeID, uint32_t quantity);
@@ -46,9 +47,9 @@ namespace dgmpp {
 		friend std::ostream& operator<<(std::ostream& os, const Facility& facility);
 		
 	protected:
-		std::list<const Route*> inputs_;
-		std::list<const Route*> outputs_;
-		std::vector<std::shared_ptr<Cycle>> cycles_;
+		std::list<std::shared_ptr<const Route>> inputs_;
+		std::list<std::shared_ptr<const Route>> outputs_;
+		std::list<std::shared_ptr<Cycle>> cycles_;
 		mutable std::map<TypeID, std::shared_ptr<Commodity>> commodities_;
 		
 		virtual double getCycleEndTime() const;

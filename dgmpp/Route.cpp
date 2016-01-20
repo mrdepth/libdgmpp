@@ -13,14 +13,17 @@
 
 using namespace dgmpp;
 
-Route::Route(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, TypeID contentTypeID, int64_t identifier) : source_(source.get()), destination_(destination.get()), identifier_(identifier) {
-	commodity_ = std::make_shared<Commodity>(source->getOwner()->getEngine(), contentTypeID);
+Route::Route(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, TypeID contentTypeID, int64_t identifier) : source_(source), destination_(destination), identifier_(identifier) {
+	if (contentTypeID)
+		commodity_ = std::make_shared<Commodity>(source->getOwner()->getEngine(), contentTypeID);
+	else
+		commodity_ = std::make_shared<Commodity>(Commodity::InvalidCommodity());
 };
 
 std::shared_ptr<Facility> Route::getSource() const {
-	return source_ ? source_->shared_from_this() : nullptr;
+	return source_.lock();
 }
 
 std::shared_ptr<Facility> Route::getDestination() const {
-	return source_ ? destination_->shared_from_this() : nullptr;
+	return destination_.lock();
 }

@@ -62,10 +62,6 @@ void StorageFacility::startCycle(double cycleTime) {
 		cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, 60, getCommodities()));
 }
 
-std::shared_ptr<const StorageCycle> StorageFacility::getCycle(size_t index) const {
-	return std::dynamic_pointer_cast<const StorageCycle>(Facility::getCycle(index));
-}
-
 std::shared_ptr<const StorageCycle> StorageFacility::getCycle(double timeStamp) const {
 	return std::dynamic_pointer_cast<const StorageCycle>(Facility::getCycle(timeStamp));
 }
