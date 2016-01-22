@@ -62,6 +62,8 @@ namespace dgmpp {
 		float decayFactor() const;
 		float noiseFactor() const;
 		
+		const std::map<TypeID, CommodityTier>& getCommodityTiers() const;
+		
 	private:
 		std::shared_ptr<SqlConnector> sqlConnector_;
 		std::shared_ptr<Gang> gang_;
@@ -78,6 +80,7 @@ namespace dgmpp {
 		int32_t updatesCounter_;
 		mutable float decayFactor_;
 		mutable float noiseFactor_;
+		mutable std::map<TypeID, CommodityTier> commodityTiers_;
 
 	};
 

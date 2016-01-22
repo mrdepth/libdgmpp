@@ -96,3 +96,7 @@ Commodity ExtractorControlUnit::getOutput() const {
 	else
 		return Commodity::InvalidCommodity();
 }
+
+bool ExtractorControlUnit::routed() const {
+	return getOutputs().size() > 0;
+}

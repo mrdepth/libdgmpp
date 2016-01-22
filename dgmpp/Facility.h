@@ -46,6 +46,8 @@ namespace dgmpp {
 		virtual std::string toJSONString() const;
 		friend std::ostream& operator<<(std::ostream& os, const Facility& facility);
 		
+		virtual bool routed() const {return true;};
+
 	protected:
 		std::list<std::shared_ptr<const Route>> inputs_;
 		std::list<std::shared_ptr<const Route>> outputs_;

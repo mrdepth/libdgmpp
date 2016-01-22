@@ -18,6 +18,7 @@ namespace dgmpp {
 		int32_t getQuantity() const {return quantity_;};
 		double getItemVolume() const {return volume_;};
 		double getVolume() const {return volume_ * quantity_;};
+		CommodityTier getTier() const {return tier_;};
 		
 		friend std::ostream& operator<<(std::ostream& os, const Commodity& commodity);
 		
@@ -27,5 +28,6 @@ namespace dgmpp {
 		std::shared_ptr<std::string> typeName_;
 		uint32_t quantity_;
 		double volume_;
+		CommodityTier tier_;
 	};
 }

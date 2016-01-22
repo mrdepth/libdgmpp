@@ -155,3 +155,27 @@ Commodity IndustryFacility::getOutput() const {
 	else
 		return Commodity::InvalidCommodity();
 }
+
+bool IndustryFacility::routed() const {
+	if (schematic_) {
+		for (const auto& require: schematic_->getInputs()) {
+			bool routed = false;
+			for (const auto& input: getInputs()) {
+				if (input->getCommodity().getTypeID() == require.getTypeID()) {
+					routed = true;
+					break;
+				}
+			}
+			if (!routed)
+				return false;
+		}
+		const auto& product = schematic_->getOutput();
+		for (const auto& output: getOutputs()) {
+			if (output->getCommodity().getTypeID() == product.getTypeID())
+				return true;
+		}
+		return false;
+	}
+	else
+		return false;
+}

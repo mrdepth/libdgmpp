@@ -29,6 +29,8 @@ namespace dgmpp {
 		std::shared_ptr<const ProductionCycle> getCycle(double timeStamp) const;
 		Commodity getOutput() const;
 
+		virtual bool routed() const;
+
 	protected:
 		virtual double getCycleEndTime() const;
 		virtual void finishCycle(double cycleTime);

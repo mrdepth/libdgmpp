@@ -113,4 +113,13 @@ namespace dgmpp {
 			ResistancesLayer layers[3];
 		};
 	};
+	
+	enum CommodityTier {
+		TIER_UNKNOWN = -1,
+		TIER_RAW,
+		TIER1,
+		TIER2,
+		TIER3,
+		TIER4
+	};
 }
