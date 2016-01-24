@@ -13,7 +13,7 @@
 
 using namespace dgmpp;
 
-Facility::Facility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier): typeID_(typeID), typeName_(typeName), capacity_(capacity), owner_(owner), identifier_(identifier) {
+Facility::Facility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier): typeID_(typeID), typeName_(typeName), capacity_(capacity), owner_(owner), identifier_(identifier), nextUpdateTime_(0) {
 }
 
 void Facility::addInput(const std::shared_ptr<const Route>& route) {
@@ -37,12 +37,19 @@ double Facility::getCycleEndTime() const {
 	return launchTime > 0 ? launchTime + getCycleTime() : 0;
 }
 
+double Facility::getNextUpdateTime() const {
+	return nextUpdateTime_;
+}
+
+
 void Facility::addCommodity(const Commodity& commodity) {
 	auto i = commodities_.find(commodity.getTypeID());
 	if (i != commodities_.end())
 		i->second->add(commodity.getQuantity());
 	else
 		commodities_[commodity.getTypeID()] = std::make_shared<Commodity>(commodity);
+	if (commodity.getQuantity() > 0)
+		nextUpdateTime_ = getOwner()->getLastUpdate();
 }
 
 void Facility::addCommodity(TypeID typeID, uint32_t quantity) {

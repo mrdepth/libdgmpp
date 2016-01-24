@@ -35,7 +35,8 @@ namespace dgmpp {
 		virtual double getCycleEndTime() const;
 		virtual void finishCycle(double cycleTime);
 		virtual void startCycle(double cycleTime);
-		virtual int priority() const {return 2;};
+		virtual void update(double time);
+		virtual int priority() const {return 1000;};
 	private:
 		double launchTime_;
 		double installTime_;

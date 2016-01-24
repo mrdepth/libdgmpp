@@ -30,7 +30,8 @@ namespace dgmpp {
 		virtual double getCycleEndTime() const;
 		virtual void finishCycle(double cycleTime);
 		virtual void startCycle(double cycleTime);
-		virtual int priority() const {return 1;};
+		virtual void update(double time);
+		virtual int priority() const {return -getOutput().getTier();};
 	private:
 		double launchTime_;
 		std::shared_ptr<Schematic> schematic_;

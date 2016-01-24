@@ -15,7 +15,7 @@ using namespace dgmpp;
 StorageFacility::StorageFacility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), full_(false) {
 }
 
-void StorageFacility::startCycle(double cycleTime) {
+void StorageFacility::update(double cycleTime) {
 	for (auto output: getOutputs()) {
 		const auto& commodity = output->getCommodity();
 		auto free = output->getDestination()->getFreeStorage(commodity);
@@ -53,13 +53,16 @@ void StorageFacility::startCycle(double cycleTime) {
 			equals = e;
 		}
 
-		lastCycle->setCycleTime(cycleTime - lastCycle->getLaunchTime());
+		if (lastCycle->getLaunchTime() == cycleTime)
+			lastCycle->setCommodities(getCommodities());
 		
+		lastCycle->setCycleTime(cycleTime - lastCycle->getLaunchTime());
 		if (!equals)
 			cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, 60, getCommodities()));
 	}
 	else
 		cycles_.push_back(std::make_shared<StorageCycle>(cycleTime, 60, getCommodities()));
+	nextUpdateTime_ = std::numeric_limits<double>::infinity();
 }
 
 std::shared_ptr<const StorageCycle> StorageFacility::getCycle(double timeStamp) const {

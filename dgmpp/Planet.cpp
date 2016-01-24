@@ -113,37 +113,46 @@ double Planet::getLastUpdate() {
 double Planet::getNextCycleTime() {
 	double nextCycleTime = std::numeric_limits<double>::infinity();
 	for (auto facility: facilities_) {
-		double time = facility->getCycleEndTime();
-		if (time > lastUpdate_)
+		double time = facility->getNextUpdateTime();
+		if (!std::isinf(time) && time >= lastUpdate_)
 			nextCycleTime = std::min(time, nextCycleTime);
 	}
-	return nextCycleTime > lastUpdate_ && !std::isinf(nextCycleTime) ? nextCycleTime : 0;
+	return nextCycleTime >= lastUpdate_ && !std::isinf(nextCycleTime) ? nextCycleTime : 0;
 }
 
 void Planet::runCycle(double cycleTime) {
+	setLastUpdate(cycleTime);
 	for (auto facility: facilities_) {
-		double cycleEndTime = facility->getCycleEndTime();
+		facility->update(cycleTime);
+/*		double cycleEndTime = facility->getCycleEndTime();
 		if (cycleEndTime > 0 && cycleEndTime - cycleTime < 0.5) {
 			facility->finishCycle(cycleTime);
-		}
+		}*/
 	}
-	for (auto facility: facilities_) {
+/*	for (auto facility: facilities_) {
 		double launchTime = facility->getLaunchTime();
 		if (launchTime == 0)
 			facility->startCycle(cycleTime);
-	}
+	}*/
 }
 
 double Planet::simulate() {
 	double endTime = getLastUpdate();
+	facilities_.sort([](const std::shared_ptr<Facility>& a, const std::shared_ptr<Facility>& b) -> bool {
+		return a->priority() > b->priority();
+	});
+	runCycle(endTime);
 	while (1) {
 		double nextCycleTime = getNextCycleTime();
-		if (nextCycleTime > 0) {
+		if (nextCycleTime > 0 && !std::isinf(nextCycleTime)) {
 			runCycle(nextCycleTime);
 			endTime = nextCycleTime;
 		}
 		else
 			break;
+		if (nextCycleTime == getNextCycleTime()) {
+			nextCycleTime = nextCycleTime;
+		}
 	}
 	return endTime;
 }

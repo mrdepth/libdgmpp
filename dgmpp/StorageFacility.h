@@ -14,8 +14,8 @@ namespace dgmpp {
 		std::shared_ptr<const StorageCycle> getCycle(double timeStamp) const;
 		
 	protected:
-		virtual void startCycle(double cycleTime);
-		virtual int priority() const {return 3;};
+		virtual void update(double cycleTime);
+		virtual int priority() const {return 900;};
 
 	private:
 		bool full_;

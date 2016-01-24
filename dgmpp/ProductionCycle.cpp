@@ -19,6 +19,10 @@ ProductionCycle::ProductionCycle(double launchTime, double cycleTime, const std:
 ProductionCycle::ProductionCycle(double launchTime, double cycleTime, const Commodity& yield, const Commodity& waste): ProductionCycle(launchTime, cycleTime, {}, yield, waste) {
 }
 
+void ProductionCycle::setMaterials(const std::list<std::shared_ptr<const Commodity>>& materials) {
+	materials_ = materials;
+}
+
 
 bool ProductionCycle::isIdle() const {
 	return !yield_ || yield_->getQuantity() == 0;

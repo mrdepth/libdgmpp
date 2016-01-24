@@ -61,29 +61,45 @@ double ExtractorControlUnit::getCycleEndTime() const {
 }
 
 void ExtractorControlUnit::finishCycle(double cycleTime) {
-	auto outputs = getOutputs();
-	if (outputs.size() > 0) {
-		int32_t yield = getYieldAtTime(getLaunchTime());
-		Commodity left = Commodity(outputs.front()->getCommodity(), yield);
-		for (auto output: getOutputs()) {
-			if (left.getQuantity() > 0) {
-				int32_t free = output->getDestination()->getFreeStorage(left);
-				if (free > 0) {
-					int32_t quantity = std::min(left.getQuantity(), free);
-					output->getDestination()->addCommodity(Commodity(left, quantity));
-					left.extract(quantity);
-				}
-			}
-		}
-		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), Commodity(left, yield - left.getQuantity()), left));
-	}
-	setLaunchTime(0);
+
 }
 
 void ExtractorControlUnit::startCycle(double cycleTime) {
-	if (cycleTime + getCycleTime() <= getExpiryTime())
-		setLaunchTime(cycleTime);
 }
+
+void ExtractorControlUnit::update(double time) {
+	double cycleEndTime = getCycleEndTime();
+	if (cycleEndTime > 0 && cycleEndTime - time < 0.5) {
+		auto outputs = getOutputs();
+		if (outputs.size() > 0) {
+			int32_t yield = getYieldAtTime(getLaunchTime());
+			Commodity left = Commodity(outputs.front()->getCommodity(), yield);
+			for (auto output: getOutputs()) {
+				if (left.getQuantity() > 0) {
+					int32_t free = output->getDestination()->getFreeStorage(left);
+					if (free > 0) {
+						int32_t quantity = std::min(left.getQuantity(), free);
+						output->getDestination()->addCommodity(Commodity(left, quantity));
+						left.extract(quantity);
+					}
+				}
+			}
+			cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), Commodity(left, yield - left.getQuantity()), left));
+		}
+		setLaunchTime(0);
+	}
+	if (getLaunchTime() == 0) {
+		if (time + getCycleTime() <= getExpiryTime()) {
+			setLaunchTime(time);
+			nextUpdateTime_ = time + getCycleTime();
+		}
+		else
+			nextUpdateTime_ = std::numeric_limits<double>::infinity();
+	}
+	else
+		nextUpdateTime_ = getLaunchTime() + getCycleTime();
+}
+
 
 std::shared_ptr<const ProductionCycle> ExtractorControlUnit::getCycle(double timeStamp) const {
 	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(timeStamp));

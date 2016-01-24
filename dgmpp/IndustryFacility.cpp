@@ -11,6 +11,7 @@
 #include "Engine.h"
 #include "Route.h"
 #include "Commodity.h"
+#include <cmath>
 
 using namespace dgmpp;
 
@@ -60,11 +61,6 @@ void IndustryFacility::finishCycle(double cycleTime) {
 			}
 		}
 		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), getCommodities(), Commodity(left, yield - left.getQuantity()), left));
-		clear();
-
-//		if (commodity.getQuantity() > 0)
-//			getOwner()->reportWarning(std::make_shared<Warning>(shared_from_this(), Warning::CODE_WASTED, cycleTime, static_cast<double>(commodity.getQuantity()) / static_cast<double>(yield)));
-
 	}
 	setLaunchTime(0);
 }
@@ -114,6 +110,7 @@ void IndustryFacility::startCycle(double cycleTime) {
 					}
 				}
 				setLaunchTime(0);
+				nextUpdateTime_ = std::numeric_limits<double>::infinity();
 				return;
 			}
 		}
@@ -126,10 +123,33 @@ void IndustryFacility::startCycle(double cycleTime) {
 		
 		idle_ = false;
 		setLaunchTime(cycleTime);
+		nextUpdateTime_ = cycleTime + getCycleTime();
+		clear();
 	}
-	else
+	else {
 		setLaunchTime(0);
+		nextUpdateTime_ = std::numeric_limits<double>::infinity();
+	}
 }
+
+void IndustryFacility::update(double time) {
+	double cycleEndTime = getCycleEndTime();
+	if (cycleEndTime > 0 && cycleEndTime - time < 0.5) {
+		finishCycle(time);
+		nextUpdateTime_ = time;
+	}
+	if (getLaunchTime() == 0)
+		startCycle(time);
+	if (cycles_.size() > 0) {
+		auto lastCycle = std::dynamic_pointer_cast<ProductionCycle>(cycles_.back());
+		lastCycle->setMaterials(getCommodities());
+	}
+	if (getLaunchTime() > 0)
+		nextUpdateTime_ = getLaunchTime() + getCycleTime();
+	else
+		nextUpdateTime_ = std::numeric_limits<double>::infinity();
+}
+
 
 int32_t IndustryFacility::getFreeStorage(const Commodity& commodity) const {
 	if (schematic_) {

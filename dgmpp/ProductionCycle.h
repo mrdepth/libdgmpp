@@ -9,6 +9,7 @@ namespace dgmpp {
 		const Commodity& getYield() const {return *yield_;};
 		const Commodity& getWaste() const {return *waste_;};
 		const std::list<std::shared_ptr<const Commodity>>& getMaterials() const {return materials_;};
+		void setMaterials(const std::list<std::shared_ptr<const Commodity>>& materials);
 		bool isIdle() const;
 	private:
 		std::list<std::shared_ptr<const Commodity>> materials_;

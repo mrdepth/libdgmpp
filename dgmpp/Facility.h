@@ -55,11 +55,14 @@ namespace dgmpp {
 		mutable std::map<TypeID, std::shared_ptr<Commodity>> commodities_;
 		
 		virtual double getCycleEndTime() const;
+		virtual double getNextUpdateTime() const;
 		virtual void finishCycle(double cycleTime) {};
 		virtual void startCycle(double cycleTime) {};
 		virtual int priority() const {return 0;};
+		virtual void update(double time) {};
 		
 		friend class Planet;
+		double nextUpdateTime_;
 	private:
 		std::weak_ptr<Planet> owner_;
 		TypeID typeID_;
