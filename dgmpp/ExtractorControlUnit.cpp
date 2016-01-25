@@ -33,8 +33,9 @@ void ExtractorControlUnit::setQuantityPerCycle(double quantityPerCycle) {
 }
 
 int32_t ExtractorControlUnit::getYieldAtTime(double time) const {
-	if (time >= expiryTime_)
+	if (time >= expiryTime_ || time < installTime_)
 		return 0;
+	
 	int cycleIndex = (time - installTime_) / cycleTime_;
 	double t = (cycleIndex + 0.5) * w_;
 	
@@ -52,16 +53,34 @@ int32_t ExtractorControlUnit::getYieldAtTime(double time) const {
 	return std::trunc(yield);
 }
 
+double ExtractorControlUnit::getNextUpdateTime() const {
+	double cycleTime = getCycleTime();
+	if (cycleTime > 0) {
+		if (getLaunchTime() < getInstallTime())
+			return getInstallTime();
+		else {
+			double time = getLaunchTime() + cycleTime;
+			if (time > getExpiryTime())
+				return std::numeric_limits<double>::infinity();
+			else
+				return time;
+		}
+	}
+	else
+		return std::numeric_limits<double>::infinity();
+	
+}
+
+
 double ExtractorControlUnit::getCycleEndTime() const {
 	double cycleEndTime = Facility::getCycleEndTime();
 	if (cycleEndTime <= getExpiryTime())
 		return cycleEndTime;
 	else
-		return 0;
+		return std::numeric_limits<double>::infinity();
 }
 
 void ExtractorControlUnit::finishCycle(double cycleTime) {
-
 }
 
 void ExtractorControlUnit::startCycle(double cycleTime) {
@@ -69,35 +88,25 @@ void ExtractorControlUnit::startCycle(double cycleTime) {
 
 void ExtractorControlUnit::update(double time) {
 	double cycleEndTime = getCycleEndTime();
-	if (cycleEndTime > 0 && cycleEndTime - time < 0.5) {
-		auto outputs = getOutputs();
-		if (outputs.size() > 0) {
-			int32_t yield = getYieldAtTime(getLaunchTime());
-			Commodity left = Commodity(outputs.front()->getCommodity(), yield);
-			for (auto output: getOutputs()) {
-				if (left.getQuantity() > 0) {
-					int32_t free = output->getDestination()->getFreeStorage(left);
-					if (free > 0) {
-						int32_t quantity = std::min(left.getQuantity(), free);
-						output->getDestination()->addCommodity(Commodity(left, quantity));
-						left.extract(quantity);
-					}
-				}
-			}
-			cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), Commodity(left, yield - left.getQuantity()), left));
-		}
-		setLaunchTime(0);
+	bool endCycle = !std::isinf(cycleEndTime) && fabs(cycleEndTime - time) < 0.5;
+	
+	if (endCycle) {
+		uint32_t yield = getYieldAtTime(getLaunchTime());
+		addCommodity(Commodity(getOutput(), yield));
+		Facility::update(time);
+		auto left = getCommodity(getOutput());
+		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), Commodity(left, yield - left.getQuantity()), left));
+		clear();
 	}
-	if (getLaunchTime() == 0) {
-		if (time + getCycleTime() <= getExpiryTime()) {
-			setLaunchTime(time);
-			nextUpdateTime_ = time + getCycleTime();
+	
+	if (getLaunchTime() < 0 || endCycle) {
+		if (time >= getInstallTime()) {
+			if (time + getCycleTime() <= getExpiryTime())
+				setLaunchTime(time);
+			else
+				setLaunchTime(std::numeric_limits<double>::infinity());
 		}
-		else
-			nextUpdateTime_ = std::numeric_limits<double>::infinity();
 	}
-	else
-		nextUpdateTime_ = getLaunchTime() + getCycleTime();
 }
 
 

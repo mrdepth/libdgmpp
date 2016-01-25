@@ -9,11 +9,35 @@
 #include "Facility.h"
 #include <cmath>
 #include "Planet.h"
+#include "Route.h"
 #include <sstream>
 
 using namespace dgmpp;
 
-Facility::Facility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier): typeID_(typeID), typeName_(typeName), capacity_(capacity), owner_(owner), identifier_(identifier), nextUpdateTime_(0) {
+bool dgmpp::operator == (const std::list<std::shared_ptr<const Commodity>>& left, const std::list<std::shared_ptr<const Commodity>>& right) {
+	if (left.size() == right.size()) {
+		if (left.size() > 0) {
+			bool e = false;
+			for (const auto& a: left) {
+				for (const auto& b: right) {
+					if (*a == *b) {
+						e = true;
+						break;
+					}
+				}
+				if (!e)
+					return false;
+			}
+			return true;
+		}
+		else
+			return true;
+	}
+	else
+		return false;
+}
+
+Facility::Facility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier): typeID_(typeID), typeName_(typeName), capacity_(capacity), owner_(owner), identifier_(identifier) {
 }
 
 void Facility::addInput(const std::shared_ptr<const Route>& route) {
@@ -34,11 +58,12 @@ void Facility::removeOutput(const std::shared_ptr<const Route>& route) {
 
 double Facility::getCycleEndTime() const {
 	double launchTime = getLaunchTime();
-	return launchTime > 0 ? launchTime + getCycleTime() : 0;
+	double cycleTime = getCycleTime();
+	return launchTime >= 0 && cycleTime > 0 ? launchTime + cycleTime : std::numeric_limits<double>::infinity();
 }
 
 double Facility::getNextUpdateTime() const {
-	return nextUpdateTime_;
+	return std::numeric_limits<double>::infinity();
 }
 
 
@@ -48,8 +73,6 @@ void Facility::addCommodity(const Commodity& commodity) {
 		i->second->add(commodity.getQuantity());
 	else
 		commodities_[commodity.getTypeID()] = std::make_shared<Commodity>(commodity);
-	if (commodity.getQuantity() > 0)
-		nextUpdateTime_ = getOwner()->getLastUpdate();
 }
 
 void Facility::addCommodity(TypeID typeID, uint32_t quantity) {
@@ -125,6 +148,12 @@ std::shared_ptr<const Cycle> Facility::getCycle(double timeStamp) const {
 	}
 	return last;
 }
+
+void Facility::update(double time) {
+	for (const auto& output: getOutputs())
+		output->update(time);
+}
+
 
 std::string Facility::toJSONString() const {
 	std::stringstream os;

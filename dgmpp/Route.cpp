@@ -13,11 +13,7 @@
 
 using namespace dgmpp;
 
-Route::Route(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, TypeID contentTypeID, int64_t identifier) : source_(source), destination_(destination), identifier_(identifier) {
-	if (contentTypeID)
-		commodity_ = std::make_shared<Commodity>(source->getOwner()->getEngine(), contentTypeID);
-	else
-		commodity_ = std::make_shared<Commodity>(Commodity::InvalidCommodity());
+Route::Route(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, const Commodity& commodity, int64_t identifier) : source_(source), destination_(destination), commodity_(commodity), identifier_(identifier) {
 };
 
 std::shared_ptr<Facility> Route::getSource() const {
@@ -26,4 +22,16 @@ std::shared_ptr<Facility> Route::getSource() const {
 
 std::shared_ptr<Facility> Route::getDestination() const {
 	return destination_.lock();
+}
+
+void Route::update(double time) const {
+	if (commodity_.getTypeID()) {
+		uint32_t quantity = std::min(getSource()->getCommodity(commodity_).getQuantity(), getDestination()->getFreeStorage(commodity_));
+		if (quantity > 0) {
+			auto product = Commodity(commodity_, quantity);
+			getSource()->extractCommodity(product);
+			getDestination()->addCommodity(product);
+			getDestination()->update(time);
+		}
+	}
 }

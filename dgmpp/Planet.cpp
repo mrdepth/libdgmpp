@@ -81,8 +81,8 @@ void Planet::removeFacility(std::shared_ptr<Facility> const& facility) {
 	facilities_.remove(facility);
 }
 
-std::shared_ptr<Route> Planet::addRoute(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, TypeID contentTypeID, int64_t identifier) {
-	auto route = std::make_shared<Route>(source, destination, contentTypeID, identifier);
+std::shared_ptr<Route> Planet::addRoute(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, const Commodity& commodity, int64_t identifier) {
+	auto route = std::make_shared<Route>(source, destination, commodity, identifier);
 	source->addOutput(route);
 	destination->addInput(route);
 	routes_.push_back(route);
@@ -117,7 +117,7 @@ double Planet::getNextCycleTime() {
 		if (!std::isinf(time) && time >= lastUpdate_)
 			nextCycleTime = std::min(time, nextCycleTime);
 	}
-	return nextCycleTime >= lastUpdate_ && !std::isinf(nextCycleTime) ? nextCycleTime : 0;
+	return nextCycleTime;
 }
 
 void Planet::runCycle(double cycleTime) {
@@ -141,18 +141,15 @@ double Planet::simulate() {
 	facilities_.sort([](const std::shared_ptr<Facility>& a, const std::shared_ptr<Facility>& b) -> bool {
 		return a->priority() > b->priority();
 	});
-	runCycle(endTime);
+//	runCycle(endTime);
 	while (1) {
 		double nextCycleTime = getNextCycleTime();
-		if (nextCycleTime > 0 && !std::isinf(nextCycleTime)) {
+		if (nextCycleTime >= 0 && !std::isinf(nextCycleTime)) {
 			runCycle(nextCycleTime);
 			endTime = nextCycleTime;
 		}
 		else
 			break;
-		if (nextCycleTime == getNextCycleTime()) {
-			nextCycleTime = nextCycleTime;
-		}
 	}
 	return endTime;
 }

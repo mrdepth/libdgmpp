@@ -70,7 +70,7 @@ int main(int argc, const char * argv[]) {
 		
 		double lastUpdateTime = 1452068276;
 		auto planet = engine->setPlanet(2016);
-		planet->setLastUpdate(lastUpdateTime);
+		planet->setLastUpdate(lastUpdateTime - lastUpdateTime);
 		planet->addFacility(2524, 1019338918550);
 		planet->addFacility(2541, 1019339001861);
 		planet->addFacility(2474, 1019339001862);
@@ -86,25 +86,25 @@ int main(int argc, const char * argv[]) {
 		planet->addFacility(2474, 1019586416755);
 		planet->addFacility(2848, 1019741064685);
 		
-		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001877), 2270);
-		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001873), 2270);
-		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001870), 2270);
-		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001865), 2399);
-		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001862), 2399);
-		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), 2399);
-		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), 2399);
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001877), Commodity(engine, 2270, 0));
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001873), Commodity(engine, 2270, 0));
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001870), Commodity(engine, 2270, 0));
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001865), Commodity(engine, 2399, 0));
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001862), Commodity(engine, 2399, 0));
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), Commodity(engine, 2399, 0));
+		planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), Commodity(engine, 2399, 0));
 		
-		planet->addRoute(planet->findFacility(1019339001862), planet->findFacility(1019339001863), 3689);
-		planet->addRoute(planet->findFacility(1019339001865), planet->findFacility(1019339001863), 2329);
-		planet->addRoute(planet->findFacility(1019339001870), planet->findFacility(1019339001861), 2399);
-		planet->addRoute(planet->findFacility(1019339001873), planet->findFacility(1019339001861), 2399);
-		planet->addRoute(planet->findFacility(1019339001877), planet->findFacility(1019339001861), 2399);
-		planet->addRoute(planet->findFacility(1019339001881), planet->findFacility(1019339001861), 2270);
-		planet->addRoute(planet->findFacility(1019339001884), planet->findFacility(1019339001861), 2396);
-		planet->addRoute(planet->findFacility(1019339001885), planet->findFacility(1019339001861), 2396);
-		planet->addRoute(planet->findFacility(1019339001888), planet->findFacility(1019339001861), 2396);
-		planet->addRoute(planet->findFacility(1019586416755), planet->findFacility(1019339001863), 2329);
-		planet->addRoute(planet->findFacility(1019741064685), planet->findFacility(1019339001861), 2288);
+		planet->addRoute(planet->findFacility(1019339001862), planet->findFacility(1019339001863), Commodity(engine, 3689, 0));
+		planet->addRoute(planet->findFacility(1019339001865), planet->findFacility(1019339001863), Commodity(engine, 2329, 0));
+		planet->addRoute(planet->findFacility(1019339001870), planet->findFacility(1019339001861), Commodity(engine, 2399, 0));
+		planet->addRoute(planet->findFacility(1019339001873), planet->findFacility(1019339001861), Commodity(engine, 2399, 0));
+		planet->addRoute(planet->findFacility(1019339001877), planet->findFacility(1019339001861), Commodity(engine, 2399, 0));
+		planet->addRoute(planet->findFacility(1019339001881), planet->findFacility(1019339001861), Commodity(engine, 2270, 0));
+		planet->addRoute(planet->findFacility(1019339001884), planet->findFacility(1019339001861), Commodity(engine, 2396, 0));
+		planet->addRoute(planet->findFacility(1019339001885), planet->findFacility(1019339001861), Commodity(engine, 2396, 0));
+		planet->addRoute(planet->findFacility(1019339001888), planet->findFacility(1019339001861), Commodity(engine, 2396, 0));
+		planet->addRoute(planet->findFacility(1019586416755), planet->findFacility(1019339001863), Commodity(engine, 2329, 0));
+		planet->addRoute(planet->findFacility(1019741064685), planet->findFacility(1019339001861), Commodity(engine, 2288, 0));
 		
 		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001862))->setSchematic(73);
 		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001865))->setSchematic(79);
@@ -118,21 +118,31 @@ int main(int argc, const char * argv[]) {
 
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setCycleTime(120 * 60);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setQuantityPerCycle(4741);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setLaunchTime(1452068276);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setInstallTime(1452068276);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setExpiryTime(1452500276);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setLaunchTime(1452068276 - lastUpdateTime);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setInstallTime(1452068276 - lastUpdateTime);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setExpiryTime(1452500276 - lastUpdateTime);
 		
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setCycleTime(120 * 60);
 		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setQuantityPerCycle(6425);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setLaunchTime(1452068276);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setInstallTime(1452068276);
-		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setExpiryTime(1452500276);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setLaunchTime(1452068276 - lastUpdateTime);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setInstallTime(1452068276 - lastUpdateTime);
+		std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setExpiryTime(1452500276 - lastUpdateTime);
+
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019586416755))->setLaunchTime(0);
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001865))->setLaunchTime(0);
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001870))->setLaunchTime(0);
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001873))->setLaunchTime(0);
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001877))->setLaunchTime(0);
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001884))->setLaunchTime(0);
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001885))->setLaunchTime(0);
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001888))->setLaunchTime(0);
+		std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019586416755))->setLaunchTime(0);
 
 		double endTime = planet->simulate();
 		
 
-		auto storage = planet->findFacility(1019339001861);
-		size_t n = storage->numberOfCycles();
+		auto fac = planet->findFacility(1019339001865);
+		size_t n = fac->numberOfCycles();
 /*		for (const auto& warning: planet->getWarnings()) {
 			switch (warning->getCode()) {
 				case Warning::CODE_WASTED:
@@ -150,8 +160,8 @@ int main(int argc, const char * argv[]) {
 		}*/
 		
 		//std::cout << *planet << std::endl;
-		auto cycle = storage->getCycle(endTime);
-		auto free = storage->getFreeVolume();
+		auto cycle = fac->getCycle(endTime);
+		auto free = fac->getFreeVolume();
 		return 0;
 		NSString* garmurDNA = @"33816:2404;3:14248;1:1952;1:19349;1:28746;1:31936;1:2605;1:2048;1:31183;1:31153;1:31111;1:29009;1:27371;3::";
 		NSString* ishkurDNA = @"12042:3178;3:5973;1:448;1:4025;1:1183;1:1447;1:10190;1:2048;1:31538;1:31526;1:2456;5:12612;3::";

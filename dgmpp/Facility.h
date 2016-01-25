@@ -5,6 +5,8 @@
 #include <iterator>
 
 namespace dgmpp {
+	extern bool operator == (const std::list<std::shared_ptr<const Commodity>>& left, const std::list<std::shared_ptr<const Commodity>>& right);
+
 	class Facility : public std::enable_shared_from_this<Facility> {
 	public:
 		Facility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner = std::shared_ptr<Planet>(nullptr), int64_t identifier = 0);
@@ -48,6 +50,8 @@ namespace dgmpp {
 		
 		virtual bool routed() const {return true;};
 
+		virtual void update(double time);
+
 	protected:
 		std::list<std::shared_ptr<const Route>> inputs_;
 		std::list<std::shared_ptr<const Route>> outputs_;
@@ -59,10 +63,10 @@ namespace dgmpp {
 		virtual void finishCycle(double cycleTime) {};
 		virtual void startCycle(double cycleTime) {};
 		virtual int priority() const {return 0;};
-		virtual void update(double time) {};
+		
 		
 		friend class Planet;
-		double nextUpdateTime_;
+		friend class Route;
 	private:
 		std::weak_ptr<Planet> owner_;
 		TypeID typeID_;

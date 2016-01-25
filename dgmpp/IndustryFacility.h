@@ -26,14 +26,17 @@ namespace dgmpp {
 		Commodity getOutput() const;
 		virtual bool routed() const;
 
+		virtual void update(double time);
+
 	protected:
+		virtual double getNextUpdateTime() const;
 		virtual double getCycleEndTime() const;
 		virtual void finishCycle(double cycleTime);
 		virtual void startCycle(double cycleTime);
-		virtual void update(double time);
 		virtual int priority() const {return -getOutput().getTier();};
 	private:
 		double launchTime_;
+		double nextUpdateTime_;
 		std::shared_ptr<Schematic> schematic_;
 		bool idle_;
 	};

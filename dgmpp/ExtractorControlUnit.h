@@ -17,9 +17,9 @@ namespace dgmpp {
 		virtual double getExpiryTime() const {return expiryTime_;};
 		virtual double getCycleTime() const {return cycleTime_;};
 
-		void setLaunchTime(double launchTime) {launchTime_ = std::max(launchTime, 0.0);};
-		void setInstallTime(double installTime) {installTime_ = std::max(installTime, 0.0);};
-		void setExpiryTime(double expiryTime) {expiryTime_ = std::max(expiryTime, 0.0);};
+		void setLaunchTime(double launchTime) {launchTime_ = launchTime;};
+		void setInstallTime(double installTime) {installTime_ = installTime;};
+		void setExpiryTime(double expiryTime) {expiryTime_ = expiryTime;};
 		void setCycleTime(double cycleTime);
 		void setQuantityPerCycle(double quantityPerCycle);
 		double getQuantityPerCycle() const {return quantityPerCycle_;};
@@ -32,6 +32,7 @@ namespace dgmpp {
 		virtual bool routed() const;
 
 	protected:
+		virtual double getNextUpdateTime() const;
 		virtual double getCycleEndTime() const;
 		virtual void finishCycle(double cycleTime);
 		virtual void startCycle(double cycleTime);
