@@ -79,18 +79,14 @@
 		125ECFD71C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */; };
 		125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		125ECFD91C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		125ECFDC1C4A2C0500A1CDA9 /* StorageCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFDA1C4A2C0500A1CDA9 /* StorageCycle.cpp */; };
-		125ECFDD1C4A2C0500A1CDA9 /* StorageCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFDA1C4A2C0500A1CDA9 /* StorageCycle.cpp */; };
-		125ECFDE1C4A2C0500A1CDA9 /* StorageCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFDB1C4A2C0500A1CDA9 /* StorageCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		125ECFDF1C4A2C0500A1CDA9 /* StorageCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFDB1C4A2C0500A1CDA9 /* StorageCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1286564F1C57AD440002BA7E /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1286564D1C57AD440002BA7E /* State.cpp */; };
 		128656501C57AD440002BA7E /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1286564D1C57AD440002BA7E /* State.cpp */; };
 		128656511C57AD440002BA7E /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 1286564E1C57AD440002BA7E /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		128656521C57AD440002BA7E /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 1286564E1C57AD440002BA7E /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		128656551C57AE6A0002BA7E /* ProductionState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 128656531C57AE6A0002BA7E /* ProductionState.cpp */; };
 		128656561C57AE6A0002BA7E /* ProductionState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 128656531C57AE6A0002BA7E /* ProductionState.cpp */; };
-		128656571C57AE6A0002BA7E /* ProductionState.h in Headers */ = {isa = PBXBuildFile; fileRef = 128656541C57AE6A0002BA7E /* ProductionState.h */; };
-		128656581C57AE6A0002BA7E /* ProductionState.h in Headers */ = {isa = PBXBuildFile; fileRef = 128656541C57AE6A0002BA7E /* ProductionState.h */; };
+		128656571C57AE6A0002BA7E /* ProductionState.h in Headers */ = {isa = PBXBuildFile; fileRef = 128656541C57AE6A0002BA7E /* ProductionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		128656581C57AE6A0002BA7E /* ProductionState.h in Headers */ = {isa = PBXBuildFile; fileRef = 128656541C57AE6A0002BA7E /* ProductionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1293C4291C46C10A00B33378 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1293C4271C46C10A00B33378 /* Planet.cpp */; };
 		1293C42A1C46C10A00B33378 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1293C4271C46C10A00B33378 /* Planet.cpp */; };
 		1293C42B1C46C10A00B33378 /* Planet.h in Headers */ = {isa = PBXBuildFile; fileRef = 1293C4281C46C10A00B33378 /* Planet.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -285,8 +281,6 @@
 		125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cycle.h; sourceTree = "<group>"; };
 		125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionCycle.cpp; sourceTree = "<group>"; };
 		125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductionCycle.h; sourceTree = "<group>"; };
-		125ECFDA1C4A2C0500A1CDA9 /* StorageCycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StorageCycle.cpp; sourceTree = "<group>"; };
-		125ECFDB1C4A2C0500A1CDA9 /* StorageCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageCycle.h; sourceTree = "<group>"; };
 		1286564D1C57AD440002BA7E /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
 		1286564E1C57AD440002BA7E /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		128656531C57AE6A0002BA7E /* ProductionState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionState.cpp; sourceTree = "<group>"; };
@@ -491,8 +485,6 @@
 				125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */,
 				125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */,
 				125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */,
-				125ECFDA1C4A2C0500A1CDA9 /* StorageCycle.cpp */,
-				125ECFDB1C4A2C0500A1CDA9 /* StorageCycle.h */,
 				1286564D1C57AD440002BA7E /* State.cpp */,
 				1286564E1C57AD440002BA7E /* State.h */,
 				128656531C57AE6A0002BA7E /* ProductionState.cpp */,
@@ -744,7 +736,6 @@
 				12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */,
 				12564BEF1B84B07F000F68D8 /* ControlTower.h in Headers */,
 				12564BF01B84B07F000F68D8 /* Structure.h in Headers */,
-				125ECFDE1C4A2C0500A1CDA9 /* StorageCycle.h in Headers */,
 				12564BF11B84B07F000F68D8 /* Blob.h in Headers */,
 				12564BF21B84B07F000F68D8 /* FetchResult.h in Headers */,
 				12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */,
@@ -803,7 +794,6 @@
 				12EFCCBC1C1AB334003ECA7F /* HeatSimulator.h in Headers */,
 				12EFCCBD1C1AB334003ECA7F /* ControlTower.h in Headers */,
 				12EFCCBE1C1AB334003ECA7F /* Structure.h in Headers */,
-				125ECFDF1C4A2C0500A1CDA9 /* StorageCycle.h in Headers */,
 				12EFCCBF1C1AB334003ECA7F /* Blob.h in Headers */,
 				12EFCCC01C1AB334003ECA7F /* FetchResult.h in Headers */,
 				12EFCCC11C1AB334003ECA7F /* SqlConnector.h in Headers */,
@@ -1059,7 +1049,6 @@
 				12564BC01B84B027000F68D8 /* ControlTower.cpp in Sources */,
 				12564BCE1B84B027000F68D8 /* Item.cpp in Sources */,
 				125ECFD61C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */,
-				125ECFDC1C4A2C0500A1CDA9 /* StorageCycle.cpp in Sources */,
 				12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */,
 				12A156AE1C46548D00C3CF0B /* Route.cpp in Sources */,
 				12564BBF1B84B027000F68D8 /* HeatSimulator.cpp in Sources */,
@@ -1132,7 +1121,6 @@
 				12EFCC951C1AB334003ECA7F /* ControlTower.cpp in Sources */,
 				12EFCC961C1AB334003ECA7F /* Item.cpp in Sources */,
 				125ECFD71C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */,
-				125ECFDD1C4A2C0500A1CDA9 /* StorageCycle.cpp in Sources */,
 				12EFCC981C1AB334003ECA7F /* Implant.cpp in Sources */,
 				12A156AF1C46548D00C3CF0B /* Route.cpp in Sources */,
 				12EFCC991C1AB334003ECA7F /* HeatSimulator.cpp in Sources */,

@@ -17,7 +17,7 @@ using namespace dgmpp;
 
 
 
-IndustryFacility::IndustryFacility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), idle_(true), nextUpdateTime_(-1) {
+IndustryFacility::IndustryFacility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), nextUpdateTime_(-1) {
 }
 
 std::shared_ptr<Schematic> IndustryFacility::setSchematic(TypeID schematicID) {
@@ -27,8 +27,6 @@ std::shared_ptr<Schematic> IndustryFacility::setSchematic(TypeID schematicID) {
 
 void IndustryFacility::setLaunchTime(double launchTime) {
 	launchTime_ = std::max(launchTime, 0.0);
-	if (launchTime > 0)
-		idle_ = false;
 };
 
 
@@ -36,132 +34,69 @@ double IndustryFacility::getCycleTime() const {
 	return schematic_ ? schematic_->getCycleTime() : 0;
 }
 
-int32_t IndustryFacility::getQuantityPerCycle() const {
+uint32_t IndustryFacility::getQuantityPerCycle() const {
 	return schematic_ ? schematic_->getOutput().getQuantity() : 0;
 }
 
-double IndustryFacility::getCycleEndTime() const {
-	double launchTime = getLaunchTime();
-	if (launchTime > 0)
-		return Facility::getCycleEndTime();
-	else
-		return 0;
-}
-
 double IndustryFacility::getNextUpdateTime() const {
-	double launchTime = getLaunchTime();
-	if (launchTime >= 0) {
-		if (nextUpdateTime_ <= 0)
-			return launchTime;
-		else if (idle_)
-			return std::numeric_limits<double>::infinity();
-		else
-			return Facility::getCycleEndTime();
-	}
+	if (productionCycle_)
+		return productionCycle_->getLaunchTime() + productionCycle_->getCycleTime();
 	else
-		return std::numeric_limits<double>::infinity();
+		return getLaunchTime();
 }
 
 void IndustryFacility::finishCycle(double time) {
-	if (schematic_) {
-		Commodity product = schematic_->getOutput();
-		addCommodity(product);
-		Facility::update(time);
-		auto left = getCommodity(getOutput());
-		cycles_.push_back(std::make_shared<ProductionCycle>(getLaunchTime(), getCycleTime(), Commodity(left, product.getQuantity() - left.getQuantity()), left));
-		if (left.getQuantity() > 0)
-			extractCommodity(left);
-	}
-	idle_ = true;
+	Commodity product = schematic_->getOutput();
+	addCommodity(product);
+	Facility::update(time);
+	auto left = getCommodity(getOutput());
+	if (left.getQuantity() > 0)
+		extractCommodity(left);
+	productionCycle_->setYield(product - left);
+	productionCycle_->setWaste(left);
+	productionCycle_ = nullptr;
+	setLaunchTime(std::numeric_limits<double>::infinity());
+	states_.push_back(std::make_shared<ProductionState>(time, nullptr));
 }
 
-void IndustryFacility::startCycle(double time) {
-	if (schematic_) {
-		for (const auto& input: schematic_->getInputs()) {
-			const auto& c = getCommodity(input);
-			if (c.getQuantity() < input.getQuantity()) {
-				if (!idle_) {
-					idle_ = true;
-					Commodity commodity = schematic_->getOutput();
-					commodity.setQuantity(0);
-					cycles_.push_back(std::make_shared<ProductionCycle>(time, std::numeric_limits<double>::infinity(), commodity, commodity));
-				}
-				else {
-					bool equals = false;
-
-					if (cycles_.size() > 0) {
-						auto lastCycle = std::dynamic_pointer_cast<ProductionCycle>(cycles_.back());
-						if (lastCycle->getLaunchTime() == time)
-							equals = true;
-						else
-							equals = lastCycle->getMaterials() == getCommodities();
-						
-						if (!equals)
-							lastCycle->setCycleTime(time - lastCycle->getLaunchTime());
-					}
-					
-					if (!equals) {
-						Commodity commodity = schematic_->getOutput();
-						commodity.setQuantity(0);
-						cycles_.push_back(std::make_shared<ProductionCycle>(time, std::numeric_limits<double>::infinity(), commodity, commodity));
-					}
-				}
-				setLaunchTime(0);
-				nextUpdateTime_ = std::numeric_limits<double>::infinity();
-				return;
-			}
-		}
-		
-		if (idle_) {
-			if (cycles_.size() > 0) {
-				auto lastCycle = std::dynamic_pointer_cast<ProductionCycle>(cycles_.back());
-				lastCycle->setCycleTime(time - lastCycle->getLaunchTime());
-			}
-		}
-		
-		idle_ = false;
-		setLaunchTime(time);
-		nextUpdateTime_ = time + getCycleTime();
+bool IndustryFacility::startCycle(double time) {
+	setLaunchTime(std::numeric_limits<double>::infinity());
+	if (schematic_->getInputs() == getCommodities()) {
+		productionCycle_ = std::make_shared<ProductionCycle>(time, getCycleTime(), getOutput(), getOutput());
 		clear();
-		for (const auto& input: getInputs()) {
+		for (const auto& input: getInputs())
 			input->update(time);
-		}
+		return true;
 	}
-	else
-		nextUpdateTime_ = std::numeric_limits<double>::infinity();
+	return false;
 }
 
 void IndustryFacility::update(double time) {
 	if (productionCycle_) {
 		double cycleEndTime = productionCycle_->getLaunchTime() + productionCycle_->getCycleTime();
 		bool endCycle = cycleEndTime == time;
-		if (endCycle) {
-			
-		}
+		if (endCycle)
+			finishCycle(time);
 	}
 	
-	if (!productionCycle_) {
-		
+	if (!productionCycle_)
+		if (startCycle(time))
+			return;
+	
+	auto materials = getCommodities();
+	std::shared_ptr<ProductionState> currentState;
+	if (states_.size() > 0) {
+		currentState = std::dynamic_pointer_cast<ProductionState>(states_.back());
+		if (currentState->getTimestamp() < time && (currentState->getCurrentCycle() != productionCycle_ || currentState->getCommodities() != materials))
+			currentState = nullptr;
 	}
 	
-	double cycleEndTime = getCycleEndTime();
-	bool endCycle = !std::isinf(cycleEndTime) && fabs(cycleEndTime - time) < 0.5 && !idle_;
-
-	if (endCycle) {
-		finishCycle(time);
+	if (!currentState) {
+		currentState = std::make_shared<ProductionState>(time, nullptr);
+		states_.push_back(currentState);
 	}
-	
-	if (idle_)
-		startCycle(time);
-	
-	if (cycles_.size() > 0) {
-		auto lastCycle = std::dynamic_pointer_cast<ProductionCycle>(cycles_.back());
-		if (lastCycle->getLaunchTime() == time)
-			lastCycle->setMaterials(getCommodities());
-	}
-	
-	if (idle_)
-		nextUpdateTime_ = std::numeric_limits<double>::infinity();
+	currentState->setCommodities(materials);
+	currentState->setCurrentCycle(productionCycle_);
 }
 
 
@@ -177,10 +112,6 @@ uint32_t IndustryFacility::getFreeStorage(const Commodity& commodity) const {
 	}
 	else
 		return 0;
-}
-
-std::shared_ptr<const ProductionCycle> IndustryFacility::getCycle(double timeStamp) const {
-	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(timeStamp));
 }
 
 Commodity IndustryFacility::getOutput() const {

@@ -37,6 +37,10 @@ bool dgmpp::operator == (const std::list<std::shared_ptr<const Commodity>>& left
 		return false;
 }
 
+bool dgmpp::operator != (const std::list<std::shared_ptr<const Commodity>>& left, const std::list<std::shared_ptr<const Commodity>>& right) {
+	return !(left == right);
+}
+
 Facility::Facility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier): typeID_(typeID), typeName_(typeName), capacity_(capacity), owner_(owner), identifier_(identifier) {
 }
 
@@ -110,11 +114,11 @@ const Commodity& Facility::getIncomming(const Commodity& commodity) const {
 	}
 }
 
-std::list<std::shared_ptr<const Commodity>> Facility::getCommodities() const {
-	std::list<std::shared_ptr<const Commodity>> list;
+std::list<const Commodity> Facility::getCommodities() const {
+	std::list<const Commodity> list;
 	for (const auto& commodity: commodities_) {
 		if (commodity.second->getQuantity() > 0)
-			list.push_back(std::make_shared<const Commodity>(*commodity.second));
+			list.push_back(*commodity.second);
 	}
 	return list;
 }
@@ -145,20 +149,14 @@ double Facility::getVolume() const {
 }
 
 
-std::shared_ptr<const Cycle> Facility::getCycle(double timeStamp) const {
-	std::shared_ptr<Cycle> last;
-	for (const auto& cycle: cycles_) {
-		double from = cycle->getLaunchTime();
-		if (timeStamp >= from) {
-			double to = cycle->getCycleTime();
-			if (timeStamp < to)
-				return cycle;
-		}
-		else
-			return last;
-		last = cycle;
+std::shared_ptr<const State> Facility::getState(double timestamp) const {
+	std::shared_ptr<const State> lastState;
+	for (const auto& state: states_) {
+		if (state->getTimestamp() > timestamp)
+			return lastState;
+		lastState = state;
 	}
-	return last;
+	return nullptr;
 }
 
 void Facility::update(double time) {

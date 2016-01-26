@@ -84,7 +84,6 @@ void ExtractorControlUnit::update(double time) {
 			extractionCycle_->setWaste(left);
 			
 			clear();
-			cycles_.push_back(extractionCycle_);
 			extractionCycle_ = nullptr;
 		}
 	}
@@ -94,21 +93,19 @@ void ExtractorControlUnit::update(double time) {
 		if (getLaunchTime() < getInstallTime()) {
 			if (time == getInstallTime())
 				newCycle = true;
-			setLaunchTime(time);
 		}
-		else if (time == getLaunchTime())
+		else if (time == getLaunchTime() || time < getExpiryTime() - getCycleTime())
 			newCycle = true;
 		if (newCycle) {
+			setLaunchTime(std::numeric_limits<double>::infinity());
 			extractionCycle_ = std::make_shared<ProductionCycle>(time, getCycleTime(), getOutput(), getOutput());
 			states_.push_back(std::make_shared<ProductionState>(time, extractionCycle_));
 		}
+		else
+			states_.push_back(std::make_shared<ProductionState>(time, nullptr));
 	}
 }
 
-
-std::shared_ptr<const ProductionCycle> ExtractorControlUnit::getCycle(double timeStamp) const {
-	return std::dynamic_pointer_cast<const ProductionCycle>(Facility::getCycle(timeStamp));
-}
 
 Commodity ExtractorControlUnit::getOutput() const {
 	auto outputs = getOutputs();

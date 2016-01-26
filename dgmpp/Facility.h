@@ -7,6 +7,7 @@
 
 namespace dgmpp {
 	extern bool operator == (const std::list<std::shared_ptr<const Commodity>>& left, const std::list<std::shared_ptr<const Commodity>>& right);
+	extern bool operator != (const std::list<std::shared_ptr<const Commodity>>& left, const std::list<std::shared_ptr<const Commodity>>& right);
 
 	class Facility : public std::enable_shared_from_this<Facility> {
 	public:
@@ -28,16 +29,15 @@ namespace dgmpp {
 
 		double getCapacity() const {return capacity_;};
 
-		size_t numberOfCycles() const {return cycles_.size();};
-		std::shared_ptr<const Cycle> getCycle(double timeStamp) const;
-		const std::list<std::shared_ptr<Cycle>>& getCycles() const {return cycles_;};
+		size_t numberOfStates() const {return states_.size();};
+		std::shared_ptr<const State> getState(double timestamp) const;
+		const std::list<std::shared_ptr<State>>& getStates() const {return states_;};
 
-		
 		virtual void addCommodity(const Commodity& commodity);
 		virtual void addCommodity(TypeID typeID, uint32_t quantity);
 		virtual void extractCommodity(const Commodity& commodity);
 		virtual void clear();
-		std::list<std::shared_ptr<const Commodity>> getCommodities() const;
+		std::list<const Commodity> getCommodities() const;
 		const Commodity& getCommodity(const Commodity& commodity) const;
 		const Commodity& getIncomming(const Commodity& commodity) const;
 		
@@ -55,7 +55,6 @@ namespace dgmpp {
 	protected:
 		std::list<std::shared_ptr<const Route>> inputs_;
 		std::list<std::shared_ptr<const Route>> outputs_;
-		std::list<std::shared_ptr<Cycle>> cycles_;
 		std::list<std::shared_ptr<State>> states_;
 
 		mutable std::map<TypeID, std::shared_ptr<Commodity>> commodities_;

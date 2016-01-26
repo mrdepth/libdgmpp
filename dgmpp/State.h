@@ -1,5 +1,6 @@
 #pragma once
 #include "types.h"
+#include "Commodity.h"
 
 namespace dgmpp {
 	class State {
@@ -8,12 +9,13 @@ namespace dgmpp {
 		virtual ~State() {};
 		virtual double getTimestamp() const {return timestamp_;};
 		virtual void setTimestamp(double timestamp) {timestamp_ = timestamp;};
-		
-		const std::list<std::shared_ptr<const Commodity>>& getCommodities() const {return commodities_;};
-		void setCommodities(const std::list<std::shared_ptr<const Commodity>>& commodities);
+		double getVolume() const;
+
+		const std::list<const Commodity>& getCommodities() const {return commodities_;};
+		void setCommodities(const std::list<const Commodity>& commodities);
 		
 	private:
 		double timestamp_;
-		std::list<std::shared_ptr<const Commodity>> commodities_;
+		std::list<const Commodity> commodities_;
 	};
 }

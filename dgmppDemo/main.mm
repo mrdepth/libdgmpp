@@ -65,8 +65,8 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
 		
 		double lastUpdateTime = 1452068276;
 		auto planet = engine->setPlanet(2016);
@@ -142,7 +142,6 @@ int main(int argc, const char * argv[]) {
 		
 
 		auto fac = planet->findFacility(1019339001865);
-		size_t n = fac->numberOfCycles();
 /*		for (const auto& warning: planet->getWarnings()) {
 			switch (warning->getCode()) {
 				case Warning::CODE_WASTED:
@@ -160,7 +159,6 @@ int main(int argc, const char * argv[]) {
 		}*/
 		
 		//std::cout << *planet << std::endl;
-		auto cycle = fac->getCycle(endTime);
 		auto free = fac->getFreeVolume();
 		return 0;
 		NSString* garmurDNA = @"33816:2404;3:14248;1:1952;1:19349;1:28746;1:31936;1:2605;1:2048;1:31183;1:31153;1:31111;1:29009;1:27371;3::";

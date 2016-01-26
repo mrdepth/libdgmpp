@@ -26,7 +26,6 @@ namespace dgmpp {
 		
 		uint32_t getYieldAtTime(double time) const;
 		
-		std::shared_ptr<const ProductionCycle> getCycle(double timeStamp) const;
 		Commodity getOutput() const;
 
 		virtual bool routed() const;

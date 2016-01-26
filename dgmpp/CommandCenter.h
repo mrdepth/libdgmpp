@@ -1,9 +1,9 @@
 #pragma once
-#include "Facility.h"
+#include "StorageFacility.h"
 #include "Route.h"
 
 namespace dgmpp {
-	class CommandCenter: public Facility {
+	class CommandCenter: public StorageFacility {
 	public:
 		enum: TypeID {
 			GROUP_ID = 1027

@@ -51,4 +51,5 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <dgmpp/Planet.h>
 #include <dgmpp/Cycle.h>
 #include <dgmpp/ProductionCycle.h>
-#include <dgmpp/StorageCycle.h>
+#include <dgmpp/State.h>
+#include <dgmpp/ProductionState.h>
