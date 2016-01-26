@@ -132,6 +132,18 @@ void IndustryFacility::startCycle(double time) {
 }
 
 void IndustryFacility::update(double time) {
+	if (productionCycle_) {
+		double cycleEndTime = productionCycle_->getLaunchTime() + productionCycle_->getCycleTime();
+		bool endCycle = cycleEndTime == time;
+		if (endCycle) {
+			
+		}
+	}
+	
+	if (!productionCycle_) {
+		
+	}
+	
 	double cycleEndTime = getCycleEndTime();
 	bool endCycle = !std::isinf(cycleEndTime) && fabs(cycleEndTime - time) < 0.5 && !idle_;
 
@@ -153,12 +165,12 @@ void IndustryFacility::update(double time) {
 }
 
 
-int32_t IndustryFacility::getFreeStorage(const Commodity& commodity) const {
+uint32_t IndustryFacility::getFreeStorage(const Commodity& commodity) const {
 	if (schematic_) {
 		for (const auto& input: schematic_->getInputs()) {
 			if (input.getTypeID() == commodity.getTypeID()) {
 				const auto& c = getCommodity(input);
-				return std::max(input.getQuantity() - c.getQuantity(), 0);
+				return std::max(static_cast<int32_t>(input.getQuantity()) - static_cast<int32_t>(c.getQuantity()), 0);
 			}
 		}
 		return 0;

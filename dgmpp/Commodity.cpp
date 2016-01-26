@@ -62,3 +62,17 @@ bool Commodity::operator==(const Commodity& other) const {
 std::ostream& dgmpp::operator<<(std::ostream& os, const Commodity& commodity) {
 	return os << "{\"typeName\":\"" << commodity.getTypeName() << "\", \"quantity\":" << commodity.getQuantity() << "}";
 }
+
+Commodity Commodity::operator+(const Commodity& other) {
+	if (typeID_ != getTypeID())
+		throw DifferentCommoditiesTypeIDs(std::to_string(other.getTypeID()));
+	return Commodity(other, quantity_ + other.getQuantity());
+}
+
+Commodity Commodity::operator-(const Commodity& other) {
+	if (typeID_ != getTypeID())
+		throw DifferentCommoditiesTypeIDs(std::to_string(other.getTypeID()));
+	else if (getQuantity() < quantity_)
+		throw  NotEnoughCommodities(std::to_string(quantity_ - other.getQuantity()));
+	return Commodity(other, quantity_ - other.getQuantity());
+}

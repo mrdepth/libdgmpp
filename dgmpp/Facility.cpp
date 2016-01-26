@@ -56,11 +56,6 @@ void Facility::removeOutput(const std::shared_ptr<const Route>& route) {
 	outputs_.remove(route);
 }
 
-double Facility::getCycleEndTime() const {
-	double launchTime = getLaunchTime();
-	double cycleTime = getCycleTime();
-	return launchTime >= 0 && cycleTime > 0 ? launchTime + cycleTime : std::numeric_limits<double>::infinity();
-}
 
 double Facility::getNextUpdateTime() const {
 	return std::numeric_limits<double>::infinity();
@@ -73,6 +68,12 @@ void Facility::addCommodity(const Commodity& commodity) {
 		i->second->add(commodity.getQuantity());
 	else
 		commodities_[commodity.getTypeID()] = std::make_shared<Commodity>(commodity);
+	
+	auto j = incomming_.find(commodity.getTypeID());
+	if (j != incomming_.end())
+		j->second->add(commodity.getQuantity());
+	else
+		incomming_[commodity.getTypeID()] = std::make_shared<Commodity>(commodity);
 }
 
 void Facility::addCommodity(TypeID typeID, uint32_t quantity) {
@@ -98,8 +99,15 @@ const Commodity& Facility::getCommodity(const Commodity& commodity) const {
 	}
 }
 
-void Facility::clear() {
-	commodities_.clear();
+const Commodity& Facility::getIncomming(const Commodity& commodity) const {
+	auto i = incomming_.find(commodity.getTypeID());
+	if (i != incomming_.end())
+		return *i->second;
+	else {
+		auto c = std::make_shared<Commodity>(commodity, 0);
+		incomming_[commodity.getTypeID()] = c;
+		return *c;
+	}
 }
 
 std::list<std::shared_ptr<const Commodity>> Facility::getCommodities() const {
@@ -111,7 +119,11 @@ std::list<std::shared_ptr<const Commodity>> Facility::getCommodities() const {
 	return list;
 }
 
-int32_t Facility::getFreeStorage(const Commodity& commodity) const {
+void Facility::clear() {
+	commodities_.clear();
+}
+
+uint32_t Facility::getFreeStorage(const Commodity& commodity) const {
 	double itemVolume = commodity.getItemVolume();
 	if (itemVolume > 0) {
 		double free = getFreeVolume();

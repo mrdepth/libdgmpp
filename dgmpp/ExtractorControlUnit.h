@@ -1,6 +1,6 @@
 #pragma once
 #include "Facility.h"
-#include "ProductionCycle.h"
+#include "ProductionState.h"
 
 namespace dgmpp {
 	class ExtractorControlUnit: public Facility {
@@ -21,10 +21,10 @@ namespace dgmpp {
 		void setInstallTime(double installTime) {installTime_ = installTime;};
 		void setExpiryTime(double expiryTime) {expiryTime_ = expiryTime;};
 		void setCycleTime(double cycleTime);
-		void setQuantityPerCycle(double quantityPerCycle);
-		double getQuantityPerCycle() const {return quantityPerCycle_;};
+		void setQuantityPerCycle(uint32_t quantityPerCycle);
+		uint32_t getQuantityPerCycle() const {return quantityPerCycle_;};
 		
-		int32_t getYieldAtTime(double time) const;
+		uint32_t getYieldAtTime(double time) const;
 		
 		std::shared_ptr<const ProductionCycle> getCycle(double timeStamp) const;
 		Commodity getOutput() const;
@@ -33,9 +33,6 @@ namespace dgmpp {
 
 	protected:
 		virtual double getNextUpdateTime() const;
-		virtual double getCycleEndTime() const;
-		virtual void finishCycle(double cycleTime);
-		virtual void startCycle(double cycleTime);
 		virtual void update(double time);
 		virtual int priority() const {return 1000;};
 	private:
@@ -43,11 +40,13 @@ namespace dgmpp {
 		double installTime_;
 		double expiryTime_;
 		double cycleTime_;
-		double quantityPerCycle_;
+		uint32_t quantityPerCycle_;
+		
 		float decayFactor_;
 		float noiseFactor_;
-		
 		double phaseShift_;
 		double w_;
+		
+		std::shared_ptr<ProductionCycle> extractionCycle_;
 	};
 }

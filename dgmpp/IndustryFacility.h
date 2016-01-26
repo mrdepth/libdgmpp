@@ -20,7 +20,7 @@ namespace dgmpp {
 		int32_t getQuantityPerCycle() const;
 		void setLaunchTime(double launchTime);
 		
-		virtual int32_t getFreeStorage(const Commodity& commodity) const;
+		virtual uint32_t getFreeStorage(const Commodity& commodity) const;
 		
 		std::shared_ptr<const ProductionCycle> getCycle(double timeStamp) const;
 		Commodity getOutput() const;
@@ -31,13 +31,15 @@ namespace dgmpp {
 	protected:
 		virtual double getNextUpdateTime() const;
 		virtual double getCycleEndTime() const;
-		virtual void finishCycle(double cycleTime);
-		virtual void startCycle(double cycleTime);
+		void finishCycle(double cycleTime);
+		void startCycle(double cycleTime);
 		virtual int priority() const {return -getOutput().getTier();};
 	private:
 		double launchTime_;
 		double nextUpdateTime_;
 		std::shared_ptr<Schematic> schematic_;
-		bool idle_;
+		
+		std::shared_ptr<ProductionCycle> productionCycle_;
+
 	};
 }
