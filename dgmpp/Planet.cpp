@@ -114,14 +114,15 @@ double Planet::getNextCycleTime() {
 	double nextCycleTime = std::numeric_limits<double>::infinity();
 	for (auto facility: facilities_) {
 		double time = facility->getNextUpdateTime();
-		if (!std::isinf(time) && time >= lastUpdate_)
+		if (!std::isinf(time) && time >= timestamp_)
 			nextCycleTime = std::min(time, nextCycleTime);
 	}
 	return nextCycleTime;
 }
 
 void Planet::runCycle(double cycleTime) {
-	setLastUpdate(cycleTime);
+	//setLastUpdate(cycleTime);
+	timestamp_ = cycleTime;
 	for (auto facility: facilities_) {
 		facility->update(cycleTime);
 /*		double cycleEndTime = facility->getCycleEndTime();
@@ -137,7 +138,10 @@ void Planet::runCycle(double cycleTime) {
 }
 
 double Planet::simulate() {
-	double endTime = getLastUpdate();
+//	setLastUpdate(0);
+//	double endTime = getLastUpdate();
+	double endTime = 0;
+	timestamp_ = 0;
 	facilities_.sort([](const std::shared_ptr<Facility>& a, const std::shared_ptr<Facility>& b) -> bool {
 		return a->priority() > b->priority();
 	});

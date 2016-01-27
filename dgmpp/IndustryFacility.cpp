@@ -26,7 +26,7 @@ std::shared_ptr<Schematic> IndustryFacility::setSchematic(TypeID schematicID) {
 }
 
 void IndustryFacility::setLaunchTime(double launchTime) {
-	launchTime_ = std::max(launchTime, 0.0);
+	launchTime_ = launchTime;
 };
 
 
@@ -41,6 +41,8 @@ uint32_t IndustryFacility::getQuantityPerCycle() const {
 double IndustryFacility::getNextUpdateTime() const {
 	if (productionCycle_)
 		return productionCycle_->getLaunchTime() + productionCycle_->getCycleTime();
+	else if (getLaunchTime() < 0)
+		return getOwner()->getLastUpdate();
 	else
 		return getLaunchTime();
 }
@@ -60,13 +62,26 @@ void IndustryFacility::finishCycle(double time) {
 }
 
 bool IndustryFacility::startCycle(double time) {
-	setLaunchTime(std::numeric_limits<double>::infinity());
-	if (schematic_->getInputs() == getCommodities()) {
+	if (!std::isinf(getLaunchTime())) {
+		if (getLaunchTime() < 0 && time != getOwner()->getLastUpdate())
+			return false;
+		if (getLaunchTime() > 0 && time != getLaunchTime())
+			return false;
+	}
+	if (getLaunchTime()) {
+		setLaunchTime(std::numeric_limits<double>::infinity());
 		productionCycle_ = std::make_shared<ProductionCycle>(time, getCycleTime(), getOutput(), getOutput());
-		clear();
-		for (const auto& input: getInputs())
-			input->update(time);
 		return true;
+	}
+	else {
+		setLaunchTime(std::numeric_limits<double>::infinity());
+		if (schematic_->getInputs() == getCommodities()) {
+			productionCycle_ = std::make_shared<ProductionCycle>(time, getCycleTime(), getOutput(), getOutput());
+			clear();
+			for (const auto& input: getInputs())
+				input->getSource()->update(time);
+			return true;
+		}
 	}
 	return false;
 }

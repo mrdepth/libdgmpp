@@ -29,6 +29,7 @@ namespace dgmpp {
 		RoutesList routes_;
 		std::weak_ptr<Engine> engine_;
 		double lastUpdate_;
+		double timestamp_;
 		
 		double getNextCycleTime();
 		void runCycle(double cycleTime);

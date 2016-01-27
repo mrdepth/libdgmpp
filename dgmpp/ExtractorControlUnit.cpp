@@ -85,24 +85,30 @@ void ExtractorControlUnit::update(double time) {
 			
 			clear();
 			extractionCycle_ = nullptr;
+			states_.push_back(std::make_shared<ProductionState>(time, nullptr));
 		}
 	}
 	
 	if (!extractionCycle_) {
 		bool newCycle = false;
-		if (getLaunchTime() < getInstallTime()) {
-			if (time == getInstallTime())
+		if (!std::isinf(getLaunchTime())) {
+			if (getLaunchTime() < getInstallTime()) {
+				if (time == getInstallTime())
+					newCycle = true;
+			}
+			else if (time == getLaunchTime())
 				newCycle = true;
 		}
-		else if (time == getLaunchTime() || time < getExpiryTime() - getCycleTime())
+		else if (time <= getExpiryTime() - getCycleTime())
 			newCycle = true;
 		if (newCycle) {
 			setLaunchTime(std::numeric_limits<double>::infinity());
 			extractionCycle_ = std::make_shared<ProductionCycle>(time, getCycleTime(), getOutput(), getOutput());
-			states_.push_back(std::make_shared<ProductionState>(time, extractionCycle_));
+			if (states_.size() == 0)
+				states_.push_back(std::make_shared<ProductionState>(time, extractionCycle_));
+			else
+				std::dynamic_pointer_cast<ProductionState>(states_.back())->setCurrentCycle(extractionCycle_);
 		}
-		else
-			states_.push_back(std::make_shared<ProductionState>(time, nullptr));
 	}
 }
 
