@@ -1,4 +1,4 @@
-%include "Item.i"
+%include "Module.i"
 
 %shared_ptr(dgmpp::Structure);
 

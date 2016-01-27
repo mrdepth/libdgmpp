@@ -1,4 +1,8 @@
 %include "types.i"
+%include "SqlConnector.i"
+%include "Gang.i"
+%include "Area.i"
+%include "ControlTower.i"
 
 %shared_ptr(dgmpp::Engine);
 

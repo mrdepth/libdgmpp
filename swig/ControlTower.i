@@ -1,4 +1,6 @@
 %include "Item.i"
+%include "Structure.i"
+%include "DamagePattern.i"
 
 %shared_ptr(dgmpp::ControlTower);
 

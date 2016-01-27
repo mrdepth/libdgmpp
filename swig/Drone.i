@@ -1,6 +1,9 @@
 %include "Item.i"
+%include "Charge.i"
+%include "DamageVector.i"
 
 %shared_ptr(dgmpp::Drone);
+%shared_ptr(dgmpp::Ship);
 
 namespace dgmpp {
 

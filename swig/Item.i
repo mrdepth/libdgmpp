@@ -1,7 +1,9 @@
 %include "types.i"
 %include "Attribute.i"
+%include "Effect.i"
 
 %shared_ptr(dgmpp::Item);
+%shared_ptr(dgmpp::Engine);
 
 namespace dgmpp {
 

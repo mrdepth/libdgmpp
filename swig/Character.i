@@ -1,7 +1,8 @@
-%include "Skill.i"
+%include "Item.i"
 %include "Booster.i"
 %include "Implant.i"
 %include "Skill.i"
+%include "Ship.i"
 %include <std_map.i>
 
 namespace std {

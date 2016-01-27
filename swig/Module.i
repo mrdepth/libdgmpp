@@ -1,6 +1,8 @@
 %include "Item.i"
+%include "Charge.i"
 
 %shared_ptr(dgmpp::Module);
+%shared_ptr(dgmpp::Ship);
 
 namespace dgmpp {
 

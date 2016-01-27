@@ -1,7 +1,10 @@
 %include "Item.i"
 %include "DamagePattern.i"
+%include "Module.i"
+%include "Drone.i"
 
 %shared_ptr(dgmpp::Ship);
+%shared_ptr(dgmpp::Character);
 
 namespace dgmpp {
 

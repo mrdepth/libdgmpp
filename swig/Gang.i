@@ -1,4 +1,3 @@
-%include "types.i"
 %include "Item.i"
 %include "Character.i"
 
