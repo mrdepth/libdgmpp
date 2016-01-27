@@ -7,6 +7,15 @@ namespace dgmpp {
 	typedef int TypeID;
 }
 
+%shared_ptr(dgmpp::Attribute);
+%shared_ptr(dgmpp::Module);
+%shared_ptr(dgmpp::Drone);
+%shared_ptr(dgmpp::Character);
+%shared_ptr(dgmpp::Skill);
+%shared_ptr(dgmpp::Implant);
+%shared_ptr(dgmpp::Booster);
+%shared_ptr(dgmpp::Structure);
+
 namespace std {
 	%template(TypesList) vector<dgmpp::TypeID>;
 	%template(AttributesMap) map<dgmpp::TypeID, dgmpp::Attribute*>;
