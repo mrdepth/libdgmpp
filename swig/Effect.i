@@ -1,7 +1,9 @@
 %include "types.i"
 
+%shared_ptr(dgmpp::Effect);
+
 namespace dgmpp {
-	
+
 	extern const TypeID ONLINE_EFFECT_ID;
 	extern const TypeID LO_POWER_EFFECT_ID;
 	extern const TypeID HI_POWER_EFFECT_ID;

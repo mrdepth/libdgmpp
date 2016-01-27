@@ -1,18 +1,23 @@
+%include "types.i"
+
+%shared_ptr(dgmpp::Engine);
+
 namespace dgmpp {
 	
 	%nodefaultctor Engine;
-	
+
 	class Engine
 	{
 		public:
-		Engine(const char* databasePath);
+		
+		Engine(const std::shared_ptr<dgmpp::SqlConnector>& sqlConnector);
 		~Engine(void);
-		dgmpp::Area* setArea(dgmpp::TypeID typeID);
-		dgmpp::ControlTower* setControlTower(dgmpp::TypeID typeID);
+		std::shared_ptr<dgmpp::Area> setArea(dgmpp::TypeID typeID);
+		std::shared_ptr<dgmpp::ControlTower> setControlTower(dgmpp::TypeID typeID);
 		void clearArea();
-		dgmpp::Gang* getGang();
-		dgmpp::Area* getArea();
-		dgmpp::ControlTower* getControlTower();
+		std::shared_ptr<dgmpp::Gang> getGang();
+		std::shared_ptr<dgmpp::Area> getArea();
+		std::shared_ptr<dgmpp::ControlTower> getControlTower();
 	};
 	
 }

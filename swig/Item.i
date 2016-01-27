@@ -1,8 +1,10 @@
 %include "types.i"
 %include "Attribute.i"
 
+%shared_ptr(dgmpp::Item);
+
 namespace dgmpp {
-	
+
 	extern const TypeID ANY_GROUP_ID;
 	extern const TypeID CHARACTER_GROUP_ID;
 	extern const TypeID WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID;
@@ -20,23 +22,22 @@ namespace dgmpp {
 	class Item
 	{
 		public:
-		dgmpp::Engine* getEngine();
+		std::shared_ptr<dgmpp::Engine> getEngine();
 		
-		dgmpp::Item* getOwner() const;
-		void setOwner(dgmpp::Item *owner);
+		std::shared_ptr<dgmpp::Item> getOwner() const;
 		
-		virtual dgmpp::TypeID getTypeID() const;
-		virtual dgmpp::TypeID getGroupID() const;
-		virtual dgmpp::TypeID getCategoryID() const;
-		virtual dgmpp::Attribute* getAttribute(dgmpp::TypeID attributeID);
+		virtual dgmpp::TypeID getTypeID();
+		virtual dgmpp::TypeID getGroupID();
+		virtual dgmpp::TypeID getCategoryID();
+		virtual std::shared_ptr<dgmpp::Attribute> getAttribute(dgmpp::TypeID attributeID);
 		const dgmpp::AttributesMap &getAttributes();
 		bool hasAttribute(dgmpp::TypeID attributeID);
-		dgmpp::Effect* getEffect(dgmpp::TypeID effectID);
+		std::shared_ptr<dgmpp::Effect> getEffect(dgmpp::TypeID effectID);
 		
 		virtual bool requireSkill(dgmpp::TypeID skillID);
 		
 		bool hasEffect(dgmpp::TypeID effectID);
 		
-		virtual const char* getTypeName() const;
+		virtual const char* getTypeName();
 	};
 }

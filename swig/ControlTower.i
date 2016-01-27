@@ -1,21 +1,23 @@
+%include "Item.i"
+
+%shared_ptr(dgmpp::ControlTower);
 
 namespace dgmpp {
-	
+
 	%nodefaultctor ControlTower;
 	
 	class ControlTower : public dgmpp::Item
 	{
 	public:
-		dgmpp::Structure* addStructure(dgmpp::TypeID typeID);
-		void removeStructure(dgmpp::Structure* structure);
+		std::shared_ptr<dgmpp::Structure> addStructure(dgmpp::TypeID typeID);
+		void removeStructure(const std::shared_ptr<dgmpp::Structure>& structure);
 		
 		%extend {
-			std::vector<dgmpp::Structure*> getStructures() {
+			std::vector<std::shared_ptr<dgmpp::Structure>> getStructures() {
 				const dgmpp::StructuresList& structures = $self->getStructures();
-				return std::vector<dgmpp::Structure*>(structures.begin(), structures.end());
+				return std::vector<std::shared_ptr<dgmpp::Structure>>(structures.begin(), structures.end());
 			}
 		}
-		bool canFit(dgmpp::Structure* structure);
 		
 		const dgmpp::DamagePattern& getDamagePattern();
 		void setDamagePattern(const dgmpp::DamagePattern& damagePattern);

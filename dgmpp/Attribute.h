@@ -1,6 +1,7 @@
 #pragma once
 #include "types.h"
 #include "AttributePrototype.h"
+#include <limits>
 
 namespace dgmpp {
 

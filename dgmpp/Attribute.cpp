@@ -329,7 +329,7 @@ void Attribute::setValue(float value)
 
 void Attribute::reset()
 {
-	generation_ = UINT32_MAX;
+	generation_ = std::numeric_limits<uint32_t>::max();
 	calculated_ = false;
 	value_ = initialValue_;
 	

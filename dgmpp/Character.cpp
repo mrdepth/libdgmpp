@@ -11,6 +11,7 @@
 #include "Implant.h"
 #include "Booster.h"
 #include <algorithm>
+#include <limits>
 
 using namespace dgmpp;
 

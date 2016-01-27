@@ -1,7 +1,10 @@
+%include "Item.i"
 %include "DamagePattern.i"
 
+%shared_ptr(dgmpp::Ship);
+
 namespace dgmpp {
-	
+
 	%nodefaultctor Ship;
 	
 	class Ship : public dgmpp::Item
@@ -16,41 +19,44 @@ namespace dgmpp {
 			SCAN_TYPE_MULTISPECTRAL
 		};
 		
-		dgmpp::Module* addModule(dgmpp::TypeID typeID);
-		void removeModule(dgmpp::Module* module);
-		dgmpp::Drone* addDrone(dgmpp::TypeID typeID);
-		void removeDrone(dgmpp::Drone* drone);
+		std::shared_ptr<dgmpp::Module> addModule(dgmpp::TypeID typeID);
+		void removeModule(std::shared_ptr<dgmpp::Module> module);
+		std::shared_ptr<dgmpp::Drone> addDrone(dgmpp::TypeID typeID);
+		void removeDrone(std::shared_ptr<dgmpp::Drone> drone);
 		
 		%extend {
-			std::vector<dgmpp::Module*> getModules() {
+			std::vector<std::shared_ptr<dgmpp::Module>> getModules() {
 				const dgmpp::ModulesList& modules = $self->getModules();
-				return std::vector<dgmpp::Module*>(modules.begin(), modules.end());
+				return std::vector<std::shared_ptr<dgmpp::Module>>(modules.begin(), modules.end());
 			}
 
-			std::vector<dgmpp::Drone*> getDrones() {
+			std::vector<std::shared_ptr<dgmpp::Drone>> getDrones() {
 				const dgmpp::DronesList& drones = $self->getDrones();
-				return std::vector<dgmpp::Drone*>(drones.begin(), drones.end());
+				return std::vector<std::shared_ptr<dgmpp::Drone>>(drones.begin(), drones.end());
 			}
 
-			std::vector<dgmpp::Module*> getProjectedModules() {
-				const dgmpp::ModulesList& modules = $self->getProjectedModules();
-				return std::vector<dgmpp::Module*>(modules.begin(), modules.end());
+			std::vector<std::shared_ptr<dgmpp::Module>> getProjectedModules() {
+				std::vector<std::shared_ptr<dgmpp::Module>> modules;
+				for (auto module: $self->getProjectedModules())
+					modules.push_back(module.lock());
+				return modules;
 			}
 			
-			std::vector<dgmpp::Drone*> getProjectedDrones() {
-				const dgmpp::DronesList& drones = $self->getProjectedDrones();
-				return std::vector<dgmpp::Drone*>(drones.begin(), drones.end());
+			std::vector<std::shared_ptr<dgmpp::Drone>> getProjectedDrones() {
+				std::vector<std::shared_ptr<dgmpp::Drone>> drones;
+				for (auto drone: $self->getProjectedDrones())
+					drones.push_back(drone.lock());
+				return drones;
 			}
 		}
 
-		bool canFit(dgmpp::Module* module);
 		bool isDisallowedAssistance();
 		bool isDisallowedOffensiveModifiers();
 		
-		void addProjectedModule(dgmpp::Module* module);
-		void removeProjectedModule(dgmpp::Module* module);
-		void addProjectedDrone(dgmpp::Drone* drone);
-		void removeProjectedDrone(dgmpp::Drone* drone);
+		void addProjectedModule(std::shared_ptr<dgmpp::Module> module);
+		void removeProjectedModule(std::shared_ptr<dgmpp::Module> module);
+		void addProjectedDrone(std::shared_ptr<dgmpp::Drone> drone);
+		void removeProjectedDrone(std::shared_ptr<dgmpp::Drone> drone);
 		
 		const dgmpp::DamagePattern& getDamagePattern();
 		void setDamagePattern(const dgmpp::DamagePattern& damagePattern);
@@ -97,10 +103,10 @@ namespace dgmpp {
 		float getShieldRecharge();
 		
 		//DPS
-		float getWeaponDps();
-		float getWeaponVolley();
-		float getDroneDps();
-		float getDroneVolley();
+		dgmpp::DamageVector getWeaponDps();
+		dgmpp::DamageVector getWeaponVolley();
+		dgmpp::DamageVector getDroneDps();
+		dgmpp::DamageVector getDroneVolley();
 		
 		//Mobility
 		float getAlignTime();
@@ -108,6 +114,13 @@ namespace dgmpp {
 		float getMaxWarpDistance();
 		float getVelocity();
 		float getSignatureRadius();
+		float getMass();
+		float getVolume();
+		float getAgility();
+		float getMaxVelocityInOrbit(float r);
+		float getOrbitRadiusWithTransverseVelocity(float v);
+		float getOrbitRadiusWithAngularVelocity(float v);
+		
 		
 		//Targeting
 		int getMaxTargets();

@@ -222,6 +222,28 @@
 		12564B8E1B84AF15000F68D8 /* dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12564B921B84AF15000F68D8 /* dgmpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dgmpp.h; sourceTree = "<group>"; };
 		12564BA71B84AFAD000F68D8 /* dgmpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dgmpp.h; sourceTree = SOURCE_ROOT; };
+		1286565A1C588E220002BA7E /* Area.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Area.i; sourceTree = "<group>"; };
+		1286565B1C588E220002BA7E /* Attribute.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Attribute.i; sourceTree = "<group>"; };
+		1286565C1C588E220002BA7E /* Booster.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Booster.i; sourceTree = "<group>"; };
+		1286565D1C588E220002BA7E /* Character.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Character.i; sourceTree = "<group>"; };
+		1286565E1C588E220002BA7E /* ControlTower.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = ControlTower.i; sourceTree = "<group>"; };
+		1286565F1C588E220002BA7E /* DamagePattern.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = DamagePattern.i; sourceTree = "<group>"; };
+		128656601C588E220002BA7E /* dgmpp.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = dgmpp.i; sourceTree = "<group>"; };
+		128656611C588E220002BA7E /* Drone.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Drone.i; sourceTree = "<group>"; };
+		128656621C588E220002BA7E /* Effect.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Effect.i; sourceTree = "<group>"; };
+		128656631C588E220002BA7E /* Engine.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Engine.i; sourceTree = "<group>"; };
+		128656641C588E220002BA7E /* Gang.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Gang.i; sourceTree = "<group>"; };
+		128656651C588E220002BA7E /* Implant.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Implant.i; sourceTree = "<group>"; };
+		128656661C588E220002BA7E /* Item.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Item.i; sourceTree = "<group>"; };
+		128656671C588E220002BA7E /* Module.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Module.i; sourceTree = "<group>"; };
+		128656681C588E220002BA7E /* Ship.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Ship.i; sourceTree = "<group>"; };
+		128656691C588E220002BA7E /* Skill.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Skill.i; sourceTree = "<group>"; };
+		1286566A1C588E220002BA7E /* Structure.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Structure.i; sourceTree = "<group>"; };
+		1286566B1C588E220002BA7E /* types.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = types.i; sourceTree = "<group>"; };
+		1286566C1C5890FB0002BA7E /* SqlConnector.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = SqlConnector.i; sourceTree = "<group>"; };
+		1286566D1C58914A0002BA7E /* SqliteConnector.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = SqliteConnector.i; sourceTree = "<group>"; };
+		1286566E1C58978C0002BA7E /* DamageVector.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = DamageVector.i; sourceTree = "<group>"; };
+		1286566F1C58AE7C0002BA7E /* Charge.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Charge.i; sourceTree = "<group>"; };
 		129F2BD61C1FFE62007FC666 /* modifiersdump */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = modifiersdump; sourceTree = BUILT_PRODUCTS_DIR; };
 		129F2BD81C1FFE62007FC666 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		12A3C6B1177C283E0067E00C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -383,6 +405,35 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		128656591C588E220002BA7E /* swig */ = {
+			isa = PBXGroup;
+			children = (
+				1286565A1C588E220002BA7E /* Area.i */,
+				1286565B1C588E220002BA7E /* Attribute.i */,
+				1286565C1C588E220002BA7E /* Booster.i */,
+				1286565D1C588E220002BA7E /* Character.i */,
+				1286565E1C588E220002BA7E /* ControlTower.i */,
+				1286565F1C588E220002BA7E /* DamagePattern.i */,
+				1286566E1C58978C0002BA7E /* DamageVector.i */,
+				128656601C588E220002BA7E /* dgmpp.i */,
+				128656611C588E220002BA7E /* Drone.i */,
+				128656621C588E220002BA7E /* Effect.i */,
+				128656631C588E220002BA7E /* Engine.i */,
+				128656641C588E220002BA7E /* Gang.i */,
+				128656651C588E220002BA7E /* Implant.i */,
+				128656661C588E220002BA7E /* Item.i */,
+				128656671C588E220002BA7E /* Module.i */,
+				1286566F1C58AE7C0002BA7E /* Charge.i */,
+				128656681C588E220002BA7E /* Ship.i */,
+				128656691C588E220002BA7E /* Skill.i */,
+				1286566A1C588E220002BA7E /* Structure.i */,
+				1286566B1C588E220002BA7E /* types.i */,
+				1286566C1C5890FB0002BA7E /* SqlConnector.i */,
+				1286566D1C58914A0002BA7E /* SqliteConnector.i */,
+			);
+			path = swig;
+			sourceTree = "<group>";
+		};
 		129F2BD71C1FFE62007FC666 /* modifiersdump */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +547,7 @@
 		37B33D321473CA0D006B18D7 = {
 			isa = PBXGroup;
 			children = (
+				128656591C588E220002BA7E /* swig */,
 				37B33D401473CA0D006B18D7 /* dgmpp */,
 				1242EC1F1A4DFF5C00FD488A /* dbpatch */,
 				12564B8F1B84AF15000F68D8 /* dgmpp */,

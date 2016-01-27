@@ -1,16 +1,12 @@
+%include "DamageVector.i"
 
 namespace dgmpp {
 	
-	class DamagePattern
+	class DamagePattern : public dgmpp::DamageVector
 	{
 	public:
 		DamagePattern();
+		DamagePattern(const dgmpp::DamageVector& damage);
 		DamagePattern(float em, float thermal, float kinetic, float explosive);
-		~DamagePattern(void);
-		
-		float emAmount;
-		float thermalAmount;
-		float kineticAmount;
-		float explosiveAmount;
 	};
 }

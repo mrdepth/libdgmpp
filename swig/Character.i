@@ -8,39 +8,37 @@ namespace std {
 	%template(SkillLevelsMap) map<dgmpp::TypeID, int>;
 }
 
-namespace dgmpp {
-	
+%shared_ptr(dgmpp::Character);
 
-	
+namespace dgmpp {
+
 	%nodefaultctor Character;
 
-	class Character : public Item
+	class Character : public dgmpp::Item
 	{
 	public:
-		dgmpp::Ship* getShip();
-		dgmpp::Ship* setShip(dgmpp::TypeID typeID);
+		std::shared_ptr<dgmpp::Ship> getShip();
+		std::shared_ptr<dgmpp::Ship> setShip(dgmpp::TypeID typeID);
 		
-		dgmpp::Skill* getSkill(dgmpp::TypeID typeID);
+		std::shared_ptr<dgmpp::Skill> getSkill(dgmpp::TypeID typeID);
 		
 		bool emptyImplantSlot(int slot);
 		bool emptyBoosterSlot(int slot);
-		dgmpp::Implant* getImplant(int slot);
-		dgmpp::Booster* getBooster(int slot);
-		dgmpp::Implant* addImplant(dgmpp::TypeID typeID);
-		dgmpp::Implant* addImplant(dgmpp::Implant* implant);
-		dgmpp::Booster* addBooster(dgmpp::TypeID typeID);
-		dgmpp::Booster* addBooster(dgmpp::Booster* booster);
-		void removeImplant(dgmpp::Implant* implant);
-		void removeBooster(dgmpp::Booster* booster);
+		std::shared_ptr<dgmpp::Implant> getImplant(int slot);
+		std::shared_ptr<dgmpp::Booster> getBooster(int slot);
+		std::shared_ptr<dgmpp::Implant> addImplant(dgmpp::TypeID typeID);
+		std::shared_ptr<dgmpp::Booster> addBooster(dgmpp::TypeID typeID);
+		void removeImplant(const std::shared_ptr<dgmpp::Implant>& implant);
+		void removeBooster(const std::shared_ptr<dgmpp::Booster>& booster);
 		%extend {
-			std::vector<dgmpp::Implant*> getImplants() {
+			std::vector<std::shared_ptr<dgmpp::Implant>> getImplants() {
 				const dgmpp::ImplantsList& implants = $self->getImplants();
-				return std::vector<dgmpp::Implant*>(implants.begin(), implants.end());
+				return std::vector<std::shared_ptr<dgmpp::Implant>>(implants.begin(), implants.end());
 			}
 
-			std::vector<dgmpp::Booster*> getBoosters() {
+			std::vector<std::shared_ptr<dgmpp::Booster>> getBoosters() {
 				const dgmpp::BoostersList& boosters = $self->getBoosters();
-				return std::vector<dgmpp::Booster*>(boosters.begin(), boosters.end());
+				return std::vector<std::shared_ptr<dgmpp::Booster>>(boosters.begin(), boosters.end());
 			}
 		}
 		
