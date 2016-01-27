@@ -1,6 +1,6 @@
 
 namespace dgmpp {
-	
+
 	class DamageVector
 	{
 	public:
@@ -13,7 +13,11 @@ namespace dgmpp {
 				float kineticAmount;
 				float explosiveAmount;
 			};
-			float damageTypes[4];
 		};
+		%extend {
+			float total() {
+				return (float)*$self;
+			}
+		}
 	};
 }
