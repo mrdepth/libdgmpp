@@ -18,7 +18,7 @@ namespace dgmpp {
 
 namespace std {
 	%template(TypesList) vector<dgmpp::TypeID>;
-	%template(AttributesMap) map<dgmpp::TypeID, dgmpp::Attribute*>;
+	%template(AttributesMap) map<dgmpp::TypeID, std::shared_ptr<dgmpp::Attribute>>;
 	%template(ModulesList) vector<std::shared_ptr<dgmpp::Module>>;
 	%template(DronesList) vector<std::shared_ptr<dgmpp::Drone>>;
 	%template(CharactersList) vector<std::shared_ptr<dgmpp::Character>>;
