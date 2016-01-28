@@ -17,6 +17,7 @@ namespace dgmpp {
 		const std::string& getTypeName() const  {return typeName_;};
 		virtual TypeID getGroupID() const {return 0;};
 		int64_t getIdentifier() const {return identifier_;};
+		std::string getFacilityName() const;
 		std::shared_ptr<Planet> getOwner() const {return owner_.lock();};
 
 		void addInput(const std::shared_ptr<const Route>& route);
@@ -70,6 +71,7 @@ namespace dgmpp {
 		std::weak_ptr<Planet> owner_;
 		TypeID typeID_;
 		std::string typeName_;
+		mutable std::string facilityName_;
 		double capacity_;
 		int64_t identifier_;
 	};

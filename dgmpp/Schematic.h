@@ -8,6 +8,7 @@ namespace dgmpp {
 		double getCycleTime() const {return cycleTime_;};
 		const Commodity& getOutput() const {return *output_;};
 		const std::list<const Commodity>& getInputs() const {return inputs_;};
+		TypeID getSchematicID() const {return schematicID_;};
 	private:
 		TypeID schematicID_;
 		double cycleTime_;

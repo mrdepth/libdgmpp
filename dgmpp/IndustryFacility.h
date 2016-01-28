@@ -34,7 +34,9 @@ namespace dgmpp {
 		virtual int priority() const {return -getOutput().getTier();};
 	private:
 		double launchTime_;
-		double nextUpdateTime_;
+		double startTime_;
+		double productionTime_;
+
 		std::shared_ptr<Schematic> schematic_;
 		
 		std::shared_ptr<ProductionCycle> productionCycle_;

@@ -164,6 +164,26 @@ void Facility::update(double time) {
 		output->update(time);
 }
 
+std::string Facility::getFacilityName() const {
+	if (identifier_ > 0 && facilityName_.length() == 0) {
+		std::string baseStr = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		int len = static_cast<int>(baseStr.length()) - 1;
+		std::string pinName;
+
+		for (int i = 0; i < 5; i++) {
+			int at = static_cast<int64_t>((identifier_ / pow(len, i))) % len;
+			if (i == 2)
+				pinName += '-';
+			pinName += baseStr.at(at);
+		}
+		facilityName_ = pinName;
+	}
+	else if (identifier_ == 0)
+		return typeName_;
+	
+	return facilityName_;
+}
+
 
 std::string Facility::toJSONString() const {
 	std::stringstream os;

@@ -45,6 +45,8 @@ namespace dgmpp {
 		float noiseFactor_;
 		double phaseShift_;
 		double w_;
+		uint32_t yield_;
+		uint32_t waste_;
 		
 		std::shared_ptr<ProductionCycle> extractionCycle_;
 	};

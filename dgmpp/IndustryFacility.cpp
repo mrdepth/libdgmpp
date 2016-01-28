@@ -17,7 +17,7 @@ using namespace dgmpp;
 
 
 
-IndustryFacility::IndustryFacility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), nextUpdateTime_(-1) {
+IndustryFacility::IndustryFacility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), startTime_(-1), productionTime_(0) {
 }
 
 std::shared_ptr<Schematic> IndustryFacility::setSchematic(TypeID schematicID) {
@@ -56,9 +56,11 @@ void IndustryFacility::finishCycle(double time) {
 		extractCommodity(left);
 	productionCycle_->setYield(product - left);
 	productionCycle_->setWaste(left);
+	productionTime_ += productionCycle_->getCycleTime();
 	productionCycle_ = nullptr;
 	setLaunchTime(std::numeric_limits<double>::infinity());
-	states_.push_back(std::make_shared<ProductionState>(time, nullptr));
+	
+	states_.push_back(std::make_shared<ProductionState>(time, nullptr, productionTime_ / (time - startTime_)));
 }
 
 bool IndustryFacility::startCycle(double time) {
@@ -68,7 +70,10 @@ bool IndustryFacility::startCycle(double time) {
 		if (getLaunchTime() > 0 && time != getLaunchTime())
 			return false;
 	}
-	if (getLaunchTime()) {
+	if (startTime_ < 0)
+		startTime_ = time;
+	
+	if (getLaunchTime() < 0) {
 		setLaunchTime(std::numeric_limits<double>::infinity());
 		productionCycle_ = std::make_shared<ProductionCycle>(time, getCycleTime(), getOutput(), getOutput());
 		return true;
@@ -112,6 +117,11 @@ void IndustryFacility::update(double time) {
 	}
 	currentState->setCommodities(materials);
 	currentState->setCurrentCycle(productionCycle_);
+	if (startTime_ > 0) {
+		double duration = time - startTime_;
+		if (duration > 0)
+			currentState->setEfficiency(productionTime_ / duration);
+	}
 }
 
 

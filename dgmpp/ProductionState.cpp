@@ -11,7 +11,7 @@
 
 using namespace dgmpp;
 
-ProductionState::ProductionState(double timestamp, const std::shared_ptr<ProductionCycle>& currentCycle) : State(timestamp), currentCycle_(currentCycle) {
+ProductionState::ProductionState(double timestamp, const std::shared_ptr<ProductionCycle>& currentCycle, double efficiency) : State(timestamp), currentCycle_(currentCycle), efficiency_(efficiency) {
 }
 
 bool ProductionState::operator == (const ProductionState& other) {
