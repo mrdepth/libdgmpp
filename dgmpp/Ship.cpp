@@ -340,9 +340,9 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 		CAN_FIT_SHIP_TYPE5_ATTRIBUTE_ID,
 		CAN_FIT_SHIP_TYPE6_ATTRIBUTE_ID};
 
-	for (int i = 0; i < 6; i++) {
-		if (module->hasAttribute(canFitToShipTypeAttribute[i]))
-			fitsOn.push_back(static_cast<int>(module->getAttribute(canFitToShipTypeAttribute[i])->getValue()));
+	for (auto attributeID: canFitToShipTypeAttribute) {
+		if (module->hasAttribute(attributeID))
+			fitsOn.push_back(static_cast<int>(module->getAttribute(attributeID)->getValue()));
 		
 	}
 
@@ -369,9 +369,9 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 		CAN_FIT_SHIP_GROUP8_ATTRIBUTE_ID,
 		CAN_FIT_SHIP_GROUP9_ATTRIBUTE_ID};
 
-	for (int i = 0; i < 9; i++) {
-		if (module->hasAttribute(canFitShipGroupAttribute[i]))
-			fitsOn.push_back(static_cast<int>(module->getAttribute(canFitShipGroupAttribute[i])->getValue()));
+	for (auto attributeID: canFitShipGroupAttribute) {
+		if (module->hasAttribute(attributeID))
+			fitsOn.push_back(static_cast<int>(module->getAttribute(attributeID)->getValue()));
 		
 	}
 
