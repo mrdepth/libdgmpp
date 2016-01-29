@@ -41,7 +41,7 @@ uint32_t IndustryFacility::getQuantityPerCycle() const {
 double IndustryFacility::getNextUpdateTime() const {
 	if (productionCycle_)
 		return productionCycle_->getLaunchTime() + productionCycle_->getCycleTime();
-	else if (getLaunchTime() < 0)
+	else if (!std::isinf(getLaunchTime()) && getLaunchTime() + getCycleTime() < getOwner()->getLastUpdate())
 		return getOwner()->getLastUpdate();
 	else
 		return getLaunchTime();
@@ -65,9 +65,11 @@ void IndustryFacility::finishCycle(double time) {
 
 bool IndustryFacility::startCycle(double time) {
 	if (!std::isinf(getLaunchTime())) {
-		if (getLaunchTime() < 0 && time != getOwner()->getLastUpdate())
-			return false;
-		if (getLaunchTime() > 0 && time != getLaunchTime())
+		if (getLaunchTime() + getCycleTime() < getOwner()->getLastUpdate()) {
+			if (time != getOwner()->getLastUpdate())
+				return false;
+		}
+		else if (time != getLaunchTime())
 			return false;
 	}
 	if (startTime_ < 0)

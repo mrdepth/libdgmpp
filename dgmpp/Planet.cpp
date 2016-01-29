@@ -83,6 +83,10 @@ void Planet::removeFacility(std::shared_ptr<Facility> const& facility) {
 
 std::shared_ptr<Route> Planet::addRoute(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, const Commodity& commodity, int64_t identifier) {
 	auto route = std::make_shared<Route>(source, destination, commodity, identifier);
+	for (const auto& i: routes_)
+		if (*i == *route)
+			return nullptr;
+	
 	source->addOutput(route);
 	destination->addInput(route);
 	routes_.push_back(route);

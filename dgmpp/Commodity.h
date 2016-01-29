@@ -24,6 +24,7 @@ namespace dgmpp {
 		friend std::ostream& operator<<(std::ostream& os, const Commodity& commodity);
 		
 		bool operator==(const Commodity& other) const;
+		bool operator!=(const Commodity& other) const;
 		
 		Commodity operator+(const Commodity& other);
 		Commodity operator-(const Commodity& other);

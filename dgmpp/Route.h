@@ -10,6 +10,8 @@ namespace dgmpp {
 		std::shared_ptr<Facility> getDestination() const;
 		const Commodity& getCommodity() const {return commodity_;};
 		void update(double time) const;
+		bool operator==(const Route& other) const;
+		bool operator!=(const Route& other) const;
 	private:
 		std::weak_ptr<Facility> source_;
 		std::weak_ptr<Facility> destination_;

@@ -59,6 +59,10 @@ bool Commodity::operator==(const Commodity& other) const {
 	return typeID_ == other.typeID_ && quantity_ == other.quantity_;
 }
 
+bool Commodity::operator!=(const Commodity& other) const {
+	return !operator==(other);
+}
+
 std::ostream& dgmpp::operator<<(std::ostream& os, const Commodity& commodity) {
 	return os << "{\"typeName\":\"" << commodity.getTypeName() << "\", \"quantity\":" << commodity.getQuantity() << "}";
 }

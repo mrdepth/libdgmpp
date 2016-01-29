@@ -35,3 +35,11 @@ void Route::update(double time) const {
 		}
 	}
 }
+
+bool Route::operator==(const Route& other) const {
+	return source_.lock() == other.source_.lock() && destination_.lock() == other.destination_.lock() && commodity_.getTypeID() == other.commodity_.getTypeID();
+}
+
+bool Route::operator!=(const Route& other) const {
+	return !operator==(other);
+}
