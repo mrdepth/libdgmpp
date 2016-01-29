@@ -11,20 +11,22 @@
 #include <math.h>
 #include <algorithm>
 
+namespace std {
+	template<> struct hash<dgmpp::Modifier> {
+	public:
+		uint64_t operator()(const dgmpp::Modifier& modifier) const {
+			uint64_t h = static_cast<size_t>(modifier.getAttributeID());
+			h <<= 16;
+			h |= static_cast<size_t>(modifier.getModifier()->getAttributeID());
+			h <<= 4;
+			h |= static_cast<size_t>(modifier.getAssociation());
+			return h;
+		}
+	};
+}
 
 using namespace dgmpp;
 
-template<> class std::hash<Modifier> {
-public:
-	uint64_t operator()(const Modifier& modifier) const {
-		uint64_t h = static_cast<size_t>(modifier.getAttributeID());
-		h <<= 16;
-		h |= static_cast<size_t>(modifier.getModifier()->getAttributeID());
-		h <<= 4;
-		h |= static_cast<size_t>(modifier.getAssociation());
-		return h;
-	}
-};
 
 class GangModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {

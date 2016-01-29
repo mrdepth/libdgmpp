@@ -1,6 +1,9 @@
+%include "Module.i"
+
+%shared_ptr(dgmpp::Structure);
 
 namespace dgmpp {
-	
+
 	%nodefaultctor Structure;
 
 	class Structure : public dgmpp::Module

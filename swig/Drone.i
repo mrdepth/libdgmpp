@@ -1,17 +1,23 @@
+%include "Item.i"
+%include "Charge.i"
+%include "DamageVector.i"
+
+%shared_ptr(dgmpp::Drone);
+%shared_ptr(dgmpp::Ship);
 
 namespace dgmpp {
-	
+
 	%nodefaultctor Drone;
 
 	class Drone : public dgmpp::Item
 	{
 	public:
-		void setTarget(dgmpp::Ship* target = NULL);
+		void setTarget(const std::shared_ptr<dgmpp::Ship>& target = NULL);
 		void clearTarget();
-		dgmpp::Ship* getTarget();
+		std::shared_ptr<dgmpp::Ship> getTarget();
 		
 		bool dealsDamage();
-		dgmpp::Charge* getCharge();
+		std::shared_ptr<dgmpp::Charge> getCharge();
 		
 		void setActive(bool active);
 		bool isActive();
@@ -20,8 +26,8 @@ namespace dgmpp {
 		
 		float getCycleTime();
 		
-		float getVolley();
-		float getDps();
+		dgmpp::DamageVector getVolley();
+		dgmpp::DamageVector getDps();
 		float getMaxRange();
 		float getFalloff();
 		float getTrackingSpeed();
