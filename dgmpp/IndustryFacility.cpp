@@ -39,6 +39,9 @@ uint32_t IndustryFacility::getQuantityPerCycle() const {
 }
 
 double IndustryFacility::getNextUpdateTime() const {
+	if (!schematic_)
+		return std::numeric_limits<double>::infinity();
+	
 	if (productionCycle_)
 		return productionCycle_->getLaunchTime() + productionCycle_->getCycleTime();
 	else if (!std::isinf(getLaunchTime()) && getLaunchTime() + getCycleTime() < getOwner()->getLastUpdate())
@@ -94,6 +97,9 @@ bool IndustryFacility::startCycle(double time) {
 }
 
 void IndustryFacility::update(double time) {
+	if (!schematic_)
+		return;
+	
 	if (productionCycle_) {
 		double cycleEndTime = productionCycle_->getLaunchTime() + productionCycle_->getCycleTime();
 		bool endCycle = cycleEndTime == time;
