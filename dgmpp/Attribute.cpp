@@ -165,6 +165,7 @@ const TypeID dgmpp::SCAN_MAGNETOMETRIC_STRENGTH_ATTRIBUTE_ID = 210;
 const TypeID dgmpp::SCAN_GRAVIMETRIC_STRENGTH_ATTRIBUTE_ID = 211;
 const TypeID dgmpp::MAX_ACTIVE_DRONES_ATTRIBUTE_ID = 352;
 const TypeID dgmpp::SCAN_RESOLUTION_ATTRIBUTE_ID = 564;
+const TypeID dgmpp::SPECIAL_ORE_HOLD_CAPACITY = 1556;
 
 const TypeID dgmpp::HI_SLOT_MODIFIER_ATTRIBUTE_ID = 1374;
 const TypeID dgmpp::MED_SLOT_MODIFIER_ATTRIBUTE_ID = 1375;
@@ -210,6 +211,9 @@ const TypeID dgmpp::ENTITY_FLY_RANGE_ATTRIBUTE_ID = 416;
 const TypeID dgmpp::ENTITY_CRUISE_SPEED_ATTRIBUTE_ID = 508;
 const TypeID dgmpp::WARP_SCRAMBLE_STRENGTH_ATTRIBUTE_ID = 105;
 const TypeID dgmpp::WARP_SCRAMBLE_STRENGTH_HIDDEN_ATTRIBUTE_ID = 1318;
+
+const TypeID dgmpp::ECU_DECAY_FACTOR_ATTRIBUTE_ID = 1683;
+const TypeID dgmpp::ECU_NOISE_FACTOR_ATTRIBUTE_ID = 1687;
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)
@@ -329,7 +333,7 @@ void Attribute::setValue(float value)
 
 void Attribute::reset()
 {
-	generation_ = UINT32_MAX;
+	generation_ = std::numeric_limits<uint32_t>::max();
 	calculated_ = false;
 	value_ = initialValue_;
 	

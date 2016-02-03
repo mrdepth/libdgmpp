@@ -28,12 +28,6 @@ namespace dgmpp {
 	{
 	public:
 		
-		class Context
-		{
-		public:
-			virtual ~Context() {};
-		};
-		
         typedef std::invalid_argument AttributeDidNotFoundException;
         typedef std::invalid_argument UnknownTypeIDException;
         typedef std::invalid_argument EffectDidNotFoundException;
@@ -98,8 +92,6 @@ namespace dgmpp {
 		EffectsList effects_;
 		std::weak_ptr<Item> owner_;
 		
-		
-
 		ItemModifiers itemModifiers_;
 		LocationModifiers locationModifiers_;
 		
@@ -115,7 +107,6 @@ namespace dgmpp {
 
 		
 	private:
-		const Context* context_;
 		bool loaded_;
 		std::vector<TypeID> requiredSkills_;
 		

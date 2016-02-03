@@ -1,7 +1,9 @@
 %include "types.i"
 
+%shared_ptr(dgmpp::Attribute);
+
 namespace dgmpp {
-	
+
 	extern const TypeID IS_ONLINE_ATTRIBUTE_ID;
 	extern const TypeID MASS_ATTRIBUTE_ID;
 	extern const TypeID CAPACITY_ATTRIBUTE_ID;
@@ -197,10 +199,6 @@ namespace dgmpp {
 		virtual float getInitialValue() const;
 		bool isStackable() const;
 		bool highIsGood() const;
-		
-		virtual void setValue(float value);
-		virtual float dec(float value);
-		virtual float inc(float value);
 		const char* getAttributeName() const;
 	};
 }

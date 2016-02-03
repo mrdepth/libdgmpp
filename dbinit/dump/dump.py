@@ -72,6 +72,12 @@ def dump(table, header, lines):
 		f.append("DROP TABLE IF EXISTS \"invGroups\";\nCREATE TABLE \"invGroups\" (\n\"groupID\" INTEGER NOT NULL,\n\"categoryID\"  INTEGER,\n\"groupName\"  TEXT(100),\n\"description\"  TEXT(3000),\n\"useBasePrice\"  INTEGER,\n\"allowManufacture\"  INTEGER,\n\"allowRecycler\"  INTEGER,\n\"anchored\"  INTEGER,\n\"anchorable\"  INTEGER,\n\"fittableNonSingleton\"  INTEGER,\n\"published\"  INTEGER,\n\"iconID\"   smallint(6) default NULL,\n\"groupNameID\"   smallint(6) default NULL,\n\"dataID\"   smallint(6) default NULL,\nPRIMARY KEY (\"groupID\")\n);")
 	elif (table == "invControlTowerResources"):
 		f.append("DROP TABLE IF EXISTS invControlTowerResources;\nCREATE TABLE invControlTowerResources (\n  \"controlTowerTypeID\" int(11) NOT NULL,\n  \"resourceTypeID\" int(11) NOT NULL,\n  \"purpose\" tinyint(4) default NULL,\n  \"quantity\" int(11) default NULL,\n  \"minSecurityLevel\" double default NULL,\n  \"factionID\" int(11) default NULL,\n  \"wormholeClassID\" INTEGER default NULL,\n  PRIMARY KEY  (\"controlTowerTypeID\",\"resourceTypeID\")\n);")
+	elif (table == "planetSchematics"):
+		f.append("DROP TABLE IF EXISTS planetSchematics;\nCREATE TABLE planetSchematics (\n \"schematicID\" integer NOT NULL,\n \"schematicName\" varchar(255) DEFAULT NULL,\n \"cycleTime\" integer DEFAULT NULL,\n PRIMARY KEY (\"schematicID\"));");
+	elif (table == "planetSchematicsPinMap"):
+		f.append("DROP TABLE IF EXISTS planetSchematicsPinMap;\nCREATE TABLE planetSchematicsPinMap (\n \"schematicID\" integer NOT NULL,\n \"pinTypeID\" integer DEFAULT NULL,\n PRIMARY KEY (\"schematicID\",\"pinTypeID\"));");
+	elif (table == "planetSchematicsTypeMap"):
+		f.append("DROP TABLE IF EXISTS planetSchematicsTypeMap;\nCREATE TABLE planetSchematicsTypeMap (\n \"schematicID\" integer NOT NULL,\n \"typeID\" integer NOT NULL,\n \"quantity\" integer DEFAULT NULL,\n \"isInput\" integer DEFAULT NULL,\n PRIMARY KEY (\"schematicID\",\"typeID\"));");
 	f.append("")
 
 	name = table
@@ -114,17 +120,20 @@ dgmOperandsHeader = dgmOperands[0].__header__.Keys()
 
 #dump (cfg.dgmexpressions, "dgmExpressions")
 
-invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID", "iconID")
+invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID", "iconID", "basePrice")
 invGroupsHeader = ("groupID", "groupName", "categoryID", "published", "iconID")
 invCategoriesHeader = ("categoryID", "categoryName", "published", "iconID")
 invTypeAttributesHeader = ("typeID", "attributeID", "value")
 invTypeEffectsHeader = ("typeID", "effectID", "isDefault")
+planetSchematicsHeader = ("schematicID", "schematicName", "cycleTime")
 
 invTypes = map(invTypesHeader, cfg.invtypes)
 invGroups = map(invGroupsHeader, cfg.invgroups)
 invCategories = map(invCategoriesHeader, cfg.invcategories)
 invTypeAttributes = [r for rows in cfg.dgmtypeattribs.values() for r in rows]
 invTypeEffects = [r for rows in cfg.dgmtypeeffects.values() for r in rows]
+planetSchematicsPinMap = [r for rows in cfg.schematicspinmap.items.values() for r in rows]
+planetSchematicsTypeMap = [r for rows in cfg.schematicstypemap.items.values() for r in rows]
 
 dump ("dgmOperands", dgmOperandsHeader, dgmOperands)
 dump ("invCategories", invCategoriesHeader, invCategories)
@@ -135,3 +144,6 @@ dump ("dgmTypeEffects", invTypeEffectsHeader, invTypeEffects)
 dump ("dgmExpressions", cfg.dgmexpressions.header, cfg.dgmexpressions.values())
 dump ("dgmAttributeTypes", cfg.dgmattribs.header, cfg.dgmattribs.values())
 dump ("dgmTypeAttributes", invTypeAttributesHeader, invTypeAttributes)
+dump ("planetSchematics", planetSchematicsHeader, cfg.schematics.values())
+dump ("planetSchematicsPinMap", cfg.schematicspinmap.header, planetSchematicsPinMap)
+dump ("planetSchematicsTypeMap", cfg.schematicstypemap.header, planetSchematicsTypeMap)

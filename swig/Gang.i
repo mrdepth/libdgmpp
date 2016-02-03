@@ -1,29 +1,29 @@
-%include "types.i"
 %include "Item.i"
 %include "Character.i"
 
+%shared_ptr(dgmpp::Gang);
+
 namespace dgmpp {
-	
+
 	%nodefaultctor Gang;
 
 	class Gang : public dgmpp::Item
 	{
 		public:
 		%extend {
-			std::vector<dgmpp::Character*> getPilots() {
+			std::vector<std::shared_ptr<dgmpp::Character>> getPilots() {
 				const dgmpp::CharactersList& pilots = $self->getPilots();
-				return std::vector<dgmpp::Character*>(pilots.begin(), pilots.end());
+				return std::vector<std::shared_ptr<dgmpp::Character>>(pilots.begin(), pilots.end());
 			}
 		}
-		dgmpp::Character* addPilot();
-		dgmpp::Character* addPilot(dgmpp::Character* character);
-		void removePilot(dgmpp::Character* character);
-		dgmpp::Character* getFleetBooster();
-		dgmpp::Character* getWingBooster();
-		dgmpp::Character* getSquadBooster();
-		void setFleetBooster(dgmpp::Character* fleetBooster);
-		void setWingBooster(dgmpp::Character* wingBooster);
-		void setSquadBooster(dgmpp::Character* squadBooster);
+		std::shared_ptr<dgmpp::Character> addPilot();
+		void removePilot(const std::shared_ptr<dgmpp::Character>& character);
+		std::shared_ptr<dgmpp::Character> getFleetBooster();
+		std::shared_ptr<dgmpp::Character> getWingBooster();
+		std::shared_ptr<dgmpp::Character> getSquadBooster();
+		void setFleetBooster(const std::shared_ptr<dgmpp::Character>& fleetBooster);
+		void setWingBooster(const std::shared_ptr<dgmpp::Character>& wingBooster);
+		void setSquadBooster(const std::shared_ptr<dgmpp::Character>& squadBooster);
 		void removeFleetBooster();
 		void removeWingBooster();
 		void removeSquadBooster();

@@ -1,6 +1,7 @@
 #pragma once
 #include "types.h"
 #include "AttributePrototype.h"
+#include <limits>
 
 namespace dgmpp {
 
@@ -158,7 +159,8 @@ namespace dgmpp {
 	extern const TypeID SCAN_GRAVIMETRIC_STRENGTH_ATTRIBUTE_ID;
 	extern const TypeID MAX_ACTIVE_DRONES_ATTRIBUTE_ID;
 	extern const TypeID SCAN_RESOLUTION_ATTRIBUTE_ID;
-	
+	extern const TypeID SPECIAL_ORE_HOLD_CAPACITY;
+
 	extern const TypeID HI_SLOT_MODIFIER_ATTRIBUTE_ID;
 	extern const TypeID MED_SLOT_MODIFIER_ATTRIBUTE_ID;
 	extern const TypeID LOW_SLOT_MODIFIER_ATTRIBUTE_ID;
@@ -203,6 +205,9 @@ namespace dgmpp {
 	extern const TypeID ENTITY_CRUISE_SPEED_ATTRIBUTE_ID;
 	extern const TypeID WARP_SCRAMBLE_STRENGTH_ATTRIBUTE_ID;
 	extern const TypeID WARP_SCRAMBLE_STRENGTH_HIDDEN_ATTRIBUTE_ID;
+
+	extern const TypeID ECU_DECAY_FACTOR_ATTRIBUTE_ID;
+	extern const TypeID ECU_NOISE_FACTOR_ATTRIBUTE_ID;
 
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{

@@ -1,7 +1,11 @@
 %include "Item.i"
+%include "Charge.i"
+
+%shared_ptr(dgmpp::Module);
+%shared_ptr(dgmpp::Ship);
 
 namespace dgmpp {
-	
+
 	%nodefaultctor Module;
 
 	class Module : public Item
@@ -9,21 +13,26 @@ namespace dgmpp {
 	public:
 		enum Slot
 		{
-			SLOT_NONE,
+			SLOT_UNKNOWN = -1,
+			SLOT_NONE = 0,
 			SLOT_HI,
 			SLOT_MED,
 			SLOT_LOW,
 			SLOT_RIG,
 			SLOT_SUBSYSTEM,
-			SLOT_STRUCTURE
+			SLOT_STRUCTURE,
+			SLOT_MODE
+			
 		};
 		
 		enum State
 		{
+			STATE_UNKNOWN = -1,
 			STATE_OFFLINE,
 			STATE_ONLINE,
 			STATE_ACTIVE,
 			STATE_OVERLOADED
+			
 		};
 		
 		enum Hardpoint
@@ -33,38 +42,42 @@ namespace dgmpp {
 			HARDPOINT_TURRET
 		};
 		
-		virtual dgmpp::Attribute* getAttribute(dgmpp::TypeID attributeID);
-		
 		Slot getSlot();
 		Hardpoint getHardpoint();
 		virtual bool canHaveState(State state);
 		State getState();
-		virtual void setState(State state);
+		State getPreferredState();
+		%extend {
+			void setState(State state) {
+				$self->setPreferredState(state);
+			}
+		}
 		
-		dgmpp::Charge* setCharge(dgmpp::TypeID typeID);
+		std::shared_ptr<dgmpp::Charge> setCharge(dgmpp::TypeID typeID);
 		void clearCharge();
-		dgmpp::Charge* getCharge();
+		std::shared_ptr<dgmpp::Charge> getCharge();
 		const std::vector<dgmpp::TypeID>& getChargeGroups();
 		int getChargeSize();
-		void removeCharge();
-		bool canFit(dgmpp::Charge* charge);
+		
 		bool requireTarget();
-		void setTarget(dgmpp::Ship* target = NULL);
+		void setTarget(const std::shared_ptr<dgmpp::Ship>& target = NULL);
 		void clearTarget();
-		dgmpp::Ship* getTarget();
+		std::shared_ptr<dgmpp::Ship> getTarget();
 		float getReloadTime();
 		
 		//Calculations
 		
 		float getCycleTime();
 		float getRawCycleTime();
-		
+		bool factorReload();
+		void setFactorReload(bool factorReload);
+
 		int getCharges();
 		int getShots();
 		float getCapUse();
 		
-		float getVolley();
-		float getDps();
+		dgmpp::DamageVector getVolley();
+		dgmpp::DamageVector getDps();
 		float getMaxRange();
 		float getFalloff();
 		float getTrackingSpeed();

@@ -542,7 +542,7 @@ int patch(const char* databasePath) {
 	addItemAttribute("Confessor Defense Mode", getAttributeID("canFitShipType1"), getTypeID("Confessor"));
 	addItemAttribute("Confessor Sharpshooter Mode", getAttributeID("canFitShipType1"), getTypeID("Confessor"));
 	addItemAttribute("Confessor Propulsion Mode", getAttributeID("canFitShipType1"), getTypeID("Confessor"));
-	addItemAttribute("Confessor", getAttributeID("tacticalMode"), 1);
+	addItemAttribute("Confessor", getAttributeID("tacticalModes"), 1);
 	
 	addItemEffect("Svipul Defense Mode", getEffectID("tacticalMode"));
 	addItemEffect("Svipul Sharpshooter Mode", getEffectID("tacticalMode"));
@@ -550,7 +550,7 @@ int patch(const char* databasePath) {
 	addItemAttribute("Svipul Defense Mode", getAttributeID("canFitShipType1"), getTypeID("Svipul"));
 	addItemAttribute("Svipul Sharpshooter Mode", getAttributeID("canFitShipType1"), getTypeID("Svipul"));
 	addItemAttribute("Svipul Propulsion Mode", getAttributeID("canFitShipType1"), getTypeID("Svipul"));
-	addItemAttribute("Svipul", getAttributeID("tacticalMode"), 1);
+	addItemAttribute("Svipul", getAttributeID("tacticalModes"), 1);
 
 	addItemEffect("Jackdaw Defense Mode", getEffectID("tacticalMode"));
 	addItemEffect("Jackdaw Sharpshooter Mode", getEffectID("tacticalMode"));
@@ -558,7 +558,7 @@ int patch(const char* databasePath) {
 	addItemAttribute("Jackdaw Defense Mode", getAttributeID("canFitShipType1"), getTypeID("Jackdaw"));
 	addItemAttribute("Jackdaw Sharpshooter Mode", getAttributeID("canFitShipType1"), getTypeID("Jackdaw"));
 	addItemAttribute("Jackdaw Propulsion Mode", getAttributeID("canFitShipType1"), getTypeID("Jackdaw"));
-	addItemAttribute("Jackdaw", getAttributeID("tacticalMode"), 1);
+	addItemAttribute("Jackdaw", getAttributeID("tacticalModes"), 1);
 
 	addItemEffect("Hecate Defense Mode", getEffectID("tacticalMode"));
 	addItemEffect("Hecate Sharpshooter Mode", getEffectID("tacticalMode"));
@@ -566,7 +566,7 @@ int patch(const char* databasePath) {
 	addItemAttribute("Hecate Defense Mode", getAttributeID("canFitShipType1"), getTypeID("Hecate"));
 	addItemAttribute("Hecate Sharpshooter Mode", getAttributeID("canFitShipType1"), getTypeID("Hecate"));
 	addItemAttribute("Hecate Propulsion Mode", getAttributeID("canFitShipType1"), getTypeID("Hecate"));
-	addItemAttribute("Hecate", getAttributeID("tacticalMode"), 1);
+	addItemAttribute("Hecate", getAttributeID("tacticalModes"), 1);
 
 	//Ancillary Armor Repairer fix
 	addEffect(10001, "naniteRepairPasteArmorDamageBonus", 0, 0, 0);
