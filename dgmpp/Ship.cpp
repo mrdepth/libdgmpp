@@ -694,6 +694,15 @@ int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 	return n;
 }
 
+float Ship::getCapacity() {
+	return getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
+	}
+
+float Ship::getOreHoldCapacity() {
+	return getAttribute(SPECIAL_ORE_HOLD_CAPACITY)->getValue();
+}
+
+
 float Ship::getCalibrationUsed()
 {
 	float calibration = 0;
