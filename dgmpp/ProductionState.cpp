@@ -8,6 +8,7 @@
 
 #include "ProductionState.h"
 #include "Facility.h"
+#include <sstream>
 
 using namespace dgmpp;
 
@@ -20,4 +21,12 @@ bool ProductionState::operator == (const ProductionState& other) {
 
 bool ProductionState::operator != (const ProductionState& other) {
 	return !(*this == other);
+}
+
+std::string ProductionState::toJSONString() const {
+	std::stringstream os;
+	if (currentCycle_)
+		os << "\"cyrrentCycle\":" << *currentCycle_ << ",";
+	os << State::toJSONString();
+	return os.str();
 }

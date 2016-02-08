@@ -13,6 +13,7 @@ namespace dgmpp {
 		bool operator != (const ProductionState& other);
 		double getEfficiency() const {return efficiency_;};
 		void setEfficiency(double efficiency) {efficiency_ = efficiency;};
+		virtual std::string toJSONString() const;
 	private:
 		std::shared_ptr<ProductionCycle> currentCycle_;
 		double efficiency_;

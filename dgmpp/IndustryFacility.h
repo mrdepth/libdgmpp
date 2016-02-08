@@ -36,6 +36,7 @@ namespace dgmpp {
 		double launchTime_;
 		double startTime_;
 		double productionTime_;
+		bool updating_;
 
 		std::shared_ptr<Schematic> schematic_;
 		

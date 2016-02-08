@@ -201,6 +201,17 @@ std::string Facility::toJSONString() const {
 			os << *commodity.second;
 		}
 	}
+	os << "],";
+	os << "\"states\":[";
+	isFirst = true;
+	for (const auto& state: states_) {
+		if (isFirst)
+			isFirst = false;
+		else
+			os << "," << std::endl;;
+		os << *state;
+	}
+	
 	os << "]" << std::endl;
 	return os.str();
 }

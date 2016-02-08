@@ -16,7 +16,7 @@
 
 using namespace dgmpp;
 
-ExtractorControlUnit::ExtractorControlUnit(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), installTime_(0), expiryTime_(0), cycleTime_(0), quantityPerCycle_(0), yield_(0), waste_(0) {
+ExtractorControlUnit::ExtractorControlUnit(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), installTime_(0), expiryTime_(0), cycleTime_(0), quantityPerCycle_(0), yield_(0), waste_(0), updating_(false) {
 	decayFactor_ = owner->getEngine()->decayFactor();
 	noiseFactor_ = owner->getEngine()->noiseFactor();
 }
@@ -70,6 +70,9 @@ double ExtractorControlUnit::getNextUpdateTime() const {
 }
 
 void ExtractorControlUnit::update(double time) {
+	if (updating_)
+		return;
+	updating_ = true;
 	if (extractionCycle_) {
 		double cycleEndTime = extractionCycle_->getLaunchTime() + extractionCycle_->getCycleTime();
 		bool endCycle = cycleEndTime == time;
@@ -112,6 +115,7 @@ void ExtractorControlUnit::update(double time) {
 				std::dynamic_pointer_cast<ProductionState>(states_.back())->setCurrentCycle(extractionCycle_);
 		}
 	}
+	updating_ = false;
 }
 
 
