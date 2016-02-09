@@ -87,7 +87,7 @@ private:
 };
 
 
-Item::Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), context_(nullptr), loaded_(false)
+Item::Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), loaded_(false)
 {
 }
 

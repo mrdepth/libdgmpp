@@ -66,6 +66,9 @@ namespace dgmpp {
 		int getFreeHardpoints(Module::Hardpoint hardpoint);
 		int getUsedHardpoints(Module::Hardpoint hardpoint);
 		
+		float getCapacity();
+		float getOreHoldCapacity();
+		
 		float getCalibrationUsed();
 		float getTotalCalibration();
 		float getPowerGridUsed();

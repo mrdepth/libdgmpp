@@ -28,13 +28,16 @@ namespace dgmpp {
 
 		Engine(std::shared_ptr<SqlConnector> const& sqlConnector);
 		virtual ~Engine(void);
-		std::shared_ptr<SqlConnector> getSqlConnector();
+		std::shared_ptr<SqlConnector> getSqlConnector() const;
 		std::shared_ptr<Area> setArea(TypeID typeID);
 		std::shared_ptr<ControlTower> setControlTower(TypeID typeID);
 		void clearArea();
 		std::shared_ptr<Gang> getGang();
 		std::shared_ptr<Area> getArea();
 		std::shared_ptr<ControlTower> getControlTower();
+		
+		std::shared_ptr<Planet> setPlanet(TypeID typeID);
+		std::shared_ptr<Planet> getPlanet();
 		
 		void reset();
 		void beginUpdates();
@@ -56,11 +59,17 @@ namespace dgmpp {
 			return generation_;
 		}
 		
+		float decayFactor() const;
+		float noiseFactor() const;
+		
+		const std::map<TypeID, CommodityTier>& getCommodityTiers() const;
+		
 	private:
 		std::shared_ptr<SqlConnector> sqlConnector_;
 		std::shared_ptr<Gang> gang_;
 		std::shared_ptr<Area> area_;
 		std::shared_ptr<ControlTower> controlTower_;
+		std::shared_ptr<Planet> planet_;
 #if !_M_CEE
 		std::recursive_mutex mutex_;
 #endif		
@@ -69,6 +78,9 @@ namespace dgmpp {
 		std::map<TypeID, std::shared_ptr<dgmpp::AttributePrototype> > reusableAttributePrototypes_;
 		uint32_t generation_;
 		int32_t updatesCounter_;
+		mutable float decayFactor_;
+		mutable float noiseFactor_;
+		mutable std::map<TypeID, CommodityTier> commodityTiers_;
 
 	};
 

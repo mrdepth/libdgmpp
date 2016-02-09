@@ -34,6 +34,12 @@ namespace dgmpp {
 	class ControlTower;
 	class Structure;
 	class Environment;
+	
+	class Planet;
+	class Facility;
+	class CommandCenter;
+	class Route;
+	class Commodity;
 
 	typedef int TypeID;
 	
@@ -57,6 +63,9 @@ namespace dgmpp {
 	typedef std::map<SkillID, ItemModifiers> LocationRequiredSkillModifiers;
 	typedef std::map<GroupID, ItemModifiers> LocationGroupModifiers;
 	
+	typedef std::list<std::shared_ptr<Facility>> FacilitiesList;
+	typedef std::list<std::shared_ptr<const Route>> RoutesList;
+
 	struct Tank
 	{
 		union {
@@ -103,5 +112,14 @@ namespace dgmpp {
 			};
 			ResistancesLayer layers[3];
 		};
+	};
+	
+	enum CommodityTier {
+		TIER_UNKNOWN = -1,
+		TIER_RAW,
+		TIER1,
+		TIER2,
+		TIER3,
+		TIER4
 	};
 }
