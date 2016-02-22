@@ -694,6 +694,10 @@ int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 	return n;
 }
 
+int Ship::getRigSize() {
+	return getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue();
+}
+
 float Ship::getCapacity() {
 	return getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
 	}
