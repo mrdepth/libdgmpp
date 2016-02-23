@@ -316,6 +316,10 @@ std::insert_iterator<ModifiersList> Character::getLocationModifiers(Attribute* a
 	return outIterator;
 }
 
+float Character::getDroneControlRange() {
+	return getAttribute(dgmpp::DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID)->getValue();
+}
+
 void Character::lazyLoad() {
 	auto engine = getEngine();
 	if (!engine)

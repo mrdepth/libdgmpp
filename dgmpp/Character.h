@@ -39,9 +39,12 @@ namespace dgmpp {
 		
 		void setSkillLevels(const std::map<TypeID, int>& levels);
 		void setAllSkillsLevel(int level);
-		
+
+		float getDroneControlRange();
+
 		virtual Item* character();
 		virtual Item* ship();
+		
 
 		friend std::ostream& operator<<(std::ostream& os, Character& character);
 	protected:
