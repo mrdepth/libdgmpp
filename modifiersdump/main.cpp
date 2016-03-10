@@ -124,8 +124,10 @@ std::string domain(const std::string& domain) {
 		return "Ship";
 	else if (domain == "targetID")
 		return "Target";
-	else if (domain == "null")
+	else if (domain == "null" || domain == "itemID")
 		return "Self";
+	else if (domain == "otherID")
+		return "Other";
 	else
 		assert(0);
 }
