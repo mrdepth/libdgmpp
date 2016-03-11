@@ -40,6 +40,8 @@ namespace dgmpp {
 	class CommandCenter;
 	class Route;
 	class Commodity;
+	
+	class SpaceStructure;
 
 	typedef int TypeID;
 	

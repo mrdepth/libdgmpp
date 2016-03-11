@@ -65,8 +65,16 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+		
+		auto spaceStructure = engine->setSpaceStructure(35832);
+		auto service = spaceStructure->getFreeSlots(Module::SLOT_SERVICE);
+		auto sshp = spaceStructure->getHitPoints();
+		auto ssres = spaceStructure->getResistances();
+		auto pg = spaceStructure->getTotalPowerGrid();
+		auto cpu = spaceStructure->getTotalCpu();
+		auto db = spaceStructure->getTotalDroneBay();
 		
 		double lastUpdateTime = 1452068276;
 		auto planet = engine->setPlanet(2016);

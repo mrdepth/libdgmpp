@@ -703,6 +703,8 @@ void Module::lazyLoad() {
 		slot_ = SLOT_MODE;
 	else if (getCategoryID() == STRUCTURE_CATEGORY_ID)
 		slot_ = SLOT_STRUCTURE;
+	else if (getCategoryID() == SERVICE_SLOT_EFFECT_ID)
+		slot_ = SLOT_SERVICE;
 	else
 		slot_ = SLOT_NONE;
 	

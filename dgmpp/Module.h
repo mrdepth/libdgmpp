@@ -18,7 +18,8 @@ namespace dgmpp {
 			SLOT_RIG,
 			SLOT_SUBSYSTEM,
 			SLOT_STRUCTURE,
-			SLOT_MODE
+			SLOT_MODE,
+			SLOT_SERVICE
 		};
 
 		enum State

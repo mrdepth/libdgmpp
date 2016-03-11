@@ -215,6 +215,8 @@ const TypeID dgmpp::WARP_SCRAMBLE_STRENGTH_HIDDEN_ATTRIBUTE_ID = 1318;
 const TypeID dgmpp::ECU_DECAY_FACTOR_ATTRIBUTE_ID = 1683;
 const TypeID dgmpp::ECU_NOISE_FACTOR_ATTRIBUTE_ID = 1687;
 
+const TypeID dgmpp::SERVICE_SLOT_ATTRIBUTE_ID = 2056;
+
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)
 {

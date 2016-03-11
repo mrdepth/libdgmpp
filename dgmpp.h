@@ -38,6 +38,7 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <dgmpp/Structure.h>
 #include <dgmpp/SqliteConnector.h>
 #include <dgmpp/CombatSimulator.h>
+#include <dgmpp/SpaceStructure.h>
 
 #include <dgmpp/CommandCenter.h>
 #include <dgmpp/ExtractorControlUnit.h>
