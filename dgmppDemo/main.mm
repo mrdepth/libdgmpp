@@ -67,14 +67,18 @@ int main(int argc, const char * argv[]) {
 	@autoreleasepool {
 		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+		auto pilot = engine->getGang()->addPilot();
+		pilot->setAllSkillsLevel(5);
 		
-		auto spaceStructure = engine->setSpaceStructure(35832);
+		auto spaceStructure = pilot->setSpaceStructure(35832);
 		auto service = spaceStructure->getFreeSlots(Module::SLOT_SERVICE);
 		auto sshp = spaceStructure->getHitPoints();
 		auto ssres = spaceStructure->getResistances();
 		auto pg = spaceStructure->getTotalPowerGrid();
 		auto cpu = spaceStructure->getTotalCpu();
 		auto db = spaceStructure->getTotalDroneBay();
+		auto turret = spaceStructure->addModule(35928);
+		auto sdps = spaceStructure->getWeaponDps();
 		
 		double lastUpdateTime = 1452068276;
 		auto planet = engine->setPlanet(2016);

@@ -14,11 +14,15 @@ namespace dgmpp {
 		}
 		bool isAssistance();
 		bool isOffensive();
+		bool canBeActive();
 
 		virtual Item* ship();
 		virtual Item* character();
 		virtual Item* other();
 	protected:
+		virtual void lazyLoad();
+	private:
+		bool canBeActive_;
 	};
 	
 }

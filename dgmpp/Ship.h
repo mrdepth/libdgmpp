@@ -44,6 +44,7 @@ namespace dgmpp {
 
 		virtual void reset();
 		
+		virtual std::vector<AttributeID> getSupportedModuleCategories() const;
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		

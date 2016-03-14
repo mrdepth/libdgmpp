@@ -5,7 +5,6 @@
 #include "Planet.h"
 #include <cmath>
 #include "Attribute.h"
-#include "SpaceStructure.h"
 
 using namespace dgmpp;
 
@@ -104,38 +103,6 @@ std::shared_ptr<Planet> Engine::getPlanet() {
 	return planet_;
 }
 
-std::shared_ptr<SpaceStructure> Engine::setSpaceStructure(TypeID typeID)
-{
-	try
-	{
-		std::shared_ptr<SpaceStructure> spaceStructure = std::make_shared<SpaceStructure>(shared_from_this(), typeID);
-		if (spaceStructure_)
-		{
-			spaceStructure_->removeEffects(Effect::CATEGORY_GENERIC);
-			spaceStructure_->removeEffects(Effect::CATEGORY_ACTIVE);
-		}
-		spaceStructure_ = spaceStructure;
-		if (spaceStructure_)
-		{
-			spaceStructure_->addEffects(Effect::CATEGORY_GENERIC);
-			spaceStructure_->addEffects(Effect::CATEGORY_ACTIVE);
-		}
-		
-		reset();
-		return spaceStructure_;
-	}
-	catch(Item::UnknownTypeIDException)
-	{
-		return nullptr;
-	}
-}
-
-std::shared_ptr<SpaceStructure> Engine::getSpaceStructure()
-{
-	return spaceStructure_;
-}
-
-
 void Engine::reset()
 {
 	if (updatesCounter_ > 0)
@@ -145,8 +112,6 @@ void Engine::reset()
 		gang_->reset();
 	if (controlTower_)
 		controlTower_->reset();
-	if (spaceStructure_)
-		spaceStructure_->reset();
 }
 
 void Engine::beginUpdates() {
@@ -213,8 +178,6 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Engine& engine)
 	os << "{\"gang\":" << *engine.getGang();
 	if (engine.getControlTower())
 		os << ", \"controlTower\":" << *engine.getControlTower();
-	if (engine.getSpaceStructure())
-		os << ", \"spaceStructure\":" << *engine.getSpaceStructure();
 	os << '}';
 	return os;
 }

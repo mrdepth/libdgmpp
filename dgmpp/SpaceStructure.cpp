@@ -10,7 +10,7 @@
 
 using namespace dgmpp;
 
-SpaceStructure::SpaceStructure(std::shared_ptr<Engine> const& engine, TypeID typeID) : Ship(engine, typeID, nullptr)
+SpaceStructure::SpaceStructure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner) : Ship(engine, typeID, owner)
 {
 	
 }
@@ -18,4 +18,8 @@ SpaceStructure::SpaceStructure(std::shared_ptr<Engine> const& engine, TypeID typ
 SpaceStructure::~SpaceStructure()
 {
 	
+}
+
+std::vector<AttributeID> SpaceStructure::getSupportedModuleCategories() const {
+	return {STRUCTURE_MODULE_CATEGORY_ID};
 }

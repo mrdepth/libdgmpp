@@ -31,6 +31,7 @@ const TypeID dgmpp::CHARGE_CATEGORY_ID = 8;
 const TypeID dgmpp::DRONE_CATEGORY_ID = 18;
 const TypeID dgmpp::SUBSYSTEM_CATEGORY_ID = 32;
 const TypeID dgmpp::STRUCTURE_CATEGORY_ID = 23;
+const TypeID dgmpp::STRUCTURE_MODULE_CATEGORY_ID = 66;
 
 const TypeID dgmpp::MISSILE_LAUNCHER_OPERATION_TYPE_ID = 3319;
 

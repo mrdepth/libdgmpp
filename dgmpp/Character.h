@@ -16,6 +16,9 @@ namespace dgmpp {
 		std::shared_ptr<Ship> getShip();
 		std::shared_ptr<Ship> setShip(TypeID typeID);
 
+		std::shared_ptr<SpaceStructure> setSpaceStructure(TypeID typeID);
+		std::shared_ptr<SpaceStructure> getSpaceStructure();
+
 		virtual void reset();
 		
 		std::shared_ptr<Skill> getSkill(TypeID typeID);
@@ -52,6 +55,7 @@ namespace dgmpp {
 
 	private:
 		std::shared_ptr<Ship> ship_;
+		std::shared_ptr<SpaceStructure> spaceStructure_;
 		SkillsMap skills_;
 		ImplantsList implants_;
 		BoostersList boosters_;

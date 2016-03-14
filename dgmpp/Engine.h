@@ -39,9 +39,6 @@ namespace dgmpp {
 		std::shared_ptr<Planet> setPlanet(TypeID typeID);
 		std::shared_ptr<Planet> getPlanet();
 		
-		std::shared_ptr<SpaceStructure> setSpaceStructure(TypeID typeID);
-		std::shared_ptr<SpaceStructure> getSpaceStructure();
-
 		void reset();
 		void beginUpdates();
 		void commitUpdates();
@@ -73,7 +70,6 @@ namespace dgmpp {
 		std::shared_ptr<Area> area_;
 		std::shared_ptr<ControlTower> controlTower_;
 		std::shared_ptr<Planet> planet_;
-		std::shared_ptr<SpaceStructure> spaceStructure_;
 #if !_M_CEE
 		std::recursive_mutex mutex_;
 #endif		

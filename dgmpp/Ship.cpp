@@ -83,7 +83,13 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 			return nullptr;
 
 		std::shared_ptr<Module> module = std::make_shared<Module>(engine, typeID, shared_from_this());
-		bool isModule = module->getCategoryID() == MODULE_CATEGORY_ID || module->getCategoryID() == SUBSYSTEM_CATEGORY_ID;
+		bool isModule = false;
+		for (auto categoryID: getSupportedModuleCategories())
+			if (categoryID == module->getCategoryID()) {
+				isModule = true;
+				break;
+			}
+		
 		if (isModule && (forced || canFit(module)))
 		{
 			modules_.push_back(module);
@@ -501,6 +507,11 @@ void Ship::reset()
 	updateEnabledStatus();
 	updateModulesState();
 }
+
+std::vector<AttributeID> Ship::getSupportedModuleCategories() const {
+	return {MODULE_CATEGORY_ID, SUBSYSTEM_CATEGORY_ID};
+}
+
 
 void Ship::addEffects(Effect::Category category)
 {

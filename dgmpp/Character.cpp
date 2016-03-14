@@ -12,6 +12,7 @@
 #include "Booster.h"
 #include <algorithm>
 #include <limits>
+#include "SpaceStructure.h"
 
 using namespace dgmpp;
 
@@ -57,11 +58,49 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 }
 
 
+std::shared_ptr<SpaceStructure> Character::setSpaceStructure(TypeID typeID)
+{
+	try
+	{
+		loadIfNeeded();
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+
+		std::shared_ptr<SpaceStructure> spaceStructure = std::make_shared<SpaceStructure>(engine, typeID, shared_from_this());
+		if (spaceStructure_)
+		{
+			spaceStructure_->removeEffects(Effect::CATEGORY_GENERIC);
+			spaceStructure_->removeEffects(Effect::CATEGORY_ACTIVE);
+		}
+		spaceStructure_ = spaceStructure;
+		if (spaceStructure_)
+		{
+			spaceStructure_->addEffects(Effect::CATEGORY_GENERIC);
+			spaceStructure_->addEffects(Effect::CATEGORY_ACTIVE);
+		}
+		
+		reset();
+		return spaceStructure_;
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return nullptr;
+	}
+}
+
+std::shared_ptr<SpaceStructure> Character::getSpaceStructure()
+{
+	return spaceStructure_;
+}
+
 void Character::reset()
 {
 	Item::reset();
 	if (ship_ != nullptr)
 		ship_->reset();
+	if (spaceStructure_ != nullptr)
+		spaceStructure_->reset();
 	
 	//for (const std::pair<int, const std::shared_ptr<Skill>&>& i: skills_)
 	for (const auto& i: skills_)

@@ -47,9 +47,11 @@ bool Module::canHaveState(State state)
 {
 	loadIfNeeded();
 	if (isEnabled()) {
+		auto charge = getCharge();
+		bool canBeActive = canBeActive_ | (charge ? charge->canBeActive() : false);
 		bool canHaveState =	 state == STATE_OFFLINE ||
 		(state == STATE_ONLINE && canBeOnline_) ||
-		(state == STATE_ACTIVE && canBeActive_) ||
+		(state == STATE_ACTIVE && canBeActive) ||
 		(state == STATE_OVERLOADED && canBeOverloaded_);
 		if (canHaveState && state >= STATE_ACTIVE)
 		{
@@ -176,9 +178,9 @@ void Module::addEffects(Effect::Category category)
 		if (state_ >= STATE_OVERLOADED)
 			addEffects(Effect::CATEGORY_OVERLOADED);
 		
-		if (charge_)
-			charge_->addEffects(category);
 	}
+	if (charge_)
+		charge_->addEffects(category);
 }
 
 void Module::removeEffects(Effect::Category category)
@@ -205,9 +207,9 @@ void Module::removeEffects(Effect::Category category)
 			getEffect(ONLINE_EFFECT_ID)->removeEffect(this);
 		}
 		
-		if (charge_)
-			charge_->removeEffects(category);
 	}
+	if (charge_)
+		charge_->removeEffects(category);
 }
 
 void Module::reset()
@@ -286,7 +288,8 @@ bool Module::canFit(std::shared_ptr<Charge> const& charge)
 	loadIfNeeded();
 	if (!charge)
 		return true;
-	if (charge->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() > getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue())
+	float capacity = getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
+	if (capacity > 0 && charge->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() > capacity)
 		return false;
 	
 	int chargeSize = getChargeSize();
@@ -703,7 +706,7 @@ void Module::lazyLoad() {
 		slot_ = SLOT_MODE;
 	else if (getCategoryID() == STRUCTURE_CATEGORY_ID)
 		slot_ = SLOT_STRUCTURE;
-	else if (getCategoryID() == SERVICE_SLOT_EFFECT_ID)
+	else if (hasEffect(SERVICE_SLOT_EFFECT_ID))
 		slot_ = SLOT_SERVICE;
 	else
 		slot_ = SLOT_NONE;
