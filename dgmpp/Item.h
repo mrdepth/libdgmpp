@@ -22,6 +22,7 @@ namespace dgmpp {
 	extern const TypeID SUBSYSTEM_CATEGORY_ID;
 	extern const TypeID STRUCTURE_CATEGORY_ID;
 	extern const TypeID STRUCTURE_MODULE_CATEGORY_ID;
+	extern const TypeID FIGHTER_CATEGORY_ID;
 
 	extern const TypeID MISSILE_LAUNCHER_OPERATION_TYPE_ID;
 

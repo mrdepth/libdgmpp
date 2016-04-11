@@ -263,7 +263,7 @@ std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
 		if (!engine)
 			return nullptr;
 		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, shared_from_this());
-		if (drone->getCategoryID() == DRONE_CATEGORY_ID) {
+		if (drone->getCategoryID() == DRONE_CATEGORY_ID || drone->getCategoryID() == FIGHTER_CATEGORY_ID) {
 			drones_.push_back(drone);
 			drone->addEffects(Effect::CATEGORY_GENERIC);
 			drone->addEffects(Effect::CATEGORY_TARGET);
