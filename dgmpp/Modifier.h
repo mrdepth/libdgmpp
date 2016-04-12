@@ -15,6 +15,7 @@ namespace dgmpp {
 			DOMAIN_AREA,
 			DOMAIN_TARGET,
 			DOMAIN_OTHER,
+			DOMAIN_STRUCTURE,
 		};
 
 		enum Association {

@@ -9,5 +9,7 @@ namespace dgmpp {
 		SpaceStructure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner = std::shared_ptr<Character>(nullptr));
 		virtual ~SpaceStructure(void);
 		virtual std::vector<AttributeID> getSupportedModuleCategories() const;
+		
+		virtual std::shared_ptr<Drone> addDrone(TypeID typeID);
 	};
 }

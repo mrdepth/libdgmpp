@@ -26,6 +26,9 @@ namespace dgmpp {
 		virtual Item* other() {
 			return nullptr;
 		}
+		virtual Item* structure() {
+			return nullptr;
+		}
 		Item* operator[](Modifier::Domain domain) {
 			switch(domain) {
 				case Modifier::DOMAIN_SELF:
@@ -42,6 +45,8 @@ namespace dgmpp {
 					return gang();
 				case Modifier::DOMAIN_AREA:
 					return area();
+				case Modifier::DOMAIN_STRUCTURE:
+					return structure();
 			}
 			return nullptr;
 		}

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12003A1C1CBD4EFC007AC3AE /* Fighter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */; };
+		12003A1D1CBD4EFC007AC3AE /* Fighter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */; };
+		12003A1E1CBD4EFC007AC3AE /* Fighter.h in Headers */ = {isa = PBXBuildFile; fileRef = 12003A1B1CBD4EFC007AC3AE /* Fighter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12003A1F1CBD4EFC007AC3AE /* Fighter.h in Headers */ = {isa = PBXBuildFile; fileRef = 12003A1B1CBD4EFC007AC3AE /* Fighter.h */; };
 		121064A51C9312370032B3DB /* SpaceStructure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* SpaceStructure.cpp */; };
 		121064A61C9312370032B3DB /* SpaceStructure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* SpaceStructure.cpp */; };
 		121064A71C9312370032B3DB /* SpaceStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = 121064A41C9312370032B3DB /* SpaceStructure.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -273,6 +277,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Fighter.cpp; sourceTree = "<group>"; };
+		12003A1B1CBD4EFC007AC3AE /* Fighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fighter.h; sourceTree = "<group>"; };
 		121064A31C9312370032B3DB /* SpaceStructure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpaceStructure.cpp; sourceTree = "<group>"; };
 		121064A41C9312370032B3DB /* SpaceStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceStructure.h; sourceTree = "<group>"; };
 		12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FetchRequest.cpp; sourceTree = "<group>"; };
@@ -651,6 +657,8 @@
 				37D72CB21497771600B13A9D /* DamagePattern.h */,
 				373AF826148E6FE900411AFE /* Drone.cpp */,
 				373AF829148E6FF500411AFE /* Drone.h */,
+				12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */,
+				12003A1B1CBD4EFC007AC3AE /* Fighter.h */,
 				37B9AB66147A5DDF006F1F8E /* Module.cpp */,
 				37B9AB67147A5DDF006F1F8E /* Module.h */,
 				37B9AB68147A5DDF006F1F8E /* Ship.cpp */,
@@ -758,6 +766,7 @@
 				12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */,
 				12B0A0641C0C9C5600194715 /* DamageVector.h in Headers */,
 				12564BF41B84B07F000F68D8 /* SqliteConnector.h in Headers */,
+				12003A1E1CBD4EFC007AC3AE /* Fighter.h in Headers */,
 				12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */,
 				12A156981C4650A700C3CF0B /* Facility.h in Headers */,
 				12A1568C1C464FC400C3CF0B /* StorageFacility.h in Headers */,
@@ -817,6 +826,7 @@
 				12EFCCC11C1AB334003ECA7F /* SqlConnector.h in Headers */,
 				12EFCCC21C1AB334003ECA7F /* DamageVector.h in Headers */,
 				12EFCCC31C1AB334003ECA7F /* SqliteConnector.h in Headers */,
+				12003A1F1CBD4EFC007AC3AE /* Fighter.h in Headers */,
 				12EFCCC41C1AB334003ECA7F /* SqliteFetchResult.h in Headers */,
 				12A156991C4650A700C3CF0B /* Facility.h in Headers */,
 				12A1568D1C464FC400C3CF0B /* StorageFacility.h in Headers */,
@@ -1043,6 +1053,7 @@
 				12564BBC1B84B027000F68D8 /* Drone.cpp in Sources */,
 				12A156781C464E6400C3CF0B /* CommandCenter.cpp in Sources */,
 				12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */,
+				12003A1C1CBD4EFC007AC3AE /* Fighter.cpp in Sources */,
 				12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */,
 				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
 				12AEEFDA1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
@@ -1116,6 +1127,7 @@
 				12EFCC851C1AB334003ECA7F /* Drone.cpp in Sources */,
 				12A156791C464E6400C3CF0B /* CommandCenter.cpp in Sources */,
 				12EFCC861C1AB334003ECA7F /* Attribute.cpp in Sources */,
+				12003A1D1CBD4EFC007AC3AE /* Fighter.cpp in Sources */,
 				12EFCC871C1AB334003ECA7F /* DamageVector.cpp in Sources */,
 				12EFCC881C1AB334003ECA7F /* Booster.cpp in Sources */,
 				12AEEFDB1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,

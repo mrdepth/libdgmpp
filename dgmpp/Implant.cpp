@@ -33,3 +33,7 @@ Item* Implant::character() {
 Item* Implant::ship() {
 	return character()->ship();
 }
+
+Item* Implant::structure() {
+	return character()->structure();
+}

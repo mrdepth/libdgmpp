@@ -69,18 +69,12 @@ std::shared_ptr<SpaceStructure> Character::setSpaceStructure(TypeID typeID)
 
 		std::shared_ptr<SpaceStructure> spaceStructure = std::make_shared<SpaceStructure>(engine, typeID, shared_from_this());
 		if (spaceStructure_)
-		{
-			spaceStructure_->removeEffects(Effect::CATEGORY_GENERIC);
-			spaceStructure_->removeEffects(Effect::CATEGORY_ACTIVE);
-		}
+			removeEffects(Effect::CATEGORY_GENERIC);
 		spaceStructure_ = spaceStructure;
 		if (spaceStructure_)
-		{
-			spaceStructure_->addEffects(Effect::CATEGORY_GENERIC);
-			spaceStructure_->addEffects(Effect::CATEGORY_ACTIVE);
-		}
+			addEffects(Effect::CATEGORY_GENERIC);
 		
-		reset();
+		engine->reset();
 		return spaceStructure_;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -122,7 +116,7 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 		std::shared_ptr<Skill> skill = std::make_shared<Skill>(engine, typeID, skillLevel, isLearned, shared_from_this());
 		skills_[typeID] = skill;
 //	if (getOwner() && ship_ != nullptr)
-		if (ship_)
+		if (ship_ || spaceStructure_)
 			skill->addEffects(Effect::CATEGORY_GENERIC);
 		return skill;
 	}
@@ -135,7 +129,7 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 void Character::removeSkill(std::shared_ptr<Skill> const& skill)
 {
 //	if (getOwner() && ship_ != NULL)
-	if (ship_)
+	if (ship_ || spaceStructure_)
 		skill->removeEffects(Effect::CATEGORY_GENERIC);
 	skills_.erase(skill->getTypeID());
 }
@@ -270,13 +264,15 @@ const BoostersList& Character::getBoosters()
 
 void Character::addEffects(Effect::Category category)
 {
-	if (ship_)
+	if (ship_ || spaceStructure_)
 	{
 		Item::addEffects(category);
 		if (category == Effect::CATEGORY_GENERIC)
 		{
 			if (ship_)
 				ship_->addEffects(Effect::CATEGORY_GENERIC);
+			if (spaceStructure_)
+				spaceStructure_->addEffects(Effect::CATEGORY_GENERIC);
 
 			for (const auto& i: skills_)
 				i.second->addEffects(Effect::CATEGORY_GENERIC);
@@ -290,13 +286,15 @@ void Character::addEffects(Effect::Category category)
 
 void Character::removeEffects(Effect::Category category)
 {
-	if (ship_)
+	if (ship_ || spaceStructure_)
 	{
 		Item::removeEffects(category);
 		if (category == Effect::CATEGORY_GENERIC)
 		{
 			if (ship_)
 				ship_->removeEffects(Effect::CATEGORY_GENERIC);
+			if (spaceStructure_)
+				spaceStructure_->removeEffects(Effect::CATEGORY_GENERIC);
 
 			for (const auto& i: skills_)
 				i.second->removeEffects(Effect::CATEGORY_GENERIC);
@@ -378,6 +376,10 @@ Item* Character::character() {
 
 Item* Character::ship() {
 	return getShip().get();
+}
+
+Item* Character::structure() {
+	return getSpaceStructure().get();
 }
 
 std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Character& character)

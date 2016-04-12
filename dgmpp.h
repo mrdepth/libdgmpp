@@ -25,6 +25,7 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <dgmpp/Ship.h>
 #include <dgmpp/Module.h>
 #include <dgmpp/Drone.h>
+#include <dgmpp/Fighter.h>
 #include <dgmpp/Charge.h>
 #include <dgmpp/Skill.h>
 #include <dgmpp/Implant.h>

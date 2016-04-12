@@ -30,7 +30,7 @@ namespace dgmpp {
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
 		void removeModule(std::shared_ptr<Module> const& module);
 		
-		std::shared_ptr<Drone> addDrone(TypeID typeID);
+		virtual std::shared_ptr<Drone> addDrone(TypeID typeID);
 		void removeDrone(std::shared_ptr<Drone> const& drone);
 		
 		const ModulesList& getModules();
@@ -140,10 +140,10 @@ namespace dgmpp {
 		virtual Item* character();
 
 		friend std::ostream& operator<<(std::ostream& os, Ship& ship);
-		
-	private:
+	protected:
 		ModulesList modules_;
 		DronesList drones_;
+	private:
 		std::list<std::weak_ptr<Module>> projectedModules_;
 		std::list<std::weak_ptr<Drone>> projectedDrones_;
 		std::shared_ptr<CapacitorSimulator> capacitorSimulator_;

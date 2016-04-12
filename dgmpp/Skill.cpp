@@ -48,3 +48,7 @@ Item* Skill::character() {
 Item* Skill::ship() {
 	return character()->ship();
 }
+
+Item* Skill::structure() {
+	return character()->structure();
+}

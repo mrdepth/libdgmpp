@@ -45,6 +45,7 @@ namespace dgmpp {
 		
 		virtual Item* character();
 		virtual Item* ship();
+		virtual Item* structure();
 
 		friend std::ostream& operator<<(std::ostream& os, Character& character);
 	protected:

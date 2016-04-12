@@ -63,14 +63,15 @@ std::vector<std::map<std::string, std::string>> parse(std::string modifierInfo) 
 	for (auto modifier: split(modifierInfo, "-")) {
 		std::map<std::string, std::string> m;
 		for (auto row: split(modifier, "\n")) {
-			if (row.length() == 0)
+			if (row.length() == 0 || row[0] == '#')
 				continue;
 			auto parts = split(row, ":");
 			auto key = parts[0];
 			auto value = parts[1];
 			m[key] = value;
 		}
-		modifiers.push_back(m);
+		if (m.size() > 0)
+			modifiers.push_back(m);
 	}
 	return modifiers;
 }
@@ -128,6 +129,10 @@ std::string domain(const std::string& domain) {
 		return "Self";
 	else if (domain == "otherID")
 		return "Other";
+	else if (domain == "gangID")
+		return "Gang";
+	else if (domain == "structureID")
+		return "Structure";
 	else
 		assert(0);
 }
@@ -141,6 +146,10 @@ std::string preFunc(const std::string& func) {
 		return "ALRSM";
 	else if (func == "OwnerRequiredSkillModifier")
 		return "AORSM";
+	else if (func == "GangItemModifier")
+		return "AGIM";
+	else if (func == "GangRequiredSkillModifier")
+		return "AGRSM";
 	else
 		assert(0);
 }
@@ -154,12 +163,16 @@ std::string postFunc(const std::string& func) {
 		return "RLRSM";
 	else if (func == "OwnerRequiredSkillModifier")
 		return "RORSM";
+	else if (func == "GangItemModifier")
+		return "RGIM";
+	else if (func == "GangRequiredSkillModifier")
+		return "RGRSM";
 	else
 		assert(0);
 }
 
 std::vector<std::string> processModifier(const std::map<std::string, std::string>& modifier) {
-	auto d = domain(modifier.at("domain"));
+	auto d = modifier.find("domain") == modifier.end() ? domain("gangID") : domain(modifier.at("domain"));
 	auto pref = preFunc(modifier.at("func"));
 	auto postf = postFunc(modifier.at("func"));
 	auto assoc = association(modifier.at("operator"));
@@ -171,7 +184,7 @@ std::vector<std::string> processModifier(const std::map<std::string, std::string
 	std::stringstream pre;
 	std::stringstream post;
 	
-	if (pref == "AIM") {
+	if (pref == "AIM" || pref == "AGIM") {
 		pre << "DefEnv(\"" << d << "\").attr(\"" << modifiedAttribute << "\").assoc(\"" << assoc << "\")." << pref << "(\"" << modifyingAttribute << "\")";
 		post << "DefEnv(\"" << d << "\").attr(\"" << modifiedAttribute << "\").assoc(\"" << assoc << "\")." << postf << "(\"" << modifyingAttribute << "\")";
 	}
@@ -179,7 +192,7 @@ std::vector<std::string> processModifier(const std::map<std::string, std::string
 		pre << "DefEnv(\"" << d << "\").locationGroup(\"" << group(modifier.at("groupID")) << "\").attr(\"" << modifiedAttribute << "\").assoc(\"" << assoc << "\")." << pref << "(\"" << modifyingAttribute << "\")";
 		post << "DefEnv(\"" << d << "\").locationGroup(\"" << group(modifier.at("groupID")) << "\").attr(\"" << modifiedAttribute << "\").assoc(\"" << assoc << "\")." << postf << "(\"" << modifyingAttribute << "\")";
 	}
-	else if (pref == "ALRSM" || pref == "AORSM") {
+	else if (pref == "ALRSM" || pref == "AORSM" || pref == "AGRSM" || pref == "AGORSM") {
 		pre << "DefEnv(\"" << d << "\").locationSkill(\"" << type(modifier.at("skillTypeID")) << "\").attr(\"" << modifiedAttribute << "\").assoc(\"" << assoc << "\")." << pref << "(\"" << modifyingAttribute << "\")";
 		post << "DefEnv(\"" << d << "\").locationSkill(\"" << type(modifier.at("skillTypeID")) << "\").attr(\"" << modifiedAttribute << "\").assoc(\"" << assoc << "\")." << postf << "(\"" << modifyingAttribute << "\")";
 	}
