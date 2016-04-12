@@ -7,6 +7,8 @@
 //
 
 #include "SpaceStructure.h"
+#include "Fighter.h"
+#include "Attribute.h"
 
 using namespace dgmpp;
 
@@ -31,8 +33,8 @@ std::shared_ptr<Drone> SpaceStructure::addDrone(TypeID typeID)
 		auto engine = getEngine();
 		if (!engine)
 			return nullptr;
-		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, shared_from_this());
-		if (drone->getCategoryID() == DRONE_CATEGORY_ID || drone->getCategoryID() == FIGHTER_CATEGORY_ID) {
+		std::shared_ptr<Fighter> drone = std::make_shared<Fighter>(engine, typeID, shared_from_this());
+		if (drone->getCategoryID() == FIGHTER_CATEGORY_ID) {
 			drones_.push_back(drone);
 			drone->addEffects(Effect::CATEGORY_GENERIC);
 			drone->addEffects(Effect::CATEGORY_TARGET);
@@ -46,4 +48,8 @@ std::shared_ptr<Drone> SpaceStructure::addDrone(TypeID typeID)
 	{
 		return nullptr;
 	}
+}
+
+float SpaceStructure::getTotalDroneBay() {
+	return getAttribute(FIGHTER_CAPACITY_ATTRIBUTE_ID)->getValue();
 }

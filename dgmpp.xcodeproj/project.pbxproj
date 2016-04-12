@@ -459,6 +459,8 @@
 			children = (
 				121064A31C9312370032B3DB /* SpaceStructure.cpp */,
 				121064A41C9312370032B3DB /* SpaceStructure.h */,
+				12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */,
+				12003A1B1CBD4EFC007AC3AE /* Fighter.h */,
 			);
 			name = SpaceStructure;
 			sourceTree = "<group>";
@@ -657,8 +659,6 @@
 				37D72CB21497771600B13A9D /* DamagePattern.h */,
 				373AF826148E6FE900411AFE /* Drone.cpp */,
 				373AF829148E6FF500411AFE /* Drone.h */,
-				12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */,
-				12003A1B1CBD4EFC007AC3AE /* Fighter.h */,
 				37B9AB66147A5DDF006F1F8E /* Module.cpp */,
 				37B9AB67147A5DDF006F1F8E /* Module.h */,
 				37B9AB68147A5DDF006F1F8E /* Ship.cpp */,

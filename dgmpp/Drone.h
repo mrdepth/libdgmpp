@@ -23,7 +23,7 @@ namespace dgmpp {
 		void clearTarget();
 		std::shared_ptr<Ship> getTarget();
 
-		bool dealsDamage();
+		virtual bool dealsDamage();
 		std::shared_ptr<Charge> getCharge();
 		
 		void setActive(bool active);
@@ -37,7 +37,7 @@ namespace dgmpp {
 
 		//Calculations
 		
-		float getCycleTime();
+		virtual float getCycleTime();
 		
 		DamageVector getVolley();
 		DamageVector getDps(const HostileTarget& target = HostileTarget::defaultTarget);
@@ -50,21 +50,22 @@ namespace dgmpp {
 		virtual Item* target();
 
 	protected:
-		virtual void lazyLoad();
-
-	private:
-		std::weak_ptr<Ship> target_;
-		std::shared_ptr<Charge> charge_;
-		
 		DamageVector volley_;
 		DamageVector dps_;
 		float maxRange_;
 		float falloff_;
 		float trackingSpeed_;
 
+		virtual void lazyLoad();
+		virtual void calculateDamageStats();
+
+	private:
+		std::weak_ptr<Ship> target_;
+		std::shared_ptr<Charge> charge_;
+		
+
 		bool isActive_;
 		
-		void calculateDamageStats();
 	};
 	
 }

@@ -248,6 +248,8 @@ const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_MISSILE_EXPLOSION_VELOCITY_ATTRIBUTE_
 const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_OPTIMAL_ATTRIBUTE_ID = 2236;
 const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_FALLOFF_ATTRIBUTE_ID = 2237;
 
+const TypeID dgmpp::FIGHTER_CAPACITY_ATTRIBUTE_ID = 2055;
+const TypeID dgmpp::FIGHTER_SQUADRON_ROLE_ATTRIBUTE_ID = 2270;
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)

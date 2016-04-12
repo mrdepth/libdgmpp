@@ -241,7 +241,10 @@ namespace dgmpp {
 	extern const TypeID FIGHTER_ABILITY_ATTACK_MISSILE_EXPLOSION_VELOCITY_ATTRIBUTE_ID;
 	extern const TypeID FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_OPTIMAL_ATTRIBUTE_ID;
 	extern const TypeID FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_FALLOFF_ATTRIBUTE_ID;
-	
+
+	extern const TypeID FIGHTER_CAPACITY_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_SQUADRON_ROLE_ATTRIBUTE_ID;
+
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:

@@ -11,5 +11,6 @@ namespace dgmpp {
 		virtual std::vector<AttributeID> getSupportedModuleCategories() const;
 		
 		virtual std::shared_ptr<Drone> addDrone(TypeID typeID);
+		virtual float getTotalDroneBay();
 	};
 }

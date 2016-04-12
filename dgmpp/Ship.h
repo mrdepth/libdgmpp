@@ -79,7 +79,7 @@ namespace dgmpp {
 		float getDroneBandwidthUsed();
 		float getTotalDroneBandwidth();
 		float getDroneBayUsed();
-		float getTotalDroneBay();
+		virtual float getTotalDroneBay();
 
 		
 		//Capacitor
