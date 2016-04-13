@@ -18,6 +18,8 @@ namespace dgmpp {
 		
 		virtual float getTotalDroneBay();
 		TypeID getFuelBlockTypeID();
+		float getCycleFuelNeed();
+		float getCycleTime();
 		/*int getDroneSquadronLimit(Fighter::Squadron squadron);
 		int getDroneSquadronUsed(Fighter::Squadron squadron);
 		int getTotalDroneLaunchTubes();

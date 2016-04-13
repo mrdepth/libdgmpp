@@ -48,6 +48,18 @@ TypeID SpaceStructure::getFuelBlockTypeID() {
 		return 0;
 }
 
+float SpaceStructure::getCycleFuelNeed() {
+	float fuel = 0;
+	for (const auto& module: getModules())
+		if (module->hasAttribute(SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID))
+			fuel += module->getAttribute(SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID)->getValue();
+	return fuel;
+}
+
+float SpaceStructure::getCycleTime() {
+	return 3600;
+}
+
 /*int SpaceStructure::getDroneSquadronLimit(Fighter::Squadron squadron) {
 	switch (squadron) {
 		case Fighter::SQUADRON_HEAVY:

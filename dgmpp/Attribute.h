@@ -257,6 +257,9 @@ namespace dgmpp {
 	extern const TypeID FIGHTER_SUPPORT_SLOTS_ATTRIBUTE_ID;
 	extern const TypeID FIGHTER_TUBES_ATTRIBUTE_ID;
 
+	extern const TypeID SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID;
+	extern const TypeID SERVICE_MODULE_FUEL_ONLINE_AMOUNT_ATTRIBUTE_ID;
+	
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
