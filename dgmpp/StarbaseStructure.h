@@ -3,13 +3,13 @@
 
 namespace dgmpp {
 	
-	class Structure : public Module
+	class StarbaseStructure : public Module
 	{
 	public:
-		Structure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<ControlTower> const& owner = std::shared_ptr<ControlTower>(nullptr));
-		virtual ~Structure(void);
-		std::shared_ptr<Structure> shared_from_this() {
-			return std::static_pointer_cast<Structure>(Item::shared_from_this());
+		StarbaseStructure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<ControlTower> const& owner = std::shared_ptr<ControlTower>(nullptr));
+		virtual ~StarbaseStructure(void);
+		std::shared_ptr<StarbaseStructure> shared_from_this() {
+			return std::static_pointer_cast<StarbaseStructure>(Item::shared_from_this());
 		}
 
 		virtual void setState(State state);

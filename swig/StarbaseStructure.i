@@ -1,12 +1,12 @@
 %include "Module.i"
 
-%shared_ptr(dgmpp::Structure);
+%shared_ptr(dgmpp::StarbaseStructure);
 
 namespace dgmpp {
 
-	%nodefaultctor Structure;
+	%nodefaultctor StarbaseStructure;
 
-	class Structure : public dgmpp::Module
+	class StarbaseStructure : public dgmpp::Module
 	{
 	public:
 		const dgmpp::Resistances& getResistances();

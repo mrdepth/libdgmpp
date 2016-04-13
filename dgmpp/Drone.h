@@ -8,9 +8,15 @@ namespace dgmpp {
 	class Drone : public Item
 	{
 	public:
-		//typedef boost::error_info<struct BadDroneTargetExceptionInfoTag, Ship*> BadDroneTargetExceptionInfo;
-		//struct BadDroneTargetException : virtual boost::exception {};
-        
+		enum FighterSquadron
+		{
+			FIGHTER_SQUADRON_NONE = 0,
+			FIGHTER_SQUADRON_HEAVY,
+			FIGHTER_SQUADRON_LIGHT,
+			FIGHTER_SQUADRON_SUPPORT
+		};
+
+		
         typedef std::invalid_argument BadDroneTargetException;
 
 		Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Ship> const& owner = std::shared_ptr<Ship>(nullptr));
@@ -34,6 +40,9 @@ namespace dgmpp {
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		virtual void reset();
+
+		FighterSquadron getSquadron();
+		int getSquadronSize();
 
 		//Calculations
 		
@@ -62,7 +71,7 @@ namespace dgmpp {
 	private:
 		std::weak_ptr<Ship> target_;
 		std::shared_ptr<Charge> charge_;
-		
+		FighterSquadron squadron_;
 
 		bool isActive_;
 		

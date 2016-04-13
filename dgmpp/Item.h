@@ -20,12 +20,24 @@ namespace dgmpp {
 	extern const TypeID CHARGE_CATEGORY_ID;
 	extern const TypeID DRONE_CATEGORY_ID;
 	extern const TypeID SUBSYSTEM_CATEGORY_ID;
-	extern const TypeID STRUCTURE_CATEGORY_ID;
+	extern const TypeID STARBASE_CATEGORY_ID;
 	extern const TypeID STRUCTURE_MODULE_CATEGORY_ID;
 	extern const TypeID FIGHTER_CATEGORY_ID;
 
 	extern const TypeID MISSILE_LAUNCHER_OPERATION_TYPE_ID;
+	
+	extern const TypeID CALDARI_RACE_ID;
+	extern const TypeID MINMATAR_RACE_ID;
+	extern const TypeID AMARR_RACE_ID;
+	extern const TypeID GALLENTE_RACE_ID;
 
+	extern const TypeID NITROGEN_FUEL_BLOCK_TYPE_ID;
+	extern const TypeID HYDROGEN_FUEL_BLOCK_TYPE_ID;
+	extern const TypeID HELIUM_FUEL_BLOCK_TYPE_ID;
+	extern const TypeID OXYGEN_FUEL_BLOCK_TYPE_ID;
+
+
+	
 	class Item: public Environment, public std::enable_shared_from_this<Item>
 	{
 	public:

@@ -30,11 +30,22 @@ const TypeID dgmpp::MODULE_CATEGORY_ID = 7;
 const TypeID dgmpp::CHARGE_CATEGORY_ID = 8;
 const TypeID dgmpp::DRONE_CATEGORY_ID = 18;
 const TypeID dgmpp::SUBSYSTEM_CATEGORY_ID = 32;
-const TypeID dgmpp::STRUCTURE_CATEGORY_ID = 23;
+const TypeID dgmpp::STARBASE_CATEGORY_ID = 23;
 const TypeID dgmpp::STRUCTURE_MODULE_CATEGORY_ID = 66;
 const TypeID dgmpp::FIGHTER_CATEGORY_ID = 87;
 
 const TypeID dgmpp::MISSILE_LAUNCHER_OPERATION_TYPE_ID = 3319;
+
+const TypeID dgmpp::CALDARI_RACE_ID = 1;
+const TypeID dgmpp::MINMATAR_RACE_ID = 2;
+const TypeID dgmpp::AMARR_RACE_ID = 4;
+const TypeID dgmpp::GALLENTE_RACE_ID = 8;
+
+const TypeID dgmpp::NITROGEN_FUEL_BLOCK_TYPE_ID = 4051;
+const TypeID dgmpp::HYDROGEN_FUEL_BLOCK_TYPE_ID = 4246;
+const TypeID dgmpp::HELIUM_FUEL_BLOCK_TYPE_ID = 4247;
+const TypeID dgmpp::OXYGEN_FUEL_BLOCK_TYPE_ID = 4312;
+
 
 class ModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {

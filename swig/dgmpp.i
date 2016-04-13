@@ -23,5 +23,5 @@ using namespace std;
 %include "Charge.i"
 %include "DamageVector.i"
 %include "ControlTower.i"
-%include "Structure.i"
+%include "StarbaseStructure.i"
 %include "SqliteConnector.i"

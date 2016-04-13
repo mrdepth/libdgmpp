@@ -247,9 +247,21 @@ const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_MISSILE_EXPLOSION_RADIUS_ATTRIBUTE_ID
 const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_MISSILE_EXPLOSION_VELOCITY_ATTRIBUTE_ID = 2235;
 const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_OPTIMAL_ATTRIBUTE_ID = 2236;
 const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_FALLOFF_ATTRIBUTE_ID = 2237;
+const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_EM_ATTRIBUTE_ID = 2171;
+const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_EXP_ATTRIBUTE_ID = 2174;
+const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_KIN_ATTRIBUTE_ID = 2173;
+const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_MULTIPLIER_ATTRIBUTE_ID = 2178;
+const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_THERM_ATTRIBUTE_ID = 2172;
+const TypeID dgmpp::FIGHTER_ABILITY_ATTACK_TURRET_DURATION_ATTRIBUTE_ID = 2177;
+const TypeID dgmpp::FIGHTER_SQUADRON_ORBIT_RANGE_ATTRIBUTE_ID = 2223;
 
 const TypeID dgmpp::FIGHTER_CAPACITY_ATTRIBUTE_ID = 2055;
 const TypeID dgmpp::FIGHTER_SQUADRON_ROLE_ATTRIBUTE_ID = 2270;
+
+const TypeID dgmpp::FIGHTER_HEAVY_SLOTS_ATTRIBUTE_ID = 2219;
+const TypeID dgmpp::FIGHTER_LIGHT_SLOTS_ATTRIBUTE_ID = 2217;
+const TypeID dgmpp::FIGHTER_SUPPORT_SLOTS_ATTRIBUTE_ID = 2218;
+const TypeID dgmpp::FIGHTER_TUBES_ATTRIBUTE_ID = 2216;
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)
@@ -455,7 +467,7 @@ void Attribute::calculate()
 				continue;
 			
 			TypeID categoryID = i->getModifier()->getOwner()->getCategoryID();
-			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID || categoryID == STRUCTURE_CATEGORY_ID;
+			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID || categoryID == FIGHTER_CATEGORY_ID || categoryID == STARBASE_CATEGORY_ID;
 			float value = i->getValue();
 			bool isNegative = (highIsGood && value < 1.0) || (!highIsGood && value > 1.0);
 

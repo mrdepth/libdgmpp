@@ -14,7 +14,7 @@ namespace dgmpp {
 %shared_ptr(dgmpp::Skill);
 %shared_ptr(dgmpp::Implant);
 %shared_ptr(dgmpp::Booster);
-%shared_ptr(dgmpp::Structure);
+%shared_ptr(dgmpp::StarbaseStructure);
 
 namespace std {
 	%template(TypesList) vector<dgmpp::TypeID>;
@@ -25,7 +25,7 @@ namespace std {
 	%template(SkillsMap) map<dgmpp::TypeID, std::shared_ptr<dgmpp::Skill>>;
 	%template(ImplantsList) vector<std::shared_ptr<dgmpp::Implant>>;
 	%template(BoostersList) vector<std::shared_ptr<dgmpp::Booster>>;
-	%template(StructuresList) vector<std::shared_ptr<dgmpp::Structure>>;
+	%template(StarbaseStructuresList) vector<std::shared_ptr<dgmpp::StarbaseStructure>>;
 }
 namespace dgmpp {
 	

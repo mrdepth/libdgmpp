@@ -704,8 +704,8 @@ void Module::lazyLoad() {
 		slot_ = SLOT_SUBSYSTEM;
 	else if (hasEffect(TACTICAL_MODE_EFFECT_ID))
 		slot_ = SLOT_MODE;
-	else if (getCategoryID() == STRUCTURE_CATEGORY_ID)
-		slot_ = SLOT_STRUCTURE;
+	else if (getCategoryID() == STARBASE_CATEGORY_ID)
+		slot_ = SLOT_STARBASE_STRUCTURE;
 	else if (hasEffect(SERVICE_SLOT_EFFECT_ID))
 		slot_ = SLOT_SERVICE;
 	else

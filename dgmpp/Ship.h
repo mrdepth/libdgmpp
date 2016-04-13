@@ -30,7 +30,7 @@ namespace dgmpp {
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
 		void removeModule(std::shared_ptr<Module> const& module);
 		
-		virtual std::shared_ptr<Drone> addDrone(TypeID typeID);
+		std::shared_ptr<Drone> addDrone(TypeID typeID);
 		void removeDrone(std::shared_ptr<Drone> const& drone);
 		
 		const ModulesList& getModules();
@@ -44,7 +44,8 @@ namespace dgmpp {
 
 		virtual void reset();
 		
-		virtual std::vector<AttributeID> getSupportedModuleCategories() const;
+		virtual std::vector<TypeID> getSupportedModuleCategories() const;
+		virtual std::vector<TypeID> getSupportedDroneCategories() const;
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
@@ -79,8 +80,10 @@ namespace dgmpp {
 		float getDroneBandwidthUsed();
 		float getTotalDroneBandwidth();
 		float getDroneBayUsed();
-		virtual float getTotalDroneBay();
-
+		float getTotalDroneBay();
+		float getFighterHangarUsed();
+		float getTotalFighterHangar();
+		
 		
 		//Capacitor
 		float getCapCapacity();
@@ -130,8 +133,10 @@ namespace dgmpp {
 		float getScanResolution();
 		
 		//Drones
-		int getMaxActiveDrones();
-		int getActiveDrones();
+		int getDroneSquadronLimit(Drone::FighterSquadron squadron = Drone::FIGHTER_SQUADRON_NONE);
+		int getDroneSquadronUsed(Drone::FighterSquadron squadron = Drone::FIGHTER_SQUADRON_NONE);
+		int getTotalFighterLaunchTubes();
+		int getFighterLaunchTubesUsed();
 
 		//Other
 		void updateHeatDamage();

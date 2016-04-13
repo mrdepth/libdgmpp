@@ -263,15 +263,15 @@ std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
 		if (!engine)
 			return nullptr;
 		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, shared_from_this());
-		if (drone->getCategoryID() == DRONE_CATEGORY_ID) {
-			drones_.push_back(drone);
-			drone->addEffects(Effect::CATEGORY_GENERIC);
-			drone->addEffects(Effect::CATEGORY_TARGET);
-			engine->reset();
-			return drone;
-		}
-		else
-			return nullptr;
+		for (auto categoryID: getSupportedDroneCategories())
+			if (categoryID == drone->getCategoryID()) {
+				drones_.push_back(drone);
+				drone->addEffects(Effect::CATEGORY_GENERIC);
+				drone->addEffects(Effect::CATEGORY_TARGET);
+				engine->reset();
+				return drone;
+			}
+		return nullptr;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -508,8 +508,12 @@ void Ship::reset()
 	updateModulesState();
 }
 
-std::vector<AttributeID> Ship::getSupportedModuleCategories() const {
+std::vector<TypeID> Ship::getSupportedModuleCategories() const {
 	return {MODULE_CATEGORY_ID, SUBSYSTEM_CATEGORY_ID};
+}
+
+std::vector<TypeID> Ship::getSupportedDroneCategories() const {
+	return {DRONE_CATEGORY_ID, FIGHTER_CATEGORY_ID};
 }
 
 
@@ -768,13 +772,26 @@ float Ship::getDroneBayUsed()
 {
 	float volume = 0;
 	for (const auto& i: drones_)
-		volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
+		if (i->getSquadron() == Drone::FIGHTER_SQUADRON_NONE)
+			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
 
 float Ship::getTotalDroneBay()
 {
 	return getAttribute(DRONE_CAPACITY_ATTRIBUTE_ID)->getValue();
+}
+
+float Ship::getFighterHangarUsed() {
+	float volume = 0;
+	for (const auto& i: drones_)
+		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE)
+			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() * i->getSquadronSize();
+	return volume;
+}
+
+float Ship::getTotalFighterHangar() {
+	return getAttribute(FIGHTER_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
 //Capacitor
@@ -1151,21 +1168,41 @@ float Ship::getProbeSize()
 }
 
 //Drones
-int Ship::getMaxActiveDrones()
+int Ship::getDroneSquadronLimit(Drone::FighterSquadron squadron)
 {
-	auto owner = getOwner();
-	return owner ? static_cast<int>(owner->getAttribute(MAX_ACTIVE_DRONES_ATTRIBUTE_ID)->getValue()) : 0;
+	switch (squadron) {
+		case Drone::FIGHTER_SQUADRON_HEAVY:
+			return getAttribute(FIGHTER_HEAVY_SLOTS_ATTRIBUTE_ID)->getValue();
+		case Drone::FIGHTER_SQUADRON_LIGHT:
+			return getAttribute(FIGHTER_LIGHT_SLOTS_ATTRIBUTE_ID)->getValue();
+		case Drone::FIGHTER_SQUADRON_SUPPORT:
+			return getAttribute(FIGHTER_SUPPORT_SLOTS_ATTRIBUTE_ID)->getValue();
+		default:
+			auto owner = getOwner();
+			return owner ? static_cast<int>(owner->getAttribute(MAX_ACTIVE_DRONES_ATTRIBUTE_ID)->getValue()) : 0;
+	}
 }
 
-int Ship::getActiveDrones()
+int Ship::getDroneSquadronUsed(Drone::FighterSquadron squadron)
 {
 	int n = 0;
 	for (const auto& i: drones_)
-		if (i->isActive())
+		if (i->isActive() && i->getSquadron() == squadron)
 			n++;
 	return n;
 }
 
+int Ship::getTotalFighterLaunchTubes() {
+	return getAttribute(FIGHTER_TUBES_ATTRIBUTE_ID)->getValue();
+}
+
+int Ship::getFighterLaunchTubesUsed() {
+	int n = 0;
+	for (const auto& drone: getDrones())
+		if (drone->isActive() && drone->getSquadron() != Drone::FIGHTER_SQUADRON_NONE)
+			n++;
+	return n;
+}
 
 //Other
 
