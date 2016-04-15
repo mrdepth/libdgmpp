@@ -781,7 +781,7 @@ int patch(const char* databasePath) {
 		   DefEnv("Ship").locationSkill("High Speed Maneuvering").attr("signatureRadiusBonus").assoc("PostDiv").RLRSM("modeMWDSigPenaltyPostDiv"));
 	
 	//Jackdaw
-	update("shipModeSPTTrackingPostDiv",
+	update("shipModeMissileVelocityPostDiv",
 		   DefEnv("Char").locationSkill("Missile Launcher Operation").attr("maxVelocity").assoc("PostDiv").AORSM("modeMaxRangePostDiv"),
 		   DefEnv("Char").locationSkill("Missile Launcher Operation").attr("maxVelocity").assoc("PostDiv").RORSM("modeMaxRangePostDiv"));
 	
