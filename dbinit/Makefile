@@ -10,7 +10,7 @@ T+=${PWD}/tmp
 all: dgm.sqlite
 
 dgmExpressions.sql:
-	cd $(T); ${DUMP}/dump.py
+	cd $(T); ${DUMP}/sisidump.py
 
 dbpatch: dbpatch.h
 	$(CC) $(CFLAGS) ../dbpatch/dbpatch.cpp -o $(T)/$@ -lsqlite3 -I $(T)/
