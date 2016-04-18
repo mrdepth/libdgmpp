@@ -159,11 +159,7 @@ Drone::FighterSquadron Drone::getSquadron() {
 }
 
 int Drone::getSquadronSize() {
-	int size = getAttribute(FIGHTER_SQUADRON_MAX_SIZE_ATTRIBUTE_ID)->getValue();
-	if (size > 0)
-		return size;
-	else
-		return 1;
+	return getAttribute(FIGHTER_SQUADRON_MAX_SIZE_ATTRIBUTE_ID)->getValue();
 }
 
 

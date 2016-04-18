@@ -785,7 +785,7 @@ float Ship::getTotalDroneBay()
 float Ship::getFighterHangarUsed() {
 	float volume = 0;
 	for (const auto& i: drones_)
-		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE)
+		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE && !i->isActive())
 			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
