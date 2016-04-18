@@ -7,7 +7,6 @@
 //
 
 #include "SpaceStructure.h"
-#include "Fighter.h"
 #include "Attribute.h"
 
 using namespace dgmpp;

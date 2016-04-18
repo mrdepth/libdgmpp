@@ -786,7 +786,7 @@ float Ship::getFighterHangarUsed() {
 	float volume = 0;
 	for (const auto& i: drones_)
 		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE)
-			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() * i->getSquadronSize();
+			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
 
@@ -1185,10 +1185,13 @@ int Ship::getDroneSquadronLimit(Drone::FighterSquadron squadron)
 
 int Ship::getDroneSquadronUsed(Drone::FighterSquadron squadron)
 {
-	int n = 0;
+	std::map<TypeID, std::pair<int, int>> squadrons;
 	for (const auto& i: drones_)
 		if (i->isActive() && i->getSquadron() == squadron)
-			n++;
+			squadrons[i->getTypeID()] = std::make_pair(squadrons[i->getTypeID()].first + 1, i->getSquadronSize());
+	int n = 0;
+	for (const auto i: squadrons)
+		n += ceil((double) i.second.first / (double) i.second.second);
 	return n;
 }
 
@@ -1197,10 +1200,13 @@ int Ship::getTotalFighterLaunchTubes() {
 }
 
 int Ship::getFighterLaunchTubesUsed() {
+	std::map<TypeID, std::pair<int, int>> squadrons;
+	for (const auto& i: drones_)
+		if (i->isActive() && i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE)
+			squadrons[i->getTypeID()] = std::make_pair(squadrons[i->getTypeID()].first + 1, i->getSquadronSize());
 	int n = 0;
-	for (const auto& drone: getDrones())
-		if (drone->isActive() && drone->getSquadron() != Drone::FIGHTER_SQUADRON_NONE)
-			n++;
+	for (const auto i: squadrons)
+		n += ceil((double) i.second.first / (double) i.second.second);
 	return n;
 }
 

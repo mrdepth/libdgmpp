@@ -381,11 +381,6 @@ void Drone::calculateDamageStats()
 				volley_ += fighterTurretVolley;
 			}
 		}
-		int squadronSize = getSquadronSize();
-		if (squadronSize > 0) {
-			dps_ *= squadronSize;
-			volley_ *= squadronSize;
-		}
 	}
 }
 

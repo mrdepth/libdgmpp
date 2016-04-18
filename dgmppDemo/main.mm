@@ -83,7 +83,12 @@ int main(int argc, const char * argv[]) {
 		auto turret = spaceStructure->addModule(35928);
 		auto sdps = spaceStructure->getWeaponDps();*/
 		
-		auto drone = spaceStructure->addDrone(40365);
+		std::shared_ptr<Drone> drone;
+		for (int i = 0; i < 30; i++) {
+			drone = spaceStructure->addDrone(40365);
+		}
+		int heavy = spaceStructure->getDroneSquadronUsed(Drone::FIGHTER_SQUADRON_HEAVY);
+		int light = spaceStructure->getDroneSquadronUsed(Drone::FIGHTER_SQUADRON_LIGHT);
 		float v = drone->getAttribute(2226)->getValue();
 		
 		double lastUpdateTime = 1452068276;

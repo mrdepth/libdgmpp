@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		12003A1C1CBD4EFC007AC3AE /* Fighter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */; };
-		12003A1E1CBD4EFC007AC3AE /* Fighter.h in Headers */ = {isa = PBXBuildFile; fileRef = 12003A1B1CBD4EFC007AC3AE /* Fighter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12003A3D1CBE35C1007AC3AE /* dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12564B8E1B84AF15000F68D8 /* dgmpp.framework */; };
 		121064A51C9312370032B3DB /* SpaceStructure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* SpaceStructure.cpp */; };
 		121064A71C9312370032B3DB /* SpaceStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = 121064A41C9312370032B3DB /* SpaceStructure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */; };
@@ -136,7 +133,6 @@
 		12D9F9961CC3A98B00313F8D /* Drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 373AF826148E6FE900411AFE /* Drone.cpp */; };
 		12D9F9971CC3A98B00313F8D /* CommandCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A156761C464E6400C3CF0B /* CommandCenter.cpp */; };
 		12D9F9981CC3A98B00313F8D /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D511473CA5E006B18D7 /* Attribute.cpp */; };
-		12D9F9991CC3A98B00313F8D /* Fighter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */; };
 		12D9F99A1CC3A98B00313F8D /* DamageVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A0611C0C9C5600194715 /* DamageVector.cpp */; };
 		12D9F99B1CC3A98B00313F8D /* Booster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3708AE4114893125005492F5 /* Booster.cpp */; };
 		12D9F99C1CC3A98B00313F8D /* AttributePrototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AEEFD81C26B8AA00FB7B1D /* AttributePrototype.cpp */; };
@@ -198,7 +194,6 @@
 		12D9F9D61CC3A98B00313F8D /* SqlConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C6177C28A90067E00C /* SqlConnector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9D71CC3A98B00313F8D /* DamageVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A0621C0C9C5600194715 /* DamageVector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9D81CC3A98B00313F8D /* SqliteConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6C8177C28A90067E00C /* SqliteConnector.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12D9F9D91CC3A98B00313F8D /* Fighter.h in Headers */ = {isa = PBXBuildFile; fileRef = 12003A1B1CBD4EFC007AC3AE /* Fighter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9DA1CC3A98B00313F8D /* SqliteFetchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A3C6CA177C28A90067E00C /* SqliteFetchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9DB1CC3A98B00313F8D /* Facility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156951C4650A700C3CF0B /* Facility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9DC1CC3A98B00313F8D /* StorageFacility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12A156891C464FC400C3CF0B /* StorageFacility.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -225,15 +220,16 @@
 		12EFCC711C1AB0DD003ECA7F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
 		12EFCCDE1C1ACE4E003ECA7F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12EFCCDD1C1ACE4E003ECA7F /* QuartzCore.framework */; };
 		12F32FEF1C33EAB300F19C45 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F32FEC1C33EAB300F19C45 /* Compiler.cpp */; };
+		12FF34AD1CC4D9500084B4A8 /* dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9F9F21CC3A98B00313F8D /* dgmpp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		12003A3E1CBE3620007AC3AE /* PBXContainerItemProxy */ = {
+		12FF34AB1CC4D9480084B4A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 37B33D341473CA0D006B18D7 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 12564B8D1B84AF15000F68D8;
-			remoteInfo = dgmpp;
+			remoteGlobalIDString = 12D9F9821CC3A98B00313F8D;
+			remoteInfo = "dgmpp OSX";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -277,8 +273,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Fighter.cpp; sourceTree = "<group>"; };
-		12003A1B1CBD4EFC007AC3AE /* Fighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fighter.h; sourceTree = "<group>"; };
 		121064A31C9312370032B3DB /* SpaceStructure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpaceStructure.cpp; sourceTree = "<group>"; };
 		121064A41C9312370032B3DB /* SpaceStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceStructure.h; sourceTree = "<group>"; };
 		12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FetchRequest.cpp; sourceTree = "<group>"; };
@@ -436,7 +430,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12003A3D1CBE35C1007AC3AE /* dgmpp.framework in Frameworks */,
+				12FF34AD1CC4D9500084B4A8 /* dgmpp.framework in Frameworks */,
 				12EFCCDE1C1ACE4E003ECA7F /* QuartzCore.framework in Frameworks */,
 				12EFCC711C1AB0DD003ECA7F /* libsqlite3.tbd in Frameworks */,
 			);
@@ -458,8 +452,6 @@
 			children = (
 				121064A31C9312370032B3DB /* SpaceStructure.cpp */,
 				121064A41C9312370032B3DB /* SpaceStructure.h */,
-				12003A1A1CBD4EFC007AC3AE /* Fighter.cpp */,
-				12003A1B1CBD4EFC007AC3AE /* Fighter.h */,
 			);
 			name = SpaceStructure;
 			sourceTree = "<group>";
@@ -764,7 +756,6 @@
 				12564BF31B84B07F000F68D8 /* SqlConnector.h in Headers */,
 				12B0A0641C0C9C5600194715 /* DamageVector.h in Headers */,
 				12564BF41B84B07F000F68D8 /* SqliteConnector.h in Headers */,
-				12003A1E1CBD4EFC007AC3AE /* Fighter.h in Headers */,
 				12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */,
 				12A156981C4650A700C3CF0B /* Facility.h in Headers */,
 				12A1568C1C464FC400C3CF0B /* StorageFacility.h in Headers */,
@@ -824,7 +815,6 @@
 				12D9F9D61CC3A98B00313F8D /* SqlConnector.h in Headers */,
 				12D9F9D71CC3A98B00313F8D /* DamageVector.h in Headers */,
 				12D9F9D81CC3A98B00313F8D /* SqliteConnector.h in Headers */,
-				12D9F9D91CC3A98B00313F8D /* Fighter.h in Headers */,
 				12D9F9DA1CC3A98B00313F8D /* SqliteFetchResult.h in Headers */,
 				12D9F9DB1CC3A98B00313F8D /* Facility.h in Headers */,
 				12D9F9DC1CC3A98B00313F8D /* StorageFacility.h in Headers */,
@@ -932,7 +922,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				12003A3F1CBE3620007AC3AE /* PBXTargetDependency */,
+				12FF34AC1CC4D9480084B4A8 /* PBXTargetDependency */,
 			);
 			name = dgmppDemo;
 			productName = eufeDemo;
@@ -1051,7 +1041,6 @@
 				12564BBC1B84B027000F68D8 /* Drone.cpp in Sources */,
 				12A156781C464E6400C3CF0B /* CommandCenter.cpp in Sources */,
 				12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */,
-				12003A1C1CBD4EFC007AC3AE /* Fighter.cpp in Sources */,
 				12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */,
 				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
 				12AEEFDA1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
@@ -1117,7 +1106,6 @@
 				12D9F9961CC3A98B00313F8D /* Drone.cpp in Sources */,
 				12D9F9971CC3A98B00313F8D /* CommandCenter.cpp in Sources */,
 				12D9F9981CC3A98B00313F8D /* Attribute.cpp in Sources */,
-				12D9F9991CC3A98B00313F8D /* Fighter.cpp in Sources */,
 				12D9F99A1CC3A98B00313F8D /* DamageVector.cpp in Sources */,
 				12D9F99B1CC3A98B00313F8D /* Booster.cpp in Sources */,
 				12D9F99C1CC3A98B00313F8D /* AttributePrototype.cpp in Sources */,
@@ -1169,10 +1157,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		12003A3F1CBE3620007AC3AE /* PBXTargetDependency */ = {
+		12FF34AC1CC4D9480084B4A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 12564B8D1B84AF15000F68D8 /* dgmpp iOS */;
-			targetProxy = 12003A3E1CBE3620007AC3AE /* PBXContainerItemProxy */;
+			target = 12D9F9821CC3A98B00313F8D /* dgmpp OSX */;
+			targetProxy = 12FF34AB1CC4D9480084B4A8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

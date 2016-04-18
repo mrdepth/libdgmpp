@@ -1,6 +1,5 @@
 #pragma once
 #include "Ship.h"
-#include "Fighter.h"
 
 namespace dgmpp {
 	
@@ -20,9 +19,5 @@ namespace dgmpp {
 		TypeID getFuelBlockTypeID();
 		float getCycleFuelNeed();
 		float getCycleTime();
-		/*int getDroneSquadronLimit(Fighter::Squadron squadron);
-		int getDroneSquadronUsed(Fighter::Squadron squadron);
-		int getTotalDroneLaunchTubes();
-		int getUsedDroneLaunchTubes();*/
 	};
 }
