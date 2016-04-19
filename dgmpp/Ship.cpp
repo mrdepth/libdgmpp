@@ -1188,7 +1188,7 @@ int Ship::getDroneSquadronUsed(Drone::FighterSquadron squadron)
 	std::map<TypeID, std::pair<int, int>> squadrons;
 	for (const auto& i: drones_)
 		if (i->isActive() && i->getSquadron() == squadron)
-			squadrons[i->getTypeID()] = std::make_pair(squadrons[i->getTypeID()].first + 1, i->getSquadronSize());
+			squadrons[i->getTypeID()] = std::make_pair(squadrons[i->getTypeID()].first + 1, i->getSquadronSize() ?: 1);
 	int n = 0;
 	for (const auto i: squadrons)
 		n += ceil((double) i.second.first / (double) i.second.second);
