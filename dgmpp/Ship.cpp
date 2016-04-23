@@ -428,6 +428,18 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 			}
 	}
 	
+	if (module->hasAttribute(MAX_TYPE_FITTED_ATTRIBUTE_ID)) {
+		int maxTypeFitted = static_cast<int>(module->getAttribute(MAX_TYPE_FITTED_ATTRIBUTE_ID)->getValue()) - 1;
+		TypeID typeID = module->getTypeID();
+		for (const auto& i: modules_)
+			if (i->getTypeID() == typeID)
+			{
+				maxTypeFitted--;
+				if (maxTypeFitted < 0)
+					return false;
+			}
+	}
+	
 	return true;
 }
 

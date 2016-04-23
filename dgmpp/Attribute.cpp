@@ -266,6 +266,8 @@ const TypeID dgmpp::FIGHTER_TUBES_ATTRIBUTE_ID = 2216;
 const TypeID dgmpp::SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID = 2109;
 const TypeID dgmpp::SERVICE_MODULE_FUEL_ONLINE_AMOUNT_ATTRIBUTE_ID = 2110;
 
+const TypeID dgmpp::MAX_TYPE_FITTED_ATTRIBUTE_ID = 2431;
+
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)
 {
