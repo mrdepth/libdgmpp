@@ -231,7 +231,7 @@ std::string process(const int effectID, std::string effectName, const std::strin
 	}
 	auto v = comb(modifiers);
 	std::stringstream s;
-	s << "update(\"" << effectName << "\",\n\t" << v[0] << ",\n\t" << v[1] << ");\n\n";
+	s << "{\nupdate(\"" << effectName << "\",\n\t" << v[0] << ",\n\t" << v[1] << ");\n}\n";
 	return s.str();
 }
 

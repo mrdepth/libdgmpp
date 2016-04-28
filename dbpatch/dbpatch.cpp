@@ -820,8 +820,7 @@ int patch(const char* databasePath) {
            DefEnv("Ship").locationSkill("Small Hybrid Turret").attr("maxRange").assoc("PostDiv").ALRSM("modeMaxRangePostDiv"),
            DefEnv("Ship").locationSkill("Small Hybrid Turret").attr("maxRange").assoc("PostDiv").RLRSM("modeMaxRangePostDiv"));
 
-
-#include <dbpatch.h>
+	#include <dbpatch.h>
 	
 	//Suppress
 /*	update("shieldBoostingForEntities", DefInt(1), DefInt(1));

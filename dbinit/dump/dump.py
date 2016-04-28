@@ -78,6 +78,8 @@ def dump(table, header, lines):
 		f.append("DROP TABLE IF EXISTS planetSchematicsPinMap;\nCREATE TABLE planetSchematicsPinMap (\n \"schematicID\" integer NOT NULL,\n \"pinTypeID\" integer DEFAULT NULL,\n PRIMARY KEY (\"schematicID\",\"pinTypeID\"));");
 	elif (table == "planetSchematicsTypeMap"):
 		f.append("DROP TABLE IF EXISTS planetSchematicsTypeMap;\nCREATE TABLE planetSchematicsTypeMap (\n \"schematicID\" integer NOT NULL,\n \"typeID\" integer NOT NULL,\n \"quantity\" integer DEFAULT NULL,\n \"isInput\" integer DEFAULT NULL,\n PRIMARY KEY (\"schematicID\",\"typeID\"));");
+	elif (table == "invMarketGroups"):
+		f.append("DROP TABLE IF EXISTS invMarketGroups;\nCREATE TABLE invMarketGroups (\n \"parentGroupID\" integer DEFAULT NULL,\n \"marketGroupID\" integer NOT NULL,\n \"marketGroupName\" varchar(100) DEFAULT NULL,\n \"description\" varchar(3000) DEFAULT NULL,\n \"graphicID\" integer DEFAULT NULL,\n  \"hasTypes\" integer DEFAULT NULL,\n \"iconID\" integer DEFAULT NULL,\n  \"dataID\" integer DEFAULT NULL,\n  \"marketGroupNameID\" integer DEFAULT NULL,\n  \"descriptionID\" integer DEFAULT NULL,\n  PRIMARY KEY (\"marketGroupID\"));");
 	f.append("")
 
 	name = table
@@ -118,6 +120,16 @@ res = cache.LoadCachedMethodCall(("dogma", "GetOperandsForChar"));
 dgmOperands = cache.LoadCachedMethodCall(("dogma", "GetOperandsForChar"))["lret"].values()
 dgmOperandsHeader = dgmOperands[0].__header__.Keys()
 
+v = cache.LoadCachedMethodCall(("marketProxy", "GetMarketGroups"))
+
+invMarketGroups = [r for rows in cache.LoadCachedMethodCall(("marketProxy", "GetMarketGroups"))["lret"].values() for r in rows]
+for row in invMarketGroups:
+	key = row["marketGroupNameID"]
+	if (key and cfg._localization.primary.has_key(int(key))):
+		row.__setattr__("marketGroupName", cfg._localization.primary[int(key)][0])
+invMarketGroupsHeader = invMarketGroups[0].__header__.Keys()
+
+
 #dump (cfg.dgmexpressions, "dgmExpressions")
 
 invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID", "iconID", "basePrice")
@@ -135,6 +147,7 @@ invTypeEffects = [r for rows in cfg.dgmtypeeffects.values() for r in rows]
 planetSchematicsPinMap = [r for rows in cfg.schematicspinmap.items.values() for r in rows]
 planetSchematicsTypeMap = [r for rows in cfg.schematicstypemap.items.values() for r in rows]
 
+dump ("invMarketGroups", invMarketGroupsHeader, invMarketGroups)
 dump ("dgmOperands", dgmOperandsHeader, dgmOperands)
 dump ("invCategories", invCategoriesHeader, invCategories)
 dump ("invGroups", invGroupsHeader, invGroups)
