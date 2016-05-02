@@ -77,6 +77,8 @@ namespace Compiler {
 			return dgmpp::Modifier::DOMAIN_OTHER;
 		else if (domain == "Gang")
 			return dgmpp::Modifier::DOMAIN_GANG;
+		else if (domain == "Structure")
+			return dgmpp::Modifier::DOMAIN_STRUCTURE;
 		else
 			throw std::bad_typeid();
 	}

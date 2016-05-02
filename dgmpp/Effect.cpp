@@ -72,6 +72,8 @@ const TypeID dgmpp::FUELED_ARMOR_REPAIR__EFFECT_ID = 5275;
 const TypeID dgmpp::NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID = 10001;
 const TypeID dgmpp::TACTICAL_MODE_EFFECT_ID = 10002;
 
+const TypeID dgmpp::SERVICE_SLOT_EFFECT_ID = 6306;
+
 std::shared_ptr<dgmpp::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, TypeID effectID, std::shared_ptr<Item> const& owner)
 {
 	return std::make_shared<Effect>(engine, EffectPrototype::getEffectPrototype(engine, effectID), owner);

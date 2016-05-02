@@ -1,5 +1,5 @@
 #include "ControlTower.h"
-#include "Structure.h"
+#include "StarbaseStructure.h"
 #include "Attribute.h"
 #include "Effect.h"
 #include "Engine.h"
@@ -22,7 +22,7 @@ ControlTower::~ControlTower(void)
 {
 }
 
-std::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
+std::shared_ptr<StarbaseStructure> ControlTower::addStructure(TypeID typeID)
 {
 	try
 	{
@@ -30,14 +30,14 @@ std::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
 		if (!engine)
 			return nullptr;
 
-		std::shared_ptr<Structure> structure = std::make_shared<Structure>(engine, typeID, shared_from_this());
+		std::shared_ptr<StarbaseStructure> structure = std::make_shared<StarbaseStructure>(engine, typeID, shared_from_this());
 		structures_.push_back(structure);
 		
 		structure->addEffects(Effect::CATEGORY_GENERIC);
-		if (structure->canHaveState(Structure::STATE_ACTIVE))
-			structure->setState(Structure::STATE_ACTIVE);
-		else if (structure->canHaveState(Structure::STATE_ONLINE))
-			structure->setState(Structure::STATE_ONLINE);
+		if (structure->canHaveState(StarbaseStructure::STATE_ACTIVE))
+			structure->setState(StarbaseStructure::STATE_ACTIVE);
+		else if (structure->canHaveState(StarbaseStructure::STATE_ONLINE))
+			structure->setState(StarbaseStructure::STATE_ONLINE);
 		engine->reset();
 		return structure;
 	}
@@ -47,9 +47,9 @@ std::shared_ptr<Structure> ControlTower::addStructure(TypeID typeID)
 	}
 }
 
-void ControlTower::removeStructure(std::shared_ptr<Structure> const& structure)
+void ControlTower::removeStructure(std::shared_ptr<StarbaseStructure> const& structure)
 {
-	structure->setState(Structure::STATE_OFFLINE);
+	structure->setState(StarbaseStructure::STATE_OFFLINE);
 	structure->removeEffects(Effect::CATEGORY_GENERIC);
 	
 	//structures_.remove(structure);
@@ -59,16 +59,16 @@ void ControlTower::removeStructure(std::shared_ptr<Structure> const& structure)
 		engine->reset();
 }
 
-const StructuresList& ControlTower::getStructures()
+const StarbaseStructuresList& ControlTower::getStructures()
 {
 	return structures_;
 }
 
-bool ControlTower::canFit(std::shared_ptr<Structure> const& structure)
+bool ControlTower::canFit(std::shared_ptr<StarbaseStructure> const& structure)
 {
-	if (structure->getSlot() != Structure::SLOT_STRUCTURE)
+	if (structure->getSlot() != StarbaseStructure::SLOT_STARBASE_STRUCTURE)
 		return false;
-	if (structure->getCategoryID() == STRUCTURE_CATEGORY_ID && structure->getGroupID() != CONTROL_TOWER_GROUP_ID)
+	if (structure->getCategoryID() == STARBASE_CATEGORY_ID && structure->getGroupID() != CONTROL_TOWER_GROUP_ID)
 		return true;
 	else
 		return false;

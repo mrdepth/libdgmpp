@@ -63,7 +63,10 @@ bool Drone::dealsDamage()
 	bool hasDamageAttribute =	hasAttribute(EM_DAMAGE_ATTRIBUTE_ID) ||
 								hasAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID) ||
 								hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID) ||
-								hasAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID);
+								hasAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID) ||
+								hasAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_MULTIPLIER_ATTRIBUTE_ID) ||
+								hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID) ||
+								hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_MULTIPLIER_ATTRIBUTE_ID);
 	if (hasDamageAttribute)
 		return hasDamageAttribute;
 	
@@ -150,6 +153,16 @@ void Drone::reset() {
 		charge_->reset();
 }
 
+Drone::FighterSquadron Drone::getSquadron() {
+	loadIfNeeded();
+	return squadron_;
+}
+
+int Drone::getSquadronSize() {
+	return getAttribute(FIGHTER_SQUADRON_MAX_SIZE_ATTRIBUTE_ID)->getValue();
+}
+
+
 //Calculations
 
 float Drone::getCycleTime()
@@ -179,6 +192,10 @@ DamageVector Drone::getDps(const HostileTarget& target)
 	if (dps_ > 0  && target.signature > 0) {
 		float range = getAttribute(ENTITY_FLY_RANGE_ATTRIBUTE_ID)->getValue();
 		float orbitVelocity = getAttribute(ENTITY_CRUISE_SPEED_ATTRIBUTE_ID)->getValue();
+		if (range == 0)
+			range = getAttribute(FIGHTER_SQUADRON_ORBIT_RANGE_ATTRIBUTE_ID)->getValue();
+		if (orbitVelocity == 0)
+			orbitVelocity = getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
 		
 		if (target.velocity > 0) {
 			float velocity = getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
@@ -290,18 +307,76 @@ void Drone::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		std::shared_ptr<Item> item = charge_ ? charge_  : std::static_pointer_cast<Item>(shared_from_this());
-		if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
-			volley_.emAmount += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
-		if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))
-			volley_.kineticAmount += item->getAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID)->getValue();
-		if (item->hasAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID))
-			volley_.explosiveAmount += item->getAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID)->getValue();
-		if (item->hasAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID))
-			volley_.thermalAmount += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
-		if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
-			volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
-		dps_ = volley_ / (getCycleTime() / 1000.0f);
+		float cycleTime = getCycleTime();
+		if (cycleTime > 0) {
+			std::shared_ptr<Item> item = charge_ ? charge_  : std::static_pointer_cast<Item>(shared_from_this());
+			if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
+				volley_.emAmount += item->getAttribute(EM_DAMAGE_ATTRIBUTE_ID)->getValue();
+			if (item->hasAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID))
+				volley_.kineticAmount += item->getAttribute(KINETIC_DAMAGE_ATTRIBUTE_ID)->getValue();
+			if (item->hasAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID))
+				volley_.explosiveAmount += item->getAttribute(EXPLOSIVE_DAMAGE_ATTRIBUTE_ID)->getValue();
+			if (item->hasAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID))
+				volley_.thermalAmount += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
+			if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
+				volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+			dps_ = volley_ / (getCycleTime() / 1000.0f);
+		}
+		
+		if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DURATION_ATTRIBUTE_ID)) {
+			DamageVector fighterMissileVolley = 0;
+			float cycleTime = getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DURATION_ATTRIBUTE_ID)->getValue();
+			if (cycleTime > 0) {
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_EM_ATTRIBUTE_ID))
+					fighterMissileVolley.emAmount += getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_EM_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_KIN_ATTRIBUTE_ID))
+					fighterMissileVolley.kineticAmount += getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_KIN_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_EXP_ATTRIBUTE_ID))
+					fighterMissileVolley.explosiveAmount += getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_EXP_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_THERM_ATTRIBUTE_ID))
+					fighterMissileVolley.thermalAmount += getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_THERM_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
+					fighterMissileVolley *= getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+				dps_ += fighterMissileVolley / (cycleTime / 1000);
+				volley_ += fighterMissileVolley;
+			}
+		}
+		if (hasAttribute(FIGHTER_ABILITY_MISSILES_DURATION_ATTRIBUTE_ID)) {
+			DamageVector fighterMissilesVolley = 0;
+			float cycleTime = getAttribute(FIGHTER_ABILITY_MISSILES_DURATION_ATTRIBUTE_ID)->getValue();
+			if (cycleTime > 0) {
+				if (hasAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_EM_ATTRIBUTE_ID))
+					fighterMissilesVolley.emAmount += getAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_EM_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_KIN_ATTRIBUTE_ID))
+					fighterMissilesVolley.kineticAmount += getAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_KIN_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_EXP_ATTRIBUTE_ID))
+					fighterMissilesVolley.explosiveAmount += getAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_EXP_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_THERM_ATTRIBUTE_ID))
+					fighterMissilesVolley.thermalAmount += getAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_THERM_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
+					fighterMissilesVolley *= getAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+				dps_ += fighterMissilesVolley / (cycleTime / 1000);
+				volley_ += fighterMissilesVolley;
+			}
+		}
+		if (hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DURATION_ATTRIBUTE_ID)) {
+			DamageVector fighterTurretVolley = 0;
+			float cycleTime = getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DURATION_ATTRIBUTE_ID)->getValue();
+			if (cycleTime > 0) {
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_EM_ATTRIBUTE_ID))
+					fighterTurretVolley.emAmount += getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_EM_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_KIN_ATTRIBUTE_ID))
+					fighterTurretVolley.kineticAmount += getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_KIN_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_EXP_ATTRIBUTE_ID))
+					fighterTurretVolley.explosiveAmount += getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_EXP_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_THERM_ATTRIBUTE_ID))
+					fighterTurretVolley.thermalAmount += getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_THERM_ATTRIBUTE_ID)->getValue();
+				if (hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
+					fighterTurretVolley *= getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+				dps_ += fighterTurretVolley / (cycleTime / 1000);
+				volley_ += fighterTurretVolley;
+			}
+		}
 	}
 }
 
@@ -317,6 +392,15 @@ void Drone::lazyLoad() {
 		charge_ = std::make_shared<Charge>(engine, typeID, shared_from_this());
 		//charge_->addEffects(Effect::CATEGORY_GENERIC);
 	}
+	
+	if (hasAttribute(FIGHTER_SQUADRON_IS_HEAVY_ATTRIBUTE_ID))
+		squadron_ = FIGHTER_SQUADRON_HEAVY;
+	else if (hasAttribute(FIGHTER_SQUADRON_IS_LIGHT_ATTRIBUTE_ID))
+		squadron_ = FIGHTER_SQUADRON_LIGHT;
+	else if (hasAttribute(FIGHTER_SQUADRON_IS_SUPPORT_ATTRIBUTE_ID))
+		squadron_ = FIGHTER_SQUADRON_SUPPORT;
+	else
+		squadron_ = FIGHTER_SQUADRON_NONE;
 }
 
 Item* Drone::ship() {

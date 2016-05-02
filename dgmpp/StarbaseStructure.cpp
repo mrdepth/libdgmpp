@@ -1,4 +1,4 @@
-#include "Structure.h"
+#include "StarbaseStructure.h"
 #include "Effect.h"
 #include "Engine.h"
 #include "Attribute.h"
@@ -10,15 +10,15 @@ using namespace dgmpp;
 
 static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
 
-Structure::Structure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<ControlTower> const& owner) : Module(engine, typeID, owner)
+StarbaseStructure::StarbaseStructure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<ControlTower> const& owner) : Module(engine, typeID, owner)
 {
 }
 
-Structure::~Structure(void)
+StarbaseStructure::~StarbaseStructure(void)
 {
 }
 
-void Structure::setState(State state)
+void StarbaseStructure::setState(State state)
 {
 	if (canHaveState(state))
 	{
@@ -58,7 +58,7 @@ void Structure::setState(State state)
 	}
 }
 
-void Structure::reset()
+void StarbaseStructure::reset()
 {
 	Module::reset();
 	
@@ -76,7 +76,7 @@ void Structure::reset()
 
 //Tank
 
-const Resistances& Structure::getResistances()
+const Resistances& StarbaseStructure::getResistances()
 {
 	if (resistances_.armor.em < 0.0)
 	{
@@ -98,7 +98,7 @@ const Resistances& Structure::getResistances()
 	return resistances_;
 }
 
-const Tank& Structure::getTank()
+const Tank& StarbaseStructure::getTank()
 {
 	if (tank_.armorRepair < 0.0)
 	{
@@ -110,7 +110,7 @@ const Tank& Structure::getTank()
 	return tank_;
 }
 
-const Tank& Structure::getEffectiveTank()
+const Tank& StarbaseStructure::getEffectiveTank()
 {
 	std::shared_ptr<ControlTower> controlTower = std::dynamic_pointer_cast<ControlTower>(getOwner());
 	const DamagePattern damagePattern = controlTower->getDamagePattern();
@@ -119,7 +119,7 @@ const Tank& Structure::getEffectiveTank()
 	return effectiveTank_;
 }
 
-const HitPoints& Structure::getHitPoints()
+const HitPoints& StarbaseStructure::getHitPoints()
 {
 	if (hitPoints_.armor < 0.0)
 	{
@@ -130,7 +130,7 @@ const HitPoints& Structure::getHitPoints()
 	return hitPoints_;
 }
 
-const HitPoints& Structure::getEffectiveHitPoints()
+const HitPoints& StarbaseStructure::getEffectiveHitPoints()
 {
 	std::shared_ptr<ControlTower> controlTower = std::dynamic_pointer_cast<ControlTower>(getOwner());
 	const DamagePattern damagePattern = controlTower->getDamagePattern();
@@ -139,7 +139,7 @@ const HitPoints& Structure::getEffectiveHitPoints()
 	return effectiveHitPoints_;
 }
 
-float Structure::getShieldRecharge()
+float StarbaseStructure::getShieldRecharge()
 {
 	if (shieldRecharge_ < 0.0)
 	{

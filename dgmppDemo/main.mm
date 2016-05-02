@@ -65,8 +65,31 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+		auto pilot = engine->getGang()->addPilot();
+		//pilot->setAllSkillsLevel(5);
+		std::map<int, int> skills;
+		skills[32339] = 5;
+		pilot->setSkillLevels(skills);
+		
+		auto spaceStructure = pilot->setSpaceStructure(35832);
+		/*auto service = spaceStructure->getFreeSlots(Module::SLOT_SERVICE);
+		auto sshp = spaceStructure->getHitPoints();
+		auto ssres = spaceStructure->getResistances();
+		auto pg = spaceStructure->getTotalPowerGrid();
+		auto cpu = spaceStructure->getTotalCpu();
+		auto db = spaceStructure->getTotalDroneBay();
+		auto turret = spaceStructure->addModule(35928);
+		auto sdps = spaceStructure->getWeaponDps();*/
+		
+		std::shared_ptr<Drone> drone;
+		for (int i = 0; i < 30; i++) {
+			drone = spaceStructure->addDrone(40365);
+		}
+		int heavy = spaceStructure->getDroneSquadronUsed(Drone::FIGHTER_SQUADRON_HEAVY);
+		int light = spaceStructure->getDroneSquadronUsed(Drone::FIGHTER_SQUADRON_LIGHT);
+		float v = drone->getAttribute(2226)->getValue();
 		
 		double lastUpdateTime = 1452068276;
 		auto planet = engine->setPlanet(2016);

@@ -7,6 +7,7 @@ import os
 import ConfigParser
 
 from reverence import blue
+import cPickle
 
 if platform == "darwin":
 	folders = glob.glob(expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/cider-EveOnlinePremium-iso-*"))
@@ -15,13 +16,15 @@ if platform == "darwin":
 		print "Error: EVE Online client not found"
 		sys.exit
 	else:
-		EVEPATH = folders[0] + "/EVE Online.app/Contents/Resources/transgaming/c_drive/tq"
+		#EVEPATH = folders[0] + "/EVE Online.app/Contents/Resources/transgaming/c_drive/tq"
+		EVEPATH = folders[0] + "/EVE Online.app/Contents/Resources/transgaming/c_drive/sisi"
 else:
 	EVEPATH = "E:/Games/EVE"
 
 OUTPATH = "./"
 
-eve = blue.EVE(EVEPATH, cachepath=expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/c_tq_tranquility"))
+#eve = blue.EVE(EVEPATH, cachepath=expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/c_tq_tranquility"))
+eve = blue.EVE(EVEPATH, cachepath=expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/c_sisi_singularity"), server="Singularity")
 cfg = eve.getconfigmgr()
 
 def sqlstr(x):
@@ -128,8 +131,6 @@ for row in invMarketGroups:
 	if (key and cfg._localization.primary.has_key(int(key))):
 		row.__setattr__("marketGroupName", cfg._localization.primary[int(key)][0])
 invMarketGroupsHeader = invMarketGroups[0].__header__.Keys()
-
-
 #dump (cfg.dgmexpressions, "dgmExpressions")
 
 invTypesHeader = ("typeID", "groupID", "typeName", "description", "radius", "mass", "volume", "capacity", "portionSize", "raceID", "published", "marketGroupID", "iconID", "basePrice")

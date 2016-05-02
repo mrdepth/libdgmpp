@@ -32,7 +32,7 @@ namespace dgmpp {
 	class Drone;
 	class EffectInterpreter;
 	class ControlTower;
-	class Structure;
+	class StarbaseStructure;
 	class Environment;
 	
 	class Planet;
@@ -40,6 +40,8 @@ namespace dgmpp {
 	class CommandCenter;
 	class Route;
 	class Commodity;
+	
+	class SpaceStructure;
 
 	typedef int TypeID;
 	
@@ -52,7 +54,7 @@ namespace dgmpp {
 	typedef std::list<std::shared_ptr<Implant>> ImplantsList;
 	typedef std::list<std::shared_ptr<Booster>> BoostersList;
 	typedef std::list<std::shared_ptr<Modifier>> ModifiersList;
-	typedef std::list<std::shared_ptr<Structure>> StructuresList;
+	typedef std::list<std::shared_ptr<StarbaseStructure>> StarbaseStructuresList;
 	
 	typedef dgmpp::TypeID AttributeID;
 	typedef dgmpp::TypeID GroupID;

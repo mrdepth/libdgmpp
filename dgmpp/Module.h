@@ -17,8 +17,9 @@ namespace dgmpp {
 			SLOT_LOW,
 			SLOT_RIG,
 			SLOT_SUBSYSTEM,
-			SLOT_STRUCTURE,
-			SLOT_MODE
+			SLOT_STARBASE_STRUCTURE,
+			SLOT_MODE,
+			SLOT_SERVICE
 		};
 
 		enum State
@@ -92,7 +93,10 @@ namespace dgmpp {
 		//float getDps(float range, float angularSpeed, float targetSignature);
 		float getMaxRange();
 		float getFalloff();
-		float getTrackingSpeed();
+		//float getTrackingSpeed();
+		float getAccuracyScore();
+		float getSignatureResolution();
+		float getAngularVelocity(float targetSignature, float hitChance = 0.5);
 		
 		float getLifeTime();
 		void setLifeTime(float lifeTime);
@@ -133,7 +137,8 @@ namespace dgmpp {
 		DamageVector dps_;
 		float maxRange_;
 		float falloff_;
-		float trackingSpeed_;
+		float accuracyScore_;
+		float signatureResolution_;
 		
 		float lifeTime_;
 		

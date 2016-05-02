@@ -15,11 +15,11 @@ namespace dgmpp {
 			return std::static_pointer_cast<ControlTower>(Item::shared_from_this());
 		}
 
-		std::shared_ptr<Structure> addStructure(TypeID typeID);
-		void removeStructure(std::shared_ptr<Structure> const& structure);
+		std::shared_ptr<StarbaseStructure> addStructure(TypeID typeID);
+		void removeStructure(std::shared_ptr<StarbaseStructure> const& structure);
 		
-		const StructuresList& getStructures();
-		bool canFit(std::shared_ptr<Structure> const& structure);
+		const StarbaseStructuresList& getStructures();
+		bool canFit(std::shared_ptr<StarbaseStructure> const& structure);
 
 		virtual void reset();
 		
@@ -54,7 +54,7 @@ namespace dgmpp {
 		friend std::ostream& operator<<(std::ostream& os, ControlTower& controlTower);
 		
 	private:
-		StructuresList structures_;
+		StarbaseStructuresList structures_;
 		DamagePattern damagePattern_;
 		
 		Resistances resistances_;

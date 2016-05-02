@@ -8,9 +8,15 @@ namespace dgmpp {
 	class Drone : public Item
 	{
 	public:
-		//typedef boost::error_info<struct BadDroneTargetExceptionInfoTag, Ship*> BadDroneTargetExceptionInfo;
-		//struct BadDroneTargetException : virtual boost::exception {};
-        
+		enum FighterSquadron
+		{
+			FIGHTER_SQUADRON_NONE = 0,
+			FIGHTER_SQUADRON_HEAVY,
+			FIGHTER_SQUADRON_LIGHT,
+			FIGHTER_SQUADRON_SUPPORT
+		};
+
+		
         typedef std::invalid_argument BadDroneTargetException;
 
 		Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Ship> const& owner = std::shared_ptr<Ship>(nullptr));
@@ -23,7 +29,7 @@ namespace dgmpp {
 		void clearTarget();
 		std::shared_ptr<Ship> getTarget();
 
-		bool dealsDamage();
+		virtual bool dealsDamage();
 		std::shared_ptr<Charge> getCharge();
 		
 		void setActive(bool active);
@@ -35,9 +41,12 @@ namespace dgmpp {
 		virtual void removeEffects(Effect::Category category);
 		virtual void reset();
 
+		FighterSquadron getSquadron();
+		int getSquadronSize();
+
 		//Calculations
 		
-		float getCycleTime();
+		virtual float getCycleTime();
 		
 		DamageVector getVolley();
 		DamageVector getDps(const HostileTarget& target = HostileTarget::defaultTarget);
@@ -50,21 +59,22 @@ namespace dgmpp {
 		virtual Item* target();
 
 	protected:
-		virtual void lazyLoad();
-
-	private:
-		std::weak_ptr<Ship> target_;
-		std::shared_ptr<Charge> charge_;
-		
 		DamageVector volley_;
 		DamageVector dps_;
 		float maxRange_;
 		float falloff_;
 		float trackingSpeed_;
 
+		virtual void lazyLoad();
+		virtual void calculateDamageStats();
+
+	private:
+		std::weak_ptr<Ship> target_;
+		std::shared_ptr<Charge> charge_;
+		FighterSquadron squadron_;
+
 		bool isActive_;
 		
-		void calculateDamageStats();
 	};
 	
 }

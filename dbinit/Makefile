@@ -1,7 +1,7 @@
 SHELL:=/bin/sh
 CC=g++
 #CFLAGS=-arch x86_64 -std=gnu++11 -stdlib=libc++ -lsqlite3
-CFLAGS=-std=c++11
+CFLAGS=-std=c++11 -fvisibility-inlines-hidden
 OUTPUT_DIR+=./
 DUMP=${PWD}/dump
 SQL=${PWD}/sql

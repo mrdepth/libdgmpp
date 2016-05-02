@@ -103,7 +103,6 @@ std::shared_ptr<Planet> Engine::getPlanet() {
 	return planet_;
 }
 
-
 void Engine::reset()
 {
 	if (updatesCounter_ > 0)
@@ -176,9 +175,9 @@ const std::map<TypeID, CommodityTier>& Engine::getCommodityTiers() const {
 
 std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Engine& engine)
 {
-	os << "{\"gang\":" << *engine.getGang() << ',';
+	os << "{\"gang\":" << *engine.getGang();
 	if (engine.getControlTower())
-		os << "\"controlTower\":" << *engine.getControlTower();
+		os << ", \"controlTower\":" << *engine.getControlTower();
 	os << '}';
 	return os;
 }

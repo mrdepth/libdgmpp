@@ -20,6 +20,7 @@ namespace dgmpp {
 
 		virtual Item* character();
 		virtual Item* ship();
+		virtual Item* structure();
 		
 	protected:
 		virtual void lazyLoad();

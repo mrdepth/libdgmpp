@@ -48,6 +48,8 @@ namespace dgmpp {
 	extern const TypeID TACTICAL_MODE_EFFECT_ID;
 	extern const TypeID NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID;
 
+	extern const TypeID SERVICE_SLOT_EFFECT_ID;
+
 	class EffectPrototype;
 	
 	class Effect

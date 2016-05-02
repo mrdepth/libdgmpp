@@ -47,9 +47,11 @@ bool Module::canHaveState(State state)
 {
 	loadIfNeeded();
 	if (isEnabled()) {
+		auto charge = getCharge();
+		bool canBeActive = canBeActive_ | (charge ? charge->canBeActive() : false);
 		bool canHaveState =	 state == STATE_OFFLINE ||
 		(state == STATE_ONLINE && canBeOnline_) ||
-		(state == STATE_ACTIVE && canBeActive_) ||
+		(state == STATE_ACTIVE && canBeActive) ||
 		(state == STATE_OVERLOADED && canBeOverloaded_);
 		if (canHaveState && state >= STATE_ACTIVE)
 		{
@@ -176,9 +178,9 @@ void Module::addEffects(Effect::Category category)
 		if (state_ >= STATE_OVERLOADED)
 			addEffects(Effect::CATEGORY_OVERLOADED);
 		
-		if (charge_)
-			charge_->addEffects(category);
 	}
+	if (charge_)
+		charge_->addEffects(category);
 }
 
 void Module::removeEffects(Effect::Category category)
@@ -205,16 +207,16 @@ void Module::removeEffects(Effect::Category category)
 			getEffect(ONLINE_EFFECT_ID)->removeEffect(this);
 		}
 		
-		if (charge_)
-			charge_->removeEffects(category);
 	}
+	if (charge_)
+		charge_->removeEffects(category);
 }
 
 void Module::reset()
 {
 	Item::reset();
 	shots_ = -1;
-	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = -1;
 	lifeTime_ = -1;
 	if (charge_)
 		charge_->reset();
@@ -286,7 +288,8 @@ bool Module::canFit(std::shared_ptr<Charge> const& charge)
 	loadIfNeeded();
 	if (!charge)
 		return true;
-	if (charge->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() > getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue())
+	float capacity = getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
+	if (capacity > 0 && charge->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() > capacity)
 		return false;
 	
 	int chargeSize = getChargeSize();
@@ -486,12 +489,12 @@ DamageVector Module::getDps(const HostileTarget& target)
 	if (hardpoint == HARDPOINT_TURRET && (target.range > 0 || target.angularVelocity > 0 || target.signature > 0)) {
 		float a = 0;
 		if (target.angularVelocity > 0) {
-			float trackingSpeed = getTrackingSpeed();
-			a = trackingSpeed > 0 ? target.angularVelocity / trackingSpeed : 0;
+			float accuracyScore = getAccuracyScore();
+			a = accuracyScore > 0 ? target.angularVelocity / accuracyScore : 0;
 		}
 		
 		if (target.signature > 0) {
-			float signatureResolution = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
+			float signatureResolution = getSignatureResolution();
 			if (signatureResolution > 0)
 				a *= signatureResolution / target.signature;
 		}
@@ -619,7 +622,7 @@ float Module::getFalloff()
 	return falloff_;
 }
 
-float Module::getTrackingSpeed()
+/*float Module::getTrackingSpeed()
 {
 	loadIfNeeded();
 	if (trackingSpeed_ < 0)
@@ -630,6 +633,38 @@ float Module::getTrackingSpeed()
 			trackingSpeed_ = 0;
 	}
 	return trackingSpeed_;
+}*/
+
+float Module::getAccuracyScore()
+{
+	loadIfNeeded();
+	if (accuracyScore_ < 0)
+	{
+		if (hasAttribute(TRACKING_SPEED_ATTRIBUTE_ID))
+			accuracyScore_ = getAttribute(TRACKING_SPEED_ATTRIBUTE_ID)->getValue();
+		else
+			accuracyScore_ = 0;
+	}
+	return accuracyScore_;
+}
+
+float Module::getSignatureResolution() {
+	loadIfNeeded();
+	if (signatureResolution_ < 0)
+	{
+		if (hasAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID))
+			signatureResolution_ = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
+		else
+			signatureResolution_ = 0;
+	}
+	return signatureResolution_;
+}
+
+float Module::getAngularVelocity(float targetSignature, float hitChance) {
+	float signatureResolution = getSignatureResolution();
+	float accuracyScore = getAccuracyScore();
+	float v = log(hitChance) / log(0.5) * accuracyScore * targetSignature / signatureResolution;
+	return v;
 }
 
 float Module::getLifeTime()
@@ -701,8 +736,10 @@ void Module::lazyLoad() {
 		slot_ = SLOT_SUBSYSTEM;
 	else if (hasEffect(TACTICAL_MODE_EFFECT_ID))
 		slot_ = SLOT_MODE;
-	else if (getCategoryID() == STRUCTURE_CATEGORY_ID)
-		slot_ = SLOT_STRUCTURE;
+	else if (getCategoryID() == STARBASE_CATEGORY_ID)
+		slot_ = SLOT_STARBASE_STRUCTURE;
+	else if (hasEffect(SERVICE_SLOT_EFFECT_ID))
+		slot_ = SLOT_SERVICE;
 	else
 		slot_ = SLOT_NONE;
 	
@@ -755,7 +792,7 @@ void Module::lazyLoad() {
 	forceReload_ = groupID_ == CAPACITOR_BOOSTER_GROUP_ID;
 	
 	shots_ = -1;
-	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = -1;
 	
 	TypeID attributes[] = {CHARGE_GROUP1_ATTRIBUTE_ID, CHARGE_GROUP2_ATTRIBUTE_ID, CHARGE_GROUP3_ATTRIBUTE_ID, CHARGE_GROUP4_ATTRIBUTE_ID, CHARGE_GROUP5_ATTRIBUTE_ID};
 	for (int i = 0; i < 5; i++)

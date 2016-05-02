@@ -44,6 +44,8 @@ namespace dgmpp {
 
 		virtual void reset();
 		
+		virtual std::vector<TypeID> getSupportedModuleCategories() const;
+		virtual std::vector<TypeID> getSupportedDroneCategories() const;
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
@@ -80,7 +82,9 @@ namespace dgmpp {
 		float getTotalDroneBandwidth();
 		float getDroneBayUsed();
 		float getTotalDroneBay();
-
+		float getFighterHangarUsed();
+		float getTotalFighterHangar();
+		
 		
 		//Capacitor
 		float getCapCapacity();
@@ -130,8 +134,10 @@ namespace dgmpp {
 		float getScanResolution();
 		
 		//Drones
-		int getMaxActiveDrones();
-		int getActiveDrones();
+		int getDroneSquadronLimit(Drone::FighterSquadron squadron = Drone::FIGHTER_SQUADRON_NONE);
+		int getDroneSquadronUsed(Drone::FighterSquadron squadron = Drone::FIGHTER_SQUADRON_NONE);
+		int getTotalFighterLaunchTubes();
+		int getFighterLaunchTubesUsed();
 
 		//Other
 		void updateHeatDamage();
@@ -140,10 +146,10 @@ namespace dgmpp {
 		virtual Item* character();
 
 		friend std::ostream& operator<<(std::ostream& os, Ship& ship);
-		
-	private:
+	protected:
 		ModulesList modules_;
 		DronesList drones_;
+	private:
 		std::list<std::weak_ptr<Module>> projectedModules_;
 		std::list<std::weak_ptr<Drone>> projectedDrones_;
 		std::shared_ptr<CapacitorSimulator> capacitorSimulator_;

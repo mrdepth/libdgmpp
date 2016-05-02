@@ -1,5 +1,5 @@
 %include "Item.i"
-%include "Structure.i"
+%include "StarbaseStructure.i"
 %include "DamagePattern.i"
 
 %shared_ptr(dgmpp::ControlTower);
@@ -11,13 +11,13 @@ namespace dgmpp {
 	class ControlTower : public dgmpp::Item
 	{
 	public:
-		std::shared_ptr<dgmpp::Structure> addStructure(dgmpp::TypeID typeID);
-		void removeStructure(const std::shared_ptr<dgmpp::Structure>& structure);
+		std::shared_ptr<dgmpp::StarbaseStructure> addStructure(dgmpp::TypeID typeID);
+		void removeStructure(const std::shared_ptr<dgmpp::StarbaseStructure>& structure);
 		
 		%extend {
-			std::vector<std::shared_ptr<dgmpp::Structure>> getStructures() {
-				const dgmpp::StructuresList& structures = $self->getStructures();
-				return std::vector<std::shared_ptr<dgmpp::Structure>>(structures.begin(), structures.end());
+			std::vector<std::shared_ptr<dgmpp::StarbaseStructure>> getStructures() {
+				const dgmpp::StarbaseStructuresList& structures = $self->getStructures();
+				return std::vector<std::shared_ptr<dgmpp::StarbaseStructure>>(structures.begin(), structures.end());
 			}
 		}
 		
