@@ -215,6 +215,8 @@
 		12D9F9EC1CC3A98B00313F8D /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D6C1473CA5E006B18D7 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9ED1CC3A98B00313F8D /* EffectPrototype.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFE31C26C54200FB7B1D /* EffectPrototype.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DDFBAD1C157E42005F1382 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
+		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
+		12DFCED31CD74242006A19BD /* dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9F9F21CC3A98B00313F8D /* dgmpp.framework */; };
 		12EFCC691C1AB060003ECA7F /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12EFCC681C1AB060003ECA7F /* main.mm */; };
 		12EFCC701C1AB0D2003ECA7F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
 		12EFCC711C1AB0DD003ECA7F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
@@ -224,6 +226,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		12DFCED41CD74242006A19BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 37B33D341473CA0D006B18D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 12D9F9821CC3A98B00313F8D;
+			remoteInfo = "dgmpp OSX";
+		};
 		12FF34AB1CC4D9480084B4A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 37B33D341473CA0D006B18D7 /* Project object */;
@@ -339,6 +348,9 @@
 		12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatSimulator.h; sourceTree = "<group>"; };
 		12D9F9F21CC3A98B00313F8D /* dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		12DFCECE1CD74242006A19BD /* dgmppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dgmppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		12DFCED01CD74242006A19BD /* dgmppTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = dgmppTests.mm; sourceTree = "<group>"; };
+		12DFCED21CD74242006A19BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12EFCC661C1AB060003ECA7F /* dgmpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dgmpp; sourceTree = BUILT_PRODUCTS_DIR; };
 		12EFCC681C1AB060003ECA7F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		12EFCCDD1C1ACE4E003ECA7F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -423,6 +435,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		12DFCECB1CD74242006A19BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12DFCED31CD74242006A19BD /* dgmpp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +567,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		12DFCECF1CD74242006A19BD /* dgmppTests */ = {
+			isa = PBXGroup;
+			children = (
+				12DFCED01CD74242006A19BD /* dgmppTests.mm */,
+				12DFCED21CD74242006A19BD /* Info.plist */,
+			);
+			path = dgmppTests;
+			sourceTree = "<group>";
+		};
 		12EFCC671C1AB060003ECA7F /* dgmppDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,6 +647,7 @@
 				1242EC1F1A4DFF5C00FD488A /* dbpatch */,
 				12EFCC671C1AB060003ECA7F /* dgmppDemo */,
 				129F2BD71C1FFE62007FC666 /* modifiersdump */,
+				12DFCECF1CD74242006A19BD /* dgmppTests */,
 				12A3C6B0177C283E0067E00C /* Frameworks */,
 				12A3C726177C2FC80067E00C /* Products */,
 				1242EC1E1A4DFF5B00FD488A /* dbpatch */,
@@ -625,6 +655,7 @@
 				12EFCC661C1AB060003ECA7F /* dgmpp */,
 				129F2BD61C1FFE62007FC666 /* modifiersdump */,
 				12D9F9F21CC3A98B00313F8D /* dgmpp.framework */,
+				12DFCECE1CD74242006A19BD /* dgmppTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -911,6 +942,24 @@
 			productReference = 12D9F9F21CC3A98B00313F8D /* dgmpp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		12DFCECD1CD74242006A19BD /* dgmppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 12DFCED81CD74242006A19BD /* Build configuration list for PBXNativeTarget "dgmppTests" */;
+			buildPhases = (
+				12DFCECA1CD74242006A19BD /* Sources */,
+				12DFCECB1CD74242006A19BD /* Frameworks */,
+				12DFCECC1CD74242006A19BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				12DFCED51CD74242006A19BD /* PBXTargetDependency */,
+			);
+			name = dgmppTests;
+			productName = dgmppTests;
+			productReference = 12DFCECE1CD74242006A19BD /* dgmppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		12EFCC651C1AB060003ECA7F /* dgmppDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 12EFCC6C1C1AB060003ECA7F /* Build configuration list for PBXNativeTarget "dgmppDemo" */;
@@ -963,6 +1012,9 @@
 					129F2BD51C1FFE62007FC666 = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					12DFCECD1CD74242006A19BD = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					12EFCC651C1AB060003ECA7F = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -986,6 +1038,7 @@
 				12EFCC651C1AB060003ECA7F /* dgmppDemo */,
 				129F2BD51C1FFE62007FC666 /* modifiersdump */,
 				12D9F9821CC3A98B00313F8D /* dgmpp OSX */,
+				12DFCECD1CD74242006A19BD /* dgmppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -999,6 +1052,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		12D9F9EE1CC3A98B00313F8D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		12DFCECC1CD74242006A19BD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1138,6 +1198,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		12DFCECA1CD74242006A19BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		12EFCC621C1AB060003ECA7F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1157,6 +1225,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		12DFCED51CD74242006A19BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 12D9F9821CC3A98B00313F8D /* dgmpp OSX */;
+			targetProxy = 12DFCED41CD74242006A19BD /* PBXContainerItemProxy */;
+		};
 		12FF34AC1CC4D9480084B4A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 12D9F9821CC3A98B00313F8D /* dgmpp OSX */;
@@ -1430,6 +1503,57 @@
 			};
 			name = Release;
 		};
+		12DFCED61CD74242006A19BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = dgmppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shimanski.dgmpp.dgmppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		12DFCED71CD74242006A19BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = dgmppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shimanski.dgmpp.dgmppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		12EFCC6A1C1AB060003ECA7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1605,6 +1729,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		12DFCED81CD74242006A19BD /* Build configuration list for PBXNativeTarget "dgmppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				12DFCED61CD74242006A19BD /* Debug */,
+				12DFCED71CD74242006A19BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		12EFCC6C1C1AB060003ECA7F /* Build configuration list for PBXNativeTarget "dgmppDemo" */ = {
 			isa = XCConfigurationList;
