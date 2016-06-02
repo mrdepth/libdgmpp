@@ -1129,7 +1129,7 @@ int Ship::getMaxTargets()
 
 float Ship::getMaxTargetRange()
 {
-	return std::min(getAttribute(MAX_TARGET_RANGE_ATTRIBUTE_ID)->getValue(), float(250000.0));
+	return getAttribute(MAX_TARGET_RANGE_ATTRIBUTE_ID)->getValue();
 }
 
 float Ship::getScanStrength()
