@@ -10,14 +10,15 @@ from reverence import blue
 import cPickle
 
 if platform == "darwin":
-	folders = glob.glob(expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/cider-EveOnlinePremium-iso-*"))
-	folders = sorted(folders, None, None, reverse=True)
-	if len(folders) == 0:
-		print "Error: EVE Online client not found"
-		sys.exit
-	else:
+	#folders = glob.glob(expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/cider-EveOnlinePremium-iso-*"))
+	#folders = sorted(folders, None, None, reverse=True)
+	#if len(folders) == 0:
+	#	print "Error: EVE Online client not found"
+	#	sys.exit
+	#else:
 		#EVEPATH = folders[0] + "/EVE Online.app/Contents/Resources/transgaming/c_drive/tq"
-		EVEPATH = folders[0] + "/EVE Online.app/Contents/Resources/transgaming/c_drive/sisi"
+#	EVEPATH = folders[0] + "/EVE Online.app/Contents/Resources/transgaming/c_drive/sisi"
+	EVEPATH = glob.glob(expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/wineenv/drive_c/sisi"))[0]
 else:
 	EVEPATH = "E:/Games/EVE"
 

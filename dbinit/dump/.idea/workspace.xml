@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="dump.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dump.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dump.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3328786">
-              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+            <state vertical-scroll-proportion="-6.111111">
+              <caret line="18" column="161" selection-start-line="18" selection-start-column="161" selection-end-line="18" selection-end-column="161" />
               <folding />
             </state>
           </provider>
@@ -55,7 +55,7 @@
         <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/cache.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="95" column="54" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="54" />
+              <caret line="131" column="33" selection-start-line="131" selection-start-column="33" selection-end-line="131" selection-end-column="33" />
               <folding>
                 <element signature="e#308#345#0" expanded="true" />
               </folding>
@@ -103,11 +103,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
         <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="530" column="36" selection-start-line="530" selection-start-column="36" selection-end-line="530" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.4761255">
+              <caret line="549" column="17" selection-start-line="549" selection-start-column="17" selection-end-line="549" selection-end-column="17" />
               <folding>
                 <element signature="e#498#508#0" expanded="true" />
               </folding>
@@ -166,7 +166,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -235,6 +234,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -441,13 +441,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/dump.py</url>
-          <line>129</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -455,7 +448,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="17" />
+      <option name="time" value="19" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -834,24 +827,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/_blue.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/cache.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="95" column="54" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="54" />
-          <folding>
-            <element signature="e#308#345#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/blue.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -860,21 +835,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/config.py">
+    <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/cache.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="530" column="36" selection-start-line="530" selection-start-column="36" selection-end-line="530" selection-end-column="37" />
+          <caret line="131" column="33" selection-start-line="131" selection-start-column="33" selection-end-line="131" selection-end-column="33" />
           <folding>
-            <element signature="e#498#508#0" expanded="true" />
+            <element signature="e#308#345#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/_blue.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dump.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3328786">
-          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+        <state vertical-scroll-proportion="-6.111111">
+          <caret line="18" column="161" selection-start-line="18" selection-start-column="161" selection-end-line="18" selection-end-column="161" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Python/2.7/site-packages/reverence-1.8.0-py2.7-macosx-10.11-intel.egg!/reverence/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4761255">
+          <caret line="549" column="17" selection-start-line="549" selection-start-column="17" selection-end-line="549" selection-end-column="17" />
+          <folding>
+            <element signature="e#498#508#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

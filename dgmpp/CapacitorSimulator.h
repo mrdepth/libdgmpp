@@ -31,6 +31,7 @@ namespace dgmpp {
 			int duration;
 			float capNeed;
 			int reloadTime;
+			int reactivationTime;
 			int shot;
 			int clipSize;
 		};

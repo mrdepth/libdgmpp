@@ -209,7 +209,8 @@ void CapacitorSimulator::internalReset()
 		
 		std::shared_ptr<State> state = std::make_shared<State>();
 		state->tNow = 0;
-		state->duration = duration;
+		state->reactivationTime = module->hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? module->getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue() : 0;
+		state->duration = module->getRawCycleTime() + (state->reactivationTime);
 		state->capNeed = capNeed;
 		state->clipSize = clipSize;
 		state->shot = 0;
@@ -227,6 +228,7 @@ void CapacitorSimulator::internalReset()
 		
 		std::shared_ptr<State> state = std::make_shared<State>();
 		state->tNow = 0;
+		state->reactivationTime = 0;
 		state->duration = duration;
 		state->capNeed = capNeed;
 		state->clipSize = 0;
@@ -284,20 +286,21 @@ void CapacitorSimulator::run()
 			
 			iterations_++;
 			
+			tLast = tNow;
+
 			if (cap < capLowest) {
 				if (cap < 0.0)
 					break;
 				capLowest = cap;
 			}
 			
-			tLast = tNow;
 			tNow += state->duration;
 			state->shot++;
 			
 			if (state->clipSize) {
 				if (state->shot % state->clipSize == 0) {
 					state->shot = 0;
-					tNow += state->reloadTime;
+					tNow += std::max(state->reloadTime, state->reactivationTime);
 				}
 			}
 			state->tNow = tNow;
