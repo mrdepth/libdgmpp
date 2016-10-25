@@ -452,10 +452,10 @@ void addEffect(int32_t effectID, const std::string& effectName, int32_t effectCa
 	exec(os.str(), nullptr);
 }
 
-void addAttribute(int32_t attributeID, const std::string& attributeName, int32_t attributeCategory, int32_t unitID, bool stackable, bool highIsGood) {
+void addAttribute(int32_t attributeID, const std::string& attributeName, int32_t attributeCategory, int32_t unitID, bool stackable, bool highIsGood, double defaultValue = 0.0) {
 	std::stringstream os;
-	os << "INSERT INTO \"dgmAttributeTypes\" (attributeID,attributeName,attributeCategory,published,unitID,displayName,description,stackable,highIsGood,categoryID,iconID)\
-	VALUES (" << attributeID << ", \"" << attributeName << "\"," << attributeCategory << ",0, " << unitID << ", NULL, \"dgmpp\", " << stackable << "," << highIsGood << ", NULL, NULL);";
+	os << "INSERT INTO \"dgmAttributeTypes\" (attributeID,attributeName,attributeCategory,published,unitID,defaultValue,displayName,description,stackable,highIsGood,categoryID,iconID)\
+	VALUES (" << attributeID << ", \"" << attributeName << "\"," << attributeCategory << ",0, " << unitID << ", " << defaultValue << ", NULL, \"dgmpp\", " << stackable << "," << highIsGood << ", NULL, NULL);";
 	exec(os.str(), nullptr);
 }
 
@@ -468,6 +468,12 @@ void addItemEffect(const std::string& typeName, int32_t effectID) {
 void addEffectGroup(int32_t groupID, int32_t effectID) {
 	std::stringstream os;
 	os << "INSERT INTO dgmTypeEffects SELECT typeID, " << effectID << " as effectID, 1 as isDefault FROM invTypes WHERE groupID = " << groupID << ";";
+	exec(os.str(), nullptr);
+}
+
+void addEffectCategory(int32_t categoryID, int32_t effectID) {
+	std::stringstream os;
+	os << "INSERT INTO dgmTypeEffects SELECT typeID, " << effectID << " as effectID, 1 as isDefault FROM invTypes WHERE groupID IN (SELECT groupID FROM invGroups WHERE categoryID = " << categoryID << ");";
 	exec(os.str(), nullptr);
 }
 
@@ -819,6 +825,58 @@ int patch(const char* databasePath) {
     update("shipModeSHTOptimalRangePostDiv",
            DefEnv("Ship").locationSkill("Small Hybrid Turret").attr("maxRange").assoc("PostDiv").ALRSM("modeMaxRangePostDiv"),
            DefEnv("Ship").locationSkill("Small Hybrid Turret").attr("maxRange").assoc("PostDiv").RLRSM("modeMaxRangePostDiv"));
+	
+	
+	addAttribute(576, "speedBoostFactorCalc", 9, 0, 1, 1, 0.01);
+	addAttribute(578, "speedBoostFactorCalc2", 9, 0, 1, 1, 1.0);
+	addEffect(710, "speedBoostFactorCalculator", 0, 0, 0);
+	addEffect(712, "speedBoostFactorCalculator2", 0, 0, 0);
+	addEffect(1171, "massFactor", 0, 0, 0);
+	addEffectGroup(46, 710);
+	addEffectGroup(46, 712);
+	
+	update("speedBoostFactorCalculator",
+		   COMB(
+				DefEnv("Self").attr("speedBoostFactorCalc").assoc("PostMul").AIM("speedFactor"),
+				DefEnv("Self").attr("speedBoostFactorCalc").assoc("PostMul").AIM("speedBoostFactor")),
+		   COMB(
+				DefEnv("Self").attr("speedBoostFactorCalc").assoc("PostMul").RIM("speedFactor"),
+				DefEnv("Self").attr("speedBoostFactorCalc").assoc("PostMul").RIM("speedBoostFactor")));
+	
+	update("speedBoostFactorCalculator2",
+		   DefEnv("Self").attr("speedBoostFactorCalc2").assoc("ModAdd").AIM("speedBoostFactorCalc"),
+		   DefEnv("Self").attr("speedBoostFactorCalc2").assoc("ModAdd").RIM("speedBoostFactorCalc"));
+
+	
+	update("moduleBonusAfterburner",
+		   COMB(
+				DefEnv("Ship").attr("maxVelocity").assoc("PostMul").AIM("speedBoostFactorCalc2"),
+				DefEnv("Ship").attr("mass").assoc("ModAdd").AIM("massAddition")),
+		   COMB(
+				DefEnv("Ship").attr("maxVelocity").assoc("PostMul").RIM("speedBoostFactorCalc2"),
+				DefEnv("Ship").attr("mass").assoc("ModAdd").RIM("massAddition")));
+
+	
+
+	update("moduleBonusMicrowarpdrive",
+		   COMB(
+				DefEnv("Ship").attr("maxVelocity").assoc("PostMul").AIM("speedBoostFactorCalc2"),
+				COMB(
+					 DefEnv("Ship").attr("mass").assoc("ModAdd").AIM("massAddition"),
+					 DefEnv("Ship").attr("signatureRadius").assoc("PostPercent").AIM("signatureRadiusBonus")
+					 )),
+		   COMB(
+				DefEnv("Ship").attr("maxVelocity").assoc("PostMul").RIM("speedBoostFactorCalc2"),
+				COMB(
+					 DefEnv("Ship").attr("mass").assoc("ModAdd").RIM("massAddition"),
+					 DefEnv("Ship").attr("signatureRadius").assoc("PostPercent").RIM("signatureRadiusBonus")
+					 )));
+	
+	update("massFactor",
+		   DefEnv("Self").locationGroup("Propulsion Module").attr("speedBoostFactorCalc").assoc("PostDiv").ALGM("mass"),
+		   DefEnv("Self").locationGroup("Propulsion Module").attr("speedBoostFactorCalc").assoc("PostDiv").RLGM("mass"));
+
+	addEffectCategory(6, 1171);
 
 	#include <dbpatch.h>
 	

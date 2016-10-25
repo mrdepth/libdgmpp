@@ -4,7 +4,9 @@ from os.path import expanduser
 import glob
 import sys
 import os
+import pwd
 import ConfigParser
+
 
 from reverence import blue
 
@@ -22,7 +24,10 @@ else:
 
 OUTPATH = "./"
 
-eve = blue.EVE(EVEPATH, cachepath=expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/c_tq_tranquility"))
+#eve = blue.EVE(EVEPATH, cachepath=expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/c_tq_tranquility"))
+user = pwd.getpwuid(os.getuid()).pw_name
+path = "~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/wineenv/drive_c/users/{0}/Local Settings/Application Data/CCP/EVE/c_tq_tranquility".format(user)
+eve = blue.EVE(EVEPATH, cachepath=expanduser(path))
 cfg = eve.getconfigmgr()
 
 def sqlstr(x):
