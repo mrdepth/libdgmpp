@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "12D9F9821CC3A98B00313F8D"
-               BuildableName = "dgmpp.framework"
-               BlueprintName = "dgmpp OSX"
+               BuildableName = "Dgmpp.framework"
+               BlueprintName = "Dgmpp OSX"
                ReferencedContainer = "container:dgmpp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "12D9F9821CC3A98B00313F8D"
-            BuildableName = "dgmpp.framework"
-            BlueprintName = "dgmpp OSX"
+            BuildableName = "Dgmpp.framework"
+            BlueprintName = "Dgmpp OSX"
             ReferencedContainer = "container:dgmpp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +64,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "12D9F9821CC3A98B00313F8D"
-            BuildableName = "dgmpp.framework"
-            BlueprintName = "dgmpp OSX"
+            BuildableName = "Dgmpp.framework"
+            BlueprintName = "Dgmpp OSX"
             ReferencedContainer = "container:dgmpp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
