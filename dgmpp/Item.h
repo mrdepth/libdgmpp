@@ -117,7 +117,7 @@ namespace dgmpp {
 			if (!loaded_)
 				lazyLoad();
 		}
-		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, float value);
+		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, Float value);
 
 		
 	private:

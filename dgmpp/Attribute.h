@@ -265,25 +265,25 @@ namespace dgmpp {
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
-		static std::shared_ptr<Attribute> getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute = false, float value = std::numeric_limits<float>::quiet_NaN());
+		static std::shared_ptr<Attribute> getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute = false, Float value = std::numeric_limits<Float>::quiet_NaN());
 
-		Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, float value);
+		Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, Float value);
 		
-//		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner = nullptr, const char* attributeName = "", bool isFakeAttribute = false);
+//		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, Float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner = nullptr, const char* attributeName = "", bool isFakeAttribute = false);
 //		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner = nullptr, bool isFakeAttribute = false);
 		virtual ~Attribute(void);
 		std::shared_ptr<Item> getOwner() const;
 		TypeID getAttributeID() const;
 		bool isFakeAttribute() const;
 
-		virtual float getValue();
-		virtual float getInitialValue() const;
+		virtual Float getValue();
+		virtual Float getInitialValue() const;
 		bool isStackable() const;
 		bool highIsGood() const;
 
-		virtual void setValue(float value);
-		virtual float dec(float value);
-		virtual float inc(float value);
+		virtual void setValue(Float value);
+		virtual Float dec(Float value);
+		virtual Float inc(Float value);
 		
 		void reset();
 		
@@ -292,9 +292,9 @@ namespace dgmpp {
 	protected:
 	private:
 		std::weak_ptr<Engine> engine_;
-		float value_;
-		float initialValue_;
-		float forcedValue_;
+		Float value_;
+		Float initialValue_;
+		Float forcedValue_;
 		bool calculated_;
 		bool isFakeAttribute_;
 		

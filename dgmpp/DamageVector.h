@@ -6,36 +6,36 @@ namespace dgmpp {
 	class DamageVector
 	{
 	public:
-		DamageVector(float value = 0);
-		DamageVector(float em, float thermal, float kinetic, float explosive);
+		DamageVector(Float value = 0);
+		DamageVector(Float em, Float thermal, Float kinetic, Float explosive);
 		union {
 			struct {
-				float emAmount;
-				float thermalAmount;
-				float kineticAmount;
-				float explosiveAmount;
+				Float emAmount;
+				Float thermalAmount;
+				Float kineticAmount;
+				Float explosiveAmount;
 			};
-			float damageTypes[4];
+			Float damageTypes[4];
 		};
 		
 		DamageVector effectiveDamage(const ResistancesLayer& resistances) const;
 		
-		DamageVector& operator=(float value);
+		DamageVector& operator=(Float value);
 		
-		DamageVector operator/(float value) const;
-		DamageVector operator*(float value) const;
-		DamageVector operator+(float value) const;
-		DamageVector operator-(float value) const;
+		DamageVector operator/(Float value) const;
+		DamageVector operator*(Float value) const;
+		DamageVector operator+(Float value) const;
+		DamageVector operator-(Float value) const;
 
 		DamageVector operator/(const DamageVector& value) const;
 		DamageVector operator*(const DamageVector& value) const;
 		DamageVector operator+(const DamageVector& value) const;
 		DamageVector operator-(const DamageVector& value) const;
 		
-		DamageVector& operator/=(float value);
-		DamageVector& operator*=(float value);
-		DamageVector& operator+=(float value);
-		DamageVector& operator-=(float value);
+		DamageVector& operator/=(Float value);
+		DamageVector& operator*=(Float value);
+		DamageVector& operator+=(Float value);
+		DamageVector& operator-=(Float value);
 		
 		DamageVector& operator/=(const DamageVector& value);
 		DamageVector& operator*=(const DamageVector& value);
@@ -43,7 +43,7 @@ namespace dgmpp {
 		DamageVector& operator-=(const DamageVector& value);
 		
 		
-		operator float() const;
+		operator Float() const;
 
 	};
 }

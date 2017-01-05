@@ -46,13 +46,13 @@ namespace dgmpp {
 
 		//Calculations
 		
-		virtual float getCycleTime();
+		virtual Float getCycleTime();
 		
 		DamageVector getVolley();
 		DamageVector getDps(const HostileTarget& target = HostileTarget::defaultTarget);
-		float getMaxRange();
-		float getFalloff();
-		float getTrackingSpeed();
+		Float getMaxRange();
+		Float getFalloff();
+		Float getAccuracyScore();
 
 		virtual Item* ship();
 		virtual Item* character();
@@ -61,9 +61,9 @@ namespace dgmpp {
 	protected:
 		DamageVector volley_;
 		DamageVector dps_;
-		float maxRange_;
-		float falloff_;
-		float trackingSpeed_;
+		Float maxRange_;
+		Float falloff_;
+		Float trackingSpeed_;
 
 		virtual void lazyLoad();
 		virtual void calculateDamageStats();

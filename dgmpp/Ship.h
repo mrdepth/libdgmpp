@@ -68,30 +68,30 @@ namespace dgmpp {
 		int getFreeHardpoints(Module::Hardpoint hardpoint);
 		int getUsedHardpoints(Module::Hardpoint hardpoint);
 		
-		float getCapacity();
-		float getOreHoldCapacity();
+		Float getCapacity();
+		Float getOreHoldCapacity();
 		
-		float getCalibrationUsed();
-		float getTotalCalibration();
-		float getPowerGridUsed();
-		float getTotalPowerGrid();
-		float getCpuUsed();
-		float getTotalCpu();
-		float getDroneBandwidthUsed();
-		float getTotalDroneBandwidth();
-		float getDroneBayUsed();
-		float getTotalDroneBay();
-		float getFighterHangarUsed();
-		float getTotalFighterHangar();
+		Float getCalibrationUsed();
+		Float getTotalCalibration();
+		Float getPowerGridUsed();
+		Float getTotalPowerGrid();
+		Float getCpuUsed();
+		Float getTotalCpu();
+		Float getDroneBandwidthUsed();
+		Float getTotalDroneBandwidth();
+		Float getDroneBayUsed();
+		Float getTotalDroneBay();
+		Float getFighterHangarUsed();
+		Float getTotalFighterHangar();
 		
 		
 		//Capacitor
-		float getCapCapacity();
+		Float getCapCapacity();
 		bool isCapStable();
-		float getCapLastsTime();
-		float getCapStableLevel();
-		float getCapUsed();
-		float getCapRecharge();
+		Float getCapLastsTime();
+		Float getCapStableLevel();
+		Float getCapUsed();
+		Float getCapRecharge();
 		
 		//Tank
 		const Resistances& getResistances();
@@ -103,7 +103,7 @@ namespace dgmpp {
 		const HitPoints& getHitPoints();
 		const HitPoints& getEffectiveHitPoints();
 		
-		float getShieldRecharge();
+		Float getShieldRecharge();
 
 		//DPS
 		DamageVector getWeaponDps(const HostileTarget& target = HostileTarget::defaultTarget);
@@ -112,25 +112,25 @@ namespace dgmpp {
 		DamageVector getDroneVolley();
 		
 		//Mobility
-		float getAlignTime();
-		float getWarpSpeed();
-		float getMaxWarpDistance();
-		float getVelocity();
-		float getSignatureRadius();
-		float getMass();
-		float getVolume();
-		float getAgility();
-		float getMaxVelocityInOrbit(float r);
-		float getOrbitRadiusWithTransverseVelocity(float v);
-		float getOrbitRadiusWithAngularVelocity(float v);
+		Float getAlignTime();
+		Float getWarpSpeed();
+		Float getMaxWarpDistance();
+		Float getVelocity();
+		Float getSignatureRadius();
+		Float getMass();
+		Float getVolume();
+		Float getAgility();
+		Float getMaxVelocityInOrbit(Float r);
+		Float getOrbitRadiusWithTransverseVelocity(Float v);
+		Float getOrbitRadiusWithAngularVelocity(Float v);
 		
 		//Targeting
 		int getMaxTargets();
-		float getMaxTargetRange();
-		float getScanStrength();
+		Float getMaxTargetRange();
+		Float getScanStrength();
 		ScanType getScanType();
-		float getProbeSize();
-		float getScanResolution();
+		Float getProbeSize();
+		Float getScanResolution();
 		
 		//Drones
 		int getDroneSquadronLimit(Drone::FighterSquadron squadron = Drone::FIGHTER_SQUADRON_NONE);
@@ -162,7 +162,7 @@ namespace dgmpp {
 		Tank effectiveSustainableTank_;
 		HitPoints hitPoints_;
 		HitPoints effectiveHitPoints_;
-		float shieldRecharge_;
+		Float shieldRecharge_;
 		
 		enum {
 			UNKNOWN = -1,

@@ -29,7 +29,7 @@ std::vector<TypeID> SpaceStructure::getSupportedDroneCategories() const {
 	return {FIGHTER_CATEGORY_ID};
 }
 
-float SpaceStructure::getTotalDroneBay() {
+Float SpaceStructure::getTotalDroneBay() {
 	return getAttribute(FIGHTER_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
@@ -47,15 +47,15 @@ TypeID SpaceStructure::getFuelBlockTypeID() {
 		return 0;
 }
 
-float SpaceStructure::getCycleFuelNeed() {
-	float fuel = 0;
+Float SpaceStructure::getCycleFuelNeed() {
+	Float fuel = 0;
 	for (const auto& module: getModules())
 		if (module->hasAttribute(SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID))
 			fuel += module->getAttribute(SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID)->getValue();
 	return fuel;
 }
 
-float SpaceStructure::getCycleTime() {
+Float SpaceStructure::getCycleTime() {
 	return 3600;
 }
 

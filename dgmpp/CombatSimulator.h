@@ -8,24 +8,24 @@ namespace dgmpp {
 	struct Vector;
 
 	struct Point {
-		float x, y;
+		Float x, y;
 		Point() : x(0), y(0) {};
-		Point(float x, float y):x(x), y(y) {};
+		Point(Float x, Float y):x(x), y(y) {};
 		Vector operator-(const Point& p) const;
 		bool operator == (const Point& p) const;
 	};
 	
 	struct Vector {
-		float dx, dy;
+		Float dx, dy;
 		Vector() : dx(0), dy(0) {};
-		Vector(float dx, float dy):dx(dx), dy(dy) {};
-		float length() const;
-		float project(const Vector& v);
-		float dotProduct(const Vector& v);
+		Vector(Float dx, Float dy):dx(dx), dy(dy) {};
+		Float length() const;
+		Float project(const Vector& v);
+		Float dotProduct(const Vector& v);
 		Vector operator+(const Vector& v) const;
 		Vector operator-(const Vector& v) const;
-		Vector operator*(float v) const;
-		Vector operator/(float v) const;
+		Vector operator*(Float v) const;
+		Vector operator/(Float v) const;
 	};
 
 	class CombatSimulator {
@@ -33,11 +33,11 @@ namespace dgmpp {
 		class State {
 		public:
 			State(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target);
-			virtual float range() const = 0;
-			virtual float transversalVelocity() const = 0;
-			virtual float angularVelocity() const = 0;
-			virtual float targetVelocity() const = 0;
-			virtual float attackerVelocity() const = 0;
+			virtual Float range() const = 0;
+			virtual Float transversalVelocity() const = 0;
+			virtual Float angularVelocity() const = 0;
+			virtual Float targetVelocity() const = 0;
+			virtual Float attackerVelocity() const = 0;
 		protected:
 			std::shared_ptr<Ship> attacker_;
 			std::shared_ptr<Ship> target_;
@@ -45,45 +45,45 @@ namespace dgmpp {
 		
 		class OrbitState: public State {
 		public:
-			OrbitState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float orbitRadius, float attackerVelocity);
-			void setOrbitRadius(float orbitRadius);
-			virtual float range() const;
-			virtual float transversalVelocity() const;
-			virtual float angularVelocity() const;
-			virtual float targetVelocity() const;
-			virtual float attackerVelocity() const;
+			OrbitState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, Float orbitRadius, Float attackerVelocity);
+			void setOrbitRadius(Float orbitRadius);
+			virtual Float range() const;
+			virtual Float transversalVelocity() const;
+			virtual Float angularVelocity() const;
+			virtual Float targetVelocity() const;
+			virtual Float attackerVelocity() const;
 		private:
-			float orbitRadius_;
-			float attackerVelocity_;
-			mutable float calculatedAttackerVelocity_;
+			Float orbitRadius_;
+			Float attackerVelocity_;
+			mutable Float calculatedAttackerVelocity_;
 			mutable uint32_t generation_;
 		};
 		
 		class KeepAtRangeState: public State {
 		public:
-			KeepAtRangeState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float range);
-			void setRange(float range);
-			virtual float range() const;
-			virtual float transversalVelocity() const;
-			virtual float angularVelocity() const;
-			virtual float targetVelocity() const;
-			virtual float attackerVelocity() const;
+			KeepAtRangeState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, Float range);
+			void setRange(Float range);
+			virtual Float range() const;
+			virtual Float transversalVelocity() const;
+			virtual Float angularVelocity() const;
+			virtual Float targetVelocity() const;
+			virtual Float attackerVelocity() const;
 		private:
-			float range_;
+			Float range_;
 		};
 		
 		class ManualState: public State {
 		public:
-			ManualState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float range = 0, float attackerVelocity = 0, float targetVelocity = 0);
+			ManualState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, Float range = 0, Float attackerVelocity = 0, Float targetVelocity = 0);
 			Point attackerPosition;
 			Point targetPosition;
 			Vector attackerVelocityVector;
 			Vector targetVelocityVector;
-			virtual float range() const;
-			virtual float transversalVelocity() const;
-			virtual float angularVelocity() const;
-			virtual float targetVelocity() const;
-			virtual float attackerVelocity() const;
+			virtual Float range() const;
+			virtual Float transversalVelocity() const;
+			virtual Float angularVelocity() const;
+			virtual Float targetVelocity() const;
+			virtual Float attackerVelocity() const;
 		};
 		
 		
@@ -93,10 +93,10 @@ namespace dgmpp {
 		void setState(const State& state);
 		DamageVector outgoingDps();
 		DamageVector incomingDps();
-		float timeToKill();
-		float timeToDie();
-		float attackerModulesLifeTime();
-		float targetModulesLifeTime();
+		Float timeToKill();
+		Float timeToDie();
+		Float attackerModulesLifeTime();
+		Float targetModulesLifeTime();
 	private:
 		std::shared_ptr<Ship> attacker_;
 		std::shared_ptr<Ship> target_;

@@ -6,11 +6,11 @@ namespace dgmpp {
 	class HostileTarget
 	{
 	public:
-		HostileTarget(float range = 0, float angularVelocity = 0, float signature = 0, float velocity = 0);
-		float angularVelocity;
-		float velocity;
-		float signature;
-		float range;
+		HostileTarget(Float range = 0, Float angularVelocity = 0, Float signature = 0, Float velocity = 0);
+		Float angularVelocity;
+		Float velocity;
+		Float signature;
+		Float range;
 		const static HostileTarget defaultTarget;
 	};
 }

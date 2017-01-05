@@ -3,7 +3,7 @@
 
 using namespace dgmpp;
 
-std::shared_ptr<dgmpp::EffectPrototype> EffectPrototype::getEffectPrototype(std::shared_ptr<Engine> const& engine, TypeID effectID)
+std::shared_ptr<EffectPrototype> EffectPrototype::getEffectPrototype(std::shared_ptr<Engine> const& engine, TypeID effectID)
 {
 	auto& reusableEffectPrototypes = engine->getReusableEffectPrototypes();
 	auto i = reusableEffectPrototypes.find(effectID);

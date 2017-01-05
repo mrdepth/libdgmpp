@@ -8,14 +8,14 @@ namespace dgmpp {
 	public:
 		DamagePattern();
 		DamagePattern(const DamageVector& damage);
-		DamagePattern(float em, float thermal, float kinetic, float explosive);
+		DamagePattern(Float em, Float thermal, Float kinetic, Float explosive);
 		~DamagePattern(void);
 		
 		HitPoints effectiveHitPoints(const Resistances& resistances, const HitPoints& hitPoints) const;
 		Tank effectiveTank(const Resistances& resistances, const Tank& tank) const;
 
 	private:
-		float effectivity(const ResistancesLayer& resistances, float amount) const;
+		Float effectivity(const ResistancesLayer& resistances, Float amount) const;
 	};
 	
 }

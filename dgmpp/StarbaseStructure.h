@@ -24,7 +24,7 @@ namespace dgmpp {
 		const HitPoints& getHitPoints();
 		const HitPoints& getEffectiveHitPoints();
 		
-		float getShieldRecharge();
+		Float getShieldRecharge();
 
 	private:
 		Resistances resistances_;
@@ -32,6 +32,6 @@ namespace dgmpp {
 		Tank effectiveTank_;
 		HitPoints hitPoints_;
 		HitPoints effectiveHitPoints_;
-		float shieldRecharge_;
+		Float shieldRecharge_;
 	};
 }

@@ -273,27 +273,14 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 {
 	if (stacking)
 	{
-		//static int precalculatedExp = 0;
-		//static float* pExp = nullptr;
-		static std::vector<float> pExp;
+		static std::vector<Float> pExp;
 		long n = std::distance(first, last);
 		for (long i = pExp.size(); i < n; i++) {
-			float j = i;
-			pExp.push_back(expf(- j * j / 7.1289f));
+			Float j = i;
+			pExp.push_back(std::exp(- j * j / 7.1289));
 		}
-		/*if (n > precalculatedExp) {
-			if (pExp)
-				delete[] pExp;
-			precalculatedExp += 20;
-			pExp = new float[precalculatedExp];
-			float j = 0;
-			for (int i = 0; i < precalculatedExp; i++, j++)
-				pExp[i] = expf(- j * j / 7.1289f);
-		}*/
-		
-//		if (pExp)
-			for (int i = 0; first != last; first++, i++)
-				value *= static_cast<float>(1.0 + (*first - 1.0) * pExp[i]);
+		for (int i = 0; first != last; first++, i++)
+			value *= static_cast<Float>(1.0 + (*first - 1.0) * pExp[i]);
 	}
 	else
 	{
@@ -303,11 +290,11 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	return value;
 }
 
-std::shared_ptr<Attribute> Attribute::getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute, float value) {
+std::shared_ptr<Attribute> Attribute::getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute, Float value) {
 	return std::make_shared<Attribute>(engine, AttributePrototype::getAttributePrototype(engine, attributeID), owner, isFakeAttribute, value);
 }
 
-Attribute::Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, float value): engine_(engine), prototype_(prototype), owner_(owner), isFakeAttribute_(isFakeAttribute), value_(value), initialValue_(value), calculated_(false), forcedValue_(std::numeric_limits<float>::quiet_NaN()) {
+Attribute::Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, Float value): engine_(engine), prototype_(prototype), owner_(owner), isFakeAttribute_(isFakeAttribute), value_(value), initialValue_(value), calculated_(false), forcedValue_(std::numeric_limits<Float>::quiet_NaN()) {
 	if (std::isnan(value))
 		initialValue_ = prototype_->getDefaultValue();
 	sync = false;
@@ -333,7 +320,7 @@ bool Attribute::isFakeAttribute() const
 	return isFakeAttribute_;
 }
 
-float Attribute::getValue()
+Float Attribute::getValue()
 {
 	auto engine = engine_.lock();
 	if (!engine)
@@ -346,7 +333,7 @@ float Attribute::getValue()
 	return value_;
 }
 
-float Attribute::getInitialValue() const
+Float Attribute::getInitialValue() const
 {
 	return initialValue_;
 }
@@ -361,7 +348,7 @@ bool Attribute::highIsGood() const
 	return prototype_->highIsGood();
 }
 
-float Attribute::dec(float value)
+Float Attribute::dec(Float value)
 {
 	if (std::isnan(forcedValue_))
 		forcedValue_ = initialValue_;
@@ -369,7 +356,7 @@ float Attribute::dec(float value)
 	return forcedValue_ -= value;
 }
 
-float Attribute::inc(float value)
+Float Attribute::inc(Float value)
 {
 	if (std::isnan(forcedValue_))
 		forcedValue_ = initialValue_;
@@ -377,7 +364,7 @@ float Attribute::inc(float value)
 	return forcedValue_ += value;
 }
 
-void Attribute::setValue(float value)
+void Attribute::setValue(Float value)
 {
 	value_ = value;
 	forcedValue_ = value;
@@ -421,37 +408,37 @@ void Attribute::calculate()
 		bool isDisallowedAssistance = ship && attributeID != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
 		bool isDisallowedOffensiveModifiers = ship && attributeID != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
 		
-		/*std::list<float>preAssignments;
-		std::list<float>postAssignments;
-		std::list<float>modAdds;
-		std::list<float>preMultipliers;
-		std::list<float>preMultipliersStackable;
-		std::list<float>preDividersStackable;
-		std::list<float>preMultipliersStackableNegative;
-		std::list<float>preDividersStackableNegative;
-		std::list<float>postMultipliers;
-		std::list<float>postMultipliersStackable;
-		std::list<float>postDividersStackable;
-		std::list<float>postPercentsStackable;
-		std::list<float>postMultipliersStackableNegative;
-		std::list<float>postDividersStackableNegative;
-		std::list<float>postPercentsStackableNegative;*/
+		/*std::list<Float>preAssignments;
+		std::list<Float>postAssignments;
+		std::list<Float>modAdds;
+		std::list<Float>preMultipliers;
+		std::list<Float>preMultipliersStackable;
+		std::list<Float>preDividersStackable;
+		std::list<Float>preMultipliersStackableNegative;
+		std::list<Float>preDividersStackableNegative;
+		std::list<Float>postMultipliers;
+		std::list<Float>postMultipliersStackable;
+		std::list<Float>postDividersStackable;
+		std::list<Float>postPercentsStackable;
+		std::list<Float>postMultipliersStackableNegative;
+		std::list<Float>postDividersStackableNegative;
+		std::list<Float>postPercentsStackableNegative;*/
 		
-		std::vector<float>preAssignments;
-		std::vector<float>postAssignments;
-		std::vector<float>modAdds;
-		std::vector<float>preMultipliers;
-		std::vector<float>preMultipliersStackable;
-		std::vector<float>preDividersStackable;
-		std::vector<float>preMultipliersStackableNegative;
-		std::vector<float>preDividersStackableNegative;
-		std::vector<float>postMultipliers;
-		std::vector<float>postMultipliersStackable;
-		std::vector<float>postDividersStackable;
-		std::vector<float>postPercentsStackable;
-		std::vector<float>postMultipliersStackableNegative;
-		std::vector<float>postDividersStackableNegative;
-		std::vector<float>postPercentsStackableNegative;
+		std::vector<Float>preAssignments;
+		std::vector<Float>postAssignments;
+		std::vector<Float>modAdds;
+		std::vector<Float>preMultipliers;
+		std::vector<Float>preMultipliersStackable;
+		std::vector<Float>preDividersStackable;
+		std::vector<Float>preMultipliersStackableNegative;
+		std::vector<Float>preDividersStackableNegative;
+		std::vector<Float>postMultipliers;
+		std::vector<Float>postMultipliersStackable;
+		std::vector<Float>postDividersStackable;
+		std::vector<Float>postPercentsStackable;
+		std::vector<Float>postMultipliersStackableNegative;
+		std::vector<Float>postDividersStackableNegative;
+		std::vector<Float>postPercentsStackableNegative;
 		
 		//ModifiersList modifiers = owner->getModifiers(shared_from_this());
 		ModifiersList modifiers;
@@ -473,7 +460,7 @@ void Attribute::calculate()
 			
 			TypeID categoryID = i->getModifier()->getOwner()->getCategoryID();
 			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID || categoryID == FIGHTER_CATEGORY_ID || categoryID == STARBASE_CATEGORY_ID;
-			float value = i->getValue();
+			Float value = i->getValue();
 			bool isNegative = (highIsGood && value < 1.0) || (!highIsGood && value > 1.0);
 
 			switch (i->getAssociation()) {
@@ -553,55 +540,55 @@ void Attribute::calculate()
 		
 		if (highIsGood)
 		{
-			/*preMultipliersStackable.sort(std::greater<float>());
-			preDividersStackable.sort(std::greater<float>());
-			postMultipliersStackable.sort(std::greater<float>());
-			postDividersStackable.sort(std::greater<float>());
-			postPercentsStackable.sort(std::greater<float>());
+			/*preMultipliersStackable.sort(std::greater<Float>());
+			preDividersStackable.sort(std::greater<Float>());
+			postMultipliersStackable.sort(std::greater<Float>());
+			postDividersStackable.sort(std::greater<Float>());
+			postPercentsStackable.sort(std::greater<Float>());
 			
-			preMultipliersStackableNegative.sort(std::less<float>());
-			preDividersStackableNegative.sort(std::less<float>());
-			postMultipliersStackableNegative.sort(std::less<float>());
-			postDividersStackableNegative.sort(std::less<float>());
-			postPercentsStackableNegative.sort(std::less<float>());*/
+			preMultipliersStackableNegative.sort(std::less<Float>());
+			preDividersStackableNegative.sort(std::less<Float>());
+			postMultipliersStackableNegative.sort(std::less<Float>());
+			postDividersStackableNegative.sort(std::less<Float>());
+			postPercentsStackableNegative.sort(std::less<Float>());*/
 
-			std::sort(preMultipliersStackable.begin(), preMultipliersStackable.end(), std::greater<float>());
-			std::sort(preDividersStackable.begin(), preDividersStackable.end(), std::greater<float>());
-			std::sort(postMultipliersStackable.begin(), postMultipliersStackable.end(), std::greater<float>());
-			std::sort(postDividersStackable.begin(), postDividersStackable.end(), std::greater<float>());
-			std::sort(postPercentsStackable.begin(), postPercentsStackable.end(), std::greater<float>());
+			std::sort(preMultipliersStackable.begin(), preMultipliersStackable.end(), std::greater<Float>());
+			std::sort(preDividersStackable.begin(), preDividersStackable.end(), std::greater<Float>());
+			std::sort(postMultipliersStackable.begin(), postMultipliersStackable.end(), std::greater<Float>());
+			std::sort(postDividersStackable.begin(), postDividersStackable.end(), std::greater<Float>());
+			std::sort(postPercentsStackable.begin(), postPercentsStackable.end(), std::greater<Float>());
 
-			std::sort(preMultipliersStackableNegative.begin(), preMultipliersStackableNegative.end(), std::less<float>());
-			std::sort(preDividersStackableNegative.begin(), preDividersStackableNegative.end(), std::less<float>());
-			std::sort(postMultipliersStackableNegative.begin(), postMultipliersStackableNegative.end(), std::less<float>());
-			std::sort(postDividersStackableNegative.begin(), postDividersStackableNegative.end(), std::less<float>());
-			std::sort(postPercentsStackableNegative.begin(), postPercentsStackableNegative.end(), std::less<float>());
+			std::sort(preMultipliersStackableNegative.begin(), preMultipliersStackableNegative.end(), std::less<Float>());
+			std::sort(preDividersStackableNegative.begin(), preDividersStackableNegative.end(), std::less<Float>());
+			std::sort(postMultipliersStackableNegative.begin(), postMultipliersStackableNegative.end(), std::less<Float>());
+			std::sort(postDividersStackableNegative.begin(), postDividersStackableNegative.end(), std::less<Float>());
+			std::sort(postPercentsStackableNegative.begin(), postPercentsStackableNegative.end(), std::less<Float>());
 		}
 		else
 		{
-			/*preMultipliersStackable.sort(std::less<float>());
-			preDividersStackable.sort(std::less<float>());
-			postMultipliersStackable.sort(std::less<float>());
-			postDividersStackable.sort(std::less<float>());
-			postPercentsStackable.sort(std::less<float>());
+			/*preMultipliersStackable.sort(std::less<Float>());
+			preDividersStackable.sort(std::less<Float>());
+			postMultipliersStackable.sort(std::less<Float>());
+			postDividersStackable.sort(std::less<Float>());
+			postPercentsStackable.sort(std::less<Float>());
 
-			preMultipliersStackableNegative.sort(std::greater<float>());
-			preDividersStackableNegative.sort(std::greater<float>());
-			postMultipliersStackableNegative.sort(std::greater<float>());
-			postDividersStackableNegative.sort(std::greater<float>());
-			postPercentsStackableNegative.sort(std::greater<float>());*/
+			preMultipliersStackableNegative.sort(std::greater<Float>());
+			preDividersStackableNegative.sort(std::greater<Float>());
+			postMultipliersStackableNegative.sort(std::greater<Float>());
+			postDividersStackableNegative.sort(std::greater<Float>());
+			postPercentsStackableNegative.sort(std::greater<Float>());*/
 
-			std::sort(preMultipliersStackable.begin(), preMultipliersStackable.end(), std::less<float>());
-			std::sort(preDividersStackable.begin(), preDividersStackable.end(), std::less<float>());
-			std::sort(postMultipliersStackable.begin(), postMultipliersStackable.end(), std::less<float>());
-			std::sort(postDividersStackable.begin(), postDividersStackable.end(), std::less<float>());
-			std::sort(postPercentsStackable.begin(), postPercentsStackable.end(), std::less<float>());
+			std::sort(preMultipliersStackable.begin(), preMultipliersStackable.end(), std::less<Float>());
+			std::sort(preDividersStackable.begin(), preDividersStackable.end(), std::less<Float>());
+			std::sort(postMultipliersStackable.begin(), postMultipliersStackable.end(), std::less<Float>());
+			std::sort(postDividersStackable.begin(), postDividersStackable.end(), std::less<Float>());
+			std::sort(postPercentsStackable.begin(), postPercentsStackable.end(), std::less<Float>());
 
-			std::sort(preMultipliersStackableNegative.begin(), preMultipliersStackableNegative.end(), std::greater<float>());
-			std::sort(preDividersStackableNegative.begin(), preDividersStackableNegative.end(), std::greater<float>());
-			std::sort(postMultipliersStackableNegative.begin(), postMultipliersStackableNegative.end(), std::greater<float>());
-			std::sort(postDividersStackableNegative.begin(), postDividersStackableNegative.end(), std::greater<float>());
-			std::sort(postPercentsStackableNegative.begin(), postPercentsStackableNegative.end(), std::greater<float>());
+			std::sort(preMultipliersStackableNegative.begin(), preMultipliersStackableNegative.end(), std::greater<Float>());
+			std::sort(preDividersStackableNegative.begin(), preDividersStackableNegative.end(), std::greater<Float>());
+			std::sort(postMultipliersStackableNegative.begin(), postMultipliersStackableNegative.end(), std::greater<Float>());
+			std::sort(postDividersStackableNegative.begin(), postDividersStackableNegative.end(), std::greater<Float>());
+			std::sort(postPercentsStackableNegative.begin(), postPercentsStackableNegative.end(), std::greater<Float>());
 		}
 		
 		if (preAssignments.size() > 0)
@@ -629,7 +616,7 @@ void Attribute::calculate()
 		
 		auto maxAttributeID = prototype_->getMaxAttributeID();
 		if (maxAttributeID > 0) {
-			float maxValue = owner->getAttribute(maxAttributeID)->getValue();
+			Float maxValue = owner->getAttribute(maxAttributeID)->getValue();
 			value_ = std::min(value_, maxValue);
 		}
 		sync = false;

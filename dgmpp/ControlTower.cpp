@@ -7,12 +7,12 @@
 #include "Modifier.h"
 #include "LocationGroupModifier.h"
 #include "LocationRequiredSkillModifier.h"
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 
 using namespace dgmpp;
 
-static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
+static const Float SHIELD_PEAK_RECHARGE = std::sqrt(0.25);
 
 ControlTower::ControlTower(std::shared_ptr<Engine> const& engine, TypeID typeID) : Item(engine, typeID, nullptr)
 {
@@ -138,7 +138,7 @@ void ControlTower::setDamagePattern(const DamagePattern& damagePattern)
 
 //Calculations
 
-float ControlTower::getPowerGridUsed()
+Float ControlTower::getPowerGridUsed()
 {
 	if (powerGridUsed_ < 0)
 	{
@@ -152,12 +152,12 @@ float ControlTower::getPowerGridUsed()
 	return powerGridUsed_;
 }
 
-float ControlTower::getTotalPowerGrid()
+Float ControlTower::getTotalPowerGrid()
 {
 	return getAttribute(POWER_OUTPUT_ATTRIBUTE_ID)->getValue();
 }
 
-float ControlTower::getCpuUsed()
+Float ControlTower::getCpuUsed()
 {
 	if (cpuUsed_ < 0)
 	{
@@ -171,7 +171,7 @@ float ControlTower::getCpuUsed()
 	return cpuUsed_;
 }
 
-float ControlTower::getTotalCpu()
+Float ControlTower::getTotalCpu()
 {
 	return getAttribute(CPU_OUTPUT_ATTRIBUTE_ID)->getValue();
 }
@@ -182,20 +182,20 @@ const Resistances& ControlTower::getResistances()
 {
 	if (resistances_.armor.em < 0.0)
 	{
-		resistances_.armor.em		 = 1.0f - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.explosive = 1.0f - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.kinetic   = 1.0f - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.thermal   = 1.0f - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.em		 = 1.0 - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.explosive = 1.0 - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.kinetic   = 1.0 - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.thermal   = 1.0 - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 		
-		resistances_.shield.em		  = 1.0f - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.explosive = 1.0f - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.kinetic   = 1.0f - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.thermal   = 1.0f - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.em		  = 1.0 - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.explosive = 1.0 - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.kinetic   = 1.0 - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.thermal   = 1.0 - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 		
-		resistances_.hull.em		= 1.0f - getAttribute(HULL_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.explosive = 1.0f - getAttribute(HULL_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.kinetic   = 1.0f - getAttribute(HULL_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.thermal   = 1.0f - getAttribute(HULL_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.em		= 1.0 - getAttribute(HULL_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.explosive = 1.0 - getAttribute(HULL_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.kinetic   = 1.0 - getAttribute(HULL_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.thermal   = 1.0 - getAttribute(HULL_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 	}
 	return resistances_;
 }
@@ -237,13 +237,13 @@ const HitPoints& ControlTower::getEffectiveHitPoints()
 	return effectiveHitPoints_;
 }
 
-float ControlTower::getShieldRecharge()
+Float ControlTower::getShieldRecharge()
 {
 	if (shieldRecharge_ < 0.0)
 	{
-		float capacity = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
-		float rechargeRate = getAttribute(SHIELD_RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
-		shieldRecharge_ = 10.0f / (rechargeRate / 1000.0f) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
+		Float capacity = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
+		Float rechargeRate = getAttribute(SHIELD_RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
+		shieldRecharge_ = 10.0 / (rechargeRate / 1000.0) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
 	}
 	return shieldRecharge_;
 }

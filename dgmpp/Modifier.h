@@ -49,7 +49,7 @@ namespace dgmpp {
 		TypeID getAttributeID() const;
 		std::shared_ptr<Attribute> getModifier() const;
 		Association getAssociation() const;
-		float getValue() const;
+		Float getValue() const;
 		bool isStackable() const;
 		Character* getCharacter();
 		bool isOffensive();

@@ -11,10 +11,12 @@
 #include <math.h>
 #include <algorithm>
 
+using namespace dgmpp;
+
 namespace std {
-	template<> struct hash<dgmpp::Modifier> {
+	template<> struct hash<Modifier> {
 	public:
-		uint64_t operator()(const dgmpp::Modifier& modifier) const {
+		uint64_t operator()(const Modifier& modifier) const {
 			uint64_t h = static_cast<size_t>(modifier.getAttributeID());
 			h <<= 16;
 			h |= static_cast<size_t>(modifier.getModifier()->getAttributeID());
@@ -25,7 +27,6 @@ namespace std {
 	};
 }
 
-using namespace dgmpp;
 
 
 class GangModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>

@@ -15,9 +15,9 @@ namespace dgmpp {
 		virtual std::vector<TypeID> getSupportedModuleCategories() const;
 		virtual std::vector<TypeID> getSupportedDroneCategories() const;
 		
-		virtual float getTotalDroneBay();
+		virtual Float getTotalDroneBay();
 		TypeID getFuelBlockTypeID();
-		float getCycleFuelNeed();
-		float getCycleTime();
+		Float getCycleFuelNeed();
+		Float getCycleTime();
 	};
 }

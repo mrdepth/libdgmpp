@@ -16,7 +16,7 @@
 
 using namespace dgmpp;
 
-static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
+static const Float SHIELD_PEAK_RECHARGE = sqrt(0.25);
 
 struct Repairer
 {
@@ -28,9 +28,9 @@ struct Repairer
 	} type;
 	
 	Module* module;
-	float hpPerSec;
-	float capPerSec;
-	float effectivity;
+	Float hpPerSec;
+	Float capPerSec;
+	Float effectivity;
 };
 
 class RepairersEffectivityCompare : public std::binary_function<const std::shared_ptr<Repairer>&, const std::shared_ptr<Repairer>&, bool>
@@ -723,92 +723,92 @@ int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 	return n;
 }
 
-float Ship::getCapacity() {
+Float Ship::getCapacity() {
 	return getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
 	}
 
-float Ship::getOreHoldCapacity() {
+Float Ship::getOreHoldCapacity() {
 	return getAttribute(SPECIAL_ORE_HOLD_CAPACITY)->getValue();
 }
 
 
-float Ship::getCalibrationUsed()
+Float Ship::getCalibrationUsed()
 {
-	float calibration = 0;
+	Float calibration = 0;
 	for (const auto& i: modules_)
 		if (i->getSlot() == Module::SLOT_RIG)
 			calibration += i->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
 	return calibration;
 }
 
-float Ship::getTotalCalibration()
+Float Ship::getTotalCalibration()
 {
 	return getAttribute(UPGRADE_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getPowerGridUsed()
+Float Ship::getPowerGridUsed()
 {
 	return getAttribute(POWER_LOAD_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getTotalPowerGrid()
+Float Ship::getTotalPowerGrid()
 {
 	return getAttribute(POWER_OUTPUT_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getCpuUsed()
+Float Ship::getCpuUsed()
 {
 	return getAttribute(CPU_LOAD_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getTotalCpu()
+Float Ship::getTotalCpu()
 {
 	return getAttribute(CPU_OUTPUT_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getDroneBandwidthUsed()
+Float Ship::getDroneBandwidthUsed()
 {
-	float bandwidth = 0;
+	Float bandwidth = 0;
 	for (const auto& i: drones_)
 		if (i->isActive())
 			bandwidth += i->getAttribute(DRONE_BANDWIDTH_USED_ATTRIBUTE_ID)->getValue();
 	return bandwidth;
 }
 
-float Ship::getTotalDroneBandwidth()
+Float Ship::getTotalDroneBandwidth()
 {
 	return getAttribute(DRONE_BANDWIDTH_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getDroneBayUsed()
+Float Ship::getDroneBayUsed()
 {
-	float volume = 0;
+	Float volume = 0;
 	for (const auto& i: drones_)
 		if (i->getSquadron() == Drone::FIGHTER_SQUADRON_NONE)
 			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
 
-float Ship::getTotalDroneBay()
+Float Ship::getTotalDroneBay()
 {
 	return getAttribute(DRONE_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getFighterHangarUsed() {
-	float volume = 0;
+Float Ship::getFighterHangarUsed() {
+	Float volume = 0;
 	for (const auto& i: drones_)
 		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE && !i->isActive())
 			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
 
-float Ship::getTotalFighterHangar() {
+Float Ship::getTotalFighterHangar() {
 	return getAttribute(FIGHTER_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
 //Capacitor
 
-float Ship::getCapCapacity()
+Float Ship::getCapCapacity()
 {
 	return getAttribute(CAPACITOR_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
@@ -818,22 +818,22 @@ bool Ship::isCapStable()
 	return getCapacitorSimulator()->isCapStable();
 }
 
-float Ship::getCapLastsTime()
+Float Ship::getCapLastsTime()
 {
 	return getCapacitorSimulator()->getCapLastsTime();
 }
 
-float Ship::getCapStableLevel()
+Float Ship::getCapStableLevel()
 {
 	return getCapacitorSimulator()->getCapStableLevel();
 }
 
-float Ship::getCapUsed()
+Float Ship::getCapUsed()
 {
 	return getCapacitorSimulator()->getCapUsed();
 }
 
-float Ship::getCapRecharge()
+Float Ship::getCapRecharge()
 {
 	return getCapacitorSimulator()->getCapRecharge();
 }
@@ -844,20 +844,20 @@ const Resistances& Ship::getResistances()
 {
 	if (resistances_.armor.em < 0.0)
 	{
-		resistances_.armor.em		 = 1.0f - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.explosive = 1.0f - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.kinetic   = 1.0f - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.thermal   = 1.0f - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.em		 = 1.0 - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.explosive = 1.0 - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.kinetic   = 1.0 - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.thermal   = 1.0 - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 
-		resistances_.shield.em		  = 1.0f - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.explosive = 1.0f - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.kinetic   = 1.0f - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.thermal   = 1.0f - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.em		  = 1.0 - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.explosive = 1.0 - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.kinetic   = 1.0 - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.thermal   = 1.0 - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 
-		resistances_.hull.em		= 1.0f - getAttribute(EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.explosive = 1.0f - getAttribute(EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.kinetic   = 1.0f - getAttribute(KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.thermal   = 1.0f - getAttribute(THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.em		= 1.0 - getAttribute(EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.explosive = 1.0 - getAttribute(EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.kinetic   = 1.0 - getAttribute(KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.thermal   = 1.0 - getAttribute(THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 	}
 	return resistances_;
 }
@@ -894,11 +894,11 @@ const Tank& Ship::getSustainableTank()
 			sustainableTank_ = getTank();
 			
 			std::list<std::shared_ptr<Repairer> > repairers;
-			float capUsed = getCapUsed();
+			Float capUsed = getCapUsed();
 			
 			TypeID attributes[] = {ARMOR_DAMAGE_ATTRIBUTE_ID, DAMAGE_ATTRIBUTE_ID, SHIELD_CHARGE_ATTRIBUTE_ID};
 			Repairer::Type types[] = {Repairer::TYPE_ARMOR, Repairer::TYPE_HULL, Repairer::TYPE_SHIELD};
-			float* layers[] = {&sustainableTank_.armorRepair, &sustainableTank_.hullRepair, &sustainableTank_.shieldRepair};
+			Float* layers[] = {&sustainableTank_.armorRepair, &sustainableTank_.hullRepair, &sustainableTank_.shieldRepair};
 			
 			for (int i = 0; i < 3; i++)
 			{
@@ -932,7 +932,7 @@ const Tank& Ship::getSustainableTank()
 			}
 			repairers.sort(RepairersEffectivityCompare());
 			
-			float totalPeakRecharge = getCapRecharge();
+			Float totalPeakRecharge = getCapRecharge();
 
 			for (const auto& repairer: repairers)
 			{
@@ -940,9 +940,9 @@ const Tank& Ship::getSustainableTank()
 					break;
 
 				if (repairer->capPerSec > 0 && repairer->hpPerSec > 0) {
-					float sustainability = std::min(float(1.0), (totalPeakRecharge - capUsed) / repairer->capPerSec);
+					Float sustainability = std::min(Float(1.0), (totalPeakRecharge - capUsed) / repairer->capPerSec);
 					
-					float amount = sustainability * repairer->hpPerSec;
+					Float amount = sustainability * repairer->hpPerSec;
 					if (repairer->type == Repairer::TYPE_ARMOR)
 						sustainableTank_.armorRepair += amount;
 					else if (repairer->type == Repairer::TYPE_HULL)
@@ -982,13 +982,13 @@ const HitPoints& Ship::getEffectiveHitPoints()
 	return effectiveHitPoints_;
 }
 
-float Ship::getShieldRecharge()
+Float Ship::getShieldRecharge()
 {
 	if (shieldRecharge_ < 0.0)
 	{
-		float capacity = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
-		float rechargeRate = getAttribute(SHIELD_RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
-		shieldRecharge_ = 10.0f / (rechargeRate / 1000.0f) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
+		Float capacity = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
+		Float rechargeRate = getAttribute(SHIELD_RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
+		shieldRecharge_ = 10.0 / (rechargeRate / 1000.0) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
 	}
 	return shieldRecharge_;
 }
@@ -1028,17 +1028,17 @@ DamageVector Ship::getDroneVolley()
 }
 
 //mobility
-float Ship::getAlignTime()
+Float Ship::getAlignTime()
 {
-	float agility = getAgility();
-	float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
-	return -logf(0.25f) * agility * mass / 1000000.0f;
+	Float agility = getAgility();
+	Float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
+	return -log(0.25) * agility * mass / 1000000.0;
 }
 
-float Ship::getWarpSpeed()
+Float Ship::getWarpSpeed()
 {
-	float base = getAttribute(BASE_WARP_SPEED_ATTRIBUTE_ID)->getValue();
-	float multiplier = getAttribute(WARP_SPEED_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+	Float base = getAttribute(BASE_WARP_SPEED_ATTRIBUTE_ID)->getValue();
+	Float multiplier = getAttribute(WARP_SPEED_MULTIPLIER_ATTRIBUTE_ID)->getValue();
 	if (base == 0.0)
 		base = 1.0;
 	if (multiplier == 0.0)
@@ -1046,38 +1046,38 @@ float Ship::getWarpSpeed()
 	return base * multiplier;
 }
 
-float Ship::getMaxWarpDistance()
+Float Ship::getMaxWarpDistance()
 {
-	float capacity = getAttribute(CAPACITOR_CAPACITY_ATTRIBUTE_ID)->getValue();
-	float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
-	float warpCapNeed = getAttribute(WARP_CAPACITOR_NEED_ATTRIBUTE_ID)->getValue();
+	Float capacity = getAttribute(CAPACITOR_CAPACITY_ATTRIBUTE_ID)->getValue();
+	Float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
+	Float warpCapNeed = getAttribute(WARP_CAPACITOR_NEED_ATTRIBUTE_ID)->getValue();
 	return capacity / (mass * warpCapNeed);
 }
 
-float Ship::getVelocity()
+Float Ship::getVelocity()
 {
 	return getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getSignatureRadius()
+Float Ship::getSignatureRadius()
 {
 	return getAttribute(SIGNATURE_RADIUS_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getMass()
+Float Ship::getMass()
 {
 	return getAttribute(MASS_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getVolume() {
+Float Ship::getVolume() {
 	return getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getAgility() {
+Float Ship::getAgility() {
 	return getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getMaxVelocityInOrbit(float r) {
+Float Ship::getMaxVelocityInOrbit(Float r) {
 	double i = getAgility();
 	double m = getMass() / 1000000.0;
 	double v = getVelocity();
@@ -1089,7 +1089,7 @@ float Ship::getMaxVelocityInOrbit(float r) {
 	return sqrt((sqrt(4 * i2 * m2 * r2 * v2 + r4) / (2 * i2 * m2)) - r2 / (2 * i2 * m2));
 }
 
-float Ship::getOrbitRadiusWithTransverseVelocity(float v) {
+Float Ship::getOrbitRadiusWithTransverseVelocity(Float v) {
 	double i = getAgility();
 	double m = getMass() / 1000000.0;
 	double vm = getVelocity();
@@ -1099,7 +1099,7 @@ float Ship::getOrbitRadiusWithTransverseVelocity(float v) {
 	return (i * m * v * v) / sqrt(s);
 }
 
-float Ship::getOrbitRadiusWithAngularVelocity(float v) {
+Float Ship::getOrbitRadiusWithAngularVelocity(Float v) {
 	double lv = getVelocity();
 	double r = 0;
 	for (int i = 0; i < 10; i++) {
@@ -1127,18 +1127,18 @@ int Ship::getMaxTargets()
 		return maxTargetsShip;
 }
 
-float Ship::getMaxTargetRange()
+Float Ship::getMaxTargetRange()
 {
 	return getAttribute(MAX_TARGET_RANGE_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getScanStrength()
+Float Ship::getScanStrength()
 {
-	float maxStrength = -1;
+	Float maxStrength = -1;
 	TypeID attributes[] = {SCAN_RADAR_STRENGTH_ATTRIBUTE_ID, SCAN_LADAR_STRENGTH_ATTRIBUTE_ID, SCAN_MAGNETOMETRIC_STRENGTH_ATTRIBUTE_ID, SCAN_GRAVIMETRIC_STRENGTH_ATTRIBUTE_ID};
 	for (int i = 0; i < 4; i++)
 	{
-		float strength = getAttribute(attributes[i])->getValue();
+		Float strength = getAttribute(attributes[i])->getValue();
 		if (strength > maxStrength)
 		{
 			maxStrength = strength;
@@ -1149,13 +1149,13 @@ float Ship::getScanStrength()
 
 Ship::ScanType Ship::getScanType()
 {
-	float maxStrength = -1;
+	Float maxStrength = -1;
 	TypeID attributes[] = {SCAN_RADAR_STRENGTH_ATTRIBUTE_ID, SCAN_LADAR_STRENGTH_ATTRIBUTE_ID, SCAN_MAGNETOMETRIC_STRENGTH_ATTRIBUTE_ID, SCAN_GRAVIMETRIC_STRENGTH_ATTRIBUTE_ID};
 	ScanType types[] = {SCAN_TYPE_RADAR, SCAN_TYPE_LADAR, SCAN_TYPE_MAGNETOMETRIC, SCAN_TYPE_GRAVIMETRIC};
 	ScanType scanType = SCAN_TYPE_MULTISPECTRAL;
 	for (int i = 0; i < 4; i++)
 	{
-		float strength = getAttribute(attributes[i])->getValue();
+		Float strength = getAttribute(attributes[i])->getValue();
 		if (strength > maxStrength)
 		{
 			maxStrength = strength;
@@ -1167,16 +1167,16 @@ Ship::ScanType Ship::getScanType()
 	return scanType;
 }
 
-float Ship::getScanResolution()
+Float Ship::getScanResolution()
 {
 	return getAttribute(SCAN_RESOLUTION_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getProbeSize()
+Float Ship::getProbeSize()
 {
-	float signatureRadius = getSignatureRadius();
-	float sensorStrength = getScanStrength();
-	return sensorStrength > 0.0f ? signatureRadius / sensorStrength : 0.0f;
+	Float signatureRadius = getSignatureRadius();
+	Float sensorStrength = getScanStrength();
+	return sensorStrength > 0.0 ? signatureRadius / sensorStrength : 0.0;
 }
 
 //Drones

@@ -75,31 +75,31 @@ namespace dgmpp {
 		void setTarget(std::shared_ptr<Ship> const& target = std::shared_ptr<Ship>(nullptr));
 		void clearTarget();
 		std::shared_ptr<Ship> getTarget();
-		float getReloadTime();
+		Float getReloadTime();
 		
 		//Calculations
 		
-		float getCycleTime();
-		float getRawCycleTime();
+		Float getCycleTime();
+		Float getRawCycleTime();
 		bool factorReload();
 		void setFactorReload(bool factorReload);
 		
 		int getCharges();
 		int getShots();
-		float getCapUse();
+		Float getCapUse();
 		
 		DamageVector getVolley();
 		DamageVector getDps(const HostileTarget& target = HostileTarget::defaultTarget);
-		//float getDps(float range, float angularSpeed, float targetSignature);
-		float getMaxRange();
-		float getFalloff();
-		//float getTrackingSpeed();
-		float getAccuracyScore();
-		float getSignatureResolution();
-		float getAngularVelocity(float targetSignature, float hitChance = 0.5);
+		//Float getDps(Float range, Float angularSpeed, Float targetSignature);
+		Float getMaxRange();
+		Float getFalloff();
+		//Float getTrackingSpeed();
+		Float getAccuracyScore();
+		Float getSignatureResolution();
+		Float getAngularVelocity(Float targetSignature, Float hitChance = 0.5);
 		
-		float getLifeTime();
-		void setLifeTime(float lifeTime);
+		Float getLifeTime();
+		void setLifeTime(Float lifeTime);
 		
 		void setEnabled(bool enabled);
 		bool isEnabled();
@@ -130,17 +130,17 @@ namespace dgmpp {
 		std::shared_ptr<Charge> charge_;
 		std::vector<TypeID> chargeGroups_;
 		std::weak_ptr<Ship> target_;
-		float reloadTime_;
+		Float reloadTime_;
 		int shots_;
 		
 		DamageVector volley_;
 		DamageVector dps_;
-		float maxRange_;
-		float falloff_;
-		float accuracyScore_;
-		float signatureResolution_;
+		Float maxRange_;
+		Float falloff_;
+		Float accuracyScore_;
+		Float signatureResolution_;
 		
-		float lifeTime_;
+		Float lifeTime_;
 		
 		void calculateDamageStats();
 	};

@@ -12,6 +12,6 @@ using namespace dgmpp;
 
 const HostileTarget HostileTarget::defaultTarget = HostileTarget();
 
-HostileTarget::HostileTarget(float range, float angularVelocity, float signature, float velocity): range(range), angularVelocity(angularVelocity), signature(signature), velocity(velocity) {
+HostileTarget::HostileTarget(Float range, Float angularVelocity, Float signature, Float velocity): range(range), angularVelocity(angularVelocity), signature(signature), velocity(velocity) {
 	
 }

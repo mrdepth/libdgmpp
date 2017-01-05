@@ -405,7 +405,7 @@ const char* Item::getGroupName()
 	return groupName_.c_str();
 }
 
-std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, float value) {
+std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, Float value) {
 	auto engine = getEngine();
 	if (!engine)
 		return nullptr;
@@ -431,10 +431,10 @@ void Item::lazyLoad() {
 	if (result->next())
 	{
 		groupID_ = result->getInt(0);
-		float radius = static_cast<float>(result->getDouble(1));
-		float mass = static_cast<float>(result->getDouble(2));
-		float volume = static_cast<float>(result->getDouble(3));
-		float capacity = static_cast<float>(result->getDouble(4));
+		Float radius = static_cast<Float>(result->getDouble(1));
+		Float mass = static_cast<Float>(result->getDouble(2));
+		Float volume = static_cast<Float>(result->getDouble(3));
+		Float capacity = static_cast<Float>(result->getDouble(4));
 		int raceID = result->getInt(5);
 		categoryID_ = result->getInt(6);
 		
@@ -443,7 +443,7 @@ void Item::lazyLoad() {
 		attributes_[MASS_ATTRIBUTE_ID] = Attribute::getAttribute(engine, MASS_ATTRIBUTE_ID,  shared_from_this(), false, mass);
 		attributes_[VOLUME_ATTRIBUTE_ID] = Attribute::getAttribute(engine, VOLUME_ATTRIBUTE_ID,  shared_from_this(), false, volume);
 		attributes_[CAPACITY_ATTRIBUTE_ID] = Attribute::getAttribute(engine, CAPACITY_ATTRIBUTE_ID,  shared_from_this(), false, capacity);
-		attributes_[RACE_ID_ATTRIBUTE_ID] = Attribute::getAttribute(engine, RACE_ID_ATTRIBUTE_ID,  shared_from_this(), false, static_cast<float>(raceID));
+		attributes_[RACE_ID_ATTRIBUTE_ID] = Attribute::getAttribute(engine, RACE_ID_ATTRIBUTE_ID,  shared_from_this(), false, static_cast<Float>(raceID));
 		
 		//sql.str(std::string());
 		//sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
@@ -455,7 +455,7 @@ void Item::lazyLoad() {
 		while (result->next())
 		{
 			TypeID attributeID = static_cast<TypeID>(result->getInt(0));
-			float value = static_cast<float>(result->getDouble(1));
+			Float value = static_cast<Float>(result->getDouble(1));
 			attributes_[attributeID] = Attribute::getAttribute(engine, attributeID, shared_from_this(), false, value);
 		}
 		

@@ -15,7 +15,7 @@ namespace dgmpp {
 			int shot;
 			int clipSize;
 			int moduleIndex;
-			float heatDamage;
+			Float heatDamage;
 		};
 
 		
@@ -31,8 +31,8 @@ namespace dgmpp {
 		StatesVector states_;
 
 		void simulate(const ModulesVector& modules);
-		float heat(float t, float heatCapacity, float heatGeneration);
-		float damageProbability(float h, int range, int numberOfOnlineModules, int numberOfSlots, float heatAttenuation);
+		Float heat(Float t, Float heatCapacity, Float heatGeneration);
+		Float damageProbability(Float h, int range, int numberOfOnlineModules, int numberOfSlots, Float heatAttenuation);
 	};
 	
 }

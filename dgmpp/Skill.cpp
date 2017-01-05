@@ -27,7 +27,7 @@ int Skill::getSkillLevel()
 
 void Skill::setSkillLevel(int level)
 {
-	getAttribute(SKILL_LEVEL_ATTRIBUTE_ID)->setValue(static_cast<float>(level));
+	getAttribute(SKILL_LEVEL_ATTRIBUTE_ID)->setValue(static_cast<Float>(level));
 }
 
 void Skill::lazyLoad() {
@@ -38,7 +38,7 @@ void Skill::lazyLoad() {
 		attribute = i->second;
 	else
 		attribute = addExtraAttribute(SKILL_LEVEL_ATTRIBUTE_ID, 0);
-	attribute->setValue(static_cast<float>(skillLevel_));
+	attribute->setValue(static_cast<Float>(skillLevel_));
 }
 
 Item* Skill::character() {
