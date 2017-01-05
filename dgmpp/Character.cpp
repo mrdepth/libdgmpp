@@ -139,6 +139,10 @@ std::shared_ptr<Skill> Character::getSkill(TypeID typeID)
 	return skills_[typeID];
 }
 
+const SkillsMap& Character::getSkills() {
+	return skills_;
+}
+
 bool Character::emptyImplantSlot(int slot)
 {
 	return !getImplant(slot);

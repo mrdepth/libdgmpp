@@ -22,6 +22,7 @@ namespace dgmpp {
 		virtual void reset();
 		
 		std::shared_ptr<Skill> getSkill(TypeID typeID);
+		const SkillsMap& getSkills();
 		
 		bool emptyImplantSlot(int slot);
 		bool emptyBoosterSlot(int slot);
