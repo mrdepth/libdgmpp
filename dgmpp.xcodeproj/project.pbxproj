@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		121064A51C9312370032B3DB /* SpaceStructure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* SpaceStructure.cpp */; };
-		121064A71C9312370032B3DB /* SpaceStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = 121064A41C9312370032B3DB /* SpaceStructure.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		121064A51C9312370032B3DB /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* Structure.cpp */; };
+		121064A71C9312370032B3DB /* Structure.h in Headers */ = {isa = PBXBuildFile; fileRef = 121064A41C9312370032B3DB /* Structure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */; };
 		12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B401C1D7643003B6DA5 /* FetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */; };
@@ -115,7 +115,7 @@
 		12D9F9871CC3A98B00313F8D /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BA6F9F147D1ACF00ADC4CE /* Character.cpp */; };
 		12D9F9881CC3A98B00313F8D /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1286564D1C57AD440002BA7E /* State.cpp */; };
 		12D9F9891CC3A98B00313F8D /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
-		12D9F98A1CC3A98B00313F8D /* SpaceStructure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* SpaceStructure.cpp */; };
+		12D9F98A1CC3A98B00313F8D /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* Structure.cpp */; };
 		12D9F98B1CC3A98B00313F8D /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B9AB68147A5DDF006F1F8E /* Ship.cpp */; };
 		12D9F98C1CC3A98B00313F8D /* HostileTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A04E1C0C386C00194715 /* HostileTarget.cpp */; };
 		12D9F98D1CC3A98B00313F8D /* CapacitorSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9C1781490F2860048A52A /* CapacitorSimulator.cpp */; };
@@ -180,7 +180,7 @@
 		12D9F9CB1CC3A98B00313F8D /* Charge.h in Headers */ = {isa = PBXBuildFile; fileRef = 3708AE3D14892DD9005492F5 /* Charge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9CC1CC3A98B00313F8D /* DamagePattern.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D72CB21497771600B13A9D /* DamagePattern.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9CD1CC3A98B00313F8D /* Drone.h in Headers */ = {isa = PBXBuildFile; fileRef = 373AF829148E6FF500411AFE /* Drone.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12D9F9CE1CC3A98B00313F8D /* SpaceStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = 121064A41C9312370032B3DB /* SpaceStructure.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */ = {isa = PBXBuildFile; fileRef = 121064A41C9312370032B3DB /* Structure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B9AB67147A5DDF006F1F8E /* Module.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B9AB69147A5DDF006F1F8E /* Ship.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9D11CC3A98B00313F8D /* HeatSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 371FA1D214F543080043E813 /* HeatSimulator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -228,8 +228,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		121064A31C9312370032B3DB /* SpaceStructure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpaceStructure.cpp; sourceTree = "<group>"; };
-		121064A41C9312370032B3DB /* SpaceStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceStructure.h; sourceTree = "<group>"; };
+		121064A31C9312370032B3DB /* Structure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Structure.cpp; sourceTree = "<group>"; };
+		121064A41C9312370032B3DB /* Structure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Structure.h; sourceTree = "<group>"; };
 		12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FetchRequest.cpp; sourceTree = "<group>"; };
 		12215B401C1D7643003B6DA5 /* FetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchRequest.h; sourceTree = "<group>"; };
 		12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SqliteFetchRequest.cpp; sourceTree = "<group>"; };
@@ -372,13 +372,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		121064A21C9312180032B3DB /* SpaceStructure */ = {
+		121064A21C9312180032B3DB /* Structure */ = {
 			isa = PBXGroup;
 			children = (
-				121064A31C9312370032B3DB /* SpaceStructure.cpp */,
-				121064A41C9312370032B3DB /* SpaceStructure.h */,
+				121064A31C9312370032B3DB /* Structure.cpp */,
+				121064A41C9312370032B3DB /* Structure.h */,
 			);
-			name = SpaceStructure;
+			name = Structure;
 			sourceTree = "<group>";
 		};
 		12A156751C464E2600C3CF0B /* PlanetaryInteraction */ = {
@@ -476,7 +476,7 @@
 				37BBC5941512066600EDE204 /* ControlTower */,
 				12A3C6D2177C28AD0067E00C /* SQL */,
 				12A156751C464E2600C3CF0B /* PlanetaryInteraction */,
-				121064A21C9312180032B3DB /* SpaceStructure */,
+				121064A21C9312180032B3DB /* Structure */,
 				37A9EC51147FA61C00B12A7F /* Area.cpp */,
 				37A9EC52147FA61C00B12A7F /* Area.h */,
 				37B33D511473CA5E006B18D7 /* Attribute.cpp */,
@@ -640,7 +640,7 @@
 				12564BE91B84B07F000F68D8 /* Charge.h in Headers */,
 				12564BEA1B84B07F000F68D8 /* DamagePattern.h in Headers */,
 				12564BEB1B84B07F000F68D8 /* Drone.h in Headers */,
-				121064A71C9312370032B3DB /* SpaceStructure.h in Headers */,
+				121064A71C9312370032B3DB /* Structure.h in Headers */,
 				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
 				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
 				12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */,
@@ -699,7 +699,7 @@
 				12D9F9CB1CC3A98B00313F8D /* Charge.h in Headers */,
 				12D9F9CC1CC3A98B00313F8D /* DamagePattern.h in Headers */,
 				12D9F9CD1CC3A98B00313F8D /* Drone.h in Headers */,
-				12D9F9CE1CC3A98B00313F8D /* SpaceStructure.h in Headers */,
+				12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */,
 				12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */,
 				12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */,
 				12D9F9D11CC3A98B00313F8D /* HeatSimulator.h in Headers */,
@@ -860,7 +860,7 @@
 				12564BD01B84B03C000F68D8 /* Character.cpp in Sources */,
 				1286564F1C57AD440002BA7E /* State.cpp in Sources */,
 				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
-				121064A51C9312370032B3DB /* SpaceStructure.cpp in Sources */,
+				121064A51C9312370032B3DB /* Structure.cpp in Sources */,
 				12564BBE1B84B027000F68D8 /* Ship.cpp in Sources */,
 				12B0A0501C0C386C00194715 /* HostileTarget.cpp in Sources */,
 				12564BB91B84B027000F68D8 /* CapacitorSimulator.cpp in Sources */,
@@ -917,7 +917,7 @@
 				12D9F9871CC3A98B00313F8D /* Character.cpp in Sources */,
 				12D9F9881CC3A98B00313F8D /* State.cpp in Sources */,
 				12D9F9891CC3A98B00313F8D /* Modifier.cpp in Sources */,
-				12D9F98A1CC3A98B00313F8D /* SpaceStructure.cpp in Sources */,
+				12D9F98A1CC3A98B00313F8D /* Structure.cpp in Sources */,
 				12D9F98B1CC3A98B00313F8D /* Ship.cpp in Sources */,
 				12D9F98C1CC3A98B00313F8D /* HostileTarget.cpp in Sources */,
 				12D9F98D1CC3A98B00313F8D /* CapacitorSimulator.cpp in Sources */,

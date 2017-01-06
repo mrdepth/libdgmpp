@@ -44,7 +44,7 @@ namespace dgmpp {
 	class Route;
 	class Commodity;
 	
-	class SpaceStructure;
+	class Structure;
 
 	
 	typedef std::map<TypeID, std::shared_ptr<Attribute>> AttributesMap;

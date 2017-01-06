@@ -17,9 +17,9 @@ namespace dgmpp {
 			SLOT_LOW,
 			SLOT_RIG,
 			SLOT_SUBSYSTEM,
-			SLOT_STARBASE_STRUCTURE,
 			SLOT_MODE,
-			SLOT_SERVICE
+			SLOT_SERVICE,
+			SLOT_STARBASE_STRUCTURE
 		};
 
 		enum State
