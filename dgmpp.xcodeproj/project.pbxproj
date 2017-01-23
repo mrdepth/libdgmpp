@@ -13,6 +13,10 @@
 		12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B401C1D7643003B6DA5 /* FetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */; };
 		12215B491C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12424E391E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
+		12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
+		12424E3B1E36397F0078AB0F /* Cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 12424E381E36397F0078AB0F /* Cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12424E3C1E36397F0078AB0F /* Cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 12424E381E36397F0078AB0F /* Cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BA91B84B027000F68D8 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D531473CA5E006B18D7 /* Effect.cpp */; };
 		12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
 		12564BB61B84B027000F68D8 /* LocationGroupModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AE79981487AD39003FB98A /* LocationGroupModifier.cpp */; };
@@ -234,6 +238,8 @@
 		12215B401C1D7643003B6DA5 /* FetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchRequest.h; sourceTree = "<group>"; };
 		12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SqliteFetchRequest.cpp; sourceTree = "<group>"; };
 		12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteFetchRequest.h; sourceTree = "<group>"; };
+		12424E371E36397F0078AB0F /* Cargo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cargo.cpp; sourceTree = "<group>"; };
+		12424E381E36397F0078AB0F /* Cargo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cargo.h; sourceTree = "<group>"; };
 		12564B8E1B84AF15000F68D8 /* Dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12564BA71B84AFAD000F68D8 /* dgmpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dgmpp.h; sourceTree = SOURCE_ROOT; };
 		125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cycle.cpp; sourceTree = "<group>"; };
@@ -548,6 +554,8 @@
 				37B9AB67147A5DDF006F1F8E /* Module.h */,
 				37B9AB68147A5DDF006F1F8E /* Ship.cpp */,
 				37B9AB69147A5DDF006F1F8E /* Ship.h */,
+				12424E371E36397F0078AB0F /* Cargo.cpp */,
+				12424E381E36397F0078AB0F /* Cargo.h */,
 				371FA1CF14F542FC0043E813 /* HeatSimulator.cpp */,
 				371FA1D214F543080043E813 /* HeatSimulator.h */,
 				12B0A04E1C0C386C00194715 /* HostileTarget.cpp */,
@@ -643,6 +651,7 @@
 				121064A71C9312370032B3DB /* Structure.h in Headers */,
 				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
 				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
+				12424E3B1E36397F0078AB0F /* Cargo.h in Headers */,
 				12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */,
 				12564BEF1B84B07F000F68D8 /* ControlTower.h in Headers */,
 				12564BF01B84B07F000F68D8 /* StarbaseStructure.h in Headers */,
@@ -702,6 +711,7 @@
 				12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */,
 				12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */,
 				12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */,
+				12424E3C1E36397F0078AB0F /* Cargo.h in Headers */,
 				12D9F9D11CC3A98B00313F8D /* HeatSimulator.h in Headers */,
 				12D9F9D21CC3A98B00313F8D /* ControlTower.h in Headers */,
 				12D9F9D31CC3A98B00313F8D /* StarbaseStructure.h in Headers */,
@@ -883,6 +893,7 @@
 				1293C4291C46C10A00B33378 /* Planet.cpp in Sources */,
 				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
 				12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */,
+				12424E391E36397F0078AB0F /* Cargo.cpp in Sources */,
 				12A156961C4650A700C3CF0B /* Facility.cpp in Sources */,
 				12A1568A1C464FC400C3CF0B /* StorageFacility.cpp in Sources */,
 				128656551C57AE6A0002BA7E /* ProductionState.cpp in Sources */,
@@ -940,6 +951,7 @@
 				12D9F99F1CC3A98B00313F8D /* Planet.cpp in Sources */,
 				12D9F9A01CC3A98B00313F8D /* FetchRequest.cpp in Sources */,
 				12D9F9A11CC3A98B00313F8D /* SqliteFetchRequest.cpp in Sources */,
+				12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */,
 				12D9F9A21CC3A98B00313F8D /* Facility.cpp in Sources */,
 				12D9F9A31CC3A98B00313F8D /* StorageFacility.cpp in Sources */,
 				12D9F9A41CC3A98B00313F8D /* ProductionState.cpp in Sources */,

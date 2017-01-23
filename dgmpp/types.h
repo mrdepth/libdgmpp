@@ -45,7 +45,7 @@ namespace dgmpp {
 	class Commodity;
 	
 	class Structure;
-
+	class Cargo;
 	
 	typedef std::map<TypeID, std::shared_ptr<Attribute>> AttributesMap;
 	typedef std::list<std::shared_ptr<Effect> > EffectsList;
@@ -57,6 +57,7 @@ namespace dgmpp {
 	typedef std::list<std::shared_ptr<Booster>> BoostersList;
 	typedef std::list<std::shared_ptr<Modifier>> ModifiersList;
 	typedef std::list<std::shared_ptr<StarbaseStructure>> StarbaseStructuresList;
+	typedef std::list<std::shared_ptr<Cargo>> CargoList;
 	
 	typedef TypeID AttributeID;
 	typedef TypeID GroupID;

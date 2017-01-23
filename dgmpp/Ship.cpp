@@ -656,6 +656,47 @@ void Ship::setDamagePattern(const DamagePattern& damagePattern)
 		engine->reset();
 }
 
+std::shared_ptr<Cargo> Ship::addCargo(TypeID typeID, size_t count)
+{
+	
+	try
+	{
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+		
+		auto i = std::find_if(cargo_.begin(), cargo_.end(), [&](const std::shared_ptr<Cargo>& i) {
+			return i->getItem()->getTypeID() == typeID;
+		});
+		if (i == cargo_.end()) {
+			auto item = std::make_shared<Item>(engine, typeID, shared_from_this());
+			auto cargo = std::make_shared<Cargo>(item, count);
+			cargo_.push_back(cargo);
+			return cargo;
+		}
+		else {
+			(*i)->count += count;
+			return *i;
+		}
+
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return nullptr;
+	}
+}
+
+void Ship::removeCarge(TypeID typeID, size_t count)
+{
+	
+}
+
+const CargoList& Ship::getCargo()
+{
+	return cargo_;
+}
+
+
 //Calculations
 
 int Ship::getNumberOfSlots(Module::Slot slot)

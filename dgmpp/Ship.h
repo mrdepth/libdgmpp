@@ -5,6 +5,7 @@
 #include "CapacitorSimulator.h"
 #include "HeatSimulator.h"
 #include "DamagePattern.h"
+#include "Cargo.h"
 
 namespace dgmpp {
 
@@ -58,6 +59,10 @@ namespace dgmpp {
 		std::shared_ptr<HeatSimulator> getHeatSimulator();
 		const DamagePattern& getDamagePattern();
 		void setDamagePattern(const DamagePattern& damagePattern);
+		
+		std::shared_ptr<Cargo> addCargo(TypeID typeID, size_t count);
+		void removeCarge(TypeID typeID, size_t count);
+		const CargoList& getCargo();
 		
 		//Calculations
 		
@@ -148,6 +153,7 @@ namespace dgmpp {
 	protected:
 		ModulesList modules_;
 		DronesList drones_;
+		CargoList cargo_;
 	private:
 		std::list<std::weak_ptr<Module>> projectedModules_;
 		std::list<std::weak_ptr<Drone>> projectedDrones_;
