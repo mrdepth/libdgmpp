@@ -8,6 +8,7 @@ namespace dgmpp {
 	class Module : public Item
 	{
 	public:
+
 		enum Slot
 		{
 			SLOT_UNKNOWN = -1,
@@ -37,6 +38,7 @@ namespace dgmpp {
 			HARDPOINT_LAUNCHER,
 			HARDPOINT_TURRET
 		};
+
 		Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = std::shared_ptr<Item>(nullptr));
 		virtual ~Module(void);
 		std::shared_ptr<Module> shared_from_this() {
@@ -59,8 +61,6 @@ namespace dgmpp {
 		bool canBeOverloaded() {return canBeOverloaded_;};
 		bool isAssistance();
 		bool isOffensive();
-		int getSocket();
-		void setSocket(int socket);
 
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);

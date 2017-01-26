@@ -49,7 +49,7 @@ namespace dgmpp {
 	
 	typedef std::map<TypeID, std::shared_ptr<Attribute>> AttributesMap;
 	typedef std::list<std::shared_ptr<Effect> > EffectsList;
-	typedef std::list<std::shared_ptr<Module>> ModulesList;
+	typedef std::vector<std::shared_ptr<Module>> ModulesList;
 	typedef std::list<std::shared_ptr<Drone>> DronesList;
 	typedef std::list<std::shared_ptr<Character>> CharactersList;
 	typedef std::map<TypeID, std::shared_ptr<Skill>> SkillsMap;

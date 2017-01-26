@@ -155,21 +155,6 @@ bool Module::isOffensive() {
 	return false;
 }
 
-int Module::getSocket() {
-	return socket_;
-}
-
-void Module::setSocket(int socket) {
-	std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
-	if (ship && socket < ship->getNumberOfSlots(slot_)) {
-		auto module = ship->getModule(slot_, socket);
-		if (module) {
-			module->socket_ = socket_;
-		}
-		socket_ = socket;
-	}
-}
-
 void Module::addEffects(Effect::Category category)
 {
 	loadIfNeeded();

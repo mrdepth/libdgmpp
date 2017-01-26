@@ -35,44 +35,29 @@ void HeatSimulator::simulate()
 {
 	if (!isCalculated_)
 	{
-		ModulesVector hiSlot;
-		ModulesVector medSlot;
-		ModulesVector lowSlot;
 		std::shared_ptr<Ship> ship = ship_.lock();
 		if (!ship)
 			return;
-		hiSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
-		medSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
-		lowSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
 		
-		for (const auto& i: ship->getModules())
-		{
-			Module::Slot slot = i->getSlot();
-			if (slot == Module::SLOT_HI)
-				hiSlot.push_back(i);
-			else if (slot == Module::SLOT_MED)
-				medSlot.push_back(i);
-			else if (slot == Module::SLOT_LOW)
-				lowSlot.push_back(i);
+		for (auto slot: {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_LOW}) {
+			simulate(ship->getModules(slot, true));
 		}
-		if (hiSlot.size() > 0)
-			simulate(hiSlot);
-		if (medSlot.size() > 0)
-			simulate(medSlot);
-		if (lowSlot.size() > 0)
-			simulate(lowSlot);
+		
 		isCalculated_ = true;
 	}
 }
 
-void HeatSimulator::simulate(const ModulesVector& modules)
+void HeatSimulator::simulate(const ModulesList& modules)
 {
+	if (modules.size() == 0)
+		return;
+	
 	states_.clear();
 
 	std::shared_ptr<Ship> ship = ship_.lock();
 	if (!ship)
 		return;
-	std::shared_ptr<Module> module = *modules.begin();
+	std::shared_ptr<Module> module = modules.front();
 	Module::Slot slot = module->getSlot();
 	Float heatCapacity = 0;
 	Float heatGenerationMultiplier = ship->getAttribute(HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID)->getValue();
@@ -104,6 +89,9 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 	for (int i = 0; i < n; i++)
 	{
 		std::shared_ptr<Module> module = modules[i];
+		if (module == nullptr)
+			continue;
+		
 		modulesHP[i] = module->getAttribute(HP_ATTRIBUTE_ID)->getValue();
 		Module::State state = module->getState();
 		if (state >= Module::STATE_ONLINE)
@@ -119,7 +107,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 			state->clipSize = clipSize;
 			state->shot = 0;
 			state->reloadTime = static_cast<int>(module->getReloadTime());
-			state->moduleIndex = module->getSocket();
+			state->moduleIndex = i;
 			state->heatDamage = module->getAttribute(HEAT_DAMAGE_ATTRIBUTE_ID)->getValue();
 			states_.push_back(state);
 			std::push_heap(states_.begin(), states_.end(), StateCompareFunction());

@@ -27,10 +27,9 @@ namespace dgmpp {
 		std::weak_ptr<Ship> ship_;
 		bool isCalculated_;
 		typedef std::vector<std::shared_ptr<State>> StatesVector;
-		typedef std::vector<std::shared_ptr<Module>> ModulesVector;
 		StatesVector states_;
 
-		void simulate(const ModulesVector& modules);
+		void simulate(const ModulesList& modules);
 		Float heat(Float t, Float heatCapacity, Float heatGeneration);
 		Float damageProbability(Float h, int range, int numberOfOnlineModules, int numberOfSlots, Float heatAttenuation);
 	};

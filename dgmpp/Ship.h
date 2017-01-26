@@ -34,8 +34,8 @@ namespace dgmpp {
 		std::shared_ptr<Drone> addDrone(TypeID typeID);
 		void removeDrone(std::shared_ptr<Drone> const& drone);
 		
-		const ModulesList& getModules();
-		void getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator);
+		ModulesList getModules(bool includingDummies = false);
+		ModulesList getModules(Module::Slot slot, bool includingDummies = false);
 		const DronesList& getDrones();
 		const std::list<std::weak_ptr<Module>>& getProjectedModules();
 		const std::list<std::weak_ptr<Drone>>& getProjectedDrones();
@@ -63,8 +63,6 @@ namespace dgmpp {
 		std::shared_ptr<Cargo> addCargo(TypeID typeID, size_t count);
 		void removeCarge(TypeID typeID, size_t count);
 		const CargoList& getCargo();
-		int getFreeSocket(Module::Slot slot);
-		std::shared_ptr<Module> getModule(Module::Slot slot, int socket);
 		
 		//Calculations
 		
@@ -153,7 +151,7 @@ namespace dgmpp {
 
 		friend std::ostream& operator<<(std::ostream& os, Ship& ship);
 	protected:
-		ModulesList modules_;
+		std::map<Module::Slot, ModulesList> modules_;
 		DronesList drones_;
 		CargoList cargo_;
 	private:
