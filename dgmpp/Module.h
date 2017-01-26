@@ -59,6 +59,8 @@ namespace dgmpp {
 		bool canBeOverloaded() {return canBeOverloaded_;};
 		bool isAssistance();
 		bool isOffensive();
+		int getSocket();
+		void setSocket(int socket);
 
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
@@ -132,6 +134,7 @@ namespace dgmpp {
 		std::weak_ptr<Ship> target_;
 		Float reloadTime_;
 		int shots_;
+		int socket_;
 		
 		DamageVector volley_;
 		DamageVector dps_;
@@ -143,5 +146,7 @@ namespace dgmpp {
 		Float lifeTime_;
 		
 		void calculateDamageStats();
+		
+		friend class Ship;
 	};
 }

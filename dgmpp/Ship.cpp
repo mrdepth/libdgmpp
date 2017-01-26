@@ -74,7 +74,7 @@ Ship::~Ship(void)
 	}
 }
 
-std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
+std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced, int socket)
 {
 	try
 	{
@@ -92,7 +92,13 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 		
 		if (isModule && (forced || canFit(module)))
 		{
+			if (socket < 0)
+			{
+				socket = getFreeSocket(module->getSlot());
+			}
+			module->socket_ = socket;
 			modules_.push_back(module);
+			
 			//module->setOwner(this);
 			
 			module->addEffects(Effect::CATEGORY_GENERIC);
@@ -127,7 +133,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 		std::shared_ptr<Charge> charge = oldModule->getCharge();
 		TypeID chargeTypeID = charge ? charge->getTypeID() : 0;
 		std::shared_ptr<Ship> target = oldModule->getTarget();
-		
+		int socket = oldModule->getSocket();
 		
 		oldModule->setState(Module::STATE_OFFLINE);
 		oldModule->clearTarget();
@@ -136,7 +142,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 		//modules_.remove(oldModule);
 		modules_.erase(std::find(modules_.begin(), modules_.end(), oldModule));
 
-		std::shared_ptr<Module> newModule = addModule(typeID);
+		std::shared_ptr<Module> newModule = addModule(typeID, false, socket);
 		if (newModule) {
 			//modules_.remove(newModule);
 			modules_.erase(std::find(modules_.begin(), modules_.end(), newModule));
@@ -518,6 +524,7 @@ void Ship::reset()
 	
 	updateEnabledStatus();
 	updateModulesState();
+	updateModulesSockets();
 }
 
 std::vector<TypeID> Ship::getSupportedModuleCategories() const {
@@ -1298,6 +1305,43 @@ void Ship::updateEnabledStatus() {
 	}
 }
 
+void Ship::updateModulesSockets() {
+	std::map<Module::Slot, int> slots;
+	for (auto slot: {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_LOW, Module::SLOT_RIG, Module::SLOT_MODE, Module::SLOT_SERVICE}) {
+		slots[slot] = getNumberOfSlots(slot);
+	}
+	for (const auto& module: modules_) {
+		if (module->getSocket() >= slots[module->getSlot()]) {
+			module->socket_ = getFreeSocket(module->getSlot());
+		}
+	}
+}
+
+int Ship::getFreeSocket(Module::Slot slot) {
+	std::vector<bool> sockets(getNumberOfSlots(slot), true);
+	int n = 0;
+	int max = -1;
+	for (const auto& m: modules_) {
+		if (m->getSlot() == slot) {
+			int socket = m->getSocket();
+			if (socket < sockets.size()) {
+				sockets[socket] = false;
+				max = std::max(max, socket);
+			}
+		}
+	}
+	auto i = std::find(sockets.begin(), sockets.end(), true);
+	return i != sockets.end() ? i - sockets.begin() : max + 1;
+}
+
+std::shared_ptr<Module> Ship::getModule(Module::Slot slot, int socket) {
+	for (const auto& m: modules_) {
+		if (m->getSlot() == slot && m->getSocket() == socket) {
+			return m;
+		}
+	}
+	return nullptr;
+}
 
 void Ship::updateHeatDamage()
 {

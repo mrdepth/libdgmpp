@@ -26,7 +26,7 @@ namespace dgmpp {
 			return std::static_pointer_cast<Ship>(Item::shared_from_this());
 		}
 
-		std::shared_ptr<Module> addModule(TypeID typeID, bool forced = false);
+		std::shared_ptr<Module> addModule(TypeID typeID, bool forced = false, int socket = -1);
 		std::shared_ptr<Module> replaceModule(std::shared_ptr<Module> const& oldModule, TypeID typeID);
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
 		void removeModule(std::shared_ptr<Module> const& module);
@@ -63,6 +63,8 @@ namespace dgmpp {
 		std::shared_ptr<Cargo> addCargo(TypeID typeID, size_t count);
 		void removeCarge(TypeID typeID, size_t count);
 		const CargoList& getCargo();
+		int getFreeSocket(Module::Slot slot);
+		std::shared_ptr<Module> getModule(Module::Slot slot, int socket);
 		
 		//Calculations
 		
@@ -178,6 +180,7 @@ namespace dgmpp {
 		
 		void updateModulesState();
 		void updateEnabledStatus();
+		void updateModulesSockets();
 
 	};
 }

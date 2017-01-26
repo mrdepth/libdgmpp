@@ -14,7 +14,7 @@
 
 using namespace dgmpp;
 
-Module::Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true), factorReload_(false)
+Module::Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true), factorReload_(false), socket_(0)
 {
 }
 
@@ -153,6 +153,21 @@ bool Module::isOffensive() {
 	if (charge)
 		return charge->isOffensive();
 	return false;
+}
+
+int Module::getSocket() {
+	return socket_;
+}
+
+void Module::setSocket(int socket) {
+	std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
+	if (ship && socket < ship->getNumberOfSlots(slot_)) {
+		auto module = ship->getModule(slot_, socket);
+		if (module) {
+			module->socket_ = socket_;
+		}
+		socket_ = socket;
+	}
 }
 
 void Module::addEffects(Effect::Category category)

@@ -119,7 +119,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 			state->clipSize = clipSize;
 			state->shot = 0;
 			state->reloadTime = static_cast<int>(module->getReloadTime());
-			state->moduleIndex = i;
+			state->moduleIndex = module->getSocket();
 			state->heatDamage = module->getAttribute(HEAT_DAMAGE_ATTRIBUTE_ID)->getValue();
 			states_.push_back(state);
 			std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
