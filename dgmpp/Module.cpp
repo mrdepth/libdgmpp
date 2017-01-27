@@ -45,6 +45,9 @@ Module::Hardpoint Module::getHardpoint()
 
 bool Module::canHaveState(State state)
 {
+	if (isDummy())
+		return false;
+	
 	loadIfNeeded();
 	if (isEnabled()) {
 		auto charge = getCharge();
@@ -79,12 +82,16 @@ bool Module::canHaveState(State state)
 
 Module::State Module::getState()
 {
+	if (isDummy())
+		return STATE_UNKNOWN;
 	loadIfNeeded();
 	return isEnabled() ? state_ : STATE_OFFLINE;
 }
 
 void Module::setState(State state)
 {
+	if (isDummy())
+		return;
 	if (state == state_)
 		return;
 	if (canHaveState(state))
@@ -127,15 +134,21 @@ void Module::setState(State state)
 }
 
 Module::State Module::getPreferredState() {
+	if (isDummy())
+		return STATE_UNKNOWN;
 	return preferredState_;
 }
 
 void Module::setPreferredState(State state) {
+	if (isDummy())
+		return;
 	preferredState_ = state;
 	setState(state);
 }
 
 bool Module::isAssistance() {
+	if (isDummy())
+		return false;
 	for (const auto& effect: getEffects())
 		if (effect->getCategory() == Effect::CATEGORY_TARGET)
 			return  effect->isAssistance();
@@ -146,6 +159,8 @@ bool Module::isAssistance() {
 }
 
 bool Module::isOffensive() {
+	if (isDummy())
+		return false;
 	for (const auto& effect: getEffects())
 		if (effect->getCategory() == Effect::CATEGORY_TARGET)
 			return  effect->isOffensive();
@@ -157,6 +172,8 @@ bool Module::isOffensive() {
 
 void Module::addEffects(Effect::Category category)
 {
+	if (isDummy())
+		return;
 	loadIfNeeded();
 	
 	for (const auto& i: effects_)
@@ -185,6 +202,8 @@ void Module::addEffects(Effect::Category category)
 
 void Module::removeEffects(Effect::Category category)
 {
+	if (isDummy())
+		return;
 	loadIfNeeded();
 
 	for (const auto& i: effects_)
@@ -224,6 +243,8 @@ void Module::reset()
 
 std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 {
+	if (isDummy())
+		return nullptr;
 	loadIfNeeded();
 	try
 	{
@@ -277,6 +298,8 @@ const std::vector<TypeID>& Module::getChargeGroups()
 
 int Module::getChargeSize()
 {
+	if (isDummy())
+		return 0;
 	if (hasAttribute(CHARGE_SIZE_ATTRIBUTE_ID))
 		return static_cast<int>(getAttribute(CHARGE_SIZE_ATTRIBUTE_ID)->getValue());
 	else
@@ -285,6 +308,8 @@ int Module::getChargeSize()
 
 bool Module::canFit(std::shared_ptr<Charge> const& charge)
 {
+	if (isDummy())
+		return false;
 	loadIfNeeded();
 	if (!charge)
 		return true;
@@ -309,6 +334,8 @@ bool Module::canFit(std::shared_ptr<Charge> const& charge)
 
 bool Module::requireTarget()
 {
+	if (isDummy())
+		return false;
 	for (const auto& i: effects_)
 	{
 		Effect::Category category = i->getCategory();
@@ -327,6 +354,8 @@ bool Module::requireTarget()
 
 void Module::setTarget(std::shared_ptr<Ship> const& target)
 {
+	if (isDummy())
+		return;
 	loadIfNeeded();
 	std::shared_ptr<Ship> oldTarget = target_.lock();
 	if (oldTarget == target)
@@ -364,6 +393,8 @@ std::shared_ptr<Ship> Module::getTarget()
 
 Float Module::getReloadTime()
 {
+	if (isDummy())
+		return 0;
 	if (hasAttribute(RELOAD_TIME_ATTRIBUTE_ID))
 		return getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue();
 	else
@@ -374,6 +405,8 @@ Float Module::getReloadTime()
 
 Float Module::getCycleTime()
 {
+	if (isDummy())
+		return 0;
 	Float reactivation = hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue() : 0;
 	Float speed = getRawCycleTime() + reactivation;
 	
@@ -390,6 +423,8 @@ Float Module::getCycleTime()
 
 Float Module::getRawCycleTime()
 {
+	if (isDummy())
+		return 0;
 	if (hasAttribute(SPEED_ATTRIBUTE_ID))
 		return getAttribute(SPEED_ATTRIBUTE_ID)->getValue();
 	else if (hasAttribute(DURATION_ATTRIBUTE_ID))
@@ -410,6 +445,8 @@ void Module::setFactorReload(bool factorReload) {
 
 int Module::getCharges()
 {
+	if (isDummy())
+		return 0;
 	if (!charge_)
 		return 0;
 	
@@ -422,6 +459,8 @@ int Module::getCharges()
 
 int Module::getShots()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (!charge_)
 		return 0;
@@ -448,6 +487,8 @@ int Module::getShots()
 
 Float Module::getCapUse()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (state_ >= STATE_ACTIVE)
 	{
@@ -474,6 +515,8 @@ Float Module::getCapUse()
 
 DamageVector Module::getVolley()
 {
+	if (isDummy())
+		return DamageVector();
 	loadIfNeeded();
 	if (volley_ < 0)
 		calculateDamageStats();
@@ -482,6 +525,8 @@ DamageVector Module::getVolley()
 
 DamageVector Module::getDps(const HostileTarget& target)
 {
+	if (isDummy())
+		return DamageVector();
 	loadIfNeeded();
 	if (dps_ < 0)
 		calculateDamageStats();
@@ -556,6 +601,8 @@ DamageVector Module::getDps(const HostileTarget& target)
 
 Float Module::getMaxRange()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (maxRange_ < 0)
 	{
@@ -607,6 +654,8 @@ Float Module::getMaxRange()
 
 Float Module::getFalloff()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (falloff_ < 0)
 	{
@@ -637,6 +686,8 @@ Float Module::getFalloff()
 
 Float Module::getAccuracyScore()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (accuracyScore_ < 0)
 	{
@@ -649,6 +700,8 @@ Float Module::getAccuracyScore()
 }
 
 Float Module::getSignatureResolution() {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (signatureResolution_ < 0)
 	{
@@ -661,6 +714,8 @@ Float Module::getSignatureResolution() {
 }
 
 Float Module::getAngularVelocity(Float targetSignature, Float hitChance) {
+	if (isDummy())
+		return 0;
 	Float signatureResolution = getSignatureResolution();
 	Float accuracyScore = getAccuracyScore();
 	Float v = log(hitChance) / log(0.5) * accuracyScore * targetSignature / signatureResolution;
@@ -669,6 +724,8 @@ Float Module::getAngularVelocity(Float targetSignature, Float hitChance) {
 
 Float Module::getLifeTime()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (lifeTime_ < 0)
 	{
@@ -688,11 +745,15 @@ void Module::setEnabled(bool enabled) {
 }
 
 bool Module::isEnabled() {
+	if (isDummy())
+		return false;
 	return enabled_;
 }
 
 void Module::calculateDamageStats()
 {
+	if (isDummy())
+		return;
 	loadIfNeeded();
 	if (state_ < STATE_ACTIVE)
 		dps_ = volley_ = 0;
@@ -722,6 +783,8 @@ void Module::calculateDamageStats()
 
 void Module::lazyLoad() {
 	Item::lazyLoad();
+	if (isDummy())
+		return;
 	addExtraAttribute(IS_ONLINE_ATTRIBUTE_ID, 0.0);
 	
 	if (hasEffect(LO_POWER_EFFECT_ID))

@@ -49,11 +49,8 @@ Ship::Ship(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr
 
 Ship::~Ship(void)
 {
-	for (const auto& i: modules_) {
-		for (const auto& module: i.second) {
-			if (module)
-				module->clearTarget();
-		}
+	for (const auto& i: getModules()) {
+		i->clearTarget();
 	}
 	
 	for (const auto& drone: drones_)
@@ -100,12 +97,12 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced, int socket)
 			auto& array = modules_[module->getSlot()];
 			
 			if (socket < 0)
-				socket = static_cast<int>(std::find(array.begin(), array.end(), nullptr) - array.begin());
+				socket = static_cast<int>(std::find_if(array.begin(), array.end(), [&](std::shared_ptr<Module> const& module) { return module->isDummy(); }) - array.begin());
 			
 			if (socket >= array.size()) {
 				array.push_back(module);
 			}
-			else if (array[socket] != nullptr) {
+			else if (!array[socket]->isDummy()) {
 				array.insert(array.begin() + socket, module);
 			}
 			else {
@@ -134,6 +131,10 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced, int socket)
 std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldModule, TypeID typeID) {
 	try
 	{
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+		
 		//Module* newModule =  new Module(engine_, typeID, this);
 		auto& array = modules_[oldModule->getSlot()];
 		auto i = std::find(array.begin(), array.end(), oldModule);
@@ -154,7 +155,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 			array.erase(i);
 		}
 		else {
-			*i = nullptr;
+			*i = Module::dummy(engine, shared_from_this(), oldModule->getSlot());
 		}
 			
 		std::shared_ptr<Module> newModule = addModule(typeID, false, socket);
@@ -165,10 +166,8 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 				newModule->setTarget();
 			newModule->setPreferredState(state);
 		}
-		auto engine = getEngine();
-		if (engine)
-			engine->reset();
 		
+		engine->reset();
 		//updateEnabledStatus();
 		return newModule;
 	}
@@ -187,33 +186,32 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 		try
 		{
 			module = addModule(i);
+			modules.push_back(module);
 		}
 		catch(Item::UnknownTypeIDException)
 		{
 			module = nullptr;
 		}
 		
-		modules.push_back(module);
 	}
 	return modules;
 }
 
 void Ship::removeModule(std::shared_ptr<Module> const& module) {
-	module->setState(Module::STATE_OFFLINE);
-	module->clearTarget();
-	module->removeEffects(Effect::CATEGORY_GENERIC);
+	auto engine = getEngine();
+	if (!engine)
+		return;
 	
-	//modules_.remove(module);
 	auto& array = modules_[module->getSlot()];
 	auto i = std::find(array.begin(), array.end(), module);
-	if (i != array.end())
-		*i = nullptr;
-	
-	auto engine = getEngine();
-	if (engine)
+	if (i != array.end()) {
+		module->setState(Module::STATE_OFFLINE);
+		module->clearTarget();
+		module->removeEffects(Effect::CATEGORY_GENERIC);
+		
+		*i = Module::dummy(engine, shared_from_this(), module->getSlot());
 		engine->reset();
-	
-	//updateEnabledStatus();
+	}
 }
 
 std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
@@ -258,7 +256,7 @@ ModulesList Ship::getModules(bool includingDummies) {
 		if (includingDummies)
 			std::copy(i.second.begin(), i.second.end(), std::back_inserter(list));
 		else
-			std::copy_if(i.second.begin(), i.second.end(), std::back_inserter(list), std::bind(std::not_equal_to<std::shared_ptr<Module>>(), std::placeholders::_1, nullptr));
+			std::copy_if(i.second.begin(), i.second.end(), std::back_inserter(list), [&](const std::shared_ptr<Module>& module) {return !module->isDummy(); });
 	}
 	return list;
 }
@@ -270,7 +268,7 @@ ModulesList Ship::getModules(Module::Slot slot, bool includingDummies) {
 		return i;
 	else {
 		ModulesList list;
-		std::copy_if(i.begin(), i.end(), std::back_inserter(list), std::bind(std::not_equal_to<std::shared_ptr<Module>>(), std::placeholders::_1, nullptr));
+		std::copy_if(i.begin(), i.end(), std::back_inserter(list), [&](const std::shared_ptr<Module>& module) {return !module->isDummy(); });
 		return list;
 	}
 }
@@ -372,14 +370,14 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 		case Module::SLOT_SUBSYSTEM:
 		{
 			int subsystemSlot = static_cast<int>(module->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue());
-			for (const auto& i: modules_[Module::SLOT_SUBSYSTEM])
-				if (static_cast<int>(i->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue()) == subsystemSlot)
+			for (const auto& i: getModules(Module::SLOT_SUBSYSTEM))
+				if (!i->isDummy() && static_cast<int>(i->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue()) == subsystemSlot)
 					return false;
 			break;
 		}
 		case Module::SLOT_RIG:
 		{
-			if (module->getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue() != getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue())
+			if (static_cast<int>(module->getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue()) != getRigSize())
 				return false;
 			break;
 		}
@@ -391,14 +389,12 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 	{
 		int maxGroupFitted = static_cast<int>(module->getAttribute(MAX_GROUP_FITTED_ATTRIBUTE_ID)->getValue()) - 1;
 		TypeID groupID = module->getGroupID();
-		for (const auto& i: modules_) {
-			for (const auto& j: i.second) {
-				if (j != nullptr && j->getGroupID() == groupID)
-				{
-					maxGroupFitted--;
-					if (maxGroupFitted < 0)
-						return false;
-				}
+		for (const auto& i: getModules()) {
+			if (i->getGroupID() == groupID)
+			{
+				maxGroupFitted--;
+				if (maxGroupFitted < 0)
+					return false;
 			}
 		}
 	}
@@ -406,14 +402,12 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 	if (module->hasAttribute(MAX_TYPE_FITTED_ATTRIBUTE_ID)) {
 		int maxTypeFitted = static_cast<int>(module->getAttribute(MAX_TYPE_FITTED_ATTRIBUTE_ID)->getValue()) - 1;
 		TypeID typeID = module->getTypeID();
-		for (const auto& i: modules_) {
-			for (const auto& j: i.second) {
-				if (j != nullptr && j->getTypeID() == typeID)
-				{
-					maxTypeFitted--;
-					if (maxTypeFitted < 0)
-						return false;
-				}
+		for (const auto& i: getModules()) {
+			if (i->getTypeID() == typeID)
+			{
+				maxTypeFitted--;
+				if (maxTypeFitted < 0)
+					return false;
 			}
 		}
 	}
@@ -430,17 +424,15 @@ bool Ship::isDisallowedAssistance()
 		else
 		{
 			disallowAssistance_ = ALLOWED;
-			for (const auto& i: modules_) {
-				for (const auto& j: i.second) {
-					if (j != nullptr && j->getState() >= Module::STATE_ACTIVE &&
-						j->hasAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID) &&
-						j->getAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID)->getValue() != 0)
-					{
-						if (j->getGroupID() == WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID && j->getCharge())
-							continue;
-						disallowAssistance_ = DISALLOWED;
-						break;
-					}
+			for (const auto& i: getModules()) {
+				if (i->getState() >= Module::STATE_ACTIVE &&
+					i->hasAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID) &&
+					i->getAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID)->getValue() != 0)
+				{
+					if (i->getGroupID() == WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID && i->getCharge())
+						continue;
+					disallowAssistance_ = DISALLOWED;
+					break;
 				}
 			}
 		}
@@ -457,15 +449,13 @@ bool Ship::isDisallowedOffensiveModifiers()
 		else
 		{
 			disallowOffensiveModifiers_ = ALLOWED;
-			for (const auto& i: modules_) {
-				for (const auto& j: i.second) {
-					if (j != nullptr && j->getState() >= Module::STATE_ACTIVE &&
-						j->hasAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID) &&
-						j->getAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID)->getValue() != 0)
-					{
-						disallowOffensiveModifiers_ = DISALLOWED;
-						break;
-					}
+			for (const auto& i: getModules()) {
+				if (i->getState() >= Module::STATE_ACTIVE &&
+					i->hasAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID) &&
+					i->getAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID)->getValue() != 0)
+				{
+					disallowOffensiveModifiers_ = DISALLOWED;
+					break;
 				}
 			}
 		}
@@ -478,8 +468,7 @@ void Ship::reset()
 	Item::reset();
 	for (const auto& i: modules_) {
 		for (const auto& j: i.second) {
-			if (j != nullptr)
-				j->reset();
+			j->reset();
 		}
 	}
 	for (const auto& i: drones_)
@@ -523,11 +512,8 @@ void Ship::addEffects(Effect::Category category)
 
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (const auto& i: modules_) {
-			for (const auto& j: i.second) {
-				if (j != nullptr)
-					j->addEffects(Effect::CATEGORY_GENERIC);
-			}
+		for (const auto& i: getModules()) {
+			i->addEffects(Effect::CATEGORY_GENERIC);
 		}
 		for (const auto& i: drones_)
 			i->addEffects(Effect::CATEGORY_GENERIC);
@@ -547,11 +533,8 @@ void Ship::removeEffects(Effect::Category category)
 
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (const auto& i: modules_) {
-			for (const auto& j: i.second) {
-				if (j != nullptr)
-					j->removeEffects(Effect::CATEGORY_GENERIC);
-			}
+		for (const auto& i: getModules()) {
+			i->removeEffects(Effect::CATEGORY_GENERIC);
 		}
 		for (const auto& i: drones_)
 			i->removeEffects(Effect::CATEGORY_GENERIC);
@@ -723,19 +706,16 @@ int Ship::getFreeSlots(Module::Slot slot)
 
 int Ship::getUsedSlots(Module::Slot slot)
 {
-	int n = 0;
-	for (const auto& i: modules_) {
-		for (const auto& j: i.second) {
-			if (j != nullptr && j->getSlot() == slot)
-				n++;
-		}
-	}
-	return n;
+	return getModules(slot).size();
 }
 
 int Ship::getNumberOfHardpoints(Module::Hardpoint hardpoint)
 {
 	return getFreeHardpoints(hardpoint) + getUsedHardpoints(hardpoint);
+}
+
+int Ship::getRigSize() {
+	return static_cast<int>(getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue());
 }
 
 int Ship::getFreeHardpoints(Module::Hardpoint hardpoint)
@@ -754,11 +734,9 @@ int Ship::getFreeHardpoints(Module::Hardpoint hardpoint)
 int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 {
 	int n = 0;
-	for (const auto& i: modules_) {
-		for (const auto& j: i.second) {
-			if (j != nullptr && j->getHardpoint() == hardpoint)
-				n++;
-		}
+	for (const auto& i: getModules()) {
+		if (i->getHardpoint() == hardpoint)
+			n++;
 	}
 	return n;
 }
@@ -775,9 +753,8 @@ Float Ship::getOreHoldCapacity() {
 Float Ship::getCalibrationUsed()
 {
 	Float calibration = 0;
-	for (const auto& i: modules_[Module::SLOT_RIG])
-		if (i != nullptr)
-			calibration += i->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
+	for (const auto& i: getModules(Module::SLOT_RIG))
+		calibration += i->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
 	return calibration;
 }
 
@@ -1038,11 +1015,8 @@ Float Ship::getShieldRecharge()
 DamageVector Ship::getWeaponDps(const HostileTarget& target)
 {
 	DamageVector weaponDps = 0;
-	for (const auto& i: modules_) {
-		for (const auto& j: i.second) {
-			if (j != nullptr)
-				weaponDps += j->getDps(target);
-		}
+	for (const auto& i: getModules()) {
+		weaponDps += i->getDps(target);
 	}
 	return weaponDps;
 }
@@ -1050,11 +1024,8 @@ DamageVector Ship::getWeaponDps(const HostileTarget& target)
 DamageVector Ship::getWeaponVolley()
 {
 	DamageVector weaponVolley = 0;
-	for (const auto& i: modules_) {
-		for (const auto& j: i.second) {
-			if (j != nullptr)
-				weaponVolley += j->getVolley();
-		}
+	for (const auto& i: getModules()) {
+		weaponVolley += i->getVolley();
 	}
 	return weaponVolley;
 }
@@ -1274,55 +1245,44 @@ int Ship::getFighterLaunchTubesUsed() {
 
 void Ship::updateModulesState()
 {
-	for (const auto& i: modules_) {
-		for (const auto& j: i.second) {
-			if (j != nullptr) {
-				Module::State state = j->getState();
-				Module::State preferredState = j->getPreferredState();
-				Module::State newState;
-				for (newState = preferredState != Module::STATE_UNKNOWN ? preferredState : state; newState > Module::STATE_OFFLINE && !j->canHaveState(newState); newState = static_cast<Module::State>(static_cast<int>(newState) - 1));
-				if (newState != state)
-					j->setState(newState);
-			}
-		}
+	for (const auto& i: getModules()) {
+		Module::State state = i->getState();
+		Module::State preferredState = i->getPreferredState();
+		Module::State newState;
+		for (newState = preferredState != Module::STATE_UNKNOWN ? preferredState : state; newState > Module::STATE_OFFLINE && !i->canHaveState(newState); newState = static_cast<Module::State>(static_cast<int>(newState) - 1));
+		if (newState != state)
+			i->setState(newState);
 	}
 }
 
 void Ship::updateEnabledStatus() {
-	std::vector<int> slots = {getNumberOfSlots(Module::SLOT_HI), getNumberOfSlots(Module::SLOT_MED), getNumberOfSlots(Module::SLOT_LOW)};
-	
-	for (const auto& i: modules_) {
-		for (const auto& j: i.second) {
-			if (j != nullptr) {
-				auto slot = j->getSlot();
-				if (slot == Module::SLOT_HI) {
-					slots[0]--;
-					j->setEnabled(slots[0] >= 0);
-				}
-				else if (slot == Module::SLOT_MED) {
-					slots[1]--;
-					j->setEnabled(slots[1] >= 0);
-				}
-				else if (slot == Module::SLOT_LOW) {
-					slots[2]--;
-					j->setEnabled(slots[2] >= 0);
-				}
-			}
+	for (auto slot: {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_LOW, Module::SLOT_RIG, Module::SLOT_SUBSYSTEM, Module::SLOT_MODE, Module::SLOT_SERVICE}) {
+		int n = getNumberOfSlots(slot);
+		auto modules = getModules(slot);
+		for (const auto& i: modules) {
+			i->setEnabled(n > 0);
+			n--;
 		}
 	}
 }
 
 void Ship::updateModulesSockets() {
-	std::map<Module::Slot, int> slots;
-	for (auto slot: {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_LOW, Module::SLOT_RIG, Module::SLOT_MODE, Module::SLOT_SERVICE}) {
+	auto engine = getEngine();
+	if (!engine)
+		return;
+	
+	for (auto slot: {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_LOW, Module::SLOT_RIG, Module::SLOT_SUBSYSTEM, Module::SLOT_MODE, Module::SLOT_SERVICE}) {
 		auto& array = modules_[slot];
 		size_t n = getNumberOfSlots(slot);
 		if (n > array.size()) {
-			array.resize(n);
+			for (size_t i = array.size(); i < n; i++) {
+				array.push_back(Module::dummy(engine, shared_from_this(), slot));
+			}
+			//array.resize(n);
 		}
 		else {
 			for (size_t i = array.size(); i > n; i--) {
-				auto j = std::find(array.rbegin(), array.rend(), nullptr);
+				auto j = std::find_if(array.rbegin(), array.rend(), [&](const std::shared_ptr<Module>& module) { return module->isDummy(); });
 				if (j != array.rend()) {
 					array.erase((++j).base());
 				}

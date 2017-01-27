@@ -56,7 +56,7 @@ namespace dgmpp {
 		virtual TypeID getTypeID();
 		virtual TypeID getGroupID();
 		virtual TypeID getCategoryID();
-		virtual const std::shared_ptr<Attribute>& getAttribute(TypeID attributeID);
+		virtual std::shared_ptr<Attribute> getAttribute(TypeID attributeID);
 		const AttributesMap &getAttributes();
 		bool hasAttribute(TypeID attributeID);
 		std::shared_ptr<Effect> getEffect(TypeID effectID);

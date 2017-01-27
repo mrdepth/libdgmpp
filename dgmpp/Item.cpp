@@ -47,7 +47,7 @@ const TypeID dgmpp::HELIUM_FUEL_BLOCK_TYPE_ID = 4247;
 const TypeID dgmpp::OXYGEN_FUEL_BLOCK_TYPE_ID = 4312;
 
 
-class ModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
+/*class ModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
 	ModifierMatchFunction(TypeID attributeID) : attributeID_(attributeID) {}
@@ -97,7 +97,7 @@ private:
 	TypeID attributeID_;
 	std::shared_ptr<Attribute> modifier_;
 	Modifier::Association association_;
-};
+};*/
 
 
 Item::Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), loaded_(false)
@@ -118,12 +118,15 @@ std::shared_ptr<Item> Item::getOwner() const
 	return owner_.lock();
 }
 
-const std::shared_ptr<Attribute>& Item::getAttribute(TypeID attributeID)
+std::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
 {
+	if (typeID_ == 0)
+		return nullptr;
+	
 	loadIfNeeded();
 	auto engine = getEngine();
-//	if (!engine)
-//		return nullptr;
+	if (!engine)
+		return nullptr;
 
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
@@ -142,6 +145,9 @@ const AttributesMap &Item::getAttributes()
 
 bool Item::hasAttribute(TypeID attributeID)
 {
+	if (typeID_ == 0)
+		return false;
+	
 	loadIfNeeded();
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
@@ -152,6 +158,9 @@ bool Item::hasAttribute(TypeID attributeID)
 
 std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 {
+	if (typeID_ == 0)
+		return nullptr;
+
 	loadIfNeeded();
 	for (const auto& i: effects_)
 		if (i->getEffectID() == effectID)
@@ -161,6 +170,9 @@ std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 
 bool Item::requireSkill(TypeID skillID)
 {
+	if (typeID_ == 0)
+		return false;
+
 	loadIfNeeded();
 	try
 	{
@@ -192,6 +204,9 @@ const std::vector<TypeID>& Item::requiredSkills() {
 
 bool Item::hasEffect(TypeID effectID)
 {
+	if (typeID_ == 0)
+		return false;
+
 	loadIfNeeded();
 	for (const auto& i: effects_)
 		if (i->getEffectID() == effectID)
@@ -246,6 +261,9 @@ void Item::reset()
 
 std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
+	if (typeID_ == 0)
+		return outIterator;
+
 	auto i = itemModifiers_.find(attribute->getAttributeID());
 	if (i != itemModifiers_.end()) {
 		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
@@ -261,6 +279,9 @@ std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std
 
 std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
+	if (typeID_ == 0)
+		return outIterator;
+
 	auto i = locationModifiers_.find(attribute->getAttributeID());
 	if (i != locationModifiers_.end())
 		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
@@ -269,6 +290,8 @@ std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attrib
 
 std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
+	if (typeID_ == 0)
+		return outIterator;
 
 	auto i = locationGroupModifiers_.find(item->getGroupID());
 	if (i != locationGroupModifiers_.end()) {
@@ -295,26 +318,36 @@ std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, A
 
 void Item::addItemModifier(std::shared_ptr<Modifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	itemModifiers_[modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationModifier(std::shared_ptr<Modifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	locationModifiers_[modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	locationGroupModifiers_[modifier->getGroupID()][modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	locationRequiredSkillModifiers_[modifier->getSkillID()][modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	auto& list = itemModifiers_[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
 	if (i != list.end())
@@ -325,6 +358,8 @@ void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 
 void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	auto& list = locationModifiers_[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
 	if (i != list.end())
@@ -335,6 +370,8 @@ void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 
 void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	auto& map = locationGroupModifiers_[modifier->getGroupID()];
 	auto& list = map[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
@@ -350,6 +387,8 @@ void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> co
 
 void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	auto& map = locationRequiredSkillModifiers_[modifier->getSkillID()];
 	auto& list = map[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
@@ -365,6 +404,8 @@ void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredS
 
 const char* Item::getTypeName()
 {
+	if (typeID_ == 0)
+		return "<dummy>";
 	loadIfNeeded();
 	if (typeName_.size() == 0)
 	{
@@ -386,6 +427,9 @@ const char* Item::getTypeName()
 
 const char* Item::getGroupName()
 {
+	if (typeID_ == 0)
+		return "<dummy>";
+
 	loadIfNeeded();
 	if (groupName_.size() == 0)
 	{
@@ -406,6 +450,9 @@ const char* Item::getGroupName()
 }
 
 std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, Float value) {
+	if (typeID_ == 0)
+		return nullptr;
+
 	auto engine = getEngine();
 	if (!engine)
 		return nullptr;
@@ -500,7 +547,11 @@ void Item::lazyLoad() {
 
 
 std::set<std::shared_ptr<Item>> Item::getAffectors() {
+	if (typeID_ == 0)
+		return std::set<std::shared_ptr<Item>>();
+	
 	ModifiersList modifiers;
+
 	auto outIterator = std::inserter(modifiers, modifiers.end());
 	{
 		for (const auto& i: getAttributes())

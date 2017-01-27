@@ -38,6 +38,16 @@ namespace dgmpp {
 			HARDPOINT_LAUNCHER,
 			HARDPOINT_TURRET
 		};
+		
+		static std::shared_ptr<Module> dummy(std::shared_ptr<Engine> const& engine, std::shared_ptr<Item> const& owner, Module::Slot slot) {
+			auto module = std::make_shared<Module>(engine, 0, owner);
+			module->slot_ = slot;
+			return module;
+		}
+		
+		bool isDummy() {
+			return getTypeID() == 0;
+		}
 
 		Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = std::shared_ptr<Item>(nullptr));
 		virtual ~Module(void);

@@ -72,6 +72,7 @@ namespace dgmpp {
 		int getNumberOfHardpoints(Module::Hardpoint hardpoint);
 		int getFreeHardpoints(Module::Hardpoint hardpoint);
 		int getUsedHardpoints(Module::Hardpoint hardpoint);
+		int getRigSize();
 		
 		Float getCapacity();
 		Float getOreHoldCapacity();
