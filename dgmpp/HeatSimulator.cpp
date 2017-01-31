@@ -89,7 +89,7 @@ void HeatSimulator::simulate(const ModulesList& modules)
 	for (int i = 0; i < n; i++)
 	{
 		std::shared_ptr<Module> module = modules[i];
-		if (module == nullptr)
+		if (module->isDummy())
 			continue;
 		
 		modulesHP[i] = module->getAttribute(HP_ATTRIBUTE_ID)->getValue();
