@@ -99,6 +99,9 @@ namespace dgmpp {
 		int getCharges();
 		int getShots();
 		Float getCapUse();
+		Float getCpuUse();
+		Float getPowerGridUse();
+		Float getCalibrationUse();
 		
 		DamageVector getVolley();
 		DamageVector getDps(const HostileTarget& target = HostileTarget::defaultTarget);

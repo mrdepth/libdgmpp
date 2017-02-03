@@ -513,6 +513,28 @@ Float Module::getCapUse()
 		return 0.0;
 }
 
+Float Module::getCpuUse() {
+	if (isDummy())
+		return 0;
+	loadIfNeeded();
+	return getAttribute(CPU_ATTRIBUTE_ID)->getValue();
+}
+
+Float Module::getPowerGridUse() {
+	if (isDummy())
+		return 0;
+	loadIfNeeded();
+	return getAttribute(POWER_ATTRIBUTE_ID)->getValue();
+}
+
+Float Module::getCalibrationUse() {
+	if (isDummy())
+		return 0;
+	loadIfNeeded();
+	return getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
+}
+
+
 DamageVector Module::getVolley()
 {
 	if (isDummy())
