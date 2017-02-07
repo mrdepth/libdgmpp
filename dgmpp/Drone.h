@@ -19,7 +19,7 @@ namespace dgmpp {
 		
         typedef std::invalid_argument BadDroneTargetException;
 
-		Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Ship> const& owner = std::shared_ptr<Ship>(nullptr));
+		Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, int squadronTag, std::shared_ptr<Ship> const& owner = std::shared_ptr<Ship>(nullptr));
 		virtual ~Drone(void);
 		std::shared_ptr<Drone> shared_from_this() {
 			return std::static_pointer_cast<Drone>(Item::shared_from_this());
@@ -43,6 +43,9 @@ namespace dgmpp {
 
 		FighterSquadron getSquadron();
 		int getSquadronSize();
+		
+		int getSquadronTag();
+		void setSquadronTag(int squadronTag);
 
 		//Calculations
 		
@@ -53,7 +56,8 @@ namespace dgmpp {
 		Float getMaxRange();
 		Float getFalloff();
 		Float getAccuracyScore();
-
+		Float getVelocity();
+		
 		virtual Item* ship();
 		virtual Item* character();
 		virtual Item* target();
@@ -72,6 +76,7 @@ namespace dgmpp {
 		std::weak_ptr<Ship> target_;
 		std::shared_ptr<Charge> charge_;
 		FighterSquadron squadron_;
+		int squadronTag_;
 
 		bool isActive_;
 		

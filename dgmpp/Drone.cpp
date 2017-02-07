@@ -10,7 +10,7 @@
 
 using namespace dgmpp;
 
-Drone::Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Ship> const& owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr)
+Drone::Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, int squadronTag, std::shared_ptr<Ship> const& owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr), squadronTag_(squadronTag)
 {
 	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
 }
@@ -162,15 +162,25 @@ int Drone::getSquadronSize() {
 	return getAttribute(FIGHTER_SQUADRON_MAX_SIZE_ATTRIBUTE_ID)->getValue();
 }
 
+int Drone::getSquadronTag() {
+	return squadronTag_;
+}
+
+void Drone::setSquadronTag(int squadronTag) {
+	squadronTag_ = squadronTag;
+	auto engine = getEngine();
+	if (engine)
+		engine->reset();
+}
 
 //Calculations
 
 Float Drone::getCycleTime()
 {
 	if (hasAttribute(SPEED_ATTRIBUTE_ID))
-		return getAttribute(SPEED_ATTRIBUTE_ID)->getValue();
+		return getAttribute(SPEED_ATTRIBUTE_ID)->getValue() / 1000.0;
 	else if (hasAttribute(DURATION_ATTRIBUTE_ID))
-		return getAttribute(DURATION_ATTRIBUTE_ID)->getValue();
+		return getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0;
 	else
 		return 0;
 }
@@ -298,6 +308,11 @@ Float Drone::getAccuracyScore()
 	return trackingSpeed_;
 }
 
+Float Drone::getVelocity()
+{
+	return getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
+}
+
 void Drone::calculateDamageStats()
 {
 	loadIfNeeded();
@@ -320,7 +335,7 @@ void Drone::calculateDamageStats()
 				volley_.thermalAmount += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
 			if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
 				volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
-			dps_ = volley_ / (getCycleTime() / 1000.0);
+			dps_ = volley_ / getCycleTime();
 		}
 		
 		if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DURATION_ATTRIBUTE_ID)) {

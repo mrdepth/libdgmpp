@@ -31,7 +31,7 @@ namespace dgmpp {
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
 		void removeModule(std::shared_ptr<Module> const& module);
 		
-		std::shared_ptr<Drone> addDrone(TypeID typeID);
+		std::shared_ptr<Drone> addDrone(TypeID typeID, int squadronTag = -1);
 		void removeDrone(std::shared_ptr<Drone> const& drone);
 		
 		ModulesList getModules(bool includingDummies = false);

@@ -165,7 +165,7 @@ void CapacitorSimulator::internalReset()
 	for (const auto& module: drains)
 	{
 		bool projected = module->getOwner() != ship;
-		int duration = static_cast<int>(module->getCycleTime());
+		int duration = static_cast<int>(module->getCycleTime() * 1000.0);
 		int clipSize = module->getShots();
 		Float capNeed = 0;
 		
@@ -182,7 +182,7 @@ void CapacitorSimulator::internalReset()
 				capNeed = static_cast<Float>(-module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
 		}
 		else
-			capNeed = module->getCapUse() * module->getCycleTime() / 1000.0;
+			capNeed = module->getCapUse() * module->getCycleTime();
 		
 		if (capNeed > 0)
 		{
@@ -210,7 +210,7 @@ void CapacitorSimulator::internalReset()
 		std::shared_ptr<State> state = std::make_shared<State>();
 		state->tNow = 0;
 		state->reactivationTime = module->hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? module->getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue() : 0;
-		state->duration = module->getRawCycleTime() + (state->reactivationTime);
+		state->duration = module->getRawCycleTime() * 1000 + state->reactivationTime;
 		state->capNeed = capNeed;
 		state->clipSize = clipSize;
 		state->shot = 0;
@@ -221,7 +221,7 @@ void CapacitorSimulator::internalReset()
 	
 	for (const auto& drone: drainDrones)
 	{
-		int duration = static_cast<int>(drone->getCycleTime());
+		int duration = static_cast<int>(drone->getCycleTime() * 1000);
 		Float capNeed = capNeed = drone->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue();
 		capUsed_ += static_cast<Float>(capNeed / (duration / 1000.0));
 		period_ = lcm(period_, duration);

@@ -103,7 +103,7 @@ void HeatSimulator::simulate(const ModulesList& modules)
 
 			std::shared_ptr<State> state = std::make_shared<State>();
 			state->tNow = 0;
-			state->duration = static_cast<int>(module->getCycleTime());
+			state->duration = static_cast<int>(module->getCycleTime() * 1000.0);
 			state->clipSize = clipSize;
 			state->shot = 0;
 			state->reloadTime = static_cast<int>(module->getReloadTime());

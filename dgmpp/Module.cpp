@@ -396,7 +396,7 @@ Float Module::getReloadTime()
 	if (isDummy())
 		return 0;
 	if (hasAttribute(RELOAD_TIME_ATTRIBUTE_ID))
-		return getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue();
+		return getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue() / 1000.0;
 	else
 		return reloadTime_;
 }
@@ -407,7 +407,7 @@ Float Module::getCycleTime()
 {
 	if (isDummy())
 		return 0;
-	Float reactivation = hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue() : 0;
+	Float reactivation = hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue()  / 1000.0: 0;
 	Float speed = getRawCycleTime() + reactivation;
 	
 	bool factorReload = forceReload_ || factorReload_;
@@ -425,14 +425,14 @@ Float Module::getRawCycleTime()
 {
 	if (isDummy())
 		return 0;
+	Float speed = 0;
 	if (hasAttribute(SPEED_ATTRIBUTE_ID))
-		return getAttribute(SPEED_ATTRIBUTE_ID)->getValue();
+		speed = getAttribute(SPEED_ATTRIBUTE_ID)->getValue();
 	else if (hasAttribute(DURATION_ATTRIBUTE_ID))
-		return getAttribute(DURATION_ATTRIBUTE_ID)->getValue();
+		speed = getAttribute(DURATION_ATTRIBUTE_ID)->getValue();
 	else if (hasAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID))
-		return getAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID)->getValue();
-	else
-		return 0;
+		speed = getAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID)->getValue();
+	return speed / 1000.0;
 }
 
 bool Module::factorReload() {
@@ -503,7 +503,7 @@ Float Module::getCapUse()
 		if (capNeed != 0.0)
 		{
 			Float cycleTime = getCycleTime();
-			return cycleTime != 0.0 ? capNeed / (cycleTime / 1000.0) : 0.0;
+			return cycleTime != 0.0 ? capNeed / cycleTime : 0.0;
 		}
 		else
 			return 0.0;
@@ -799,7 +799,7 @@ void Module::calculateDamageStats()
 
 		Float speed = getCycleTime();
 		if (speed > 0)
-			dps_ = volley_ / (speed / 1000.0);
+			dps_ = volley_ / speed;
 	}
 }
 
@@ -829,13 +829,13 @@ void Module::lazyLoad() {
 		slot_ = SLOT_NONE;
 	
 	if (hasAttribute(RELOAD_TIME_ATTRIBUTE_ID))
-		reloadTime_ = getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue();
+		reloadTime_ = getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue() / 1000.0;
 	else
 	{
 		if (hasEffect(MINING_LASER_EFFECT_ID) || hasEffect(TARGET_ATTACK_EFFECT_ID) || hasEffect(USE_MISSILES_EFFECT_ID))
-			reloadTime_ = 1000;
+			reloadTime_ = 1.0;
 		else if (hasEffect(POWER_BOOSTER_EFFECT_ID) || hasEffect(PROJECTILE_FIRED_EFFECT_ID))
-			reloadTime_ = 10000;
+			reloadTime_ = 10.0;
 	}
 	
 	if (hasEffect(TURRET_FITTED_EFFECT_ID))

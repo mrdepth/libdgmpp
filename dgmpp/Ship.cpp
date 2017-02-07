@@ -214,20 +214,64 @@ void Ship::removeModule(std::shared_ptr<Module> const& module) {
 	}
 }
 
-std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
+std::shared_ptr<Drone> Ship::addDrone(TypeID typeID, int squadronTag)
 {
 	try
 	{
 		auto engine = getEngine();
 		if (!engine)
 			return nullptr;
-		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, shared_from_this());
+		
+		if (squadronTag < 0) {
+			int lastTag = 0;
+			int lastSize = 0;
+			int squadronSize = 0;
+			for (const auto& drone: drones_) {
+				if (drone->getTypeID() != typeID)
+					continue;
+				
+				auto tag = drone->getSquadronTag();
+				if (tag > lastTag) {
+					lastTag = tag;
+					lastSize = 1;
+					squadronSize = drone->getSquadronSize();
+				}
+				else if (tag == lastTag) {
+					lastSize++;
+				}
+			}
+			if (lastSize < squadronSize ?: 5)
+				squadronTag = lastTag;
+			else
+				squadronTag = lastTag + 1;
+		}
+
+		
+		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, squadronTag, shared_from_this());
 		for (auto categoryID: getSupportedDroneCategories())
 			if (categoryID == drone->getCategoryID()) {
+				
+				auto i = std::find_if(drones_.begin(), drones_.end(), [&](const std::shared_ptr<Drone>& drone) {
+					return drone->getTypeID() == typeID && drone->getSquadronTag() == squadronTag;
+				});
+				if (i == drones_.end()) {
+					auto squadron = drone->getSquadron();
+					if (squadron == Drone::FIGHTER_SQUADRON_NONE) {
+						drone->setActive(getDroneSquadronLimit(squadron) > getDroneSquadronUsed(squadron));
+					}
+					else {
+						drone->setActive(getTotalFighterLaunchTubes() > getFighterLaunchTubesUsed() && getDroneSquadronLimit(squadron) > getDroneSquadronUsed(squadron));
+					}
+				}
+				else {
+					drone->setActive((*i)->isActive());
+				}
+				
 				drones_.push_back(drone);
 				drone->addEffects(Effect::CATEGORY_GENERIC);
 				drone->addEffects(Effect::CATEGORY_TARGET);
 				engine->reset();
+				
 				return drone;
 			}
 		return nullptr;
@@ -1216,14 +1260,20 @@ int Ship::getDroneSquadronLimit(Drone::FighterSquadron squadron)
 
 int Ship::getDroneSquadronUsed(Drone::FighterSquadron squadron)
 {
-	std::map<TypeID, std::pair<int, int>> squadrons;
-	for (const auto& i: drones_)
-		if (i->isActive() && i->getSquadron() == squadron)
-			squadrons[i->getTypeID()] = std::make_pair(squadrons[i->getTypeID()].first + 1, i->getSquadronSize() ?: 1);
+	std::set<std::tuple<TypeID, int, bool>> squadrons;
 	int n = 0;
-	for (const auto i: squadrons)
-		n += ceil((double) i.second.first / (double) i.second.second);
-	return n;
+	
+	for (const auto& i: drones_)
+		if (i->isActive() && i->getSquadron() == squadron) {
+			if (squadron != Drone::FIGHTER_SQUADRON_NONE) {
+				auto key = std::make_tuple(i->getTypeID(), i->getSquadronTag(), i->isActive());
+				squadrons.insert(key);
+			}
+			else {
+				n++;
+			}
+		}
+	return squadrons.size() + n;
 }
 
 int Ship::getTotalFighterLaunchTubes() {
@@ -1231,14 +1281,13 @@ int Ship::getTotalFighterLaunchTubes() {
 }
 
 int Ship::getFighterLaunchTubesUsed() {
-	std::map<TypeID, std::pair<int, int>> squadrons;
+	std::set<std::tuple<TypeID, int, bool>> squadrons;
 	for (const auto& i: drones_)
-		if (i->isActive() && i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE)
-			squadrons[i->getTypeID()] = std::make_pair(squadrons[i->getTypeID()].first + 1, i->getSquadronSize());
-	int n = 0;
-	for (const auto i: squadrons)
-		n += ceil((double) i.second.first / (double) i.second.second);
-	return n;
+		if (i->isActive() && i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE) {
+			auto key = std::make_tuple(i->getTypeID(), i->getSquadronTag(), i->isActive());
+			squadrons.insert(key);
+		}
+	return squadrons.size();
 }
 
 //Other
