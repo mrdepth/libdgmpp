@@ -899,6 +899,10 @@ Float Ship::getCapRecharge()
 	return getCapacitorSimulator()->getCapRecharge();
 }
 
+Float Ship::getCapRechargeTime() {
+	return getAttribute(RECHARGE_RATE_ATTRIBUTE_ID)->getValue() / 1000.0;
+}
+
 //Tank
 
 const Resistances& Ship::getResistances()

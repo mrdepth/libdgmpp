@@ -98,6 +98,7 @@ namespace dgmpp {
 		Float getCapStableLevel();
 		Float getCapUsed();
 		Float getCapRecharge();
+		Float getCapRechargeTime();
 		
 		//Tank
 		const Resistances& getResistances();
