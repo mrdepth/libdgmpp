@@ -44,6 +44,8 @@ namespace dgmpp {
 		void setSkillLevels(const std::map<TypeID, int>& levels);
 		void setAllSkillsLevel(int level);
 		
+		Float getDroneControlDistance();
+		
 		virtual Item* character();
 		virtual Item* ship();
 		virtual Item* structure();

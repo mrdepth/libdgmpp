@@ -348,6 +348,10 @@ void Character::setAllSkillsLevel(int level)
 	engine->reset();
 }
 
+Float Character::getDroneControlDistance() {
+	return getAttribute(DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID)->getValue();
+}
+
 std::insert_iterator<ModifiersList> Character::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
 	outIterator = Item::getLocationModifiers(attribute, outIterator);

@@ -740,7 +740,8 @@ Float Module::getAngularVelocity(Float targetSignature, Float hitChance) {
 		return 0;
 	Float signatureResolution = getSignatureResolution();
 	Float accuracyScore = getAccuracyScore();
-	Float v = log(hitChance) / log(0.5) * accuracyScore * targetSignature / signatureResolution;
+	
+	Float v = std::sqrt(std::log(hitChance) / std::log(0.5)) * accuracyScore * targetSignature / signatureResolution;
 	return v;
 }
 

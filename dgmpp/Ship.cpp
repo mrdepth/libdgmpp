@@ -9,7 +9,7 @@
 #include "Modifier.h"
 #include "LocationGroupModifier.h"
 #include "LocationRequiredSkillModifier.h"
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 #include "Charge.h"
 #include <cassert>
@@ -1099,7 +1099,7 @@ Float Ship::getAlignTime()
 {
 	Float agility = getAgility();
 	Float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
-	return -log(0.25) * agility * mass / 1000000.0;
+	return -std::log(0.25) * agility * mass / 1000000.0;
 }
 
 Float Ship::getWarpSpeed()
