@@ -32,13 +32,16 @@ std::shared_ptr<Area> Engine::setArea(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Area> area = std::make_shared<Area>(shared_from_this(), typeID);
 		if (area_) {
 			area_->removeEffects(Effect::CATEGORY_SYSTEM);
+			area_ = nullptr;
 		}
-		area_ = area;
-		if (area_)
-			area_->addEffects(Effect::CATEGORY_SYSTEM);
+		if (typeID) {
+			std::shared_ptr<Area> area = std::make_shared<Area>(shared_from_this(), typeID);
+			area_ = area;
+			if (area_)
+				area_->addEffects(Effect::CATEGORY_SYSTEM);
+		}
 		reset();
 		
 		return area_;
