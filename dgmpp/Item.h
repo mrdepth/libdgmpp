@@ -96,7 +96,7 @@ namespace dgmpp {
 		virtual Item* self();
 		virtual Item* gang();
 		virtual Item* area();
-
+		
 	protected:
 		std::weak_ptr<Engine> engine_;
 		AttributesMap attributes_;

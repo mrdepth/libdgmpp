@@ -38,7 +38,7 @@ namespace dgmpp {
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
-		void setCharacterName(const char* characterName = "");
+		void setCharacterName(const char* characterName);
 		const char* getCharacterName();
 		
 		void setSkillLevels(const std::map<TypeID, int>& levels);

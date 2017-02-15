@@ -716,6 +716,15 @@ const CargoList& Ship::getCargo()
 	return cargo_;
 }
 
+void Ship::setTitle(const char* title) {
+	title_ = title ? title : "";
+}
+
+const char* Ship::getTitle() {
+	return title_.c_str();
+}
+
+
 
 //Calculations
 

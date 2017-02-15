@@ -64,6 +64,9 @@ namespace dgmpp {
 		void removeCarge(TypeID typeID, size_t count);
 		const CargoList& getCargo();
 		
+		void setTitle(const char* title);
+		const char* getTitle();
+
 		//Calculations
 		
 		int getNumberOfSlots(Module::Slot slot);
@@ -162,6 +165,7 @@ namespace dgmpp {
 		std::shared_ptr<CapacitorSimulator> capacitorSimulator_;
 		std::shared_ptr<HeatSimulator> heatSimulator_;
 		DamagePattern damagePattern_;
+		std::string title_;
 		
 		Resistances resistances_;
 		Tank tank_;
