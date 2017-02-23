@@ -62,6 +62,7 @@ namespace dgmpp {
 
 		Slot getSlot();
 		Hardpoint getHardpoint();
+		int getSocket();
 		virtual bool canHaveState(State state);
 		State getState();
 		State getPreferredState();
