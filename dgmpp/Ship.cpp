@@ -716,12 +716,12 @@ const CargoList& Ship::getCargo()
 	return cargo_;
 }
 
-void Ship::setTitle(const char* title) {
-	title_ = title ? title : "";
+void Ship::setName(const char* name) {
+	name_ = name ?: "";
 }
 
-const char* Ship::getTitle() {
-	return title_.c_str();
+const char* Ship::getName() {
+	return name_.c_str();
 }
 
 
