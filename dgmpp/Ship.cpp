@@ -771,6 +771,10 @@ int Ship::getRigSize() {
 	return static_cast<int>(getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue());
 }
 
+int Ship::getRaceID() {
+	return static_cast<int>(getAttribute(RACE_ID_ATTRIBUTE_ID)->getValue());
+}
+
 int Ship::getFreeHardpoints(Module::Hardpoint hardpoint)
 {
 	switch (hardpoint)

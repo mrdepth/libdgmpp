@@ -255,15 +255,27 @@ Float Drone::getMaxRange()
 	loadIfNeeded();
 	if (maxRange_ < 0)
 	{
-		TypeID attributes[] = {SHIELD_TRANSFER_RANGE_ATTRIBUTE_ID, POWER_TRANSFER_RANGE_ATTRIBUTE_ID, ENERGY_DESTABILIZATION_RANGE_ATTRIBUTE_ID,
-			EMP_FIELD_RANGE_ATTRIBUTE_ID, ECM_BURST_RANGE_ATTRIBUTE_ID, MAX_RANGE_ATTRIBUTE_ID};
+		TypeID attributes[] = {
+			SHIELD_TRANSFER_RANGE_ATTRIBUTE_ID,
+			POWER_TRANSFER_RANGE_ATTRIBUTE_ID,
+			ENERGY_DESTABILIZATION_RANGE_ATTRIBUTE_ID,
+			EMP_FIELD_RANGE_ATTRIBUTE_ID,
+			ECM_BURST_RANGE_ATTRIBUTE_ID,
+			MAX_RANGE_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_OPTIMAL_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ATTACK_TURRET_RANGE_OPTIMAL_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ECM_RANGE_OPTIMAL_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ENERGY_NEUTRALIZER_OPTIMAL_RANGE_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_STASIS_WEBIFIER_OPTIMAL_RANGE_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_WARP_DISRUPTION_RANGE_ATTRIBUTE_ID};
 		
-		for (int i = 0; i < 10; i++)
-			if (hasAttribute(attributes[i]))
+		for (auto attributeID: attributes) {
+			if (hasAttribute(attributeID))
 			{
-				maxRange_ = getAttribute(attributes[i])->getValue();
+				maxRange_ = getAttribute(attributeID)->getValue();
 				return maxRange_;
 			}
+		}
 		
 		if (charge_)
 		{
@@ -287,10 +299,22 @@ Float Drone::getFalloff()
 	loadIfNeeded();
 	if (falloff_ < 0)
 	{
-		if (hasAttribute(FALLOFF_ATTRIBUTE_ID))
-			falloff_ = getAttribute(FALLOFF_ATTRIBUTE_ID)->getValue();
-		else
-			falloff_ = 0;
+		TypeID attributes[] = {
+			FALLOFF_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_FALLOFF_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ATTACK_TURRET_RANGE_FALLOFF_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ECM_RANGE_FALLOFF_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ENERGY_NEUTRALIZER_FALLOFF_RANGE_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_STASIS_WEBIFIER_FALLOFF_RANGE_ATTRIBUTE_ID};
+		
+		for (auto attributeID: attributes) {
+			if (hasAttribute(attributeID))
+			{
+				falloff_ = getAttribute(attributeID)->getValue();
+				return falloff_;
+			}
+		}
+		falloff_ = 0;
 	}
 	return falloff_;
 }
