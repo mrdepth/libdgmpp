@@ -231,16 +231,18 @@ std::shared_ptr<Drone> Ship::addDrone(TypeID typeID, int squadronTag)
 					continue;
 				
 				auto tag = drone->getSquadronTag();
+				if (squadronSize == 0) {
+					squadronSize = drone->getSquadronSize() ?: 5;
+				}
 				if (tag > lastTag) {
 					lastTag = tag;
 					lastSize = 1;
-					squadronSize = drone->getSquadronSize();
 				}
 				else if (tag == lastTag) {
 					lastSize++;
 				}
 			}
-			if (lastSize < squadronSize ?: 5)
+			if (lastSize < (squadronSize ?: 5))
 				squadronTag = lastTag;
 			else
 				squadronTag = lastTag + 1;
@@ -871,7 +873,7 @@ Float Ship::getTotalDroneBay()
 Float Ship::getFighterHangarUsed() {
 	Float volume = 0;
 	for (const auto& i: drones_)
-		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE && !i->isActive())
+		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE/* && !i->isActive()*/)
 			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
