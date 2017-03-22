@@ -414,15 +414,15 @@ Float Module::getCycleTime()
 	if (isDummy())
 		return 0;
 	Float reactivation = hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue()  / 1000.0: 0;
-	Float speed = getRawCycleTime() + reactivation;
+	Float speed = getRawCycleTime();
 	
 	bool factorReload = forceReload_ || factorReload_;
 	Float reload = charge_ ? getReloadTime() : 0;
-	if (factorReload && reactivation < reload)
+	if (factorReload && reload > 0)
 	{
 		Float additionalReloadTime = (reload - reactivation);
 		Float numShots = static_cast<Float>(getShots());
-		speed = numShots > 0 ? (speed * numShots + additionalReloadTime) / numShots : speed;
+		speed = numShots > 0 ? (speed * numShots + reload) / numShots : speed;
 	}
 	return speed;
 }
@@ -447,6 +447,9 @@ bool Module::factorReload() {
 
 void Module::setFactorReload(bool factorReload) {
 	factorReload_ = factorReload;
+	auto engine = getEngine();
+	if (engine)
+		engine->reset();
 }
 
 int Module::getCharges()

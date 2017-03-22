@@ -214,7 +214,7 @@ void CapacitorSimulator::internalReset()
 		state->capNeed = capNeed;
 		state->clipSize = clipSize;
 		state->shot = 0;
-		state->reloadTime = static_cast<int>(module->getReloadTime());
+		state->reloadTime = static_cast<int>(module->getReloadTime() * 1000);
 		states_.push_back(state);
 		std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
 	}
@@ -300,7 +300,8 @@ void CapacitorSimulator::run()
 			if (state->clipSize) {
 				if (state->shot % state->clipSize == 0) {
 					state->shot = 0;
-					tNow += std::max(state->reloadTime, state->reactivationTime);
+					//tNow += std::max(state->reloadTime, state->reactivationTime);
+					tNow += 10000;
 				}
 			}
 			state->tNow = tNow;
