@@ -122,6 +122,10 @@ namespace dgmpp {
 		DamageVector getDroneDps(const HostileTarget& target = HostileTarget::defaultTarget);
 		DamageVector getDroneVolley();
 		
+		//Mining
+		Float getMinerYield();
+		Float getDroneYield();
+		
 		//Mobility
 		Float getAlignTime();
 		Float getWarpSpeed();

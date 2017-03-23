@@ -56,11 +56,14 @@ namespace dgmpp {
 		Float getMaxRange();
 		Float getFalloff();
 		Float getAccuracyScore();
+		Float getMiningYield();
 		Float getVelocity();
 		
 		virtual Item* ship();
 		virtual Item* character();
 		virtual Item* target();
+
+		virtual std::insert_iterator<ModifiersList> getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator);
 
 	protected:
 		DamageVector volley_;
@@ -68,6 +71,7 @@ namespace dgmpp {
 		Float maxRange_;
 		Float falloff_;
 		Float trackingSpeed_;
+		Float miningYield_;
 
 		virtual void lazyLoad();
 		virtual void calculateDamageStats();

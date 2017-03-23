@@ -1111,7 +1111,25 @@ DamageVector Ship::getDroneVolley()
 	return droneVolley;
 }
 
-//mobility
+//Mining
+
+Float Ship::getMinerYield()
+{
+	Float yield = 0;
+	for (const auto& i: getModules())
+		yield += i->getMiningYield();
+	return yield;
+}
+
+Float Ship::getDroneYield()
+{
+	Float yield = 0;
+	for (const auto& i: drones_)
+		yield += i->getMiningYield();
+	return yield;
+}
+
+//Mobility
 Float Ship::getAlignTime()
 {
 	Float agility = getAgility();

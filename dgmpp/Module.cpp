@@ -241,7 +241,7 @@ void Module::reset()
 {
 	Item::reset();
 	shots_ = -1;
-	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = miningYield_ = -1;
 	lifeTime_ = -1;
 	if (charge_)
 		charge_->reset();
@@ -754,6 +754,31 @@ Float Module::getAngularVelocity(Float targetSignature, Float hitChance) {
 	return v;
 }
 
+Float Module::getMiningYield()
+{
+	if (isDummy())
+		return 0;
+	if (miningYield_ < 0)
+	{
+		miningYield_ = 0;
+		if (state_ >= STATE_ACTIVE)
+		{
+			Float volley = 0;
+			if (hasAttribute(SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID))
+				volley += getAttribute(SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID)->getValue();
+			else if (hasAttribute(MINING_AMOUNT_ATTRIBUTE_ID))
+				volley += getAttribute(MINING_AMOUNT_ATTRIBUTE_ID)->getValue();
+			
+			Float cycleTime = getCycleTime();
+			if (volley > 0 && cycleTime > 0)
+			{
+				miningYield_ = volley / cycleTime;
+			}
+		}
+	}
+	return miningYield_;
+}
+
 Float Module::getLifeTime()
 {
 	if (isDummy())
@@ -887,7 +912,7 @@ void Module::lazyLoad() {
 	forceReload_ = groupID_ == CAPACITOR_BOOSTER_GROUP_ID;
 	
 	shots_ = -1;
-	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = miningYield_ = -1;
 	
 	TypeID attributes[] = {CHARGE_GROUP1_ATTRIBUTE_ID, CHARGE_GROUP2_ATTRIBUTE_ID, CHARGE_GROUP3_ATTRIBUTE_ID, CHARGE_GROUP4_ATTRIBUTE_ID, CHARGE_GROUP5_ATTRIBUTE_ID};
 	for (int i = 0; i < 5; i++)

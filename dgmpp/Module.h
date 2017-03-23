@@ -113,6 +113,7 @@ namespace dgmpp {
 		Float getAccuracyScore();
 		Float getSignatureResolution();
 		Float getAngularVelocity(Float targetSignature, Float hitChance = 0.5);
+		Float getMiningYield();
 		
 		Float getLifeTime();
 		void setLifeTime(Float lifeTime);
@@ -158,6 +159,7 @@ namespace dgmpp {
 		Float signatureResolution_;
 		
 		Float lifeTime_;
+		Float miningYield_;
 		
 		void calculateDamageStats();
 		

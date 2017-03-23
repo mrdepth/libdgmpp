@@ -12,7 +12,7 @@ using namespace dgmpp;
 
 Drone::Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, int squadronTag, std::shared_ptr<Ship> const& owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr), squadronTag_(squadronTag)
 {
-	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = miningYield_ = -1;
 }
 
 Drone::~Drone(void)
@@ -148,7 +148,7 @@ void Drone::removeEffects(Effect::Category category)
 
 void Drone::reset() {
 	Item::reset();
-	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = miningYield_ = -1;
 	if (charge_)
 		charge_->reset();
 }
@@ -332,6 +332,29 @@ Float Drone::getAccuracyScore()
 	return trackingSpeed_;
 }
 
+Float Drone::getMiningYield()
+{
+	if (miningYield_ < 0)
+	{
+		miningYield_ = 0;
+		if (isActive_)
+		{
+			Float volley = 0;
+			if (hasAttribute(MINING_AMOUNT_ATTRIBUTE_ID))
+				volley += getAttribute(MINING_AMOUNT_ATTRIBUTE_ID)->getValue();
+			if (hasAttribute(SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID))
+				volley += getAttribute(SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID)->getValue();
+			
+			Float cycleTime = getCycleTime();
+			if (volley > 0 && cycleTime > 0)
+			{
+				miningYield_ = volley / cycleTime;
+			}
+		}
+	}
+	return miningYield_;
+}
+
 Float Drone::getVelocity()
 {
 	return getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
@@ -452,4 +475,25 @@ Item* Drone::character() {
 
 Item* Drone::target() {
 	return getTarget().get();
+}
+
+std::insert_iterator<ModifiersList> Drone::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
+{
+	if (typeID_ == 0)
+		return outIterator;
+	
+	auto i = itemModifiers_.find(attribute->getAttributeID());
+	if (i != itemModifiers_.end()) {
+		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
+	}
+	auto owner = getOwner();
+	if (owner)
+	{
+		owner = owner->getOwner();
+		if (owner) {
+			outIterator = owner->getLocationModifiers(attribute, outIterator);
+			outIterator = owner->getModifiersMatchingItem(this, attribute, outIterator);
+		}
+	}
+	return outIterator;
 }

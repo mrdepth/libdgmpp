@@ -272,6 +272,9 @@ namespace dgmpp {
 	
 	extern const TypeID MAX_TYPE_FITTED_ATTRIBUTE_ID;
 
+	extern const TypeID MINING_AMOUNT_ATTRIBUTE_ID;
+	extern const TypeID SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID;
+
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
