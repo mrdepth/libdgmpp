@@ -997,15 +997,17 @@ const Tank& Ship::getSustainableTank()
 						{
 							std::shared_ptr<Module> module = std::dynamic_pointer_cast<Module>(item);
 							assert(module);
-							
-							std::shared_ptr<Repairer> repairer (new Repairer);
-							repairer->type = types[i];
-							repairer->hpPerSec = j->getValue();
-							repairer->capPerSec = module->getCapUse();
-							repairer->effectivity = repairer->hpPerSec / repairer->capPerSec;
-							*layers[i] -= repairer->hpPerSec;
-							capUsed -= repairer->capPerSec;
-							repairers.push_back(repairer);
+							Float use = module->getCapUse();
+							if (use > 0) {
+								std::shared_ptr<Repairer> repairer (new Repairer);
+								repairer->type = types[i];
+								repairer->hpPerSec = j->getValue();
+								repairer->capPerSec = use;
+								repairer->effectivity = repairer->hpPerSec / use;
+								*layers[i] -= repairer->hpPerSec;
+								capUsed -= repairer->capPerSec;
+								repairers.push_back(repairer);
+							}
 						}
 					}
 				}
