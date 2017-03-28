@@ -46,7 +46,7 @@ Module::Hardpoint Module::getHardpoint()
 int Module::getSocket() {
 	std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
 	auto modules = ship->getModules(getSlot(), true);
-	return std::find(modules.begin(), modules.end(), shared_from_this()) - modules.begin();
+	return static_cast<int>(std::find(modules.begin(), modules.end(), shared_from_this()) - modules.begin());
 }
 
 bool Module::canHaveState(State state)
@@ -420,9 +420,9 @@ Float Module::getCycleTime()
 	Float reload = charge_ ? getReloadTime() : 0;
 	if (factorReload && reload > 0)
 	{
-		Float additionalReloadTime = (reload - reactivation);
+//		Float additionalReloadTime = (reload - reactivation);
 		Float numShots = static_cast<Float>(getShots());
-		speed = numShots > 0 ? (speed * numShots + reload) / numShots : speed;
+		speed = numShots > 0 ? (speed * numShots + std::max(reload, reactivation)) / numShots : speed;
 	}
 	return speed;
 }

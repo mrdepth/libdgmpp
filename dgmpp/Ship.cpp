@@ -761,7 +761,7 @@ int Ship::getFreeSlots(Module::Slot slot)
 
 int Ship::getUsedSlots(Module::Slot slot)
 {
-	return getModules(slot).size();
+	return static_cast<int>(getModules(slot).size());
 }
 
 int Ship::getNumberOfHardpoints(Module::Hardpoint hardpoint)
@@ -1312,7 +1312,7 @@ int Ship::getDroneSquadronUsed(Drone::FighterSquadron squadron)
 				n++;
 			}
 		}
-	return squadrons.size() + n;
+	return static_cast<int>(squadrons.size()) + n;
 }
 
 int Ship::getTotalFighterLaunchTubes() {
@@ -1326,7 +1326,7 @@ int Ship::getFighterLaunchTubesUsed() {
 			auto key = std::make_tuple(i->getTypeID(), i->getSquadronTag(), i->isActive());
 			squadrons.insert(key);
 		}
-	return squadrons.size();
+	return static_cast<int>(squadrons.size());
 }
 
 //Other
