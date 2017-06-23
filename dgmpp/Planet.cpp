@@ -19,7 +19,7 @@
 
 using namespace dgmpp;
 
-Planet::Planet(std::shared_ptr<Engine> const& engine, TypeID typeID): engine_(engine) {
+Planet::Planet(std::shared_ptr<Engine> const& engine, TypeID typeID): engine_(engine), typeID_(typeID) {
 }
 
 std::shared_ptr<Engine> Planet::getEngine() const {
@@ -93,7 +93,7 @@ std::shared_ptr<Route> Planet::addRoute(std::shared_ptr<Facility> const& source,
 	return route;
 }
 
-void Planet::removeRoute(std::shared_ptr<Route> const& route) {
+void Planet::removeRoute(std::shared_ptr<const Route> const& route) {
 	route->getSource()->removeOutput(route);
 	route->getDestination()->removeInput(route);
 	routes_.remove(route);
