@@ -322,10 +322,11 @@ const char*  Character::getCharacterName()
 
 void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 {
+	loadIfNeeded();
 	auto engine = getEngine();
 	if (!engine)
 		return;
-
+	
 	std::map<TypeID, int>::const_iterator j, endj = levels.end();
 	
 	for (const auto& i: skills_) {
@@ -340,9 +341,11 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 
 void Character::setAllSkillsLevel(int level)
 {
+	loadIfNeeded();
 	auto engine = getEngine();
 	if (!engine)
 		return;
+	
 	for (const auto& i: skills_)
 		i.second->setSkillLevel(level);
 	engine->reset();
