@@ -21,3 +21,6 @@ delete from dgmEffects where effectID not in (select effectID from dgmTypeEffect
 --Missing chargeSize
 INSERT INTO dgmTypeAttributes (typeID,attributeID,value) VALUES(263,128,0);
 INSERT INTO dgmTypeAttributes (typeID,attributeID,value) VALUES(33330,128,0);
+
+--Subsystems fix
+UPDATE dgmTypeAttributes SET value=4 WHERE attributeID=1367;
