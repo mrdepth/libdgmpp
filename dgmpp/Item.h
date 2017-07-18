@@ -36,7 +36,14 @@ namespace dgmpp {
 	extern const TypeID HELIUM_FUEL_BLOCK_TYPE_ID;
 	extern const TypeID OXYGEN_FUEL_BLOCK_TYPE_ID;
 
-
+	extern const TypeID SHIELD_OPERATION_TYPE_ID;
+	extern const TypeID SHIELD_EMISSION_SYSTEMS_TYPE_ID;
+	extern const TypeID REPAIR_SYSTEMS_TYPE_ID;
+	extern const TypeID REMOTE_ARMOR_REPAIR_SYSTEMS_TYPE_ID;
+	extern const TypeID ECM_GROUP_ID;
+	extern const TypeID SENSOR_DAMPENER_GROUP_ID;
+	extern const TypeID WEAPON_DISRUPTOR_GROUP_ID;
+	extern const TypeID TARGET_PAINTER_GROUP_ID;
 	
 	class Item: public Environment, public std::enable_shared_from_this<Item>
 	{

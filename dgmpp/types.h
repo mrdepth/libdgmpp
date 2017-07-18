@@ -47,6 +47,8 @@ namespace dgmpp {
 	class Structure;
 	class Cargo;
 	
+	class GangBoost;
+	
 	typedef std::map<TypeID, std::shared_ptr<Attribute>> AttributesMap;
 	typedef std::list<std::shared_ptr<Effect> > EffectsList;
 	typedef std::vector<std::shared_ptr<Module>> ModulesList;

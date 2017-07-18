@@ -46,6 +46,15 @@ const TypeID dgmpp::HYDROGEN_FUEL_BLOCK_TYPE_ID = 4246;
 const TypeID dgmpp::HELIUM_FUEL_BLOCK_TYPE_ID = 4247;
 const TypeID dgmpp::OXYGEN_FUEL_BLOCK_TYPE_ID = 4312;
 
+const TypeID dgmpp::SHIELD_OPERATION_TYPE_ID = 3416;
+const TypeID dgmpp::SHIELD_EMISSION_SYSTEMS_TYPE_ID = 3422;
+const TypeID dgmpp::REPAIR_SYSTEMS_TYPE_ID = 3393;
+const TypeID dgmpp::REMOTE_ARMOR_REPAIR_SYSTEMS_TYPE_ID = 16069;
+const TypeID dgmpp::ECM_GROUP_ID = 201;
+const TypeID dgmpp::SENSOR_DAMPENER_GROUP_ID = 208;
+const TypeID dgmpp::WEAPON_DISRUPTOR_GROUP_ID = 291;
+const TypeID dgmpp::TARGET_PAINTER_GROUP_ID = 379;
+
 
 /*class ModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {

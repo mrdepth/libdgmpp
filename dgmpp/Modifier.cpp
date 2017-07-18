@@ -68,11 +68,11 @@ Float Modifier::getValue() const
 		return value;
 }
 
-bool Modifier::isStackable() const
-{
-	auto modifier = modifier_.lock();
-	return modifier ? modifier->isStackable() : false;
-}
+//bool Modifier::isStackable() const
+//{
+//	auto modifier = modifier_.lock();
+//	return modifier ? modifier->isStackable() : false;
+//}
 
 Character* Modifier::getCharacter()
 {

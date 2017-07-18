@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1248DB3E1F1DE90E009625EC /* QuartzCore.framework */; };
 		12DBEAA81E1D3B0E0088A486 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DBEAA71E1D3B0E0088A486 /* main.mm */; };
 		12DBEAAB1E1D3B160088A486 /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DBEAAA1E1D3B160088A486 /* Dgmpp.framework */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1248DB3E1F1DE90E009625EC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		12DBEA971E1D3AEA0088A486 /* dgmppDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dgmppDemo; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEAA71E1D3B0E0088A486 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		12DBEAAA1E1D3B160088A486 /* Dgmpp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dgmpp.framework; path = "build/Debug-iphoneos/Dgmpp.framework"; sourceTree = "<group>"; };
@@ -34,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */,
 				12DBEAAB1E1D3B160088A486 /* Dgmpp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +72,7 @@
 		12DBEAA91E1D3B160088A486 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1248DB3E1F1DE90E009625EC /* QuartzCore.framework */,
 				12DBEAAA1E1D3B160088A486 /* Dgmpp.framework */,
 			);
 			name = Frameworks;

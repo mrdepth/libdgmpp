@@ -1,6 +1,7 @@
 #pragma once
 #include "types.h"
 #include "Item.h"
+#include "GangBoost.h"
 
 namespace dgmpp {
 
@@ -28,6 +29,9 @@ namespace dgmpp {
 		void removeFleetBooster();
 		void removeWingBooster();
 		void removeSquadBooster();
+		
+		void addGangBoost(std::shared_ptr<GangBoost> boost);
+		void removeGangBoost(std::shared_ptr<GangBoost> boost);
 
 		friend std::ostream& operator<<(std::ostream& os, Gang& gang);
 		
@@ -50,6 +54,8 @@ namespace dgmpp {
 		std::shared_ptr<Character> fleetBooster_;
 		std::shared_ptr<Character> wingBooster_;
 		std::shared_ptr<Character> squadBooster_;
+		
+		std::list<std::shared_ptr<GangBoost>> boosts_;
 		
 		typedef std::map<AttributeID, std::map<int64_t, std::map<Character*, std::shared_ptr<Modifier>>>> LocationModifiers;
 		typedef std::map<SkillID, LocationModifiers> LocationRequiredSkillModifiers;

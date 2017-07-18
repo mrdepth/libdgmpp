@@ -50,7 +50,7 @@ namespace dgmpp {
 		std::shared_ptr<Attribute> getModifier() const;
 		Association getAssociation() const;
 		Float getValue() const;
-		bool isStackable() const;
+//		bool isStackable() const;
 		Character* getCharacter();
 		bool isOffensive();
 		bool isAssistance();

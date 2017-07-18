@@ -17,6 +17,15 @@
 		12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3B1E36397F0078AB0F /* Cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 12424E381E36397F0078AB0F /* Cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12424E3C1E36397F0078AB0F /* Cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 12424E381E36397F0078AB0F /* Cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1248DB4D1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */; };
+		1248DB4E1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */; };
+		1248DB4F1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */; };
+		1248DB501F1E3EDC009625EC /* GangBoostEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 1248DB4C1F1E3EDC009625EC /* GangBoostEffect.h */; };
+		1248DB511F1E3EDC009625EC /* GangBoostEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 1248DB4C1F1E3EDC009625EC /* GangBoostEffect.h */; };
+		1248DB541F1E445C009625EC /* GangBoost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1248DB521F1E445C009625EC /* GangBoost.cpp */; };
+		1248DB551F1E445C009625EC /* GangBoost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1248DB521F1E445C009625EC /* GangBoost.cpp */; };
+		1248DB561F1E445C009625EC /* GangBoost.h in Headers */ = {isa = PBXBuildFile; fileRef = 1248DB531F1E445C009625EC /* GangBoost.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1248DB571F1E445C009625EC /* GangBoost.h in Headers */ = {isa = PBXBuildFile; fileRef = 1248DB531F1E445C009625EC /* GangBoost.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12564BA91B84B027000F68D8 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B33D531473CA5E006B18D7 /* Effect.cpp */; };
 		12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3700DA7214869A620026EA83 /* Modifier.cpp */; };
 		12564BB61B84B027000F68D8 /* LocationGroupModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37AE79981487AD39003FB98A /* LocationGroupModifier.cpp */; };
@@ -240,6 +249,10 @@
 		12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteFetchRequest.h; sourceTree = "<group>"; };
 		12424E371E36397F0078AB0F /* Cargo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cargo.cpp; sourceTree = "<group>"; };
 		12424E381E36397F0078AB0F /* Cargo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cargo.h; sourceTree = "<group>"; };
+		1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GangBoostEffect.cpp; sourceTree = "<group>"; };
+		1248DB4C1F1E3EDC009625EC /* GangBoostEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GangBoostEffect.h; sourceTree = "<group>"; };
+		1248DB521F1E445C009625EC /* GangBoost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GangBoost.cpp; sourceTree = "<group>"; };
+		1248DB531F1E445C009625EC /* GangBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GangBoost.h; sourceTree = "<group>"; };
 		12564B8E1B84AF15000F68D8 /* Dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12564BA71B84AFAD000F68D8 /* dgmpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dgmpp.h; sourceTree = SOURCE_ROOT; };
 		125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cycle.cpp; sourceTree = "<group>"; };
@@ -615,6 +628,10 @@
 				37B33D541473CA5E006B18D7 /* Effect.h */,
 				12AEEFE21C26C54200FB7B1D /* EffectPrototype.cpp */,
 				12AEEFE31C26C54200FB7B1D /* EffectPrototype.h */,
+				1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */,
+				1248DB4C1F1E3EDC009625EC /* GangBoostEffect.h */,
+				1248DB521F1E445C009625EC /* GangBoost.cpp */,
+				1248DB531F1E445C009625EC /* GangBoost.h */,
 			);
 			name = Effects;
 			path = ../dgmpp;
@@ -671,7 +688,9 @@
 				12AEEFCE1C25BAC200FB7B1D /* Environment.h in Headers */,
 				12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */,
 				12215B491C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */,
+				1248DB501F1E3EDC009625EC /* GangBoostEffect.h in Headers */,
 				12A156AA1C4651C000C3CF0B /* Schematic.h in Headers */,
+				1248DB561F1E445C009625EC /* GangBoost.h in Headers */,
 				12A156861C464FA400C3CF0B /* IndustryFacility.h in Headers */,
 				12564BFC1B84B07F000F68D8 /* Gang.h in Headers */,
 				12A156801C464EE800C3CF0B /* ExtractorControlUnit.h in Headers */,
@@ -731,7 +750,9 @@
 				12D9F9E21CC3A98B00313F8D /* Environment.h in Headers */,
 				12D9F9E31CC3A98B00313F8D /* FetchRequest.h in Headers */,
 				12D9F9E41CC3A98B00313F8D /* SqliteFetchRequest.h in Headers */,
+				1248DB511F1E3EDC009625EC /* GangBoostEffect.h in Headers */,
 				12D9F9E51CC3A98B00313F8D /* Schematic.h in Headers */,
+				1248DB571F1E445C009625EC /* GangBoost.h in Headers */,
 				12D9F9E61CC3A98B00313F8D /* IndustryFacility.h in Headers */,
 				12D9F9E71CC3A98B00313F8D /* Gang.h in Headers */,
 				12D9F9E81CC3A98B00313F8D /* ExtractorControlUnit.h in Headers */,
@@ -868,6 +889,7 @@
 				12564BCA1B84B027000F68D8 /* Area.cpp in Sources */,
 				125ECFD01C4A28DD00A1CDA9 /* Cycle.cpp in Sources */,
 				12564BD01B84B03C000F68D8 /* Character.cpp in Sources */,
+				1248DB541F1E445C009625EC /* GangBoost.cpp in Sources */,
 				1286564F1C57AD440002BA7E /* State.cpp in Sources */,
 				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
 				121064A51C9312370032B3DB /* Structure.cpp in Sources */,
@@ -885,6 +907,7 @@
 				12564BBC1B84B027000F68D8 /* Drone.cpp in Sources */,
 				12A156781C464E6400C3CF0B /* CommandCenter.cpp in Sources */,
 				12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */,
+				1248DB4D1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */,
 				12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */,
 				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
 				12AEEFDA1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
@@ -926,6 +949,7 @@
 				12D9F9851CC3A98B00313F8D /* Area.cpp in Sources */,
 				12D9F9861CC3A98B00313F8D /* Cycle.cpp in Sources */,
 				12D9F9871CC3A98B00313F8D /* Character.cpp in Sources */,
+				1248DB551F1E445C009625EC /* GangBoost.cpp in Sources */,
 				12D9F9881CC3A98B00313F8D /* State.cpp in Sources */,
 				12D9F9891CC3A98B00313F8D /* Modifier.cpp in Sources */,
 				12D9F98A1CC3A98B00313F8D /* Structure.cpp in Sources */,
@@ -943,6 +967,7 @@
 				12D9F9961CC3A98B00313F8D /* Drone.cpp in Sources */,
 				12D9F9971CC3A98B00313F8D /* CommandCenter.cpp in Sources */,
 				12D9F9981CC3A98B00313F8D /* Attribute.cpp in Sources */,
+				1248DB4E1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */,
 				12D9F99A1CC3A98B00313F8D /* DamageVector.cpp in Sources */,
 				12D9F99B1CC3A98B00313F8D /* Booster.cpp in Sources */,
 				12D9F99C1CC3A98B00313F8D /* AttributePrototype.cpp in Sources */,
@@ -981,6 +1006,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */,
+				1248DB4F1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

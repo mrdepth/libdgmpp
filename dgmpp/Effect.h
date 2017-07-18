@@ -49,6 +49,8 @@ namespace dgmpp {
 	extern const TypeID NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID;
 
 	extern const TypeID SERVICE_SLOT_EFFECT_ID;
+	
+	extern const TypeID GANG_BOOST_EFFECT_ID;
 
 	class EffectPrototype;
 	
@@ -71,8 +73,8 @@ namespace dgmpp {
 		
 		Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectPrototype> const& prototype, std::shared_ptr<Item> const& owner);
 		virtual ~Effect(void);
-		bool addEffect(Environment* environment);
-		bool removeEffect(Environment* environment);
+		virtual bool addEffect(Environment* environment);
+		virtual bool removeEffect(Environment* environment);
 		TypeID getEffectID() const;
 		Category getCategory() const;
 		const char* getEffectName() const;

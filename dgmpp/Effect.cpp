@@ -29,6 +29,7 @@
 #include "EffectAdaptiveArmorHardener.h"
 #include "EffectNaniteRepairPasteArmorDamageBonus.h"*/
 #include "EffectPrototype.h"
+#include "GangBoostEffect.h"
 
 using namespace dgmpp;
 
@@ -74,9 +75,16 @@ const TypeID dgmpp::TACTICAL_MODE_EFFECT_ID = 10002;
 
 const TypeID dgmpp::SERVICE_SLOT_EFFECT_ID = 6306;
 
+const TypeID dgmpp::GANG_BOOST_EFFECT_ID = 10004;
+
 std::shared_ptr<dgmpp::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, TypeID effectID, std::shared_ptr<Item> const& owner)
 {
-	return std::make_shared<Effect>(engine, EffectPrototype::getEffectPrototype(engine, effectID), owner);
+	if (effectID == GANG_BOOST_EFFECT_ID) {
+		return std::make_shared<GangBoostEffect>(engine, EffectPrototype::getEffectPrototype(engine, effectID), owner);
+	}
+	else {
+		return std::make_shared<Effect>(engine, EffectPrototype::getEffectPrototype(engine, effectID), owner);
+	}
 }
 
 Effect::Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectPrototype> const& prototype, std::shared_ptr<Item> const& owner) : engine_(engine), prototype_(prototype), owner_(owner)

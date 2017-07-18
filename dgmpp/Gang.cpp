@@ -239,6 +239,14 @@ void Gang::removeSquadBooster() {
 		engine->reset();
 }
 
+void Gang::addGangBoost(std::shared_ptr<GangBoost> boost) {
+	boosts_.push_back(boost);
+}
+
+void Gang::removeGangBoost(std::shared_ptr<GangBoost> boost) {
+	boosts_.erase(std::find(boosts_.begin(), boosts_.end(), boost));
+}
+
 void Gang::addLocationModifier(std::shared_ptr<Modifier> const& modifier)
 {
 	locationModifiers_[modifier->getAttributeID()][std::hash<Modifier>()(*modifier)][modifier->getCharacter()] = modifier;

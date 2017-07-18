@@ -877,6 +877,11 @@ int patch(const char* databasePath) {
 		   DefEnv("Self").locationGroup("Propulsion Module").attr("speedBoostFactorCalc").assoc("PostDiv").RLGM("mass"));
 
 	addEffectCategory(6, 1171);
+	
+	addEffect(10004, "gangBoost", 1, 0, 0);
+	addEffectGroup(1770, 10004);
+
+
 
 	#include <dbpatch.h>
 	
