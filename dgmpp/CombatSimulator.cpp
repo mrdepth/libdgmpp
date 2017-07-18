@@ -163,11 +163,11 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> const& attacker, std::sha
 					if (module->getDps() == 0) {
 						preferredStates_[module] = state;
 						modulesList.push_back(module);
-						module->setPreferredState(Module::STATE_ONLINE);
+						module->setState(Module::STATE_ONLINE);
 					}
 				}
 				else
-					module->setPreferredState(Module::STATE_ONLINE);
+					module->setState(Module::STATE_ONLINE);
 			}
 		}
 		for (const auto& drone: attacker->getDrones()) {
@@ -189,11 +189,11 @@ CombatSimulator::~CombatSimulator() {
 
 	for (const auto& module: attacker_->getModules()) {
 		module->setTarget(targets_[module]);
-		module->setPreferredState(states_[module]);
+		module->setState(states_[module]);
 	}
 	for (const auto& module: target_->getModules()) {
 		module->setTarget(targets_[module]);
-		module->setPreferredState(states_[module]);
+		module->setState(states_[module]);
 	}
 	for (const auto& drone: attacker_->getDrones()) {
 		if (drone->isActive() && drone->isOffensive() && !drone->isAssistance()) {
@@ -215,12 +215,12 @@ void CombatSimulator::setState(const State& state) {
 	for (const auto& module: attackerOffensiveModules_) {
 		Float maxRange = module->getMaxRange();
 		Float falloff = module->getFalloff();
-		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
+		module->setState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
 	}
 	for (const auto& module: targetOffensiveModules_) {
 		Float maxRange = module->getMaxRange();
 		Float falloff = module->getFalloff();
-		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
+		module->setState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
 	}
 	engine->commitUpdates();
 

@@ -54,6 +54,17 @@ const TypeID dgmpp::ECM_GROUP_ID = 201;
 const TypeID dgmpp::SENSOR_DAMPENER_GROUP_ID = 208;
 const TypeID dgmpp::WEAPON_DISRUPTOR_GROUP_ID = 291;
 const TypeID dgmpp::TARGET_PAINTER_GROUP_ID = 379;
+const TypeID dgmpp::STASIS_WEB_GROUP_ID = 65;
+const TypeID dgmpp::WARP_SCRAMBLER_GROUP_ID = 52;
+const TypeID dgmpp::AFTERBURNER_TYPE_ID = 3450;
+const TypeID dgmpp::HIGH_SPEED_MANEUVERING_TYPE_ID = 3454;
+const TypeID dgmpp::MINING_TYPE_ID = 3386;
+const TypeID dgmpp::ICE_HARVESTING_TYPE_ID = 16281;
+const TypeID dgmpp::GAS_CLOUD_HARVESTING_TYPE_ID = 25544;
+const TypeID dgmpp::CPU_MANAGEMENT_TYPE_ID = 3426;
+const TypeID dgmpp::ENERGY_WEAPON_GROUP_ID = 53;
+const TypeID dgmpp::HYBRID_WEAPON_GROUP_ID = 74;
+
 
 
 /*class ModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>

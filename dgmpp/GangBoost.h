@@ -44,6 +44,9 @@ namespace dgmpp {
 		GangBoost(std::shared_ptr<Engine> const& engine, std::shared_ptr<Attribute> bufID, std::shared_ptr<Attribute> value);
 		
 		std::list<std::shared_ptr<Modifier>> modifiers();
+		
+		std::shared_ptr<Attribute> getBufID() const;
+		std::shared_ptr<Attribute> getValue() const;
 	private:
 		std::weak_ptr<Engine> engine_;
 		std::shared_ptr<Attribute> bufID_;

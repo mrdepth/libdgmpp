@@ -42,7 +42,7 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 					isModule = false;
 				}
 				else
-					module->setPreferredState(Module::STATE_ACTIVE);
+					module->setState(Module::STATE_ACTIVE);
 			}
 			if (!isModule) {
 				auto drone = ship->addDrone(typeID);
@@ -65,9 +65,10 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+//		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		auto pilot = engine->getGang()->addPilot();
+		pilot->setAllSkillsLevel(5);
 		
 /*
 		//pilot->setAllSkillsLevel(5);
@@ -172,8 +173,9 @@ int main(int argc, const char * argv[]) {
 		auto before = eos->getEffectiveTank().armorRepair;
 		
 		auto armorCommandBurst = eos->addModule(43552);
-		armorCommandBurst->setCharge(42832); //Armor Energizing Charge
-		
+//		armorCommandBurst->setCharge(42832); //Armor Energizing Charge
+		armorCommandBurst->setCharge(42833); //Rapid Repair Charge
+		armorCommandBurst->setState(dgmpp::Module::State::STATE_ACTIVE);
 		auto after = eos->getEffectiveTank().armorRepair;
 		
 		

@@ -18,7 +18,7 @@ StarbaseStructure::~StarbaseStructure(void)
 {
 }
 
-void StarbaseStructure::setState(State state)
+void StarbaseStructure::setInternalState(State state)
 {
 	if (canHaveState(state))
 	{

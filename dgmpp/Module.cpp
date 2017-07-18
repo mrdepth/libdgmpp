@@ -94,7 +94,7 @@ Module::State Module::getState()
 	return isEnabled() ? state_ : STATE_OFFLINE;
 }
 
-void Module::setState(State state)
+void Module::setInternalState(State state)
 {
 	if (isDummy())
 		return;
@@ -145,11 +145,11 @@ Module::State Module::getPreferredState() {
 	return preferredState_;
 }
 
-void Module::setPreferredState(State state) {
+void Module::setState(State state) {
 	if (isDummy())
 		return;
 	preferredState_ = state;
-	setState(state);
+	setInternalState(state);
 }
 
 bool Module::isAssistance() {

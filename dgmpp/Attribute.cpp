@@ -305,6 +305,10 @@ const TypeID dgmpp::TRACKING_SPEED_BONUS_ATTRIBUTE_ID = 767;
 const TypeID dgmpp::MAX_TARGET_RANGE_BONUS_ATTRIBUTE_ID = 309;
 const TypeID dgmpp::SCAN_RESOLUTION_BONUS_ATTRIBUTE_ID = 566;
 const TypeID dgmpp::SIGNATURE_RADIUS_BONUS_ATTRIBUTE_ID = 554;
+const TypeID dgmpp::SENSOR_DAMPENER_RESISTANCE_ATTRIBUTE_ID = 2112;
+const TypeID dgmpp::WEAPON_DISRUPTION_RESISTANCE_ATTRIBUTE_ID = 2113;
+const TypeID dgmpp::SPEED_FACTOR_ATTRIBUTE_ID = 20;
+
 
 template<typename InputIterator, typename Output>
 Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)

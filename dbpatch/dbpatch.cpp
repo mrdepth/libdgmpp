@@ -880,6 +880,7 @@ int patch(const char* databasePath) {
 	
 	addEffect(10004, "gangBoost", 1, 0, 0);
 	addEffectGroup(1770, 10004);
+	addEffectGroup(1815, 10004);
 
 
 

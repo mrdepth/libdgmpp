@@ -44,7 +44,18 @@ namespace dgmpp {
 	extern const TypeID SENSOR_DAMPENER_GROUP_ID;
 	extern const TypeID WEAPON_DISRUPTOR_GROUP_ID;
 	extern const TypeID TARGET_PAINTER_GROUP_ID;
-	
+	extern const TypeID STASIS_WEB_GROUP_ID;
+	extern const TypeID WARP_SCRAMBLER_GROUP_ID;
+	extern const TypeID AFTERBURNER_TYPE_ID;
+	extern const TypeID HIGH_SPEED_MANEUVERING_TYPE_ID;
+	extern const TypeID MINING_TYPE_ID;
+	extern const TypeID ICE_HARVESTING_TYPE_ID;
+	extern const TypeID GAS_CLOUD_HARVESTING_TYPE_ID;
+	extern const TypeID CPU_MANAGEMENT_TYPE_ID;
+	extern const TypeID ENERGY_WEAPON_GROUP_ID;
+	extern const TypeID HYBRID_WEAPON_GROUP_ID;
+
+
 	class Item: public Environment, public std::enable_shared_from_this<Item>
 	{
 	public:

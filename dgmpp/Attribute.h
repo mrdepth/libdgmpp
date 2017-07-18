@@ -298,6 +298,9 @@ namespace dgmpp {
 	extern const TypeID MAX_TARGET_RANGE_BONUS_ATTRIBUTE_ID;
 	extern const TypeID SCAN_RESOLUTION_BONUS_ATTRIBUTE_ID;
 	extern const TypeID SIGNATURE_RADIUS_BONUS_ATTRIBUTE_ID;
+	extern const TypeID SENSOR_DAMPENER_RESISTANCE_ATTRIBUTE_ID;
+	extern const TypeID WEAPON_DISRUPTION_RESISTANCE_ATTRIBUTE_ID;
+	extern const TypeID SPEED_FACTOR_ATTRIBUTE_ID;
 	
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{

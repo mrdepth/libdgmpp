@@ -8,7 +8,7 @@
 #include "LocationRequiredSkillModifier.h"
 #include "Attribute.h"
 #include <functional>
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 
 using namespace dgmpp;
@@ -118,7 +118,7 @@ private:
 	bool highIsGood_;
 };
 
-Gang::Gang(std::shared_ptr<Engine> const& engine) : Item(engine, 0, nullptr), fleetBooster_(nullptr), wingBooster_(nullptr), squadBooster_(nullptr)
+Gang::Gang(std::shared_ptr<Engine> const& engine) : Item(engine, 0, nullptr)
 {
 }
 
@@ -164,79 +164,7 @@ void Gang::reset()
 	
 	for (const auto& i: pilots_)
 		i->reset();
-}
-
-std::shared_ptr<Character> Gang::getFleetBooster()
-{
-	return fleetBooster_;
-}
-
-std::shared_ptr<Character> Gang::getWingBooster()
-{
-	return wingBooster_;
-}
-
-std::shared_ptr<Character> Gang::getSquadBooster()
-{
-	return squadBooster_;
-}
-
-void Gang::setFleetBooster(std::shared_ptr<Character> const& fleetBooster)
-{
-	fleetBooster_ = fleetBooster;
-	if (wingBooster_ == fleetBooster)
-		wingBooster_ = nullptr;
-	if (squadBooster_ == fleetBooster)
-		squadBooster_ = nullptr;
-	auto engine = getEngine();
-	if (engine)
-		engine->reset();
-}
-
-void Gang::setWingBooster(std::shared_ptr<Character> const& wingBooster)
-{
-	wingBooster_ = wingBooster;
-	if (fleetBooster_ == wingBooster)
-		fleetBooster_ = nullptr;
-	if (squadBooster_ == wingBooster)
-		squadBooster_ = nullptr;
-	auto engine = getEngine();
-	if (engine)
-		engine->reset();
-}
-
-void Gang::setSquadBooster(std::shared_ptr<Character> const& squadBooster)
-{
-	squadBooster_ = squadBooster;
-	if (fleetBooster_ == squadBooster)
-		fleetBooster_ = nullptr;
-	if (wingBooster_ == squadBooster)
-		wingBooster_ = nullptr;
-	auto engine = getEngine();
-	if (engine)
-		engine->reset();
-}
-
-void Gang::removeFleetBooster() {
-	fleetBooster_ = nullptr;
-	auto engine = getEngine();
-	if (engine)
-		engine->reset();
-}
-
-void Gang::removeWingBooster() {
-	wingBooster_ = nullptr;
-	auto engine = getEngine();
-	if (engine)
-		engine->reset();
-	
-}
-
-void Gang::removeSquadBooster() {
-	squadBooster_ = nullptr;
-	auto engine = getEngine();
-	if (engine)
-		engine->reset();
+	boostModifiers_ = nullptr;
 }
 
 void Gang::addGangBoost(std::shared_ptr<GangBoost> boost) {
@@ -247,180 +175,47 @@ void Gang::removeGangBoost(std::shared_ptr<GangBoost> boost) {
 	boosts_.erase(std::find(boosts_.begin(), boosts_.end(), boost));
 }
 
-void Gang::addLocationModifier(std::shared_ptr<Modifier> const& modifier)
-{
-	locationModifiers_[modifier->getAttributeID()][std::hash<Modifier>()(*modifier)][modifier->getCharacter()] = modifier;
-}
-
-void Gang::addLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
-{
-	locationGroupModifiers_[modifier->getGroupID()][modifier->getAttributeID()][std::hash<Modifier>()(*modifier)][modifier->getCharacter()] = modifier;
-}
-
-void Gang::addLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
-{
-	locationRequiredSkillModifiers_[modifier->getSkillID()][modifier->getAttributeID()][std::hash<Modifier>()(*modifier)][modifier->getCharacter()] = modifier;
-}
-
-void Gang::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
-{
-	auto hash = std::hash<Modifier>()(*modifier);
-	auto& attributes = locationModifiers_;
-	auto hashes = attributes.find(modifier->getAttributeID());
-	
-	if (hashes != attributes.end()) {
-		auto characters = hashes->second.find(hash);
-		if (characters != hashes->second.end()) {
-			auto modifierPtr = characters->second.find(modifier->getCharacter());
-			if (modifierPtr != characters->second.end()) {
-				characters->second.erase(modifierPtr);
-				if (characters->second.size() == 0) {
-					hashes->second.erase(characters);
-					if (hashes->second.size() == 0) {
-						attributes.erase(hashes);
-					}
-				}
-			}
-		}
-	}
-}
-
-void Gang::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
-{
-	auto hash = std::hash<Modifier>()(*modifier);
-	auto& groups = locationGroupModifiers_;
-	
-	auto attributes = groups.find(modifier->getGroupID());
-	if (attributes != groups.end()) {
-		auto hashes = attributes->second.find(modifier->getAttributeID());
-		
-		if (hashes != attributes->second.end()) {
-			auto characters = hashes->second.find(hash);
-			if (characters != hashes->second.end()) {
-				auto modifierPtr = characters->second.find(modifier->getCharacter());
-				if (modifierPtr != characters->second.end()) {
-					characters->second.erase(modifierPtr);
-					if (characters->second.size() == 0) {
-						hashes->second.erase(characters);
-						if (hashes->second.size() == 0) {
-							attributes->second.erase(hashes);
-							if (attributes->second.size() == 0) {
-								groups.erase(attributes);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-void Gang::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
-{
-	auto hash = std::hash<Modifier>()(*modifier);
-	auto& requiredSkills = locationRequiredSkillModifiers_;
-	
-	auto attributes = requiredSkills.find(modifier->getSkillID());
-	if (attributes != requiredSkills.end()) {
-		auto hashes = attributes->second.find(modifier->getAttributeID());
-		
-		if (hashes != attributes->second.end()) {
-			auto characters = hashes->second.find(hash);
-			if (characters != hashes->second.end()) {
-				auto modifierPtr = characters->second.find(modifier->getCharacter());
-				if (modifierPtr != characters->second.end()) {
-					characters->second.erase(modifierPtr);
-					if (characters->second.size() == 0) {
-						hashes->second.erase(characters);
-						if (hashes->second.size() == 0) {
-							attributes->second.erase(hashes);
-							if (attributes->second.size() == 0) {
-								requiredSkills.erase(attributes);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
 std::insert_iterator<ModifiersList> Gang::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	ModifiersCompareFunction cmp (attribute->highIsGood());
-
-	auto boosters = {fleetBooster_.get(), wingBooster_.get(), squadBooster_.get()};
-
-	auto i = locationModifiers_.find(attribute->getAttributeID());
-	if (i != locationModifiers_.end()) {
-		for (const auto& modifier: i->second) {
-			std::shared_ptr<Modifier> max = nullptr;
-
-			for (auto booster: boosters) {
-				auto ptr = modifier.second.find(booster);
-				if (ptr != modifier.second.end()) {
-					if (!max || cmp(ptr->second, max))
-						max = ptr->second;
-				}
-			}
-			if (max)
-				(*outIterator++) = max;
-		}
-	}
 	return outIterator;
 }
 
 std::insert_iterator<ModifiersList> Gang::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	ModifiersCompareFunction cmp (attribute->highIsGood());
-	
-	auto boosters = {fleetBooster_.get(), wingBooster_.get(), squadBooster_.get()};
-	
-	auto j = locationGroupModifiers_.find(item->getGroupID());
-	if (j != locationGroupModifiers_.end()) {
-		auto i = j->second.find(attribute->getAttributeID());
-		if (i != j->second.end()) {
-			for (const auto& modifier: i->second) {
-				std::shared_ptr<Modifier> max = nullptr;
-				
-				for (auto booster: boosters) {
-					auto ptr = modifier.second.find(booster);
-					if (ptr != modifier.second.end()) {
-						if (!max || cmp(ptr->second, max))
-							max = ptr->second;
-					}
-				}
-				if (max)
-					(*outIterator++) = max;
-			}
-		}
+	auto modifiers = getBoostModifiers();
+	auto i = modifiers.find(attribute->getAttributeID());
+	if (i != modifiers.end()) {
+		std::copy_if(i->second.begin(), i->second.end(), outIterator, [=](std::shared_ptr<Modifier> modifier) {
+			return modifier->isMatch(item);
+		});
 	}
 	
-	for (auto skillID: item->requiredSkills()) {
-		auto j = locationRequiredSkillModifiers_.find(skillID);
-		if (j != locationRequiredSkillModifiers_.end()) {
-			auto i = j->second.find(attribute->getAttributeID());
-			if (i != j->second.end()) {
-				for (const auto& modifier: i->second) {
-					std::shared_ptr<Modifier> max = nullptr;
-					
-					for (auto booster: boosters) {
-						auto ptr = modifier.second.find(booster);
-						if (ptr != modifier.second.end()) {
-							if (!max || cmp(ptr->second, max))
-								max = ptr->second;
-						}
-					}
-					if (max)
-						(*outIterator++) = max;
-				}
-			}
-		}
-	}
-
 	return outIterator;
 }
 
+const ItemModifiers& Gang::getBoostModifiers() {
+	if (!boostModifiers_) {
+		boostModifiers_ = std::make_shared<ItemModifiers>();
+		std::map<int, std::list<std::shared_ptr<GangBoost>>> m;
+		for (const auto& boost: boosts_) {
+			m[static_cast<int>(boost->getBufID()->getValue())].push_back(boost);
+		}
+		
+		for (const auto& i: m) {
+			auto boost = std::max_element(i.second.begin(), i.second.end(), [&](std::shared_ptr<GangBoost> a, std::shared_ptr<GangBoost> b) {
+				return std::abs(a->getValue()->getValue()) < std::abs(b->getValue()->getValue());
+			});
+			if (boost != i.second.end()) {
+				auto modifiers = (*boost)->modifiers();
+				
+				for (auto modifier: modifiers) {
+					(*boostModifiers_)[modifier->getAttributeID()].push_back(modifier);
+				}
+			}
+		}
+	}
+	return *boostModifiers_;
+}
 
 std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Gang& gang)
 {
@@ -452,67 +247,6 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Gang& gang)
 				else
 					os << ',';
 				os << *i;
-			}
-		}
-	}
-	
-	os << "], \"locationModifiers\":[";
-	
-	if (gang.locationModifiers_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& list: gang.locationModifiers_) {
-			for (const auto& i: list.second)
-			{
-				for (const auto& k: i.second) {
-					if (isFirst)
-						isFirst = false;
-					else
-						os << ',';
-					os << *k.second;
-				}
-			}
-		}
-	}
-	
-	os << "], \"locationGroupModifiers\":[";
-	
-	if (gang.locationGroupModifiers_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& map: gang.locationGroupModifiers_) {
-			for (const auto& list: map.second) {
-				for (const auto& i: list.second)
-				{
-					for (const auto& k: i.second) {
-						if (isFirst)
-							isFirst = false;
-						else
-							os << ',';
-						os << *k.second;
-					}
-				}
-			}
-		}
-	}
-	
-	os << "], \"locationRequiredSkillModifiers\":[";
-	
-	if (gang.locationRequiredSkillModifiers_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& map: gang.locationRequiredSkillModifiers_) {
-			for (const auto& list: map.second) {
-				for (const auto& i: list.second)
-				{
-					for (const auto& k: i.second) {
-						if (isFirst)
-							isFirst = false;
-						else
-							os << ',';
-						os << *k.second;
-					}
-				}
 			}
 		}
 	}

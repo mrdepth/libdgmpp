@@ -66,7 +66,7 @@ namespace dgmpp {
 		virtual bool canHaveState(State state);
 		State getState();
 		State getPreferredState();
-		void setPreferredState(State state);
+		void setState(State state);
 		bool canBeOnline() {return canBeOnline_;};
 		bool canBeActive() {return canBeActive_;};
 		bool canBeOverloaded() {return canBeOverloaded_;};
@@ -132,7 +132,7 @@ namespace dgmpp {
 		virtual void lazyLoad();
 
 		friend class Ship;
-		virtual void setState(State state);
+		virtual void setInternalState(State state);
 
 		
 	private:

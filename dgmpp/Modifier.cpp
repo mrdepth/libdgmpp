@@ -14,7 +14,7 @@ Modifier::~Modifier()
 {
 }
 
-bool Modifier::isMatch(std::shared_ptr<Item> const& item) const
+bool Modifier::isMatch(Item* item) const
 {
 	return true;
 }

@@ -111,9 +111,9 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced, int socket)
 
 			module->addEffects(Effect::CATEGORY_GENERIC);
 			if (module->canHaveState(Module::STATE_ACTIVE))
-				module->setState(Module::STATE_ACTIVE);
+				module->setInternalState(Module::STATE_ACTIVE);
 			else if (module->canHaveState(Module::STATE_ONLINE))
-				module->setState(Module::STATE_ONLINE);
+				module->setInternalState(Module::STATE_ONLINE);
 			engine->reset();
 			
 			//updateEnabledStatus();
@@ -147,7 +147,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 		std::shared_ptr<Ship> target = oldModule->getTarget();
 		auto socket = static_cast<int>(i - array.begin());
 		
-		oldModule->setState(Module::STATE_OFFLINE);
+		oldModule->setInternalState(Module::STATE_OFFLINE);
 		oldModule->clearTarget();
 		oldModule->removeEffects(Effect::CATEGORY_GENERIC);
 		
@@ -164,7 +164,7 @@ std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldMo
 				newModule->setCharge(chargeTypeID);
 			if (target)
 				newModule->setTarget();
-			newModule->setPreferredState(state);
+			newModule->setState(state);
 		}
 		
 		engine->reset();
@@ -205,7 +205,7 @@ void Ship::removeModule(std::shared_ptr<Module> const& module) {
 	auto& array = modules_[module->getSlot()];
 	auto i = std::find(array.begin(), array.end(), module);
 	if (i != array.end()) {
-		module->setState(Module::STATE_OFFLINE);
+		module->setInternalState(Module::STATE_OFFLINE);
 		module->clearTarget();
 		module->removeEffects(Effect::CATEGORY_GENERIC);
 		
@@ -1339,7 +1339,7 @@ void Ship::updateModulesState()
 		Module::State newState;
 		for (newState = preferredState != Module::STATE_UNKNOWN ? preferredState : state; newState > Module::STATE_OFFLINE && !i->canHaveState(newState); newState = static_cast<Module::State>(static_cast<int>(newState) - 1));
 		if (newState != state)
-			i->setState(newState);
+			i->setInternalState(newState);
 	}
 }
 
