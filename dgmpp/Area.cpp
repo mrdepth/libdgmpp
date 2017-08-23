@@ -13,7 +13,7 @@ public:
 		area_ = area;
 		ship_ = ship;
 		character_ = ship ? ship->getOwner().get() : nullptr;
-		gang_ = ship->getEngine()->getGang().get();
+		gang_ = ship ? ship->getEngine()->getGang().get() : nullptr;
 	}
 	Item* ship_;
 	Item* character_;
