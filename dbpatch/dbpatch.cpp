@@ -690,15 +690,43 @@ int patch(const char* databasePath) {
 		   DefEnv("Ship").attr("shieldCharge").assoc("AddRate").RIM("shieldBonus"));
 	
 
-	update("structureRepair",
-		   DefEnv("Ship").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
-		   DefEnv("Ship").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
-	update("remoteHullRepair",
+//	update("structureRepair",
+//		   DefEnv("Ship").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
+//		   DefEnv("Ship").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
+//	update("remoteHullRepair",
+//		   DefEnv("Target").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
+//		   DefEnv("Target").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
+//	update("remoteHullRepairFalloff",
+//		   DefEnv("Target").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
+//		   DefEnv("Target").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
+
+	update("shipModuleRemoteHullRepairer",
 		   DefEnv("Target").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
 		   DefEnv("Target").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
-	update("remoteHullRepairFalloff",
-		   DefEnv("Target").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
-		   DefEnv("Target").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
+	update("shipModuleRemoteShieldBooster",
+		   DefEnv("Target").attr("shieldCharge").assoc("AddRate").AIM("shieldBonus"),
+		   DefEnv("Target").attr("shieldCharge").assoc("AddRate").RIM("shieldBonus"));
+	update("shipModuleAncillaryRemoteShieldBooster",
+		   DefEnv("Target").attr("shieldCharge").assoc("AddRate").AIM("shieldBonus"),
+		   DefEnv("Target").attr("shieldCharge").assoc("AddRate").RIM("shieldBonus"));
+	update("shipModuleRemoteArmorRepairer",
+		   DefEnv("Target").attr("armorDamage").assoc("SubRate").AIM("armorDamageAmount"),
+		   DefEnv("Target").attr("armorDamage").assoc("SubRate").RIM("armorDamageAmount"));
+	update("shipModuleAncillaryRemoteArmorRepairer",
+		   DefEnv("Target").attr("armorDamage").assoc("SubRate").AIM("armorDamageAmount"),
+		   DefEnv("Target").attr("armorDamage").assoc("SubRate").RIM("armorDamageAmount"));
+	update("shipModuleRemoteCapacitorTransmitter",
+		   DefEnv("Target").attr("charge").assoc("AddRate").AIM("powerTransferAmount"),
+		   DefEnv("Target").attr("charge").assoc("AddRate").RIM("powerTransferAmount"));
+	update("shipModuleRemoteTrackingComputer",
+		   COMB(
+				COMB(DefEnv("Target").locationSkill("Gunnery").attr("trackingSpeed").assoc("PostPercent").ALRSM("trackingSpeedBonus"),
+					 DefEnv("Target").locationSkill("Gunnery").attr("maxRange").assoc("PostPercent").ALRSM("maxRangeBonus")),
+				DefEnv("Target").locationSkill("Gunnery").attr("falloff").assoc("PostPercent").ALRSM("falloffBonus")),
+		   COMB(
+				COMB(DefEnv("Target").locationSkill("Gunnery").attr("trackingSpeed").assoc("PostPercent").RLRSM("trackingSpeedBonus"),
+					 DefEnv("Target").locationSkill("Gunnery").attr("maxRange").assoc("PostPercent").RLRSM("maxRangeBonus")),
+				DefEnv("Target").locationSkill("Gunnery").attr("falloff").assoc("PostPercent").RLRSM("falloffBonus")));
 
 
 	//Energy Transfers
