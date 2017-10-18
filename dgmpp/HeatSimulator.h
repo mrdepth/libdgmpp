@@ -15,7 +15,7 @@ namespace dgmpp {
 			int shot;
 			int clipSize;
 			int moduleIndex;
-			float heatDamage;
+			Float heatDamage;
 		};
 
 		
@@ -27,12 +27,11 @@ namespace dgmpp {
 		std::weak_ptr<Ship> ship_;
 		bool isCalculated_;
 		typedef std::vector<std::shared_ptr<State>> StatesVector;
-		typedef std::vector<std::shared_ptr<Module>> ModulesVector;
 		StatesVector states_;
 
-		void simulate(const ModulesVector& modules);
-		float heat(float t, float heatCapacity, float heatGeneration);
-		float damageProbability(float h, int range, int numberOfOnlineModules, int numberOfSlots, float heatAttenuation);
+		void simulate(const ModulesList& modules);
+		Float heat(Float t, Float heatCapacity, Float heatGeneration);
+		Float damageProbability(Float h, int range, int numberOfOnlineModules, int numberOfSlots, Float heatAttenuation);
 	};
 	
 }

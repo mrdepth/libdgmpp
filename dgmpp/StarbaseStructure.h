@@ -12,7 +12,6 @@ namespace dgmpp {
 			return std::static_pointer_cast<StarbaseStructure>(Item::shared_from_this());
 		}
 
-		virtual void setState(State state);
 		
 		virtual void reset();
 		
@@ -24,7 +23,9 @@ namespace dgmpp {
 		const HitPoints& getHitPoints();
 		const HitPoints& getEffectiveHitPoints();
 		
-		float getShieldRecharge();
+		Float getShieldRecharge();
+	protected:
+		virtual void setInternalState(State state);
 
 	private:
 		Resistances resistances_;
@@ -32,6 +33,6 @@ namespace dgmpp {
 		Tank effectiveTank_;
 		HitPoints hitPoints_;
 		HitPoints effectiveHitPoints_;
-		float shieldRecharge_;
+		Float shieldRecharge_;
 	};
 }

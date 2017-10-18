@@ -14,7 +14,7 @@ Modifier::~Modifier()
 {
 }
 
-bool Modifier::isMatch(std::shared_ptr<Item> const& item) const
+bool Modifier::isMatch(Item* item) const
 {
 	return true;
 }
@@ -39,40 +39,40 @@ Modifier::Association Modifier::getAssociation() const
 }
 
 
-float Modifier::getValue() const
+Float Modifier::getValue() const
 {
 	auto modifier = modifier_.lock();
 	if (!modifier)
 		return 0;
 	
-	float value = modifier->getValue();
+	Float value = modifier->getValue();
 	if (association_ == ASSOCIATION_POST_DIV)
-		return static_cast<float>(1.0f / value);
+		return static_cast<Float>(1.0 / value);
 	else if (association_ == ASSOCIATION_POST_PERCENT)
-		return static_cast<float>(1.0f + value / 100.0f);
+		return static_cast<Float>(1.0 + value / 100.0);
 	else if (association_ == ASSOCIATION_ADD_RATE || association_ == ASSOCIATION_SUB_RATE)
 	{
 		std::shared_ptr<Item> item = modifier->getOwner();
 		if (!item)
 			return 0;
-		float duration;
+		Float duration;
 		if (item->hasAttribute(DURATION_ATTRIBUTE_ID))
-			duration = static_cast<float>(item->getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0f);
+			duration = static_cast<Float>(item->getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0);
 		else if (item->hasAttribute(SPEED_ATTRIBUTE_ID))
-			duration = static_cast<float>(item->getAttribute(SPEED_ATTRIBUTE_ID)->getValue() / 1000.0f);
+			duration = static_cast<Float>(item->getAttribute(SPEED_ATTRIBUTE_ID)->getValue() / 1000.0);
 		else
 			duration = 1;
-		return duration > 0.0f ? static_cast<float>(value / duration) : 0.0f;
+		return duration > 0.0 ? static_cast<Float>(value / duration) : 0.0;
 	}
 	else
 		return value;
 }
 
-bool Modifier::isStackable() const
-{
-	auto modifier = modifier_.lock();
-	return modifier ? modifier->isStackable() : false;
-}
+//bool Modifier::isStackable() const
+//{
+//	auto modifier = modifier_.lock();
+//	return modifier ? modifier->isStackable() : false;
+//}
 
 Character* Modifier::getCharacter()
 {

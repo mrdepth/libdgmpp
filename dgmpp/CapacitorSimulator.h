@@ -11,17 +11,17 @@ namespace dgmpp {
 		class Drain
 		{
 		public:
-			Drain(std::shared_ptr<Module> const& module, float cycleTime = 0, float capacitorNeed = 0, float clipSize = 0, float reloadTime = 0) : cycleTime_(cycleTime), capacitorNeed_(capacitorNeed), clipSize_(clipSize), reloadTime_(reloadTime), module_(module) {};
+			Drain(std::shared_ptr<Module> const& module, Float cycleTime = 0, Float capacitorNeed = 0, Float clipSize = 0, Float reloadTime = 0) : cycleTime_(cycleTime), capacitorNeed_(capacitorNeed), clipSize_(clipSize), reloadTime_(reloadTime), module_(module) {};
 			
 			bool operator == (const Drain& other)
 			{
 				return module_.lock() == other.module_.lock();
 			}
 
-			float cycleTime_;
-			float capacitorNeed_;
-			float clipSize_;
-			float reloadTime_;
+			Float cycleTime_;
+			Float capacitorNeed_;
+			Float clipSize_;
+			Float reloadTime_;
 		private:
 			std::weak_ptr<Module> module_;
 		};
@@ -29,8 +29,9 @@ namespace dgmpp {
 		struct State {
 			int tNow;
 			int duration;
-			float capNeed;
+			Float capNeed;
 			int reloadTime;
+			int reactivationTime;
 			int shot;
 			int clipSize;
 		};
@@ -48,10 +49,10 @@ namespace dgmpp {
 		int getMaxTime();
 		int getIterations();
 		bool isCapStable();
-		float getCapLastsTime();
-		float getCapStableLevel();
-		float getCapUsed();
-		float getCapRecharge();
+		Float getCapLastsTime();
+		Float getCapStableLevel();
+		Float getCapUsed();
+		Float getCapRecharge();
 		
 		
 	private:
@@ -66,15 +67,15 @@ namespace dgmpp {
 
 		int period_;
 		int maxTime_;
-		float capacitorRecharge_;
-		float capacitorCapacity_;
-		float capRecharge_;
-		float capUsed_;
+		Float capacitorRecharge_;
+		Float capacitorCapacity_;
+		Float capRecharge_;
+		Float capUsed_;
 		int iterations_;
 		int time_;
-		float capStableEVE_;
-		float capStableLow_;
-		float capStableHigh_;
+		Float capStableEVE_;
+		Float capStableLow_;
+		Float capStableHigh_;
 		
 		void internalReset();
 		void run();

@@ -42,7 +42,7 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 					isModule = false;
 				}
 				else
-					module->setPreferredState(Module::STATE_ACTIVE);
+					module->setState(Module::STATE_ACTIVE);
 			}
 			if (!isModule) {
 				auto drone = ship->addDrone(typeID);
@@ -65,24 +65,19 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		//std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+//		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		auto pilot = engine->getGang()->addPilot();
+		pilot->setAllSkillsLevel(5);
+		
+/*
 		//pilot->setAllSkillsLevel(5);
 		std::map<int, int> skills;
 		skills[32339] = 5;
 		pilot->setSkillLevels(skills);
 		
-		auto spaceStructure = pilot->setSpaceStructure(35832);
-		/*auto service = spaceStructure->getFreeSlots(Module::SLOT_SERVICE);
-		auto sshp = spaceStructure->getHitPoints();
-		auto ssres = spaceStructure->getResistances();
-		auto pg = spaceStructure->getTotalPowerGrid();
-		auto cpu = spaceStructure->getTotalCpu();
-		auto db = spaceStructure->getTotalDroneBay();
-		auto turret = spaceStructure->addModule(35928);
-		auto sdps = spaceStructure->getWeaponDps();*/
-		
+		auto spaceStructure = pilot->setStructure(35832);
+ 
 		std::shared_ptr<Drone> drone;
 		for (int i = 0; i < 30; i++) {
 			drone = spaceStructure->addDrone(40365);
@@ -165,25 +160,26 @@ int main(int argc, const char * argv[]) {
 		
 
 		auto fac = planet->findFacility(1019339001865);
-/*		for (const auto& warning: planet->getWarnings()) {
-			switch (warning->getCode()) {
-				case Warning::CODE_WASTED:
-					std::cout << (int64_t) (warning->getTimeStamp() - lastUpdateTime) << " Wasted: " << warning->getSource()->getTypeName() << " " << (int32_t) (warning->getArg() * 100) << "%" << std::endl;
-					break;
-				case Warning::CODE_PRODUCTION_STOPPED:
-					std::cout << (int64_t) (warning->getTimeStamp() - lastUpdateTime) << " Production stopped: " << warning->getSource()->getTypeName() << std::endl;
-					break;
-				case Warning::CODE_STORAGE_IS_FULL:
-					std::cout << (int64_t) (warning->getTimeStamp() - lastUpdateTime) << " Storage is full: " << warning->getSource()->getTypeName() << " " << (warning->getArg() * 100.0) << "%" << std::endl;
-					break;
-				default:
-					break;
-			}
-		}*/
 		
 		//std::cout << *planet << std::endl;
 		auto free = fac->getFreeVolume();
 		return 0;
+*/
+		
+		
+		auto eos = pilot->setShip(22442);
+		auto armorRepairer = eos->addModule(3540);
+		
+		auto before = eos->getEffectiveTank().armorRepair;
+		
+		auto armorCommandBurst = eos->addModule(43552);
+//		armorCommandBurst->setCharge(42832); //Armor Energizing Charge
+		armorCommandBurst->setCharge(42833); //Rapid Repair Charge
+		armorCommandBurst->setState(dgmpp::Module::State::STATE_ACTIVE);
+		auto after = eos->getEffectiveTank().armorRepair;
+		
+		
+		
 		NSString* garmurDNA = @"33816:2404;3:14248;1:1952;1:19349;1:28746;1:31936;1:2605;1:2048;1:31183;1:31153;1:31111;1:29009;1:27371;3::";
 		NSString* ishkurDNA = @"12042:3178;3:5973;1:448;1:4025;1:1183;1:1447;1:10190;1:2048;1:31538;1:31526;1:2456;5:12612;3::";
 		NSString* vigilantDNA = @"17722:3146;5:5439;1:4025;1:6160;1:5975;1:10190;3:4405;2:2048;1:31546;1:31055;1:2185;5:12789;5:29011;1::";
@@ -191,6 +187,7 @@ int main(int argc, const char * argv[]) {
 		NSString* magusDNA = @"37483:4284;1:4282;1:4280;1:11014;2::";
 		//NSString* morosDNA = @"19724:4292;1::";
 		NSString* dramielDNA = @"17932:34595;1:12084;1::";
+		
 		CFTimeInterval t0 = CACurrentMediaTime();
 		auto garmur = addShip(engine, garmurDNA);
 		auto ishkur = addShip(engine, ishkurDNA);

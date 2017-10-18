@@ -12,7 +12,7 @@
 #include "Booster.h"
 #include <algorithm>
 #include <limits>
-#include "SpaceStructure.h"
+#include "Structure.h"
 
 using namespace dgmpp;
 
@@ -58,7 +58,7 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 }
 
 
-std::shared_ptr<SpaceStructure> Character::setSpaceStructure(TypeID typeID)
+std::shared_ptr<Structure> Character::setStructure(TypeID typeID)
 {
 	try
 	{
@@ -67,15 +67,15 @@ std::shared_ptr<SpaceStructure> Character::setSpaceStructure(TypeID typeID)
 		if (!engine)
 			return nullptr;
 
-		std::shared_ptr<SpaceStructure> spaceStructure = std::make_shared<SpaceStructure>(engine, typeID, shared_from_this());
-		if (spaceStructure_)
+		std::shared_ptr<Structure> structure = std::make_shared<Structure>(engine, typeID, shared_from_this());
+		if (structure_)
 			removeEffects(Effect::CATEGORY_GENERIC);
-		spaceStructure_ = spaceStructure;
-		if (spaceStructure_)
+		structure_ = structure;
+		if (structure_)
 			addEffects(Effect::CATEGORY_GENERIC);
 		
 		engine->reset();
-		return spaceStructure_;
+		return structure_;
 	}
 	catch(Item::UnknownTypeIDException)
 	{
@@ -83,9 +83,9 @@ std::shared_ptr<SpaceStructure> Character::setSpaceStructure(TypeID typeID)
 	}
 }
 
-std::shared_ptr<SpaceStructure> Character::getSpaceStructure()
+std::shared_ptr<Structure> Character::getStructure()
 {
-	return spaceStructure_;
+	return structure_;
 }
 
 void Character::reset()
@@ -93,8 +93,8 @@ void Character::reset()
 	Item::reset();
 	if (ship_ != nullptr)
 		ship_->reset();
-	if (spaceStructure_ != nullptr)
-		spaceStructure_->reset();
+	if (structure_ != nullptr)
+		structure_->reset();
 	
 	//for (const std::pair<int, const std::shared_ptr<Skill>&>& i: skills_)
 	for (const auto& i: skills_)
@@ -116,7 +116,7 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 		std::shared_ptr<Skill> skill = std::make_shared<Skill>(engine, typeID, skillLevel, isLearned, shared_from_this());
 		skills_[typeID] = skill;
 //	if (getOwner() && ship_ != nullptr)
-		if (ship_ || spaceStructure_)
+		if (ship_ || structure_)
 			skill->addEffects(Effect::CATEGORY_GENERIC);
 		return skill;
 	}
@@ -129,7 +129,7 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 void Character::removeSkill(std::shared_ptr<Skill> const& skill)
 {
 //	if (getOwner() && ship_ != NULL)
-	if (ship_ || spaceStructure_)
+	if (ship_ || structure_)
 		skill->removeEffects(Effect::CATEGORY_GENERIC);
 	skills_.erase(skill->getTypeID());
 }
@@ -137,6 +137,10 @@ void Character::removeSkill(std::shared_ptr<Skill> const& skill)
 std::shared_ptr<Skill> Character::getSkill(TypeID typeID)
 {
 	return skills_[typeID];
+}
+
+const SkillsMap& Character::getSkills() {
+	return skills_;
 }
 
 bool Character::emptyImplantSlot(int slot)
@@ -264,15 +268,15 @@ const BoostersList& Character::getBoosters()
 
 void Character::addEffects(Effect::Category category)
 {
-	if (ship_ || spaceStructure_)
+	if (ship_ || structure_)
 	{
 		Item::addEffects(category);
 		if (category == Effect::CATEGORY_GENERIC)
 		{
 			if (ship_)
 				ship_->addEffects(Effect::CATEGORY_GENERIC);
-			if (spaceStructure_)
-				spaceStructure_->addEffects(Effect::CATEGORY_GENERIC);
+			if (structure_)
+				structure_->addEffects(Effect::CATEGORY_GENERIC);
 
 			for (const auto& i: skills_)
 				i.second->addEffects(Effect::CATEGORY_GENERIC);
@@ -286,15 +290,15 @@ void Character::addEffects(Effect::Category category)
 
 void Character::removeEffects(Effect::Category category)
 {
-	if (ship_ || spaceStructure_)
+	if (ship_ || structure_)
 	{
 		Item::removeEffects(category);
 		if (category == Effect::CATEGORY_GENERIC)
 		{
 			if (ship_)
 				ship_->removeEffects(Effect::CATEGORY_GENERIC);
-			if (spaceStructure_)
-				spaceStructure_->removeEffects(Effect::CATEGORY_GENERIC);
+			if (structure_)
+				structure_->removeEffects(Effect::CATEGORY_GENERIC);
 
 			for (const auto& i: skills_)
 				i.second->removeEffects(Effect::CATEGORY_GENERIC);
@@ -318,10 +322,11 @@ const char*  Character::getCharacterName()
 
 void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 {
+	loadIfNeeded();
 	auto engine = getEngine();
 	if (!engine)
 		return;
-
+	
 	std::map<TypeID, int>::const_iterator j, endj = levels.end();
 	
 	for (const auto& i: skills_) {
@@ -336,12 +341,18 @@ void Character::setSkillLevels(const std::map<TypeID, int>& levels)
 
 void Character::setAllSkillsLevel(int level)
 {
+	loadIfNeeded();
 	auto engine = getEngine();
 	if (!engine)
 		return;
+	
 	for (const auto& i: skills_)
 		i.second->setSkillLevel(level);
 	engine->reset();
+}
+
+Float Character::getDroneControlDistance() {
+	return getAttribute(DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID)->getValue();
 }
 
 std::insert_iterator<ModifiersList> Character::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
@@ -383,7 +394,7 @@ Item* Character::ship() {
 }
 
 Item* Character::structure() {
-	return getSpaceStructure().get();
+	return getStructure().get();
 }
 
 std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Character& character)

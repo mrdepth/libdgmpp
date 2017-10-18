@@ -123,7 +123,7 @@ std::string domain(const std::string& domain) {
 		return "Char";
 	else if (domain == "shipID")
 		return "Ship";
-	else if (domain == "targetID")
+	else if (domain == "targetID" || domain == "target")
 		return "Target";
 	else if (domain == "null" || domain == "itemID")
 		return "Self";
@@ -150,6 +150,8 @@ std::string preFunc(const std::string& func) {
 		return "AGIM";
 	else if (func == "GangRequiredSkillModifier")
 		return "AGRSM";
+	else if (func == "EffectStopper")
+		return "$SKIP";
 	else
 		assert(0);
 }
@@ -167,6 +169,8 @@ std::string postFunc(const std::string& func) {
 		return "RGIM";
 	else if (func == "GangRequiredSkillModifier")
 		return "RGRSM";
+	else if (func == "EffectStopper")
+		return "$SKIP";
 	else
 		assert(0);
 }
@@ -174,11 +178,15 @@ std::string postFunc(const std::string& func) {
 std::vector<std::string> processModifier(const std::map<std::string, std::string>& modifier) {
 	auto d = modifier.find("domain") == modifier.end() ? domain("gangID") : domain(modifier.at("domain"));
 	auto pref = preFunc(modifier.at("func"));
+	if (pref == "$SKIP")
+		return {};
+
 	auto postf = postFunc(modifier.at("func"));
 	auto assoc = association(modifier.at("operator"));
 	auto modifiedAttribute = attr(modifier.at("modifiedAttributeID"));
 	auto modifyingAttribute = attr(modifier.at("modifyingAttributeID"));
 
+	
 	domains.insert(d);
 	
 	std::stringstream pre;
@@ -227,7 +235,8 @@ std::string process(const int effectID, std::string effectName, const std::strin
 	std::vector<std::vector<std::string>> modifiers;
 	for (auto m: parse(modifierInfo)) {
 		auto v = processModifier(m);
-		modifiers.push_back(v);
+		if (v.size() == 2)
+			modifiers.push_back(v);
 	}
 	auto v = comb(modifiers);
 	std::stringstream s;

@@ -8,6 +8,7 @@ namespace dgmpp {
 	class Module : public Item
 	{
 	public:
+
 		enum Slot
 		{
 			SLOT_UNKNOWN = -1,
@@ -17,9 +18,9 @@ namespace dgmpp {
 			SLOT_LOW,
 			SLOT_RIG,
 			SLOT_SUBSYSTEM,
-			SLOT_STARBASE_STRUCTURE,
 			SLOT_MODE,
-			SLOT_SERVICE
+			SLOT_SERVICE,
+			SLOT_STARBASE_STRUCTURE
 		};
 
 		enum State
@@ -37,6 +38,17 @@ namespace dgmpp {
 			HARDPOINT_LAUNCHER,
 			HARDPOINT_TURRET
 		};
+		
+		static std::shared_ptr<Module> dummy(std::shared_ptr<Engine> const& engine, std::shared_ptr<Item> const& owner, Module::Slot slot) {
+			auto module = std::make_shared<Module>(engine, 0, owner);
+			module->slot_ = slot;
+			return module;
+		}
+		
+		bool isDummy() {
+			return getTypeID() == 0;
+		}
+
 		Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = std::shared_ptr<Item>(nullptr));
 		virtual ~Module(void);
 		std::shared_ptr<Module> shared_from_this() {
@@ -50,10 +62,11 @@ namespace dgmpp {
 
 		Slot getSlot();
 		Hardpoint getHardpoint();
+		int getSocket();
 		virtual bool canHaveState(State state);
 		State getState();
 		State getPreferredState();
-		void setPreferredState(State state);
+		void setState(State state);
 		bool canBeOnline() {return canBeOnline_;};
 		bool canBeActive() {return canBeActive_;};
 		bool canBeOverloaded() {return canBeOverloaded_;};
@@ -75,31 +88,35 @@ namespace dgmpp {
 		void setTarget(std::shared_ptr<Ship> const& target = std::shared_ptr<Ship>(nullptr));
 		void clearTarget();
 		std::shared_ptr<Ship> getTarget();
-		float getReloadTime();
+		Float getReloadTime();
 		
 		//Calculations
 		
-		float getCycleTime();
-		float getRawCycleTime();
+		Float getCycleTime();
+		Float getRawCycleTime();
 		bool factorReload();
 		void setFactorReload(bool factorReload);
 		
 		int getCharges();
 		int getShots();
-		float getCapUse();
+		Float getCapUse();
+		Float getCpuUse();
+		Float getPowerGridUse();
+		Float getCalibrationUse();
 		
 		DamageVector getVolley();
 		DamageVector getDps(const HostileTarget& target = HostileTarget::defaultTarget);
-		//float getDps(float range, float angularSpeed, float targetSignature);
-		float getMaxRange();
-		float getFalloff();
-		//float getTrackingSpeed();
-		float getAccuracyScore();
-		float getSignatureResolution();
-		float getAngularVelocity(float targetSignature, float hitChance = 0.5);
+		//Float getDps(Float range, Float angularSpeed, Float targetSignature);
+		Float getMaxRange();
+		Float getFalloff();
+		//Float getTrackingSpeed();
+		Float getAccuracyScore();
+		Float getSignatureResolution();
+		Float getAngularVelocity(Float targetSignature, Float hitChance = 0.5);
+		Float getMiningYield();
 		
-		float getLifeTime();
-		void setLifeTime(float lifeTime);
+		Float getLifeTime();
+		void setLifeTime(Float lifeTime);
 		
 		void setEnabled(bool enabled);
 		bool isEnabled();
@@ -115,7 +132,7 @@ namespace dgmpp {
 		virtual void lazyLoad();
 
 		friend class Ship;
-		virtual void setState(State state);
+		virtual void setInternalState(State state);
 
 		
 	private:
@@ -130,18 +147,22 @@ namespace dgmpp {
 		std::shared_ptr<Charge> charge_;
 		std::vector<TypeID> chargeGroups_;
 		std::weak_ptr<Ship> target_;
-		float reloadTime_;
+		Float reloadTime_;
 		int shots_;
+		int socket_;
 		
 		DamageVector volley_;
 		DamageVector dps_;
-		float maxRange_;
-		float falloff_;
-		float accuracyScore_;
-		float signatureResolution_;
+		Float maxRange_;
+		Float falloff_;
+		Float accuracyScore_;
+		Float signatureResolution_;
 		
-		float lifeTime_;
+		Float lifeTime_;
+		Float miningYield_;
 		
 		void calculateDamageStats();
+		
+		friend class Ship;
 	};
 }

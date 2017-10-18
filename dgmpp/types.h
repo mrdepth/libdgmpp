@@ -12,6 +12,9 @@
 #include <vector>
 
 namespace dgmpp {
+	typedef int TypeID;
+	typedef double Float;
+
 	class Item;
 	class Attribute;
 	class Effect;
@@ -41,24 +44,26 @@ namespace dgmpp {
 	class Route;
 	class Commodity;
 	
-	class SpaceStructure;
-
-	typedef int TypeID;
+	class Structure;
+	class Cargo;
 	
-	typedef std::map<dgmpp::TypeID, std::shared_ptr<Attribute>> AttributesMap;
+	class GangBoost;
+	
+	typedef std::map<TypeID, std::shared_ptr<Attribute>> AttributesMap;
 	typedef std::list<std::shared_ptr<Effect> > EffectsList;
-	typedef std::list<std::shared_ptr<Module>> ModulesList;
+	typedef std::vector<std::shared_ptr<Module>> ModulesList;
 	typedef std::list<std::shared_ptr<Drone>> DronesList;
 	typedef std::list<std::shared_ptr<Character>> CharactersList;
-	typedef std::map<dgmpp::TypeID, std::shared_ptr<Skill>> SkillsMap;
+	typedef std::map<TypeID, std::shared_ptr<Skill>> SkillsMap;
 	typedef std::list<std::shared_ptr<Implant>> ImplantsList;
 	typedef std::list<std::shared_ptr<Booster>> BoostersList;
 	typedef std::list<std::shared_ptr<Modifier>> ModifiersList;
 	typedef std::list<std::shared_ptr<StarbaseStructure>> StarbaseStructuresList;
+	typedef std::list<std::shared_ptr<Cargo>> CargoList;
 	
-	typedef dgmpp::TypeID AttributeID;
-	typedef dgmpp::TypeID GroupID;
-	typedef dgmpp::TypeID SkillID;
+	typedef TypeID AttributeID;
+	typedef TypeID GroupID;
+	typedef TypeID SkillID;
 
 	typedef std::map<AttributeID, ModifiersList> ItemModifiers;
 	typedef ItemModifiers LocationModifiers;
@@ -72,12 +77,12 @@ namespace dgmpp {
 	{
 		union {
 			struct {
-				float passiveShield;
-				float shieldRepair;
-				float armorRepair;
-				float hullRepair;
+				Float passiveShield;
+				Float shieldRepair;
+				Float armorRepair;
+				Float hullRepair;
 			};
-			float layers[4];
+			Float layers[4];
 		};
 	};
 	
@@ -85,11 +90,11 @@ namespace dgmpp {
 	{
 		union {
 			struct {
-				float shield;
-				float armor;
-				float hull;
+				Float shield;
+				Float armor;
+				Float hull;
 			};
-			float layers[3];
+			Float layers[3];
 		};
 	};
 
@@ -97,12 +102,12 @@ namespace dgmpp {
 	{
 		union {
 			struct {
-				float em;
-				float thermal;
-				float kinetic;
-				float explosive;
+				Float em;
+				Float thermal;
+				Float kinetic;
+				Float explosive;
 			};
-			float resistances[4];
+			Float resistances[4];
 		};
 	};
 	

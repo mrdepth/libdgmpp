@@ -7,11 +7,11 @@ DamagePattern::DamagePattern() : DamageVector(0.25)
 {
 }
 
-DamagePattern::DamagePattern(const DamageVector& damage)  : DamageVector(damage > 0 ? damage / static_cast<float>(damage) : DamageVector(0))
+DamagePattern::DamagePattern(const DamageVector& damage)  : DamageVector(damage > 0 ? damage / static_cast<Float>(damage) : DamageVector(0))
 {
 }
 
-DamagePattern::DamagePattern(float em, float thermal, float kinetic, float explosive) : DamageVector(em, thermal, kinetic, explosive)
+DamagePattern::DamagePattern(Float em, Float thermal, Float kinetic, Float explosive) : DamageVector(em, thermal, kinetic, explosive)
 {
 }
 
@@ -38,15 +38,15 @@ Tank DamagePattern::effectiveTank(const Resistances& resistances, const Tank& ta
 	return et;
 }
 
-float DamagePattern::effectivity(const ResistancesLayer& resistances, float amount) const
+Float DamagePattern::effectivity(const ResistancesLayer& resistances, Float amount) const
 {
-	float totalDamage = emAmount + thermalAmount + kineticAmount + explosiveAmount;
-	float emResonance		 = 1.0f - resistances.em;
-	float thermalResonance	 = 1.0f - resistances.thermal;
-	float kineticResonance	 = 1.0f - resistances.kinetic;
-	float explosiveResonance = 1.0f - resistances.explosive;
+	Float totalDamage = emAmount + thermalAmount + kineticAmount + explosiveAmount;
+	Float emResonance		 = 1.0 - resistances.em;
+	Float thermalResonance	 = 1.0 - resistances.thermal;
+	Float kineticResonance	 = 1.0 - resistances.kinetic;
+	Float explosiveResonance = 1.0 - resistances.explosive;
 	
-	float specificDivider = 0;
+	Float specificDivider = 0;
 	
 	if (totalDamage == 0.0)
 		totalDamage = 1.0;
@@ -55,5 +55,5 @@ float DamagePattern::effectivity(const ResistancesLayer& resistances, float amou
 	specificDivider += thermalAmount / totalDamage * thermalResonance;
 	specificDivider += kineticAmount / totalDamage * kineticResonance;
 	specificDivider += explosiveAmount / totalDamage * explosiveResonance;
-	return specificDivider ? amount / specificDivider : std::numeric_limits<float>::infinity();
+	return specificDivider ? amount / specificDivider : std::numeric_limits<Float>::infinity();
 }

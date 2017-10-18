@@ -12,11 +12,11 @@ namespace dgmpp {
 
 		class ModifierPrototype {
 		public:
-			dgmpp::Modifier::Domain domain;
-			dgmpp::Modifier::Type type;
+			Modifier::Domain domain;
+			Modifier::Type type;
 			int32_t modifiedAttributeID;
 			int32_t modifyingAttributeID;
-			dgmpp::Modifier::Association association;
+			Modifier::Association association;
 			int32_t requiredID;
 		};
 		

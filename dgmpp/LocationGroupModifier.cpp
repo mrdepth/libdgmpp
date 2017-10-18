@@ -14,7 +14,7 @@ LocationGroupModifier::~LocationGroupModifier()
 {
 }
 
-bool LocationGroupModifier::isMatch(std::shared_ptr<Item> const& item) const
+bool LocationGroupModifier::isMatch(Item* item) const
 {
 	return item->getGroupID() == groupID_;
 }

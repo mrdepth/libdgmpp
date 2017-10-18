@@ -14,7 +14,7 @@ LocationRequiredSkillModifier::~LocationRequiredSkillModifier()
 {
 }
 
-bool LocationRequiredSkillModifier::isMatch(std::shared_ptr<Item> const& item) const
+bool LocationRequiredSkillModifier::isMatch(Item* item) const
 {
 	return item->requireSkill(skillID_);
 }

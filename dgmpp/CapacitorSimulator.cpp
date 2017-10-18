@@ -1,5 +1,5 @@
 #include "CapacitorSimulator.h"
-#include <math.h>
+#include <cmath>
 #include <functional>
 #include <algorithm>
 #include "Ship.h"
@@ -9,7 +9,7 @@
 
 using namespace dgmpp;
 
-static const float CAPACITOR_PEAK_RECHARGE = sqrtf(0.25);
+static const Float CAPACITOR_PEAK_RECHARGE = std::sqrt(0.25);
 
 class StateCompareFunction : public std::binary_function<std::shared_ptr<const CapacitorSimulator::State> const&, std::shared_ptr<const CapacitorSimulator::State> const&, bool>
 {
@@ -70,41 +70,41 @@ bool CapacitorSimulator::isCapStable()
 	return capStableLow_ + capStableHigh_ > 0;
 }
 
-float CapacitorSimulator::getCapLastsTime()
+Float CapacitorSimulator::getCapLastsTime()
 {
 	if (!isCalculated_)
 		run();
 	
 	if (isCapStable())
-		return std::numeric_limits<float>::infinity();
+		return std::numeric_limits<Float>::infinity();
 	else
 	{
-		return static_cast<float>(time_ / 1000.0);
+		return static_cast<Float>(time_ / 1000.0);
 	}
 }
 
-float CapacitorSimulator::getCapStableLevel()
+Float CapacitorSimulator::getCapStableLevel()
 {
 	if (!isCalculated_)
 		run();
 
 	if (isCapStable())
 	{
-		float capState = (capStableLow_ + capStableHigh_) / (2 * capacitorCapacity_);
-		return std::min(capState, float(1.0));
+		Float capState = (capStableLow_ + capStableHigh_) / (2 * capacitorCapacity_);
+		return std::min(capState, Float(1.0));
 	}
 	else
 		return 0;
 }
 
-float CapacitorSimulator::getCapUsed()
+Float CapacitorSimulator::getCapUsed()
 {
 	if (!isCalculated_)
 		run();
 	return capUsed_;
 }
 
-float CapacitorSimulator::getCapRecharge()
+Float CapacitorSimulator::getCapRecharge()
 {
 	if (!isCalculated_)
 		run();
@@ -128,7 +128,7 @@ void CapacitorSimulator::internalReset()
 	bool isDisallowedAssistance = ship->isDisallowedAssistance();
 	bool isDisallowedOffensiveModifiers = ship->isDisallowedOffensiveModifiers();
 	
-	capRecharge_ = 10.0f / (capacitorRecharge_ / 1000.0f) * CAPACITOR_PEAK_RECHARGE * (1 - CAPACITOR_PEAK_RECHARGE) * capacitorCapacity_;
+	capRecharge_ = 10.0 / (capacitorRecharge_ / 1000.0) * CAPACITOR_PEAK_RECHARGE * (1 - CAPACITOR_PEAK_RECHARGE) * capacitorCapacity_;
 	
 	std::list<std::shared_ptr<Module>> drains;
 	std::list<std::shared_ptr<Drone>> drainDrones;
@@ -165,9 +165,9 @@ void CapacitorSimulator::internalReset()
 	for (const auto& module: drains)
 	{
 		bool projected = module->getOwner() != ship;
-		int duration = static_cast<int>(module->getCycleTime());
+		int duration = static_cast<int>(module->getCycleTime() * 1000.0);
 		int clipSize = module->getShots();
-		float capNeed = 0;
+		Float capNeed = 0;
 		
 		if (duration == 0)
 			continue;
@@ -175,26 +175,26 @@ void CapacitorSimulator::internalReset()
 		if (projected)
 		{
 			if (module->hasEffect(ENERGY_NOSFERATU_FALLOFF))
-				capNeed = static_cast<float>(module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
+				capNeed = static_cast<Float>(module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
 			else if (module->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
-				capNeed = static_cast<float>(module->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue());
+				capNeed = static_cast<Float>(module->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue());
 			else if (module->hasEffect(ENERGY_TRANSFER_EFFECT_ID))
-				capNeed = static_cast<float>(-module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
+				capNeed = static_cast<Float>(-module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
 		}
 		else
-			capNeed = module->getCapUse() * module->getCycleTime() / 1000.0f;
+			capNeed = module->getCapUse() * module->getCycleTime();
 		
 		if (capNeed > 0)
 		{
 			if (projected && isDisallowedOffensiveModifiers)
 				continue;
-			capUsed_ += capNeed / (duration / 1000.0f);
+			capUsed_ += capNeed / (duration / 1000.0);
 		}
 		else if (capNeed < 0)
 		{
 			if (projected && isDisallowedAssistance)
 				continue;
-			capRecharge_ -= capNeed / (duration / 1000.0f);
+			capRecharge_ -= capNeed / (duration / 1000.0);
 		}
 		else
 			continue;
@@ -209,24 +209,26 @@ void CapacitorSimulator::internalReset()
 		
 		std::shared_ptr<State> state = std::make_shared<State>();
 		state->tNow = 0;
-		state->duration = duration;
+		state->reactivationTime = module->hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? module->getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue() : 0;
+		state->duration = module->getRawCycleTime() * 1000 + state->reactivationTime;
 		state->capNeed = capNeed;
 		state->clipSize = clipSize;
 		state->shot = 0;
-		state->reloadTime = static_cast<int>(module->getReloadTime());
+		state->reloadTime = static_cast<int>(module->getReloadTime() * 1000);
 		states_.push_back(state);
 		std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
 	}
 	
 	for (const auto& drone: drainDrones)
 	{
-		int duration = static_cast<int>(drone->getCycleTime());
-		float capNeed = capNeed = drone->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue();
-		capUsed_ += static_cast<float>(capNeed / (duration / 1000.0));
+		int duration = static_cast<int>(drone->getCycleTime() * 1000);
+		Float capNeed = capNeed = drone->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue();
+		capUsed_ += static_cast<Float>(capNeed / (duration / 1000.0));
 		period_ = lcm(period_, duration);
 		
 		std::shared_ptr<State> state = std::make_shared<State>();
 		state->tNow = 0;
+		state->reactivationTime = 0;
 		state->duration = duration;
 		state->capNeed = capNeed;
 		state->clipSize = 0;
@@ -246,11 +248,11 @@ void CapacitorSimulator::run()
 	
 	if (states_.size() > 0)
 	{
-		float tau = capacitorRecharge_ / 5.0f;
-		float capWrap = capacitorCapacity_;
-		float capLowest = capacitorCapacity_;
-		float capLowestPre = capacitorCapacity_;
-		float cap = capacitorCapacity_;
+		Float tau = capacitorRecharge_ / 5.0;
+		Float capWrap = capacitorCapacity_;
+		Float capLowest = capacitorCapacity_;
+		Float capLowestPre = capacitorCapacity_;
+		Float cap = capacitorCapacity_;
 		int tWrap = period_;
 		int tNow = 0;
 		int tLast = 0;
@@ -266,7 +268,7 @@ void CapacitorSimulator::run()
 			if (tNow > maxTime_)
 				break;
 			
-			float s((1.0f + (sqrtf(cap / capacitorCapacity_) - 1.0f) * expf((tLast - state->tNow) / tau)));
+			Float s((1.0 + (std::sqrt(cap / capacitorCapacity_) - 1.0) * std::exp((tLast - state->tNow) / tau)));
 			cap = s * s *capacitorCapacity_;
 			if (tNow != tLast) {
 				if (cap < capLowestPre)
@@ -284,20 +286,22 @@ void CapacitorSimulator::run()
 			
 			iterations_++;
 			
+			tLast = tNow;
+
 			if (cap < capLowest) {
 				if (cap < 0.0)
 					break;
 				capLowest = cap;
 			}
 			
-			tLast = tNow;
 			tNow += state->duration;
 			state->shot++;
 			
 			if (state->clipSize) {
 				if (state->shot % state->clipSize == 0) {
 					state->shot = 0;
-					tNow += state->reloadTime;
+					//tNow += std::max(state->reloadTime, state->reactivationTime);
+					tNow += 10000;
 				}
 			}
 			state->tNow = tNow;
@@ -309,17 +313,17 @@ void CapacitorSimulator::run()
 		
 		time_ = tLast;
 		
-		float avgDrain = 0;
+		Float avgDrain = 0;
 		
 		for (const auto& i: states_)
 			avgDrain += i->capNeed / i->duration;
 		
-		float a = - (2.0f * avgDrain * tau - capacitorCapacity_) / capacitorCapacity_;
+		Float a = - (2.0 * avgDrain * tau - capacitorCapacity_) / capacitorCapacity_;
 		if (a < 0.0)
 			capStableEVE_ = 0;
 		else {
-			float t = (1.0f + sqrtf(a));
-			capStableEVE_ = 0.25f * t * t;	
+			Float t = (1.0 + std::sqrt(a));
+			capStableEVE_ = 0.25 * t * t;	
 		}
 		
 		if (cap > 0.0) {

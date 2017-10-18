@@ -249,6 +249,16 @@ namespace dgmpp {
 	extern const TypeID FIGHTER_ABILITY_ATTACK_TURRET_DURATION_ATTRIBUTE_ID;
 	extern const TypeID FIGHTER_SQUADRON_ORBIT_RANGE_ATTRIBUTE_ID;
 
+	extern const TypeID FIGHTER_ABILITY_ATTACK_TURRET_RANGE_FALLOFF_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_ABILITY_ATTACK_TURRET_RANGE_OPTIMAL_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_ABILITY_ECM_RANGE_FALLOFF_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_ABILITY_ECM_RANGE_OPTIMAL_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_ABILITY_ENERGY_NEUTRALIZER_FALLOFF_RANGE_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_ABILITY_ENERGY_NEUTRALIZER_OPTIMAL_RANGE_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_ABILITY_STASIS_WEBIFIER_FALLOFF_RANGE_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_ABILITY_STASIS_WEBIFIER_OPTIMAL_RANGE_ATTRIBUTE_ID;
+	extern const TypeID FIGHTER_ABILITY_WARP_DISRUPTION_RANGE_ATTRIBUTE_ID;
+
 	
 	extern const TypeID FIGHTER_CAPACITY_ATTRIBUTE_ID;
 	extern const TypeID FIGHTER_SQUADRON_ROLE_ATTRIBUTE_ID;
@@ -262,28 +272,58 @@ namespace dgmpp {
 	
 	extern const TypeID MAX_TYPE_FITTED_ATTRIBUTE_ID;
 
+	extern const TypeID MINING_AMOUNT_ATTRIBUTE_ID;
+	extern const TypeID SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID;
+
+	extern const TypeID WARFARE_BUFF1_ID_ATTRIBUTE_ID;
+	extern const TypeID WARFARE_BUFF1_VALUE_ATTRIBUTE_ID;
+	extern const TypeID WARFARE_BUFF2_ID_ATTRIBUTE_ID;
+	extern const TypeID WARFARE_BUFF2_VALUE_ATTRIBUTE_ID;
+	extern const TypeID WARFARE_BUFF3_ID_ATTRIBUTE_ID;
+	extern const TypeID WARFARE_BUFF3_VALUE_ATTRIBUTE_ID;
+	extern const TypeID WARFARE_BUFF4_ID_ATTRIBUTE_ID;
+	extern const TypeID WARFARE_BUFF4_VALUE_ATTRIBUTE_ID;
+
+	extern const TypeID SCAN_GRAVIMETRIC_STRENGTH_BONUS_ATTRIBUTE_ID;
+	extern const TypeID SCAN_LADAR_STRENGTH_BONUS_ATTRIBUTE_ID;
+	extern const TypeID SCAN_MAGNETOMETRIC_STRENGTH_BONUS_ATTRIBUTE_ID;
+	extern const TypeID SCAN_RADAR_STRENGTH_BONUS_ATTRIBUTE_ID;
+	extern const TypeID MISSILE_VELOCITY_BONUS_ATTRIBUTE_ID;
+	extern const TypeID EXPLOSION_DELAY_BONUS_ATTRIBUTE_ID;
+	extern const TypeID AOE_VELOCITY_BONUS_ATTRIBUTE_ID;
+	extern const TypeID FALLOFF_BONUS_ATTRIBUTE_ID;
+	extern const TypeID MAX_RANGE_BONUS_ATTRIBUTE_ID;
+	extern const TypeID AOE_CLOUD_SIZE_BONUS_ATTRIBUTE_ID;
+	extern const TypeID TRACKING_SPEED_BONUS_ATTRIBUTE_ID;
+	extern const TypeID MAX_TARGET_RANGE_BONUS_ATTRIBUTE_ID;
+	extern const TypeID SCAN_RESOLUTION_BONUS_ATTRIBUTE_ID;
+	extern const TypeID SIGNATURE_RADIUS_BONUS_ATTRIBUTE_ID;
+	extern const TypeID SENSOR_DAMPENER_RESISTANCE_ATTRIBUTE_ID;
+	extern const TypeID WEAPON_DISRUPTION_RESISTANCE_ATTRIBUTE_ID;
+	extern const TypeID SPEED_FACTOR_ATTRIBUTE_ID;
+	
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
-		static std::shared_ptr<Attribute> getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute = false, float value = std::numeric_limits<float>::quiet_NaN());
+		static std::shared_ptr<Attribute> getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute = false, Float value = std::numeric_limits<Float>::quiet_NaN());
 
-		Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, float value);
+		Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, Float value);
 		
-//		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner = nullptr, const char* attributeName = "", bool isFakeAttribute = false);
+//		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, TypeID maxAttributeID, Float value, bool isStackable, bool highIsGood, std::shared_ptr<Item> const& owner = nullptr, const char* attributeName = "", bool isFakeAttribute = false);
 //		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner = nullptr, bool isFakeAttribute = false);
 		virtual ~Attribute(void);
 		std::shared_ptr<Item> getOwner() const;
 		TypeID getAttributeID() const;
 		bool isFakeAttribute() const;
 
-		virtual float getValue();
-		virtual float getInitialValue() const;
+		virtual Float getValue();
+		virtual Float getInitialValue() const;
 		bool isStackable() const;
 		bool highIsGood() const;
 
-		virtual void setValue(float value);
-		virtual float dec(float value);
-		virtual float inc(float value);
+		virtual void setValue(Float value);
+		virtual Float dec(Float value);
+		virtual Float inc(Float value);
 		
 		void reset();
 		
@@ -292,9 +332,9 @@ namespace dgmpp {
 	protected:
 	private:
 		std::weak_ptr<Engine> engine_;
-		float value_;
-		float initialValue_;
-		float forcedValue_;
+		Float value_;
+		Float initialValue_;
+		Float forcedValue_;
 		bool calculated_;
 		bool isFakeAttribute_;
 		

@@ -1,39 +1,39 @@
 //
-//  SpaceStructure.cpp
+//  Structure.cpp
 //  dgmpp
 //
 //  Created by Артем Шиманский on 11.03.16.
 //
 //
 
-#include "SpaceStructure.h"
+#include "Structure.h"
 #include "Attribute.h"
 
 using namespace dgmpp;
 
-SpaceStructure::SpaceStructure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner) : Ship(engine, typeID, owner)
+Structure::Structure(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner) : Ship(engine, typeID, owner)
 {
 	
 }
 
-SpaceStructure::~SpaceStructure()
+Structure::~Structure()
 {
 	
 }
 
-std::vector<TypeID> SpaceStructure::getSupportedModuleCategories() const {
+std::vector<TypeID> Structure::getSupportedModuleCategories() const {
 	return {STRUCTURE_MODULE_CATEGORY_ID};
 }
 
-std::vector<TypeID> SpaceStructure::getSupportedDroneCategories() const {
+std::vector<TypeID> Structure::getSupportedDroneCategories() const {
 	return {FIGHTER_CATEGORY_ID};
 }
 
-float SpaceStructure::getTotalDroneBay() {
+Float Structure::getTotalDroneBay() {
 	return getAttribute(FIGHTER_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
-TypeID SpaceStructure::getFuelBlockTypeID() {
+TypeID Structure::getFuelBlockTypeID() {
 	TypeID raceID = getAttribute(RACE_ID_ATTRIBUTE_ID)->getValue();
 	if (raceID == CALDARI_RACE_ID)
 		return NITROGEN_FUEL_BLOCK_TYPE_ID;
@@ -47,19 +47,19 @@ TypeID SpaceStructure::getFuelBlockTypeID() {
 		return 0;
 }
 
-float SpaceStructure::getCycleFuelNeed() {
-	float fuel = 0;
+Float Structure::getCycleFuelNeed() {
+	Float fuel = 0;
 	for (const auto& module: getModules())
 		if (module->hasAttribute(SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID))
 			fuel += module->getAttribute(SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID)->getValue();
 	return fuel;
 }
 
-float SpaceStructure::getCycleTime() {
+Float Structure::getCycleTime() {
 	return 3600;
 }
 
-/*int SpaceStructure::getDroneSquadronLimit(Fighter::Squadron squadron) {
+/*int Structure::getDroneSquadronLimit(Fighter::Squadron squadron) {
 	switch (squadron) {
 		case Fighter::SQUADRON_HEAVY:
 			return getAttribute(FIGHTER_HEAVY_SLOTS_ATTRIBUTE_ID)->getValue();
@@ -72,7 +72,7 @@ float SpaceStructure::getCycleTime() {
 	}
 }
 
-int SpaceStructure::getDroneSquadronUsed(Fighter::Squadron squadron) {
+int Structure::getDroneSquadronUsed(Fighter::Squadron squadron) {
 	int n = 0;
 	for (const auto& drone: getDrones()) {
 		if (std::dynamic_pointer_cast<Fighter>(drone)->getSquadron() == squadron)
@@ -81,11 +81,11 @@ int SpaceStructure::getDroneSquadronUsed(Fighter::Squadron squadron) {
 	return n;
 }
 
-int SpaceStructure::getTotalDroneLaunchTubes() {
+int Structure::getTotalDroneLaunchTubes() {
 	return getAttribute(FIGHTER_TUBES_ATTRIBUTE_ID)->getValue();
 }
 
-int SpaceStructure::getUsedDroneLaunchTubes() {
+int Structure::getUsedDroneLaunchTubes() {
 	int n = 0;
 	for (const auto& drone: getDrones())
 		if (drone->isActive())

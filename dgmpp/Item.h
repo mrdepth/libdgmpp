@@ -36,8 +36,26 @@ namespace dgmpp {
 	extern const TypeID HELIUM_FUEL_BLOCK_TYPE_ID;
 	extern const TypeID OXYGEN_FUEL_BLOCK_TYPE_ID;
 
+	extern const TypeID SHIELD_OPERATION_TYPE_ID;
+	extern const TypeID SHIELD_EMISSION_SYSTEMS_TYPE_ID;
+	extern const TypeID REPAIR_SYSTEMS_TYPE_ID;
+	extern const TypeID REMOTE_ARMOR_REPAIR_SYSTEMS_TYPE_ID;
+	extern const TypeID ECM_GROUP_ID;
+	extern const TypeID SENSOR_DAMPENER_GROUP_ID;
+	extern const TypeID WEAPON_DISRUPTOR_GROUP_ID;
+	extern const TypeID TARGET_PAINTER_GROUP_ID;
+	extern const TypeID STASIS_WEB_GROUP_ID;
+	extern const TypeID WARP_SCRAMBLER_GROUP_ID;
+	extern const TypeID AFTERBURNER_TYPE_ID;
+	extern const TypeID HIGH_SPEED_MANEUVERING_TYPE_ID;
+	extern const TypeID MINING_TYPE_ID;
+	extern const TypeID ICE_HARVESTING_TYPE_ID;
+	extern const TypeID GAS_CLOUD_HARVESTING_TYPE_ID;
+	extern const TypeID CPU_MANAGEMENT_TYPE_ID;
+	extern const TypeID ENERGY_WEAPON_GROUP_ID;
+	extern const TypeID HYBRID_WEAPON_GROUP_ID;
 
-	
+
 	class Item: public Environment, public std::enable_shared_from_this<Item>
 	{
 	public:
@@ -56,7 +74,7 @@ namespace dgmpp {
 		virtual TypeID getTypeID();
 		virtual TypeID getGroupID();
 		virtual TypeID getCategoryID();
-		virtual const std::shared_ptr<Attribute>& getAttribute(TypeID attributeID);
+		virtual std::shared_ptr<Attribute> getAttribute(TypeID attributeID);
 		const AttributesMap &getAttributes();
 		bool hasAttribute(TypeID attributeID);
 		std::shared_ptr<Effect> getEffect(TypeID effectID);
@@ -96,7 +114,7 @@ namespace dgmpp {
 		virtual Item* self();
 		virtual Item* gang();
 		virtual Item* area();
-
+		
 	protected:
 		std::weak_ptr<Engine> engine_;
 		AttributesMap attributes_;
@@ -117,7 +135,7 @@ namespace dgmpp {
 			if (!loaded_)
 				lazyLoad();
 		}
-		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, float value);
+		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, Float value);
 
 		
 	private:

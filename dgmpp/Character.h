@@ -16,12 +16,13 @@ namespace dgmpp {
 		std::shared_ptr<Ship> getShip();
 		std::shared_ptr<Ship> setShip(TypeID typeID);
 
-		std::shared_ptr<SpaceStructure> setSpaceStructure(TypeID typeID);
-		std::shared_ptr<SpaceStructure> getSpaceStructure();
+		std::shared_ptr<Structure> setStructure(TypeID typeID);
+		std::shared_ptr<Structure> getStructure();
 
 		virtual void reset();
 		
 		std::shared_ptr<Skill> getSkill(TypeID typeID);
+		const SkillsMap& getSkills();
 		
 		bool emptyImplantSlot(int slot);
 		bool emptyBoosterSlot(int slot);
@@ -37,14 +38,14 @@ namespace dgmpp {
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
-		void setCharacterName(const char* characterName = "");
+		void setCharacterName(const char* characterName);
 		const char* getCharacterName();
 		
 		void setSkillLevels(const std::map<TypeID, int>& levels);
 		void setAllSkillsLevel(int level);
-
-		float getDroneControlRange();
-
+		
+		Float getDroneControlDistance();
+		
 		virtual Item* character();
 		virtual Item* ship();
 		virtual Item* structure();
@@ -58,7 +59,7 @@ namespace dgmpp {
 
 	private:
 		std::shared_ptr<Ship> ship_;
-		std::shared_ptr<SpaceStructure> spaceStructure_;
+		std::shared_ptr<Structure> structure_;
 		SkillsMap skills_;
 		ImplantsList implants_;
 		BoostersList boosters_;

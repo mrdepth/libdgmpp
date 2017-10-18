@@ -3,7 +3,7 @@
 
 using namespace dgmpp;
 
-std::shared_ptr<dgmpp::EffectPrototype> EffectPrototype::getEffectPrototype(std::shared_ptr<Engine> const& engine, TypeID effectID)
+std::shared_ptr<EffectPrototype> EffectPrototype::getEffectPrototype(std::shared_ptr<Engine> const& engine, TypeID effectID)
 {
 	auto& reusableEffectPrototypes = engine->getReusableEffectPrototypes();
 	auto i = reusableEffectPrototypes.find(effectID);
@@ -29,7 +29,7 @@ EffectPrototype::EffectPrototype(std::shared_ptr<Engine> const& engine, TypeID e
 		bool isAssistance = result->getInt(2) != 0;
 		bool isOffensive = result->getInt(1) != 0;
 		effectName_ = result->getText(3);
-		for (auto i: effectName_)
+		for (auto &i: effectName_)
 		{
 			char c = i;
 			if (!((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))

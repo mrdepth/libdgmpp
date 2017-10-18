@@ -12,7 +12,7 @@ namespace dgmpp {
 
 		TypeID getAttributeID() const {return attributeID_;};
 		TypeID getMaxAttributeID() const {return maxAttributeID_;};
-		float getDefaultValue() const {return defaultValue_;};
+		Float getDefaultValue() const {return defaultValue_;};
 		bool isStackable() const {return isStackable_;};
 		bool highIsGood() const {return highIsGood_;};
 		const char* getAttributeName() const {return attributeName_.c_str();};
@@ -21,7 +21,7 @@ namespace dgmpp {
 		std::weak_ptr<Engine> engine_;
 		TypeID attributeID_;
 		TypeID maxAttributeID_;
-		float defaultValue_;
+		Float defaultValue_;
 		bool isStackable_;
 		bool highIsGood_;
 		std::string attributeName_;

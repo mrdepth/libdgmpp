@@ -46,8 +46,28 @@ const TypeID dgmpp::HYDROGEN_FUEL_BLOCK_TYPE_ID = 4246;
 const TypeID dgmpp::HELIUM_FUEL_BLOCK_TYPE_ID = 4247;
 const TypeID dgmpp::OXYGEN_FUEL_BLOCK_TYPE_ID = 4312;
 
+const TypeID dgmpp::SHIELD_OPERATION_TYPE_ID = 3416;
+const TypeID dgmpp::SHIELD_EMISSION_SYSTEMS_TYPE_ID = 3422;
+const TypeID dgmpp::REPAIR_SYSTEMS_TYPE_ID = 3393;
+const TypeID dgmpp::REMOTE_ARMOR_REPAIR_SYSTEMS_TYPE_ID = 16069;
+const TypeID dgmpp::ECM_GROUP_ID = 201;
+const TypeID dgmpp::SENSOR_DAMPENER_GROUP_ID = 208;
+const TypeID dgmpp::WEAPON_DISRUPTOR_GROUP_ID = 291;
+const TypeID dgmpp::TARGET_PAINTER_GROUP_ID = 379;
+const TypeID dgmpp::STASIS_WEB_GROUP_ID = 65;
+const TypeID dgmpp::WARP_SCRAMBLER_GROUP_ID = 52;
+const TypeID dgmpp::AFTERBURNER_TYPE_ID = 3450;
+const TypeID dgmpp::HIGH_SPEED_MANEUVERING_TYPE_ID = 3454;
+const TypeID dgmpp::MINING_TYPE_ID = 3386;
+const TypeID dgmpp::ICE_HARVESTING_TYPE_ID = 16281;
+const TypeID dgmpp::GAS_CLOUD_HARVESTING_TYPE_ID = 25544;
+const TypeID dgmpp::CPU_MANAGEMENT_TYPE_ID = 3426;
+const TypeID dgmpp::ENERGY_WEAPON_GROUP_ID = 53;
+const TypeID dgmpp::HYBRID_WEAPON_GROUP_ID = 74;
 
-class ModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
+
+
+/*class ModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
 	ModifierMatchFunction(TypeID attributeID) : attributeID_(attributeID) {}
@@ -97,7 +117,7 @@ private:
 	TypeID attributeID_;
 	std::shared_ptr<Attribute> modifier_;
 	Modifier::Association association_;
-};
+};*/
 
 
 Item::Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), loaded_(false)
@@ -118,12 +138,15 @@ std::shared_ptr<Item> Item::getOwner() const
 	return owner_.lock();
 }
 
-const std::shared_ptr<Attribute>& Item::getAttribute(TypeID attributeID)
+std::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
 {
+	if (typeID_ == 0)
+		return nullptr;
+	
 	loadIfNeeded();
 	auto engine = getEngine();
-//	if (!engine)
-//		return nullptr;
+	if (!engine)
+		return nullptr;
 
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
@@ -142,6 +165,9 @@ const AttributesMap &Item::getAttributes()
 
 bool Item::hasAttribute(TypeID attributeID)
 {
+	if (typeID_ == 0)
+		return false;
+	
 	loadIfNeeded();
 	AttributesMap::iterator i = attributes_.find(attributeID);
 	if (i != attributes_.end())
@@ -152,6 +178,9 @@ bool Item::hasAttribute(TypeID attributeID)
 
 std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 {
+	if (typeID_ == 0)
+		return nullptr;
+
 	loadIfNeeded();
 	for (const auto& i: effects_)
 		if (i->getEffectID() == effectID)
@@ -161,6 +190,9 @@ std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
 
 bool Item::requireSkill(TypeID skillID)
 {
+	if (typeID_ == 0)
+		return false;
+
 	loadIfNeeded();
 	try
 	{
@@ -192,6 +224,9 @@ const std::vector<TypeID>& Item::requiredSkills() {
 
 bool Item::hasEffect(TypeID effectID)
 {
+	if (typeID_ == 0)
+		return false;
+
 	loadIfNeeded();
 	for (const auto& i: effects_)
 		if (i->getEffectID() == effectID)
@@ -246,6 +281,9 @@ void Item::reset()
 
 std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
+	if (typeID_ == 0)
+		return outIterator;
+
 	auto i = itemModifiers_.find(attribute->getAttributeID());
 	if (i != itemModifiers_.end()) {
 		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
@@ -261,6 +299,9 @@ std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std
 
 std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
+	if (typeID_ == 0)
+		return outIterator;
+
 	auto i = locationModifiers_.find(attribute->getAttributeID());
 	if (i != locationModifiers_.end())
 		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
@@ -269,6 +310,8 @@ std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attrib
 
 std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
+	if (typeID_ == 0)
+		return outIterator;
 
 	auto i = locationGroupModifiers_.find(item->getGroupID());
 	if (i != locationGroupModifiers_.end()) {
@@ -295,26 +338,36 @@ std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, A
 
 void Item::addItemModifier(std::shared_ptr<Modifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	itemModifiers_[modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationModifier(std::shared_ptr<Modifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	locationModifiers_[modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	locationGroupModifiers_[modifier->getGroupID()][modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	locationRequiredSkillModifiers_[modifier->getSkillID()][modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	auto& list = itemModifiers_[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
 	if (i != list.end())
@@ -325,6 +378,8 @@ void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 
 void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	auto& list = locationModifiers_[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
 	if (i != list.end())
@@ -335,6 +390,8 @@ void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 
 void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	auto& map = locationGroupModifiers_[modifier->getGroupID()];
 	auto& list = map[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
@@ -350,6 +407,8 @@ void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> co
 
 void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
 {
+	if (typeID_ == 0)
+		return;
 	auto& map = locationRequiredSkillModifiers_[modifier->getSkillID()];
 	auto& list = map[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
@@ -365,6 +424,8 @@ void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredS
 
 const char* Item::getTypeName()
 {
+	if (typeID_ == 0)
+		return "<dummy>";
 	loadIfNeeded();
 	if (typeName_.size() == 0)
 	{
@@ -386,6 +447,9 @@ const char* Item::getTypeName()
 
 const char* Item::getGroupName()
 {
+	if (typeID_ == 0)
+		return "<dummy>";
+
 	loadIfNeeded();
 	if (groupName_.size() == 0)
 	{
@@ -405,7 +469,10 @@ const char* Item::getGroupName()
 	return groupName_.c_str();
 }
 
-std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, float value) {
+std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, Float value) {
+	if (typeID_ == 0)
+		return nullptr;
+
 	auto engine = getEngine();
 	if (!engine)
 		return nullptr;
@@ -431,10 +498,10 @@ void Item::lazyLoad() {
 	if (result->next())
 	{
 		groupID_ = result->getInt(0);
-		float radius = static_cast<float>(result->getDouble(1));
-		float mass = static_cast<float>(result->getDouble(2));
-		float volume = static_cast<float>(result->getDouble(3));
-		float capacity = static_cast<float>(result->getDouble(4));
+		Float radius = static_cast<Float>(result->getDouble(1));
+		Float mass = static_cast<Float>(result->getDouble(2));
+		Float volume = static_cast<Float>(result->getDouble(3));
+		Float capacity = static_cast<Float>(result->getDouble(4));
 		int raceID = result->getInt(5);
 		categoryID_ = result->getInt(6);
 		
@@ -443,7 +510,7 @@ void Item::lazyLoad() {
 		attributes_[MASS_ATTRIBUTE_ID] = Attribute::getAttribute(engine, MASS_ATTRIBUTE_ID,  shared_from_this(), false, mass);
 		attributes_[VOLUME_ATTRIBUTE_ID] = Attribute::getAttribute(engine, VOLUME_ATTRIBUTE_ID,  shared_from_this(), false, volume);
 		attributes_[CAPACITY_ATTRIBUTE_ID] = Attribute::getAttribute(engine, CAPACITY_ATTRIBUTE_ID,  shared_from_this(), false, capacity);
-		attributes_[RACE_ID_ATTRIBUTE_ID] = Attribute::getAttribute(engine, RACE_ID_ATTRIBUTE_ID,  shared_from_this(), false, static_cast<float>(raceID));
+		attributes_[RACE_ID_ATTRIBUTE_ID] = Attribute::getAttribute(engine, RACE_ID_ATTRIBUTE_ID,  shared_from_this(), false, static_cast<Float>(raceID));
 		
 		//sql.str(std::string());
 		//sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
@@ -455,7 +522,7 @@ void Item::lazyLoad() {
 		while (result->next())
 		{
 			TypeID attributeID = static_cast<TypeID>(result->getInt(0));
-			float value = static_cast<float>(result->getDouble(1));
+			Float value = static_cast<Float>(result->getDouble(1));
 			attributes_[attributeID] = Attribute::getAttribute(engine, attributeID, shared_from_this(), false, value);
 		}
 		
@@ -500,7 +567,11 @@ void Item::lazyLoad() {
 
 
 std::set<std::shared_ptr<Item>> Item::getAffectors() {
+	if (typeID_ == 0)
+		return std::set<std::shared_ptr<Item>>();
+	
 	ModifiersList modifiers;
+
 	auto outIterator = std::inserter(modifiers, modifiers.end());
 	{
 		for (const auto& i: getAttributes())

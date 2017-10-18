@@ -6,7 +6,7 @@
 
 using namespace dgmpp;
 
-Vector Point::operator-(const dgmpp::Point &p) const  {
+Vector Point::operator-(const Point &p) const  {
 	return Vector(x - p.x, y - p.y);
 }
 
@@ -14,15 +14,15 @@ bool Point::operator == (const Point& p) const {
 	return p.x == x && p.y == y;
 }
 
-float Vector::length() const {
+Float Vector::length() const {
 	return std::sqrt(dx * dx + dy * dy);
 }
 
-float Vector::project(const Vector& v) {
+Float Vector::project(const Vector& v) {
 	return dotProduct(v) / length();
 }
 
-float Vector::dotProduct(const Vector& v) {
+Float Vector::dotProduct(const Vector& v) {
 	return dx * v.dx + dy * v.dy;
 }
 
@@ -34,48 +34,48 @@ Vector Vector::operator-(const Vector& v) const {
 	return Vector(dx - v.dx, dy - v.dy);
 }
 
-Vector Vector::operator*(float v) const {
+Vector Vector::operator*(Float v) const {
 	return Vector(dx * v, dy * v);
 }
 
-Vector Vector::operator/(float v) const {
+Vector Vector::operator/(Float v) const {
 	return Vector(dx / v, dy / v);
 }
 
 CombatSimulator::State::State(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target) : attacker_(attacker), target_(target) {
 }
 
-CombatSimulator::OrbitState::OrbitState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float orbitRadius, float attackerVelocity) : State(attacker, target), orbitRadius_(orbitRadius), attackerVelocity_(attackerVelocity), calculatedAttackerVelocity_(-1), generation_(0) {
+CombatSimulator::OrbitState::OrbitState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, Float orbitRadius, Float attackerVelocity) : State(attacker, target), orbitRadius_(orbitRadius), attackerVelocity_(attackerVelocity), calculatedAttackerVelocity_(-1), generation_(0) {
 }
 
-void CombatSimulator::OrbitState::setOrbitRadius(float orbitRadius) {
+void CombatSimulator::OrbitState::setOrbitRadius(Float orbitRadius) {
 	orbitRadius_ = orbitRadius;
 	calculatedAttackerVelocity_ = -1;
 	generation_ = 0;
 }
 
 
-float CombatSimulator::OrbitState::range() const {
+Float CombatSimulator::OrbitState::range() const {
 	return orbitRadius_;
 }
 
-float CombatSimulator::OrbitState::transversalVelocity() const {
-	float Va = attackerVelocity();
-	float Vt = targetVelocity();
+Float CombatSimulator::OrbitState::transversalVelocity() const {
+	Float Va = attackerVelocity();
+	Float Vt = targetVelocity();
 	//return Va > Vt ? std::sqrt(Va * Va - Vt * Vt) : 0;
 	return std::sqrt(fabs(Va * Va - Vt * Vt));
 }
 
-float CombatSimulator::OrbitState::angularVelocity() const {
-	float r = range();
+Float CombatSimulator::OrbitState::angularVelocity() const {
+	Float r = range();
 	return r > 0 ? transversalVelocity() / r : 0;
 }
 
-float CombatSimulator::OrbitState::targetVelocity() const {
+Float CombatSimulator::OrbitState::targetVelocity() const {
 	return target_->getVelocity();
 }
 
-float CombatSimulator::OrbitState::attackerVelocity() const {
+Float CombatSimulator::OrbitState::attackerVelocity() const {
 	auto g = target_->getEngine()->getGeneration();
 	if (g != generation_ || calculatedAttackerVelocity_ < 0) {
 		calculatedAttackerVelocity_ = std::min(attacker_->getMaxVelocityInOrbit(orbitRadius_), attackerVelocity_);
@@ -84,63 +84,63 @@ float CombatSimulator::OrbitState::attackerVelocity() const {
 	return calculatedAttackerVelocity_;
 }
 
-CombatSimulator::KeepAtRangeState::KeepAtRangeState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float range) : State(attacker, target), range_(range) {
+CombatSimulator::KeepAtRangeState::KeepAtRangeState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, Float range) : State(attacker, target), range_(range) {
 }
 
-void CombatSimulator::KeepAtRangeState::setRange(float range) {
+void CombatSimulator::KeepAtRangeState::setRange(Float range) {
 	range_ = range;
 }
 
-float CombatSimulator::KeepAtRangeState::range() const {
+Float CombatSimulator::KeepAtRangeState::range() const {
 	return range_;
 }
 
-float CombatSimulator::KeepAtRangeState::transversalVelocity() const {
+Float CombatSimulator::KeepAtRangeState::transversalVelocity() const {
 	return 0;
 }
 
-float CombatSimulator::KeepAtRangeState::angularVelocity() const {
+Float CombatSimulator::KeepAtRangeState::angularVelocity() const {
 	return 0;
 }
 
-float CombatSimulator::KeepAtRangeState::targetVelocity() const {
+Float CombatSimulator::KeepAtRangeState::targetVelocity() const {
 	return target_->getVelocity();
 }
 
-float CombatSimulator::KeepAtRangeState::attackerVelocity() const {
+Float CombatSimulator::KeepAtRangeState::attackerVelocity() const {
 	return std::min(attacker_->getVelocity(), targetVelocity());
 }
 
-CombatSimulator::ManualState::ManualState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, float range, float attackerVelocity, float targetVelocity) : State(attacker, target), targetPosition(0, 0),  attackerPosition(range, 0),  attackerVelocityVector(0, attackerVelocity), targetVelocityVector(0, targetVelocity) {
+CombatSimulator::ManualState::ManualState(std::shared_ptr<Ship> const& attacker, std::shared_ptr<Ship> const& target, Float range, Float attackerVelocity, Float targetVelocity) : State(attacker, target), targetPosition(0, 0),  attackerPosition(range, 0),  attackerVelocityVector(0, attackerVelocity), targetVelocityVector(0, targetVelocity) {
 }
 
-float CombatSimulator::ManualState::range() const {
+Float CombatSimulator::ManualState::range() const {
 	return (attackerPosition - targetPosition).length();
 }
 
-float CombatSimulator::ManualState::transversalVelocity() const {
+Float CombatSimulator::ManualState::transversalVelocity() const {
 	if (targetPosition == attackerPosition)
 		return 0;
 	
 	Vector dv = targetVelocityVector - attackerVelocityVector;
-	float l = dv.length();
+	Float l = dv.length();
 	if (l == 0)
 		return 0;
 	
-	float pr = (attackerPosition - targetPosition).project(dv);
+	Float pr = (attackerPosition - targetPosition).project(dv);
 	return std::sqrt(l * l - pr * pr);
 }
 
-float CombatSimulator::ManualState::angularVelocity() const {
-	float r = range();
+Float CombatSimulator::ManualState::angularVelocity() const {
+	Float r = range();
 	return r > 0 ? transversalVelocity() / r : 0;
 }
 
-float CombatSimulator::ManualState::targetVelocity() const {
+Float CombatSimulator::ManualState::targetVelocity() const {
 	return targetVelocityVector.length();
 }
 
-float CombatSimulator::ManualState::attackerVelocity() const {
+Float CombatSimulator::ManualState::attackerVelocity() const {
 	return attackerVelocityVector.length();
 }
 
@@ -163,11 +163,11 @@ CombatSimulator::CombatSimulator(std::shared_ptr<Ship> const& attacker, std::sha
 					if (module->getDps() == 0) {
 						preferredStates_[module] = state;
 						modulesList.push_back(module);
-						module->setPreferredState(Module::STATE_ONLINE);
+						module->setState(Module::STATE_ONLINE);
 					}
 				}
 				else
-					module->setPreferredState(Module::STATE_ONLINE);
+					module->setState(Module::STATE_ONLINE);
 			}
 		}
 		for (const auto& drone: attacker->getDrones()) {
@@ -189,11 +189,11 @@ CombatSimulator::~CombatSimulator() {
 
 	for (const auto& module: attacker_->getModules()) {
 		module->setTarget(targets_[module]);
-		module->setPreferredState(states_[module]);
+		module->setState(states_[module]);
 	}
 	for (const auto& module: target_->getModules()) {
 		module->setTarget(targets_[module]);
-		module->setPreferredState(states_[module]);
+		module->setState(states_[module]);
 	}
 	for (const auto& drone: attacker_->getDrones()) {
 		if (drone->isActive() && drone->isOffensive() && !drone->isAssistance()) {
@@ -209,24 +209,24 @@ CombatSimulator::~CombatSimulator() {
 }
 
 void CombatSimulator::setState(const State& state) {
-	float range = state.range();
+	Float range = state.range();
 	auto engine = attacker_->getEngine();
 	engine->beginUpdates();
 	for (const auto& module: attackerOffensiveModules_) {
-		float maxRange = module->getMaxRange();
-		float falloff = module->getFalloff();
-		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
+		Float maxRange = module->getMaxRange();
+		Float falloff = module->getFalloff();
+		module->setState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
 	}
 	for (const auto& module: targetOffensiveModules_) {
-		float maxRange = module->getMaxRange();
-		float falloff = module->getFalloff();
-		module->setPreferredState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
+		Float maxRange = module->getMaxRange();
+		Float falloff = module->getFalloff();
+		module->setState(range > (maxRange + falloff * 2) ? Module::STATE_ONLINE : preferredStates_[module]);
 	}
 	engine->commitUpdates();
 
-	float targetVelocity = state.targetVelocity();
-	float attackerVelocity = state.attackerVelocity();
-	float angularVelocity = state.angularVelocity();
+	Float targetVelocity = state.targetVelocity();
+	Float attackerVelocity = state.attackerVelocity();
+	Float angularVelocity = state.angularVelocity();
 	
 	attackersHostileTarget_ = HostileTarget(range, angularVelocity, target_->getSignatureRadius(), targetVelocity);
 	targetsHostileTarget_ = HostileTarget(range, angularVelocity,  attacker_->getSignatureRadius(), attackerVelocity);
@@ -240,9 +240,9 @@ DamageVector CombatSimulator::incomingDps() {
 	return target_->getWeaponDps(targetsHostileTarget_) + target_->getDroneDps(targetsHostileTarget_);
 }
 
-float CombatSimulator::timeToKill() {
+Float CombatSimulator::timeToKill() {
 	auto vdps = outgoingDps();
-	float dps = vdps;
+	Float dps = vdps;
 	DamagePattern pattern(dps);
 	auto resistances = target_->getResistances();
 	auto ehp = pattern.effectiveHitPoints(resistances, target_->getHitPoints());
@@ -254,12 +254,12 @@ float CombatSimulator::timeToKill() {
 	if (shieldDPS > 0 && armorDPS > 0 && hullDPS > 0)
 		return ehp.shield / shieldDPS + ehp.armor / armorDPS + ehp.hull / hullDPS;
 	else
-		return std::numeric_limits<float>::infinity();
+		return std::numeric_limits<Float>::infinity();
 }
 
-float CombatSimulator::timeToDie() {
+Float CombatSimulator::timeToDie() {
 	auto vdps = incomingDps();
-	float dps = vdps;
+	Float dps = vdps;
 	DamagePattern pattern(dps);
 	auto resistances = attacker_->getResistances();
 	auto ehp = pattern.effectiveHitPoints(resistances, attacker_->getHitPoints());
@@ -271,23 +271,23 @@ float CombatSimulator::timeToDie() {
 	if (shieldDPS > 0 && armorDPS > 0 && hullDPS > 0)
 		return ehp.shield / shieldDPS + ehp.armor / armorDPS + ehp.hull / hullDPS;
 	else
-		return std::numeric_limits<float>::infinity();
+		return std::numeric_limits<Float>::infinity();
 }
 
-float CombatSimulator::attackerModulesLifeTime() {
-	float lifeTime = std::numeric_limits<float>::infinity();
+Float CombatSimulator::attackerModulesLifeTime() {
+	Float lifeTime = std::numeric_limits<Float>::infinity();
 	for (const auto& module: attacker_->getModules()) {
-		float v = module->getLifeTime();
+		Float v = module->getLifeTime();
 		if (v > 0)
 			lifeTime = std::min(lifeTime, v);
 	}
 	return lifeTime;
 }
 
-float CombatSimulator::targetModulesLifeTime() {
-	float lifeTime = std::numeric_limits<float>::infinity();
+Float CombatSimulator::targetModulesLifeTime() {
+	Float lifeTime = std::numeric_limits<Float>::infinity();
 	for (const auto& module: target_->getModules()) {
-		float v = module->getLifeTime();
+		Float v = module->getLifeTime();
 		if (v > 0)
 			lifeTime = std::min(lifeTime, v);
 	}

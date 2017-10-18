@@ -9,14 +9,14 @@
 #include "Modifier.h"
 #include "LocationGroupModifier.h"
 #include "LocationRequiredSkillModifier.h"
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 #include "Charge.h"
 #include <cassert>
 
 using namespace dgmpp;
 
-static const float SHIELD_PEAK_RECHARGE = sqrtf(0.25f);
+static const Float SHIELD_PEAK_RECHARGE = sqrt(0.25);
 
 struct Repairer
 {
@@ -28,9 +28,9 @@ struct Repairer
 	} type;
 	
 	Module* module;
-	float hpPerSec;
-	float capPerSec;
-	float effectivity;
+	Float hpPerSec;
+	Float capPerSec;
+	Float effectivity;
 };
 
 class RepairersEffectivityCompare : public std::binary_function<const std::shared_ptr<Repairer>&, const std::shared_ptr<Repairer>&, bool>
@@ -49,8 +49,10 @@ Ship::Ship(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr
 
 Ship::~Ship(void)
 {
-	for (const auto& module: modules_)
-		module->clearTarget();
+	for (const auto& i: getModules()) {
+		i->clearTarget();
+	}
+	
 	for (const auto& drone: drones_)
 		drone->clearTarget();
 	
@@ -74,7 +76,7 @@ Ship::~Ship(void)
 	}
 }
 
-std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
+std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced, int socket)
 {
 	try
 	{
@@ -92,14 +94,26 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 		
 		if (isModule && (forced || canFit(module)))
 		{
-			modules_.push_back(module);
-			//module->setOwner(this);
+			auto& array = modules_[module->getSlot()];
 			
+			if (socket < 0)
+				socket = static_cast<int>(std::find_if(array.begin(), array.end(), [&](std::shared_ptr<Module> const& module) { return module->isDummy(); }) - array.begin());
+			
+			if (socket >= array.size()) {
+				array.push_back(module);
+			}
+			else if (!array[socket]->isDummy()) {
+				array.insert(array.begin() + socket, module);
+			}
+			else {
+				array[socket] = module;
+			}
+
 			module->addEffects(Effect::CATEGORY_GENERIC);
 			if (module->canHaveState(Module::STATE_ACTIVE))
-				module->setState(Module::STATE_ACTIVE);
+				module->setInternalState(Module::STATE_ACTIVE);
 			else if (module->canHaveState(Module::STATE_ONLINE))
-				module->setState(Module::STATE_ONLINE);
+				module->setInternalState(Module::STATE_ONLINE);
 			engine->reset();
 			
 			//updateEnabledStatus();
@@ -117,41 +131,43 @@ std::shared_ptr<Module> Ship::addModule(TypeID typeID, bool forced)
 std::shared_ptr<Module> Ship::replaceModule(std::shared_ptr<Module> const& oldModule, TypeID typeID) {
 	try
 	{
-		//Module* newModule =  new Module(engine_, typeID, this);
-		ModulesList::iterator i = std::find(modules_.begin(), modules_.end(), oldModule);
-		if (i == modules_.end())
+		auto engine = getEngine();
+		if (!engine)
 			return nullptr;
-		i--;
+		
+		//Module* newModule =  new Module(engine_, typeID, this);
+		auto& array = modules_[oldModule->getSlot()];
+		auto i = std::find(array.begin(), array.end(), oldModule);
+		if (i == array.end())
+			return nullptr;
 		
 		Module::State state = oldModule->getPreferredState();
 		std::shared_ptr<Charge> charge = oldModule->getCharge();
 		TypeID chargeTypeID = charge ? charge->getTypeID() : 0;
 		std::shared_ptr<Ship> target = oldModule->getTarget();
+		auto socket = static_cast<int>(i - array.begin());
 		
-		
-		oldModule->setState(Module::STATE_OFFLINE);
+		oldModule->setInternalState(Module::STATE_OFFLINE);
 		oldModule->clearTarget();
 		oldModule->removeEffects(Effect::CATEGORY_GENERIC);
 		
-		//modules_.remove(oldModule);
-		modules_.erase(std::find(modules_.begin(), modules_.end(), oldModule));
-
-		std::shared_ptr<Module> newModule = addModule(typeID);
+		if (array.size() > getNumberOfSlots(oldModule->getSlot())) {
+			array.erase(i);
+		}
+		else {
+			*i = Module::dummy(engine, shared_from_this(), oldModule->getSlot());
+		}
+			
+		std::shared_ptr<Module> newModule = addModule(typeID, false, socket);
 		if (newModule) {
-			//modules_.remove(newModule);
-			modules_.erase(std::find(modules_.begin(), modules_.end(), newModule));
-			i++;
-			modules_.insert(i, newModule);
 			if (chargeTypeID)
 				newModule->setCharge(chargeTypeID);
 			if (target)
 				newModule->setTarget();
-			newModule->setPreferredState(state);
+			newModule->setState(state);
 		}
-		auto engine = getEngine();
-		if (engine)
-			engine->reset();
 		
+		engine->reset();
 		//updateEnabledStatus();
 		return newModule;
 	}
@@ -170,105 +186,94 @@ ModulesList Ship::addModules(const std::list<TypeID>& typeIDs)
 		try
 		{
 			module = addModule(i);
+			modules.push_back(module);
 		}
 		catch(Item::UnknownTypeIDException)
 		{
 			module = nullptr;
 		}
 		
-		modules.push_back(module);
 	}
 	return modules;
-	
-	/*std::list<TypeID>::const_iterator i, end = typeIDs.end();
-	ModulesList modules;
-	ModulesList lows;
-	ModulesList meds;
-	ModulesList highs;
-	ModulesList rigs;
-	ModulesList subsystems;
-
-	for (i = typeIDs.begin(); i != end; i++)
-	{
-		Module* module;
-		try
-		{
-			module = addModule(*i);
-			module = new Module(engine_, *i, this);
-		}
-		catch(Item::UnknownTypeIDException)
-		{
-			module = nullptr;
-		}
-
-		modules.push_back(module);
-		if (!module)
-			continue;
-		switch(module->getSlot())
-		{
-		case Module::SLOT_LOW:
-			lows.push_back(module);
-			break;
-		case Module::SLOT_MED:
-			meds.push_back(module);
-			break;
-		case Module::SLOT_HI:
-			highs.push_back(module);
-			break;
-		case Module::SLOT_RIG:
-			rigs.push_back(module);
-			break;
-		case Module::SLOT_SUBSYSTEM:
-			subsystems.push_back(module);
-			break;
-		default:
-			modules.pop_back();
-			modules.push_back(nullptr);
-			break;
-		}
-	}
-
-
-	ModulesList* lists[] = {&subsystems, &rigs, &lows, &meds, &highs};
-
-	for (int j = 0; j < 5; j++)
-	{
-		ModulesList::iterator k, endk;
-		for (k = lists[j]->begin(), endk = lists[j]->end(); k != endk; k++)
-			if (!addModule(*k))
-				std::replace(modules.begin(), modules.end(), *k, (Module*) nullptr);
-	}
-	return modules;*/
 }
 
 void Ship::removeModule(std::shared_ptr<Module> const& module) {
-	module->setState(Module::STATE_OFFLINE);
-	module->clearTarget();
-	module->removeEffects(Effect::CATEGORY_GENERIC);
-	
-	//modules_.remove(module);
-	modules_.erase(std::find(modules_.begin(), modules_.end(), module));
 	auto engine = getEngine();
-	if (engine)
-		engine->reset();
+	if (!engine)
+		return;
 	
-	//updateEnabledStatus();
+	auto& array = modules_[module->getSlot()];
+	auto i = std::find(array.begin(), array.end(), module);
+	if (i != array.end()) {
+		module->setInternalState(Module::STATE_OFFLINE);
+		module->clearTarget();
+		module->removeEffects(Effect::CATEGORY_GENERIC);
+		
+		*i = Module::dummy(engine, shared_from_this(), module->getSlot());
+		engine->reset();
+	}
 }
 
-std::shared_ptr<Drone> Ship::addDrone(TypeID typeID)
+std::shared_ptr<Drone> Ship::addDrone(TypeID typeID, int squadronTag)
 {
 	try
 	{
 		auto engine = getEngine();
 		if (!engine)
 			return nullptr;
-		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, shared_from_this());
+		
+		if (squadronTag < 0) {
+			int lastTag = 0;
+			int lastSize = 0;
+			int squadronSize = 0;
+			for (const auto& drone: drones_) {
+				if (drone->getTypeID() != typeID)
+					continue;
+				
+				auto tag = drone->getSquadronTag();
+				if (squadronSize == 0) {
+					squadronSize = drone->getSquadronSize() ?: 5;
+				}
+				if (tag > lastTag) {
+					lastTag = tag;
+					lastSize = 1;
+				}
+				else if (tag == lastTag) {
+					lastSize++;
+				}
+			}
+			if (lastSize < (squadronSize ?: 5))
+				squadronTag = lastTag;
+			else
+				squadronTag = lastTag + 1;
+		}
+
+		
+		std::shared_ptr<Drone> drone = std::make_shared<Drone>(engine, typeID, squadronTag, shared_from_this());
 		for (auto categoryID: getSupportedDroneCategories())
 			if (categoryID == drone->getCategoryID()) {
+				
+				auto i = std::find_if(drones_.begin(), drones_.end(), [&](const std::shared_ptr<Drone>& drone) {
+					return drone->getTypeID() == typeID && drone->getSquadronTag() == squadronTag;
+				});
+				if (i == drones_.end()) {
+					auto squadron = drone->getSquadron();
+					if (squadron == Drone::FIGHTER_SQUADRON_NONE) {
+						drone->setActive(getDroneSquadronLimit(squadron) > getDroneSquadronUsed(squadron));
+					}
+					else {
+						drone->setActive(getTotalFighterLaunchTubes() > getFighterLaunchTubesUsed() && getDroneSquadronLimit(squadron) > getDroneSquadronUsed(squadron));
+					}
+				}
+				else {
+					drone->setActive((*i)->isActive());
+				}
+				
 				drones_.push_back(drone);
 				drone->addEffects(Effect::CATEGORY_GENERIC);
 				drone->addEffects(Effect::CATEGORY_TARGET);
 				engine->reset();
+				
 				return drone;
 			}
 		return nullptr;
@@ -291,18 +296,29 @@ void Ship::removeDrone(std::shared_ptr<Drone> const& drone)
 		engine->reset();
 }
 
-
-const ModulesList& Ship::getModules()
-{
-	return modules_;
+ModulesList Ship::getModules(bool includingDummies) {
+	ModulesList list;
+	for (const auto& i: modules_) {
+		if (includingDummies)
+			std::copy(i.second.begin(), i.second.end(), std::back_inserter(list));
+		else
+			std::copy_if(i.second.begin(), i.second.end(), std::back_inserter(list), [&](const std::shared_ptr<Module>& module) {return !module->isDummy(); });
+	}
+	return list;
 }
 
-void Ship::getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator)
-{
-	for (const auto& i: modules_)
-		if (i->getSlot() == slot)
-			*outIterator++ = i;
+ModulesList Ship::getModules(Module::Slot slot, bool includingDummies) {
+	const auto& i = modules_[slot];
+	
+	if (includingDummies)
+		return i;
+	else {
+		ModulesList list;
+		std::copy_if(i.begin(), i.end(), std::back_inserter(list), [&](const std::shared_ptr<Module>& module) {return !module->isDummy(); });
+		return list;
+	}
 }
+
 
 const DronesList& Ship::getDrones()
 {
@@ -400,14 +416,14 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 		case Module::SLOT_SUBSYSTEM:
 		{
 			int subsystemSlot = static_cast<int>(module->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue());
-			for (const auto& i: modules_)
-				if (i->getSlot() == Module::SLOT_SUBSYSTEM && static_cast<int>(i->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue()) == subsystemSlot)
+			for (const auto& i: getModules(Module::SLOT_SUBSYSTEM))
+				if (!i->isDummy() && static_cast<int>(i->getAttribute(SUBSYSTEM_SLOT_ATTRIBUTE_ID)->getValue()) == subsystemSlot)
 					return false;
 			break;
 		}
 		case Module::SLOT_RIG:
 		{
-			if (module->getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue() != getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue())
+			if (static_cast<int>(module->getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue()) != getRigSize())
 				return false;
 			break;
 		}
@@ -419,25 +435,27 @@ bool Ship::canFit(std::shared_ptr<Module> const& module)
 	{
 		int maxGroupFitted = static_cast<int>(module->getAttribute(MAX_GROUP_FITTED_ATTRIBUTE_ID)->getValue()) - 1;
 		TypeID groupID = module->getGroupID();
-		for (const auto& i: modules_)
+		for (const auto& i: getModules()) {
 			if (i->getGroupID() == groupID)
 			{
 				maxGroupFitted--;
 				if (maxGroupFitted < 0)
 					return false;
 			}
+		}
 	}
 	
 	if (module->hasAttribute(MAX_TYPE_FITTED_ATTRIBUTE_ID)) {
 		int maxTypeFitted = static_cast<int>(module->getAttribute(MAX_TYPE_FITTED_ATTRIBUTE_ID)->getValue()) - 1;
 		TypeID typeID = module->getTypeID();
-		for (const auto& i: modules_)
+		for (const auto& i: getModules()) {
 			if (i->getTypeID() == typeID)
 			{
 				maxTypeFitted--;
 				if (maxTypeFitted < 0)
 					return false;
 			}
+		}
 	}
 	
 	return true;
@@ -452,8 +470,7 @@ bool Ship::isDisallowedAssistance()
 		else
 		{
 			disallowAssistance_ = ALLOWED;
-			for (const auto& i: modules_)
-			{
+			for (const auto& i: getModules()) {
 				if (i->getState() >= Module::STATE_ACTIVE &&
 					i->hasAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID) &&
 					i->getAttribute(DISALLOW_ASSISTANCE_ATTRIBUTE_ID)->getValue() != 0)
@@ -478,8 +495,7 @@ bool Ship::isDisallowedOffensiveModifiers()
 		else
 		{
 			disallowOffensiveModifiers_ = ALLOWED;
-			for (const auto& i: modules_)
-			{
+			for (const auto& i: getModules()) {
 				if (i->getState() >= Module::STATE_ACTIVE &&
 					i->hasAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID) &&
 					i->getAttribute(DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID)->getValue() != 0)
@@ -496,8 +512,11 @@ bool Ship::isDisallowedOffensiveModifiers()
 void Ship::reset()
 {
 	Item::reset();
-	for (const auto& i: modules_)
-		i->reset();
+	for (const auto& i: modules_) {
+		for (const auto& j: i.second) {
+			j->reset();
+		}
+	}
 	for (const auto& i: drones_)
 		i->reset();
 	
@@ -518,6 +537,7 @@ void Ship::reset()
 	
 	updateEnabledStatus();
 	updateModulesState();
+	updateModulesSockets();
 }
 
 std::vector<TypeID> Ship::getSupportedModuleCategories() const {
@@ -538,8 +558,9 @@ void Ship::addEffects(Effect::Category category)
 
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (const auto& i: modules_)
+		for (const auto& i: getModules()) {
 			i->addEffects(Effect::CATEGORY_GENERIC);
+		}
 		for (const auto& i: drones_)
 			i->addEffects(Effect::CATEGORY_GENERIC);
 
@@ -558,8 +579,9 @@ void Ship::removeEffects(Effect::Category category)
 
 	if (category == Effect::CATEGORY_GENERIC)
 	{
-		for (const auto& i: modules_)
+		for (const auto& i: getModules()) {
 			i->removeEffects(Effect::CATEGORY_GENERIC);
+		}
 		for (const auto& i: drones_)
 			i->removeEffects(Effect::CATEGORY_GENERIC);
 
@@ -656,6 +678,56 @@ void Ship::setDamagePattern(const DamagePattern& damagePattern)
 		engine->reset();
 }
 
+std::shared_ptr<Cargo> Ship::addCargo(TypeID typeID, size_t count)
+{
+	
+	try
+	{
+		auto engine = getEngine();
+		if (!engine)
+			return nullptr;
+		
+		auto i = std::find_if(cargo_.begin(), cargo_.end(), [&](const std::shared_ptr<Cargo>& i) {
+			return i->getItem()->getTypeID() == typeID;
+		});
+		if (i == cargo_.end()) {
+			auto item = std::make_shared<Item>(engine, typeID, shared_from_this());
+			auto cargo = std::make_shared<Cargo>(item, count);
+			cargo_.push_back(cargo);
+			return cargo;
+		}
+		else {
+			(*i)->count += count;
+			return *i;
+		}
+
+	}
+	catch(Item::UnknownTypeIDException)
+	{
+		return nullptr;
+	}
+}
+
+void Ship::removeCarge(TypeID typeID, size_t count)
+{
+	
+}
+
+const CargoList& Ship::getCargo()
+{
+	return cargo_;
+}
+
+void Ship::setName(const char* name) {
+	name_ = name ?: "";
+}
+
+const char* Ship::getName() {
+	return name_.c_str();
+}
+
+
+
 //Calculations
 
 int Ship::getNumberOfSlots(Module::Slot slot)
@@ -689,16 +761,20 @@ int Ship::getFreeSlots(Module::Slot slot)
 
 int Ship::getUsedSlots(Module::Slot slot)
 {
-	int n = 0;
-	for (const auto& i: modules_)
-		if (i->getSlot() == slot)
-			n++;
-	return n;
+	return static_cast<int>(getModules(slot).size());
 }
 
 int Ship::getNumberOfHardpoints(Module::Hardpoint hardpoint)
 {
 	return getFreeHardpoints(hardpoint) + getUsedHardpoints(hardpoint);
+}
+
+int Ship::getRigSize() {
+	return static_cast<int>(getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue());
+}
+
+int Ship::getRaceID() {
+	return static_cast<int>(getAttribute(RACE_ID_ATTRIBUTE_ID)->getValue());
 }
 
 int Ship::getFreeHardpoints(Module::Hardpoint hardpoint)
@@ -717,102 +793,98 @@ int Ship::getFreeHardpoints(Module::Hardpoint hardpoint)
 int Ship::getUsedHardpoints(Module::Hardpoint hardpoint)
 {
 	int n = 0;
-	for (const auto& i: modules_)
+	for (const auto& i: getModules()) {
 		if (i->getHardpoint() == hardpoint)
 			n++;
+	}
 	return n;
 }
 
-int Ship::getRigSize() {
-	return getAttribute(RIG_SIZE_ATTRIBUTE_ID)->getValue();
-}
-
-float Ship::getCapacity() {
+Float Ship::getCapacity() {
 	return getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
 	}
 
-float Ship::getOreHoldCapacity() {
+Float Ship::getOreHoldCapacity() {
 	return getAttribute(SPECIAL_ORE_HOLD_CAPACITY)->getValue();
 }
 
 
-float Ship::getCalibrationUsed()
+Float Ship::getCalibrationUsed()
 {
-	float calibration = 0;
-	for (const auto& i: modules_)
-		if (i->getSlot() == Module::SLOT_RIG)
-			calibration += i->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
+	Float calibration = 0;
+	for (const auto& i: getModules(Module::SLOT_RIG))
+		calibration += i->getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
 	return calibration;
 }
 
-float Ship::getTotalCalibration()
+Float Ship::getTotalCalibration()
 {
 	return getAttribute(UPGRADE_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getPowerGridUsed()
+Float Ship::getPowerGridUsed()
 {
 	return getAttribute(POWER_LOAD_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getTotalPowerGrid()
+Float Ship::getTotalPowerGrid()
 {
 	return getAttribute(POWER_OUTPUT_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getCpuUsed()
+Float Ship::getCpuUsed()
 {
 	return getAttribute(CPU_LOAD_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getTotalCpu()
+Float Ship::getTotalCpu()
 {
 	return getAttribute(CPU_OUTPUT_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getDroneBandwidthUsed()
+Float Ship::getDroneBandwidthUsed()
 {
-	float bandwidth = 0;
+	Float bandwidth = 0;
 	for (const auto& i: drones_)
 		if (i->isActive())
 			bandwidth += i->getAttribute(DRONE_BANDWIDTH_USED_ATTRIBUTE_ID)->getValue();
 	return bandwidth;
 }
 
-float Ship::getTotalDroneBandwidth()
+Float Ship::getTotalDroneBandwidth()
 {
 	return getAttribute(DRONE_BANDWIDTH_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getDroneBayUsed()
+Float Ship::getDroneBayUsed()
 {
-	float volume = 0;
+	Float volume = 0;
 	for (const auto& i: drones_)
 		if (i->getSquadron() == Drone::FIGHTER_SQUADRON_NONE)
 			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
 
-float Ship::getTotalDroneBay()
+Float Ship::getTotalDroneBay()
 {
 	return getAttribute(DRONE_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getFighterHangarUsed() {
-	float volume = 0;
+Float Ship::getFighterHangarUsed() {
+	Float volume = 0;
 	for (const auto& i: drones_)
-		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE && !i->isActive())
+		if (i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE/* && !i->isActive()*/)
 			volume += i->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 	return volume;
 }
 
-float Ship::getTotalFighterHangar() {
+Float Ship::getTotalFighterHangar() {
 	return getAttribute(FIGHTER_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
 
 //Capacitor
 
-float Ship::getCapCapacity()
+Float Ship::getCapCapacity()
 {
 	return getAttribute(CAPACITOR_CAPACITY_ATTRIBUTE_ID)->getValue();
 }
@@ -822,24 +894,28 @@ bool Ship::isCapStable()
 	return getCapacitorSimulator()->isCapStable();
 }
 
-float Ship::getCapLastsTime()
+Float Ship::getCapLastsTime()
 {
 	return getCapacitorSimulator()->getCapLastsTime();
 }
 
-float Ship::getCapStableLevel()
+Float Ship::getCapStableLevel()
 {
 	return getCapacitorSimulator()->getCapStableLevel();
 }
 
-float Ship::getCapUsed()
+Float Ship::getCapUsed()
 {
 	return getCapacitorSimulator()->getCapUsed();
 }
 
-float Ship::getCapRecharge()
+Float Ship::getCapRecharge()
 {
 	return getCapacitorSimulator()->getCapRecharge();
+}
+
+Float Ship::getCapRechargeTime() {
+	return getAttribute(RECHARGE_RATE_ATTRIBUTE_ID)->getValue() / 1000.0;
 }
 
 //Tank
@@ -848,20 +924,20 @@ const Resistances& Ship::getResistances()
 {
 	if (resistances_.armor.em < 0.0)
 	{
-		resistances_.armor.em		 = 1.0f - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.explosive = 1.0f - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.kinetic   = 1.0f - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.thermal   = 1.0f - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.em		 = 1.0 - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.explosive = 1.0 - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.kinetic   = 1.0 - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.thermal   = 1.0 - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 
-		resistances_.shield.em		  = 1.0f - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.explosive = 1.0f - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.kinetic   = 1.0f - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.thermal   = 1.0f - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.em		  = 1.0 - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.explosive = 1.0 - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.kinetic   = 1.0 - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.thermal   = 1.0 - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 
-		resistances_.hull.em		= 1.0f - getAttribute(EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.explosive = 1.0f - getAttribute(EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.kinetic   = 1.0f - getAttribute(KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.thermal   = 1.0f - getAttribute(THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.em		= 1.0 - getAttribute(EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.explosive = 1.0 - getAttribute(EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.kinetic   = 1.0 - getAttribute(KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.thermal   = 1.0 - getAttribute(THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
 	}
 	return resistances_;
 }
@@ -898,11 +974,11 @@ const Tank& Ship::getSustainableTank()
 			sustainableTank_ = getTank();
 			
 			std::list<std::shared_ptr<Repairer> > repairers;
-			float capUsed = getCapUsed();
+			Float capUsed = getCapUsed();
 			
 			TypeID attributes[] = {ARMOR_DAMAGE_ATTRIBUTE_ID, DAMAGE_ATTRIBUTE_ID, SHIELD_CHARGE_ATTRIBUTE_ID};
 			Repairer::Type types[] = {Repairer::TYPE_ARMOR, Repairer::TYPE_HULL, Repairer::TYPE_SHIELD};
-			float* layers[] = {&sustainableTank_.armorRepair, &sustainableTank_.hullRepair, &sustainableTank_.shieldRepair};
+			Float* layers[] = {&sustainableTank_.armorRepair, &sustainableTank_.hullRepair, &sustainableTank_.shieldRepair};
 			
 			for (int i = 0; i < 3; i++)
 			{
@@ -921,22 +997,24 @@ const Tank& Ship::getSustainableTank()
 						{
 							std::shared_ptr<Module> module = std::dynamic_pointer_cast<Module>(item);
 							assert(module);
-							
-							std::shared_ptr<Repairer> repairer (new Repairer);
-							repairer->type = types[i];
-							repairer->hpPerSec = j->getValue();
-							repairer->capPerSec = module->getCapUse();
-							repairer->effectivity = repairer->hpPerSec / repairer->capPerSec;
-							*layers[i] -= repairer->hpPerSec;
-							capUsed -= repairer->capPerSec;
-							repairers.push_back(repairer);
+							Float use = module->getCapUse();
+							if (use > 0) {
+								std::shared_ptr<Repairer> repairer (new Repairer);
+								repairer->type = types[i];
+								repairer->hpPerSec = j->getValue();
+								repairer->capPerSec = use;
+								repairer->effectivity = repairer->hpPerSec / use;
+								*layers[i] -= repairer->hpPerSec;
+								capUsed -= repairer->capPerSec;
+								repairers.push_back(repairer);
+							}
 						}
 					}
 				}
 			}
 			repairers.sort(RepairersEffectivityCompare());
 			
-			float totalPeakRecharge = getCapRecharge();
+			Float totalPeakRecharge = getCapRecharge();
 
 			for (const auto& repairer: repairers)
 			{
@@ -944,9 +1022,9 @@ const Tank& Ship::getSustainableTank()
 					break;
 
 				if (repairer->capPerSec > 0 && repairer->hpPerSec > 0) {
-					float sustainability = std::min(float(1.0), (totalPeakRecharge - capUsed) / repairer->capPerSec);
+					Float sustainability = std::min(Float(1.0), (totalPeakRecharge - capUsed) / repairer->capPerSec);
 					
-					float amount = sustainability * repairer->hpPerSec;
+					Float amount = sustainability * repairer->hpPerSec;
 					if (repairer->type == Repairer::TYPE_ARMOR)
 						sustainableTank_.armorRepair += amount;
 					else if (repairer->type == Repairer::TYPE_HULL)
@@ -986,13 +1064,13 @@ const HitPoints& Ship::getEffectiveHitPoints()
 	return effectiveHitPoints_;
 }
 
-float Ship::getShieldRecharge()
+Float Ship::getShieldRecharge()
 {
 	if (shieldRecharge_ < 0.0)
 	{
-		float capacity = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
-		float rechargeRate = getAttribute(SHIELD_RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
-		shieldRecharge_ = 10.0f / (rechargeRate / 1000.0f) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
+		Float capacity = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
+		Float rechargeRate = getAttribute(SHIELD_RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
+		shieldRecharge_ = 10.0 / (rechargeRate / 1000.0) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
 	}
 	return shieldRecharge_;
 }
@@ -1002,16 +1080,18 @@ float Ship::getShieldRecharge()
 DamageVector Ship::getWeaponDps(const HostileTarget& target)
 {
 	DamageVector weaponDps = 0;
-	for (const auto& i: modules_)
+	for (const auto& i: getModules()) {
 		weaponDps += i->getDps(target);
+	}
 	return weaponDps;
 }
 
 DamageVector Ship::getWeaponVolley()
 {
 	DamageVector weaponVolley = 0;
-	for (const auto& i: modules_)
+	for (const auto& i: getModules()) {
 		weaponVolley += i->getVolley();
+	}
 	return weaponVolley;
 }
 
@@ -1031,18 +1111,36 @@ DamageVector Ship::getDroneVolley()
 	return droneVolley;
 }
 
-//mobility
-float Ship::getAlignTime()
+//Mining
+
+Float Ship::getMinerYield()
 {
-	float agility = getAgility();
-	float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
-	return -logf(0.25f) * agility * mass / 1000000.0f;
+	Float yield = 0;
+	for (const auto& i: getModules())
+		yield += i->getMiningYield();
+	return yield;
 }
 
-float Ship::getWarpSpeed()
+Float Ship::getDroneYield()
 {
-	float base = getAttribute(BASE_WARP_SPEED_ATTRIBUTE_ID)->getValue();
-	float multiplier = getAttribute(WARP_SPEED_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+	Float yield = 0;
+	for (const auto& i: drones_)
+		yield += i->getMiningYield();
+	return yield;
+}
+
+//Mobility
+Float Ship::getAlignTime()
+{
+	Float agility = getAgility();
+	Float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
+	return -std::log(0.25) * agility * mass / 1000000.0;
+}
+
+Float Ship::getWarpSpeed()
+{
+	Float base = getAttribute(BASE_WARP_SPEED_ATTRIBUTE_ID)->getValue();
+	Float multiplier = getAttribute(WARP_SPEED_MULTIPLIER_ATTRIBUTE_ID)->getValue();
 	if (base == 0.0)
 		base = 1.0;
 	if (multiplier == 0.0)
@@ -1050,38 +1148,38 @@ float Ship::getWarpSpeed()
 	return base * multiplier;
 }
 
-float Ship::getMaxWarpDistance()
+Float Ship::getMaxWarpDistance()
 {
-	float capacity = getAttribute(CAPACITOR_CAPACITY_ATTRIBUTE_ID)->getValue();
-	float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
-	float warpCapNeed = getAttribute(WARP_CAPACITOR_NEED_ATTRIBUTE_ID)->getValue();
+	Float capacity = getAttribute(CAPACITOR_CAPACITY_ATTRIBUTE_ID)->getValue();
+	Float mass = getAttribute(MASS_ATTRIBUTE_ID)->getValue();
+	Float warpCapNeed = getAttribute(WARP_CAPACITOR_NEED_ATTRIBUTE_ID)->getValue();
 	return capacity / (mass * warpCapNeed);
 }
 
-float Ship::getVelocity()
+Float Ship::getVelocity()
 {
 	return getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getSignatureRadius()
+Float Ship::getSignatureRadius()
 {
 	return getAttribute(SIGNATURE_RADIUS_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getMass()
+Float Ship::getMass()
 {
 	return getAttribute(MASS_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getVolume() {
+Float Ship::getVolume() {
 	return getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getAgility() {
+Float Ship::getAgility() {
 	return getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getMaxVelocityInOrbit(float r) {
+Float Ship::getMaxVelocityInOrbit(Float r) {
 	double i = getAgility();
 	double m = getMass() / 1000000.0;
 	double v = getVelocity();
@@ -1093,7 +1191,7 @@ float Ship::getMaxVelocityInOrbit(float r) {
 	return sqrt((sqrt(4 * i2 * m2 * r2 * v2 + r4) / (2 * i2 * m2)) - r2 / (2 * i2 * m2));
 }
 
-float Ship::getOrbitRadiusWithTransverseVelocity(float v) {
+Float Ship::getOrbitRadiusWithTransverseVelocity(Float v) {
 	double i = getAgility();
 	double m = getMass() / 1000000.0;
 	double vm = getVelocity();
@@ -1103,7 +1201,7 @@ float Ship::getOrbitRadiusWithTransverseVelocity(float v) {
 	return (i * m * v * v) / sqrt(s);
 }
 
-float Ship::getOrbitRadiusWithAngularVelocity(float v) {
+Float Ship::getOrbitRadiusWithAngularVelocity(Float v) {
 	double lv = getVelocity();
 	double r = 0;
 	for (int i = 0; i < 10; i++) {
@@ -1131,18 +1229,18 @@ int Ship::getMaxTargets()
 		return maxTargetsShip;
 }
 
-float Ship::getMaxTargetRange()
+Float Ship::getMaxTargetRange()
 {
-	return std::min(getAttribute(MAX_TARGET_RANGE_ATTRIBUTE_ID)->getValue(), float(250000.0));
+	return getAttribute(MAX_TARGET_RANGE_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getScanStrength()
+Float Ship::getScanStrength()
 {
-	float maxStrength = -1;
+	Float maxStrength = -1;
 	TypeID attributes[] = {SCAN_RADAR_STRENGTH_ATTRIBUTE_ID, SCAN_LADAR_STRENGTH_ATTRIBUTE_ID, SCAN_MAGNETOMETRIC_STRENGTH_ATTRIBUTE_ID, SCAN_GRAVIMETRIC_STRENGTH_ATTRIBUTE_ID};
 	for (int i = 0; i < 4; i++)
 	{
-		float strength = getAttribute(attributes[i])->getValue();
+		Float strength = getAttribute(attributes[i])->getValue();
 		if (strength > maxStrength)
 		{
 			maxStrength = strength;
@@ -1153,13 +1251,13 @@ float Ship::getScanStrength()
 
 Ship::ScanType Ship::getScanType()
 {
-	float maxStrength = -1;
+	Float maxStrength = -1;
 	TypeID attributes[] = {SCAN_RADAR_STRENGTH_ATTRIBUTE_ID, SCAN_LADAR_STRENGTH_ATTRIBUTE_ID, SCAN_MAGNETOMETRIC_STRENGTH_ATTRIBUTE_ID, SCAN_GRAVIMETRIC_STRENGTH_ATTRIBUTE_ID};
 	ScanType types[] = {SCAN_TYPE_RADAR, SCAN_TYPE_LADAR, SCAN_TYPE_MAGNETOMETRIC, SCAN_TYPE_GRAVIMETRIC};
 	ScanType scanType = SCAN_TYPE_MULTISPECTRAL;
 	for (int i = 0; i < 4; i++)
 	{
-		float strength = getAttribute(attributes[i])->getValue();
+		Float strength = getAttribute(attributes[i])->getValue();
 		if (strength > maxStrength)
 		{
 			maxStrength = strength;
@@ -1171,16 +1269,16 @@ Ship::ScanType Ship::getScanType()
 	return scanType;
 }
 
-float Ship::getScanResolution()
+Float Ship::getScanResolution()
 {
 	return getAttribute(SCAN_RESOLUTION_ATTRIBUTE_ID)->getValue();
 }
 
-float Ship::getProbeSize()
+Float Ship::getProbeSize()
 {
-	float signatureRadius = getSignatureRadius();
-	float sensorStrength = getScanStrength();
-	return sensorStrength > 0.0f ? signatureRadius / sensorStrength : 0.0f;
+	Float signatureRadius = getSignatureRadius();
+	Float sensorStrength = getScanStrength();
+	return sensorStrength > 0.0 ? signatureRadius / sensorStrength : 0.0;
 }
 
 //Drones
@@ -1201,14 +1299,20 @@ int Ship::getDroneSquadronLimit(Drone::FighterSquadron squadron)
 
 int Ship::getDroneSquadronUsed(Drone::FighterSquadron squadron)
 {
-	std::map<TypeID, std::pair<int, int>> squadrons;
-	for (const auto& i: drones_)
-		if (i->isActive() && i->getSquadron() == squadron)
-			squadrons[i->getTypeID()] = std::make_pair(squadrons[i->getTypeID()].first + 1, i->getSquadronSize() ?: 1);
+	std::set<std::tuple<TypeID, int, bool>> squadrons;
 	int n = 0;
-	for (const auto i: squadrons)
-		n += ceil((double) i.second.first / (double) i.second.second);
-	return n;
+	
+	for (const auto& i: drones_)
+		if (i->isActive() && i->getSquadron() == squadron) {
+			if (squadron != Drone::FIGHTER_SQUADRON_NONE) {
+				auto key = std::make_tuple(i->getTypeID(), i->getSquadronTag(), i->isActive());
+				squadrons.insert(key);
+			}
+			else {
+				n++;
+			}
+		}
+	return static_cast<int>(squadrons.size()) + n;
 }
 
 int Ship::getTotalFighterLaunchTubes() {
@@ -1216,51 +1320,67 @@ int Ship::getTotalFighterLaunchTubes() {
 }
 
 int Ship::getFighterLaunchTubesUsed() {
-	std::map<TypeID, std::pair<int, int>> squadrons;
+	std::set<std::tuple<TypeID, int, bool>> squadrons;
 	for (const auto& i: drones_)
-		if (i->isActive() && i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE)
-			squadrons[i->getTypeID()] = std::make_pair(squadrons[i->getTypeID()].first + 1, i->getSquadronSize());
-	int n = 0;
-	for (const auto i: squadrons)
-		n += ceil((double) i.second.first / (double) i.second.second);
-	return n;
+		if (i->isActive() && i->getSquadron() != Drone::FIGHTER_SQUADRON_NONE) {
+			auto key = std::make_tuple(i->getTypeID(), i->getSquadronTag(), i->isActive());
+			squadrons.insert(key);
+		}
+	return static_cast<int>(squadrons.size());
 }
 
 //Other
 
 void Ship::updateModulesState()
 {
-	for (const auto& i: modules_)
-	{
+	for (const auto& i: getModules()) {
 		Module::State state = i->getState();
 		Module::State preferredState = i->getPreferredState();
 		Module::State newState;
 		for (newState = preferredState != Module::STATE_UNKNOWN ? preferredState : state; newState > Module::STATE_OFFLINE && !i->canHaveState(newState); newState = static_cast<Module::State>(static_cast<int>(newState) - 1));
 		if (newState != state)
-			i->setState(newState);
+			i->setInternalState(newState);
 	}
 }
 
 void Ship::updateEnabledStatus() {
-	std::vector<int> slots = {getNumberOfSlots(Module::SLOT_HI), getNumberOfSlots(Module::SLOT_MED), getNumberOfSlots(Module::SLOT_LOW)};
-	
-	for (const auto& module: modules_) {
-		auto slot = module->getSlot();
-		if (slot == Module::SLOT_HI) {
-			slots[0]--;
-			module->setEnabled(slots[0] >= 0);
-		}
-		else if (slot == Module::SLOT_MED) {
-			slots[1]--;
-			module->setEnabled(slots[1] >= 0);
-		}
-		else if (slot == Module::SLOT_LOW) {
-			slots[2]--;
-			module->setEnabled(slots[2] >= 0);
+	for (auto slot: {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_LOW, Module::SLOT_RIG, Module::SLOT_SUBSYSTEM, Module::SLOT_MODE, Module::SLOT_SERVICE}) {
+		int n = getNumberOfSlots(slot);
+		auto modules = getModules(slot);
+		for (const auto& i: modules) {
+			i->setEnabled(n > 0);
+			n--;
 		}
 	}
 }
 
+void Ship::updateModulesSockets() {
+	auto engine = getEngine();
+	if (!engine)
+		return;
+	
+	for (auto slot: {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_LOW, Module::SLOT_RIG, Module::SLOT_SUBSYSTEM, Module::SLOT_MODE, Module::SLOT_SERVICE}) {
+		auto& array = modules_[slot];
+		size_t n = getNumberOfSlots(slot);
+		if (n > array.size()) {
+			for (size_t i = array.size(); i < n; i++) {
+				array.push_back(Module::dummy(engine, shared_from_this(), slot));
+			}
+			//array.resize(n);
+		}
+		else {
+			for (size_t i = array.size(); i > n; i--) {
+				auto j = std::find_if(array.rbegin(), array.rend(), [&](const std::shared_ptr<Module>& module) { return module->isDummy(); });
+				if (j != array.rend()) {
+					array.erase((++j).base());
+				}
+				else {
+					break;
+				}
+			}
+		}
+	}
+}
 
 void Ship::updateHeatDamage()
 {
@@ -1310,10 +1430,11 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Ship& ship)
 
 	os << "], \"modules\":[";
 	
-	if (ship.modules_.size() > 0)
+	auto modules = ship.getModules();
+	if (modules.size() > 0)
 	{
 		bool isFirst = true;
-		for (const auto& i: ship.modules_)
+		for (const auto& i: modules)
 		{
 			if (isFirst)
 				isFirst = false;

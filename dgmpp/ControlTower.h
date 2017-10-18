@@ -31,10 +31,10 @@ namespace dgmpp {
 		
 		//Calculations
 		
-		float getPowerGridUsed();
-		float getTotalPowerGrid();
-		float getCpuUsed();
-		float getTotalCpu();
+		Float getPowerGridUsed();
+		Float getTotalPowerGrid();
+		Float getCpuUsed();
+		Float getTotalCpu();
 		
 		//Tank
 		const Resistances& getResistances();
@@ -44,7 +44,7 @@ namespace dgmpp {
 		const HitPoints& getHitPoints();
 		const HitPoints& getEffectiveHitPoints();
 		
-		float getShieldRecharge();
+		Float getShieldRecharge();
 		
 		//DPS
 		DamageVector getWeaponDps();
@@ -62,13 +62,13 @@ namespace dgmpp {
 		Tank effectiveTank_;
 		HitPoints hitPoints_;
 		HitPoints effectiveHitPoints_;
-		float shieldRecharge_;
+		Float shieldRecharge_;
 		
 		DamageVector weaponDps_;
 		DamageVector weaponVolley_;
 		
-		float cpuUsed_;
-		float powerGridUsed_;
+		Float cpuUsed_;
+		Float powerGridUsed_;
 		
 		void calculateDamageStats();
 	};

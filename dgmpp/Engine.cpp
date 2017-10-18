@@ -8,7 +8,7 @@
 
 using namespace dgmpp;
 
-Engine::Engine(std::shared_ptr<SqlConnector> const& sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr), generation_(), updatesCounter_(0), decayFactor_(std::numeric_limits<float>::quiet_NaN()), noiseFactor_(std::numeric_limits<float>::quiet_NaN())
+Engine::Engine(std::shared_ptr<SqlConnector> const& sqlConnector) : sqlConnector_(sqlConnector), gang_(nullptr), area_(nullptr), controlTower_(nullptr), generation_(), updatesCounter_(0), decayFactor_(std::numeric_limits<Float>::quiet_NaN()), noiseFactor_(std::numeric_limits<Float>::quiet_NaN())
 {
 }
 
@@ -32,13 +32,16 @@ std::shared_ptr<Area> Engine::setArea(TypeID typeID)
 {
 	try
 	{
-		std::shared_ptr<Area> area = std::make_shared<Area>(shared_from_this(), typeID);
 		if (area_) {
 			area_->removeEffects(Effect::CATEGORY_SYSTEM);
+			area_ = nullptr;
 		}
-		area_ = area;
-		if (area_)
-			area_->addEffects(Effect::CATEGORY_SYSTEM);
+		if (typeID) {
+			std::shared_ptr<Area> area = std::make_shared<Area>(shared_from_this(), typeID);
+			area_ = area;
+			if (area_)
+				area_->addEffects(Effect::CATEGORY_SYSTEM);
+		}
 		reset();
 		
 		return area_;
@@ -126,7 +129,7 @@ void Engine::commitUpdates() {
 	}
 }
 
-float Engine::decayFactor() const {
+Float Engine::decayFactor() const {
 	if (std::isnan(decayFactor_)) {
 		auto stmt = getSqlConnector()->getReusableFetchRequest("SELECT defaultValue FROM dgmAttributeTypes WHERE attributeID = ? LIMIT 1");
 		stmt->bindInt(1, ECU_DECAY_FACTOR_ATTRIBUTE_ID);
@@ -136,7 +139,7 @@ float Engine::decayFactor() const {
 	return decayFactor_;
 }
 
-float Engine::noiseFactor() const {
+Float Engine::noiseFactor() const {
 	if (std::isnan(noiseFactor_)) {
 		auto stmt = getSqlConnector()->getReusableFetchRequest("SELECT defaultValue FROM dgmAttributeTypes WHERE attributeID = ? LIMIT 1");
 		stmt->bindInt(1, ECU_NOISE_FACTOR_ATTRIBUTE_ID);

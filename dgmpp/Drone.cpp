@@ -10,9 +10,9 @@
 
 using namespace dgmpp;
 
-Drone::Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Ship> const& owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr)
+Drone::Drone(std::shared_ptr<Engine> const& engine, TypeID typeID, int squadronTag, std::shared_ptr<Ship> const& owner) : Item(engine, typeID, owner), isActive_(true), target_(), charge_(nullptr), squadronTag_(squadronTag)
 {
-	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = -1;
+	dps_ = maxRange_ = falloff_ = volley_ = trackingSpeed_ = miningYield_ = -1;
 }
 
 Drone::~Drone(void)
@@ -148,7 +148,7 @@ void Drone::removeEffects(Effect::Category category)
 
 void Drone::reset() {
 	Item::reset();
-	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = trackingSpeed_ = miningYield_ = -1;
 	if (charge_)
 		charge_->reset();
 }
@@ -162,15 +162,25 @@ int Drone::getSquadronSize() {
 	return getAttribute(FIGHTER_SQUADRON_MAX_SIZE_ATTRIBUTE_ID)->getValue();
 }
 
+int Drone::getSquadronTag() {
+	return squadronTag_;
+}
+
+void Drone::setSquadronTag(int squadronTag) {
+	squadronTag_ = squadronTag;
+	auto engine = getEngine();
+	if (engine)
+		engine->reset();
+}
 
 //Calculations
 
-float Drone::getCycleTime()
+Float Drone::getCycleTime()
 {
 	if (hasAttribute(SPEED_ATTRIBUTE_ID))
-		return getAttribute(SPEED_ATTRIBUTE_ID)->getValue();
+		return getAttribute(SPEED_ATTRIBUTE_ID)->getValue() / 1000.0;
 	else if (hasAttribute(DURATION_ATTRIBUTE_ID))
-		return getAttribute(DURATION_ATTRIBUTE_ID)->getValue();
+		return getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0;
 	else
 		return 0;
 }
@@ -190,46 +200,46 @@ DamageVector Drone::getDps(const HostileTarget& target)
 		calculateDamageStats();
 	
 	if (dps_ > 0  && target.signature > 0) {
-		float range = getAttribute(ENTITY_FLY_RANGE_ATTRIBUTE_ID)->getValue();
-		float orbitVelocity = getAttribute(ENTITY_CRUISE_SPEED_ATTRIBUTE_ID)->getValue();
+		Float range = getAttribute(ENTITY_FLY_RANGE_ATTRIBUTE_ID)->getValue();
+		Float orbitVelocity = getAttribute(ENTITY_CRUISE_SPEED_ATTRIBUTE_ID)->getValue();
 		if (range == 0)
 			range = getAttribute(FIGHTER_SQUADRON_ORBIT_RANGE_ATTRIBUTE_ID)->getValue();
 		if (orbitVelocity == 0)
 			orbitVelocity = getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
 		
 		if (target.velocity > 0) {
-			float velocity = getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
+			Float velocity = getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
 			
 			if (velocity < target.velocity)
 				return 0;
 			
-			float v = sqrtf(velocity * velocity - target.velocity * target.velocity);
+			Float v = std::sqrt(velocity * velocity - target.velocity * target.velocity);
 			orbitVelocity = std::min(orbitVelocity, v);
 		}
 		
-		float angularVelocity = range > 0 ? orbitVelocity / range : 0;
+		Float angularVelocity = range > 0 ? orbitVelocity / range : 0;
 		
-		float a = 0;
+		Float a = 0;
 		if (angularVelocity > 0) {
-			float trackingSpeed = getTrackingSpeed();
-			a = trackingSpeed > 0 ? angularVelocity / trackingSpeed : 0;
+			Float accuracyScore = getAccuracyScore();
+			a = accuracyScore > 0 ? angularVelocity / accuracyScore : 0;
 		}
 		
-		float signatureResolution = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
+		Float signatureResolution = getAttribute(OPTIMAL_SIG_RADIUS_ATTRIBUTE_ID)->getValue();
 		if (signatureResolution > 0)
 			a *= signatureResolution / target.signature;
 		
-		float b = 0;
+		Float b = 0;
 		if (target.range > 0) {
-			float maxRange = getMaxRange();
-			float falloff = getFalloff();
-			b = falloff > 0 ? std::max(0.0f, (range - maxRange) / falloff) : 0;
+			Float maxRange = getMaxRange();
+			Float falloff = getFalloff();
+			b = falloff > 0 ? std::max(0.0, (range - maxRange) / falloff) : 0;
 			
 		}
 		
-		float blob = a * a + b * b;
-		float hitChance = std::pow(0.5f, blob);
-		float relativeDPS;
+		Float blob = a * a + b * b;
+		Float hitChance = std::pow(0.5, blob);
+		Float relativeDPS;
 		if (hitChance > 0.01)
 			relativeDPS = (hitChance - 0.01) * (0.5 + (hitChance + 0.49)) / 2 + 0.01 * 3;
 		else
@@ -240,28 +250,40 @@ DamageVector Drone::getDps(const HostileTarget& target)
 	return dps_;
 }
 
-float Drone::getMaxRange()
+Float Drone::getMaxRange()
 {
 	loadIfNeeded();
 	if (maxRange_ < 0)
 	{
-		TypeID attributes[] = {SHIELD_TRANSFER_RANGE_ATTRIBUTE_ID, POWER_TRANSFER_RANGE_ATTRIBUTE_ID, ENERGY_DESTABILIZATION_RANGE_ATTRIBUTE_ID,
-			EMP_FIELD_RANGE_ATTRIBUTE_ID, ECM_BURST_RANGE_ATTRIBUTE_ID, MAX_RANGE_ATTRIBUTE_ID};
+		TypeID attributes[] = {
+			SHIELD_TRANSFER_RANGE_ATTRIBUTE_ID,
+			POWER_TRANSFER_RANGE_ATTRIBUTE_ID,
+			ENERGY_DESTABILIZATION_RANGE_ATTRIBUTE_ID,
+			EMP_FIELD_RANGE_ATTRIBUTE_ID,
+			ECM_BURST_RANGE_ATTRIBUTE_ID,
+			MAX_RANGE_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_OPTIMAL_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ATTACK_TURRET_RANGE_OPTIMAL_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ECM_RANGE_OPTIMAL_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ENERGY_NEUTRALIZER_OPTIMAL_RANGE_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_STASIS_WEBIFIER_OPTIMAL_RANGE_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_WARP_DISRUPTION_RANGE_ATTRIBUTE_ID};
 		
-		for (int i = 0; i < 10; i++)
-			if (hasAttribute(attributes[i]))
+		for (auto attributeID: attributes) {
+			if (hasAttribute(attributeID))
 			{
-				maxRange_ = getAttribute(attributes[i])->getValue();
+				maxRange_ = getAttribute(attributeID)->getValue();
 				return maxRange_;
 			}
+		}
 		
 		if (charge_)
 		{
 			if (charge_->hasAttribute(MAX_VELOCITY_ATTRIBUTE_ID) && charge_->hasAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID))
 			{
-				float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
-				float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0f;
-				maxRange_ = flightTime / 1000.0f * maxVelocity;
+				Float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
+				Float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0;
+				maxRange_ = flightTime / 1000.0 * maxVelocity;
 			}
 			else
 				maxRange_ = 0;
@@ -272,20 +294,32 @@ float Drone::getMaxRange()
 	return maxRange_;
 }
 
-float Drone::getFalloff()
+Float Drone::getFalloff()
 {
 	loadIfNeeded();
 	if (falloff_ < 0)
 	{
-		if (hasAttribute(FALLOFF_ATTRIBUTE_ID))
-			falloff_ = getAttribute(FALLOFF_ATTRIBUTE_ID)->getValue();
-		else
-			falloff_ = 0;
+		TypeID attributes[] = {
+			FALLOFF_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ATTACK_MISSILE_RANGE_FALLOFF_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ATTACK_TURRET_RANGE_FALLOFF_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ECM_RANGE_FALLOFF_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_ENERGY_NEUTRALIZER_FALLOFF_RANGE_ATTRIBUTE_ID,
+			FIGHTER_ABILITY_STASIS_WEBIFIER_FALLOFF_RANGE_ATTRIBUTE_ID};
+		
+		for (auto attributeID: attributes) {
+			if (hasAttribute(attributeID))
+			{
+				falloff_ = getAttribute(attributeID)->getValue();
+				return falloff_;
+			}
+		}
+		falloff_ = 0;
 	}
 	return falloff_;
 }
 
-float Drone::getTrackingSpeed()
+Float Drone::getAccuracyScore()
 {
 	loadIfNeeded();
 	if (trackingSpeed_ < 0)
@@ -298,6 +332,34 @@ float Drone::getTrackingSpeed()
 	return trackingSpeed_;
 }
 
+Float Drone::getMiningYield()
+{
+	if (miningYield_ < 0)
+	{
+		miningYield_ = 0;
+		if (isActive_)
+		{
+			Float volley = 0;
+			if (hasAttribute(MINING_AMOUNT_ATTRIBUTE_ID))
+				volley += getAttribute(MINING_AMOUNT_ATTRIBUTE_ID)->getValue();
+			if (hasAttribute(SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID))
+				volley += getAttribute(SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID)->getValue();
+			
+			Float cycleTime = getCycleTime();
+			if (volley > 0 && cycleTime > 0)
+			{
+				miningYield_ = volley / cycleTime;
+			}
+		}
+	}
+	return miningYield_;
+}
+
+Float Drone::getVelocity()
+{
+	return getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue();
+}
+
 void Drone::calculateDamageStats()
 {
 	loadIfNeeded();
@@ -307,7 +369,7 @@ void Drone::calculateDamageStats()
 	{
 		volley_ = 0;
 		dps_ = 0;
-		float cycleTime = getCycleTime();
+		Float cycleTime = getCycleTime();
 		if (cycleTime > 0) {
 			std::shared_ptr<Item> item = charge_ ? charge_  : std::static_pointer_cast<Item>(shared_from_this());
 			if (item->hasAttribute(EM_DAMAGE_ATTRIBUTE_ID))
@@ -320,12 +382,12 @@ void Drone::calculateDamageStats()
 				volley_.thermalAmount += item->getAttribute(THERMAL_DAMAGE_ATTRIBUTE_ID)->getValue();
 			if (hasAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
 				volley_ *= getAttribute(DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
-			dps_ = volley_ / (getCycleTime() / 1000.0f);
+			dps_ = volley_ / getCycleTime();
 		}
 		
 		if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DURATION_ATTRIBUTE_ID)) {
 			DamageVector fighterMissileVolley = 0;
-			float cycleTime = getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DURATION_ATTRIBUTE_ID)->getValue();
+			Float cycleTime = getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DURATION_ATTRIBUTE_ID)->getValue();
 			if (cycleTime > 0) {
 				if (hasAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_EM_ATTRIBUTE_ID))
 					fighterMissileVolley.emAmount += getAttribute(FIGHTER_ABILITY_ATTACK_MISSILE_DAMAGE_EM_ATTRIBUTE_ID)->getValue();
@@ -343,7 +405,7 @@ void Drone::calculateDamageStats()
 		}
 		if (hasAttribute(FIGHTER_ABILITY_MISSILES_DURATION_ATTRIBUTE_ID)) {
 			DamageVector fighterMissilesVolley = 0;
-			float cycleTime = getAttribute(FIGHTER_ABILITY_MISSILES_DURATION_ATTRIBUTE_ID)->getValue();
+			Float cycleTime = getAttribute(FIGHTER_ABILITY_MISSILES_DURATION_ATTRIBUTE_ID)->getValue();
 			if (cycleTime > 0) {
 				if (hasAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_EM_ATTRIBUTE_ID))
 					fighterMissilesVolley.emAmount += getAttribute(FIGHTER_ABILITY_MISSILES_DAMAGE_EM_ATTRIBUTE_ID)->getValue();
@@ -361,7 +423,7 @@ void Drone::calculateDamageStats()
 		}
 		if (hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DURATION_ATTRIBUTE_ID)) {
 			DamageVector fighterTurretVolley = 0;
-			float cycleTime = getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DURATION_ATTRIBUTE_ID)->getValue();
+			Float cycleTime = getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DURATION_ATTRIBUTE_ID)->getValue();
 			if (cycleTime > 0) {
 				if (hasAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_EM_ATTRIBUTE_ID))
 					fighterTurretVolley.emAmount += getAttribute(FIGHTER_ABILITY_ATTACK_TURRET_DAMAGE_EM_ATTRIBUTE_ID)->getValue();
@@ -413,4 +475,25 @@ Item* Drone::character() {
 
 Item* Drone::target() {
 	return getTarget().get();
+}
+
+std::insert_iterator<ModifiersList> Drone::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
+{
+	if (typeID_ == 0)
+		return outIterator;
+	
+	auto i = itemModifiers_.find(attribute->getAttributeID());
+	if (i != itemModifiers_.end()) {
+		outIterator = std::copy(i->second.begin(), i->second.end(), outIterator);
+	}
+	auto owner = getOwner();
+	if (owner)
+	{
+		owner = owner->getOwner();
+		if (owner) {
+			outIterator = owner->getLocationModifiers(attribute, outIterator);
+			outIterator = owner->getModifiersMatchingItem(this, attribute, outIterator);
+		}
+	}
+	return outIterator;
 }

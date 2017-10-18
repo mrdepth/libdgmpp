@@ -44,13 +44,13 @@ namespace dgmpp {
 		
 		Modifier(Domain domain, TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character = nullptr);
 		virtual ~Modifier(void);
-		virtual bool isMatch(std::shared_ptr<Item> const& item) const;
+		virtual bool isMatch(Item* item) const;
 		Domain getDomain();
 		TypeID getAttributeID() const;
 		std::shared_ptr<Attribute> getModifier() const;
 		Association getAssociation() const;
-		float getValue() const;
-		bool isStackable() const;
+		Float getValue() const;
+//		bool isStackable() const;
 		Character* getCharacter();
 		bool isOffensive();
 		bool isAssistance();

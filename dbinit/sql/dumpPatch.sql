@@ -17,3 +17,10 @@ delete from invTypes where groupID not in (select groupID from invGroups);
 delete from dgmTypeAttributes where typeID not in (select typeID from invTypes);
 delete from dgmTypeEffects where typeID not in (select typeID from invTypes);
 delete from dgmEffects where effectID not in (select effectID from dgmTypeEffects);
+
+--Missing chargeSize
+INSERT INTO dgmTypeAttributes (typeID,attributeID,value) VALUES(263,128,0);
+INSERT INTO dgmTypeAttributes (typeID,attributeID,value) VALUES(33330,128,0);
+
+--Subsystems fix
+UPDATE dgmTypeAttributes SET value=4 WHERE attributeID=1367;

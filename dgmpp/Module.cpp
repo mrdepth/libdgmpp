@@ -14,7 +14,7 @@
 
 using namespace dgmpp;
 
-Module::Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true), factorReload_(false)
+Module::Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner), state_(STATE_OFFLINE), preferredState_(STATE_UNKNOWN), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(SLOT_UNKNOWN), enabled_(true), factorReload_(false), socket_(0)
 {
 }
 
@@ -43,8 +43,17 @@ Module::Hardpoint Module::getHardpoint()
 	return hardpoint_;
 }
 
+int Module::getSocket() {
+	std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
+	auto modules = ship->getModules(getSlot(), true);
+	return static_cast<int>(std::find(modules.begin(), modules.end(), shared_from_this()) - modules.begin());
+}
+
 bool Module::canHaveState(State state)
 {
+	if (isDummy())
+		return false;
+	
 	loadIfNeeded();
 	if (isEnabled()) {
 		auto charge = getCharge();
@@ -79,12 +88,16 @@ bool Module::canHaveState(State state)
 
 Module::State Module::getState()
 {
+	if (isDummy())
+		return STATE_UNKNOWN;
 	loadIfNeeded();
 	return isEnabled() ? state_ : STATE_OFFLINE;
 }
 
-void Module::setState(State state)
+void Module::setInternalState(State state)
 {
+	if (isDummy())
+		return;
 	if (state == state_)
 		return;
 	if (canHaveState(state))
@@ -127,15 +140,21 @@ void Module::setState(State state)
 }
 
 Module::State Module::getPreferredState() {
+	if (isDummy())
+		return STATE_UNKNOWN;
 	return preferredState_;
 }
 
-void Module::setPreferredState(State state) {
+void Module::setState(State state) {
+	if (isDummy())
+		return;
 	preferredState_ = state;
-	setState(state);
+	setInternalState(state);
 }
 
 bool Module::isAssistance() {
+	if (isDummy())
+		return false;
 	for (const auto& effect: getEffects())
 		if (effect->getCategory() == Effect::CATEGORY_TARGET)
 			return  effect->isAssistance();
@@ -146,6 +165,8 @@ bool Module::isAssistance() {
 }
 
 bool Module::isOffensive() {
+	if (isDummy())
+		return false;
 	for (const auto& effect: getEffects())
 		if (effect->getCategory() == Effect::CATEGORY_TARGET)
 			return  effect->isOffensive();
@@ -157,6 +178,8 @@ bool Module::isOffensive() {
 
 void Module::addEffects(Effect::Category category)
 {
+	if (isDummy())
+		return;
 	loadIfNeeded();
 	
 	for (const auto& i: effects_)
@@ -185,6 +208,8 @@ void Module::addEffects(Effect::Category category)
 
 void Module::removeEffects(Effect::Category category)
 {
+	if (isDummy())
+		return;
 	loadIfNeeded();
 
 	for (const auto& i: effects_)
@@ -216,7 +241,7 @@ void Module::reset()
 {
 	Item::reset();
 	shots_ = -1;
-	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = miningYield_ = -1;
 	lifeTime_ = -1;
 	if (charge_)
 		charge_->reset();
@@ -224,6 +249,8 @@ void Module::reset()
 
 std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
 {
+	if (isDummy())
+		return nullptr;
 	loadIfNeeded();
 	try
 	{
@@ -277,6 +304,8 @@ const std::vector<TypeID>& Module::getChargeGroups()
 
 int Module::getChargeSize()
 {
+	if (isDummy())
+		return 0;
 	if (hasAttribute(CHARGE_SIZE_ATTRIBUTE_ID))
 		return static_cast<int>(getAttribute(CHARGE_SIZE_ATTRIBUTE_ID)->getValue());
 	else
@@ -285,10 +314,12 @@ int Module::getChargeSize()
 
 bool Module::canFit(std::shared_ptr<Charge> const& charge)
 {
+	if (isDummy())
+		return false;
 	loadIfNeeded();
 	if (!charge)
 		return true;
-	float capacity = getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
+	Float capacity = getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
 	if (capacity > 0 && charge->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue() > capacity)
 		return false;
 	
@@ -309,6 +340,8 @@ bool Module::canFit(std::shared_ptr<Charge> const& charge)
 
 bool Module::requireTarget()
 {
+	if (isDummy())
+		return false;
 	for (const auto& i: effects_)
 	{
 		Effect::Category category = i->getCategory();
@@ -327,6 +360,8 @@ bool Module::requireTarget()
 
 void Module::setTarget(std::shared_ptr<Ship> const& target)
 {
+	if (isDummy())
+		return;
 	loadIfNeeded();
 	std::shared_ptr<Ship> oldTarget = target_.lock();
 	if (oldTarget == target)
@@ -362,42 +397,48 @@ std::shared_ptr<Ship> Module::getTarget()
 	return target_.lock();
 }
 
-float Module::getReloadTime()
+Float Module::getReloadTime()
 {
+	if (isDummy())
+		return 0;
 	if (hasAttribute(RELOAD_TIME_ATTRIBUTE_ID))
-		return getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue();
+		return getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue() / 1000.0;
 	else
 		return reloadTime_;
 }
 
 //Calculations
 
-float Module::getCycleTime()
+Float Module::getCycleTime()
 {
-	float reactivation = hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue() : 0;
-	float speed = getRawCycleTime() + reactivation;
+	if (isDummy())
+		return 0;
+	Float reactivation = hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue()  / 1000.0: 0;
+	Float speed = getRawCycleTime();
 	
 	bool factorReload = forceReload_ || factorReload_;
-	float reload = charge_ ? getReloadTime() : 0;
-	if (factorReload && reactivation < reload)
+	Float reload = charge_ ? getReloadTime() : 0;
+	if (factorReload && reload > 0)
 	{
-		float additionalReloadTime = (reload - reactivation);
-		float numShots = static_cast<float>(getShots());
-		speed = numShots > 0 ? (speed * numShots + additionalReloadTime) / numShots : speed;
+//		Float additionalReloadTime = (reload - reactivation);
+		Float numShots = static_cast<Float>(getShots());
+		speed = numShots > 0 ? (speed * numShots + std::max(reload, reactivation)) / numShots : speed;
 	}
 	return speed;
 }
 
-float Module::getRawCycleTime()
+Float Module::getRawCycleTime()
 {
-	if (hasAttribute(SPEED_ATTRIBUTE_ID))
-		return getAttribute(SPEED_ATTRIBUTE_ID)->getValue();
-	else if (hasAttribute(DURATION_ATTRIBUTE_ID))
-		return getAttribute(DURATION_ATTRIBUTE_ID)->getValue();
-	else if (hasAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID))
-		return getAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID)->getValue();
-	else
+	if (isDummy())
 		return 0;
+	Float speed = 0;
+	if (hasAttribute(SPEED_ATTRIBUTE_ID))
+		speed = getAttribute(SPEED_ATTRIBUTE_ID)->getValue();
+	else if (hasAttribute(DURATION_ATTRIBUTE_ID))
+		speed = getAttribute(DURATION_ATTRIBUTE_ID)->getValue();
+	else if (hasAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID))
+		speed = getAttribute(MISSILE_LAUNCH_DURATION_ATTRIBUTE_ID)->getValue();
+	return speed / 1000.0;
 }
 
 bool Module::factorReload() {
@@ -406,15 +447,20 @@ bool Module::factorReload() {
 
 void Module::setFactorReload(bool factorReload) {
 	factorReload_ = factorReload;
+	auto engine = getEngine();
+	if (engine)
+		engine->reset();
 }
 
 int Module::getCharges()
 {
+	if (isDummy())
+		return 0;
 	if (!charge_)
 		return 0;
 	
-	float chargeVolume = charge_->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
-	float containerCapacity = getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
+	Float chargeVolume = charge_->getAttribute(VOLUME_ATTRIBUTE_ID)->getValue();
+	Float containerCapacity = getAttribute(CAPACITY_ATTRIBUTE_ID)->getValue();
 	if (!chargeVolume || !containerCapacity)
 		return 0;
 	return static_cast<int>(containerCapacity / chargeVolume);
@@ -422,6 +468,8 @@ int Module::getCharges()
 
 int Module::getShots()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (!charge_)
 		return 0;
@@ -430,14 +478,14 @@ int Module::getShots()
 		int charges = getCharges();
 		if (charges > 0 && hasAttribute(CHARGE_RATE_ATTRIBUTE_ID))
 		{
-			float chargeRate = getAttribute(CHARGE_RATE_ATTRIBUTE_ID)->getValue();
+			Float chargeRate = getAttribute(CHARGE_RATE_ATTRIBUTE_ID)->getValue();
 			shots_ = static_cast<int>(getCharges() / chargeRate);
 		}
 		else if (charges > 0 && hasAttribute(CRYSTALS_GET_DAMAGED_ATTRIBUTE_ID))
 		{
-			float hp = charge_->getAttribute(HP_ATTRIBUTE_ID)->getValue();
-			float chance = charge_->getAttribute(CRYSTAL_VOLATILITY_CHANCE_ATTRIBUTE_ID)->getValue();
-			float damage = charge_->getAttribute(CRYSTAL_VOLATILITY_DAMAGE_ATTRIBUTE_ID)->getValue();
+			Float hp = charge_->getAttribute(HP_ATTRIBUTE_ID)->getValue();
+			Float chance = charge_->getAttribute(CRYSTAL_VOLATILITY_CHANCE_ATTRIBUTE_ID)->getValue();
+			Float damage = charge_->getAttribute(CRYSTAL_VOLATILITY_DAMAGE_ATTRIBUTE_ID)->getValue();
 			shots_ = static_cast<int>(getCharges() * hp / (damage * chance));
 		}
 		else
@@ -446,12 +494,14 @@ int Module::getShots()
 	return shots_;
 }
 
-float Module::getCapUse()
+Float Module::getCapUse()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (state_ >= STATE_ACTIVE)
 	{
-		float capNeed = 0.0;
+		Float capNeed = 0.0;
 		if (hasAttribute(CAPACITOR_NEED_ATTRIBUTE_ID))
 			capNeed = getAttribute(CAPACITOR_NEED_ATTRIBUTE_ID)->getValue();
 		if (capNeed == 0.0 && hasEffect(ENERGY_NOSFERATU_FALLOFF))
@@ -461,19 +511,43 @@ float Module::getCapUse()
 		
 		if (capNeed != 0.0)
 		{
-			float cycleTime = getCycleTime();
-			return cycleTime != 0.0f ? capNeed / (cycleTime / 1000.0f) : 0.0f;
+			Float cycleTime = getCycleTime();
+			return cycleTime != 0.0 ? capNeed / cycleTime : 0.0;
 		}
 		else
-			return 0.0f;
+			return 0.0;
 		return capNeed;
 	}
 	else
-		return 0.0f;
+		return 0.0;
 }
+
+Float Module::getCpuUse() {
+	if (isDummy())
+		return 0;
+	loadIfNeeded();
+	return getAttribute(CPU_ATTRIBUTE_ID)->getValue();
+}
+
+Float Module::getPowerGridUse() {
+	if (isDummy())
+		return 0;
+	loadIfNeeded();
+	return getAttribute(POWER_ATTRIBUTE_ID)->getValue();
+}
+
+Float Module::getCalibrationUse() {
+	if (isDummy())
+		return 0;
+	loadIfNeeded();
+	return getAttribute(UPGRADE_COST_ATTRIBUTE_ID)->getValue();
+}
+
 
 DamageVector Module::getVolley()
 {
+	if (isDummy())
+		return DamageVector();
 	loadIfNeeded();
 	if (volley_ < 0)
 		calculateDamageStats();
@@ -482,33 +556,35 @@ DamageVector Module::getVolley()
 
 DamageVector Module::getDps(const HostileTarget& target)
 {
+	if (isDummy())
+		return DamageVector();
 	loadIfNeeded();
 	if (dps_ < 0)
 		calculateDamageStats();
 	auto hardpoint = getHardpoint();
 	if (hardpoint == HARDPOINT_TURRET && (target.range > 0 || target.angularVelocity > 0 || target.signature > 0)) {
-		float a = 0;
+		Float a = 0;
 		if (target.angularVelocity > 0) {
-			float accuracyScore = getAccuracyScore();
+			Float accuracyScore = getAccuracyScore();
 			a = accuracyScore > 0 ? target.angularVelocity / accuracyScore : 0;
 		}
 		
 		if (target.signature > 0) {
-			float signatureResolution = getSignatureResolution();
+			Float signatureResolution = getSignatureResolution();
 			if (signatureResolution > 0)
 				a *= signatureResolution / target.signature;
 		}
 
-		float b = 0;
+		Float b = 0;
 		if (target.range > 0) {
-			float maxRange = getMaxRange();
-			float falloff = getFalloff();
-			b = falloff > 0 ? std::max(0.0f, (target.range - maxRange) / falloff) : 0;
+			Float maxRange = getMaxRange();
+			Float falloff = getFalloff();
+			b = falloff > 0 ? std::max(0.0, (target.range - maxRange) / falloff) : 0;
 		}
 		
-		float blob = a * a + b * b;
-		float hitChance = std::pow(0.5f, blob);
-		float relativeDPS;
+		Float blob = a * a + b * b;
+		Float hitChance = std::pow(0.5, blob);
+		Float relativeDPS;
 		if (hitChance > 0.01)
 			relativeDPS = (hitChance - 0.01) * (0.5 + (hitChance + 0.49)) / 2 + 0.01 * 3;
 		else
@@ -521,41 +597,43 @@ DamageVector Module::getDps(const HostileTarget& target)
 			if (target.range > getMaxRange())
 				return 0;
 			if (target.velocity > 0) {
-				float missileEntityVelocityMultiplier = 1;
+				Float missileEntityVelocityMultiplier = 1;
 				if (hasAttribute(MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID))
 					missileEntityVelocityMultiplier = getAttribute(MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID)->getValue();
-				float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue() * missileEntityVelocityMultiplier;
+				Float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue() * missileEntityVelocityMultiplier;
 				if (maxVelocity < target.velocity)
 					return 0;
 			}
 			
-			float a = 1;
+			Float a = 1;
 			if (target.signature > 0) {
-				float e = charge->getAttribute(AOE_CLOUD_SIZE_ATTRIBUTE_ID)->getValue();
+				Float e = charge->getAttribute(AOE_CLOUD_SIZE_ATTRIBUTE_ID)->getValue();
 				a = target.signature / e;
 			}
-			float b = 1;
+			Float b = 1;
 			if (target.velocity > 0) {
-				float v = charge->getAttribute(AOE_VELOCITY_ATTRIBUTE_ID)->getValue();
-				float drf = charge->getAttribute(AOE_DAMAGE_REDUCTION_FACTOR_ATTRIBUTE_ID)->getValue();
-				float drs = charge->getAttribute(AOE_DAMAGE_REDUCTION_SENSITIVITY_ATTRIBUTE_ID)->getValue();
+				Float v = charge->getAttribute(AOE_VELOCITY_ATTRIBUTE_ID)->getValue();
+				Float drf = charge->getAttribute(AOE_DAMAGE_REDUCTION_FACTOR_ATTRIBUTE_ID)->getValue();
+				Float drs = charge->getAttribute(AOE_DAMAGE_REDUCTION_SENSITIVITY_ATTRIBUTE_ID)->getValue();
 				if (drf > 0 && drs > 0 && v > 0)
 					b = std::pow(a * v / target.velocity, std::log(drf)/std::log(drs));
 			}
-			float relativeDPS = std::min(1.0f, std::min(a, b));
+			Float relativeDPS = std::min(1.0, std::min(a, b));
 			return dps_ * relativeDPS;
 		}
 	}
 	else if (dps_ > 0) {
-		float maxRange = getMaxRange();
+		Float maxRange = getMaxRange();
 		if (maxRange < target.range)
 			return 0;
 	}
 	return dps_;
 }
 
-float Module::getMaxRange()
+Float Module::getMaxRange()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (maxRange_ < 0)
 	{
@@ -575,8 +653,8 @@ float Module::getMaxRange()
 			if (charge_->hasAttribute(MAX_VELOCITY_ATTRIBUTE_ID) && charge_->hasAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID) &&
 				charge_->hasAttribute(MASS_ATTRIBUTE_ID) && charge_->hasAttribute(AGILITY_ATTRIBUTE_ID))
 			{
-				float missileEntityVelocityMultiplier = 1;
-				float missileEntityFlightTimeMultiplier = 1;
+				Float missileEntityVelocityMultiplier = 1;
+				Float missileEntityFlightTimeMultiplier = 1;
 				if (hasAttribute(MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID))
 					missileEntityVelocityMultiplier = getAttribute(MISSILE_ENTITY_VELOCITY_MULTIPLIER_ATTRIBUTE_ID)->getValue();
 				if (hasAttribute(MISSILE_ENTITY_FLIGHT_TIME_MULTIPLIER_ATTRIBUTE_ID))
@@ -586,14 +664,14 @@ float Module::getMaxRange()
 				if (missileEntityFlightTimeMultiplier == 0)
 					missileEntityFlightTimeMultiplier = 1.0;
 				
-				float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue() * missileEntityVelocityMultiplier;
-				float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0f * missileEntityFlightTimeMultiplier;
-				float mass = charge_->getAttribute(MASS_ATTRIBUTE_ID)->getValue();
-				float agility = charge_->getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
+				Float maxVelocity = charge_->getAttribute(MAX_VELOCITY_ATTRIBUTE_ID)->getValue() * missileEntityVelocityMultiplier;
+				Float flightTime = charge_->getAttribute(EXPLOSION_DELAY_ATTRIBUTE_ID)->getValue() / 1000.0 * missileEntityFlightTimeMultiplier;
+				Float mass = charge_->getAttribute(MASS_ATTRIBUTE_ID)->getValue();
+				Float agility = charge_->getAttribute(AGILITY_ATTRIBUTE_ID)->getValue();
 				
-				float accelTime = std::min(flightTime, static_cast<float>(mass * agility / 1000000.0f));
-				float duringAcceleration = maxVelocity / 2 * accelTime;
-				float fullSpeed = maxVelocity * (flightTime - accelTime);
+				Float accelTime = std::min(flightTime, static_cast<Float>(mass * agility / 1000000.0));
+				Float duringAcceleration = maxVelocity / 2 * accelTime;
+				Float fullSpeed = maxVelocity * (flightTime - accelTime);
 				maxRange_ =  duringAcceleration + fullSpeed;
 			}
 			else
@@ -605,8 +683,10 @@ float Module::getMaxRange()
 	return maxRange_;
 }
 
-float Module::getFalloff()
+Float Module::getFalloff()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (falloff_ < 0)
 	{
@@ -622,7 +702,7 @@ float Module::getFalloff()
 	return falloff_;
 }
 
-/*float Module::getTrackingSpeed()
+/*Float Module::getTrackingSpeed()
 {
 	loadIfNeeded();
 	if (trackingSpeed_ < 0)
@@ -635,8 +715,10 @@ float Module::getFalloff()
 	return trackingSpeed_;
 }*/
 
-float Module::getAccuracyScore()
+Float Module::getAccuracyScore()
 {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (accuracyScore_ < 0)
 	{
@@ -648,7 +730,9 @@ float Module::getAccuracyScore()
 	return accuracyScore_;
 }
 
-float Module::getSignatureResolution() {
+Float Module::getSignatureResolution() {
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (signatureResolution_ < 0)
 	{
@@ -660,15 +744,45 @@ float Module::getSignatureResolution() {
 	return signatureResolution_;
 }
 
-float Module::getAngularVelocity(float targetSignature, float hitChance) {
-	float signatureResolution = getSignatureResolution();
-	float accuracyScore = getAccuracyScore();
-	float v = log(hitChance) / log(0.5) * accuracyScore * targetSignature / signatureResolution;
+Float Module::getAngularVelocity(Float targetSignature, Float hitChance) {
+	if (isDummy())
+		return 0;
+	Float signatureResolution = getSignatureResolution();
+	Float accuracyScore = getAccuracyScore();
+	
+	Float v = std::sqrt(std::log(hitChance) / std::log(0.5)) * accuracyScore * targetSignature / signatureResolution;
 	return v;
 }
 
-float Module::getLifeTime()
+Float Module::getMiningYield()
 {
+	if (isDummy())
+		return 0;
+	if (miningYield_ < 0)
+	{
+		miningYield_ = 0;
+		if (state_ >= STATE_ACTIVE)
+		{
+			Float volley = 0;
+			if (hasAttribute(SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID))
+				volley += getAttribute(SPECIALTY_MINING_AMOUNT_ATTRIBUTE_ID)->getValue();
+			else if (hasAttribute(MINING_AMOUNT_ATTRIBUTE_ID))
+				volley += getAttribute(MINING_AMOUNT_ATTRIBUTE_ID)->getValue();
+			
+			Float cycleTime = getCycleTime();
+			if (volley > 0 && cycleTime > 0)
+			{
+				miningYield_ = volley / cycleTime;
+			}
+		}
+	}
+	return miningYield_;
+}
+
+Float Module::getLifeTime()
+{
+	if (isDummy())
+		return 0;
 	loadIfNeeded();
 	if (lifeTime_ < 0)
 	{
@@ -678,7 +792,7 @@ float Module::getLifeTime()
 	return lifeTime_;
 }
 
-void Module::setLifeTime(float lifeTime)
+void Module::setLifeTime(Float lifeTime)
 {
 	lifeTime_ = lifeTime;
 }
@@ -688,11 +802,15 @@ void Module::setEnabled(bool enabled) {
 }
 
 bool Module::isEnabled() {
+	if (isDummy())
+		return false;
 	return enabled_;
 }
 
 void Module::calculateDamageStats()
 {
+	if (isDummy())
+		return;
 	loadIfNeeded();
 	if (state_ < STATE_ACTIVE)
 		dps_ = volley_ = 0;
@@ -714,14 +832,16 @@ void Module::calculateDamageStats()
 		else if (hasAttribute(MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID))
 			volley_ *= getAttribute(MISSILE_DAMAGE_MULTIPLIER_ATTRIBUTE_ID)->getValue();
 
-		float speed = getCycleTime();
+		Float speed = getCycleTime();
 		if (speed > 0)
-			dps_ = volley_ / (speed / 1000.0f);
+			dps_ = volley_ / speed;
 	}
 }
 
 void Module::lazyLoad() {
 	Item::lazyLoad();
+	if (isDummy())
+		return;
 	addExtraAttribute(IS_ONLINE_ATTRIBUTE_ID, 0.0);
 	
 	if (hasEffect(LO_POWER_EFFECT_ID))
@@ -744,13 +864,13 @@ void Module::lazyLoad() {
 		slot_ = SLOT_NONE;
 	
 	if (hasAttribute(RELOAD_TIME_ATTRIBUTE_ID))
-		reloadTime_ = getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue();
+		reloadTime_ = getAttribute(RELOAD_TIME_ATTRIBUTE_ID)->getValue() / 1000.0;
 	else
 	{
 		if (hasEffect(MINING_LASER_EFFECT_ID) || hasEffect(TARGET_ATTACK_EFFECT_ID) || hasEffect(USE_MISSILES_EFFECT_ID))
-			reloadTime_ = 1000;
+			reloadTime_ = 1.0;
 		else if (hasEffect(POWER_BOOSTER_EFFECT_ID) || hasEffect(PROJECTILE_FIRED_EFFECT_ID))
-			reloadTime_ = 10000;
+			reloadTime_ = 10.0;
 	}
 	
 	if (hasEffect(TURRET_FITTED_EFFECT_ID))
@@ -792,7 +912,7 @@ void Module::lazyLoad() {
 	forceReload_ = groupID_ == CAPACITOR_BOOSTER_GROUP_ID;
 	
 	shots_ = -1;
-	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = -1;
+	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = miningYield_ = -1;
 	
 	TypeID attributes[] = {CHARGE_GROUP1_ATTRIBUTE_ID, CHARGE_GROUP2_ATTRIBUTE_ID, CHARGE_GROUP3_ATTRIBUTE_ID, CHARGE_GROUP4_ATTRIBUTE_ID, CHARGE_GROUP5_ATTRIBUTE_ID};
 	for (int i = 0; i < 5; i++)

@@ -15,7 +15,6 @@ namespace dgmpp {
 
 		bool isLearned() const;
 		int getSkillLevel();
-		void setSkillLevel(int level);
 		//virtual Attribute getAttribute(TypeID attributeID);
 
 		virtual Item* character();
@@ -24,6 +23,8 @@ namespace dgmpp {
 		
 	protected:
 		virtual void lazyLoad();
+		friend class Character;
+		void setSkillLevel(int level);
 	private:
 		bool isLearned_;
 		int skillLevel_;

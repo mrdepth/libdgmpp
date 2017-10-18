@@ -24,8 +24,8 @@ AttributePrototype::AttributePrototype(std::shared_ptr<Engine> const& engine, Ty
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 	if (result->next()) {
 		isStackable_ = result->getInt(0) != 0;
-		maxAttributeID_ = static_cast<dgmpp::TypeID>(result->getInt(1));
-		defaultValue_ = static_cast<float>(result->getDouble(2));
+		maxAttributeID_ = static_cast<TypeID>(result->getInt(1));
+		defaultValue_ = static_cast<Float>(result->getDouble(2));
 		highIsGood_ = result->getInt(3) != 0;
 		attributeName_ = result->getText(4);
 	}

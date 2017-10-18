@@ -4,24 +4,30 @@ from os.path import expanduser
 import glob
 import sys
 import os
+import pwd
 import ConfigParser
+
 
 from reverence import blue
 
 if platform == "darwin":
-	folders = glob.glob(expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/cider-EveOnlinePremium-iso-*"))
-	folders = sorted(folders, None, None, reverse=True)
-	if len(folders) == 0:
-		print "Error: EVE Online client not found"
-		sys.exit
-	else:
-		EVEPATH = folders[0] + "/EVE Online.app/Contents/Resources/transgaming/c_drive/tq"
+	#folders = glob.glob(expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/cider-EveOnlinePremium-iso-*"))
+	#folders = sorted(folders, None, None, reverse=True)
+	#if len(folders) == 0:
+	#	print "Error: EVE Online client not found"
+	#	sys.exit
+	#else:
+	#	EVEPATH = folders[0] + "/EVE Online.app/Contents/Resources/transgaming/c_drive/tq"
+	EVEPATH = glob.glob(expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/wineenv/drive_c/tq"))[0]
 else:
 	EVEPATH = "E:/Games/EVE"
 
 OUTPATH = "./"
 
-eve = blue.EVE(EVEPATH, cachepath=expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/c_tq_tranquility"))
+#eve = blue.EVE(EVEPATH, cachepath=expanduser("~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/c_tq_tranquility"))
+user = pwd.getpwuid(os.getuid()).pw_name
+path = "~/Library/Application Support/EVE Online/p_drive/Local Settings/Application Data/CCP/EVE/SharedCache/wineenv/drive_c/users/{0}/Local Settings/Application Data/CCP/EVE/c_tq_tranquility".format(user)
+eve = blue.EVE(EVEPATH, cachepath=expanduser(path))
 cfg = eve.getconfigmgr()
 
 def sqlstr(x):
@@ -63,7 +69,7 @@ def dump(table, header, lines):
 	elif (table == "dgmAttributeTypes"):
 		f.append("DROP TABLE IF EXISTS dgmAttributeTypes;\nCREATE TABLE dgmAttributeTypes (\n  \"attributeID\" smallint(6) NOT NULL,\n  \"attributeName\" varchar(100) default NULL,\n  attributeCategory smallint(6) NOT NULL,\n  \"description\" varchar(1000) default NULL,\n  maxAttributeID smallint(6) default NULL,\n  attributeIdx smallint(6) default NULL,\n  chargeRechargeTimeID smallint(6) default NULL,\n  \"defaultValue\" double default NULL,\n  \"published\" tinyint(1) default NULL,\n  \"displayName\" varchar(100) default NULL,\n  \"unitID\" tinyint(3) default NULL,\n  \"stackable\" tinyint(1) default NULL,\n  \"highIsGood\" tinyint(1) default NULL,\n  \"categoryID\" tinyint(3) default NULL,\n  \"iconID\" smallint(6) default NULL,\n  displayNameID smallint(6) default NULL,\n  tooltipTitleID smallint(6) default NULL,\n  tooltipDescriptionID smallint(6) default NULL,\n  dataID smallint(6) default NULL,\n  PRIMARY KEY  (\"attributeID\")\n);")
 	elif (table == "dgmEffects"):
-		f.append("DROP TABLE IF EXISTS dgmEffects;\nCREATE TABLE dgmEffects (\n\"effectID\"  INTEGER NOT NULL,\n\"effectName\"  TEXT(400),\n\"effectCategory\"  INTEGER,\n\"preExpression\"  INTEGER,\n\"postExpression\"  INTEGER,\n\"description\"  TEXT(1000),\n\"guid\"  TEXT(60),\n\"isOffensive\"  INTEGER,\n\"isAssistance\"  INTEGER,\n\"durationAttributeID\"  INTEGER,\n\"trackingSpeedAttributeID\"  INTEGER,\n\"dischargeAttributeID\"  INTEGER,\n\"rangeAttributeID\"  INTEGER,\n\"falloffAttributeID\"  INTEGER,\n\"disallowAutoRepeat\"  INTEGER,\n\"published\"  INTEGER,\n\"displayName\"  TEXT(100),\n\"isWarpSafe\"  INTEGER,\n\"rangeChance\"  INTEGER,\n\"electronicChance\"  INTEGER,\n\"propulsionChance\"  INTEGER,\n\"distribution\"  INTEGER,\n\"sfxName\"  TEXT(20),\n\"npcUsageChanceAttributeID\"  INTEGER,\n\"npcActivationChanceAttributeID\"  INTEGER,\n\"fittingUsageChanceAttributeID\"  INTEGER,\n\"iconID\" smallint(6) default NULL,\n\"displayNameID\" smallint(6) default NULL,\n\"descriptionID\" smallint(6) default NULL,\n\"modifierInfo\"  TEXT(1000),\n\"dataID\" smallint(6) default NULL,\nPRIMARY KEY (\"effectID\")\n);")
+		f.append("DROP TABLE IF EXISTS dgmEffects;\nCREATE TABLE dgmEffects (\n\"effectID\"  INTEGER NOT NULL,\n\"effectName\"  TEXT(400),\n\"effectCategory\"  INTEGER,\n\"preExpression\"  INTEGER,\n\"postExpression\"  INTEGER,\n\"description\"  TEXT(1000),\n\"guid\"  TEXT(60),\n\"isOffensive\"  INTEGER,\n\"isAssistance\"  INTEGER,\n\"durationAttributeID\"  INTEGER,\n\"trackingSpeedAttributeID\"  INTEGER,\n\"dischargeAttributeID\"  INTEGER,\n\"rangeAttributeID\"  INTEGER,\n\"falloffAttributeID\"  INTEGER,\n\"disallowAutoRepeat\"  INTEGER,\n\"published\"  INTEGER,\n\"displayName\"  TEXT(100),\n\"isWarpSafe\"  INTEGER,\n\"rangeChance\"  INTEGER,\n\"electronicChance\"  INTEGER,\n\"propulsionChance\"  INTEGER,\n\"distribution\"  INTEGER,\n\"sfxName\"  TEXT(20),\n\"npcUsageChanceAttributeID\"  INTEGER,\n\"npcActivationChanceAttributeID\"  INTEGER,\n\"fittingUsageChanceAttributeID\"  INTEGER,\n\"iconID\" smallint(6) default NULL,\n\"displayNameID\" smallint(6) default NULL,\n\"descriptionID\" smallint(6) default NULL,\n\"resistanceID\" smallint(6) default NULL,\n\"modifierInfo\"  TEXT(1000),\n\"dataID\" smallint(6) default NULL,\nPRIMARY KEY (\"effectID\")\n);")
 	elif (table == "dgmTypeEffects"):
 		f.append("DROP TABLE IF EXISTS \"dgmTypeEffects\";\nCREATE TABLE \"dgmTypeEffects\" (\n\"typeID\"  INTEGER NOT NULL,\n\"effectID\"  INTEGER NOT NULL,\n\"isDefault\"  INTEGER,\nPRIMARY KEY (\"typeID\", \"effectID\")\n);")
 	elif (table == "invCategories"):

@@ -35,75 +35,63 @@ void HeatSimulator::simulate()
 {
 	if (!isCalculated_)
 	{
-		ModulesVector hiSlot;
-		ModulesVector medSlot;
-		ModulesVector lowSlot;
 		std::shared_ptr<Ship> ship = ship_.lock();
 		if (!ship)
 			return;
-		hiSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
-		medSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
-		lowSlot.reserve(ship->getNumberOfSlots(Module::SLOT_HI));
 		
-		for (const auto& i: ship->getModules())
-		{
-			Module::Slot slot = i->getSlot();
-			if (slot == Module::SLOT_HI)
-				hiSlot.push_back(i);
-			else if (slot == Module::SLOT_MED)
-				medSlot.push_back(i);
-			else if (slot == Module::SLOT_LOW)
-				lowSlot.push_back(i);
+		for (auto slot: {Module::SLOT_HI, Module::SLOT_MED, Module::SLOT_LOW}) {
+			simulate(ship->getModules(slot, true));
 		}
-		if (hiSlot.size() > 0)
-			simulate(hiSlot);
-		if (medSlot.size() > 0)
-			simulate(medSlot);
-		if (lowSlot.size() > 0)
-			simulate(lowSlot);
+		
 		isCalculated_ = true;
 	}
 }
 
-void HeatSimulator::simulate(const ModulesVector& modules)
+void HeatSimulator::simulate(const ModulesList& modules)
 {
+	if (modules.size() == 0)
+		return;
+	
 	states_.clear();
 
 	std::shared_ptr<Ship> ship = ship_.lock();
 	if (!ship)
 		return;
-	std::shared_ptr<Module> module = *modules.begin();
+	std::shared_ptr<Module> module = modules.front();
 	Module::Slot slot = module->getSlot();
-	float heatCapacity = 0;
-	float heatGenerationMultiplier = ship->getAttribute(HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID)->getValue();
-	float heatAttenuation = 0;
-	float heatGeneration = 0;
-	float heatAbsorbtionRateModifier = 0;
+	Float heatCapacity = 0;
+	Float heatGenerationMultiplier = ship->getAttribute(HEAT_GENERATION_MULTIPLIER_ATTRIBUTE_ID)->getValue();
+	Float heatAttenuation = 0;
+	Float heatGeneration = 0;
+	Float heatAbsorbtionRateModifier = 0;
 	int numberOfSlots = ship->getNumberOfSlots(slot);
 	int numberOfOnlineModules = 0;
 	
 	if (slot == Module::SLOT_HI)
 	{
-		heatCapacity = ship->getAttribute(HEAT_CAPACITY_HI_ATTRIBUTE_ID)->getValue() / 100.0f;
+		heatCapacity = ship->getAttribute(HEAT_CAPACITY_HI_ATTRIBUTE_ID)->getValue() / 100.0;
 		heatAttenuation = ship->getAttribute(HEAT_ATTENUATION_HI_ATTRIBUTE_ID)->getValue();
 	}
 	else if (slot == Module::SLOT_MED)
 	{
-		heatCapacity = ship->getAttribute(HEAT_CAPACITY_MED_ATTRIBUTE_ID)->getValue() / 100.0f;
+		heatCapacity = ship->getAttribute(HEAT_CAPACITY_MED_ATTRIBUTE_ID)->getValue() / 100.0;
 		heatAttenuation = ship->getAttribute(HEAT_ATTENUATION_MED_ATTRIBUTE_ID)->getValue();
 	}
 	else if (slot == Module::SLOT_LOW)
 	{
-		heatCapacity = ship->getAttribute(HEAT_CAPACITY_LOW_ATTRIBUTE_ID)->getValue() / 100.0f;
+		heatCapacity = ship->getAttribute(HEAT_CAPACITY_LOW_ATTRIBUTE_ID)->getValue() / 100.0;
 		heatAttenuation = ship->getAttribute(HEAT_ATTENUATION_LOW_ATTRIBUTE_ID)->getValue();
 	}
 	
 	int n = (int) modules.size();
-	std::vector<float> modulesHP(n);
+	std::vector<Float> modulesHP(n);
 
 	for (int i = 0; i < n; i++)
 	{
 		std::shared_ptr<Module> module = modules[i];
+		if (module->isDummy())
+			continue;
+		
 		modulesHP[i] = module->getAttribute(HP_ATTRIBUTE_ID)->getValue();
 		Module::State state = module->getState();
 		if (state >= Module::STATE_ONLINE)
@@ -115,7 +103,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 
 			std::shared_ptr<State> state = std::make_shared<State>();
 			state->tNow = 0;
-			state->duration = static_cast<int>(module->getCycleTime());
+			state->duration = static_cast<int>(module->getCycleTime() * 1000.0);
 			state->clipSize = clipSize;
 			state->shot = 0;
 			state->reloadTime = static_cast<int>(module->getReloadTime());
@@ -140,7 +128,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 
 			tNow = state->tNow;
 			
-			float h = heat(static_cast<float>(tNow), heatCapacity, heatGeneration);
+			Float h = heat(static_cast<Float>(tNow), heatCapacity, heatGeneration);
 			int numberOfDeadModules = 0;
 			for (int i = 0; i < n; i++)
 			{
@@ -150,7 +138,7 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 					modulesHP[i] -= damageProbability(h, range, numberOfOnlineModules, numberOfSlots, heatAttenuation) * state->heatDamage;
 					if (modulesHP[i] <= 0.0)
 					{
-						modules[i]->setLifeTime(tNow / 1000.0f);
+						modules[i]->setLifeTime(tNow / 1000.0);
 						numberOfDeadModules++;
 					}
 				}
@@ -177,12 +165,12 @@ void HeatSimulator::simulate(const ModulesVector& modules)
 	}
 }
 
-float HeatSimulator::heat(float t, float heatCapacity, float heatGeneration)
+Float HeatSimulator::heat(Float t, Float heatCapacity, Float heatGeneration)
 {
 	return heatCapacity - exp(-t * heatGeneration);
 }
 
-float HeatSimulator::damageProbability(float h, int range, int numberOfOnlineModules, int numberOfSlots, float heatAttenuation)
+Float HeatSimulator::damageProbability(Float h, int range, int numberOfOnlineModules, int numberOfSlots, Float heatAttenuation)
 {
 	return (float) numberOfOnlineModules / (float) numberOfSlots * h * pow(heatAttenuation, range);
 }

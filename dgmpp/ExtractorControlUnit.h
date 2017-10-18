@@ -41,8 +41,8 @@ namespace dgmpp {
 		double cycleTime_;
 		uint32_t quantityPerCycle_;
 		
-		float decayFactor_;
-		float noiseFactor_;
+		Float decayFactor_;
+		Float noiseFactor_;
 		double phaseShift_;
 		double w_;
 		uint32_t yield_;

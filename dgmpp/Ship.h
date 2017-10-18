@@ -5,6 +5,7 @@
 #include "CapacitorSimulator.h"
 #include "HeatSimulator.h"
 #include "DamagePattern.h"
+#include "Cargo.h"
 
 namespace dgmpp {
 
@@ -25,16 +26,16 @@ namespace dgmpp {
 			return std::static_pointer_cast<Ship>(Item::shared_from_this());
 		}
 
-		std::shared_ptr<Module> addModule(TypeID typeID, bool forced = false);
+		std::shared_ptr<Module> addModule(TypeID typeID, bool forced = false, int socket = -1);
 		std::shared_ptr<Module> replaceModule(std::shared_ptr<Module> const& oldModule, TypeID typeID);
 		ModulesList addModules(const std::list<TypeID>& typeIDs);
 		void removeModule(std::shared_ptr<Module> const& module);
 		
-		std::shared_ptr<Drone> addDrone(TypeID typeID);
+		std::shared_ptr<Drone> addDrone(TypeID typeID, int squadronTag = -1);
 		void removeDrone(std::shared_ptr<Drone> const& drone);
 		
-		const ModulesList& getModules();
-		void getModules(Module::Slot slot, std::insert_iterator<ModulesList> outIterator);
+		ModulesList getModules(bool includingDummies = false);
+		ModulesList getModules(Module::Slot slot, bool includingDummies = false);
 		const DronesList& getDrones();
 		const std::list<std::weak_ptr<Module>>& getProjectedModules();
 		const std::list<std::weak_ptr<Drone>>& getProjectedDrones();
@@ -59,6 +60,13 @@ namespace dgmpp {
 		const DamagePattern& getDamagePattern();
 		void setDamagePattern(const DamagePattern& damagePattern);
 		
+		std::shared_ptr<Cargo> addCargo(TypeID typeID, size_t count);
+		void removeCarge(TypeID typeID, size_t count);
+		const CargoList& getCargo();
+		
+		void setName(const char* name);
+		const char* getName();
+
 		//Calculations
 		
 		int getNumberOfSlots(Module::Slot slot);
@@ -68,31 +76,33 @@ namespace dgmpp {
 		int getFreeHardpoints(Module::Hardpoint hardpoint);
 		int getUsedHardpoints(Module::Hardpoint hardpoint);
 		int getRigSize();
+		int getRaceID();
 		
-		float getCapacity();
-		float getOreHoldCapacity();
+		Float getCapacity();
+		Float getOreHoldCapacity();
 		
-		float getCalibrationUsed();
-		float getTotalCalibration();
-		float getPowerGridUsed();
-		float getTotalPowerGrid();
-		float getCpuUsed();
-		float getTotalCpu();
-		float getDroneBandwidthUsed();
-		float getTotalDroneBandwidth();
-		float getDroneBayUsed();
-		float getTotalDroneBay();
-		float getFighterHangarUsed();
-		float getTotalFighterHangar();
+		Float getCalibrationUsed();
+		Float getTotalCalibration();
+		Float getPowerGridUsed();
+		Float getTotalPowerGrid();
+		Float getCpuUsed();
+		Float getTotalCpu();
+		Float getDroneBandwidthUsed();
+		Float getTotalDroneBandwidth();
+		Float getDroneBayUsed();
+		Float getTotalDroneBay();
+		Float getFighterHangarUsed();
+		Float getTotalFighterHangar();
 		
 		
 		//Capacitor
-		float getCapCapacity();
+		Float getCapCapacity();
 		bool isCapStable();
-		float getCapLastsTime();
-		float getCapStableLevel();
-		float getCapUsed();
-		float getCapRecharge();
+		Float getCapLastsTime();
+		Float getCapStableLevel();
+		Float getCapUsed();
+		Float getCapRecharge();
+		Float getCapRechargeTime();
 		
 		//Tank
 		const Resistances& getResistances();
@@ -104,7 +114,7 @@ namespace dgmpp {
 		const HitPoints& getHitPoints();
 		const HitPoints& getEffectiveHitPoints();
 		
-		float getShieldRecharge();
+		Float getShieldRecharge();
 
 		//DPS
 		DamageVector getWeaponDps(const HostileTarget& target = HostileTarget::defaultTarget);
@@ -112,26 +122,30 @@ namespace dgmpp {
 		DamageVector getDroneDps(const HostileTarget& target = HostileTarget::defaultTarget);
 		DamageVector getDroneVolley();
 		
+		//Mining
+		Float getMinerYield();
+		Float getDroneYield();
+		
 		//Mobility
-		float getAlignTime();
-		float getWarpSpeed();
-		float getMaxWarpDistance();
-		float getVelocity();
-		float getSignatureRadius();
-		float getMass();
-		float getVolume();
-		float getAgility();
-		float getMaxVelocityInOrbit(float r);
-		float getOrbitRadiusWithTransverseVelocity(float v);
-		float getOrbitRadiusWithAngularVelocity(float v);
+		Float getAlignTime();
+		Float getWarpSpeed();
+		Float getMaxWarpDistance();
+		Float getVelocity();
+		Float getSignatureRadius();
+		Float getMass();
+		Float getVolume();
+		Float getAgility();
+		Float getMaxVelocityInOrbit(Float r);
+		Float getOrbitRadiusWithTransverseVelocity(Float v);
+		Float getOrbitRadiusWithAngularVelocity(Float v);
 		
 		//Targeting
 		int getMaxTargets();
-		float getMaxTargetRange();
-		float getScanStrength();
+		Float getMaxTargetRange();
+		Float getScanStrength();
 		ScanType getScanType();
-		float getProbeSize();
-		float getScanResolution();
+		Float getProbeSize();
+		Float getScanResolution();
 		
 		//Drones
 		int getDroneSquadronLimit(Drone::FighterSquadron squadron = Drone::FIGHTER_SQUADRON_NONE);
@@ -147,14 +161,16 @@ namespace dgmpp {
 
 		friend std::ostream& operator<<(std::ostream& os, Ship& ship);
 	protected:
-		ModulesList modules_;
+		std::map<Module::Slot, ModulesList> modules_;
 		DronesList drones_;
+		CargoList cargo_;
 	private:
 		std::list<std::weak_ptr<Module>> projectedModules_;
 		std::list<std::weak_ptr<Drone>> projectedDrones_;
 		std::shared_ptr<CapacitorSimulator> capacitorSimulator_;
 		std::shared_ptr<HeatSimulator> heatSimulator_;
 		DamagePattern damagePattern_;
+		std::string name_;
 		
 		Resistances resistances_;
 		Tank tank_;
@@ -163,7 +179,7 @@ namespace dgmpp {
 		Tank effectiveSustainableTank_;
 		HitPoints hitPoints_;
 		HitPoints effectiveHitPoints_;
-		float shieldRecharge_;
+		Float shieldRecharge_;
 		
 		enum {
 			UNKNOWN = -1,
@@ -173,6 +189,7 @@ namespace dgmpp {
 		
 		void updateModulesState();
 		void updateEnabledStatus();
+		void updateModulesSockets();
 
 	};
 }
