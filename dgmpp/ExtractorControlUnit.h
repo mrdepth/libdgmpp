@@ -5,11 +5,11 @@
 namespace dgmpp {
 	class ExtractorControlUnit: public Facility {
 	public:
-		enum: TypeID {
-			GROUP_ID = 1063
-		};
+		
+		static const GroupID groupID = GroupID::extractorControlUnits;
+		
 		ExtractorControlUnit(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner = std::shared_ptr<Planet>(nullptr), int64_t identifier = 0);
-		virtual TypeID getGroupID() const {return GROUP_ID;};
+		virtual GroupID getGroupID() const {return groupID;};
 		
 
 		virtual double getLaunchTime() const {return launchTime_;};

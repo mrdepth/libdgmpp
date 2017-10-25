@@ -11,7 +11,7 @@
 
 using namespace dgmpp;
 
-const TypeID dgmpp::IS_ONLINE_ATTRIBUTE_ID = 2;
+/*const TypeID dgmpp::IS_ONLINE_ATTRIBUTE_ID = 2;
 const TypeID dgmpp::MASS_ATTRIBUTE_ID = 4;
 const TypeID dgmpp::CAPACITY_ATTRIBUTE_ID = 38;
 const TypeID dgmpp::VOLUME_ATTRIBUTE_ID = 161;
@@ -307,7 +307,7 @@ const TypeID dgmpp::SCAN_RESOLUTION_BONUS_ATTRIBUTE_ID = 566;
 const TypeID dgmpp::SIGNATURE_RADIUS_BONUS_ATTRIBUTE_ID = 554;
 const TypeID dgmpp::SENSOR_DAMPENER_RESISTANCE_ATTRIBUTE_ID = 2112;
 const TypeID dgmpp::WEAPON_DISRUPTION_RESISTANCE_ATTRIBUTE_ID = 2113;
-const TypeID dgmpp::SPEED_FACTOR_ATTRIBUTE_ID = 20;
+const TypeID dgmpp::SPEED_FACTOR_ATTRIBUTE_ID = 20;*/
 
 
 template<typename InputIterator, typename Output>
@@ -332,7 +332,7 @@ Output multiply(InputIterator first, InputIterator last, Output value, bool stac
 	return value;
 }
 
-std::shared_ptr<Attribute> Attribute::getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute, Float value) {
+std::shared_ptr<Attribute> Attribute::getAttribute(std::shared_ptr<Engine> const& engine, AttributeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute, Float value) {
 	return std::make_shared<Attribute>(engine, AttributePrototype::getAttributePrototype(engine, attributeID), owner, isFakeAttribute, value);
 }
 
@@ -352,7 +352,7 @@ std::shared_ptr<Item> Attribute::getOwner() const
 	return owner_.lock();
 }
 
-TypeID Attribute::getAttributeID() const
+AttributeID Attribute::getAttributeID() const
 {
 	return prototype_->getAttributeID();
 }
@@ -447,8 +447,9 @@ void Attribute::calculate()
 		auto attributeID = prototype_->getAttributeID();
 		auto highIsGood = prototype_->highIsGood();
 		auto isStackable = prototype_->isStackable();
-		bool isDisallowedAssistance = ship && attributeID != DISALLOW_ASSISTANCE_ATTRIBUTE_ID ? ship->isDisallowedAssistance() : false;
-		bool isDisallowedOffensiveModifiers = ship && attributeID != DISALLOW_OFFENSIVE_MODIFIERS_ATTRIBUTE_ID ? ship->isDisallowedOffensiveModifiers() : false;
+		
+		bool isDisallowedAssistance = ship && attributeID != AttributeID::disallowAssistance ? ship->isDisallowedAssistance() : false;
+		bool isDisallowedOffensiveModifiers = ship && attributeID != AttributeID::disallowOffensiveModifiers ? ship->isDisallowedOffensiveModifiers() : false;
 		
 		/*std::list<Float>preAssignments;
 		std::list<Float>postAssignments;
@@ -500,27 +501,27 @@ void Attribute::calculate()
 			if (projected && ((i->isAssistance() && isDisallowedAssistance) || (i->isOffensive() && isDisallowedOffensiveModifiers)))
 				continue;
 			
-			TypeID categoryID = i->getModifier()->getOwner()->getCategoryID();
-			bool needsStackingCheck = categoryID == MODULE_CATEGORY_ID || categoryID == CHARGE_CATEGORY_ID || categoryID == DRONE_CATEGORY_ID || categoryID == FIGHTER_CATEGORY_ID || categoryID == STARBASE_CATEGORY_ID;
+			CategoryID categoryID = i->getModifier()->getOwner()->getCategoryID();
+			bool needsStackingCheck = categoryID == CategoryID::module || categoryID == CategoryID::charge || categoryID == CategoryID::drone || categoryID == CategoryID::fighter || categoryID == CategoryID::starbase;
 			Float value = i->getValue();
 			bool isNegative = (highIsGood && value < 1.0) || (!highIsGood && value > 1.0);
 
 			switch (i->getAssociation()) {
-				case Modifier::ASSOCIATION_PRE_ASSIGNMENT:
+				case Modifier::Association::preAssignment:
 					preAssignments.push_back(value);
 					break;
-				case Modifier::ASSOCIATION_POST_ASSIGNMENT:
+				case Modifier::Association::postAssignment:
 					postAssignments.push_back(value);
 					break;
-				case Modifier::ASSOCIATION_MOD_ADD:
-				case Modifier::ASSOCIATION_ADD_RATE:
+				case Modifier::Association::modAdd:
+				case Modifier::Association::addRate:
 					modAdds.push_back(value);
 					break;
-				case Modifier::ASSOCIATION_MOD_SUB:
-				case Modifier::ASSOCIATION_SUB_RATE:
+				case Modifier::Association::modSub:
+				case Modifier::Association::subRate:
 					modAdds.push_back(-value);
 					break;
-				case Modifier::ASSOCIATION_PRE_MUL:
+				case Modifier::Association::preMul:
 					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
@@ -531,7 +532,7 @@ void Attribute::calculate()
 					else
 						preMultipliers.push_back(value);
 					break;
-				case Modifier::ASSOCIATION_PRE_DIV:
+				case Modifier::Association::preDiv:
 					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
@@ -542,7 +543,7 @@ void Attribute::calculate()
 					else
 						preMultipliers.push_back(value);
 					break;
-				case Modifier::ASSOCIATION_POST_MUL:
+				case Modifier::Association::postMul:
 					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
@@ -553,7 +554,7 @@ void Attribute::calculate()
 					else
 						postMultipliers.push_back(value);
 					break;
-				case Modifier::ASSOCIATION_POST_DIV:
+				case Modifier::Association::postDiv:
 					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
@@ -564,7 +565,7 @@ void Attribute::calculate()
 					else
 						postMultipliers.push_back(value);
 					break;
-				case Modifier::ASSOCIATION_POST_PERCENT:
+				case Modifier::Association::postPercent:
 					if (needsStackingCheck && !isStackable)// && !(*i)->isStackable())
 					{
 						if (isNegative)
@@ -657,7 +658,7 @@ void Attribute::calculate()
 		value_ = multiply(postPercentsStackableNegative.begin(), postPercentsStackableNegative.end(), value_, true);
 		
 		auto maxAttributeID = prototype_->getMaxAttributeID();
-		if (maxAttributeID > 0) {
+		if (maxAttributeID != AttributeID::none) {
 			Float maxValue = owner->getAttribute(maxAttributeID)->getValue();
 			value_ = std::min(value_, maxValue);
 		}
@@ -676,7 +677,7 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Attribute& attribute)
 {
 	os	<< "{\"attributeName\":\"" << attribute.prototype_->getAttributeName()
 		<< "\", \"typeName\":\"" << attribute.getOwner()->getTypeName()
-		<< "\", \"attributeID\":\"" << attribute.prototype_->getAttributeID()
+		<< "\", \"attributeID\":\"" << static_cast<int>(attribute.prototype_->getAttributeID())
 		<< "\", \"value\":\"" << attribute.getValue()
 		<< "\", \"initialValue\":\"" << attribute.getInitialValue()
 		<< "\", \"stackable\":\"" << attribute.prototype_->isStackable() << "\"}";

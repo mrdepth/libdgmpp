@@ -20,7 +20,7 @@ using namespace dgmpp;
 IndustryFacility::IndustryFacility(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), startTime_(-1), productionTime_(0), updating_(false) {
 }
 
-std::shared_ptr<Schematic> IndustryFacility::setSchematic(TypeID schematicID) {
+std::shared_ptr<Schematic> IndustryFacility::setSchematic(SchematicID schematicID) {
 	schematic_ = schematicID > 0 ? std::make_shared<Schematic>(getOwner()->getEngine(), schematicID) : nullptr;
 	return schematic_;
 }

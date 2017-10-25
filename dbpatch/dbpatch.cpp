@@ -730,10 +730,10 @@ int patch(const char* databasePath) {
 
 
 	//Energy Transfers
-	update("energyTransfer",
+	update("shipModuleRemoteCapacitorTransmitter",
 		   DefEnv("Target").attr("charge").assoc("AddRate").AIM("powerTransferAmount"),
 		   DefEnv("Target").attr("charge").assoc("AddRate").RIM("powerTransferAmount"));
-	update("energyDestabilizationNew",
+	update("energyNeutralizerFalloff",
 		   DefEnv("Target").attr("charge").assoc("SubRate").AIM("powerTransferAmount"),
 		   DefEnv("Target").attr("charge").assoc("SubRate").RIM("powerTransferAmount"));
 	update("energyNosferatuFalloff",

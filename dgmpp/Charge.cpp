@@ -17,7 +17,7 @@ Charge::~Charge()
 bool Charge::isAssistance() {
 	loadIfNeeded();
 	for (const auto& effect: getEffects())
-		if (effect->getCategory() == Effect::CATEGORY_TARGET)
+		if (effect->getCategory() == Effect::Category::target)
 			return  effect->isAssistance();
 	return false;
 }
@@ -25,7 +25,7 @@ bool Charge::isAssistance() {
 bool Charge::isOffensive() {
 	loadIfNeeded();
 	for (const auto& effect: getEffects())
-		if (effect->getCategory() == Effect::CATEGORY_TARGET)
+		if (effect->getCategory() == Effect::Category::target)
 			return  effect->isOffensive();
 	return false;
 }
@@ -54,9 +54,9 @@ void Charge::lazyLoad() {
 	for (const auto& i: effects_)
 	{
 		Effect::Category category = i->getCategory();
-		if (category == Effect::CATEGORY_ACTIVE ||
-			category == Effect::CATEGORY_TARGET ||
-			category == Effect::CATEGORY_OVERLOADED) {
+		if (category == Effect::Category::active ||
+			category == Effect::Category::target ||
+			category == Effect::Category::overloaded) {
 			canBeActive_ = true;
 			break;
 		}

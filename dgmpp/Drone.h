@@ -8,12 +8,12 @@ namespace dgmpp {
 	class Drone : public Item
 	{
 	public:
-		enum FighterSquadron
+		enum class FighterSquadron
 		{
-			FIGHTER_SQUADRON_NONE = 0,
-			FIGHTER_SQUADRON_HEAVY,
-			FIGHTER_SQUADRON_LIGHT,
-			FIGHTER_SQUADRON_SUPPORT
+			none,
+			heavy,
+			light,
+			support
 		};
 
 		

@@ -85,6 +85,16 @@
 		125ECFD21C4A28DD00A1CDA9 /* Cycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		125ECFD61C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */; };
 		125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CA21FA08D1C00577188 /* AttributeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CA11FA08C3400577188 /* AttributeID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CA31FA08D1C00577188 /* AttributeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CA11FA08C3400577188 /* AttributeID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CB11FA0B47700577188 /* CategoryID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB01FA0B47700577188 /* CategoryID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CB21FA0B47700577188 /* CategoryID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB01FA0B47700577188 /* CategoryID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CB41FA0B5D200577188 /* GroupID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB31FA0B5D200577188 /* GroupID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CB51FA0B5D200577188 /* GroupID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB31FA0B5D200577188 /* GroupID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CB71FA0B83700577188 /* TypeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB61FA0B83700577188 /* TypeID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CB81FA0B83700577188 /* TypeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB61FA0B83700577188 /* TypeID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CBA1FA0C0AC00577188 /* EffectID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB91FA0C0AC00577188 /* EffectID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CBB1FA0C0AC00577188 /* EffectID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB91FA0C0AC00577188 /* EffectID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1286564F1C57AD440002BA7E /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1286564D1C57AD440002BA7E /* State.cpp */; };
 		128656511C57AD440002BA7E /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 1286564E1C57AD440002BA7E /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		128656551C57AE6A0002BA7E /* ProductionState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 128656531C57AE6A0002BA7E /* ProductionState.cpp */; };
@@ -258,6 +268,11 @@
 		125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cycle.h; sourceTree = "<group>"; };
 		125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionCycle.cpp; sourceTree = "<group>"; };
 		125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductionCycle.h; sourceTree = "<group>"; };
+		12791CA11FA08C3400577188 /* AttributeID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttributeID.h; sourceTree = "<group>"; };
+		12791CB01FA0B47700577188 /* CategoryID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryID.h; sourceTree = "<group>"; };
+		12791CB31FA0B5D200577188 /* GroupID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupID.h; sourceTree = "<group>"; };
+		12791CB61FA0B83700577188 /* TypeID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypeID.h; sourceTree = "<group>"; };
+		12791CB91FA0C0AC00577188 /* EffectID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EffectID.h; sourceTree = "<group>"; };
 		1286564D1C57AD440002BA7E /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
 		1286564E1C57AD440002BA7E /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		128656531C57AE6A0002BA7E /* ProductionState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionState.cpp; sourceTree = "<group>"; };
@@ -498,6 +513,11 @@
 				37A9EC52147FA61C00B12A7F /* Area.h */,
 				37B33D511473CA5E006B18D7 /* Attribute.cpp */,
 				37B33D521473CA5E006B18D7 /* Attribute.h */,
+				12791CA11FA08C3400577188 /* AttributeID.h */,
+				12791CB01FA0B47700577188 /* CategoryID.h */,
+				12791CB31FA0B5D200577188 /* GroupID.h */,
+				12791CB61FA0B83700577188 /* TypeID.h */,
+				12791CB91FA0C0AC00577188 /* EffectID.h */,
 				12AEEFD81C26B8AA00FB7B1D /* AttributePrototype.cpp */,
 				12AEEFD91C26B8AA00FB7B1D /* AttributePrototype.h */,
 				37BA6F98147D10E200ADC4CE /* Engine.cpp */,
@@ -652,8 +672,12 @@
 				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
 				12564BE41B84B07F000F68D8 /* Booster.h in Headers */,
 				125ECFD21C4A28DD00A1CDA9 /* Cycle.h in Headers */,
+				12791CBA1FA0C0AC00577188 /* EffectID.h in Headers */,
 				12B0A0511C0C386C00194715 /* HostileTarget.h in Headers */,
 				12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */,
+				12791CA21FA08D1C00577188 /* AttributeID.h in Headers */,
+				12791CB41FA0B5D200577188 /* GroupID.h in Headers */,
+				12791CB71FA0B83700577188 /* TypeID.h in Headers */,
 				12564BE51B84B07F000F68D8 /* Character.h in Headers */,
 				12564BE61B84B07F000F68D8 /* Implant.h in Headers */,
 				12564BE71B84B07F000F68D8 /* Skill.h in Headers */,
@@ -663,6 +687,7 @@
 				12564BE91B84B07F000F68D8 /* Charge.h in Headers */,
 				12564BEA1B84B07F000F68D8 /* DamagePattern.h in Headers */,
 				12564BEB1B84B07F000F68D8 /* Drone.h in Headers */,
+				12791CB11FA0B47700577188 /* CategoryID.h in Headers */,
 				121064A71C9312370032B3DB /* Structure.h in Headers */,
 				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
 				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
@@ -714,8 +739,12 @@
 				12D9F9C01CC3A98B00313F8D /* LocationRequiredSkillModifier.h in Headers */,
 				12D9F9C11CC3A98B00313F8D /* Booster.h in Headers */,
 				12D9F9C21CC3A98B00313F8D /* Cycle.h in Headers */,
+				12791CBB1FA0C0AC00577188 /* EffectID.h in Headers */,
 				12D9F9C31CC3A98B00313F8D /* HostileTarget.h in Headers */,
 				12D9F9C41CC3A98B00313F8D /* CombatSimulator.h in Headers */,
+				12791CA31FA08D1C00577188 /* AttributeID.h in Headers */,
+				12791CB51FA0B5D200577188 /* GroupID.h in Headers */,
+				12791CB81FA0B83700577188 /* TypeID.h in Headers */,
 				12D9F9C51CC3A98B00313F8D /* Character.h in Headers */,
 				12D9F9C61CC3A98B00313F8D /* Implant.h in Headers */,
 				12D9F9C71CC3A98B00313F8D /* Skill.h in Headers */,
@@ -725,6 +754,7 @@
 				12D9F9CB1CC3A98B00313F8D /* Charge.h in Headers */,
 				12D9F9CC1CC3A98B00313F8D /* DamagePattern.h in Headers */,
 				12D9F9CD1CC3A98B00313F8D /* Drone.h in Headers */,
+				12791CB21FA0B47700577188 /* CategoryID.h in Headers */,
 				12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */,
 				12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */,
 				12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */,

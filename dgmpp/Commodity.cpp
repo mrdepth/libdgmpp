@@ -13,13 +13,13 @@
 using namespace dgmpp;
 
 Commodity Commodity::InvalidCommodity() {
-	return Commodity(nullptr, 0);
+	return Commodity(nullptr, TypeID::none);
 }
 
 Commodity::Commodity(std::shared_ptr<Engine> const& engine, TypeID typeID, uint32_t quantity) : typeID_(typeID), quantity_(quantity), volume_(0), tier_(TIER_UNKNOWN) {
 	if (engine) {
 		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT volume, typeName FROM invTypes WHERE typeID = ? LIMIT 1");
-		stmt->bindInt(1, typeID);
+		stmt->bindInt(1, static_cast<int>(typeID));
 		std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 		if (result->next()) {
 			volume_ = result->getDouble(0);
@@ -28,7 +28,7 @@ Commodity::Commodity(std::shared_ptr<Engine> const& engine, TypeID typeID, uint3
 			tier_ = tier != engine->getCommodityTiers().end() ? tier->second : TIER_UNKNOWN;
 		}
 		else {
-			throw Item::UnknownTypeIDException(std::to_string(typeID));
+			throw Item::UnknownTypeIDException(std::to_string(static_cast<int>(typeID)));
 		}
 	}
 }
@@ -69,13 +69,13 @@ std::ostream& dgmpp::operator<<(std::ostream& os, const Commodity& commodity) {
 
 Commodity Commodity::operator+(const Commodity& other) {
 	if (typeID_ != getTypeID())
-		throw DifferentCommoditiesTypeIDs(std::to_string(other.getTypeID()));
+		throw DifferentCommoditiesTypeIDs(std::to_string(static_cast<int>(other.getTypeID())));
 	return Commodity(other, quantity_ + other.getQuantity());
 }
 
 Commodity Commodity::operator-(const Commodity& other) {
 	if (typeID_ != getTypeID())
-		throw DifferentCommoditiesTypeIDs(std::to_string(other.getTypeID()));
+		throw DifferentCommoditiesTypeIDs(std::to_string(static_cast<int>(other.getTypeID())));
 	else if (getQuantity() < quantity_)
 		throw  NotEnoughCommodities(std::to_string(quantity_ - other.getQuantity()));
 	return Commodity(other, quantity_ - other.getQuantity());

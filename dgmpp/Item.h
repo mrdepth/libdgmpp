@@ -8,7 +8,7 @@
 
 namespace dgmpp {
 	
-	extern const TypeID ANY_GROUP_ID;
+	/*extern const TypeID ANY_GROUP_ID;
 	extern const TypeID CHARACTER_GROUP_ID;
 	extern const TypeID WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID;
 	extern const TypeID CAPACITOR_BOOSTER_GROUP_ID;
@@ -53,7 +53,7 @@ namespace dgmpp {
 	extern const TypeID GAS_CLOUD_HARVESTING_TYPE_ID;
 	extern const TypeID CPU_MANAGEMENT_TYPE_ID;
 	extern const TypeID ENERGY_WEAPON_GROUP_ID;
-	extern const TypeID HYBRID_WEAPON_GROUP_ID;
+	extern const TypeID HYBRID_WEAPON_GROUP_ID;*/
 
 
 	class Item: public Environment, public std::enable_shared_from_this<Item>
@@ -72,18 +72,18 @@ namespace dgmpp {
 		std::shared_ptr<Item> getOwner() const;
 
 		virtual TypeID getTypeID();
-		virtual TypeID getGroupID();
-		virtual TypeID getCategoryID();
-		virtual std::shared_ptr<Attribute> getAttribute(TypeID attributeID);
+		virtual GroupID getGroupID();
+		virtual CategoryID getCategoryID();
+		virtual std::shared_ptr<Attribute> getAttribute(AttributeID attributeID);
 		const AttributesMap &getAttributes();
-		bool hasAttribute(TypeID attributeID);
-		std::shared_ptr<Effect> getEffect(TypeID effectID);
+		bool hasAttribute(AttributeID attributeID);
+		std::shared_ptr<Effect> getEffect(EffectID effectID);
 		
 		
 		virtual bool requireSkill(TypeID skillID);
 		const std::vector<TypeID>& requiredSkills();
 
-		bool hasEffect(TypeID effectID);
+		bool hasEffect(EffectID effectID);
 		
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
@@ -119,8 +119,8 @@ namespace dgmpp {
 		std::weak_ptr<Engine> engine_;
 		AttributesMap attributes_;
 		TypeID typeID_;
-		TypeID groupID_;
-		TypeID categoryID_;
+		GroupID groupID_;
+		CategoryID categoryID_;
 		EffectsList effects_;
 		std::weak_ptr<Item> owner_;
 		
@@ -135,7 +135,7 @@ namespace dgmpp {
 			if (!loaded_)
 				lazyLoad();
 		}
-		std::shared_ptr<Attribute> addExtraAttribute(TypeID attributeID, Float value);
+		std::shared_ptr<Attribute> addExtraAttribute(AttributeID attributeID, Float value);
 
 		
 	private:

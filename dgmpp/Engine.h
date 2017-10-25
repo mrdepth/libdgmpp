@@ -45,13 +45,13 @@ namespace dgmpp {
 		
 		friend std::ostream& operator<<(std::ostream& os, Engine& engine);
 		
-		std::map<TypeID, std::shared_ptr<EffectPrototype> >& getReusableEffectPrototypes() {
+		std::map<EffectID, std::shared_ptr<EffectPrototype> >& getReusableEffectPrototypes() {
 			return reusableEffectPrototypes_;
 		}
-		std::map<TypeID, std::shared_ptr<EffectPrototype::ModifierPrototype> >& getReusableModifierPrototypes() {
+		std::map<ModifierID, std::shared_ptr<EffectPrototype::ModifierPrototype> >& getReusableModifierPrototypes() {
 			return reusableModifierPrototypes_;
 		}
-		std::map<TypeID, std::shared_ptr<AttributePrototype> >& getReusableAttributePrototypes() {
+		std::map<AttributeID, std::shared_ptr<AttributePrototype> >& getReusableAttributePrototypes() {
 			return reusableAttributePrototypes_;
 		}
 		
@@ -73,9 +73,9 @@ namespace dgmpp {
 #if !_M_CEE
 		std::recursive_mutex mutex_;
 #endif		
-		std::map<TypeID, std::shared_ptr<EffectPrototype> > reusableEffectPrototypes_;
-		std::map<TypeID, std::shared_ptr<EffectPrototype::ModifierPrototype> > reusableModifierPrototypes_;
-		std::map<TypeID, std::shared_ptr<AttributePrototype> > reusableAttributePrototypes_;
+		std::map<EffectID, std::shared_ptr<EffectPrototype> > reusableEffectPrototypes_;
+		std::map<ModifierID, std::shared_ptr<EffectPrototype::ModifierPrototype> > reusableModifierPrototypes_;
+		std::map<AttributeID, std::shared_ptr<AttributePrototype> > reusableAttributePrototypes_;
 		uint32_t generation_;
 		int32_t updatesCounter_;
 		mutable Float decayFactor_;

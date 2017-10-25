@@ -14,199 +14,202 @@ std::list<std::shared_ptr<Modifier>> GangBoost::modifiers() {
 	
 	std::list<std::shared_ptr<Modifier>> modifiers;
 	
-	switch (static_cast<int>(bufID_->getValue())) {
-		case SHIELD_BURST_SHIELD_HARMONIZING_SHIELD_RESISTANCE_BUF_ID:
-			for (auto i: {SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+	switch (static_cast<BufID>(bufID_->getValue())) {
+		case BufID::shieldBurstShieldHarmonizingShieldResistance:
+			
+			for (auto i: {AttributeID::shieldEmDamageResonance, AttributeID::shieldKineticDamageResonance, AttributeID::shieldThermalDamageResonance, AttributeID::shieldExplosiveDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
 			}
 			break;
 		
-		case SHIELD_BURST_ACTIVE_SHIELDING_REPAIR_DURATION_CAPACITOR_BUF_ID:
-			for (auto i: {CAPACITOR_NEED_ATTRIBUTE_ID, DURATION_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, SHIELD_OPERATION_TYPE_ID, false, false));
-				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, SHIELD_EMISSION_SYSTEMS_TYPE_ID, false, false));
+		case BufID::shieldBurstActiveShieldingRepairDurationCapacitor:
+			for (auto i: {AttributeID::capacitorNeed, AttributeID::duration}) {
+				
+				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, TypeID::shieldOperation, false, false));
+				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, TypeID::shieldEmissionSystems, false, false));
 			}
 			break;
 		
-		case SHIELD_BURST_SHIELD_EXTENSION_SHIELD_HP_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, SHIELD_CAPACITY_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+		case BufID::shieldBurstShieldExtensionShieldHP:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::shieldCapacity, Modifier::Association::postPercent, value_, false, false));
 			break;
 		
-		case ARMOR_BURST_ARMOR_ENERGIZING_ARMOR_RESISTANCE_BUF_ID:
-			for (auto i: {ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID, ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID, ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID, ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+			
+		case BufID::armorBurstArmorEnergizingArmorResistance:
+			for (auto i: {AttributeID::armorEmDamageResonance, AttributeID::armorKineticDamageResonance, AttributeID::armorThermalDamageResonance, AttributeID::armorExplosiveDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
 			}
 			break;
 		
-		case ARMOR_BURST_RAPID_REPAIR_REPAIR_DURATION_CAPACITOR_BUF_ID:
-			for (auto i: {CAPACITOR_NEED_ATTRIBUTE_ID, DURATION_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, REPAIR_SYSTEMS_TYPE_ID, false, false));
-				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, REMOTE_ARMOR_REPAIR_SYSTEMS_TYPE_ID, false, false));
+		case BufID::armorBurstRapidRepairRepairDurationCapacitor:
+			for (auto i: {AttributeID::capacitorNeed, AttributeID::duration}) {
+				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, TypeID::repairSystems, false, false));
+				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, TypeID::remoteArmorRepairSystems, false, false));
 			}
 			break;
 		
-		case ARMOR_BURST_ARMOR_REINFORCEMENT_ARMOR_HP_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, ARMOR_HP_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+		case BufID::armorBurstArmorReinforcementArmorHP:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::armorHP, Modifier::Association::postPercent, value_, false, false));
 			break;
 		
-		case INFORMATION_BURST_SENSOR_OPTIMIZATION_SCAN_RESOLUTION_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, SCAN_RESOLUTION_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+		case BufID::informationBurstSensorOptimizationScanResolution:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::scanResolution, Modifier::Association::postPercent, value_, false, false));
 			break;
-		
-		case INFORMATION_BURST_ELECTRONIC_SUPERIORITY_EWAR_RANGE_AND_STRENGTH_BUF_ID:
-			for (auto i: {ECM_GROUP_ID, SENSOR_DAMPENER_GROUP_ID, WEAPON_DISRUPTOR_GROUP_ID, TARGET_PAINTER_GROUP_ID}) {
-				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::DOMAIN_SHIP, MAX_RANGE_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, i, false, false));
-				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::DOMAIN_SHIP, FALLOFF_EFFECTIVENESS_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, i, false, false));
+			
+		case BufID::informationBurstElectronicSuperiorityEwarRangeAndStrength:
+			for (auto i: {GroupID::eCM, GroupID::sensorDampener, GroupID::weaponDisruptor, GroupID::targetPainter}) {
+				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, AttributeID::maxRange, Modifier::Association::postPercent, value_, i, false, false));
+				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, AttributeID::falloffEffectiveness, Modifier::Association::postPercent, value_, i, false, false));
 			}
 			
-			for (auto i: {SCAN_GRAVIMETRIC_STRENGTH_BONUS_ATTRIBUTE_ID, SCAN_LADAR_STRENGTH_BONUS_ATTRIBUTE_ID, SCAN_MAGNETOMETRIC_STRENGTH_BONUS_ATTRIBUTE_ID, SCAN_RADAR_STRENGTH_BONUS_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, ECM_GROUP_ID, false, false));
+			for (auto i: {AttributeID::scanGravimetricStrengthBonus, AttributeID::scanLadarStrengthBonus, AttributeID::scanMagnetometricStrengthBonus, AttributeID::scanRadarStrengthBonus}) {
+				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, GroupID::eCM, false, false));
 			}
 
-			for (auto i: {MISSILE_VELOCITY_BONUS_ATTRIBUTE_ID, EXPLOSION_DELAY_BONUS_ATTRIBUTE_ID, AOE_VELOCITY_BONUS_ATTRIBUTE_ID, FALLOFF_BONUS_ATTRIBUTE_ID, MAX_RANGE_BONUS_ATTRIBUTE_ID, AOE_CLOUD_SIZE_BONUS_ATTRIBUTE_ID, TRACKING_SPEED_BONUS_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, WEAPON_DISRUPTOR_GROUP_ID, false, false));
+			for (auto i: {AttributeID::missileVelocityBonus, AttributeID::explosionDelayBonus, AttributeID::aoeVelocityBonus, AttributeID::falloffBonus, AttributeID::maxRangeBonus, AttributeID::aoeCloudSizeBonus, AttributeID::trackingSpeedBonus}) {
+				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, GroupID::weaponDisruptor, false, false));
 			}
 
-			for (auto i: {MAX_TARGET_RANGE_BONUS_ATTRIBUTE_ID, SCAN_RESOLUTION_BONUS_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, SENSOR_DAMPENER_GROUP_ID, false, false));
+			for (auto i: {AttributeID::maxTargetRangeBonus, AttributeID::scanResolutionBonus}) {
+				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, GroupID::sensorDampener, false, false));
 			}
 
-			modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::DOMAIN_SHIP, SIGNATURE_RADIUS_BONUS_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, TARGET_PAINTER_GROUP_ID, false, false));
+			modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, AttributeID::signatureRadiusBonus, Modifier::Association::postPercent, value_, GroupID::targetPainter, false, false));
 			break;
 
-		case INFORMATION_BURST_ELECTRONIC_HARDENING_SCAN_STRENGTH_BUF_ID:
-			for (auto i: {SCAN_GRAVIMETRIC_STRENGTH_ATTRIBUTE_ID, SCAN_RADAR_STRENGTH_ATTRIBUTE_ID, SCAN_LADAR_STRENGTH_ATTRIBUTE_ID, SCAN_MAGNETOMETRIC_STRENGTH_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
-			break;
-
-		case INFORMATION_BURST_ELECTRONIC_HARDENING_RSD_RWD_RESISTANCE_BUF_ID:
-			for (auto i: {SENSOR_DAMPENER_RESISTANCE_ATTRIBUTE_ID, WEAPON_DISRUPTION_RESISTANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+		case BufID::informationBurstElectronicHardeningScanStrength:
+			for (auto i: {AttributeID::scanGravimetricStrength, AttributeID::scanRadarStrength, AttributeID::scanLadarStrength, AttributeID::scanMagnetometricStrength}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
 			}
 			break;
 
-		case INFORMATION_BURST_SENSOR_OPTIMIZATION_TARGETING_RANGE_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, MAX_TARGET_RANGE_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+		case BufID::informationBurstElectronicHardeningRsdRwdResistance:
+			for (auto i: {AttributeID::sensorDampenerResistance, AttributeID::weaponDisruptionResistance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
+			break;
+
+		case BufID::informationBurstSensorOptimizationTargetingRange:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::maxTargetRange, Modifier::Association::postPercent, value_, false, false));
 			break;
 		
-		case SKIRMISH_BURST_EVASIVE_MANEUVERS_SIGNATURE_RADIUS_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, SIGNATURE_RADIUS_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+		case BufID::skirmishBurstEvasiveManeuversSignatureRadius:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::signatureRadius, Modifier::Association::postPercent, value_, false, false));
 			break;
 		
-		case SKIRMISH_BURST_INTERDICTION_MANEUVERS_TACKLE_RANGE_BUF_ID:
-			for (auto i: {STASIS_WEB_GROUP_ID, WARP_SCRAMBLER_GROUP_ID}) {
-				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::DOMAIN_SHIP, MAX_RANGE_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, i, false, false));
+		case BufID::skirmishBurstInterdictionManeuversTackleRange:
+			for (auto i: {GroupID::stasisWeb, GroupID::warpScrambler}) {
+				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, AttributeID::maxRange, Modifier::Association::postPercent, value_, i, false, false));
+			}
+			break;
+			
+		case BufID::skirmishBurstRapidDeploymentAbMwdSpeedIncrease:
+			for (auto i: {TypeID::afterburner, TypeID::highSpeedManeuvering}) {
+				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::speedFactor, Modifier::Association::postPercent, value_, i, false, false));
+			}
+			break;
+
+		case BufID::miningBurstMiningLaserFieldEnhancementMiningSurveyRange:
+			for (auto i: {TypeID::mining, TypeID::iceHarvesting, TypeID::gasCloudHarvesting}) {
+				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::maxRange, Modifier::Association::postPercent, value_, i, false, false));
+			}
+			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::surveyScanRange, Modifier::Association::postPercent, value_, TypeID::cPUManagement, false, false));
+			break;
+
+		case BufID::miningBurstMiningLaserOptimizationMiningCapacitorDuration:
+			for (auto i: {TypeID::mining, TypeID::iceHarvesting, TypeID::gasCloudHarvesting}) {
+				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::capacitorNeed, Modifier::Association::postPercent, value_, i, false, false));
+				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::duration, Modifier::Association::postPercent, value_, i, false, false));
 			}
 			break;
 		
-		case SKIRMISH_BURST_RAPID_DEPLOYMENT_AB_MWD_SPEED_INCREASE_BUF_ID:
-			for (auto i: {AFTERBURNER_TYPE_ID, HIGH_SPEED_MANEUVERING_TYPE_ID}) {
-				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, SPEED_FACTOR_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, i, false, false));
-			}
+		case BufID::miningBurstMiningEquipmentPreservationCrystalVolatility:
+			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::crystalVolatilityChance, Modifier::Association::postPercent, value_, TypeID::mining, false, false));
 			break;
 
-		case MINING_BURST_MINING_LASER_FIELD_ENHANCEMENT_MINING_SURVEY_RANGE_BUF_ID:
-			for (auto i: {MINING_TYPE_ID, ICE_HARVESTING_TYPE_ID, GAS_CLOUD_HARVESTING_TYPE_ID}) {
-				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, MAX_RANGE_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, i, false, false));
-			}
-			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, SURVEY_SCAN_RANGE_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, CPU_MANAGEMENT_TYPE_ID, false, false));
+		case BufID::skirmishBurstEvasiveManeuversAgility:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::agility, Modifier::Association::postPercent, value_, false, false));
 			break;
 
-		case MINING_BURST_MINING_LASER_OPTIMIZATION_MINING_CAPACITOR_DURATION_BUF_ID:
-			for (auto i: {MINING_TYPE_ID, ICE_HARVESTING_TYPE_ID, GAS_CLOUD_HARVESTING_TYPE_ID}) {
-				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, CAPACITOR_NEED_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, i, false, false));
-				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, DURATION_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, i, false, false));
-			}
+		case BufID::avatarEffectGeneratorCapacitorRechargeBonus:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::rechargeRate, Modifier::Association::postPercent, value_, false, false));
 			break;
 		
-		case MINING_BURST_MINING_EQUIPMENT_PRESERVATION_CRYSTAL_VOLATILITY_BUF_ID:
-			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, CRYSTAL_VOLATILITY_CHANCE_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, MINING_TYPE_ID, false, false));
+		case BufID::avatarEffectGeneratorKineticResistanceBonus:
+			for (auto i: {AttributeID::armorKineticDamageResonance, AttributeID::shieldKineticDamageResonance, AttributeID::kineticDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
 			break;
 
-		case SKIRMISH_BURST_EVASIVE_MANEUVERS_AGILITY_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, AGILITY_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+		case BufID::avatarEffectGeneratorEmResistancePenalty:
+			for (auto i: {AttributeID::armorEmDamageResonance, AttributeID::shieldEmDamageResonance, AttributeID::emDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
 			break;
 
-		case AVATAR_EFFECT_GENERATOR_CAPACITOR_RECHARGE_BONUS_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, RECHARGE_RATE_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
+		case BufID::erebusEffectGeneratorArmorHpBonus:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::armorHP, Modifier::Association::postPercent, value_, false, false));
+			break;
+
+		case BufID::erebusEffectGeneratorExplosiveResistanceBonus:
+			for (auto i: {AttributeID::armorExplosiveDamageResonance, AttributeID::shieldExplosiveDamageResonance, AttributeID::explosiveDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
+			break;
+
+		case BufID::erebusEffectGeneratorThermalResistancePenalty:
+			for (auto i: {AttributeID::armorThermalDamageResonance, AttributeID::shieldThermalDamageResonance, AttributeID::thermalDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
+			break;
+
+		case BufID::ragnarokEffectGeneratorSignatureRadiusBonus:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::signatureRadius, Modifier::Association::postPercent, value_, false, false));
+			break;
+
+		case BufID::ragnarokEffectGeneratorThermalResistanceBonus:
+			for (auto i: {AttributeID::armorThermalDamageResonance, AttributeID::shieldThermalDamageResonance, AttributeID::thermalDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
+			break;
+
+		case BufID::ragnarokEffectGeneratorExplosiveResistancePenaly:
+			for (auto i: {AttributeID::armorExplosiveDamageResonance, AttributeID::shieldExplosiveDamageResonance, AttributeID::explosiveDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
+			break;
+
+		case BufID::leviathanEffectGeneratorShieldHpBonus:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::shieldCapacity, Modifier::Association::postPercent, value_, false, false));
+			break;
+
+		case BufID::leviathanEffectGeneratorEmResistanceBonus:
+			for (auto i: {AttributeID::armorEmDamageResonance, AttributeID::shieldEmDamageResonance, AttributeID::emDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
+			break;
+
+		case BufID::leviathanEffectGeneratorKineticResistancePenalty:
+			for (auto i: {AttributeID::armorKineticDamageResonance, AttributeID::shieldKineticDamageResonance, AttributeID::kineticDamageResonance}) {
+				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, false, false));
+			}
+			break;
+
+		case BufID::avatarEffectGeneratorVelocityPenalty:
+			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::ship, AttributeID::maxVelocity, Modifier::Association::postPercent, value_, false, false));
+			break;
+
+		case BufID::erebusEffectGeneratorShieldRrPenalty:
+			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::shieldBonus, Modifier::Association::postPercent, value_, TypeID::shieldEmissionSystems, false, false));
 			break;
 		
-		case AVATAR_EFFECT_GENERATOR_KINETIC_RESISTANCE_BONUS_BUF_ID:
-			for (auto i: {ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID, KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
+		case BufID::leviathanEffectGeneratorArmorRrPenalty:
+			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::armorDamageAmount, Modifier::Association::postPercent, value_, TypeID::remoteArmorRepairSystems, false, false));
 			break;
-
-		case AVATAR_EFFECT_GENERATOR_EM_RESISTANCE_PENALTY_BUF_ID:
-			for (auto i: {ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID, EM_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
-			break;
-
-		case EREBUS_EFFECT_GENERATOR_ARMOR_HP_BONUS_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, ARMOR_HP_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			break;
-
-		case EREBUS_EFFECT_GENERATOR_EXPLOSIVE_RESISTANCE_BONUS_BUF_ID:
-			for (auto i: {ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID, EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
-			break;
-
-		case EREBUS_EFFECT_GENERATOR_THERMAL_RESISTANCE_PENALTY_BUF_ID:
-			for (auto i: {ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID, THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
-			break;
-
-		case RAGNAROK_EFFECT_GENERATOR_SIGNATURE_RADIUS_BONUS_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, SIGNATURE_RADIUS_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			break;
-
-		case RAGNAROK_EFFECT_GENERATOR_THERMAL_RESISTANCE_BONUS_BUF_ID:
-			for (auto i: {ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID, THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
-			break;
-
-		case RAGNAROK_EFFECT_GENERATOR_EXPLOSIVE_RESISTANCE_PENALY_BUF_ID:
-			for (auto i: {ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID, EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
-			break;
-
-		case LEVIATHAN_EFFECT_GENERATOR_SHIELD_HP_BONUS_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, SHIELD_CAPACITY_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			break;
-
-		case LEVIATHAN_EFFECT_GENERATOR_EM_RESISTANCE_BONUS_BUF_ID:
-			for (auto i: {ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID, EM_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
-			break;
-
-		case LEVIATHAN_EFFECT_GENERATOR_KINETIC_RESISTANCE_PENALTY_BUF_ID:
-			for (auto i: {ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID, SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID, KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID}) {
-				modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, i, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			}
-			break;
-
-		case AVATAR_EFFECT_GENERATOR_VELOCITY_PENALTY_BUF_ID:
-			modifiers.push_back(std::make_shared<Modifier>(Modifier::Domain::DOMAIN_SHIP, MAX_VELOCITY_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, false, false));
-			break;
-
-		case EREBUS_EFFECT_GENERATOR_SHIELD_RR_PENALTY_BUF_ID:
-			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, SHIELD_BONUS_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, SHIELD_EMISSION_SYSTEMS_TYPE_ID, false, false));
-			break;
-		
-		case LEVIATHAN_EFFECT_GENERATOR_ARMOR_RR_PENALTY_BUF_ID:
-			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::DOMAIN_SHIP, ARMOR_DAMAGE_AMOUNT_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, REMOTE_ARMOR_REPAIR_SYSTEMS_TYPE_ID, false, false));
-			break;
-
-		case RAGNAROK_EFFECT_GENERATOR_LASER_AND_HYBRID_OPTIMAL_PENALTY_BUF_ID:
-			for (auto i: {ENERGY_WEAPON_GROUP_ID, HYBRID_WEAPON_GROUP_ID}) {
-				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::DOMAIN_SHIP, MAX_RANGE_ATTRIBUTE_ID, Modifier::Association::ASSOCIATION_POST_PERCENT, value_, i, false, false));
+			
+		case BufID::ragnarokEffectGeneratorLaserAndHybridOptimalPenalty:
+			for (auto i: {GroupID::energyWeapon, GroupID::hybridWeapon}) {
+				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, AttributeID::maxRange, Modifier::Association::postPercent, value_, i, false, false));
 			}
 			break;
 	}

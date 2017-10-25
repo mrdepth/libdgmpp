@@ -12,13 +12,13 @@ namespace dgmpp {
 	class Ship : public Item
 	{
 	public:
-		enum ScanType
+		enum class ScanType
 		{
-			SCAN_TYPE_RADAR,
-			SCAN_TYPE_LADAR,
-			SCAN_TYPE_MAGNETOMETRIC,
-			SCAN_TYPE_GRAVIMETRIC,
-			SCAN_TYPE_MULTISPECTRAL
+			radar,
+			ladar,
+			magnetometric,
+			gravimetric,
+			multispectral
 		};
 		Ship(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner = std::shared_ptr<Character>(nullptr));
 		virtual ~Ship(void);
@@ -45,8 +45,8 @@ namespace dgmpp {
 
 		virtual void reset();
 		
-		virtual std::vector<TypeID> getSupportedModuleCategories() const;
-		virtual std::vector<TypeID> getSupportedDroneCategories() const;
+		virtual std::vector<CategoryID> getSupportedModuleCategories() const;
+		virtual std::vector<CategoryID> getSupportedDroneCategories() const;
 		virtual void addEffects(Effect::Category category);
 		virtual void removeEffects(Effect::Category category);
 		
@@ -76,7 +76,7 @@ namespace dgmpp {
 		int getFreeHardpoints(Module::Hardpoint hardpoint);
 		int getUsedHardpoints(Module::Hardpoint hardpoint);
 		int getRigSize();
-		int getRaceID();
+		RaceID getRaceID();
 		
 		Float getCapacity();
 		Float getOreHoldCapacity();
@@ -148,8 +148,8 @@ namespace dgmpp {
 		Float getScanResolution();
 		
 		//Drones
-		int getDroneSquadronLimit(Drone::FighterSquadron squadron = Drone::FIGHTER_SQUADRON_NONE);
-		int getDroneSquadronUsed(Drone::FighterSquadron squadron = Drone::FIGHTER_SQUADRON_NONE);
+		int getDroneSquadronLimit(Drone::FighterSquadron squadron = Drone::FighterSquadron::none);
+		int getDroneSquadronUsed(Drone::FighterSquadron squadron = Drone::FighterSquadron::none);
 		int getTotalFighterLaunchTubes();
 		int getFighterLaunchTubesUsed();
 

@@ -22,22 +22,22 @@ bool Skill::isLearned() const
 
 int Skill::getSkillLevel()
 {
-	return static_cast<int>(getAttribute(SKILL_LEVEL_ATTRIBUTE_ID)->getValue());
+	return static_cast<int>(getAttribute(AttributeID::skillLevel)->getValue());
 }
 
 void Skill::setSkillLevel(int level)
 {
-	getAttribute(SKILL_LEVEL_ATTRIBUTE_ID)->setValue(static_cast<Float>(level));
+	getAttribute(AttributeID::skillLevel)->setValue(static_cast<Float>(level));
 }
 
 void Skill::lazyLoad() {
 	Item::lazyLoad();
-	AttributesMap::iterator i = attributes_.find(SKILL_LEVEL_ATTRIBUTE_ID);
+	AttributesMap::iterator i = attributes_.find(AttributeID::skillLevel);
 	std::shared_ptr<Attribute> attribute;
 	if (i != attributes_.end())
 		attribute = i->second;
 	else
-		attribute = addExtraAttribute(SKILL_LEVEL_ATTRIBUTE_ID, 0);
+		attribute = addExtraAttribute(AttributeID::skillLevel, 0);
 	attribute->setValue(static_cast<Float>(skillLevel_));
 }
 

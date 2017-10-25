@@ -33,14 +33,14 @@ std::shared_ptr<Area> Engine::setArea(TypeID typeID)
 	try
 	{
 		if (area_) {
-			area_->removeEffects(Effect::CATEGORY_SYSTEM);
+			area_->removeEffects(Effect::Category::system);
 			area_ = nullptr;
 		}
-		if (typeID) {
+		if (typeID != TypeID::none) {
 			std::shared_ptr<Area> area = std::make_shared<Area>(shared_from_this(), typeID);
 			area_ = area;
 			if (area_)
-				area_->addEffects(Effect::CATEGORY_SYSTEM);
+				area_->addEffects(Effect::Category::system);
 		}
 		reset();
 		
@@ -59,14 +59,14 @@ std::shared_ptr<ControlTower> Engine::setControlTower(TypeID typeID)
 		std::shared_ptr<ControlTower> controlTower = std::make_shared<ControlTower>(shared_from_this(), typeID);
 		if (controlTower_)
 		{
-			controlTower_->removeEffects(Effect::CATEGORY_GENERIC);
-			controlTower_->removeEffects(Effect::CATEGORY_ACTIVE);
+			controlTower_->removeEffects(Effect::Category::generic);
+			controlTower_->removeEffects(Effect::Category::active);
 		}
 		controlTower_ = controlTower;
 		if (controlTower_)
 		{
-			controlTower_->addEffects(Effect::CATEGORY_GENERIC);
-			controlTower_->addEffects(Effect::CATEGORY_ACTIVE);
+			controlTower_->addEffects(Effect::Category::generic);
+			controlTower_->addEffects(Effect::Category::active);
 		}
 		
 		reset();
@@ -81,7 +81,7 @@ std::shared_ptr<ControlTower> Engine::setControlTower(TypeID typeID)
 void Engine::clearArea()
 {
 	if (area_) {
-		area_->removeEffects(Effect::CATEGORY_SYSTEM);
+		area_->removeEffects(Effect::Category::system);
 		reset();
 	}
 	area_ = nullptr;
@@ -132,7 +132,7 @@ void Engine::commitUpdates() {
 Float Engine::decayFactor() const {
 	if (std::isnan(decayFactor_)) {
 		auto stmt = getSqlConnector()->getReusableFetchRequest("SELECT defaultValue FROM dgmAttributeTypes WHERE attributeID = ? LIMIT 1");
-		stmt->bindInt(1, ECU_DECAY_FACTOR_ATTRIBUTE_ID);
+		stmt->bindInt(1, static_cast<int>(AttributeID::ecuDecayFactor));
 		auto result = getSqlConnector()->exec(stmt);
 		decayFactor_ = result->next()  ? result->getDouble(0) : 0;
 	}
@@ -142,7 +142,7 @@ Float Engine::decayFactor() const {
 Float Engine::noiseFactor() const {
 	if (std::isnan(noiseFactor_)) {
 		auto stmt = getSqlConnector()->getReusableFetchRequest("SELECT defaultValue FROM dgmAttributeTypes WHERE attributeID = ? LIMIT 1");
-		stmt->bindInt(1, ECU_NOISE_FACTOR_ATTRIBUTE_ID);
+		stmt->bindInt(1, static_cast<int>(AttributeID::ecuNoiseFactor));
 		auto result = getSqlConnector()->exec(stmt);
 		noiseFactor_ = result->next()  ? result->getDouble(0) : 1;
 	}
@@ -162,7 +162,7 @@ const std::map<TypeID, CommodityTier>& Engine::getCommodityTiers() const {
 		stmt = getSqlConnector()->getReusableFetchRequest("SELECT * FROM temp.tiers");
 		auto result = getSqlConnector()->exec(stmt);
 		while (result->next()) {
-			TypeID typeID = result->getInt(0);
+			TypeID typeID = static_cast<TypeID>(result->getInt(0));
 			CommodityTier tier = static_cast<CommodityTier>(result->getInt(1));
 			commodityTiers_[typeID] = tier;
 		}

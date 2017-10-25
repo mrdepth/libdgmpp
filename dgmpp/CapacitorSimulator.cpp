@@ -122,8 +122,9 @@ void CapacitorSimulator::internalReset()
 	if (!ship)
 		return;
 	
-	capacitorCapacity_ = ship->getAttribute(CAPACITOR_CAPACITY_ATTRIBUTE_ID)->getValue();
-	capacitorRecharge_ = ship->getAttribute(RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
+	capacitorCapacity_ = ship->getAttribute(AttributeID::capacitorCapacity)->getValue();
+	capacitorRecharge_ = ship->getAttribute(AttributeID::rechargeRate)->getValue();
+	
 	capUsed_ = 0;
 	bool isDisallowedAssistance = ship->isDisallowedAssistance();
 	bool isDisallowedOffensiveModifiers = ship->isDisallowedOffensiveModifiers();
@@ -134,14 +135,14 @@ void CapacitorSimulator::internalReset()
 	std::list<std::shared_ptr<Drone>> drainDrones;
 	for (const auto& i: ship->getModules())
 	{
-		if (i->getState() >= Module::STATE_ACTIVE)
+		if (i->getState() >= Module::State::active)
 			drains.push_back(i);
 	}
 	
 	for (const auto& i: ship->getProjectedModules())
 	{
 		auto module = i.lock();
-		if (module && module->getState() >= Module::STATE_ACTIVE)
+		if (module && module->getState() >= Module::State::active)
 			drains.push_back(module);
 	}
 	
@@ -150,7 +151,7 @@ void CapacitorSimulator::internalReset()
 		for (const auto& i: ship->getProjectedDrones())
 		{
 			auto drone = i.lock();
-			if (drone && drone->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
+			if (drone && drone->hasEffect(EffectID::entityEnergyNeutralizerFalloff))
 				drainDrones.push_back(drone);
 		}
 	}
@@ -174,12 +175,13 @@ void CapacitorSimulator::internalReset()
 
 		if (projected)
 		{
-			if (module->hasEffect(ENERGY_NOSFERATU_FALLOFF))
-				capNeed = static_cast<Float>(module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
-			else if (module->hasEffect(ENERGY_DESTABILIZATION_NEW_EFFECT_ID))
-				capNeed = static_cast<Float>(module->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue());
-			else if (module->hasEffect(ENERGY_TRANSFER_EFFECT_ID))
-				capNeed = static_cast<Float>(-module->getAttribute(POWER_TRANSFER_AMOUNT_ATTRIBUTE_ID)->getValue());
+			
+			if (module->hasEffect(EffectID::energyNosferatuFalloff))
+				capNeed = static_cast<Float>(module->getAttribute(AttributeID::powerTransferAmount)->getValue());
+			else if (module->hasEffect(EffectID::energyNeutralizerFalloff))
+				capNeed = static_cast<Float>(module->getAttribute(AttributeID::energyNeutralizerAmount)->getValue());
+			else if (module->hasEffect(EffectID::shipModuleRemoteCapacitorTransmitter))
+				capNeed = static_cast<Float>(-module->getAttribute(AttributeID::powerTransferAmount)->getValue());
 		}
 		else
 			capNeed = module->getCapUse() * module->getCycleTime();
@@ -209,7 +211,7 @@ void CapacitorSimulator::internalReset()
 		
 		std::shared_ptr<State> state = std::make_shared<State>();
 		state->tNow = 0;
-		state->reactivationTime = module->hasAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID) ? module->getAttribute(MODULE_REACTIVATION_DELAY_ATTRIBUTE_ID)->getValue() : 0;
+		state->reactivationTime = module->hasAttribute(AttributeID::moduleReactivationDelay) ? module->getAttribute(AttributeID::moduleReactivationDelay)->getValue() : 0;
 		state->duration = module->getRawCycleTime() * 1000 + state->reactivationTime;
 		state->capNeed = capNeed;
 		state->clipSize = clipSize;
@@ -222,7 +224,7 @@ void CapacitorSimulator::internalReset()
 	for (const auto& drone: drainDrones)
 	{
 		int duration = static_cast<int>(drone->getCycleTime() * 1000);
-		Float capNeed = capNeed = drone->getAttribute(ENERGY_DESTABILIZATION_AMOUNT_ATTRIBUTE_ID)->getValue();
+		Float capNeed = capNeed = drone->getAttribute(AttributeID::energyNeutralizerAmount)->getValue();
 		capUsed_ += static_cast<Float>(capNeed / (duration / 1000.0));
 		period_ = lcm(period_, duration);
 		

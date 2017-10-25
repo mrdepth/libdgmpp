@@ -10,9 +10,25 @@
 #include <memory>
 #include <cassert>
 #include <vector>
+#include "AttributeID.h"
+#include "CategoryID.h"
+#include "GroupID.h"
+#include "TypeID.h"
+#include "EffectID.h"
 
 namespace dgmpp {
-	typedef int TypeID;
+//	typedef int TypeID;
+	
+	enum class RaceID: int {
+		none = 0,
+		caldari = 1,
+		minmatar = 2,
+		amarr = 4,
+		gallente = 8
+		};
+		
+	typedef int ModifierID;
+	
 	typedef double Float;
 
 	class Item;
@@ -49,7 +65,7 @@ namespace dgmpp {
 	
 	class GangBoost;
 	
-	typedef std::map<TypeID, std::shared_ptr<Attribute>> AttributesMap;
+	typedef std::map<AttributeID, std::shared_ptr<Attribute>> AttributesMap;
 	typedef std::list<std::shared_ptr<Effect> > EffectsList;
 	typedef std::vector<std::shared_ptr<Module>> ModulesList;
 	typedef std::list<std::shared_ptr<Drone>> DronesList;
@@ -61,13 +77,12 @@ namespace dgmpp {
 	typedef std::list<std::shared_ptr<StarbaseStructure>> StarbaseStructuresList;
 	typedef std::list<std::shared_ptr<Cargo>> CargoList;
 	
-	typedef TypeID AttributeID;
-	typedef TypeID GroupID;
-	typedef TypeID SkillID;
+//	typedef TypeID GroupID;
+//	typedef TypeID SkillID;
 
 	typedef std::map<AttributeID, ModifiersList> ItemModifiers;
 	typedef ItemModifiers LocationModifiers;
-	typedef std::map<SkillID, ItemModifiers> LocationRequiredSkillModifiers;
+	typedef std::map<TypeID, ItemModifiers> LocationRequiredSkillModifiers;
 	typedef std::map<GroupID, ItemModifiers> LocationGroupModifiers;
 	
 	typedef std::list<std::shared_ptr<Facility>> FacilitiesList;

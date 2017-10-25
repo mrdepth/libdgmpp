@@ -23,7 +23,7 @@ int Booster::getSlot()
 
 void Booster::lazyLoad() {
 	Item::lazyLoad();
-	slot_ = static_cast<int>(getAttribute(BOOSTERNESS_ATTRIBUTE_ID)->getValue());
+	slot_ = static_cast<int>(getAttribute(AttributeID::boosterness)->getValue());
 }
 
 Item* Booster::character() {

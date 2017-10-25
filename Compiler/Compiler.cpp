@@ -64,50 +64,50 @@ namespace Compiler {
 	
 	dgmpp::Modifier::Domain getDomainID(const std::string& domain) {
 		if (domain == "Self")
-			return dgmpp::Modifier::DOMAIN_SELF;
+			return dgmpp::Modifier::Domain::self;
 		else if (domain == "Char")
-			return dgmpp::Modifier::DOMAIN_CHAR;
+			return dgmpp::Modifier::Domain::character;
 		else if (domain == "Ship")
-			return dgmpp::Modifier::DOMAIN_SHIP;
+			return dgmpp::Modifier::Domain::ship;
 		else if (domain == "Target")
-			return dgmpp::Modifier::DOMAIN_TARGET;
+			return dgmpp::Modifier::Domain::target;
 		else if (domain == "Area")
-			return dgmpp::Modifier::DOMAIN_AREA;
+			return dgmpp::Modifier::Domain::area;
 		else if (domain == "Other")
-			return dgmpp::Modifier::DOMAIN_OTHER;
+			return dgmpp::Modifier::Domain::other;
 		else if (domain == "Gang")
-			return dgmpp::Modifier::DOMAIN_GANG;
+			return dgmpp::Modifier::Domain::gang;
 		else if (domain == "Structure")
-			return dgmpp::Modifier::DOMAIN_STRUCTURE;
+			return dgmpp::Modifier::Domain::structure;
 		else
 			throw std::bad_typeid();
 	}
 	
 	dgmpp::Modifier::Association getAssociationID(const std::string& association) {
 		if (association == "PreAssignment")
-			return dgmpp::Modifier::ASSOCIATION_PRE_ASSIGNMENT;
+			return dgmpp::Modifier::Association::preAssignment;
 		else if (association == "PreDiv")
-			return dgmpp::Modifier::ASSOCIATION_PRE_DIV;
+			return dgmpp::Modifier::Association::preDiv;
 		else if (association == "PreMul")
-			return dgmpp::Modifier::ASSOCIATION_PRE_MUL;
+			return dgmpp::Modifier::Association::preMul;
 		else if (association == "ModAdd")
-			return dgmpp::Modifier::ASSOCIATION_MOD_ADD;
+			return dgmpp::Modifier::Association::modAdd;
 		else if (association == "ModSub")
-			return dgmpp::Modifier::ASSOCIATION_MOD_SUB;
+			return dgmpp::Modifier::Association::modSub;
 		else if (association == "PostPercent")
-			return dgmpp::Modifier::ASSOCIATION_POST_PERCENT;
+			return dgmpp::Modifier::Association::postPercent;
 		else if (association == "PostMul")
-			return dgmpp::Modifier::ASSOCIATION_POST_MUL;
+			return dgmpp::Modifier::Association::postMul;
 		else if (association == "PostDiv")
-			return dgmpp::Modifier::ASSOCIATION_POST_DIV;
+			return dgmpp::Modifier::Association::postDiv;
 		else if (association == "PostAssignment")
-			return dgmpp::Modifier::ASSOCIATION_POST_ASSIGNMENT;
+			return dgmpp::Modifier::Association::postAssignment;
 		else if (association == "9")
-			return dgmpp::Modifier::ASSOCIATION_SKILL_TIME;
+			return dgmpp::Modifier::Association::skillTime;
 		else if (association == "AddRate")
-			return dgmpp::Modifier::ASSOCIATION_ADD_RATE;
+			return dgmpp::Modifier::Association::addRate;
 		else if (association == "SubRate")
-			return dgmpp::Modifier::ASSOCIATION_SUB_RATE;
+			return dgmpp::Modifier::Association::subRate;
 		else
 			throw std::bad_typeid();
 	}
@@ -170,27 +170,27 @@ namespace Compiler {
 	}
 
 	bool Association::addItemModifier(const AttributeID attributeID) {
-		auto modifier = uniqueModifiers.emplace(dgmpp::Modifier::ITEM_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
+		auto modifier = uniqueModifiers.emplace(dgmpp::Modifier::Type::item, *this, attributeID, uniqueModifiers.size() + 1);
 		modifiers[currentExpressionID].insert(*modifier.first);
 		return true;
 	}
 	bool Association::addLocationGroupModifier(const AttributeID attributeID) {
-		auto modifier = uniqueModifiers.emplace(dgmpp::Modifier::LOCATION_GROUP_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
+		auto modifier = uniqueModifiers.emplace(dgmpp::Modifier::Type::locationGroup, *this, attributeID, uniqueModifiers.size() + 1);
 		modifiers[currentExpressionID].insert(*modifier.first);
 		return true;
 	}
 	bool Association::addLocationModifier(const AttributeID attributeID) {
-		auto modifier = uniqueModifiers.emplace(dgmpp::Modifier::LOCATION_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
+		auto modifier = uniqueModifiers.emplace(dgmpp::Modifier::Type::location, *this, attributeID, uniqueModifiers.size() + 1);
 		modifiers[currentExpressionID].insert(*modifier.first);
 		return true;
 	}
 	bool Association::addLocationRequiredSkillModifier(const AttributeID attributeID) {
-		auto modifier = uniqueModifiers.emplace(attribute.domain.requiredSkill.typeID > 0 ? dgmpp::Modifier::LOCATION_REQUIRED_SKILL_MODIFIER : dgmpp::Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
+		auto modifier = uniqueModifiers.emplace(attribute.domain.requiredSkill.typeID > 0 ? dgmpp::Modifier::Type::locationRequiredSkill : dgmpp::Modifier::Type::locationRequiredDomainSkill, *this, attributeID, uniqueModifiers.size() + 1);
 		modifiers[currentExpressionID].insert(*modifier.first);
 		return true;
 	}
 	bool Association::addOwnerRequiredSkillModifier(const AttributeID attributeID) {
-		auto modifier = uniqueModifiers.emplace(attribute.domain.requiredSkill.typeID > 0 ? dgmpp::Modifier::OWNER_REQUIRED_SKILL_MODIFIER : dgmpp::Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER, *this, attributeID, uniqueModifiers.size() + 1);
+		auto modifier = uniqueModifiers.emplace(attribute.domain.requiredSkill.typeID > 0 ? dgmpp::Modifier::Type::ownerRequiredSkill : dgmpp::Modifier::Type::locationRequiredDomainSkill, *this, attributeID, uniqueModifiers.size() + 1);
 		modifiers[currentExpressionID].insert(*modifier.first);
 		return true;
 	}
@@ -198,25 +198,25 @@ namespace Compiler {
 	std::ostream& operator<<(std::ostream& os, const Modifier& modifier) {
 		os << "INSERT INTO dgmModifiers VALUES ("
 		<< modifier.modifierID << ","
-		<< getDomainID(modifier.modifiedAssociation.attribute.domain.domain) << ","
+		<< static_cast<int>(getDomainID(modifier.modifiedAssociation.attribute.domain.domain)) << ","
 		<< modifier.type << ","
 		<< modifier.modifiedAssociation.attribute.attributeID.attributeID << ","
 		<< modifier.modifyingAttributeID.attributeID << ","
-		<< getAssociationID(modifier.modifiedAssociation.name) << ",";
+		<< static_cast<int>(getAssociationID(modifier.modifiedAssociation.name)) << ",";
 		switch (modifier.type) {
-			case dgmpp::Modifier::ITEM_MODIFIER:
-			case dgmpp::Modifier::LOCATION_MODIFIER:
+			case dgmpp::Modifier::Type::item:
+			case dgmpp::Modifier::Type::location:
 				os << "NULL";
 				break;
-			case dgmpp::Modifier::LOCATION_GROUP_MODIFIER:
+			case dgmpp::Modifier::Type::locationGroup:
 				os << modifier.modifiedAssociation.attribute.domain.locationGroup.groupID;
 				break;
-			case dgmpp::Modifier::LOCATION_REQUIRED_SKILL_MODIFIER:
-			case dgmpp::Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
+			case dgmpp::Modifier::Type::locationRequiredSkill:
+			case dgmpp::Modifier::Type::ownerRequiredSkill:
 				os << modifier.modifiedAssociation.attribute.domain.requiredSkill.typeID;
 				break;
-			case dgmpp::Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
-				os << getDomainID(modifier.modifiedAssociation.attribute.domain.requiredSkill.domain);
+			case dgmpp::Modifier::Type::locationRequiredDomainSkill:
+				os << static_cast<int>(getDomainID(modifier.modifiedAssociation.attribute.domain.requiredSkill.domain));
 				break;
 			default:
 				throw std::bad_typeid();

@@ -12,8 +12,8 @@ namespace dgmpp {
 		std::shared_ptr<Structure> shared_from_this() {
 			return std::static_pointer_cast<Structure>(Item::shared_from_this());
 		}
-		virtual std::vector<TypeID> getSupportedModuleCategories() const;
-		virtual std::vector<TypeID> getSupportedDroneCategories() const;
+		virtual std::vector<CategoryID> getSupportedModuleCategories() const;
+		virtual std::vector<CategoryID> getSupportedDroneCategories() const;
 		
 		virtual Float getTotalDroneBay();
 		TypeID getFuelBlockTypeID();

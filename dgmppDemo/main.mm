@@ -12,12 +12,13 @@
 #include <fstream>
 #include <string>
 #include <unordered_map>
+#include <future>
 
 using namespace dgmpp;
 
 std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int level = 5) {
 	NSMutableArray* components = [[dna componentsSeparatedByString:@":"] mutableCopy];
-	TypeID shipTypeID = [components[0] intValue];
+	TypeID shipTypeID = static_cast<TypeID>([components[0] intValue]);
 	[components removeObjectAtIndex:0];
 	
 	auto pilot = engine->getGang()->addPilot();
@@ -29,8 +30,8 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 	for (NSString* component in components) {
 		NSArray* c = [component componentsSeparatedByString:@";"];
 		int32_t n = 1;
-		TypeID typeID = [c[0] intValue];
-		if (typeID == 0)
+		TypeID typeID = static_cast<TypeID>([c[0] intValue]);
+		if (typeID == TypeID::none)
 			continue;
 		if (c.count == 2)
 			n = [c[1] intValue];
@@ -42,7 +43,7 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 					isModule = false;
 				}
 				else
-					module->setState(Module::STATE_ACTIVE);
+					module->setState(Module::State::active);
 			}
 			if (!isModule) {
 				auto drone = ship->addDrone(typeID);
@@ -63,8 +64,76 @@ std::shared_ptr<Ship> addShip(std::shared_ptr<Engine> engine, NSString* dna, int
 	return ship;
 }
 
+int main2()
+{
+	// future from a packaged_task
+	/*std::packaged_task<int()> task([](){ return 7; }); // wrap the function
+	std::future<int> f1 = task.get_future();  // get a future
+	std::thread(std::move(task)).detach(); // launch on a thread
+	
+	// future from an async()
+	std::future<int> f2 = std::async(std::launch::async, [](){ return 8; });
+	
+	// future from a promise
+	std::promise<int> p;
+	std::future<int> f3 = p.get_future();
+	std::thread( [](std::promise<int>& p){ p.set_value(9); },
+				std::ref(p) ).detach();
+	
+	std::cout << "Waiting...";
+	f1.wait();
+	f2.wait();
+	f3.wait();
+	
+	auto b = f1.valid();
+	auto i = f1.get();
+	b = f1.valid();
+
+	i = f1.get();
+	i = f1.get();
+	i = f1.get();
+
+	std::cout << "Done!\nResults are: "
+	<< f1.get() << ' ' << f2.get() << ' ' << f3.get() << '\n';*/
+	
+	for (int i = 0; i < 10; i++) {
+	
+	auto t0 = CACurrentMediaTime();
+	auto b = 	sqlite3_threadsafe();
+
+
+		
+	std::mutex m;
+
+	std::future<bool> f[1000];
+	for (auto& ff: f) {
+		ff = std::async(std::launch::async, [&]() -> bool {
+//			m.lock();
+			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/dbTools/dbinit/dgm.sqlite"));
+			auto request = engine->getSqlConnector()->getReusableFetchRequest("select * from invTypes");
+//			auto request = std::make_shared<SqliteFetchRequest>("select * from invTypes");
+			auto result = engine->getSqlConnector()->exec(request);
+//			m.unlock();
+		for (int j = 0; j < 1000; j++)
+			result->next();
+//			while (result->next()) {
+//			}
+			return true;
+		});
+	}
+	for (auto& ff: f)
+		ff.wait();
+	auto t1 = CACurrentMediaTime();
+	
+	auto t = t1 - t0;
+		NSLog(@"%f", t);
+	}
+	return 0;
+}
+
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
+//		main2();
 //		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		auto pilot = engine->getGang()->addPilot();
@@ -167,15 +236,15 @@ int main(int argc, const char * argv[]) {
 */
 		
 		
-		auto eos = pilot->setShip(22442);
-		auto armorRepairer = eos->addModule(3540);
+		auto eos = pilot->setShip(TypeID(22442));
+		auto armorRepairer = eos->addModule(TypeID(3540));
 		
 		auto before = eos->getEffectiveTank().armorRepair;
 		
-		auto armorCommandBurst = eos->addModule(43552);
+		auto armorCommandBurst = eos->addModule(TypeID(43552));
 //		armorCommandBurst->setCharge(42832); //Armor Energizing Charge
-		armorCommandBurst->setCharge(42833); //Rapid Repair Charge
-		armorCommandBurst->setState(dgmpp::Module::State::STATE_ACTIVE);
+		armorCommandBurst->setCharge(TypeID(42833)); //Rapid Repair Charge
+		armorCommandBurst->setState(dgmpp::Module::State::active);
 		auto after = eos->getEffectiveTank().armorRepair;
 		
 		

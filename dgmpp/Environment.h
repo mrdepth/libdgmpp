@@ -31,21 +31,21 @@ namespace dgmpp {
 		}
 		Item* operator[](Modifier::Domain domain) {
 			switch(domain) {
-				case Modifier::DOMAIN_SELF:
+				case Modifier::Domain::self:
 					return self();
-				case Modifier::DOMAIN_SHIP:
+				case Modifier::Domain::ship:
 					return ship();
-				case Modifier::DOMAIN_CHAR:
+				case Modifier::Domain::character:
 					return character();
-				case Modifier::DOMAIN_OTHER:
+				case Modifier::Domain::other:
 					return other();
-				case Modifier::DOMAIN_TARGET:
+				case Modifier::Domain::target:
 					return target();
-				case Modifier::DOMAIN_GANG:
+				case Modifier::Domain::gang:
 					return gang();
-				case Modifier::DOMAIN_AREA:
+				case Modifier::Domain::area:
 					return area();
-				case Modifier::DOMAIN_STRUCTURE:
+				case Modifier::Domain::structure:
 					return structure();
 			}
 			return nullptr;
