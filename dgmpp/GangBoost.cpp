@@ -57,13 +57,13 @@ std::list<std::shared_ptr<Modifier>> GangBoost::modifiers() {
 			break;
 			
 		case BufID::informationBurstElectronicSuperiorityEwarRangeAndStrength:
-			for (auto i: {GroupID::eCM, GroupID::sensorDampener, GroupID::weaponDisruptor, GroupID::targetPainter}) {
+			for (auto i: {GroupID::ECM, GroupID::sensorDampener, GroupID::weaponDisruptor, GroupID::targetPainter}) {
 				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, AttributeID::maxRange, Modifier::Association::postPercent, value_, i, false, false));
 				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, AttributeID::falloffEffectiveness, Modifier::Association::postPercent, value_, i, false, false));
 			}
 			
 			for (auto i: {AttributeID::scanGravimetricStrengthBonus, AttributeID::scanLadarStrengthBonus, AttributeID::scanMagnetometricStrengthBonus, AttributeID::scanRadarStrengthBonus}) {
-				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, GroupID::eCM, false, false));
+				modifiers.push_back(std::make_shared<LocationGroupModifier>(Modifier::Domain::ship, i, Modifier::Association::postPercent, value_, GroupID::ECM, false, false));
 			}
 
 			for (auto i: {AttributeID::missileVelocityBonus, AttributeID::explosionDelayBonus, AttributeID::aoeVelocityBonus, AttributeID::falloffBonus, AttributeID::maxRangeBonus, AttributeID::aoeCloudSizeBonus, AttributeID::trackingSpeedBonus}) {
@@ -113,7 +113,7 @@ std::list<std::shared_ptr<Modifier>> GangBoost::modifiers() {
 			for (auto i: {TypeID::mining, TypeID::iceHarvesting, TypeID::gasCloudHarvesting}) {
 				modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::maxRange, Modifier::Association::postPercent, value_, i, false, false));
 			}
-			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::surveyScanRange, Modifier::Association::postPercent, value_, TypeID::cPUManagement, false, false));
+			modifiers.push_back(std::make_shared<LocationRequiredSkillModifier>(Modifier::Domain::ship, AttributeID::surveyScanRange, Modifier::Association::postPercent, value_, TypeID::CPUManagement, false, false));
 			break;
 
 		case BufID::miningBurstMiningLaserOptimizationMiningCapacitorDuration:

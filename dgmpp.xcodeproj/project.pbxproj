@@ -95,6 +95,7 @@
 		12791CB81FA0B83700577188 /* TypeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB61FA0B83700577188 /* TypeID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12791CBA1FA0C0AC00577188 /* EffectID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB91FA0C0AC00577188 /* EffectID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12791CBB1FA0C0AC00577188 /* EffectID.h in Headers */ = {isa = PBXBuildFile; fileRef = 12791CB91FA0C0AC00577188 /* EffectID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12791CBC1FA1C1CC00577188 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
 		1286564F1C57AD440002BA7E /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1286564D1C57AD440002BA7E /* State.cpp */; };
 		128656511C57AD440002BA7E /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 1286564E1C57AD440002BA7E /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		128656551C57AE6A0002BA7E /* ProductionState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 128656531C57AE6A0002BA7E /* ProductionState.cpp */; };
@@ -397,6 +398,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12791CBC1FA1C1CC00577188 /* libsqlite3.tbd in Frameworks */,
 				12DFCED31CD74242006A19BD /* Dgmpp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1229,7 +1231,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1254,7 +1256,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;

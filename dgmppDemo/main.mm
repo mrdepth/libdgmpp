@@ -134,8 +134,13 @@ int main2()
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
 //		main2();
-//		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		
+		auto result = engine->getSqlConnector()->fetch<int, std::string>("select typeID, typeName from invTypes");
+		
+		auto typeName = std::get<1>(result);
+		
+//		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		auto pilot = engine->getGang()->addPilot();
 		pilot->setAllSkillsLevel(5);
 		
@@ -236,12 +241,12 @@ int main(int argc, const char * argv[]) {
 */
 		
 		
-		auto eos = pilot->setShip(TypeID(22442));
-		auto armorRepairer = eos->addModule(TypeID(3540));
+		auto eos = pilot->setShip(TypeID::eos);
+		auto armorRepairer = eos->addModule(TypeID::largeArmorRepairerI);
 		
 		auto before = eos->getEffectiveTank().armorRepair;
 		
-		auto armorCommandBurst = eos->addModule(TypeID(43552));
+		auto armorCommandBurst = eos->addModule(TypeID::armorCommandBurstI);
 //		armorCommandBurst->setCharge(42832); //Armor Energizing Charge
 		armorCommandBurst->setCharge(TypeID(42833)); //Rapid Repair Charge
 		armorCommandBurst->setState(dgmpp::Module::State::active);

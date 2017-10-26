@@ -1,13 +1,8 @@
 #pragma once
 
-//SELECT lower(substr(effectName, 1, 1)) || substr(replace(replace(effectName, '-', ''), ' ', ''), 2) || ' = ' || effectID || ','  FROM dgmEffects WHERE effectID IN (16, 11, 12, 13, 2663, 3772, 42, 40, 61, 48, 34, 10, 101, 3250, 6197, 2303, 31, 3461, 27, 592, 4, 18, 26, 3041, 3774, 3773, 901, 4928, 4936, 5275, 10001, 10002, 6306, 10004, 6691)  order by effectID
-
-//SELECT lower(substr(effectName, 1, 1)) || substr(replace(replace(replace(effectName, '&', 'And'), '-', ''), ' ', ''), 2) || ' = ' || effectID || ','  FROM dgmEffects  order by effectID
-
 namespace dgmpp {
 	enum class EffectID: int {
 		none = 0,
-		
 		shieldBoosting = 4,
 		missileLaunching = 9,
 		targetAttack = 10,
@@ -408,7 +403,7 @@ namespace dgmpp {
 		controlTowerTrackingArrayLaserTrackingBonus = 1161,
 		massFactor = 1171,
 		ammoInfluenceEntityFlyRange = 1173,
-		accerationControlSkillAbAndMwdSpeedBoost = 1176,
+		accerationControlSkillAbMwdSpeedBoost = 1176,
 		eliteBonusGunshipLaserDamage2 = 1179,
 		eliteBonusLogisticEnergyTransferCapNeed1 = 1181,
 		shipEnergyTransferRange1 = 1182,
@@ -518,7 +513,7 @@ namespace dgmpp {
 		shieldCommandMindlink = 1645,
 		informationCommandMindlink = 1646,
 		skillSiegeModuleConsumptionQuantityBonus = 1650,
-		skillCynosuralAndSiegeConsumQuantityBonusSkillLevel = 1651,
+		skillCynosuralSiegeConsumQuantityBonusSkillLevel = 1651,
 		missileSkillWarheadUpgradesThermalDamageBonus = 1657,
 		freighterA1SkillLevel = 1659,
 		freighterA2SkillLevel = 1660,
@@ -803,7 +798,7 @@ namespace dgmpp {
 		skillTriageModuleConsumptionQuantityBonus = 2967,
 		bombLaunching = 2971,
 		skillRemoteECMDurationBonusSkillLevel = 2974,
-		skillRemoteHullRepairSystemsCapNeedBonus = 2979,
+		tskillRemoteHullRepairSystemsCapNeedBonus = 2979,
 		skillCapitalRemoteHullRepairSystemsCapNeedBonus = 2980,
 		skillRemoteECMDurationBonus = 2982,
 		overloadRofBonus = 3001,
@@ -1258,7 +1253,7 @@ namespace dgmpp {
 		shipFalloffBonusMF = 4515,
 		shipHTurretFalloffBonusGC = 4516,
 		gunneryFalloffBonusOnline = 4527,
-		capitalLauncherSkillCruiseCitadelEmDamage1 = 4555,
+		tcapitalLauncherSkillCruiseCitadelEmDamage1 = 4555,
 		capitalLauncherSkillCruiseCitadelExplosiveDamage1 = 4556,
 		capitalLauncherSkillCruiseCitadelKineticDamage1 = 4557,
 		capitalLauncherSkillCruiseCitadelThermalDamage1 = 4558,
@@ -1334,7 +1329,7 @@ namespace dgmpp {
 		shipBonusDroneShieldHitpointsGF2 = 4898,
 		shipSETTrackingBonusAF = 4900,
 		shipMissileSpeedBonusAF = 4901,
-		mWDSignatureRadiusRoleBonus = 4902,
+		MWDSignatureRadiusRoleBonus = 4902,
 		systemDamageFighters = 4906,
 		modifyShieldArmorHullResonancePostPercent = 4908,
 		setWeaponSpeedToValue = 4910,
@@ -1435,7 +1430,7 @@ namespace dgmpp {
 		miningFrigateSkillLevelPostMulShipBonusORE1frig = 5137,
 		miningFrigateSkillLevelPostMulShipBonusORE2frig = 5138,
 		shipMiningBonusOREfrig1 = 5139,
-		gCHYieldMultiplyPassive = 5142,
+		GCHYieldMultiplyPassive = 5142,
 		shipMissileVelocityPirateFactionRocket = 5153,
 		shipGCHYieldBonusOREfrig2 = 5156,
 		skillReactiveArmorHardenerCapNeedBonus = 5162,
@@ -2203,7 +2198,7 @@ namespace dgmpp {
 		shipBonusTitanC2ROFBonus = 6638,
 		shipBonusSupercarrierA4FighterApplicationBonus = 6639,
 		shipBonusRole1NumWarfareLinks = 6640,
-		shipBonusRole2ArmorPlatesAndShieldExtendersBonus = 6641,
+		shipBonusRole2ArmorPlatesShieldExtendersBonus = 6641,
 		skillBonusDoomsdayRapidFiring = 6642,
 		shipBonusTitanA3WarpStrength = 6647,
 		shipBonusTitanC3WarpStrength = 6648,
@@ -2269,8 +2264,8 @@ namespace dgmpp {
 		shipBonusRole3CapitalHybridDamageBonus = 6711,
 		shipBonusTitanM1WebStrengthBonus = 6712,
 		shipBonusSupercarrierM1BurstProjectorWebBonus = 6713,
-		eCMBurstJammer = 6714,
-		eCMBurstJammerQA = 6715,
+		ECMBurstJammer = 6714,
+		ECMBurstJammerQA = 6715,
 		pacifierDebuffQA = 6716,
 		roleBonusIceOreMiningDurationCap = 6717,
 		logisticSkillMultiplier3 = 6718,
@@ -2484,6 +2479,6 @@ namespace dgmpp {
 		naniteRepairPasteArmorDamageBonus = 10001,
 		tacticalMode = 10002,
 		fueledArmorRepairBonus = 10003,
-		gangBoost = 10004,
-		};
-	}
+		gangBoost = 10004
+	};
+}

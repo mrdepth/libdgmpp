@@ -1,12 +1,11 @@
 #pragma once
 
-//SELECT lower(substr(categoryName, 1, 1)) || substr(replace(categoryName, " ", ""), 2) || " = " || categoryID || ","  FROM invCategories order by categoryID
-
 namespace dgmpp {
 	enum class CategoryID: int {
 		none = 0,
 		owner = 1,
 		celestial = 2,
+		material = 4,
 		ship = 6,
 		module = 7,
 		charge = 8,
@@ -23,4 +22,3 @@ namespace dgmpp {
 		fighter = 87
 	};
 }
-	
