@@ -28,7 +28,8 @@ namespace dgmpp {
 		};
 		
 	typedef int ModifierID;
-	
+	typedef int SchematicID;
+
 	typedef double Float;
 
 	class Item;

@@ -60,6 +60,30 @@ std::vector<std::map<std::string, std::string>> parse(std::string modifierInfo) 
 	replace(modifierInfo, " ", "");
 	
 	std::vector<std::map<std::string, std::string>> modifiers;
+	std::map<std::string, std::string> m;
+	
+	for (auto row: split(modifierInfo, "\n")) {
+		if (row.length() == 0 || row[0] == '#')
+			continue;
+		if (row[0] == '-') {
+			if (m.size() > 0)
+				modifiers.push_back(m);
+			m.clear();
+			row.erase(row.begin());
+		}
+		
+		auto parts = split(row, ":");
+		assert(parts.size() == 2);
+		auto key = parts[0];
+		auto value = parts[1];
+		m[key] = value;
+
+	}
+	
+	if (m.size() > 0)
+		modifiers.push_back(m);
+
+	/*std::vector<std::map<std::string, std::string>> modifiers;
 	for (auto modifier: split(modifierInfo, "-")) {
 		std::map<std::string, std::string> m;
 		for (auto row: split(modifier, "\n")) {
@@ -72,7 +96,7 @@ std::vector<std::map<std::string, std::string>> parse(std::string modifierInfo) 
 		}
 		if (m.size() > 0)
 			modifiers.push_back(m);
-	}
+	}*/
 	return modifiers;
 }
 

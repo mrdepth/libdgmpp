@@ -2,7 +2,6 @@
 #include "types.h"
 
 namespace dgmpp {
-	typedef int SchematicID;
 	
 	class Schematic {
 	public:

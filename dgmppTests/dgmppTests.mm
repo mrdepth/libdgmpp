@@ -137,29 +137,20 @@ std::shared_ptr<Engine> createEngine() {
 }
 
 - (void)testShips {
-	auto engine = createEngine();
-	auto gang = engine->getGang();
-	auto pilot = gang->addPilot();
-	pilot->setAllSkillsLevel(5);
-
-	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes where groupID in (select groupID from invGroups where categoryID=6)");
-	auto result = engine->getSqlConnector()->exec(stmt);
-	while (result->next()) {
-		TypeID typeID = static_cast<TypeID>(result->getInt(0));
-		pilot->setShip(typeID);
-	}
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
+	[self measureBlock:^{
+		
 		auto engine = createEngine();
 		auto gang = engine->getGang();
 		auto pilot = gang->addPilot();
 		pilot->setAllSkillsLevel(5);
-		auto ship = pilot->setShip(TypeID::dominix);
-		ship->addModule(TypeID::largeArmorRepairerI);
-    }];
+		
+		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes where groupID in (select groupID from invGroups where categoryID=6)");
+		auto result = engine->getSqlConnector()->exec(stmt);
+		while (result->next()) {
+			TypeID typeID = static_cast<TypeID>(result->getInt(0));
+			pilot->setShip(typeID);
+		}
+	}];
 }
 
 @end

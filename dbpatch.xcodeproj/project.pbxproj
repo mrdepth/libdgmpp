@@ -232,6 +232,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/dbinit/tmp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -240,6 +241,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/dbinit/tmp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
