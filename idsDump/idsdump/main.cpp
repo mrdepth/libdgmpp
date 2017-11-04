@@ -37,7 +37,6 @@ std::string normalize(std::string s) {
 		s = "_" + s;
 	}
 	return s;
-
 }
 
 int main(int argc, const char * argv[]) {

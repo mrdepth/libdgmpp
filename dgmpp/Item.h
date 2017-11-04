@@ -7,54 +7,6 @@
 #include "Engine.h"
 
 namespace dgmpp {
-	
-	/*extern const TypeID ANY_GROUP_ID;
-	extern const TypeID CHARACTER_GROUP_ID;
-	extern const TypeID WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID;
-	extern const TypeID CAPACITOR_BOOSTER_GROUP_ID;
-	extern const TypeID CONTROL_TOWER_GROUP_ID;
-	extern const TypeID CAPACITOR_BOOSTER_CHARGE_GROUP_ID;
-	extern const TypeID NANITE_REPAIR_PASTE_GROUP_ID;
-
-	extern const TypeID MODULE_CATEGORY_ID;
-	extern const TypeID CHARGE_CATEGORY_ID;
-	extern const TypeID DRONE_CATEGORY_ID;
-	extern const TypeID SUBSYSTEM_CATEGORY_ID;
-	extern const TypeID STARBASE_CATEGORY_ID;
-	extern const TypeID STRUCTURE_MODULE_CATEGORY_ID;
-	extern const TypeID FIGHTER_CATEGORY_ID;
-
-	extern const TypeID MISSILE_LAUNCHER_OPERATION_TYPE_ID;
-	
-	extern const TypeID CALDARI_RACE_ID;
-	extern const TypeID MINMATAR_RACE_ID;
-	extern const TypeID AMARR_RACE_ID;
-	extern const TypeID GALLENTE_RACE_ID;
-
-	extern const TypeID NITROGEN_FUEL_BLOCK_TYPE_ID;
-	extern const TypeID HYDROGEN_FUEL_BLOCK_TYPE_ID;
-	extern const TypeID HELIUM_FUEL_BLOCK_TYPE_ID;
-	extern const TypeID OXYGEN_FUEL_BLOCK_TYPE_ID;
-
-	extern const TypeID SHIELD_OPERATION_TYPE_ID;
-	extern const TypeID SHIELD_EMISSION_SYSTEMS_TYPE_ID;
-	extern const TypeID REPAIR_SYSTEMS_TYPE_ID;
-	extern const TypeID REMOTE_ARMOR_REPAIR_SYSTEMS_TYPE_ID;
-	extern const TypeID ECM_GROUP_ID;
-	extern const TypeID SENSOR_DAMPENER_GROUP_ID;
-	extern const TypeID WEAPON_DISRUPTOR_GROUP_ID;
-	extern const TypeID TARGET_PAINTER_GROUP_ID;
-	extern const TypeID STASIS_WEB_GROUP_ID;
-	extern const TypeID WARP_SCRAMBLER_GROUP_ID;
-	extern const TypeID AFTERBURNER_TYPE_ID;
-	extern const TypeID HIGH_SPEED_MANEUVERING_TYPE_ID;
-	extern const TypeID MINING_TYPE_ID;
-	extern const TypeID ICE_HARVESTING_TYPE_ID;
-	extern const TypeID GAS_CLOUD_HARVESTING_TYPE_ID;
-	extern const TypeID CPU_MANAGEMENT_TYPE_ID;
-	extern const TypeID ENERGY_WEAPON_GROUP_ID;
-	extern const TypeID HYBRID_WEAPON_GROUP_ID;*/
-
 
 	class Item: public Environment, public std::enable_shared_from_this<Item>
 	{

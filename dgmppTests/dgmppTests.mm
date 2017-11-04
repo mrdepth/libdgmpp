@@ -148,7 +148,12 @@ std::shared_ptr<Engine> createEngine() {
 		auto result = engine->getSqlConnector()->exec(stmt);
 		while (result->next()) {
 			TypeID typeID = static_cast<TypeID>(result->getInt(0));
-			pilot->setShip(typeID);
+			auto ship = pilot->setShip(typeID);
+			ship->getCapUsed();
+			ship->getEffectiveSustainableTank();
+			ship->getHitPoints();
+			ship->getWeaponDps();
+			ship->getDrones();
 		}
 	}];
 }

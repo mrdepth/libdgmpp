@@ -13,6 +13,7 @@
 #include <string>
 #include <unordered_map>
 #include <future>
+#include <array>
 
 using namespace dgmpp;
 
@@ -101,8 +102,6 @@ int main2()
 	auto t0 = CACurrentMediaTime();
 	auto b = 	sqlite3_threadsafe();
 
-
-		
 	std::mutex m;
 
 	std::future<bool> f[1000];
@@ -131,14 +130,100 @@ int main2()
 	return 0;
 }
 
+struct Str {
+	int i;
+};
+
+constexpr const Str v[] = {{1},{2},{3},{4},{5}};
+
+constexpr const Str& vv(int i) {
+	for (int j = 0; j < sizeof(v); j++) {
+		if (v[j].i == i)
+			return v[j];
+	}
+	return v[0];
+}
+
+template<int I> struct fact {
+	static constexpr int val = I * fact<I-1>::val;
+};
+
+
+template<> struct fact<0> {
+	static constexpr int val = 1;
+};
+
+template <std::size_t N>
+constexpr std::array<char, N - 1> obf(const char (&s)[N]) {
+	std::array<char, N - 1> result;
+	for (int i = 0; i < N - 1; i++) {
+		result[i] = s[i] ^ 0x55;
+	}
+	return result;
+}
+
+template<size_t N>
+std::string de_obf(const std::array<char, N>& a) {
+	std::string s;
+	std::transform(a.begin(), a.end(), std::back_inserter(s), [](auto c) -> char {return c ^ 0x55;});
+	return s;
+}
+
+const auto s = obf("hello my world");
+
+
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-//		main2();
+		std::vector<int> vec;
+		
+		auto insert = [&](int v) {
+			auto i = std::upper_bound(vec.begin(), vec.end(), v);
+			if (i != vec.end())
+				std::cout << *i << ' ';
+			else
+				std::cout << "end ";
+			vec.insert(i, v);
+//			vec.insert(vec.end(), v);
+		};
+		
+		insert(1);
+		insert(2);
+		insert(2);
+		insert(3);
+		insert(3);
+		insert(4);
+		insert(4);
+		insert(5);
+		insert(5);
+		insert(6);
+		insert(6);
+		insert(7);
+		insert(7);
+		insert(8);
+		insert(8);
+		insert(9);
+		insert(11);
+		insert(12);
+		
+		auto first = std::lower_bound(vec.begin() + 1, vec.end() - 1, 10);
+		auto last = std::upper_bound(first, vec.end() - 1, 10);
+		auto n = last - first;
+
+		
+//		std::cout << std::is_literal_type<const std::initializer_list<int>>::value << std::endl;
+//		std::cout << sizeof(dgmpp2::Type::MetaInfo) << std::endl;
+//		const auto& solarSystem = dgmpp2::SDE::get(TypeID::solarSystem);
+//		for (const auto& attr: solarSystem.attributes) {
+//			std::cout << static_cast<int>(std::get<0>(attr).attributeID) << std::endl;
+//		}
+		
+		auto v = &s;
+		auto ss = de_obf(s);
 		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		
-		auto result = engine->getSqlConnector()->fetch<int, std::string>("select typeID, typeName from invTypes");
-		
-		auto typeName = std::get<1>(result);
+//		auto result = engine->getSqlConnector()->fetch<int, std::string>("select typeID, typeName from invTypes");
+//
+//		auto typeName = std::get<1>(result);
 		
 //		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		auto pilot = engine->getGang()->addPilot();

@@ -41,4 +41,10 @@ std::shared_ptr<FetchRequest> SqliteConnector::getReusableFetchRequest(const cha
 	}
 	else
 		return i->second;
+	
+//	sqlite3_stmt* stmt = nullptr;
+//	sqlite3_prepare_v2(db_, sql, -1, &stmt, nullptr);
+//	std::shared_ptr<SqliteFetchRequest> request = std::make_shared<SqliteFetchRequest>(stmt);
+//	return request;
+
 }

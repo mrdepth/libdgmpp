@@ -3,54 +3,9 @@
 #include "Modifier.h"
 #include <stdexcept>
 #include <vector>
+#include <unordered_map>
 
 namespace dgmpp {
-
-	/*extern const TypeID ONLINE_EFFECT_ID;
-	extern const TypeID LO_POWER_EFFECT_ID;
-	extern const TypeID HI_POWER_EFFECT_ID;
-	extern const TypeID MED_POWER_EFFECT_ID;
-	extern const TypeID RIG_SLOT_EFFECT_ID;
-	extern const TypeID SUBSYSTEM_EFFECT_ID;
-	extern const TypeID TURRET_FITTED_EFFECT_ID;
-	extern const TypeID LAUNCHER_FITTED_EFFECT_ID;
-	
-	extern const TypeID MINING_LASER_EFFECT_ID;
-	extern const TypeID POWER_BOOSTER_EFFECT_ID;
-	extern const TypeID PROJECTILE_FIRED_EFFECT_ID;
-	extern const TypeID TARGET_ATTACK_EFFECT_ID;
-	extern const TypeID USE_MISSILES_EFFECT_ID;
-	
-	extern const TypeID LEECH_EFFECT_ID;
-	extern const TypeID ENERGY_NOSFERATU_FALLOFF;
-	extern const TypeID ENERGY_DESTABILIZATION_NEW_EFFECT_ID;
-	extern const TypeID ENERGY_DESTABILIZATION_NEW_EFFECT_ID;
-	extern const TypeID ENERGY_TRANSFER_EFFECT_ID;
-	
-	extern const TypeID WARP_DISRUPTION_FIELD_EFFECT_ONLINE_EFFECT_ID;
-	
-	extern const TypeID ARMOR_REPAIR_EFFECT_ID;
-	extern const TypeID TARGET_ARMOR_REPAIR_EFFECT_ID;
-	extern const TypeID SHIELD_BOOSTING_EFFECT_ID;
-	extern const TypeID SHIELD_TRANSFER_EFFECT_ID;
-	extern const TypeID STRUCTURE_REPAIR_EFFECT_ID;
-	extern const TypeID REMOTE_HULL_REPAIR_EFFECT_ID;
-	extern const TypeID SLOT_MODIFIER_EFFECT_ID;
-	extern const TypeID SLOT_MODIFIER_EFFECT_ID;
-	extern const TypeID HARD_POINT_MODIFIER_EFFECT_EFFECT_ID;
-	
-	extern const TypeID ONLINE_FOR_STRUCTURES_EFFECT_ID;
-
-	extern const TypeID ADAPTIVE_ARMOR_HARDENER_EFFECT_ID;
-	extern const TypeID FUELED_SHIELD_BOOSTING_EFFECT_ID;
-	extern const TypeID FUELED_ARMOR_REPAIR__EFFECT_ID;
-	
-	extern const TypeID TACTICAL_MODE_EFFECT_ID;
-	extern const TypeID NANITE_REPAIR_PASTE_ARMOR_DAMAGE_BONUS_EFFECT_ID;
-
-	extern const TypeID SERVICE_SLOT_EFFECT_ID;
-	
-	extern const TypeID GANG_BOOST_EFFECT_ID;*/
 
 	class EffectPrototype;
 	
@@ -87,4 +42,55 @@ namespace dgmpp {
 		std::shared_ptr<EffectPrototype> prototype_;
 		std::map<Modifier::Type, ModifiersList> modifiers_;
 	};
+}
+
+namespace dgmpp2 {
+	
+	class Effect {
+	public:
+		struct MetaInfo;
+		Effect(const Effect& other) = delete;
+		Effect(Effect&& other) = delete;
+		Effect& operator=(const Effect& other) = delete;
+		Effect& operator=(Effect&& other) = delete;
+		~Effect() = default;
+
+		
+		const MetaInfo& metaInfo() const {return metaInfo_;}
+//		Type& owner() const {return owner_;}
+		const std::list<const Modifier>& modifiers() {return modifiers_;};
+	private:
+		friend class Type;
+		const MetaInfo& metaInfo_;
+//		Type& owner_;
+		std::list<const Modifier> modifiers_;
+		
+		Effect(const MetaInfo& metaInfo, Type& owner);
+	};
+	
+	struct Effect::MetaInfo {
+		enum class Category {
+			generic,
+			active, //also online effect
+			target,
+			passive,
+			overloaded,
+			dungeon,
+			system
+		};
+		
+		EffectID effectID;
+		Category category;
+		bool isAssistance;
+		bool isOffensive;
+		std::initializer_list<ref<const Modifier::MetaInfo>> modifiers;
+		
+		MetaInfo(const MetaInfo& other) = delete;
+		MetaInfo(MetaInfo&& other) = delete;
+		MetaInfo& operator=(const MetaInfo& other) = delete;
+		MetaInfo& operator=(MetaInfo&& other) = delete;
+		~MetaInfo() = default;
+
+	};
+
 }

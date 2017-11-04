@@ -259,3 +259,11 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Effect& effect)
 	os << "{\"effectName\":\"" << effect.getEffectName()<< "\", \"effectID\":\"" << static_cast<int>(effect.getEffectID()) << "\"}";
 	return os;
 }
+
+namespace dgmpp2 {
+	Effect::Effect(const MetaInfo& metaInfo, Type& owner) : metaInfo_(metaInfo) {
+		for (const auto& info: metaInfo_.modifiers) {
+			modifiers_.emplace(modifiers_.end(), info, owner);
+		}
+	}
+}

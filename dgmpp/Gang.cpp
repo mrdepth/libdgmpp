@@ -29,7 +29,7 @@ namespace std {
 
 
 
-class GangModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
+/*class GangModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
 	GangModifierMatchFunction(AttributeID attributeID, Character* fleetBooster, Character* wingBooster, Character* squadBooster) : attributeID_(attributeID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
@@ -44,7 +44,7 @@ private:
 	Character* fleetBooster_;
 	Character* wingBooster_;
 	Character* squadBooster_;
-};
+};*/
 
 /*class GangLocationGroupModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {

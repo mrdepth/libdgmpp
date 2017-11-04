@@ -1,7 +1,7 @@
 #pragma once
 
 namespace dgmpp {
-	enum class CategoryID: int {
+	enum class CategoryID: unsigned short {
 		none = 0,
 		owner = 1,
 		celestial = 2,

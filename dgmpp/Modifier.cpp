@@ -3,6 +3,7 @@
 #include "Item.h"
 #include "Module.h"
 #include <sstream>
+#include "Type.hpp"
 
 using namespace dgmpp;
 
@@ -136,5 +137,57 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Modifier& modifier)
 {
 	os << modifier.print();
 	return os;
+}
+
+
+namespace dgmpp2 {
+	
+	Modifier::Modifier(const MetaInfo& metaInfo, Type& owner)
+	: metaInfo_(metaInfo), owner_(owner), modifyingAttribute_(*owner[metaInfo.modifyingAttributeID]) {
+	}
+	
+	bool Modifier::match(const Type* type) const {
+		switch (metaInfo_.type) {
+			case MetaInfo::ModifierType::item:
+			case MetaInfo::ModifierType::location:
+				return true;
+			case MetaInfo::ModifierType::locationGroup:
+				return type->metaInfo().groupID == metaInfo_.require.groupID;
+			case MetaInfo::ModifierType::locationRequiredSkill:
+			case MetaInfo::ModifierType::ownerRequiredSkill:
+				return type->metaInfo().requireSkill(metaInfo_.require.typeID);
+			case MetaInfo::ModifierType::locationRequiredDomainSkill:
+				return type->metaInfo().requireSkill(owner_[metaInfo_.domain]->metaInfo().typeID);
+			default:
+				assert(!"Invalid Modifier::MetaInfo::ModifierType value");
+		}
+	}
+	
+	Float Modifier::get() const {
+		switch (metaInfo_.association) {
+			using namespace std::chrono_literals;
+				
+			case MetaInfo::Association::postDiv:
+				return 1.0 / modifyingAttribute_;
+			case MetaInfo::Association::postPercent:
+				return 1.0 + modifyingAttribute_ / 100.0;
+			case MetaInfo::Association::addRate:
+			case MetaInfo::Association::subRate:
+				std::chrono::duration<Float> duration;
+				if (auto attr = owner_[AttributeID::duration]) {
+					duration = std::chrono::milliseconds(*attr);
+				}
+				else if (auto attr = owner_[AttributeID::speed]) {
+					duration = std::chrono::milliseconds(*attr);
+				}
+				else {
+					duration = 1s;
+				}
+				return duration > 0.0s ? modifyingAttribute_ / duration.count() : 0.0;
+			default:
+				return modifyingAttribute_;
+		}
+		return 0;
+	}
 }
 

@@ -10,11 +10,11 @@
 #include <memory>
 #include <cassert>
 #include <vector>
-#include "AttributeID.h"
-#include "CategoryID.h"
-#include "GroupID.h"
-#include "TypeID.h"
-#include "EffectID.h"
+#include "AttributeID.hpp"
+#include "CategoryID.hpp"
+#include "GroupID.hpp"
+#include "TypeID.hpp"
+#include "EffectID.hpp"
 
 namespace dgmpp {
 //	typedef int TypeID;
@@ -145,4 +145,57 @@ namespace dgmpp {
 		TIER3,
 		TIER4
 	};
+}
+
+namespace dgmpp2 {
+	using Float = double;
+	using TypeID = dgmpp::TypeID;
+	using GroupID = dgmpp::GroupID;
+	using CategoryID = dgmpp::CategoryID;
+	using AttributeID = dgmpp::AttributeID;
+	using EffectID = dgmpp::EffectID;
+	using ModifierID = dgmpp::ModifierID;
+	using SchematicID = dgmpp::SchematicID;
+	
+	template <typename T> struct optional {
+		optional(T* ptr) : value_(ptr) {}
+		optional(const T& value) : value_(new T(value)) {}
+		optional(optional&& other) = default;
+		optional(const optional& other) = delete;
+		optional& operator=(optional&& other) = default;
+		optional& operator=(const optional& other) = delete;
+		
+		optional& operator=(const T& value) {
+			value_ = std::unique_ptr<T>(new T(value));
+			return *this;
+		}
+
+		operator bool() const {return value_ != nullptr;}
+	private:
+		std::unique_ptr<T> value_;
+	};
+	
+	static auto nullopt = nullptr;
+	
+	template <typename T> optional<T> make_optional(T&& t) {
+		return optional<T>(std::forward<T>(t));
+	}
+
+	template <typename T> class ref {
+	public:
+		constexpr ref(T& ref) : ref_(ref) {}
+		
+		constexpr operator T&() const noexcept {
+			return ref_;
+		}
+		
+		constexpr T& get() const noexcept {
+			return ref_;
+		}
+	private:
+		T& ref_;
+	};
+	
+	class Type;
+	
 }

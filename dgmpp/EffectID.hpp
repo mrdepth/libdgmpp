@@ -1,7 +1,7 @@
 #pragma once
 
 namespace dgmpp {
-	enum class EffectID: int {
+	enum class EffectID: unsigned short {
 		none = 0,
 		shieldBoosting = 4,
 		missileLaunching = 9,

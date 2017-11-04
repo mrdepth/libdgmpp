@@ -9,6 +9,8 @@
 #include <sstream>
 #include <functional>
 
+#include "SDE.hpp"
+
 using namespace dgmpp;
 
 /*const TypeID dgmpp::IS_ONLINE_ATTRIBUTE_ID = 2;
@@ -390,7 +392,7 @@ bool Attribute::highIsGood() const
 	return prototype_->highIsGood();
 }
 
-Float Attribute::dec(Float value)
+/*Float Attribute::dec(Float value)
 {
 	if (std::isnan(forcedValue_))
 		forcedValue_ = initialValue_;
@@ -404,7 +406,7 @@ Float Attribute::inc(Float value)
 		forcedValue_ = initialValue_;
 	isFakeAttribute_ = false;
 	return forcedValue_ += value;
-}
+}*/
 
 void Attribute::setValue(Float value)
 {
@@ -682,4 +684,34 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Attribute& attribute)
 		<< "\", \"initialValue\":\"" << attribute.getInitialValue()
 		<< "\", \"stackable\":\"" << attribute.prototype_->isStackable() << "\"}";
 	return os;
+}
+
+
+namespace dgmpp2 {
+	Attribute::Proxy::operator Float() const {
+		if (attribute_->second) {
+			return *attribute_->second;
+		}
+		else {
+			return metaInfo().defaultValue;
+		}
+	}
+	
+	Attribute& Attribute::Proxy::operator*() {
+		if (!attribute_->second) {
+			const auto& metaInfo = this->metaInfo();
+			attribute_->second = std::unique_ptr<Attribute>(new Attribute(metaInfo, metaInfo.defaultValue, owner_));
+		}
+		return *attribute_->second;
+	}
+	
+	const Attribute::MetaInfo& Attribute::Proxy::metaInfo() const {
+		if (!metaInfo_) {
+			if (attribute_->second)
+			metaInfo_ = &attribute_->second->metaInfo();
+			else
+			metaInfo_ = &SDE::get(attribute_->first);
+		}
+		return *metaInfo_;
+	}
 }
