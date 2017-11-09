@@ -1536,3 +1536,43 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Ship& ship)
 	os << "]}";
 	return os;
 }
+
+namespace dgmpp2 {
+	Module* Ship::add(std::unique_ptr<Module> module) {
+		auto state = module->state();
+		module->state(dgmpp2::Module::State::unknown);
+		
+		auto m = Type::add(std::move(module));
+		
+		if (state == Module::State::unknown) {
+			m->state(dgmpp2::Module::State::active);
+		}
+		else {
+			m->state(state);
+		}
+		return m;
+	}
+	
+	void Ship::remove(Module* module) {
+		Type::remove(module);
+	}
+
+	Type* Ship::domain(Modifier::MetaInfo::Domain domain) {
+		switch (domain) {
+			case Modifier::MetaInfo::Domain::self:
+				return this;
+			case Modifier::MetaInfo::Domain::ship:
+			case Modifier::MetaInfo::Domain::character:
+				return parent();
+			case Modifier::MetaInfo::Domain::gang:
+				if (auto parent = this->parent()) {
+					return parent->parent();
+				}
+				return nullptr;
+			default:
+				return nullptr;
+		}
+		return nullptr;
+	}
+	
+}

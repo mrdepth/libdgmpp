@@ -145,16 +145,20 @@ void dumpItems(SQLiteDatabase& database) {
 	<< "	namespace SDE {" << std::endl
 	<< "		constexpr const Type::MetaInfo types[] {" << std::endl;
 
+	std::cout << "\t\t\t"
+	<< "{TypeID::none, GroupID::none, CategoryID::none, {}, {}, {}}," << std::endl;
+
+	
 	auto radiusID = database.fetch<int>("select rowid from dgmAttributeTypes where attributeName == \"radius\"").next().get<0>();
 	auto massID = database.fetch<int>("select rowid from dgmAttributeTypes where attributeName == \"mass\"").next().get<0>();
 	auto volumeID = database.fetch<int>("select rowid from dgmAttributeTypes where attributeName == \"volume\"").next().get<0>();
 	auto capacityID = database.fetch<int>("select rowid from dgmAttributeTypes where attributeName == \"capacity\"").next().get<0>();
 	auto raceIDID = database.fetch<int>("select rowid from dgmAttributeTypes where attributeName == \"raceID\"").next().get<0>();
 	
-	int n = 0;
+//	int n = 0;
 	while (auto row = result.next()) {
-		if (n++ > 100)
-			break;
+//		if (n++ > 100)
+//			break;
 		
 		auto typeID = row.get<0>();
 		auto typeName = Name(row.get<1>());

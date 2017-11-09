@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include <future>
 #include <array>
+#include <numeric>
 
 using namespace dgmpp;
 
@@ -171,61 +172,156 @@ std::string de_obf(const std::array<char, N>& a) {
 
 const auto s = obf("hello my world");
 
+namespace my {
+constexpr std::size_t sfCount = 10;
+constexpr int expIterations = 10;
+
+constexpr double pow(double x, int y) {
+	return y == 0 ? 1.0 : x * pow(x, y-1);
+}
+
+constexpr int factorial(int x) {
+	return x == 0 ? 1 : x * factorial(x-1);
+}
+
+constexpr Float exp(Float x, int n = expIterations) {
+	return n == 0 ? 1 : exp(x, n-1) + pow(x,n) / factorial(n);
+};
+
+constexpr Float sf(int n) {
+	return exp(-static_cast<Float>(n * n) / 7.1289);
+}
+
+template<class Function, std::size_t... Indices>
+constexpr auto make_array_helper(Function f, std::index_sequence<Indices...>)
+-> std::array<typename std::result_of<Function(std::size_t)>::type, sizeof...(Indices)>
+{
+	return {{ f(Indices)... }};
+}
+
+template<int N, class Function>
+constexpr auto make_array(Function f)
+-> std::array<typename std::result_of<Function(std::size_t)>::type, N>
+{
+	return make_array_helper(f, std::make_index_sequence<N>{});
+}
+
+constexpr auto stackingFactor = make_array<sfCount>(sf);
+}
+
+template<typename InputIterator, typename Output>
+Output multiply(InputIterator first, InputIterator last, Output value, bool stacking)
+{
+	if (stacking)
+	{
+		static std::vector<Float> pExp;
+		long n = std::distance(first, last);
+		for (long i = pExp.size(); i < n; i++) {
+			Float j = i;
+			pExp.push_back(std::exp(- j * j / 7.1289));
+		}
+		for (int i = 0; first != last; first++, i++)
+			value *= static_cast<Float>(1.0 + (*first - 1.0) * pExp[i]);
+	}
+	else
+	{
+		for (; first != last; first++)
+			value *= *first;
+	}
+	return value;
+}
+
+template <typename Iterator, typename F> struct TransformIterator {
+//	using Iterator = std::iterator<Traits, T>;
+	
+//	TransformIterator(const Iterator& i, const F& f): iterator(i), function(f) {}
+	
+	TransformIterator& operator++() {
+		++iterator;
+		return *this;
+	}
+
+	TransformIterator& operator++(int) {
+		iterator++;
+		return *this;
+	}
+
+	TransformIterator& operator--() {
+		--iterator;
+		return *this;
+	}
+
+	TransformIterator& operator--(int) {
+		iterator--;
+		return *this;
+	}
+
+	auto operator*() const {
+		return function(*iterator);
+	}
+	
+	template <typename Iterator2, typename F2>
+	bool operator!=(const TransformIterator<Iterator2, F2>& other) const {
+		return iterator != other.iterator;
+	}
+	
+	Iterator iterator;
+	F function;
+};
+
+template <typename Iterator, typename F> TransformIterator<Iterator, F> MakeTransformIterator(Iterator&& i, F&& f) {
+	return {std::forward<Iterator>(i), std::forward<F>(f)};
+//	return TransformIterator<Iterator, F> {std::forward<Iterator>(i), std::forward<F>(f)};
+}
+
+enum class E1 {
+	e1
+};
+
+enum class E2 {
+	e2
+};
+
+
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		std::vector<int> vec;
-		
-		auto insert = [&](int v) {
-			auto i = std::upper_bound(vec.begin(), vec.end(), v);
-			if (i != vec.end())
-				std::cout << *i << ' ';
-			else
-				std::cout << "end ";
-			vec.insert(i, v);
-//			vec.insert(vec.end(), v);
-		};
-		
-		insert(1);
-		insert(2);
-		insert(2);
-		insert(3);
-		insert(3);
-		insert(4);
-		insert(4);
-		insert(5);
-		insert(5);
-		insert(6);
-		insert(6);
-		insert(7);
-		insert(7);
-		insert(8);
-		insert(8);
-		insert(9);
-		insert(11);
-		insert(12);
-		
-		auto first = std::lower_bound(vec.begin() + 1, vec.end() - 1, 10);
-		auto last = std::upper_bound(first, vec.end() - 1, 10);
-		auto n = last - first;
 
+		{
+			auto gang = dgmpp2::Gang::Create();
+			auto pilot = gang->add(dgmpp2::Character::Create());
+			auto ship = pilot->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+//			std::cout << (*ship)[dgmpp2::AttributeID::armorEmDamageResonance]->value() << " ";
+//			ship->add(dgmpp2::Module::Create(TypeID::damageControlII));
+//			ship->add(dgmpp2::Module::Create(TypeID::armorEMHardenerII));
+//			ship->add(dgmpp2::Module::Create(TypeID::armorEMHardenerI));
+			ship->add(dgmpp2::Module::Create(TypeID::_500MNMicrowarpdriveII));
+			Float v1 = (*ship)[dgmpp2::AttributeID::maxVelocity]->value();
+			std::cout << v1 << std::endl;
+		}
+		{
+			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+			auto pilot = engine->getGang()->addPilot();
+			auto ship = pilot->setShip(dgmpp::TypeID::dominix);
+//			ship->addModule(dgmpp::TypeID::armorEMHardenerII);
+//			ship->addModule(dgmpp::TypeID::armorEMHardenerI);
+			ship->addModule(dgmpp::TypeID::_500MNMicrowarpdriveII);
+			std::cout << ship->getAttribute(dgmpp::AttributeID::maxVelocity)->getValue() << std::endl;
+		}
+//		578=2
+//		37=218
+//
+//		578=2.34775
+//		37=255.905
 		
-//		std::cout << std::is_literal_type<const std::initializer_list<int>>::value << std::endl;
-//		std::cout << sizeof(dgmpp2::Type::MetaInfo) << std::endl;
-//		const auto& solarSystem = dgmpp2::SDE::get(TypeID::solarSystem);
-//		for (const auto& attr: solarSystem.attributes) {
-//			std::cout << static_cast<int>(std::get<0>(attr).attributeID) << std::endl;
-//		}
 		
-		auto v = &s;
-		auto ss = de_obf(s);
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		
+		return 0;
 //		auto result = engine->getSqlConnector()->fetch<int, std::string>("select typeID, typeName from invTypes");
 //
 //		auto typeName = std::get<1>(result);
 		
 //		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		auto pilot = engine->getGang()->addPilot();
 		pilot->setAllSkillsLevel(5);
 		

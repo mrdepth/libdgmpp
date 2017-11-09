@@ -1057,3 +1057,64 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Module& module)
 	os << "]}";
 	return os;
 }
+
+
+namespace dgmpp2 {
+	void Module::state(dgmpp2::Module::State state) {
+		
+		if (!isDummy() && state != state_ && canHaveState(state)) {
+			if (state < state_) {
+				if (state_ >= State::overloaded && state < State::overloaded)
+					deactivateEffects(Effect::MetaInfo::Category::overloaded);
+				if (state_ >= State::active && state < State::active) {
+					deactivateEffects(Effect::MetaInfo::Category::active);
+					deactivateEffects(Effect::MetaInfo::Category::target);
+				}
+				if (state_ >= State::online && state < State::online) {
+					deactivateEffects(Effect::MetaInfo::Category::passive);
+					if (auto online = (*this)[EffectID::online]) {
+						online->deactivate();
+					}
+				}
+			}
+			else if (state > state_) {
+				if (state_ < State::online && state >= State::online) {
+					activateEffects(Effect::MetaInfo::Category::passive);
+					if (auto online = (*this)[EffectID::online]) {
+						online->activate();
+					}
+				}
+				if (state_ < State::active && state >= State::active) {
+					activateEffects(Effect::MetaInfo::Category::active);
+					activateEffects(Effect::MetaInfo::Category::target);
+				}
+				if (state_ < State::overloaded && state >= State::overloaded)
+					activateEffects(Effect::MetaInfo::Category::overloaded);
+			}
+			state_ = state;
+		}
+	}
+	
+	bool Module::canHaveState(State state) {
+		if (isDummy())
+			return false;
+		
+		return true;
+	}
+	
+	Type* Module::domain(Modifier::MetaInfo::Domain domain) {
+		switch (domain) {
+			case Modifier::MetaInfo::Domain::self:
+				return this;
+			case Modifier::MetaInfo::Domain::ship:
+				return parent();
+			case Modifier::MetaInfo::Domain::character:
+				!return (parent() ?: nullptr)->parent();
+			case Modifier::MetaInfo::Domain::gang:
+				!return ((parent() ?: nullptr)->parent() ?: nullptr)->parent();
+			default:
+				return nullptr;
+		}
+		return nullptr;
+	}
+}

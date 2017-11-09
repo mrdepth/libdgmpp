@@ -59,8 +59,13 @@ namespace dgmpp2 {
 		const MetaInfo& metaInfo() const {return metaInfo_;}
 //		Type& owner() const {return owner_;}
 		const std::list<const Modifier>& modifiers() {return modifiers_;};
+		
+		void activate();
+		void deactivate();
+		bool isActive() {return isActive_;}
 	private:
 		friend class Type;
+		bool isActive_ = false;
 		const MetaInfo& metaInfo_;
 //		Type& owner_;
 		std::list<const Modifier> modifiers_;

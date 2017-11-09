@@ -2,6 +2,7 @@
 #include "types.h"
 #include "Item.h"
 #include "GangBoost.h"
+#include "Type.hpp"
 
 namespace dgmpp {
 
@@ -39,4 +40,24 @@ namespace dgmpp {
 
 	};
 
+}
+
+namespace dgmpp2 {
+	class Character;
+	
+	class Gang: public Type {
+	public:
+		static std::unique_ptr<Gang> Create() {return std::unique_ptr<Gang>(new Gang);}
+		Character* add(std::unique_ptr<Character> pilot);
+		
+		void remove(Character* pilot);
+		std::vector<Character*> pilots() const;
+	protected:
+		virtual Type* domain(Modifier::MetaInfo::Domain domain) override;
+	private:
+		Gang(): Type(TypeID::none) {
+			activateEffects(Effect::MetaInfo::Category::generic);
+		}
+
+	};
 }

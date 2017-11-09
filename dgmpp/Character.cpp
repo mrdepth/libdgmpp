@@ -515,3 +515,32 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Character& character)
 	os << "]}";
 	return os;
 }
+
+namespace dgmpp2 {
+	Ship* Character::setShip(std::unique_ptr<Ship> ship) {
+		if (ship_)
+			remove(ship_);
+		
+		if (ship != nullptr)
+			ship_ = Type::add(std::move(ship));
+		else
+			ship_ = nullptr;
+		return ship_;
+	}
+	
+	Type* Character::domain(Modifier::MetaInfo::Domain domain) {
+		switch (domain) {
+			case Modifier::MetaInfo::Domain::self:
+			case Modifier::MetaInfo::Domain::character:
+				return this;
+			case Modifier::MetaInfo::Domain::ship:
+				return ship_;
+			case Modifier::MetaInfo::Domain::gang:
+				return parent();
+			default:
+				return nullptr;
+		}
+		return nullptr;
+	}
+
+}

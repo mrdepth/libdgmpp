@@ -1,6 +1,7 @@
 #pragma once
 #include "types.h"
 #include "Item.h"
+#include "Type.hpp"
 
 namespace dgmpp {
 	
@@ -67,5 +68,21 @@ namespace dgmpp {
 
 		std::shared_ptr<Skill> addSkill(TypeID typeID, int skillLevel, bool isLearned);
 		void removeSkill(std::shared_ptr<Skill> const& skill);
+	};
+}
+
+namespace dgmpp2 {
+	class Ship;
+	
+	class Character: public Type {
+	public:
+		static std::unique_ptr<Character> Create() {return std::unique_ptr<Character>(new Character);}
+		Ship* setShip(std::unique_ptr<Ship> ship);
+	protected:
+		virtual Type* domain(Modifier::MetaInfo::Domain domain) override;
+
+	private:
+		Ship* ship_ = nullptr;
+		Character(): Type(TypeID::characterGallente){}
 	};
 }

@@ -6,6 +6,7 @@
 #include "HeatSimulator.h"
 #include "DamagePattern.h"
 #include "Cargo.h"
+#include "Type.hpp"
 
 namespace dgmpp {
 
@@ -191,5 +192,20 @@ namespace dgmpp {
 		void updateEnabledStatus();
 		void updateModulesSockets();
 
+	};
+}
+
+namespace dgmpp2 {
+	class Module;
+	
+	class Ship: public Type {
+	public:
+		static std::unique_ptr<Ship> Create(TypeID typeID) {return std::unique_ptr<Ship>(new Ship(typeID));}
+		Module* add(std::unique_ptr<Module> module);
+		void remove(Module* module);
+	protected:
+		virtual Type* domain(Modifier::MetaInfo::Domain domain) override;
+	private:
+		Ship(TypeID typeID): Type(typeID) {};
 	};
 }

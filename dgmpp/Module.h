@@ -3,6 +3,8 @@
 #include "HostileTarget.h"
 #include "DamageVector.h"
 
+#include "Type.hpp"
+
 namespace dgmpp {
 	
 	class Module : public Item
@@ -164,5 +166,30 @@ namespace dgmpp {
 		void calculateDamageStats();
 		
 		friend class Ship;
+	};
+}
+
+namespace dgmpp2 {
+	class Module: public Type {
+	public:
+		static std::unique_ptr<Module> Create(TypeID typeID) {return std::unique_ptr<Module>(new Module(typeID));}
+
+		enum class State {
+			unknown = -1,
+			offline,
+			online,
+			active,
+			overloaded
+		};
+
+		bool isDummy() {return false;}
+		bool canHaveState(State state);
+		void state(State state);
+		State state() const {return state_;};
+	protected:
+		virtual Type* domain(Modifier::MetaInfo::Domain domain) override;
+	private:
+		State state_ = State::unknown;
+		Module(TypeID typeID): Type(typeID) {};
 	};
 }

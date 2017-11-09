@@ -71,13 +71,10 @@ namespace dgmpp2 {
 		const MetaInfo& metaInfo() const {return metaInfo_;}
 		Type& owner() const {return owner_;}
 		
-		Float get() const {return 0;}
-		operator Float() const {return get();}
+		Float value() const;
+//		operator Float() const {return get();}
 		
-		Attribute& operator = (Float value) {
-			forcedValue_ = value;
-			return *this;
-		}
+		Attribute& operator= (Float value);
 
 	private:
 		friend class Type;
@@ -86,9 +83,17 @@ namespace dgmpp2 {
 		Type& owner_;
 		Float initialValue_;
 		optional<Float> forcedValue_ = nullopt;
+		mutable optional<Float> value_ = nullopt;
+		optional<Proxy> maxAttribute_ = nullopt;
 
-		Attribute(const MetaInfo& metaInfo, Float initialValue, Type& owner)
-		: metaInfo_(metaInfo), initialValue_(initialValue), owner_(owner) {}
+		Attribute(const MetaInfo& metaInfo, Float initialValue, Type& owner);
+		
+		void reset() {value_ = nullopt;}
+		
+#if DEBUG
+		mutable bool recursionFlag_ = false;
+#endif
+		
 	};
 	
 	struct Attribute::MetaInfo {
@@ -115,11 +120,14 @@ namespace dgmpp2 {
 		Proxy& operator=(Proxy&& other) = delete;
 		Proxy& operator=(const Proxy& other) = delete;
 		
-		operator bool() const {
+		explicit operator bool() const {
 			return attribute_->second != nullptr;
 		}
-		operator Float() const;
-		Attribute& operator*();
+//		operator Float() const;
+		Attribute& operator*() const;
+		Attribute* operator->() const {
+			return &(**this);
+		}
 		
 //		Proxy& operator=(Float value) {
 //			this->operator*() = value;

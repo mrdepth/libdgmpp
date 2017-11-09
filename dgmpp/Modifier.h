@@ -75,12 +75,13 @@ namespace dgmpp {
 namespace dgmpp2 {
 	class Type;
 	class Attribute;
+	class Effect;
 	
 	class Modifier {
 	public:
 		struct MetaInfo;
 		
-		Modifier(const MetaInfo& metaInfo, Type& owner);
+		Modifier(const MetaInfo& metaInfo, Type& owner, const Effect& effect);
 		Modifier(const Modifier& other) = delete;
 		Modifier(Modifier&& other) = delete;
 		Modifier& operator=(const Modifier& other) = delete;
@@ -89,16 +90,21 @@ namespace dgmpp2 {
 		
 		const MetaInfo& metaInfo() const {return metaInfo_;}
 		Type& owner() const {return owner_;}
+		Type* domain() const;
+		const Effect& effect() const {return effect_;}
 		
 		bool match(const Type* type) const;
 		Float get() const;
-		operator Float() const {return get();};
+		operator Float() const {return get();}
+		bool needsStackingCheck() const {return needsStackingCheck_;}
 		
 	private:
 		friend class Effect;
 		const MetaInfo& metaInfo_;
 		Type& owner_;
+		const Effect& effect_;
 		const Attribute& modifyingAttribute_;
+		bool needsStackingCheck_;
 		
 	};
 	

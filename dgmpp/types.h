@@ -169,8 +169,45 @@ namespace dgmpp2 {
 			value_ = std::unique_ptr<T>(new T(value));
 			return *this;
 		}
+		
+		optional& operator=(std::nullptr_t) {
+			value_.reset(nullptr);
+			return *this;
+		}
 
 		operator bool() const {return value_ != nullptr;}
+		
+		T& value() {
+			if (value_ == nullptr) {
+				throw std::runtime_error("Dereferencing empty optional");
+			}
+			return *value_;
+		}
+		
+		T& operator*() {
+			return value();
+		}
+		
+		T& operator->() {
+			return value();
+		}
+		
+		const T& value() const {
+			if (value_ == nullptr) {
+				throw std::runtime_error("Dereferencing empty optional");
+			}
+			return *value_;
+		}
+		
+		const T& operator*() const {
+			return value();
+		}
+		
+		const T& operator->() const {
+			return value();
+		}
+
+
 	private:
 		std::unique_ptr<T> value_;
 	};

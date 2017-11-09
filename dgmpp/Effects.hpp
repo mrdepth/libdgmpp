@@ -2912,9 +2912,6 @@ namespace dgmpp2 {
 			{EffectID::scriptTrackingComputerFalloffBonusBonus, Effect::MetaInfo::Category::generic, true, true, {
 				{modifiers[1046]},
 			}},
-			{EffectID::dungeonMaxTargetingRangeShip, Effect::MetaInfo::Category::dungeon, true, true, {
-				{modifiers[167]},
-			}},
 			{EffectID::shipMissileLauncherSpeedBonusMC2, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[1047]},{modifiers[1048]},{modifiers[1049]},
 			}},
@@ -2996,929 +2993,758 @@ namespace dgmpp2 {
 			{EffectID::probeLaunching, Effect::MetaInfo::Category::active, false, false, {
 				
 			}},
-			{EffectID::dungeonMaxVelocityModifier, Effect::MetaInfo::Category::dungeon, true, true, {
+			{EffectID::droneBandwidthAddPassive, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[1082]},
 			}},
-			{EffectID::dungeonMiningLaserDurationBonus, Effect::MetaInfo::Category::dungeon, true, true, {
+			{EffectID::droneCapacityAdddroneCapacityPassive, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[1083]},
 			}},
-			{EffectID::dungeonTurretTrackingBonus, Effect::MetaInfo::Category::dungeon, true, true, {
-				{modifiers[785]},
-			}},
-			{EffectID::droneBandwidthAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1084]},
-			}},
-			{EffectID::droneCapacityAdddroneCapacityPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1085]},
-			}},
 			{EffectID::scanStrengthAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1086]},{modifiers[1087]},{modifiers[1088]},{modifiers[1089]},
+				{modifiers[1084]},{modifiers[1085]},{modifiers[1086]},{modifiers[1087]},
 			}},
 			{EffectID::maxTargetRangeAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1090]},
+				{modifiers[1088]},
 			}},
 			{EffectID::signatureRadiusAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1091]},
+				{modifiers[1089]},
 			}},
 			{EffectID::scanResolutionAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1092]},
+				{modifiers[1090]},
 			}},
 			{EffectID::capacityAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1093]},
+				{modifiers[1091]},
 			}},
 			{EffectID::capacitorCapacityAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1094]},
+				{modifiers[1092]},
 			}},
 			{EffectID::shieldCapacityAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1095]},
+				{modifiers[1093]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrDefensive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1096]},
+				{modifiers[1094]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariDefensive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1097]},
+				{modifiers[1095]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteDefensive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1098]},
+				{modifiers[1096]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarDefensive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1099]},
+				{modifiers[1097]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarElectronic, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1100]},
+				{modifiers[1098]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteElectronic, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1101]},
+				{modifiers[1099]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariElectronic, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1102]},
+				{modifiers[1100]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrElectronic, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1103]},
+				{modifiers[1101]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrEngineering, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1104]},
+				{modifiers[1102]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariEngineering, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1105]},
+				{modifiers[1103]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteEngineering, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1106]},
+				{modifiers[1104]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarEngineering, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1107]},
+				{modifiers[1105]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarOffensive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1108]},
+				{modifiers[1106]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteOffensive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1109]},
+				{modifiers[1107]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariOffensive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1110]},
+				{modifiers[1108]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrOffensive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1111]},
+				{modifiers[1109]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrPropulsion, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1112]},
+				{modifiers[1110]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariPropulsion, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1113]},
+				{modifiers[1111]},
 			}},
 			{EffectID::subsystemSkillLevelGallentePropulsion, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1114]},
+				{modifiers[1112]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarPropulsion, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1115]},
+				{modifiers[1113]},
 			}},
 			{EffectID::rechargeRateAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1116]},
+				{modifiers[1114]},
 			}},
 			{EffectID::shieldRechargeRateAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1117]},
+				{modifiers[1115]},
 			}},
 			{EffectID::subsystemBonusAmarrPropulsionMaxVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1118]},
+				{modifiers[1116]},
 			}},
 			{EffectID::subsystemBonusCaldariPropulsionMaxVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1119]},
+				{modifiers[1117]},
 			}},
 			{EffectID::subsystemBonusMinmatarPropulsionMaxVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1120]},
+				{modifiers[1118]},
 			}},
 			{EffectID::subsystemBonusMinmatarPropulsionAfterburnerSpeedFactor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1121]},
+				{modifiers[1119]},
 			}},
 			{EffectID::subsystemBonusCaldariPropulsionAfterburnerSpeedFactor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1122]},
+				{modifiers[1120]},
 			}},
 			{EffectID::subsystemBonusAmarrPropulsionAfterburnerSpeedFactor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1123]},
+				{modifiers[1121]},
 			}},
 			{EffectID::subsystemBonusAmarrPropulsion2Agility, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1124]},
+				{modifiers[1122]},
 			}},
 			{EffectID::subsystemBonusCaldariPropulsion2Agility, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1125]},
+				{modifiers[1123]},
 			}},
 			{EffectID::subsystemBonusGallentePropulsion2Agility, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1126]},
+				{modifiers[1124]},
 			}},
 			{EffectID::subsystemBonusMinmatarPropulsion2Agility, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1127]},
+				{modifiers[1125]},
 			}},
 			{EffectID::subsystemBonusMinmatarPropulsion2MWDPenalty, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1128]},
+				{modifiers[1126]},
 			}},
 			{EffectID::subsystemBonusGallentePropulsionMWDPenalty, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1129]},
+				{modifiers[1127]},
 			}},
 			{EffectID::subsystemBonusAmarrPropulsion2MWDPenalty, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1130]},
+				{modifiers[1128]},
 			}},
 			{EffectID::subsystemBonusGallentePropulsionABMWDCapNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1131]},
+				{modifiers[1129]},
 			}},
 			{EffectID::subsystemBonusGallenteElectronicCPU, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1132]},
+				{modifiers[1130]},
 			}},
 			{EffectID::subsystemBonusCaldariElectronicCPU, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1133]},
+				{modifiers[1131]},
 			}},
 			{EffectID::subsystemBonusMinmatarCoreScanStrengthLADAR, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1134]},
+				{modifiers[1132]},
 			}},
 			{EffectID::subsystemBonusGallenteCoreScanStrengthMagnetometric, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1135]},
+				{modifiers[1133]},
 			}},
 			{EffectID::subsystemBonusCaldariCoreScanStrengthGravimetric, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1136]},
+				{modifiers[1134]},
 			}},
 			{EffectID::subsystemBonusAmarrCoreScanStrengthRADAR, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1137]},
+				{modifiers[1135]},
 			}},
 			{EffectID::subsystemBonusAmarrDefensiveArmorResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1138]},{modifiers[1139]},{modifiers[1140]},{modifiers[1141]},
+				{modifiers[1136]},{modifiers[1137]},{modifiers[1138]},{modifiers[1139]},
 			}},
 			{EffectID::subsystemBonusGallenteDefensiveArmorResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1142]},{modifiers[1143]},{modifiers[1144]},{modifiers[1145]},
+				{modifiers[1140]},{modifiers[1141]},{modifiers[1142]},{modifiers[1143]},
 			}},
 			{EffectID::subsystemBonusMinmatarDefensiveArmorResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1146]},{modifiers[1147]},{modifiers[1148]},{modifiers[1149]},
+				{modifiers[1144]},{modifiers[1145]},{modifiers[1146]},{modifiers[1147]},
 			}},
 			{EffectID::subsystemBonusMinmatarDefensiveShieldResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1150]},{modifiers[1151]},{modifiers[1152]},{modifiers[1153]},
+				{modifiers[1148]},{modifiers[1149]},{modifiers[1150]},{modifiers[1151]},
 			}},
 			{EffectID::subsystemBonusCaldariDefensiveShieldResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1154]},{modifiers[1155]},{modifiers[1156]},{modifiers[1157]},
+				{modifiers[1152]},{modifiers[1153]},{modifiers[1154]},{modifiers[1155]},
 			}},
 			{EffectID::subsystemBonusAmarrDefensiveArmorRepairAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1158]},
+				{modifiers[1156]},
 			}},
 			{EffectID::subsystemBonusGallenteDefensiveArmorRepairAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1159]},
+				{modifiers[1157]},
 			}},
 			{EffectID::subsystemBonusMinmatarDefensiveShieldArmorRepairAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1160]},{modifiers[1161]},
+				{modifiers[1158]},{modifiers[1159]},
 			}},
 			{EffectID::subsystemBonusCaldariDefensiveShieldBoostAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1162]},
+				{modifiers[1160]},
 			}},
 			{EffectID::subsystemBonusCaldariDefensiveShieldHP, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1163]},
+				{modifiers[1161]},
 			}},
 			{EffectID::subsystemBonusMinmatarDefensiveShieldArmorHP, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1164]},{modifiers[1165]},
+				{modifiers[1162]},{modifiers[1163]},
 			}},
 			{EffectID::subsystemBonusGallenteDefensiveArmorHP, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1166]},
+				{modifiers[1164]},
 			}},
 			{EffectID::subsystemBonusAmarrDefensiveArmorHP, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1167]},
-			}},
-			{EffectID::systemShieldHP, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[14]},
-			}},
-			{EffectID::systemTargetingRange, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[31]},
-			}},
-			{EffectID::systemSignatureRadius, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[283]},
-			}},
-			{EffectID::systemArmorEmResistance, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1168]},
-			}},
-			{EffectID::systemArmorExplosiveResistance, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1169]},
-			}},
-			{EffectID::systemArmorKineticResistance, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1170]},
-			}},
-			{EffectID::systemArmorThermalResistance, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1171]},
-			}},
-			{EffectID::systemMissileVelocity, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1172]},
-			}},
-			{EffectID::systemMaxVelocity, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1173]},
-			}},
-			{EffectID::systemDamageMultiplierGunnery, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1174]},
-			}},
-			{EffectID::systemDamageThermalMissiles, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1175]},
-			}},
-			{EffectID::systemDamageEmMissiles, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1176]},
-			}},
-			{EffectID::systemDamageExplosiveMissiles, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1177]},
-			}},
-			{EffectID::systemDamageKineticMissiles, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1178]},
-			}},
-			{EffectID::systemDamageDrones, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1179]},
-			}},
-			{EffectID::systemTracking, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[89]},
-			}},
-			{EffectID::systemAoeVelocity, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1180]},
-			}},
-			{EffectID::systemHeatDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1181]},
-			}},
-			{EffectID::systemOverloadArmor, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1182]},
-			}},
-			{EffectID::systemOverloadDamageModifier, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1183]},
-			}},
-			{EffectID::systemOverloadDurationBonus, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1184]},
-			}},
-			{EffectID::systemOverloadEccmStrength, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1185]},
-			}},
-			{EffectID::systemOverloadEcmStrength, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1186]},
-			}},
-			{EffectID::systemOverloadHardening, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1187]},
-			}},
-			{EffectID::systemOverloadRange, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1188]},
-			}},
-			{EffectID::systemOverloadRof, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1189]},
-			}},
-			{EffectID::systemOverloadSelfDuration, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1190]},
-			}},
-			{EffectID::systemOverloadShieldBonus, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1191]},
-			}},
-			{EffectID::systemOverloadSpeedFactor, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1192]},
-			}},
-			{EffectID::systemSmartBombRange, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1193]},
-			}},
-			{EffectID::systemSmartBombEmDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1194]},
-			}},
-			{EffectID::systemSmartBombThermalDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1195]},
-			}},
-			{EffectID::systemSmartBombKineticDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1196]},
-			}},
-			{EffectID::systemSmartBombExplosiveDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1197]},
-			}},
-			{EffectID::systemSmallEnergyDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1198]},
-			}},
-			{EffectID::systemSmallProjectileDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1199]},
-			}},
-			{EffectID::systemSmallHybridDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1200]},
-			}},
-			{EffectID::systemRocketEmDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1201]},
-			}},
-			{EffectID::systemRocketExplosiveDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1202]},
-			}},
-			{EffectID::systemRocketKineticDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1203]},
-			}},
-			{EffectID::systemRocketThermalDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1204]},
-			}},
-			{EffectID::systemStandardMissileThermalDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1205]},
-			}},
-			{EffectID::systemStandardMissileEmDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1206]},
-			}},
-			{EffectID::systemStandardMissileExplosiveDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1207]},
-			}},
-			{EffectID::systemArmorRepairAmount, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1208]},{modifiers[1209]},
-			}},
-			{EffectID::systemArmorRemoteRepairAmount, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1210]},
-			}},
-			{EffectID::systemShieldRemoteRepairAmount, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1211]},
-			}},
-			{EffectID::systemCapacitorCapacity, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1212]},
-			}},
-			{EffectID::systemCapacitorRecharge, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1213]},
+				{modifiers[1165]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensiveEnergyWeaponDamageMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1214]},
+				{modifiers[1166]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensiveHybridWeaponMaxRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1215]},
+				{modifiers[1167]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensiveHybridWeaponFalloff, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1216]},
+				{modifiers[1168]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensiveHybridWeaponDamageMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1217]},
+				{modifiers[1169]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1218]},
+				{modifiers[1170]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponFalloff, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1219]},
+				{modifiers[1171]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponMaxRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1220]},
+				{modifiers[1172]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensiveHeavyMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1221]},
+				{modifiers[1173]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensiveHeavyAssaultMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1222]},
+				{modifiers[1174]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive1LauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1221]},{modifiers[1222]},{modifiers[1223]},
-			}},
-			{EffectID::systemShieldEmResistance, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1224]},
-			}},
-			{EffectID::systemShieldExplosiveResistance, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1225]},
-			}},
-			{EffectID::systemShieldKineticResistance, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1226]},
-			}},
-			{EffectID::systemShieldThermalResistance, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1227]},
+				{modifiers[1173]},{modifiers[1174]},{modifiers[1175]},
 			}},
 			{EffectID::subsystemBonusAmarrEngineeringHeatDamageReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1228]},
+				{modifiers[1176]},
 			}},
 			{EffectID::subsystemBonusCaldariEngineeringHeatDamageReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1229]},
+				{modifiers[1177]},
 			}},
 			{EffectID::subsystemBonusGallenteEngineeringHeatDamageReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1230]},
+				{modifiers[1178]},
 			}},
 			{EffectID::subsystemBonusMinmatarEngineeringHeatDamageReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1231]},
+				{modifiers[1179]},
 			}},
 			{EffectID::subsystemBonusMinmatarEngineeringCapacitorCapacity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1232]},
+				{modifiers[1180]},
 			}},
 			{EffectID::subsystemBonusCaldariCoreCapacitorCapacity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1233]},
+				{modifiers[1181]},
 			}},
 			{EffectID::subsystemBonusAmarrCoreCapacitorCapacity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1234]},
+				{modifiers[1182]},
 			}},
 			{EffectID::massAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1235]},
+				{modifiers[1183]},
 			}},
 			{EffectID::baseMaxScanDeviationModifierRequiringAstrometrics, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1236]},
+				{modifiers[1184]},
 			}},
 			{EffectID::baseSensorStrengthModifierRequiringAstrometrics, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1237]},
+				{modifiers[1185]},
 			}},
 			{EffectID::shipBonusScanProbeStrengthCF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1238]},
+				{modifiers[1186]},
 			}},
 			{EffectID::shipBonusScanProbeStrengthMF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1239]},
+				{modifiers[1187]},
 			}},
 			{EffectID::shipBonusScanProbeStrengthGF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1240]},
+				{modifiers[1188]},
 			}},
 			{EffectID::eliteBonusCoverOpsScanProbeStrength2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1241]},
+				{modifiers[1189]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensiveEnergyWeaponCapacitorNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1242]},
+				{modifiers[1190]},
 			}},
 			{EffectID::shipBonusStrategicCruiserAmarrHeatDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1243]},
+				{modifiers[1191]},
 			}},
 			{EffectID::shipBonusStrategicCruiserCaldariHeatDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1244]},
+				{modifiers[1192]},
 			}},
 			{EffectID::shipBonusStrategicCruiserGallenteHeatDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1245]},
+				{modifiers[1193]},
 			}},
 			{EffectID::shipBonusStrategicCruiserMinmatarHeatDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1246]},
+				{modifiers[1194]},
 			}},
 			{EffectID::strategicCruiserAmarrSkillLevel1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1247]},
+				{modifiers[1195]},
 			}},
 			{EffectID::strategicCruiserCaldariSkillLevel1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1248]},
+				{modifiers[1196]},
 			}},
 			{EffectID::strategicCruiserGallenteSkillLevel1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1249]},
+				{modifiers[1197]},
 			}},
 			{EffectID::strategicCruiserMinmatarSkillLevel1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1250]},
+				{modifiers[1198]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrDefensive2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1251]},
+				{modifiers[1199]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariDefensive2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1252]},
+				{modifiers[1200]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteDefensive2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1253]},
+				{modifiers[1201]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarDefensive2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1254]},
+				{modifiers[1202]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarElectronic2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1255]},
+				{modifiers[1203]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteElectronic2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1256]},
+				{modifiers[1204]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariElectronic2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1257]},
+				{modifiers[1205]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrElectronic2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1258]},
+				{modifiers[1206]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrEngineering2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1259]},
+				{modifiers[1207]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariEngineering2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1260]},
+				{modifiers[1208]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteEngineering2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1261]},
+				{modifiers[1209]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarEngineering2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1262]},
+				{modifiers[1210]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarOffensive2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1263]},
+				{modifiers[1211]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteOffensive2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1264]},
+				{modifiers[1212]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariOffensive2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1265]},
+				{modifiers[1213]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrOffensive2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1266]},
+				{modifiers[1214]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrPropulsion2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1267]},
+				{modifiers[1215]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariPropulsion2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1268]},
+				{modifiers[1216]},
 			}},
 			{EffectID::subsystemSkillLevelGallentePropulsion2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1269]},
+				{modifiers[1217]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarPropulsion2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1270]},
+				{modifiers[1218]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive2EnergyWeaponCapacitorNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1271]},
+				{modifiers[1219]},
 			}},
 			{EffectID::subsystemBonusAmarrCore2EnergyVampireAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1272]},
+				{modifiers[1220]},
 			}},
 			{EffectID::subsystemBonusAmarrCore2EnergyDestabilizerAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1273]},
+				{modifiers[1221]},
 			}},
 			{EffectID::modifyArmorResonancePassivePreAssignment, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1274]},{modifiers[1275]},{modifiers[1276]},{modifiers[1277]},
+				{modifiers[1222]},{modifiers[1223]},{modifiers[1224]},{modifiers[1225]},
 			}},
 			{EffectID::modifyShieldResonancePassivePreAssignment, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1278]},{modifiers[1279]},{modifiers[1280]},{modifiers[1281]},
+				{modifiers[1226]},{modifiers[1227]},{modifiers[1228]},{modifiers[1229]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive2MissileLauncherKineticDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1282]},{modifiers[1283]},{modifiers[1284]},
+				{modifiers[1230]},{modifiers[1231]},{modifiers[1232]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensiveDroneDamageHP, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1285]},{modifiers[1286]},{modifiers[1287]},{modifiers[1288]},
+				{modifiers[1233]},{modifiers[1234]},{modifiers[1235]},{modifiers[1236]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensive2ProjectileWeaponDamageMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1289]},
+				{modifiers[1237]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensive2ProjectileWeaponROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1290]},
+				{modifiers[1238]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensive2MissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1291]},{modifiers[1292]},{modifiers[1293]},
+				{modifiers[1239]},{modifiers[1240]},{modifiers[1241]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensiveAssaultMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1294]},
+				{modifiers[1242]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensiveHeavyMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1295]},
+				{modifiers[1243]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensiveHeavyAssaultMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1296]},
+				{modifiers[1244]},
 			}},
 			{EffectID::subsystemBonusAmarrEngineeringPowerOutput, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1297]},
+				{modifiers[1245]},
 			}},
 			{EffectID::subsystemBonusCaldariEngineeringPowerOutput, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1298]},
+				{modifiers[1246]},
 			}},
 			{EffectID::subsystemBonusGallenteEngineeringPowerOutput, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1299]},
+				{modifiers[1247]},
 			}},
 			{EffectID::subsystemBonusMinmatarEngineeringPowerOutput, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1300]},
+				{modifiers[1248]},
 			}},
 			{EffectID::subsystemBonusMinmatarCoreCapacitorRecharge, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1301]},
+				{modifiers[1249]},
 			}},
 			{EffectID::subsystemBonusGallenteCoreCapacitorRecharge, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1302]},
+				{modifiers[1250]},
 			}},
 			{EffectID::subsystemBonusCaldariEngineeringCapacitorRecharge, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1303]},
+				{modifiers[1251]},
 			}},
 			{EffectID::subsystemBonusAmarrEngineeringCapacitorRecharge, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1304]},
+				{modifiers[1252]},
 			}},
 			{EffectID::subsystemBonusAmarrCore3ScanResolution, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1305]},
+				{modifiers[1253]},
 			}},
 			{EffectID::subsystemBonusMinmatarCore3ScanResolution, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1306]},
+				{modifiers[1254]},
 			}},
 			{EffectID::subsystemBonusCaldariCore2MaxTargetingRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1307]},
+				{modifiers[1255]},
 			}},
 			{EffectID::subsystemBonusGallenteCore2MaxTargetingRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1308]},
+				{modifiers[1256]},
 			}},
 			{EffectID::subsystemBonusGallenteCore2WarpScrambleRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1309]},
+				{modifiers[1257]},
 			}},
 			{EffectID::subsystemBonusMinmatarCore2StasisWebifierRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1310]},
+				{modifiers[1258]},
 			}},
 			{EffectID::subsystemBonusCaldariPropulsion2WarpSpeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1311]},
+				{modifiers[1259]},
 			}},
 			{EffectID::subsystemBonusGallentePropulsionWarpCapacitor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1312]},
+				{modifiers[1260]},
 			}},
 			{EffectID::subsystemBonusGallentePropulsion2WarpSpeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1313]},
-			}},
-			{EffectID::systemAgility, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1314]},
+				{modifiers[1261]},
 			}},
 			{EffectID::modifyShipAgilityPassivePreAssignment, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1315]},
+				{modifiers[1262]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensive2HybridWeaponDamageMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1316]},
+				{modifiers[1263]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive2HybridWeaponDamageMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1317]},
+				{modifiers[1264]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive2RemoteArmorRepairCapUse, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1318]},
+				{modifiers[1265]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensive2RemoteArmorRepairCapUse, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1319]},
+				{modifiers[1266]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensive2RemoteRepCapUse, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1320]},{modifiers[1321]},
+				{modifiers[1267]},{modifiers[1268]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive2RemoteShieldBoosterCapUse, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1322]},
+				{modifiers[1269]},
 			}},
 			{EffectID::subsystemBonusGallenteEngineeringDroneHP, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1323]},{modifiers[1324]},{modifiers[1325]},
+				{modifiers[1270]},{modifiers[1271]},{modifiers[1272]},
 			}},
 			{EffectID::subsystemBonusGallenteEngineering2DroneMWD, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1326]},
+				{modifiers[1273]},
 			}},
 			{EffectID::subsystemBonusCaldariCore2ECMStrengthRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1327]},{modifiers[1328]},{modifiers[1329]},{modifiers[1330]},{modifiers[1331]},
+				{modifiers[1274]},{modifiers[1275]},{modifiers[1276]},{modifiers[1277]},{modifiers[1278]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensiveDroneDamageMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1332]},
+				{modifiers[1279]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive3DroneDamageHP, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1333]},{modifiers[1334]},{modifiers[1335]},{modifiers[1336]},
+				{modifiers[1280]},{modifiers[1281]},{modifiers[1282]},{modifiers[1283]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensive3DroneDamageMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1337]},
+				{modifiers[1284]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive3EnergyWeaponMaxRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1338]},
+				{modifiers[1285]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive3HMLHAMVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1339]},{modifiers[1340]},
+				{modifiers[1286]},{modifiers[1287]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive3HeavyMissileVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1340]},
+				{modifiers[1287]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive3EwStrengthGrav, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1341]},
+				{modifiers[1288]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive3EwStrengthLadar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1342]},
+				{modifiers[1289]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive3EwStrengthMagn, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1343]},
+				{modifiers[1290]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive3EwStrengthRadar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1344]},
+				{modifiers[1291]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrOffensive3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1345]},
+				{modifiers[1292]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariOffensive3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1346]},
+				{modifiers[1293]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteOffensive3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1347]},
+				{modifiers[1294]},
 			}},
 			{EffectID::subsystemBonusMinmatarCore2MaxTargetingRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1348]},
+				{modifiers[1295]},
 			}},
 			{EffectID::subsystemBonusAmarrCore2MaxTargetingRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1349]},
+				{modifiers[1296]},
 			}},
 			{EffectID::subsystemBonusMinmatarDefensiveSignatureRadius, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1350]},
+				{modifiers[1297]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensive3TurretTracking, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1351]},
+				{modifiers[1298]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarOffensive3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1352]},
+				{modifiers[1299]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensive3TurretTracking, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1353]},
+				{modifiers[1300]},
 			}},
 			{EffectID::caldariCruiserSkillLevelPreMulShipBonusCC3Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1354]},
+				{modifiers[1301]},
 			}},
 			{EffectID::ecmRangeBonusModuleEffect, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1355]},
+				{modifiers[1302]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensiveHeavyMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1356]},
+				{modifiers[1303]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensiveMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1356]},{modifiers[1357]},{modifiers[1358]},
+				{modifiers[1303]},{modifiers[1304]},{modifiers[1305]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensiveHeavyAssaultMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1358]},
+				{modifiers[1305]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive2MissileDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1359]},{modifiers[1360]},{modifiers[1361]},{modifiers[1362]},{modifiers[1363]},{modifiers[1364]},{modifiers[1365]},{modifiers[1366]},{modifiers[1367]},{modifiers[1368]},{modifiers[1369]},{modifiers[1370]},
+				{modifiers[1306]},{modifiers[1307]},{modifiers[1308]},{modifiers[1309]},{modifiers[1310]},{modifiers[1311]},{modifiers[1312]},{modifiers[1313]},{modifiers[1314]},{modifiers[1315]},{modifiers[1316]},{modifiers[1317]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive2HAMThermalDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1371]},
+				{modifiers[1318]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive2HAMKineticDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1372]},
+				{modifiers[1319]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive2HAMExplosiveDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1373]},
+				{modifiers[1320]},
 			}},
 			{EffectID::shipBonusMediumHybridDmgCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1374]},
+				{modifiers[1321]},
 			}},
 			{EffectID::subsystemBonusWarpBubbleImmune, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1375]},
+				{modifiers[1322]},
 			}},
 			{EffectID::caldariShipEwFalloffRangeCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1376]},
+				{modifiers[1323]},
 			}},
 			{EffectID::caldariShipEwFalloffRangeCB3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1377]},
+				{modifiers[1324]},
 			}},
 			{EffectID::subSystemBonusAmarrOffensiveCommandBursts, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1378]},{modifiers[1379]},{modifiers[1380]},{modifiers[1381]},{modifiers[1382]},{modifiers[1383]},{modifiers[1384]},{modifiers[1385]},{modifiers[1386]},{modifiers[1387]},{modifiers[1388]},{modifiers[1389]},{modifiers[1390]},{modifiers[1391]},{modifiers[1392]},
+				{modifiers[1325]},{modifiers[1326]},{modifiers[1327]},{modifiers[1328]},{modifiers[1329]},{modifiers[1330]},{modifiers[1331]},{modifiers[1332]},{modifiers[1333]},{modifiers[1334]},{modifiers[1335]},{modifiers[1336]},{modifiers[1337]},{modifiers[1338]},{modifiers[1339]},
 			}},
 			{EffectID::subSystemBonusCaldariDefensiveSiegeWarfare, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1393]},{modifiers[1394]},{modifiers[1395]},{modifiers[1396]},{modifiers[1397]},
+				{modifiers[1340]},{modifiers[1341]},{modifiers[1342]},{modifiers[1343]},{modifiers[1344]},
 			}},
 			{EffectID::subSystemBonusGallenteDefensiveInformationWarfare, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1398]},{modifiers[1399]},{modifiers[1400]},{modifiers[1401]},{modifiers[1402]},
+				{modifiers[1345]},{modifiers[1346]},{modifiers[1347]},{modifiers[1348]},{modifiers[1349]},
 			}},
 			{EffectID::subSystemBonusMinmatarDefensiveSkirmishWarfare, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1403]},{modifiers[1404]},{modifiers[1405]},{modifiers[1406]},{modifiers[1407]},
+				{modifiers[1350]},{modifiers[1351]},{modifiers[1352]},{modifiers[1353]},{modifiers[1354]},
 			}},
 			{EffectID::shipBonusTorpedoVelocityGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1408]},
+				{modifiers[1355]},
 			}},
 			{EffectID::shipBonusTorpedoVelocityMF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1409]},
+				{modifiers[1356]},
 			}},
 			{EffectID::shipBonusTorpedoVelocity2AF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1410]},
+				{modifiers[1357]},
 			}},
 			{EffectID::shipBonusTorpedoVelocityCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1411]},
+				{modifiers[1358]},
 			}},
 			{EffectID::eliteReconBonusHeavyMissileVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1412]},
+				{modifiers[1359]},
 			}},
 			{EffectID::eliteReconBonusHeavyAssaultMissileVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1413]},
+				{modifiers[1360]},
 			}},
 			{EffectID::subSystemBonusAmarrElectronicScanProbeStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1414]},
+				{modifiers[1361]},
 			}},
 			{EffectID::subSystemBonusCaldariElectronicScanProbeStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1415]},
+				{modifiers[1362]},
 			}},
 			{EffectID::subSystemBonusGallenteElectronicScanProbeStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1416]},
+				{modifiers[1363]},
 			}},
 			{EffectID::subSystemBonusMinmatarElectronicScanProbeStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1417]},
+				{modifiers[1364]},
 			}},
 			{EffectID::shipBonusEliteCover2TorpedoThermalDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1418]},
+				{modifiers[1365]},
 			}},
 			{EffectID::shipBonusEliteCover2TorpedoEMDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1419]},
+				{modifiers[1366]},
 			}},
 			{EffectID::shipBonusEliteCover2TorpedoExplosiveDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1420]},
+				{modifiers[1367]},
 			}},
 			{EffectID::shipBonusEliteCover2TorpedoKineticDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1421]},
+				{modifiers[1368]},
 			}},
 			{EffectID::shipBonusGFTorpedoExplosionVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1422]},
+				{modifiers[1369]},
 			}},
 			{EffectID::shipBonusMF1TorpedoExplosionVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1423]},
+				{modifiers[1370]},
 			}},
 			{EffectID::shipBonusCF1TorpedoExplosionVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1424]},
+				{modifiers[1371]},
 			}},
 			{EffectID::shipBonusAF1TorpedoExplosionVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1425]},
+				{modifiers[1372]},
 			}},
 			{EffectID::subSystemBonusAmarrElectronic2TractorBeamVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1426]},
+				{modifiers[1373]},
 			}},
 			{EffectID::subSystemBonusCaldariElectronic2TractorBeamVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1427]},
+				{modifiers[1374]},
 			}},
 			{EffectID::subSystemBonusGallenteElectronic2TractorBeamVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1428]},
+				{modifiers[1375]},
 			}},
 			{EffectID::subSystemBonusMinmatarElectronic2TractorBeamVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1429]},
+				{modifiers[1376]},
 			}},
 			{EffectID::subSystemBonusMinmatarElectronic2TractorBeamRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1430]},
+				{modifiers[1377]},
 			}},
 			{EffectID::subSystemBonusGallenteElectronic2TractorBeamRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1431]},
+				{modifiers[1378]},
 			}},
 			{EffectID::subSystemBonusCaldariElectronic2TractorBeamRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1432]},
+				{modifiers[1379]},
 			}},
 			{EffectID::subSystemBonusAmarrElectronic2TractorBeamRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1433]},
+				{modifiers[1380]},
 			}},
 			{EffectID::signatureRadiusPreAssignment, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1434]},
+				{modifiers[1381]},
 			}},
 			{EffectID::subsystemBonusScanProbeLauncherCPU, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1435]},
+				{modifiers[1382]},
 			}},
 			{EffectID::subsystemBonusJumpHarmonics, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1436]},
+				{modifiers[1383]},
 			}},
 			{EffectID::shipBonusGF1TorpedoFlightTime, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1437]},
+				{modifiers[1384]},
 			}},
 			{EffectID::shipBonusMF1TorpedoFlightTime, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1438]},
+				{modifiers[1385]},
 			}},
 			{EffectID::shipBonusCF1TorpedoFlightTime, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1439]},
+				{modifiers[1386]},
 			}},
 			{EffectID::shipBonusAF1TorpedoFlightTime, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1440]},
+				{modifiers[1387]},
 			}},
 			{EffectID::scanRadarStrengthModifierEffect, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1441]},
+				{modifiers[1388]},
 			}},
 			{EffectID::scanLadarStrengthModifierEffect, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1442]},
+				{modifiers[1389]},
 			}},
 			{EffectID::scanGravimetricStrengthModifierEffect, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1443]},
+				{modifiers[1390]},
 			}},
 			{EffectID::scanMagnetometricStrengthModifierEffect, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1444]},
+				{modifiers[1391]},
 			}},
 			{EffectID::federationsetbonus3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1445]},
+				{modifiers[1392]},
 			}},
 			{EffectID::imperialsetbonus3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1446]},
+				{modifiers[1393]},
 			}},
 			{EffectID::republicsetbonus3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1447]},
+				{modifiers[1394]},
 			}},
 			{EffectID::caldarisetbonus3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1448]},
+				{modifiers[1395]},
 			}},
 			{EffectID::imperialsetLGbonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1449]},
+				{modifiers[1396]},
 			}},
 			{EffectID::federationsetLGbonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1450]},
+				{modifiers[1397]},
 			}},
 			{EffectID::caldarisetLGbonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1451]},
+				{modifiers[1398]},
 			}},
 			{EffectID::republicsetLGbonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1452]},
+				{modifiers[1399]},
 			}},
 			{EffectID::shipBonusStasisMF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1453]},
+				{modifiers[1400]},
 			}},
 			{EffectID::shipProjectileDmgMC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1454]},
+				{modifiers[1401]},
 			}},
 			{EffectID::shipVelocityBonusATC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1455]},
+				{modifiers[1402]},
 			}},
 			{EffectID::shipMTMaxRangeBonusATC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1456]},
+				{modifiers[1403]},
 			}},
 			{EffectID::shipMTFalloffBonusATC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1457]},
+				{modifiers[1404]},
 			}},
 			{EffectID::shipMTFalloffBonusATF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1458]},
+				{modifiers[1405]},
 			}},
 			{EffectID::shipMTMaxRangeBonusATF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1459]},
+				{modifiers[1406]},
 			}},
 			{EffectID::shipBonusAfterburnerCapNeedATF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1460]},
+				{modifiers[1407]},
 			}},
 			{EffectID::shipBonusSurveyProbeExplosionDelaySkillSurveyCovertOps3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1461]},
+				{modifiers[1408]},
 			}},
 			{EffectID::covertOpsSkillLevelPreMulEliteBonusCoverOpsShip3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1462]},
+				{modifiers[1409]},
 			}},
 			{EffectID::shipETOptimalRange2AF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1463]},
+				{modifiers[1410]},
 			}},
 			{EffectID::shipPTurretFalloffBonusGB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1464]},
+				{modifiers[1411]},
 			}},
 			{EffectID::shipBonusStasisWebSpeedFactorMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1465]},
+				{modifiers[1412]},
 			}},
 			{EffectID::superWeaponAmarr, Effect::MetaInfo::Category::target, true, false, {
 				
@@ -3933,91 +3759,91 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::shipStasisWebStrengthBonusMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1466]},
+				{modifiers[1413]},
 			}},
 			{EffectID::shipPTurretFalloffBonusGC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1467]},
+				{modifiers[1414]},
 			}},
 			{EffectID::shipStasisWebStrengthBonusMF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1468]},
+				{modifiers[1415]},
 			}},
 			{EffectID::shipFalloffBonusMF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1469]},
+				{modifiers[1416]},
 			}},
 			{EffectID::shipHTurretFalloffBonusGC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1470]},
+				{modifiers[1417]},
 			}},
 			{EffectID::gunneryFalloffBonusOnline, Effect::MetaInfo::Category::passive, false, false, {
 				{modifiers[92]},
 			}},
 			{EffectID::tcapitalLauncherSkillCruiseCitadelEmDamage1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1471]},
+				{modifiers[1418]},
 			}},
 			{EffectID::capitalLauncherSkillCruiseCitadelExplosiveDamage1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1472]},
+				{modifiers[1419]},
 			}},
 			{EffectID::capitalLauncherSkillCruiseCitadelKineticDamage1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1473]},
+				{modifiers[1420]},
 			}},
 			{EffectID::capitalLauncherSkillCruiseCitadelThermalDamage1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1474]},
+				{modifiers[1421]},
 			}},
 			{EffectID::gunneryMaxRangeFalloffTrackingSpeedBonus, Effect::MetaInfo::Category::active, false, false, {
 				{modifiers[92]},{modifiers[785]},{modifiers[1001]},
 			}},
 			{EffectID::industrialCoreEffect2, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[616]},{modifiers[617]},{modifiers[1475]},{modifiers[1476]},{modifiers[1477]},{modifiers[1478]},{modifiers[1479]},{modifiers[1480]},{modifiers[1481]},{modifiers[1482]},{modifiers[1483]},{modifiers[1484]},{modifiers[1485]},{modifiers[1486]},{modifiers[1487]},{modifiers[1488]},{modifiers[1489]},{modifiers[1490]},{modifiers[1491]},{modifiers[1492]},{modifiers[1493]},{modifiers[1494]},{modifiers[1495]},{modifiers[1496]},{modifiers[1497]},{modifiers[1498]},{modifiers[1499]},{modifiers[1500]},{modifiers[1501]},
+				{modifiers[616]},{modifiers[617]},{modifiers[1422]},{modifiers[1423]},{modifiers[1424]},{modifiers[1425]},{modifiers[1426]},{modifiers[1427]},{modifiers[1428]},{modifiers[1429]},{modifiers[1430]},{modifiers[1431]},{modifiers[1432]},{modifiers[1433]},{modifiers[1434]},{modifiers[1435]},{modifiers[1436]},{modifiers[1437]},{modifiers[1438]},{modifiers[1439]},{modifiers[1440]},{modifiers[1441]},{modifiers[1442]},{modifiers[1443]},{modifiers[1444]},{modifiers[1445]},{modifiers[1446]},{modifiers[1447]},{modifiers[1448]},
 			}},
 			{EffectID::eliteBonusLogisticsTrackingLinkFalloffBonus1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1502]},
+				{modifiers[1449]},
 			}},
 			{EffectID::eliteBonusLogisticsTrackingLinkFalloffBonus2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1503]},
+				{modifiers[1450]},
 			}},
 			{EffectID::droneRigStasisWebSpeedFactorBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1504]},
+				{modifiers[1451]},
 			}},
 			{EffectID::amarrFrigateSkillLevelPreMulShipBonus3AFShip, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1505]},
+				{modifiers[1452]},
 			}},
 			{EffectID::caldariFrigateSkillLevelPreMulShipBonus3CFShip, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1506]},
+				{modifiers[1453]},
 			}},
 			{EffectID::gallenteFrigateSkillLevelPreMulShipBonus3GFShip, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1507]},
+				{modifiers[1454]},
 			}},
 			{EffectID::minmatarFrigateSkillLevelPreMulShipBonus3MFShip, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1508]},
+				{modifiers[1455]},
 			}},
 			{EffectID::shipBonusDroneDamageGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1509]},
+				{modifiers[1456]},
 			}},
 			{EffectID::shipBonusWarpScramblerMaxRangeGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1510]},
+				{modifiers[1457]},
 			}},
 			{EffectID::shipBonusHeatDamageATF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1511]},
+				{modifiers[1458]},
 			}},
 			{EffectID::shipBonusSmallHybridMaxRangeATF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1512]},
+				{modifiers[1459]},
 			}},
 			{EffectID::shipBonusSmallHybridTrackingSpeedATF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1513]},
+				{modifiers[1460]},
 			}},
 			{EffectID::shipBonusHybridTrackingATC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1514]},
+				{modifiers[1461]},
 			}},
 			{EffectID::shipBonusHybridFalloffATC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1515]},
+				{modifiers[1462]},
 			}},
 			{EffectID::shipBonusWarpScramblerMaxRangeGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1516]},
+				{modifiers[1463]},
 			}},
 			{EffectID::eliteBonusMaraudersCruiseAndTorpedoDamageRole1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1517]},{modifiers[1518]},{modifiers[1519]},{modifiers[1520]},{modifiers[1521]},{modifiers[1522]},{modifiers[1523]},{modifiers[1524]},
+				{modifiers[1464]},{modifiers[1465]},{modifiers[1466]},{modifiers[1467]},{modifiers[1468]},{modifiers[1469]},{modifiers[1470]},{modifiers[1471]},
 			}},
 			{EffectID::shipBonusAoeVelocityCruiseAndTorpedoCB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1525]},{modifiers[1526]},
+				{modifiers[1472]},{modifiers[1473]},
 			}},
 			{EffectID::shipCruiseAndTorpedoVelocityBonusCB3, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[277]},{modifiers[278]},
@@ -4026,592 +3852,583 @@ namespace dgmpp2 {
 				{modifiers[293]},{modifiers[294]},{modifiers[295]},{modifiers[296]},
 			}},
 			{EffectID::shipHeavyAssaultMissileEMAndExpAndKinAndThmDmgAC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1527]},{modifiers[1528]},{modifiers[1529]},{modifiers[1530]},
+				{modifiers[1474]},{modifiers[1475]},{modifiers[1476]},{modifiers[1477]},
 			}},
 			{EffectID::eliteBonusHeavyGunshipHeavyAndHeavyAssaultAndAssaultMissileLauncherROF, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[719]},{modifiers[720]},{modifiers[721]},
 			}},
 			{EffectID::eliteBonusBlackOpsECMGravAndLadarAndMagnetometricAndRadarStrength1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1531]},{modifiers[1532]},{modifiers[1533]},{modifiers[1534]},
+				{modifiers[1478]},{modifiers[1479]},{modifiers[1480]},{modifiers[1481]},
 			}},
 			{EffectID::shipCruiseAndSiegeLauncherROFBonus2CB, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[555]},{modifiers[556]},
 			}},
 			{EffectID::oreIndustrialSkillLevelPostMulShipBonusOreIndustrial1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1535]},
+				{modifiers[1482]},
 			}},
 			{EffectID::oreIndustrialSkillLevelPostMulShipBonusOreIndustrial2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1536]},
+				{modifiers[1483]},
 			}},
 			{EffectID::shipBonusNoctisSalvageCycle, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1537]},
+				{modifiers[1484]},
 			}},
 			{EffectID::shipBonusNoctisTractorCycle, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1538]},
+				{modifiers[1485]},
 			}},
 			{EffectID::shipBonusNoctisTractorVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1539]},
+				{modifiers[1486]},
 			}},
 			{EffectID::shipBonusNoctisTractorRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1540]},
-			}},
-			{EffectID::offensiveDefensiveReduction, Effect::MetaInfo::Category::system, false, false, {
-				
+				{modifiers[1487]},
 			}},
 			{EffectID::subsystemBonusCaldariPropulsionWarpCapacitor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1541]},
+				{modifiers[1488]},
 			}},
 			{EffectID::hackOrbital, Effect::MetaInfo::Category::target, false, false, {
 				
 			}},
 			{EffectID::shipEnergyNeutralizerTransferAmountBonusAF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1542]},
+				{modifiers[1489]},
 			}},
 			{EffectID::shipBonusSmallEnergyWeaponOptimalRangeATF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1543]},
+				{modifiers[1490]},
 			}},
 			{EffectID::shipBonusSmallEnergyTurretDamageATF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1544]},
+				{modifiers[1491]},
 			}},
 			{EffectID::shipBonusMissileLauncherHeavyROFATC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1545]},
+				{modifiers[1492]},
 			}},
 			{EffectID::shipBonusMissileLauncherAssaultROFATC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1546]},
+				{modifiers[1493]},
 			}},
 			{EffectID::shipBonusMissileLauncherHeavyAssaultROFATC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1547]},
+				{modifiers[1494]},
 			}},
 			{EffectID::eliteBonusBlackOpsECMBurstGravAndLadarAndMagnetoAndRadar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1548]},{modifiers[1549]},{modifiers[1550]},{modifiers[1551]},
+				{modifiers[1495]},{modifiers[1496]},{modifiers[1497]},{modifiers[1498]},
 			}},
 			{EffectID::salvagingAccessDifficultyBonusMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1552]},
+				{modifiers[1499]},
 			}},
 			{EffectID::hackingAccessDifficultyBonusMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1553]},
+				{modifiers[1500]},
 			}},
 			{EffectID::archaeologyAccessDifficultyBonusMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1554]},
+				{modifiers[1501]},
 			}},
 			{EffectID::dataMiningSkillBoostAccessDifficultyBonusAbsolutePercent, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1555]},
+				{modifiers[1502]},
 			}},
 			{EffectID::ecmGravimetricStrengthBonusPercent, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1556]},
+				{modifiers[1503]},
 			}},
 			{EffectID::ecmLadarStrengthBonusPercent, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1557]},
+				{modifiers[1504]},
 			}},
 			{EffectID::ecmMagnetometricStrengthBonusPercent, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1558]},
+				{modifiers[1505]},
 			}},
 			{EffectID::ecmRadarStrengthBonusPercent, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1559]},
+				{modifiers[1506]},
 			}},
 			{EffectID::skillConsumptionQuantityBonusPercentSkillLevel, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1560]},
+				{modifiers[1507]},
 			}},
 			{EffectID::jumpPortalConsumptionBonusPercentSkill, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1561]},
+				{modifiers[1508]},
 			}},
 			{EffectID::salvagerModuleDurationReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1562]},
+				{modifiers[1509]},
 			}},
 			{EffectID::bcLargeEnergyTurretPowerNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1563]},
+				{modifiers[1510]},
 			}},
 			{EffectID::bcLargeHybridTurretPowerNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1564]},
+				{modifiers[1511]},
 			}},
 			{EffectID::bcLargeProjectileTurretPowerNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1565]},
+				{modifiers[1512]},
 			}},
 			{EffectID::bcLargeEnergyTurretCPUNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1566]},
+				{modifiers[1513]},
 			}},
 			{EffectID::bcLargeHybridTurretCPUNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1567]},
+				{modifiers[1514]},
 			}},
 			{EffectID::bcLargeProjectileTurretCPUNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1568]},
+				{modifiers[1515]},
 			}},
 			{EffectID::bcLargeEnergyTurretCapacitorNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1569]},
+				{modifiers[1516]},
 			}},
 			{EffectID::bcLargeHybridTurretCapacitorNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1570]},
+				{modifiers[1517]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusBC3Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1571]},
+				{modifiers[1518]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusBC4Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1572]},
+				{modifiers[1519]},
 			}},
 			{EffectID::setBonusChristmasPowergrid, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1573]},
+				{modifiers[1520]},
 			}},
 			{EffectID::setBonusChristmasCapacitorCapacity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1574]},
+				{modifiers[1521]},
 			}},
 			{EffectID::setBonusChristmasCPUOutput, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1575]},
+				{modifiers[1522]},
 			}},
 			{EffectID::setBonusChristmasCapacitorRecharge2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1576]},
+				{modifiers[1523]},
 			}},
 			{EffectID::maxRangeHiddenPreAssignmentWarpScrambleRange, Effect::MetaInfo::Category::generic, true, true, {
-				{modifiers[1577]},
+				{modifiers[1524]},
 			}},
 			{EffectID::shipBonusDroneHitpointsGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1578]},
+				{modifiers[1525]},
 			}},
 			{EffectID::shipBonusDroneArmorHitpointsGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1579]},
+				{modifiers[1526]},
 			}},
 			{EffectID::shipBonusDroneShieldHitpointsGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1580]},
+				{modifiers[1527]},
 			}},
 			{EffectID::shipSETTrackingBonusAF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1581]},
+				{modifiers[1528]},
 			}},
 			{EffectID::shipMissileSpeedBonusAF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1582]},
+				{modifiers[1529]},
 			}},
 			{EffectID::MWDSignatureRadiusRoleBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1583]},
-			}},
-			{EffectID::systemDamageFighters, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1584]},
+				{modifiers[1530]},
 			}},
 			{EffectID::modifyShieldArmorHullResonancePostPercent, Effect::MetaInfo::Category::active, false, false, {
 				{modifiers[586]},{modifiers[587]},{modifiers[588]},{modifiers[589]},{modifiers[590]},{modifiers[591]},{modifiers[592]},{modifiers[593]},{modifiers[1078]},{modifiers[1079]},{modifiers[1080]},{modifiers[1081]},
 			}},
 			{EffectID::setWeaponSpeedToValue, Effect::MetaInfo::Category::generic, true, true, {
-				{modifiers[1585]},
+				{modifiers[1531]},
 			}},
 			{EffectID::modifyShieldRechargeRatePassive, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[11]},
 			}},
 			{EffectID::damageMultiplierMultiplierActivation, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[1586]},
+				{modifiers[1532]},
 			}},
 			{EffectID::missileDamageMultiplier, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1587]},
+				{modifiers[1533]},
 			}},
 			{EffectID::setMassAndAgilityAndSpeed, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[1588]},{modifiers[1589]},{modifiers[1590]},
+				{modifiers[1534]},{modifiers[1535]},{modifiers[1536]},
 			}},
 			{EffectID::microJumpDrive, Effect::MetaInfo::Category::active, false, false, {
 				
 			}},
 			{EffectID::skillMJDdurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1591]},
+				{modifiers[1537]},
 			}},
 			{EffectID::adaptiveArmorHardener, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[1592]},{modifiers[1593]},{modifiers[1594]},{modifiers[1595]},
+				{modifiers[1538]},{modifiers[1539]},{modifiers[1540]},{modifiers[1541]},
 			}},
 			{EffectID::scriptConsumptionQuantityBonus, Effect::MetaInfo::Category::generic, true, true, {
-				{modifiers[1596]},
+				{modifiers[1542]},
 			}},
 			{EffectID::shipSETDmgBonus2AF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1597]},
+				{modifiers[1543]},
 			}},
 			{EffectID::shipArmorRepairingGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1598]},
+				{modifiers[1544]},
 			}},
 			{EffectID::fueledShieldBoosting, Effect::MetaInfo::Category::active, false, false, {
 				{modifiers[0]},
 			}},
 			{EffectID::shipHybridDamageBonusCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1599]},
+				{modifiers[1545]},
 			}},
 			{EffectID::targetBreaker, Effect::MetaInfo::Category::active, false, false, {
 				
 			}},
 			{EffectID::skillTargetBreakerDurationBonus2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1600]},
+				{modifiers[1546]},
 			}},
 			{EffectID::skillTargetBreakerCapNeedBonus2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1601]},
+				{modifiers[1547]},
 			}},
 			{EffectID::shipBonusShieldBoosterMB1a, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1602]},
+				{modifiers[1548]},
 			}},
 			{EffectID::shieldBoostAmplifierPassiveBooster, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[431]},{modifiers[523]},
 			}},
-			{EffectID::systemShieldRepairAmountShieldSkills, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1603]},{modifiers[1604]},
-			}},
 			{EffectID::shieldBoosterDurationBonusShieldSkills, Effect::MetaInfo::Category::generic, true, true, {
-				{modifiers[1605]},{modifiers[1606]},
+				{modifiers[1549]},{modifiers[1550]},
 			}},
 			{EffectID::boosterShieldBoostAmountPenaltyShieldSkills, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1607]},{modifiers[1608]},
+				{modifiers[1551]},{modifiers[1552]},
 			}},
 			{EffectID::eliteBonusAssaultShipLightMissileROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1609]},
+				{modifiers[1553]},
 			}},
 			{EffectID::eliteBonusAssaultShipRocketROF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1610]},
+				{modifiers[1554]},
 			}},
 			{EffectID::eliteBonusMarauderShieldBonus2a, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1611]},
+				{modifiers[1555]},
 			}},
 			{EffectID::shipBonusMissileKineticlATF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1612]},
+				{modifiers[1556]},
 			}},
 			{EffectID::skillReactiveArmorHardenerDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1613]},{modifiers[1614]},
+				{modifiers[1557]},{modifiers[1558]},
 			}},
 			{EffectID::skillWarAllyCostModifier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1615]},
+				{modifiers[1559]},
 			}},
 			{EffectID::relationsAllyCostSkillBoost, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1616]},
+				{modifiers[1560]},
 			}},
 			{EffectID::missileSkillAoeCloudSizeBonusAllIncludingCapitals, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[453]},
 			}},
 			{EffectID::shipEnergyTCapNeedBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1617]},
+				{modifiers[1561]},
 			}},
 			{EffectID::shipSETDmgBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1618]},
+				{modifiers[1562]},
 			}},
 			{EffectID::shipArmorEMResistanceRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1619]},
+				{modifiers[1563]},
 			}},
 			{EffectID::shipArmorEXResistanceRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1620]},
+				{modifiers[1564]},
 			}},
 			{EffectID::shipArmorKNResistanceRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1621]},
+				{modifiers[1565]},
 			}},
 			{EffectID::shipArmorTHResistanceRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1622]},
+				{modifiers[1566]},
 			}},
 			{EffectID::shipHybridRangeBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1623]},
+				{modifiers[1567]},
 			}},
 			{EffectID::shipMissileKineticDamageRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1624]},
+				{modifiers[1568]},
 			}},
 			{EffectID::shipShieldEMResistanceRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1625]},
+				{modifiers[1569]},
 			}},
 			{EffectID::shipShieldExplosiveResistanceRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1626]},
+				{modifiers[1570]},
 			}},
 			{EffectID::shipShieldKineticResistanceRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1627]},
+				{modifiers[1571]},
 			}},
 			{EffectID::shipShieldThermalResistanceRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1628]},
+				{modifiers[1572]},
 			}},
 			{EffectID::shipSHTDmgBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1629]},
+				{modifiers[1573]},
 			}},
 			{EffectID::shipBonusDroneDamageMultiplierRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1630]},
+				{modifiers[1574]},
 			}},
 			{EffectID::shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1631]},
+				{modifiers[1575]},
 			}},
 			{EffectID::shipBonusEwRemoteSensorDampenerScanResolutionBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1632]},
+				{modifiers[1576]},
 			}},
 			{EffectID::shipArmorRepairingRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1633]},
+				{modifiers[1577]},
 			}},
 			{EffectID::shipVelocityBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1634]},
+				{modifiers[1578]},
 			}},
 			{EffectID::minmatarShipEwTargetPainterRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1635]},
+				{modifiers[1579]},
 			}},
 			{EffectID::shipSPTDmgBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1636]},
+				{modifiers[1580]},
 			}},
 			{EffectID::shipShieldBoostRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1637]},
+				{modifiers[1581]},
 			}},
 			{EffectID::shipECMScanStrengthBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1638]},{modifiers[1639]},{modifiers[1640]},{modifiers[1641]},
+				{modifiers[1582]},{modifiers[1583]},{modifiers[1584]},{modifiers[1585]},
 			}},
 			{EffectID::shipBonusDroneMiningAmountRole, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1642]},
+				{modifiers[1586]},
 			}},
 			{EffectID::shipBonusMiningDroneAmountPercentRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1643]},
+				{modifiers[1587]},
 			}},
 			{EffectID::shipBonusDroneHitpointsRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1644]},{modifiers[1645]},{modifiers[1646]},
+				{modifiers[1588]},{modifiers[1589]},{modifiers[1590]},
 			}},
 			{EffectID::shipBonusSalvageCycleAF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1647]},
+				{modifiers[1591]},
 			}},
 			{EffectID::shipBonusSalvageCycleCF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1648]},
+				{modifiers[1592]},
 			}},
 			{EffectID::shipBonusSalvageCycleGF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1649]},
+				{modifiers[1593]},
 			}},
 			{EffectID::shipBonusSalvageCycleMF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1650]},
+				{modifiers[1594]},
 			}},
 			{EffectID::baseDefenderAllyCostCharAssignment, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1651]},
+				{modifiers[1595]},
 			}},
 			{EffectID::iceHarvesterDurationMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1652]},
+				{modifiers[1596]},
 			}},
 			{EffectID::iceHarvesterCapacitorNeedMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1653]},
+				{modifiers[1597]},
 			}},
 			{EffectID::miningYieldMultiplyPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1654]},
+				{modifiers[1598]},
 			}},
 			{EffectID::shipBonusIceHarvesterDurationORE3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1655]},
+				{modifiers[1599]},
 			}},
 			{EffectID::shipBonusTargetPainterOptimalMF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1656]},
+				{modifiers[1600]},
 			}},
 			{EffectID::shipBonusOreHoldORE2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1657]},
+				{modifiers[1601]},
 			}},
 			{EffectID::shipBonusShieldCapacityORE2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1658]},
+				{modifiers[1602]},
 			}},
 			{EffectID::mercoxitCrystalBonus, Effect::MetaInfo::Category::generic, true, true, {
-				{modifiers[1659]},
+				{modifiers[1603]},
 			}},
 			{EffectID::shipMissileKineticDamageCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1660]},
+				{modifiers[1604]},
 			}},
 			{EffectID::shipMissileVelocityCF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1661]},
+				{modifiers[1605]},
 			}},
 			{EffectID::maxTargetingRangeBonusPostPercentPassive, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[167]},
 			}},
 			{EffectID::shipBonusDroneHitpointsGF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1662]},{modifiers[1663]},{modifiers[1664]},
+				{modifiers[1606]},{modifiers[1607]},{modifiers[1608]},
 			}},
 			{EffectID::shipShieldBoostMF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1665]},
+				{modifiers[1609]},
 			}},
 			{EffectID::shipBonusShieldTransferCapNeedCF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1666]},
+				{modifiers[1610]},
 			}},
 			{EffectID::shipBonusShieldTransferBoostAmountCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1667]},
+				{modifiers[1611]},
 			}},
 			{EffectID::shipBonusShieldTransferCapNeedMF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1668]},
+				{modifiers[1612]},
 			}},
 			{EffectID::shipBonusShieldTransferBoostAmountMF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1669]},
+				{modifiers[1613]},
 			}},
 			{EffectID::shipBonusRemoteArmorRepairCapNeedGF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1670]},
+				{modifiers[1614]},
 			}},
 			{EffectID::shipBonusRemoteArmorRepairAmountGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1671]},
+				{modifiers[1615]},
 			}},
 			{EffectID::shipBonusRemoteArmorRepairCapNeedAF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1672]},
+				{modifiers[1616]},
 			}},
 			{EffectID::shipBonusRemoteArmorRepairAmount2AF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1673]},
+				{modifiers[1617]},
 			}},
 			{EffectID::shipBonusDroneTrackingGF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1674]},
+				{modifiers[1618]},
 			}},
 			{EffectID::shipBonusScanProbeStrength2AF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1675]},
+				{modifiers[1619]},
 			}},
 			{EffectID::energyTransferArrayTransferAmountBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1676]},
+				{modifiers[1620]},
 			}},
 			{EffectID::shipBonusShieldTransferCapneedMC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1677]},
+				{modifiers[1621]},
 			}},
 			{EffectID::shipBonusRemoteArmorRepairCapNeedAC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1678]},
+				{modifiers[1622]},
 			}},
 			{EffectID::shipBonusRemoteArmorRepairAmountAC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1679]},
+				{modifiers[1623]},
 			}},
 			{EffectID::shipBonusRemoteArmorRepairAmountGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1680]},
+				{modifiers[1624]},
 			}},
 			{EffectID::shipBonusShieldTransferBoostAmountCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1681]},
+				{modifiers[1625]},
 			}},
 			{EffectID::shipBonusShieldTransferBoostAmountMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1682]},
+				{modifiers[1626]},
 			}},
 			{EffectID::shipBonusEwRemoteSensorDampenerOptimalBonusGC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1683]},
+				{modifiers[1627]},
 			}},
 			{EffectID::minmatarShipEwTargetPainterMC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1684]},
+				{modifiers[1628]},
 			}},
 			{EffectID::shipMissileRofCC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1685]},{modifiers[1686]},{modifiers[1687]},
+				{modifiers[1629]},{modifiers[1630]},{modifiers[1631]},
 			}},
 			{EffectID::shipPTurretFalloffBonusMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1688]},
+				{modifiers[1632]},
 			}},
 			{EffectID::shipHTDamageBonusCC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1689]},
+				{modifiers[1633]},
 			}},
 			{EffectID::shipMETCDamageBonusAC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1690]},
+				{modifiers[1634]},
 			}},
 			{EffectID::miningFrigateSkillLevelPostMulShipBonusORE1frig, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1691]},
+				{modifiers[1635]},
 			}},
 			{EffectID::miningFrigateSkillLevelPostMulShipBonusORE2frig, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1692]},
+				{modifiers[1636]},
 			}},
 			{EffectID::shipMiningBonusOREfrig1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1693]},
+				{modifiers[1637]},
 			}},
 			{EffectID::GCHYieldMultiplyPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1694]},
+				{modifiers[1638]},
 			}},
 			{EffectID::shipMissileVelocityPirateFactionRocket, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1695]},
+				{modifiers[1639]},
 			}},
 			{EffectID::shipGCHYieldBonusOREfrig2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1696]},
+				{modifiers[1640]},
 			}},
 			{EffectID::skillReactiveArmorHardenerCapNeedBonus, Effect::MetaInfo::Category::generic, true, true, {
-				{modifiers[1697]},{modifiers[1698]},
+				{modifiers[1641]},{modifiers[1642]},
 			}},
 			{EffectID::salvageDroneEffect, Effect::MetaInfo::Category::target, false, false, {
 				
 			}},
 			{EffectID::shipBonusDroneMWDboostrole, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1699]},
+				{modifiers[1643]},
 			}},
 			{EffectID::droneSalvageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1700]},
+				{modifiers[1644]},
 			}},
 			{EffectID::droneSalvageSkillBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1701]},
+				{modifiers[1645]},
 			}},
 			{EffectID::sensorIntegritySkillLevelPreMulSensorStrengthBonusSelf, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1702]},
+				{modifiers[1646]},
 			}},
 			{EffectID::sensorCompensationSensorStrengthBonusGravimetric, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1703]},
+				{modifiers[1647]},
 			}},
 			{EffectID::sensorCompensationSensorStrengthBonusLadar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1704]},
+				{modifiers[1648]},
 			}},
 			{EffectID::sensorCompensationSensorStrengthBonusMagnetometric, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1705]},
+				{modifiers[1649]},
 			}},
 			{EffectID::sensorCompensationSensorStrengthBonusRadar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1706]},
+				{modifiers[1650]},
 			}},
 			{EffectID::shipEnergyVampireAmountBonusFixedAF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1707]},
+				{modifiers[1651]},
 			}},
 			{EffectID::shipBonusEwRemoteSensorDampenerFalloffBonusGC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1708]},
+				{modifiers[1652]},
 			}},
 			{EffectID::trackingSpeedBonusEffectHybrids, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1709]},
+				{modifiers[1653]},
 			}},
 			{EffectID::trackingSpeedBonusEffectLasers, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1710]},
+				{modifiers[1654]},
 			}},
 			{EffectID::trackingSpeedBonusEffectProjectiles, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1711]},
+				{modifiers[1655]},
 			}},
 			{EffectID::spaceAnchorEffect, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1712]},
+				{modifiers[1656]},
 			}},
 			{EffectID::armorUpgradesSkillBoostMassPenaltyReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1713]},
+				{modifiers[1657]},
 			}},
 			{EffectID::armorUpgradesMassPenaltyReductionBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1714]},
+				{modifiers[1658]},
 			}},
 			{EffectID::shipSETTrackingBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1715]},
+				{modifiers[1659]},
 			}},
 			{EffectID::shipSETOptimalBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1716]},
+				{modifiers[1660]},
 			}},
 			{EffectID::shipNOSTransferAmountBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1717]},
+				{modifiers[1661]},
 			}},
 			{EffectID::shipNeutDestabilizationAmountBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1718]},
+				{modifiers[1662]},
 			}},
 			{EffectID::shipWebVelocityBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1719]},
+				{modifiers[1663]},
 			}},
 			{EffectID::shipDroneMWDSpeedBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1720]},
+				{modifiers[1664]},
 			}},
 			{EffectID::shipRocketMaxVelocityBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1721]},
+				{modifiers[1665]},
 			}},
 			{EffectID::shipLightMissileMaxVelocityBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1722]},
+				{modifiers[1666]},
 			}},
 			{EffectID::shipSHTTrackingSpeedBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1723]},
+				{modifiers[1667]},
 			}},
 			{EffectID::shipSHTFalloffBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1724]},
+				{modifiers[1668]},
 			}},
 			{EffectID::shipSPTTrackingSpeedBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1725]},
+				{modifiers[1669]},
 			}},
 			{EffectID::shipSPTFalloffBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1726]},
+				{modifiers[1670]},
 			}},
 			{EffectID::shipSPTOptimalRangeBonusRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1727]},
+				{modifiers[1671]},
 			}},
 			{EffectID::shipProjectileDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1728]},
+				{modifiers[1672]},
 			}},
 			{EffectID::shipHeavyAssaultMissileEMDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1729]},
+				{modifiers[1673]},
 			}},
 			{EffectID::shipHeavyAssaultMissileKinDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1730]},
+				{modifiers[1674]},
 			}},
 			{EffectID::shipHeavyAssaultMissileThermDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1731]},
+				{modifiers[1675]},
 			}},
 			{EffectID::shipHeavyAssaultMissileExpDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1732]},
+				{modifiers[1676]},
 			}},
 			{EffectID::shipHeavyMissileEMDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1733]},
+				{modifiers[1677]},
 			}},
 			{EffectID::shipHeavyMissileExpDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1734]},
+				{modifiers[1678]},
 			}},
 			{EffectID::shipHeavyMissileKinDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1735]},
+				{modifiers[1679]},
 			}},
 			{EffectID::shipHeavyMissileThermDmgPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1736]},
+				{modifiers[1680]},
 			}},
 			{EffectID::shipScanProbeStrengthBonusPirateCruiser, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1737]},
+				{modifiers[1681]},
 			}},
 			{EffectID::modifyActiveShieldResonancePostPercent, Effect::MetaInfo::Category::active, false, false, {
 				{modifiers[590]},{modifiers[591]},{modifiers[592]},{modifiers[593]},
@@ -4620,1321 +4437,1264 @@ namespace dgmpp2 {
 				{modifiers[586]},{modifiers[587]},{modifiers[588]},{modifiers[589]},
 			}},
 			{EffectID::shipSmallMissileExpDmgCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1738]},{modifiers[1739]},
+				{modifiers[1682]},{modifiers[1683]},
 			}},
 			{EffectID::shipSmallMissileKinDmgCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1740]},{modifiers[1741]},
+				{modifiers[1684]},{modifiers[1685]},
 			}},
 			{EffectID::shipSmallMissileThermDmgCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1742]},{modifiers[1743]},
+				{modifiers[1686]},{modifiers[1687]},
 			}},
 			{EffectID::shipSmallMissileEMDmgCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1744]},{modifiers[1745]},
+				{modifiers[1688]},{modifiers[1689]},
 			}},
 			{EffectID::reconShipCloakCpuBonus1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1746]},
+				{modifiers[1690]},
 			}},
 			{EffectID::covertOpsCloakCpuPercentBonus1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1747]},
+				{modifiers[1691]},
 			}},
 			{EffectID::covertCloakCPUAddition, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1748]},
+				{modifiers[1692]},
 			}},
 			{EffectID::covertOpsCloakCpuPenalty, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1749]},
+				{modifiers[1693]},
 			}},
 			{EffectID::covertCynoCpuPenalty, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1750]},
+				{modifiers[1694]},
 			}},
 			{EffectID::warfareLinkCPUAddition, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1751]},
+				{modifiers[1695]},
 			}},
 			{EffectID::warfareLinkCpuPenalty, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1752]},
+				{modifiers[1696]},
 			}},
 			{EffectID::blockadeRunnerCloakCpuPercentBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1753]},
+				{modifiers[1697]},
 			}},
 			{EffectID::drawbackRepairSystemsPGNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1754]},
+				{modifiers[1698]},
 			}},
 			{EffectID::drawbackCapRepPGNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1755]},
+				{modifiers[1699]},
 			}},
 			{EffectID::fueledArmorRepair, Effect::MetaInfo::Category::active, false, false, {
 				{modifiers[7]},
 			}},
 			{EffectID::destroyerSkillLevelPreMulShipBonusAD1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1756]},
+				{modifiers[1700]},
 			}},
 			{EffectID::destroyerSkillLevelPreMulShipBonusAD2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1757]},
+				{modifiers[1701]},
 			}},
 			{EffectID::destroyerSkillLevelPreMulShipBonusCD1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1758]},
+				{modifiers[1702]},
 			}},
 			{EffectID::destroyerSkillLevelPreMulShipBonusCD2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1759]},
+				{modifiers[1703]},
 			}},
 			{EffectID::destroyerSkillLevelPreMulShipBonusGD1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1760]},
+				{modifiers[1704]},
 			}},
 			{EffectID::destroyerSkillLevelPreMulShipBonusGD2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1761]},
+				{modifiers[1705]},
 			}},
 			{EffectID::destroyerSkillLevelPreMulShipBonusMD1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1762]},
+				{modifiers[1706]},
 			}},
 			{EffectID::destroyerSkillLevelPreMulShipBonusMD2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1763]},
+				{modifiers[1707]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusABC1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1764]},
+				{modifiers[1708]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusABC2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1765]},
+				{modifiers[1709]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusCBC1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1766]},
+				{modifiers[1710]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusCBC2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1767]},
+				{modifiers[1711]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusGBC1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1768]},
+				{modifiers[1712]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusGBC2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1769]},
+				{modifiers[1713]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusMBC1Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1770]},
+				{modifiers[1714]},
 			}},
 			{EffectID::battlecruiserSkillLevelPreMulShipBonusMBC2Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1771]},
+				{modifiers[1715]},
 			}},
 			{EffectID::shipLaserCapNeed2AD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1772]},
+				{modifiers[1716]},
 			}},
 			{EffectID::shipLaserTracking2AD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1773]},
+				{modifiers[1717]},
 			}},
 			{EffectID::shipBonusDroneDamageMultiplierAD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1774]},
+				{modifiers[1718]},
 			}},
 			{EffectID::shipBonusDroneHitpointsAD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1775]},{modifiers[1776]},{modifiers[1777]},
+				{modifiers[1719]},{modifiers[1720]},{modifiers[1721]},
 			}},
 			{EffectID::shipHybridRange1CD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1778]},
+				{modifiers[1722]},
 			}},
 			{EffectID::shipHybridTrackingCD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1779]},
+				{modifiers[1723]},
 			}},
 			{EffectID::shipBonusFrigateSizedMissileKineticDamageCD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1780]},
+				{modifiers[1724]},
 			}},
 			{EffectID::shipRocketKineticDmgCD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1781]},
+				{modifiers[1725]},
 			}},
 			{EffectID::shipBonusAoeVelocityRocketsCD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1782]},
+				{modifiers[1726]},
 			}},
 			{EffectID::shipBonusAoeVelocityStandardMissilesCD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1783]},
+				{modifiers[1727]},
 			}},
 			{EffectID::shipHybridFallOff1GD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1784]},
+				{modifiers[1728]},
 			}},
 			{EffectID::shipHybridTracking1GD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1785]},
+				{modifiers[1729]},
 			}},
 			{EffectID::shipBonusDroneDamageMultiplierGD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1786]},
+				{modifiers[1730]},
 			}},
 			{EffectID::shipBonusDroneHitpointsGD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1787]},{modifiers[1788]},{modifiers[1789]},
+				{modifiers[1731]},{modifiers[1732]},{modifiers[1733]},
 			}},
 			{EffectID::shipProjectileDamageMD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1790]},
+				{modifiers[1734]},
 			}},
 			{EffectID::shipProjectileTracking1MD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1791]},
+				{modifiers[1735]},
 			}},
 			{EffectID::shipBonusFrigateSizedLightMissileExplosiveDamageMD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1792]},
+				{modifiers[1736]},
 			}},
 			{EffectID::shipRocketExplosiveDmgMD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1793]},
+				{modifiers[1737]},
 			}},
 			{EffectID::shipBonusMWDSignatureRadiusMD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1794]},
+				{modifiers[1738]},
 			}},
 			{EffectID::shipArmorEMResistance1ABC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1795]},
+				{modifiers[1739]},
 			}},
 			{EffectID::shipArmorExplosiveResistance1ABC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1796]},
+				{modifiers[1740]},
 			}},
 			{EffectID::shipArmorKineticResistance1ABC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1797]},
+				{modifiers[1741]},
 			}},
 			{EffectID::shipArmorThermResistance1ABC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1798]},
+				{modifiers[1742]},
 			}},
 			{EffectID::shipBonusDroneDamageMultiplierABC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1799]},
+				{modifiers[1743]},
 			}},
 			{EffectID::shipBonusDroneHitpointsABC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1800]},{modifiers[1801]},{modifiers[1802]},
+				{modifiers[1744]},{modifiers[1745]},{modifiers[1746]},
 			}},
 			{EffectID::shipLaserCapABC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1803]},
+				{modifiers[1747]},
 			}},
 			{EffectID::shipLaserDamageBonusABC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1804]},
+				{modifiers[1748]},
 			}},
 			{EffectID::shipHybridOptimal1CBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1805]},
+				{modifiers[1749]},
 			}},
 			{EffectID::shipShieldEmResistance1CBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1806]},
+				{modifiers[1750]},
 			}},
 			{EffectID::shipShieldExplosiveResistance1CBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1807]},
+				{modifiers[1751]},
 			}},
 			{EffectID::shipShieldKineticResistance1CBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1808]},
+				{modifiers[1752]},
 			}},
 			{EffectID::shipShieldThermalResistance1CBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1809]},
+				{modifiers[1753]},
 			}},
 			{EffectID::shipBonusHeavyAssaultMissileKineticDamageCBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1810]},
+				{modifiers[1754]},
 			}},
 			{EffectID::shipBonusHeavyMissileKineticDamageCBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1811]},
+				{modifiers[1755]},
 			}},
 			{EffectID::shipHybridDmg1GBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1812]},
+				{modifiers[1756]},
 			}},
 			{EffectID::shipArmorRepairing1GBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1813]},
+				{modifiers[1757]},
 			}},
 			{EffectID::shipBonusDroneDamageMultiplierGBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1814]},
+				{modifiers[1758]},
 			}},
 			{EffectID::shipBonusDroneHitpointsGBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1815]},{modifiers[1816]},{modifiers[1817]},
+				{modifiers[1759]},{modifiers[1760]},{modifiers[1761]},
 			}},
 			{EffectID::shipBonusHeavyMissileLauncherRofMBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1818]},
+				{modifiers[1762]},
 			}},
 			{EffectID::shipBonusHeavyAssaultMissileLauncherRofMBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1819]},
+				{modifiers[1763]},
 			}},
 			{EffectID::shipShieldBoost1MBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1820]},
+				{modifiers[1764]},
 			}},
 			{EffectID::shipBonusProjectileDamageMBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1821]},
+				{modifiers[1765]},
 			}},
 			{EffectID::shipProjectileRof1MBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1822]},
+				{modifiers[1766]},
 			}},
 			{EffectID::shipLargeLaserCapABC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1823]},
+				{modifiers[1767]},
 			}},
 			{EffectID::shipLargeLaserDamageBonusABC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1824]},
+				{modifiers[1768]},
 			}},
 			{EffectID::shipHybridRangeBonusCBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1825]},
+				{modifiers[1769]},
 			}},
 			{EffectID::shipHybridDamageBonusCBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1826]},
+				{modifiers[1770]},
 			}},
 			{EffectID::shipLargeHybridTrackingBonusGBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1827]},
+				{modifiers[1771]},
 			}},
 			{EffectID::shipHybridDamageBonusGBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1828]},
+				{modifiers[1772]},
 			}},
 			{EffectID::shipProjectileRofBonusMBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1829]},
+				{modifiers[1773]},
 			}},
 			{EffectID::shipProjectileFalloffBonusMBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1830]},
+				{modifiers[1774]},
 			}},
 			{EffectID::armorAllRepairSystemsAmountBonusPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1831]},{modifiers[1832]},
+				{modifiers[1775]},{modifiers[1776]},
 			}},
 			{EffectID::eliteBonusViolatorsRepairSystemsArmorDamageAmount2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1833]},
+				{modifiers[1777]},
 			}},
 			{EffectID::shipBonusRepairSystemsBonusATC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1834]},
+				{modifiers[1778]},
 			}},
 			{EffectID::shipBonusRepairSystemsArmorRepairAmountGB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1835]},
+				{modifiers[1779]},
 			}},
 			{EffectID::damageCloudChanceReductionFixed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1836]},
+				{modifiers[1780]},
 			}},
 			{EffectID::deepCoreMiningSkillBoostDamageCloudChanceReductionMul, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1837]},
+				{modifiers[1781]},
 			}},
 			{EffectID::shipHeavyMissileAOECloudSizeCBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1838]},
+				{modifiers[1782]},
 			}},
 			{EffectID::shipHeavyAssaultMissileAOECloudSizeCBC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1839]},
+				{modifiers[1783]},
 			}},
 			{EffectID::shipHybridTrackingGBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1840]},
+				{modifiers[1784]},
 			}},
 			{EffectID::shipEnergyTrackingABC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1841]},
+				{modifiers[1785]},
 			}},
 			{EffectID::shipBonusMETOptimalAC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1842]},
+				{modifiers[1786]},
 			}},
 			{EffectID::shipMissileEMDamageCC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1843]},
+				{modifiers[1787]},
 			}},
 			{EffectID::shipMissileThermDamageCC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1844]},
+				{modifiers[1788]},
 			}},
 			{EffectID::shipMissileExpDamageCC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1845]},
+				{modifiers[1789]},
 			}},
 			{EffectID::shipMissileKinDamageCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1846]},
+				{modifiers[1790]},
 			}},
 			{EffectID::shipHeavyAssaultMissileAOECloudSizeCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1847]},
+				{modifiers[1791]},
 			}},
 			{EffectID::shipHeavyMissileAOECloudSizeCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1848]},
+				{modifiers[1792]},
 			}},
 			{EffectID::shipBonusDroneTrackingGC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1849]},
+				{modifiers[1793]},
 			}},
 			{EffectID::shipBonusDroneMWDboostGC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1850]},
+				{modifiers[1794]},
 			}},
 			{EffectID::baseMaxScanDeviationModifierModuleOnline2None, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1851]},
+				{modifiers[1795]},
 			}},
 			{EffectID::systemScanDurationModuleModifier, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1852]},
+				{modifiers[1796]},
 			}},
 			{EffectID::baseSensorStrengthModifierModule, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[1853]},
+				{modifiers[1797]},
 			}},
 			{EffectID::shipMissileHeavyAssaultVelocityABC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1854]},
+				{modifiers[1798]},
 			}},
 			{EffectID::shipMissileHeavyVelocityABC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1855]},
+				{modifiers[1799]},
 			}},
 			{EffectID::shipLaserCap1ABC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1856]},
+				{modifiers[1800]},
 			}},
 			{EffectID::shipMissileVelocityCD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1857]},
+				{modifiers[1801]},
 			}},
 			{EffectID::shipBonusDroneDamageMultiplierAB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1858]},
+				{modifiers[1802]},
 			}},
 			{EffectID::shipBonusDroneArmorHitPointsAB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1859]},
+				{modifiers[1803]},
 			}},
 			{EffectID::shipBonusDroneShieldHitPointsAB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1860]},
+				{modifiers[1804]},
 			}},
 			{EffectID::shipBonusDroneStructureHitPointsAB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1861]},
+				{modifiers[1805]},
 			}},
 			{EffectID::shipBonusEnergyNeutRangeAB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1862]},
+				{modifiers[1806]},
 			}},
 			{EffectID::shipBonusEnergyVampireRangeAB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1863]},
+				{modifiers[1807]},
 			}},
 			{EffectID::shipLargeHybridTurretRofGB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1864]},
+				{modifiers[1808]},
 			}},
 			{EffectID::shipBonusDroneTrackingGB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1865]},
+				{modifiers[1809]},
 			}},
 			{EffectID::shipBonusDroneOptimalRangeGB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1866]},
+				{modifiers[1810]},
 			}},
 			{EffectID::shipBonusMissileAoeVelocityMB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1867]},
+				{modifiers[1811]},
 			}},
 			{EffectID::shipBonusAoeVelocityCruiseMissilesMB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1868]},
+				{modifiers[1812]},
 			}},
 			{EffectID::shipBonusLargeEnergyTurretTrackingAB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1869]},
+				{modifiers[1813]},
 			}},
 			{EffectID::hackingSkillVirusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1870]},
+				{modifiers[1814]},
 			}},
 			{EffectID::dataMiningSkillLevelVirusCoherenceBonusModifier2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1871]},
+				{modifiers[1815]},
 			}},
 			{EffectID::archaeologySkillVirusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1872]},
-			}},
-			{EffectID::systemStandardMissileKineticDamage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[1873]},
+				{modifiers[1816]},
 			}},
 			{EffectID::shipTorpedoAOECloudSize1CB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1874]},
+				{modifiers[1817]},
 			}},
 			{EffectID::shipCruiseMissileAOECloudSize1CB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1875]},
+				{modifiers[1818]},
 			}},
 			{EffectID::shipCruiseMissileROFCB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1876]},
+				{modifiers[1819]},
 			}},
 			{EffectID::shipTorpedoROFCB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1877]},
+				{modifiers[1820]},
 			}},
 			{EffectID::minigameVirusStrengthBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1878]},{modifiers[1879]},
+				{modifiers[1821]},{modifiers[1822]},
 			}},
 			{EffectID::shieldOperationRechargeratebonusPostPercentOnline, Effect::MetaInfo::Category::passive, false, false, {
 				{modifiers[161]},
 			}},
 			{EffectID::shipBonusAgilityCI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1880]},
+				{modifiers[1823]},
 			}},
 			{EffectID::shipBonusAgilityMI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1881]},
+				{modifiers[1824]},
 			}},
 			{EffectID::shipBonusAgilityGI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1882]},
+				{modifiers[1825]},
 			}},
 			{EffectID::shipBonusAgilityAI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1883]},
+				{modifiers[1826]},
 			}},
 			{EffectID::shipBonusOreCapacityGI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1884]},
+				{modifiers[1827]},
 			}},
 			{EffectID::shipBonusAmmoBayMI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1885]},
+				{modifiers[1828]},
 			}},
 			{EffectID::shipBonusPICommoditiesHoldGI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1886]},
+				{modifiers[1829]},
 			}},
 			{EffectID::shipBonusMineralBayGI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1887]},
+				{modifiers[1830]},
 			}},
 			{EffectID::setBonusChristmasBonusVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1888]},
+				{modifiers[1831]},
 			}},
 			{EffectID::setBonusChristmasAgilityBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1889]},
+				{modifiers[1832]},
 			}},
 			{EffectID::setBonusChristmasShieldCapacityBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1890]},
+				{modifiers[1833]},
 			}},
 			{EffectID::setBonusChristmasArmorHPBonus2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1891]},
+				{modifiers[1834]},
 			}},
 			{EffectID::shipSPTOptimalBonusMF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1892]},
+				{modifiers[1835]},
 			}},
 			{EffectID::shipBonusProjectileDamageMBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1893]},
+				{modifiers[1836]},
 			}},
 			{EffectID::eliteBonusCommandShipHAMRoFCS1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1894]},
+				{modifiers[1837]},
 			}},
 			{EffectID::eliteBonusCommandShipHMRoFCS1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1895]},
+				{modifiers[1838]},
 			}},
 			{EffectID::eliteBonusCommandShipsHeavyAssaultMissileExplosionVelocityCS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1896]},
+				{modifiers[1839]},
 			}},
 			{EffectID::eliteBonusCommandShipsHeavyAssaultMissileExplosionRadiusCS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1897]},
+				{modifiers[1840]},
 			}},
 			{EffectID::eliteBonusCommandShipsHeavyMissileExplosionRadiusCS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1898]},
+				{modifiers[1841]},
 			}},
 			{EffectID::eliteBonusCommandShipMediumHybridDamageCS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1899]},
+				{modifiers[1842]},
 			}},
 			{EffectID::eliteBonusCommandShipMediumHybridTrackingCS1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1900]},
+				{modifiers[1843]},
 			}},
 			{EffectID::eliteBonusCommandShipHeavyDroneTrackingCS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1901]},
+				{modifiers[1844]},
 			}},
 			{EffectID::eliteBonusCommandShipHeavyDroneVelocityCS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1902]},
+				{modifiers[1845]},
 			}},
 			{EffectID::eliteBonusCommandShipMediumHybridRoFCS1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1903]},
+				{modifiers[1846]},
 			}},
 			{EffectID::eliteBonusCommandShipHeavyAssaultMissileDamageCS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1904]},{modifiers[1905]},{modifiers[1906]},{modifiers[1907]},
+				{modifiers[1847]},{modifiers[1848]},{modifiers[1849]},{modifiers[1850]},
 			}},
 			{EffectID::eliteBonusCommandShipHeavyMissileDamageCS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1908]},{modifiers[1909]},{modifiers[1910]},{modifiers[1911]},
+				{modifiers[1851]},{modifiers[1852]},{modifiers[1853]},{modifiers[1854]},
 			}},
 			{EffectID::skillJumpCloneCooldownReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1912]},
+				{modifiers[1855]},
 			}},
 			{EffectID::shipBonusHMLKineticDamageAC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1913]},
+				{modifiers[1856]},
 			}},
 			{EffectID::shipBonusHMLEMDamageAC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1914]},
+				{modifiers[1857]},
 			}},
 			{EffectID::shipBonusHMLThermDamageAC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1915]},
+				{modifiers[1858]},
 			}},
 			{EffectID::shipBonusHMLExploDamageAC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1916]},
+				{modifiers[1859]},
 			}},
 			{EffectID::shipBonusHMLVelocityEliteBonusHeavyGunship1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1917]},
+				{modifiers[1860]},
 			}},
 			{EffectID::shipBonusHAMVelocityEliteBonusHeavyGunship1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1918]},
+				{modifiers[1861]},
 			}},
 			{EffectID::shipBonusArmorRepAmountGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1919]},
+				{modifiers[1862]},
 			}},
 			{EffectID::shipBonusHeavyDroneSpeedGC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1920]},
+				{modifiers[1863]},
 			}},
 			{EffectID::shipBonusHeavyDRoneTrackingGC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1921]},
+				{modifiers[1864]},
 			}},
 			{EffectID::shipBonusSentryDroneOptimalRangeEliteBonusHeavyGunship2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1922]},
+				{modifiers[1865]},
 			}},
 			{EffectID::shipBonusSentryDroneTrackingEliteBonusHeavyGunship2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1923]},
+				{modifiers[1866]},
 			}},
 			{EffectID::shipBonusShieldBoostAmountMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1924]},
+				{modifiers[1867]},
 			}},
 			{EffectID::roleBonusMarauderMJDRReactivationDelayBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1925]},
+				{modifiers[1868]},
 			}},
 			{EffectID::subSystemBonusAmarrDefensiveInformationWarfare, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1926]},{modifiers[1927]},{modifiers[1928]},{modifiers[1929]},{modifiers[1930]},
+				{modifiers[1869]},{modifiers[1870]},{modifiers[1871]},{modifiers[1872]},{modifiers[1873]},
 			}},
 			{EffectID::subSystemBonusAmarrDefensiveSkirmishWarfare, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1931]},{modifiers[1932]},{modifiers[1933]},{modifiers[1934]},{modifiers[1935]},
+				{modifiers[1874]},{modifiers[1875]},{modifiers[1876]},{modifiers[1877]},{modifiers[1878]},
 			}},
 			{EffectID::subSystemBonusCaldariOffensiveCommandBursts, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1936]},{modifiers[1937]},{modifiers[1938]},{modifiers[1939]},{modifiers[1940]},{modifiers[1941]},{modifiers[1942]},{modifiers[1943]},{modifiers[1944]},{modifiers[1945]},{modifiers[1946]},{modifiers[1947]},{modifiers[1948]},{modifiers[1949]},{modifiers[1950]},
+				{modifiers[1879]},{modifiers[1880]},{modifiers[1881]},{modifiers[1882]},{modifiers[1883]},{modifiers[1884]},{modifiers[1885]},{modifiers[1886]},{modifiers[1887]},{modifiers[1888]},{modifiers[1889]},{modifiers[1890]},{modifiers[1891]},{modifiers[1892]},{modifiers[1893]},
 			}},
 			{EffectID::subSystemBonusCaldariDefensiveSkirmishWarfare, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1951]},{modifiers[1952]},{modifiers[1953]},{modifiers[1954]},{modifiers[1955]},
+				{modifiers[1894]},{modifiers[1895]},{modifiers[1896]},{modifiers[1897]},{modifiers[1898]},
 			}},
 			{EffectID::subSystemBonusGallenteDefensiveSkirmishWarfare, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1956]},{modifiers[1957]},{modifiers[1958]},{modifiers[1959]},{modifiers[1960]},
+				{modifiers[1899]},{modifiers[1900]},{modifiers[1901]},{modifiers[1902]},{modifiers[1903]},
 			}},
 			{EffectID::subSystemBonusGallenteOffensiveCommandBursts, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1961]},{modifiers[1962]},{modifiers[1963]},{modifiers[1964]},{modifiers[1965]},{modifiers[1966]},{modifiers[1967]},{modifiers[1968]},{modifiers[1969]},{modifiers[1970]},{modifiers[1971]},{modifiers[1972]},{modifiers[1973]},{modifiers[1974]},{modifiers[1975]},
+				{modifiers[1904]},{modifiers[1905]},{modifiers[1906]},{modifiers[1907]},{modifiers[1908]},{modifiers[1909]},{modifiers[1910]},{modifiers[1911]},{modifiers[1912]},{modifiers[1913]},{modifiers[1914]},{modifiers[1915]},{modifiers[1916]},{modifiers[1917]},{modifiers[1918]},
 			}},
 			{EffectID::subSystemBonusMinmatarDefensiveSiegeWarfare, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1976]},{modifiers[1977]},{modifiers[1978]},{modifiers[1979]},{modifiers[1980]},
+				{modifiers[1919]},{modifiers[1920]},{modifiers[1921]},{modifiers[1922]},{modifiers[1923]},
 			}},
 			{EffectID::subSystemBonusMinmatarOffensiveCommandBursts, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1981]},{modifiers[1982]},{modifiers[1983]},{modifiers[1984]},{modifiers[1985]},{modifiers[1986]},{modifiers[1987]},{modifiers[1988]},{modifiers[1989]},{modifiers[1990]},{modifiers[1991]},{modifiers[1992]},{modifiers[1993]},{modifiers[1994]},{modifiers[1995]},
+				{modifiers[1924]},{modifiers[1925]},{modifiers[1926]},{modifiers[1927]},{modifiers[1928]},{modifiers[1929]},{modifiers[1930]},{modifiers[1931]},{modifiers[1932]},{modifiers[1933]},{modifiers[1934]},{modifiers[1935]},{modifiers[1936]},{modifiers[1937]},{modifiers[1938]},
 			}},
 			{EffectID::commandShipSkillMultiplier3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1996]},
+				{modifiers[1939]},
 			}},
 			{EffectID::eliteBonusCommandShipArmoredCS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[1997]},{modifiers[1998]},{modifiers[1999]},{modifiers[2000]},{modifiers[2001]},
+				{modifiers[1940]},{modifiers[1941]},{modifiers[1942]},{modifiers[1943]},{modifiers[1944]},
 			}},
 			{EffectID::eliteBonusCommandShipSiegeCS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2002]},{modifiers[2003]},{modifiers[2004]},{modifiers[2005]},{modifiers[2006]},
+				{modifiers[1945]},{modifiers[1946]},{modifiers[1947]},{modifiers[1948]},{modifiers[1949]},
 			}},
 			{EffectID::eliteBonusCommandShipSkirmishCS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2007]},{modifiers[2008]},{modifiers[2009]},{modifiers[2010]},{modifiers[2011]},
+				{modifiers[1950]},{modifiers[1951]},{modifiers[1952]},{modifiers[1953]},{modifiers[1954]},
 			}},
 			{EffectID::eliteBonusCommandShipInformationCS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2012]},{modifiers[2013]},{modifiers[2014]},{modifiers[2015]},{modifiers[2016]},
+				{modifiers[1955]},{modifiers[1956]},{modifiers[1957]},{modifiers[1958]},{modifiers[1959]},
 			}},
 			{EffectID::capacitorEmissionSystemskill, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2017]},
+				{modifiers[1960]},
 			}},
 			{EffectID::shipBonusLargeEnergyTurretMaxRangeAB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2018]},
+				{modifiers[1961]},
 			}},
 			{EffectID::shipBonusHTFalloffGB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2019]},
+				{modifiers[1962]},
 			}},
 			{EffectID::piCustomsOfficeTaxReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2020]},
+				{modifiers[1963]},
 			}},
 			{EffectID::piTaxReductionModifierSkillModifier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2021]},
+				{modifiers[1964]},
 			}},
 			{EffectID::shipBonusRHMLROF2CB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2022]},
+				{modifiers[1965]},
 			}},
 			{EffectID::shipBonusRHMLROFCB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2023]},
+				{modifiers[1966]},
 			}},
 			{EffectID::shipBonusRHMLROFMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2024]},
+				{modifiers[1967]},
 			}},
 			{EffectID::shipBonusCruiseROFMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2025]},
+				{modifiers[1968]},
 			}},
 			{EffectID::shipBonusTorpedoROFMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2026]},
+				{modifiers[1969]},
 			}},
 			{EffectID::shipBonusCruiseMissileEMDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2027]},
+				{modifiers[1970]},
 			}},
 			{EffectID::shipBonusCruiseMissileThermDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2028]},
+				{modifiers[1971]},
 			}},
 			{EffectID::shipBonusCruiseMissileKineticDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2029]},
+				{modifiers[1972]},
 			}},
 			{EffectID::shipBonusCruiseMissileExploDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2030]},
+				{modifiers[1973]},
 			}},
 			{EffectID::shipBonusTorpedoMissileExploDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2031]},
+				{modifiers[1974]},
 			}},
 			{EffectID::shipBonusTorpedoMissileEMDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2032]},
+				{modifiers[1975]},
 			}},
 			{EffectID::shipBonusTorpedoMissileThermDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2033]},
+				{modifiers[1976]},
 			}},
 			{EffectID::shipBonusTorpedoMissileKineticDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2034]},
+				{modifiers[1977]},
 			}},
 			{EffectID::shipBonusHeavyMissileEMDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2035]},
+				{modifiers[1978]},
 			}},
 			{EffectID::shipBonusHeavyMissileThermDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2036]},
+				{modifiers[1979]},
 			}},
 			{EffectID::shipBonusHeavyMissileKineticDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2037]},
+				{modifiers[1980]},
 			}},
 			{EffectID::shipBonusHeavyMissileExploDmgMB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2038]},
+				{modifiers[1981]},
 			}},
 			{EffectID::shipBonusMissileVelocityCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2039]},
+				{modifiers[1982]},
 			}},
 			{EffectID::covertOpsCloakCPUPercentRoleBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2040]},
+				{modifiers[1983]},
 			}},
 			{EffectID::shipArmorResistanceAF1, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[531]},{modifiers[532]},{modifiers[533]},{modifiers[534]},
 			}},
 			{EffectID::interceptor2ShieldResist, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2041]},{modifiers[2042]},{modifiers[2043]},{modifiers[2044]},
+				{modifiers[1984]},{modifiers[1985]},{modifiers[1986]},{modifiers[1987]},
 			}},
 			{EffectID::interceptor2ProjectileDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2045]},
+				{modifiers[1988]},
 			}},
 			{EffectID::shipBonusSmallMissileExplosionRadiusCD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2046]},{modifiers[2047]},
+				{modifiers[1989]},{modifiers[1990]},
 			}},
 			{EffectID::shipBonusMissileVelocityAD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2048]},
+				{modifiers[1991]},
 			}},
 			{EffectID::eliteBonusInterdictorsArmorResist1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2049]},{modifiers[2050]},{modifiers[2051]},{modifiers[2052]},
+				{modifiers[1992]},{modifiers[1993]},{modifiers[1994]},{modifiers[1995]},
 			}},
 			{EffectID::setWarpSpeedMultiplier, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2053]},
+				{modifiers[1996]},
 			}},
 			{EffectID::implantSetWarpSpeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2054]},
+				{modifiers[1997]},
 			}},
 			{EffectID::shipBonusMETOptimalRangePirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2055]},
+				{modifiers[1998]},
 			}},
 			{EffectID::shipHybridOptimalGD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2056]},
+				{modifiers[1999]},
 			}},
 			{EffectID::eliteBonusInterdictorsMWDSigRadius2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2057]},
+				{modifiers[2000]},
 			}},
 			{EffectID::shipSHTOptimalBonusGF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2058]},
+				{modifiers[2001]},
 			}},
 			{EffectID::shipBonusRemoteRepairAmountPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2059]},
+				{modifiers[2002]},
 			}},
 			{EffectID::shipBonusLETOptimalRangePirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2060]},
+				{modifiers[2003]},
 			}},
 			{EffectID::eliteBonusMaraudersHeavyMissileDamageExpRole1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2061]},
+				{modifiers[2004]},
 			}},
 			{EffectID::eliteBonusMaraudersHeavyMissileDamageKinRole1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2062]},
+				{modifiers[2005]},
 			}},
 			{EffectID::eliteBonusMaraudersHeavyMissileDamageEMRole1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2063]},
+				{modifiers[2006]},
 			}},
 			{EffectID::eliteBonusMaraudersHeavyMissileDamageThermRole1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2064]},
+				{modifiers[2007]},
 			}},
 			{EffectID::shipScanProbeStrengthBonusPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2065]},
+				{modifiers[2008]},
 			}},
 			{EffectID::shipBonusRemoteRepairRangePirateFaction2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2066]},{modifiers[2067]},
+				{modifiers[2009]},{modifiers[2010]},
 			}},
 			{EffectID::overloadSelfTrackingModuleBonus, Effect::MetaInfo::Category::overloaded, false, false, {
-				{modifiers[2068]},{modifiers[2069]},{modifiers[2070]},
+				{modifiers[2011]},{modifiers[2012]},{modifiers[2013]},
 			}},
 			{EffectID::overloadSelfSensorModuleBonus, Effect::MetaInfo::Category::overloaded, false, false, {
-				{modifiers[2071]},{modifiers[2072]},{modifiers[2073]},{modifiers[2074]},{modifiers[2075]},{modifiers[2076]},
+				{modifiers[2014]},{modifiers[2015]},{modifiers[2016]},{modifiers[2017]},{modifiers[2018]},{modifiers[2019]},
 			}},
 			{EffectID::overloadSelfPainterBonus, Effect::MetaInfo::Category::overloaded, false, false, {
-				{modifiers[2077]},
+				{modifiers[2020]},
 			}},
 			{EffectID::repairDroneHullBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2078]},
+				{modifiers[2021]},
 			}},
 			{EffectID::shipMissileRoFMF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2079]},
+				{modifiers[2022]},
 			}},
 			{EffectID::shipBonusSPTFalloffMF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2080]},
+				{modifiers[2023]},
 			}},
 			{EffectID::miningAmountBonusBonusActivation, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[2081]},
+				{modifiers[2024]},
 			}},
 			{EffectID::ewSkillTrackingDisruptionRangeDisruptionBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2082]},{modifiers[2083]},
+				{modifiers[2025]},{modifiers[2026]},
 			}},
 			{EffectID::shipBonusEwWeaponDisruptionStrengthRookie, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2084]},{modifiers[2085]},{modifiers[2086]},{modifiers[2087]},{modifiers[2088]},{modifiers[2089]},{modifiers[2090]},
+				{modifiers[2027]},{modifiers[2028]},{modifiers[2029]},{modifiers[2030]},{modifiers[2031]},{modifiers[2032]},{modifiers[2033]},
 			}},
 			{EffectID::shipBonusAfterburnerSpeedFactor2CB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2091]},
+				{modifiers[2034]},
 			}},
 			{EffectID::shipBonusSentryDroneDamageMultiplierPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2092]},
+				{modifiers[2035]},
 			}},
 			{EffectID::shipBonusHeavyDroneDamageMultiplierPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2093]},
+				{modifiers[2036]},
 			}},
 			{EffectID::shipBonusSentryDroneHPPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2094]},
+				{modifiers[2037]},
 			}},
 			{EffectID::shipBonusSentryDroneArmorHpPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2095]},
+				{modifiers[2038]},
 			}},
 			{EffectID::shipBonusSentryDroneShieldHpPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2096]},
+				{modifiers[2039]},
 			}},
 			{EffectID::shipBonusHeavyDroneShieldHpPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2097]},
+				{modifiers[2040]},
 			}},
 			{EffectID::shipBonusHeavyDroneArmorHpPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2098]},
+				{modifiers[2041]},
 			}},
 			{EffectID::shipBonusHeavyDroneHPPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2099]},
+				{modifiers[2042]},
 			}},
 			{EffectID::shipBonusKineticMissileDamageGB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2100]},
+				{modifiers[2043]},
 			}},
 			{EffectID::shipBonusThermalMissileDamageGB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2101]},
+				{modifiers[2044]},
 			}},
 			{EffectID::shipBonusAfterburnerSpeedFactorCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2102]},
+				{modifiers[2045]},
 			}},
 			{EffectID::shipBonusKineticMissileDamageGF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2103]},
+				{modifiers[2046]},
 			}},
 			{EffectID::shipBonusThermalMissileDamageGF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2104]},
+				{modifiers[2047]},
 			}},
 			{EffectID::shipBonusLightDroneDamageMultiplierPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2105]},
+				{modifiers[2048]},
 			}},
 			{EffectID::shipBonusLightDroneHPPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2106]},
+				{modifiers[2049]},
 			}},
 			{EffectID::shipBonusLightDroneArmorHPPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2107]},
+				{modifiers[2050]},
 			}},
 			{EffectID::shipBonusLightDroneShieldHPPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2108]},
+				{modifiers[2051]},
 			}},
 			{EffectID::shipBonusAfterburnerSpeedFactorCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2109]},
+				{modifiers[2052]},
 			}},
 			{EffectID::shipBonusMediumDroneDamageMultiplierPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2110]},
+				{modifiers[2053]},
 			}},
 			{EffectID::shipBonusMediumDroneHPPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2111]},
+				{modifiers[2054]},
 			}},
 			{EffectID::shipBonusMediumDroneArmorHPPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2112]},
+				{modifiers[2055]},
 			}},
 			{EffectID::shipBonusMediumDroneShieldHPPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2113]},
+				{modifiers[2056]},
 			}},
 			{EffectID::shipBonusKineticMissileDamageGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2114]},
+				{modifiers[2057]},
 			}},
 			{EffectID::shipBonusThermalMissileDamageGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2115]},
+				{modifiers[2058]},
 			}},
 			{EffectID::shipBonusTDOptimalBonusAF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2116]},
+				{modifiers[2059]},
 			}},
 			{EffectID::shipBonusMiningDurationORE3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2117]},
+				{modifiers[2060]},
 			}},
 			{EffectID::shipBonusMiningIceHarvestingRangeORE2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2118]},{modifiers[2119]},
+				{modifiers[2061]},{modifiers[2062]},
 			}},
 			{EffectID::eliteBargeShieldResistance1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2120]},{modifiers[2121]},{modifiers[2122]},{modifiers[2123]},
+				{modifiers[2063]},{modifiers[2064]},{modifiers[2065]},{modifiers[2066]},
 			}},
 			{EffectID::eliteBargeBonusMiningDurationBarge2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2124]},
+				{modifiers[2067]},
 			}},
 			{EffectID::expeditionFrigateSkillLevelPostMulEliteBonusExpedition1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2125]},
+				{modifiers[2068]},
 			}},
 			{EffectID::expeditionFrigateSkillLevelPostMulEliteBonusExpedition2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2126]},
+				{modifiers[2069]},
 			}},
 			{EffectID::eliteBonusExpeditionMining1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2127]},
+				{modifiers[2070]},
 			}},
 			{EffectID::eliteBonusExpeditionSigRadius2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2128]},
+				{modifiers[2071]},
 			}},
 			{EffectID::shipBonusNosferatuOverride, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2129]},
+				{modifiers[2072]},
 			}},
 			{EffectID::shipMissileEMDamageCB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2130]},
+				{modifiers[2073]},
 			}},
 			{EffectID::shipMissileKinDamageCB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2131]},
+				{modifiers[2074]},
 			}},
 			{EffectID::shipMissileThermDamageCB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2132]},
+				{modifiers[2075]},
 			}},
 			{EffectID::shipMissileExploDamageCB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2133]},
+				{modifiers[2076]},
 			}},
 			{EffectID::shipBonusWarpScrambleMaxRangeGB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2134]},
+				{modifiers[2077]},
 			}},
 			{EffectID::shipBonusMissileExplosionDelayPirateFaction2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2135]},
+				{modifiers[2078]},
 			}},
 			{EffectID::drawbackCargoCapacity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2136]},
+				{modifiers[2079]},
 			}},
 			{EffectID::eliteIndustrialWarpSpeedBonus1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2137]},
+				{modifiers[2080]},
 			}},
 			{EffectID::shipBonusShieldBoostCI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2138]},
+				{modifiers[2081]},
 			}},
 			{EffectID::shipBonusShieldBoostMI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2139]},
+				{modifiers[2082]},
 			}},
 			{EffectID::shipBonusArmorRepairAI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2140]},
+				{modifiers[2083]},
 			}},
 			{EffectID::shipBonusArmorRepairGI2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2141]},
+				{modifiers[2084]},
 			}},
 			{EffectID::eliteIndustrialFleetCapacity1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2142]},
+				{modifiers[2085]},
 			}},
 			{EffectID::eliteIndustrialShieldResists2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2143]},{modifiers[2144]},{modifiers[2145]},{modifiers[2146]},
+				{modifiers[2086]},{modifiers[2087]},{modifiers[2088]},{modifiers[2089]},
 			}},
 			{EffectID::eliteIndustrialArmorResists2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2147]},{modifiers[2148]},{modifiers[2149]},{modifiers[2150]},
+				{modifiers[2090]},{modifiers[2091]},{modifiers[2092]},{modifiers[2093]},
 			}},
 			{EffectID::eliteIndustrialABHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2151]},
+				{modifiers[2094]},
 			}},
 			{EffectID::eliteIndustrialMWDHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2152]},
+				{modifiers[2095]},
 			}},
 			{EffectID::eliteIndustrialArmorHardenerHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2153]},
+				{modifiers[2096]},
 			}},
 			{EffectID::eliteIndustrialReactiveArmorHardenerHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2154]},
+				{modifiers[2097]},
 			}},
 			{EffectID::eliteIndustrialShieldHardenerHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2155]},
+				{modifiers[2098]},
 			}},
 			{EffectID::eliteIndustrialShieldBoosterHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2156]},{modifiers[2157]},
+				{modifiers[2099]},{modifiers[2100]},
 			}},
 			{EffectID::eliteIndustrialArmorRepairHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2158]},{modifiers[2159]},
+				{modifiers[2101]},{modifiers[2102]},
 			}},
 			{EffectID::warpSpeedAddition, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2160]},
+				{modifiers[2103]},
 			}},
 			{EffectID::roleBonusBulkheadCPU, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2161]},
+				{modifiers[2104]},
 			}},
 			{EffectID::advancedIndustryManufacturingTimeBonusPostPercent, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2162]},
+				{modifiers[2105]},
 			}},
 			{EffectID::advancedIndustryCopyTimeBonusPostPercent, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2163]},
+				{modifiers[2106]},
 			}},
 			{EffectID::advancedIndustryInventionTimeBonusPostPercent, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2164]},
+				{modifiers[2107]},
 			}},
 			{EffectID::advancedIndustrySkillBoostAdvancedIndustrySkillIndustryJobTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2165]},
+				{modifiers[2108]},
 			}},
 			{EffectID::advancedIndustryManufactureTimeResearchTimeBonusPostPercent, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2166]},
+				{modifiers[2109]},
 			}},
 			{EffectID::advancedIndustryMaterialResearchTimeBonusPostPercent, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2167]},
+				{modifiers[2110]},
 			}},
 			{EffectID::onlineJumpDriveConsumptionAmountBonusPercentage, Effect::MetaInfo::Category::passive, false, false, {
 				{modifiers[1000]},
 			}},
-			{EffectID::systemRemoteCapTransmitterAmount, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2168]},
-			}},
-			{EffectID::systemArmorHP, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[19]},
-			}},
-			{EffectID::systemEnergyNeutMultiplier, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2169]},
-			}},
-			{EffectID::systemEnergyVampireMultiplier, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2170]},
-			}},
-			{EffectID::systemDamageExplosiveBombs, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2171]},
-			}},
-			{EffectID::systemDamageKineticBombs, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2172]},
-			}},
-			{EffectID::systemDamageThermalBombs, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2173]},
-			}},
-			{EffectID::systemDamageEMBombs, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2174]},
-			}},
-			{EffectID::systemAoeCloudSize, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2175]},
-			}},
-			{EffectID::systemTargetPainterMultiplier, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2176]},
-			}},
-			{EffectID::systemWebifierStrengthMultiplier, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2177]},
-			}},
-			{EffectID::systemNeutBombs, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2178]},
-			}},
-			{EffectID::systemGravimetricECMBomb, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2179]},
-			}},
-			{EffectID::systemLadarECMBomb, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2180]},
-			}},
-			{EffectID::systemMagnetrometricECMBomb, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2181]},
-			}},
-			{EffectID::systemRadarECMBomb, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2182]},
-			}},
-			{EffectID::systemDroneTracking, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[2183]},
-			}},
 			{EffectID::warpScrambleBlockMWDWithNPCEffect, Effect::MetaInfo::Category::target, true, false, {
-				{modifiers[8]},{modifiers[2184]},{modifiers[2185]},
+				{modifiers[8]},{modifiers[2111]},{modifiers[2112]},
 			}},
 			{EffectID::shipBonusSmallMissileExplosionRadiusCF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2186]},{modifiers[2187]},
+				{modifiers[2113]},{modifiers[2114]},
 			}},
 			{EffectID::shipRocketRoFBonusAF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2188]},
+				{modifiers[2115]},
 			}},
 			{EffectID::eliteBonusInterdictorsSHTRoF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2189]},
+				{modifiers[2116]},
 			}},
 			{EffectID::shipMissileLauncherRoFAD1Fixed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2190]},
+				{modifiers[2117]},
 			}},
 			{EffectID::cloakingPrototype, Effect::MetaInfo::Category::active, false, false, {
 				{modifiers[214]},
 			}},
 			{EffectID::drawbackWarpSpeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2191]},
+				{modifiers[2118]},
 			}},
 			{EffectID::shipMETDamageBonusAC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2192]},
+				{modifiers[2119]},
 			}},
 			{EffectID::eliteBonusHeavyInterdictorsMETOptimal, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2193]},
+				{modifiers[2120]},
 			}},
 			{EffectID::shipHybridTrackingGC, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2194]},
+				{modifiers[2121]},
 			}},
 			{EffectID::eliteBonusHeavyInterdictorsHybridOptimal1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2195]},
+				{modifiers[2122]},
 			}},
 			{EffectID::resistanceKillerShieldAll, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2196]},{modifiers[2197]},{modifiers[2198]},{modifiers[2199]},
+				{modifiers[2123]},{modifiers[2124]},{modifiers[2125]},{modifiers[2126]},
 			}},
 			{EffectID::resistanceKillerArmorAll, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2200]},{modifiers[2201]},{modifiers[2202]},{modifiers[2203]},
+				{modifiers[2127]},{modifiers[2128]},{modifiers[2129]},{modifiers[2130]},
 			}},
 			{EffectID::resistanceKillerHullAll, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2204]},{modifiers[2205]},{modifiers[2206]},{modifiers[2207]},
+				{modifiers[2131]},{modifiers[2132]},{modifiers[2133]},{modifiers[2134]},
 			}},
 			{EffectID::resistanceKillerShieldArmorAll, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2196]},{modifiers[2197]},{modifiers[2198]},{modifiers[2199]},{modifiers[2200]},{modifiers[2201]},{modifiers[2202]},{modifiers[2203]},
+				{modifiers[2123]},{modifiers[2124]},{modifiers[2125]},{modifiers[2126]},{modifiers[2127]},{modifiers[2128]},{modifiers[2129]},{modifiers[2130]},
 			}},
 			{EffectID::freighterO1SkillLevel, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2208]},
+				{modifiers[2135]},
 			}},
 			{EffectID::freighterO2SkillLevel, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2209]},
+				{modifiers[2136]},
 			}},
 			{EffectID::freighterSMACapacityBonusO1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2210]},
+				{modifiers[2137]},
 			}},
 			{EffectID::freighterAgilityBonus2O2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2211]},
+				{modifiers[2138]},
 			}},
 			{EffectID::tacticalDestroyerAmarrSkillLevel1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2212]},
+				{modifiers[2139]},
 			}},
 			{EffectID::tacticalDestroyerAmarrSkillLevel2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2213]},
+				{modifiers[2140]},
 			}},
 			{EffectID::tacticalDestroyerAmarrSkillLevel3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2214]},
+				{modifiers[2141]},
 			}},
 			{EffectID::shipSETDamageAmarrTacticalDestroyer1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2215]},
+				{modifiers[2142]},
 			}},
 			{EffectID::shipSETCapNeedAmarrTacticalDestroyer2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2216]},
+				{modifiers[2143]},
 			}},
 			{EffectID::shipHeatDamageAmarrTacticalDestroyer3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2217]},
+				{modifiers[2144]},
 			}},
 			{EffectID::probeLauncherCPUPercentRoleBonusT3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2218]},
+				{modifiers[2145]},
 			}},
 			{EffectID::shipModeMaxTargetRangePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2219]},
+				{modifiers[2146]},
 			}},
 			{EffectID::shipModeSETOptimalRangePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2220]},
+				{modifiers[2147]},
 			}},
 			{EffectID::shipModeScanStrengthPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2221]},{modifiers[2222]},{modifiers[2223]},{modifiers[2224]},
+				{modifiers[2148]},{modifiers[2149]},{modifiers[2150]},{modifiers[2151]},
 			}},
 			{EffectID::modeSigRadiusPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2225]},
+				{modifiers[2152]},
 			}},
 			{EffectID::modeArmorResonancePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2226]},{modifiers[2227]},{modifiers[2228]},{modifiers[2229]},
+				{modifiers[2153]},{modifiers[2154]},{modifiers[2155]},{modifiers[2156]},
 			}},
 			{EffectID::modeAgilityPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2230]},
+				{modifiers[2157]},
 			}},
 			{EffectID::modeVelocityPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2231]},
+				{modifiers[2158]},
 			}},
 			{EffectID::shipBonusEnergyNeutOptimalRS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2232]},
+				{modifiers[2159]},
 			}},
 			{EffectID::shipBonusEnergyNosOptimalRS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2233]},
+				{modifiers[2160]},
 			}},
 			{EffectID::reconShipSkillMultiplier3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2234]},
+				{modifiers[2161]},
 			}},
 			{EffectID::eliteReconBonusMHTOptimalRange1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2235]},
+				{modifiers[2162]},
 			}},
 			{EffectID::eliteReconBonusMPTdamage1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2236]},
+				{modifiers[2163]},
 			}},
 			{EffectID::remoteCapacitorTransmitterPowerNeedBonusEffect, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2237]},
+				{modifiers[2164]},
 			}},
 			{EffectID::tacticalDestroyerMinmatarSkillLevel1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2238]},
+				{modifiers[2165]},
 			}},
 			{EffectID::tacticalDestroyerMinmatarSkillLevel2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2239]},
+				{modifiers[2166]},
 			}},
 			{EffectID::tacticalDestroyerMinmatarSkillLevel3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2240]},
+				{modifiers[2167]},
 			}},
 			{EffectID::shipHeatDamageMinmatarTacticalDestroyer3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2241]},
+				{modifiers[2168]},
 			}},
 			{EffectID::shipSPTDamageMinmatarTacticalDestroyer1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2242]},
+				{modifiers[2169]},
 			}},
 			{EffectID::shipSPTOptimalMinmatarTacticalDestroyer2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2243]},
+				{modifiers[2170]},
 			}},
 			{EffectID::shipModeSPTTrackingPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2244]},
+				{modifiers[2171]},
 			}},
 			{EffectID::modeMWDSigRadiusPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2245]},
+				{modifiers[2172]},
 			}},
 			{EffectID::modeShieldResonancePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2246]},{modifiers[2247]},{modifiers[2248]},{modifiers[2249]},
+				{modifiers[2173]},{modifiers[2174]},{modifiers[2175]},{modifiers[2176]},
 			}},
 			{EffectID::subsystemBonusCaldariDefensiveShieldRechargeRate, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2250]},
+				{modifiers[2177]},
 			}},
 			{EffectID::gallenteCruiserSkillLevelPreMulShipBonusGC3Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2251]},
+				{modifiers[2178]},
 			}},
 			{EffectID::shipBonusSentryDamageMultiplierGC3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2252]},
+				{modifiers[2179]},
 			}},
 			{EffectID::shipBonusSentryHPGC3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2253]},
+				{modifiers[2180]},
 			}},
 			{EffectID::shipBonusSentryArmorHPGC3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2254]},
+				{modifiers[2181]},
 			}},
 			{EffectID::shipBonusSentryShieldHPGC3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2255]},
+				{modifiers[2182]},
 			}},
 			{EffectID::shipBonusLightDroneDamageMultiplierGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2256]},
+				{modifiers[2183]},
 			}},
 			{EffectID::shipBonusMediumDroneDamageMultiplierGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2257]},
+				{modifiers[2184]},
 			}},
 			{EffectID::shipBonusHeavyDroneDamageMultiplierGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2258]},
+				{modifiers[2185]},
 			}},
 			{EffectID::shipBonusHeavyDroneHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2259]},
+				{modifiers[2186]},
 			}},
 			{EffectID::shipBonusHeavyDroneArmorHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2260]},
+				{modifiers[2187]},
 			}},
 			{EffectID::shipBonusHeavyDroneShieldHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2261]},
+				{modifiers[2188]},
 			}},
 			{EffectID::shipBonusMediumDroneShieldHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2262]},
+				{modifiers[2189]},
 			}},
 			{EffectID::shipBonusMediumDroneArmorHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2263]},
+				{modifiers[2190]},
 			}},
 			{EffectID::shipBonusMediumDroneHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2264]},
+				{modifiers[2191]},
 			}},
 			{EffectID::shipBonusLightDroneHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2265]},
+				{modifiers[2192]},
 			}},
 			{EffectID::shipBonusLightDroneArmorHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2266]},
+				{modifiers[2193]},
 			}},
 			{EffectID::shipBonusLightDroneShieldHPGC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2267]},
+				{modifiers[2194]},
 			}},
 			{EffectID::entosisLink, Effect::MetaInfo::Category::target, false, false, {
 				
 			}},
 			{EffectID::shipModeMissileVelocityPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2268]},
+				{modifiers[2195]},
 			}},
 			{EffectID::shipHeatDamageCaldariTacticalDestroyer3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2269]},
+				{modifiers[2196]},
 			}},
 			{EffectID::tacticalDestroyerCaldariSkillLevel1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2270]},
+				{modifiers[2197]},
 			}},
 			{EffectID::tacticalDestroyerCaldariSkillLevel2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2271]},
+				{modifiers[2198]},
 			}},
 			{EffectID::tacticalDestroyerCaldariSkillLevel3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2272]},
+				{modifiers[2199]},
 			}},
 			{EffectID::shipSmallMissileDmgPirateFaction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2273]},{modifiers[2274]},{modifiers[2275]},{modifiers[2276]},{modifiers[2277]},{modifiers[2278]},{modifiers[2279]},{modifiers[2280]},
+				{modifiers[2200]},{modifiers[2201]},{modifiers[2202]},{modifiers[2203]},{modifiers[2204]},{modifiers[2205]},{modifiers[2206]},{modifiers[2207]},
 			}},
 			{EffectID::shipMissileRoFCaldariTacticalDestroyer1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2281]},
+				{modifiers[2208]},
 			}},
 			{EffectID::shipBonusHeavyAssaultMissileAllDamageMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2282]},{modifiers[2283]},{modifiers[2284]},{modifiers[2285]},
+				{modifiers[2209]},{modifiers[2210]},{modifiers[2211]},{modifiers[2212]},
 			}},
 			{EffectID::shipBonusHeavyMissileAllDamageMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2286]},{modifiers[2287]},{modifiers[2288]},{modifiers[2289]},
+				{modifiers[2213]},{modifiers[2214]},{modifiers[2215]},{modifiers[2216]},
 			}},
 			{EffectID::shipBonusLightMissileAllDamageMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2290]},{modifiers[2291]},{modifiers[2292]},{modifiers[2293]},
+				{modifiers[2217]},{modifiers[2218]},{modifiers[2219]},{modifiers[2220]},
 			}},
 			{EffectID::shipMissileReloadTimeCaldariTacticalDestroyer2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2294]},
+				{modifiers[2221]},
 			}},
 			{EffectID::entosisDurationMultiply, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2295]},
+				{modifiers[2222]},
 			}},
 			{EffectID::missileVelocityBonusOnline, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2296]},
+				{modifiers[2223]},
 			}},
 			{EffectID::missileExplosionDelayBonusOnline, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2297]},
+				{modifiers[2224]},
 			}},
 			{EffectID::missileAOECloudSizeBonusOnline, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2298]},
+				{modifiers[2225]},
 			}},
 			{EffectID::missileAOEVelocityBonusOnline, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2299]},
+				{modifiers[2226]},
 			}},
 			{EffectID::scriptMissileGuidanceComputerAOECloudSizeBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2300]},
+				{modifiers[2227]},
 			}},
 			{EffectID::scriptMissileGuidanceComputerAOEVelocityBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2301]},
+				{modifiers[2228]},
 			}},
 			{EffectID::scriptMissileGuidanceComputerMissileVelocityBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2302]},
+				{modifiers[2229]},
 			}},
 			{EffectID::scriptMissileGuidanceComputerExplosionDelayBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2303]},
+				{modifiers[2230]},
 			}},
 			{EffectID::missileGuidanceComputerBonus4, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[2296]},{modifiers[2297]},{modifiers[2298]},{modifiers[2299]},
+				{modifiers[2223]},{modifiers[2224]},{modifiers[2225]},{modifiers[2226]},
 			}},
 			{EffectID::overloadSelfMissileGuidanceBonus5, Effect::MetaInfo::Category::overloaded, false, false, {
-				{modifiers[2304]},{modifiers[2305]},{modifiers[2306]},{modifiers[2307]},{modifiers[2308]},
+				{modifiers[2231]},{modifiers[2232]},{modifiers[2233]},{modifiers[2234]},{modifiers[2235]},
 			}},
 			{EffectID::tacticalDestroyerGallenteSkillLevel1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2309]},
+				{modifiers[2236]},
 			}},
 			{EffectID::tacticalDestroyerGallenteSkillLevel2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2310]},
+				{modifiers[2237]},
 			}},
 			{EffectID::tacticalDestroyerGallenteSkillLevel3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2311]},
+				{modifiers[2238]},
 			}},
 			{EffectID::shipHeatDamageGallenteTacticalDestroyer3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2312]},
+				{modifiers[2239]},
 			}},
 			{EffectID::shipSHTRoFGallenteTacticalDestroyer1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2313]},
+				{modifiers[2240]},
 			}},
 			{EffectID::shipSHTTrackingGallenteTacticalDestroyer2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2314]},
+				{modifiers[2241]},
 			}},
 			{EffectID::modeHullResonancePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2315]},{modifiers[2316]},{modifiers[2317]},{modifiers[2318]},
+				{modifiers[2242]},{modifiers[2243]},{modifiers[2244]},{modifiers[2245]},
 			}},
 			{EffectID::shipModeSHTOptimalRangePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2319]},
+				{modifiers[2246]},
 			}},
 			{EffectID::modeMWDCapPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2320]},
+				{modifiers[2247]},
 			}},
 			{EffectID::modeMWDBoostPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2321]},
+				{modifiers[2248]},
 			}},
 			{EffectID::modeArmorRepDurationPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2322]},
+				{modifiers[2249]},
 			}},
 			{EffectID::passiveSpeedLimit, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2323]},
-			}},
-			{EffectID::systemMaxVelocityPercentage, Effect::MetaInfo::Category::system, false, false, {
-				{modifiers[617]},
+				{modifiers[2250]},
 			}},
 			{EffectID::shipBonusWDFGnullPenalties, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2324]},{modifiers[2325]},{modifiers[2326]},
+				{modifiers[2251]},{modifiers[2252]},{modifiers[2253]},
 			}},
 			{EffectID::entosisCPUPenalty, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2327]},
+				{modifiers[2254]},
 			}},
 			{EffectID::entosisCPUAddition, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2328]},
+				{modifiers[2255]},
 			}},
 			{EffectID::battlecruiserMETRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2329]},{modifiers[2330]},
+				{modifiers[2256]},{modifiers[2257]},
 			}},
 			{EffectID::battlecruiserMHTRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2331]},{modifiers[2332]},
+				{modifiers[2258]},{modifiers[2259]},
 			}},
 			{EffectID::battlecruiserMPTRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2333]},{modifiers[2334]},
+				{modifiers[2260]},{modifiers[2261]},
 			}},
 			{EffectID::battlecruiserMissileRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2335]},
+				{modifiers[2262]},
 			}},
 			{EffectID::battlecruiserDroneSpeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2336]},
+				{modifiers[2263]},
 			}},
 			{EffectID::shipHybridDmg1CBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2337]},
+				{modifiers[2264]},
 			}},
 			{EffectID::shipBonusProjectileTrackingMBC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2338]},
+				{modifiers[2265]},
 			}},
 			{EffectID::shipModuleRemoteCapacitorTransmitter, Effect::MetaInfo::Category::target, false, true, {
-				{modifiers[2339]},
+				{modifiers[2266]},
 			}},
 			{EffectID::shipModuleRemoteHullRepairer, Effect::MetaInfo::Category::target, false, true, {
-				{modifiers[2340]},
+				{modifiers[2267]},
 			}},
 			{EffectID::shipModuleRemoteShieldBooster, Effect::MetaInfo::Category::target, false, true, {
 				{modifiers[3]},
 			}},
 			{EffectID::energyNeutralizerFalloff, Effect::MetaInfo::Category::target, true, false, {
-				{modifiers[2341]},
+				{modifiers[2268]},
 			}},
 			{EffectID::shipModuleRemoteArmorRepairer, Effect::MetaInfo::Category::target, false, true, {
 				{modifiers[206]},
 			}},
 			{EffectID::expeditionFrigateShieldResistance1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2342]},{modifiers[2343]},{modifiers[2344]},{modifiers[2345]},
+				{modifiers[2269]},{modifiers[2270]},{modifiers[2271]},{modifiers[2272]},
 			}},
 			{EffectID::expeditionFrigateBonusIceHarvestingCycleTime2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2346]},
+				{modifiers[2273]},
 			}},
 			{EffectID::energyNosferatuFalloff, Effect::MetaInfo::Category::target, true, false, {
-				{modifiers[2341]},
+				{modifiers[2268]},
 			}},
 			{EffectID::doomsdaySlash, Effect::MetaInfo::Category::active, true, false, {
 				
@@ -5943,373 +5703,373 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::commandDestroyerSkillMultiplier1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2347]},
+				{modifiers[2274]},
 			}},
 			{EffectID::commandDestroyerSkillMultiplier2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2348]},
+				{modifiers[2275]},
 			}},
 			{EffectID::commandDestroyerSkillMultiplier3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2349]},
+				{modifiers[2276]},
 			}},
 			{EffectID::roleBonusCDLinksPGReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2350]},
+				{modifiers[2277]},
 			}},
 			{EffectID::structureEnergyNeutralizerFalloff, Effect::MetaInfo::Category::target, true, false, {
 				
 			}},
 			{EffectID::structureWarpScrambleBlockMWDWithNPCEffect, Effect::MetaInfo::Category::target, true, false, {
-				{modifiers[8]},{modifiers[2184]},{modifiers[2185]},
+				{modifiers[8]},{modifiers[2111]},{modifiers[2112]},
 			}},
 			{EffectID::structureTargetMaxTargetRangeAndScanResolutionBonusAssistance, Effect::MetaInfo::Category::target, false, true, {
-				{modifiers[2351]},{modifiers[2352]},
+				{modifiers[2278]},{modifiers[2279]},
 			}},
 			{EffectID::structureTargetGunneryMaxRangeFalloffTrackingSpeedBonusAssistance, Effect::MetaInfo::Category::target, false, true, {
-				{modifiers[2353]},{modifiers[2354]},{modifiers[2355]},
+				{modifiers[2280]},{modifiers[2281]},{modifiers[2282]},
 			}},
 			{EffectID::structureMissileGuidanceComputerBonus4, Effect::MetaInfo::Category::active, false, true, {
-				{modifiers[2296]},{modifiers[2297]},{modifiers[2298]},{modifiers[2299]},
+				{modifiers[2223]},{modifiers[2224]},{modifiers[2225]},{modifiers[2226]},
 			}},
 			{EffectID::shipBonusEnergyNeutOptimalRS1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2356]},
+				{modifiers[2283]},
 			}},
 			{EffectID::shipBonusEnergyNeutFalloffRS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2357]},
+				{modifiers[2284]},
 			}},
 			{EffectID::shipBonusEnergyNeutFalloffRS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2358]},
+				{modifiers[2285]},
 			}},
 			{EffectID::shipBonusEnergyNosOptimalRS1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2359]},
+				{modifiers[2286]},
 			}},
 			{EffectID::shipBonusEnergyNosFalloffRS2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2360]},
+				{modifiers[2287]},
 			}},
 			{EffectID::shipBonusEnergyNosFalloffRS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2361]},
+				{modifiers[2288]},
 			}},
 			{EffectID::miningFrigateBonusIceHarvestingCycleTime2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2362]},
+				{modifiers[2289]},
 			}},
 			{EffectID::shipBonusEnergyNeutFalloffAD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2363]},
+				{modifiers[2290]},
 			}},
 			{EffectID::shipBonusEnergyNeutOptimalAD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2364]},
+				{modifiers[2291]},
 			}},
 			{EffectID::shipBonusEnergyNosOptimalAD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2365]},
+				{modifiers[2292]},
 			}},
 			{EffectID::shipBonusEnergyNosFalloffAD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2366]},
+				{modifiers[2293]},
 			}},
 			{EffectID::shipBonusEnergyNeutOptimalAB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2367]},
+				{modifiers[2294]},
 			}},
 			{EffectID::shipBonusEnergyNeutFalloffAB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2368]},
+				{modifiers[2295]},
 			}},
 			{EffectID::shipBonusEnergyNosOptimalAB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2369]},
+				{modifiers[2296]},
 			}},
 			{EffectID::shipBonusEnergyNosFalloffAB2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2370]},
+				{modifiers[2297]},
 			}},
 			{EffectID::shipBonusEnergyNeutOptimalEAF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2371]},
+				{modifiers[2298]},
 			}},
 			{EffectID::shipBonusEnergyNeutFalloffEAF3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2372]},
+				{modifiers[2299]},
 			}},
 			{EffectID::shipBonusEnergyNosOptimalEAF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2373]},
+				{modifiers[2300]},
 			}},
 			{EffectID::shipBonusEnergyNosFalloffEAF3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2374]},
+				{modifiers[2301]},
 			}},
 			{EffectID::electronicAttackShipsSkillMultiplier3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2375]},
+				{modifiers[2302]},
 			}},
 			{EffectID::shipBonusEnergyNeutOptimalAF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2376]},
+				{modifiers[2303]},
 			}},
 			{EffectID::shipBonusEnergyNeutFalloffAF3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2377]},
+				{modifiers[2304]},
 			}},
 			{EffectID::shipBonusEnergyNosOptimalAF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2378]},
+				{modifiers[2305]},
 			}},
 			{EffectID::shipBonusEnergyNosFalloffAF3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2379]},
+				{modifiers[2306]},
 			}},
 			{EffectID::amarrCruiserSkillLevelPreMulShipBonusAC3Ship, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2380]},
+				{modifiers[2307]},
 			}},
 			{EffectID::shipBonusEnergyNeutOptimalAC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2381]},
+				{modifiers[2308]},
 			}},
 			{EffectID::shipBonusEnergyNeutFalloffAC3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2382]},
+				{modifiers[2309]},
 			}},
 			{EffectID::shipBonusEnergyNosOptimalAC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2383]},
+				{modifiers[2310]},
 			}},
 			{EffectID::shipBonusNosOptimalFalloffAC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2384]},{modifiers[2385]},
+				{modifiers[2311]},{modifiers[2312]},
 			}},
 			{EffectID::shipBonusEnergyNosFalloffAC3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2386]},
+				{modifiers[2313]},
 			}},
 			{EffectID::serviceSlot, Effect::MetaInfo::Category::generic, false, false, {
 				
 			}},
 			{EffectID::shipBonusThermMissileDmgMD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2387]},
+				{modifiers[2314]},
 			}},
 			{EffectID::shipBonusEMMissileDmgMD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2388]},
+				{modifiers[2315]},
 			}},
 			{EffectID::shipBonusKineticMissileDmgMD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2389]},
+				{modifiers[2316]},
 			}},
 			{EffectID::shipBonusExplosiveMissileDmgMD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2390]},
+				{modifiers[2317]},
 			}},
 			{EffectID::eliteBonusCommandDestroyerSkirmish1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2391]},{modifiers[2392]},{modifiers[2393]},{modifiers[2394]},{modifiers[2395]},
+				{modifiers[2318]},{modifiers[2319]},{modifiers[2320]},{modifiers[2321]},{modifiers[2322]},
 			}},
 			{EffectID::eliteBonusCommandDestroyerShield1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2396]},{modifiers[2397]},{modifiers[2398]},{modifiers[2399]},{modifiers[2400]},
+				{modifiers[2323]},{modifiers[2324]},{modifiers[2325]},{modifiers[2326]},{modifiers[2327]},
 			}},
 			{EffectID::eliteBonusCommandDestroyerMJFGspool2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2401]},
+				{modifiers[2328]},
 			}},
 			{EffectID::shipBonusEMShieldResistanceMD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2402]},
+				{modifiers[2329]},
 			}},
 			{EffectID::shipBonusKineticShieldResistanceMD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2403]},
+				{modifiers[2330]},
 			}},
 			{EffectID::shipBonusThermalShieldResistanceMD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2404]},
+				{modifiers[2331]},
 			}},
 			{EffectID::shipBonusExplosiveShieldResistanceMD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2405]},
+				{modifiers[2332]},
 			}},
 			{EffectID::scriptscanGravimetricStrengthBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2406]},
+				{modifiers[2333]},
 			}},
 			{EffectID::scriptscanLadarStrengthBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2407]},
+				{modifiers[2334]},
 			}},
 			{EffectID::scriptscanMagnetometricStrengthBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2408]},
+				{modifiers[2335]},
 			}},
 			{EffectID::scriptscanRadarStrengthBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2409]},
+				{modifiers[2336]},
 			}},
 			{EffectID::shipBonusThermalMissileDamageCD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2410]},
+				{modifiers[2337]},
 			}},
 			{EffectID::shipBonusEMMissileDamageCD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2411]},
+				{modifiers[2338]},
 			}},
 			{EffectID::shipBonusKineticMissileDamageCD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2412]},
+				{modifiers[2339]},
 			}},
 			{EffectID::shipBonusExplosiveMissileDamageCD1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2413]},
+				{modifiers[2340]},
 			}},
 			{EffectID::shipBonusShieldEMResistanceCD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2414]},
+				{modifiers[2341]},
 			}},
 			{EffectID::shipBonusShieldThermalResistanceCD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2415]},
+				{modifiers[2342]},
 			}},
 			{EffectID::shipBonusShieldKineticResistanceCD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2416]},
+				{modifiers[2343]},
 			}},
 			{EffectID::shipBonusShieldExplosiveResistanceCD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2417]},
+				{modifiers[2344]},
 			}},
 			{EffectID::eliteBonusCommandDestroyerInfo1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2418]},{modifiers[2419]},{modifiers[2420]},{modifiers[2421]},{modifiers[2422]},
+				{modifiers[2345]},{modifiers[2346]},{modifiers[2347]},{modifiers[2348]},{modifiers[2349]},
 			}},
 			{EffectID::shipBonusKineticArmorResistanceAD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2423]},
+				{modifiers[2350]},
 			}},
 			{EffectID::shipBonusThermalArmorResistanceAD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2424]},
+				{modifiers[2351]},
 			}},
 			{EffectID::shipBonusEMArmorResistanceAD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2425]},
+				{modifiers[2352]},
 			}},
 			{EffectID::shipBonusExplosiveArmorResistanceAD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2426]},
+				{modifiers[2353]},
 			}},
 			{EffectID::eliteBonusCommandDestroyerArmored1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2427]},{modifiers[2428]},{modifiers[2429]},{modifiers[2430]},{modifiers[2431]},
+				{modifiers[2354]},{modifiers[2355]},{modifiers[2356]},{modifiers[2357]},{modifiers[2358]},
 			}},
 			{EffectID::shipBonusKineticArmorResistanceGD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2432]},
+				{modifiers[2359]},
 			}},
 			{EffectID::shipBonusEMArmorResistanceGD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2433]},
+				{modifiers[2360]},
 			}},
 			{EffectID::shipBonusThermalArmorResistanceGD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2434]},
+				{modifiers[2361]},
 			}},
 			{EffectID::shipBonusExplosiveArmorResistanceGD2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2435]},
+				{modifiers[2362]},
 			}},
 			{EffectID::setFixedResonance, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[2436]},{modifiers[2437]},{modifiers[2438]},{modifiers[2439]},{modifiers[2440]},{modifiers[2441]},{modifiers[2442]},{modifiers[2443]},{modifiers[2444]},{modifiers[2445]},{modifiers[2446]},{modifiers[2447]},
+				{modifiers[2363]},{modifiers[2364]},{modifiers[2365]},{modifiers[2366]},{modifiers[2367]},{modifiers[2368]},{modifiers[2369]},{modifiers[2370]},{modifiers[2371]},{modifiers[2372]},{modifiers[2373]},{modifiers[2374]},
 			}},
 			{EffectID::shipSmallMissileKinDmgCF3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2448]},{modifiers[2449]},
+				{modifiers[2375]},{modifiers[2376]},
 			}},
 			{EffectID::shipMissileKinDamageCC3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2450]},
+				{modifiers[2377]},
 			}},
 			{EffectID::roleBonusWDRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2451]},{modifiers[2452]},
+				{modifiers[2378]},{modifiers[2379]},
 			}},
 			{EffectID::roleBonusWDCapCPU, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2453]},{modifiers[2454]},
+				{modifiers[2380]},{modifiers[2381]},
 			}},
 			{EffectID::shipBonusEwWeaponDisruptionStrengthAF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2455]},{modifiers[2456]},{modifiers[2457]},{modifiers[2458]},{modifiers[2459]},{modifiers[2460]},{modifiers[2461]},
+				{modifiers[2382]},{modifiers[2383]},{modifiers[2384]},{modifiers[2385]},{modifiers[2386]},{modifiers[2387]},{modifiers[2388]},
 			}},
 			{EffectID::roleBonusECMCapCPU, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2462]},{modifiers[2463]},
+				{modifiers[2389]},{modifiers[2390]},
 			}},
 			{EffectID::roleBonusECMRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2464]},{modifiers[2465]},
+				{modifiers[2391]},{modifiers[2392]},
 			}},
 			{EffectID::shipBonusJustScramblerRangeGF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2466]},
+				{modifiers[2393]},
 			}},
 			{EffectID::roleBonusJustScramblerStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2467]},
+				{modifiers[2394]},
 			}},
 			{EffectID::shipBonusAoeVelocityRocketsMF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2468]},
+				{modifiers[2395]},
 			}},
 			{EffectID::shipRocketEMThermKinDmgMF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2469]},{modifiers[2470]},{modifiers[2471]},
+				{modifiers[2396]},{modifiers[2397]},{modifiers[2398]},
 			}},
 			{EffectID::shipRocketExpDmgMF3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2472]},
+				{modifiers[2399]},
 			}},
 			{EffectID::roleBonusStasisRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2473]},
+				{modifiers[2400]},
 			}},
 			{EffectID::shieldTransporterFalloffBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2474]},{modifiers[2475]},
+				{modifiers[2401]},{modifiers[2402]},
 			}},
 			{EffectID::shipShieldTransferFalloffMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2476]},
+				{modifiers[2403]},
 			}},
 			{EffectID::shipShieldTransferFalloffCC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2477]},
+				{modifiers[2404]},
 			}},
 			{EffectID::shipRemoteArmorFalloffGC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2478]},
+				{modifiers[2405]},
 			}},
 			{EffectID::shipRemoteArmorFalloffAC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2479]},
+				{modifiers[2406]},
 			}},
 			{EffectID::armorRepairProjectorFalloffBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2480]},{modifiers[2481]},
+				{modifiers[2407]},{modifiers[2408]},
 			}},
 			{EffectID::droneHullRepairBonusEffect, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2482]},
+				{modifiers[2409]},
 			}},
 			{EffectID::logiFrigSkillMultiplier1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2483]},
+				{modifiers[2410]},
 			}},
 			{EffectID::logiFrigSkillMultiplier2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2484]},
+				{modifiers[2411]},
 			}},
 			{EffectID::eliteBonusLogiFrigArmorRepSpeedCap1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2485]},{modifiers[2486]},
+				{modifiers[2412]},{modifiers[2413]},
 			}},
 			{EffectID::eliteBonusLogiFrigShieldRepSpeedCap1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2487]},{modifiers[2488]},
+				{modifiers[2414]},{modifiers[2415]},
 			}},
 			{EffectID::eliteBonusLogiFrigArmorHP2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2489]},
+				{modifiers[2416]},
 			}},
 			{EffectID::eliteBonusLogiFrigShieldHP2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2490]},
+				{modifiers[2417]},
 			}},
 			{EffectID::eliteBonusLogiFrigSignature2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2491]},
+				{modifiers[2418]},
 			}},
 			{EffectID::overloadSelfMissileGuidanceModuleBonus, Effect::MetaInfo::Category::overloaded, false, false, {
-				{modifiers[2305]},{modifiers[2306]},{modifiers[2307]},{modifiers[2308]},
+				{modifiers[2232]},{modifiers[2233]},{modifiers[2234]},{modifiers[2235]},
 			}},
 			{EffectID::ignoreCloakVelocityPenalty, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2492]},
+				{modifiers[2419]},
 			}},
 			{EffectID::ewSkillGuidanceDisruptionBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2493]},{modifiers[2494]},{modifiers[2495]},{modifiers[2496]},
+				{modifiers[2420]},{modifiers[2421]},{modifiers[2422]},{modifiers[2423]},
 			}},
 			{EffectID::shipBonusEwWeaponDisruptionStrengthAC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2497]},{modifiers[2498]},{modifiers[2499]},{modifiers[2500]},{modifiers[2501]},{modifiers[2502]},{modifiers[2503]},
+				{modifiers[2424]},{modifiers[2425]},{modifiers[2426]},{modifiers[2427]},{modifiers[2428]},{modifiers[2429]},{modifiers[2430]},
 			}},
 			{EffectID::skillStructureMissileDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2504]},{modifiers[2505]},{modifiers[2506]},{modifiers[2507]},{modifiers[2508]},{modifiers[2509]},{modifiers[2510]},{modifiers[2511]},{modifiers[2512]},{modifiers[2513]},{modifiers[2514]},{modifiers[2515]},
+				{modifiers[2431]},{modifiers[2432]},{modifiers[2433]},{modifiers[2434]},{modifiers[2435]},{modifiers[2436]},{modifiers[2437]},{modifiers[2438]},{modifiers[2439]},{modifiers[2440]},{modifiers[2441]},{modifiers[2442]},
 			}},
 			{EffectID::skillStructureElectronicSystemsCapNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2516]},{modifiers[2517]},{modifiers[2518]},
+				{modifiers[2443]},{modifiers[2444]},{modifiers[2445]},
 			}},
 			{EffectID::skillStructureEngineeringSystemsCapNeedBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2519]},{modifiers[2520]},
+				{modifiers[2446]},{modifiers[2447]},
 			}},
 			{EffectID::structureRigAoeVelocityBonusSingleTargetMissiles, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2521]},{modifiers[2522]},
+				{modifiers[2448]},{modifiers[2449]},
 			}},
 			{EffectID::structureRigVelocityBonusSingleTargetMissiles, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2523]},{modifiers[2524]},
+				{modifiers[2450]},{modifiers[2451]},
 			}},
 			{EffectID::structureRigNeutralizerMaxRangeFalloffEffectiveness, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2525]},{modifiers[2526]},
+				{modifiers[2452]},{modifiers[2453]},
 			}},
 			{EffectID::structureRigNeutralizerCapacitorNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2527]},
+				{modifiers[2454]},
 			}},
 			{EffectID::structureRigEWMaxRangeFalloff, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2528]},{modifiers[2529]},{modifiers[2530]},{modifiers[2531]},{modifiers[2532]},{modifiers[2533]},
+				{modifiers[2455]},{modifiers[2456]},{modifiers[2457]},{modifiers[2458]},{modifiers[2459]},{modifiers[2460]},
 			}},
 			{EffectID::structureRigEWCapacitorNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2534]},{modifiers[2535]},
+				{modifiers[2461]},{modifiers[2462]},
 			}},
 			{EffectID::structureRigMaxTargets, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2536]},
+				{modifiers[2463]},
 			}},
 			{EffectID::structureRigSensorResolution, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2537]},
+				{modifiers[2464]},
 			}},
 			{EffectID::structureRigExplosionRadiusBonusAoEMissiles, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2538]},
+				{modifiers[2465]},
 			}},
 			{EffectID::structureRigVelocityBonusAoeMissiles, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2539]},
+				{modifiers[2466]},
 			}},
 			{EffectID::structureRigPDBmaxRange, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2540]},
+				{modifiers[2467]},
 			}},
 			{EffectID::structureRigPDBCapacitorNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2541]},
+				{modifiers[2468]},
 			}},
 			{EffectID::structureRigFighterHP, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2542]},{modifiers[2543]},{modifiers[2544]},{modifiers[2545]},{modifiers[2546]},{modifiers[2547]},
+				{modifiers[2469]},{modifiers[2470]},{modifiers[2471]},{modifiers[2472]},{modifiers[2473]},{modifiers[2474]},
 			}},
 			{EffectID::structureRigFighterMaxVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2548]},{modifiers[2549]},
+				{modifiers[2475]},{modifiers[2476]},
 			}},
 			{EffectID::structureRigDoomsdayDamageLoss, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2550]},
+				{modifiers[2477]},
 			}},
 			{EffectID::remoteSensorDampFalloff, Effect::MetaInfo::Category::target, true, false, {
 				
@@ -6330,7 +6090,7 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::shipModuleRemoteTrackingComputer, Effect::MetaInfo::Category::target, false, true, {
-				{modifiers[2353]},{modifiers[2354]},{modifiers[2355]},
+				{modifiers[2280]},{modifiers[2281]},{modifiers[2282]},
 			}},
 			{EffectID::fighterAbilityMissiles, Effect::MetaInfo::Category::target, true, false, {
 				
@@ -6372,13 +6132,13 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::structureMissileGuidanceEnhancer, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2551]},{modifiers[2552]},{modifiers[2553]},{modifiers[2554]},{modifiers[2555]},{modifiers[2556]},{modifiers[2557]},{modifiers[2558]},
+				{modifiers[2478]},{modifiers[2479]},{modifiers[2480]},{modifiers[2481]},{modifiers[2482]},{modifiers[2483]},{modifiers[2484]},{modifiers[2485]},
 			}},
 			{EffectID::structureBallisticControlSystem, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2559]},{modifiers[2560]},{modifiers[2561]},{modifiers[2562]},{modifiers[2563]},{modifiers[2564]},{modifiers[2565]},{modifiers[2566]},{modifiers[2567]},{modifiers[2568]},
+				{modifiers[2486]},{modifiers[2487]},{modifiers[2488]},{modifiers[2489]},{modifiers[2490]},{modifiers[2491]},{modifiers[2492]},{modifiers[2493]},{modifiers[2494]},{modifiers[2495]},
 			}},
 			{EffectID::structureMissileGuidanceComputerBonus5, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[2569]},{modifiers[2570]},{modifiers[2571]},{modifiers[2572]},
+				{modifiers[2496]},{modifiers[2497]},{modifiers[2498]},{modifiers[2499]},
 			}},
 			{EffectID::structureScanResolutionActivePercentage, Effect::MetaInfo::Category::active, false, false, {
 				{modifiers[232]},
@@ -6402,7 +6162,7 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::structureRigDoomsdayTargetAmountBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2573]},
+				{modifiers[2500]},
 			}},
 			{EffectID::doomsdayAOEWeb, Effect::MetaInfo::Category::active, true, false, {
 				
@@ -6432,394 +6192,394 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::modifyEnergyWarfareResistance, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2574]},
+				{modifiers[2501]},
 			}},
 			{EffectID::scriptSensorBoosterSensorStrengthBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2575]},{modifiers[2576]},{modifiers[2577]},{modifiers[2578]},
+				{modifiers[2502]},{modifiers[2503]},{modifiers[2504]},{modifiers[2505]},
 			}},
 			{EffectID::skillMultiplierShipBonusDreadnoughtAmarr, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2579]},{modifiers[2580]},{modifiers[2581]},
+				{modifiers[2506]},{modifiers[2507]},{modifiers[2508]},
 			}},
 			{EffectID::skillMultiplierShipBonusDreadnoughtCaldari, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2582]},{modifiers[2583]},{modifiers[2584]},
+				{modifiers[2509]},{modifiers[2510]},{modifiers[2511]},
 			}},
 			{EffectID::skillMultiplierShipBonusDreadnoughtGallente, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2585]},{modifiers[2586]},{modifiers[2587]},
+				{modifiers[2512]},{modifiers[2513]},{modifiers[2514]},
 			}},
 			{EffectID::skillMultiplierShipBonusDreadnoughtMinmatar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2588]},{modifiers[2589]},{modifiers[2590]},
+				{modifiers[2515]},{modifiers[2516]},{modifiers[2517]},
 			}},
 			{EffectID::shipBonusDreadnoughtA1DamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2591]},
+				{modifiers[2518]},
 			}},
 			{EffectID::shipBonusDreadnoughtA2ArmorResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2592]},{modifiers[2593]},{modifiers[2594]},{modifiers[2595]},
+				{modifiers[2519]},{modifiers[2520]},{modifiers[2521]},{modifiers[2522]},
 			}},
 			{EffectID::shipBonusDreadnoughtA3CapNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2596]},
+				{modifiers[2523]},
 			}},
 			{EffectID::shipBonusDreadnoughtC1DamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2597]},{modifiers[2598]},{modifiers[2599]},{modifiers[2600]},{modifiers[2601]},{modifiers[2602]},{modifiers[2603]},{modifiers[2604]},{modifiers[2605]},{modifiers[2606]},{modifiers[2607]},{modifiers[2608]},
+				{modifiers[2524]},{modifiers[2525]},{modifiers[2526]},{modifiers[2527]},{modifiers[2528]},{modifiers[2529]},{modifiers[2530]},{modifiers[2531]},{modifiers[2532]},{modifiers[2533]},{modifiers[2534]},{modifiers[2535]},
 			}},
 			{EffectID::shipBonusDreadnoughtC2ShieldResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2609]},{modifiers[2610]},{modifiers[2611]},{modifiers[2612]},
+				{modifiers[2536]},{modifiers[2537]},{modifiers[2538]},{modifiers[2539]},
 			}},
 			{EffectID::shipBonusDreadnoughtG1DamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2613]},
+				{modifiers[2540]},
 			}},
 			{EffectID::shipBonusDreadnoughtG2ROFBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2614]},
+				{modifiers[2541]},
 			}},
 			{EffectID::shipBonusDreadnoughtG3RepairTime, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2615]},
+				{modifiers[2542]},
 			}},
 			{EffectID::shipBonusDreadnoughtM1DamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2616]},
+				{modifiers[2543]},
 			}},
 			{EffectID::shipBonusDreadnoughtM2ROFBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2617]},
+				{modifiers[2544]},
 			}},
 			{EffectID::shipBonusDreadnoughtM3RepairTime, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2618]},
+				{modifiers[2545]},
 			}},
 			{EffectID::doomsdayAOEECM, Effect::MetaInfo::Category::active, true, false, {
 				
 			}},
 			{EffectID::skillMultiplierShipBonusForceAuxiliaryAmarr, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2619]},{modifiers[2620]},{modifiers[2621]},{modifiers[2622]},
+				{modifiers[2546]},{modifiers[2547]},{modifiers[2548]},{modifiers[2549]},
 			}},
 			{EffectID::skillMultiplierShipBonusForceAuxiliaryCaldari, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2623]},{modifiers[2624]},{modifiers[2625]},{modifiers[2626]},
+				{modifiers[2550]},{modifiers[2551]},{modifiers[2552]},{modifiers[2553]},
 			}},
 			{EffectID::skillMultiplierShipBonusForceAuxiliaryGallente, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2627]},{modifiers[2628]},{modifiers[2629]},{modifiers[2630]},
+				{modifiers[2554]},{modifiers[2555]},{modifiers[2556]},{modifiers[2557]},
 			}},
 			{EffectID::skillMultiplierShipBonusForceAuxiliaryMinmatar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2631]},{modifiers[2632]},{modifiers[2633]},{modifiers[2634]},
+				{modifiers[2558]},{modifiers[2559]},{modifiers[2560]},{modifiers[2561]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryA1RemoteRepairAndCapAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2635]},{modifiers[2636]},
+				{modifiers[2562]},{modifiers[2563]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryA2ArmorResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2637]},{modifiers[2638]},{modifiers[2639]},{modifiers[2640]},
+				{modifiers[2564]},{modifiers[2565]},{modifiers[2566]},{modifiers[2567]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryA3CapCapacity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2641]},
+				{modifiers[2568]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryA4WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2642]},{modifiers[2643]},{modifiers[2644]},{modifiers[2645]},{modifiers[2646]},{modifiers[2647]},{modifiers[2648]},{modifiers[2649]},{modifiers[2650]},{modifiers[2651]},
+				{modifiers[2569]},{modifiers[2570]},{modifiers[2571]},{modifiers[2572]},{modifiers[2573]},{modifiers[2574]},{modifiers[2575]},{modifiers[2576]},{modifiers[2577]},{modifiers[2578]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryM4WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2652]},{modifiers[2653]},{modifiers[2654]},{modifiers[2655]},{modifiers[2656]},{modifiers[2657]},{modifiers[2658]},{modifiers[2659]},{modifiers[2660]},{modifiers[2661]},
+				{modifiers[2579]},{modifiers[2580]},{modifiers[2581]},{modifiers[2582]},{modifiers[2583]},{modifiers[2584]},{modifiers[2585]},{modifiers[2586]},{modifiers[2587]},{modifiers[2588]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryG4WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2662]},{modifiers[2663]},{modifiers[2664]},{modifiers[2665]},{modifiers[2666]},{modifiers[2667]},{modifiers[2668]},{modifiers[2669]},{modifiers[2670]},{modifiers[2671]},
+				{modifiers[2589]},{modifiers[2590]},{modifiers[2591]},{modifiers[2592]},{modifiers[2593]},{modifiers[2594]},{modifiers[2595]},{modifiers[2596]},{modifiers[2597]},{modifiers[2598]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryC4WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2672]},{modifiers[2673]},{modifiers[2674]},{modifiers[2675]},{modifiers[2676]},{modifiers[2677]},{modifiers[2678]},{modifiers[2679]},{modifiers[2680]},{modifiers[2681]},
+				{modifiers[2599]},{modifiers[2600]},{modifiers[2601]},{modifiers[2602]},{modifiers[2603]},{modifiers[2604]},{modifiers[2605]},{modifiers[2606]},{modifiers[2607]},{modifiers[2608]},
 			}},
 			{EffectID::shipBonusRole1CommandBurstCPUBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2682]},
+				{modifiers[2609]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryC1RemoteBoostAndCapAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2683]},{modifiers[2684]},
+				{modifiers[2610]},{modifiers[2611]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryC2ShieldResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2685]},{modifiers[2686]},{modifiers[2687]},{modifiers[2688]},
+				{modifiers[2612]},{modifiers[2613]},{modifiers[2614]},{modifiers[2615]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryC3CapCapacity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2689]},
+				{modifiers[2616]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryG1RemoteCycleTime, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2690]},{modifiers[2691]},
+				{modifiers[2617]},{modifiers[2618]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryG2LocalRepairAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2692]},{modifiers[2693]},
+				{modifiers[2619]},{modifiers[2620]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryG3CapBoosterStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2694]},
+				{modifiers[2621]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryM1RemoteDuration, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2695]},{modifiers[2696]},
+				{modifiers[2622]},{modifiers[2623]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryM2LocalBoostAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2697]},{modifiers[2698]},
+				{modifiers[2624]},{modifiers[2625]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryM3CapBoosterStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2699]},
+				{modifiers[2626]},
 			}},
 			{EffectID::fighterAbilityKamikaze, Effect::MetaInfo::Category::target, false, false, {
 				
 			}},
 			{EffectID::moduleBonusDroneNavigationComputer, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2700]},{modifiers[2701]},
+				{modifiers[2627]},{modifiers[2628]},
 			}},
 			{EffectID::moduleBonusDroneDamageAmplifier, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2702]},{modifiers[2703]},{modifiers[2704]},{modifiers[2705]},
+				{modifiers[2629]},{modifiers[2630]},{modifiers[2631]},{modifiers[2632]},
 			}},
 			{EffectID::moduleBonusOmnidirectionalTrackingLink, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[2706]},{modifiers[2707]},{modifiers[2708]},{modifiers[2709]},{modifiers[2710]},{modifiers[2711]},{modifiers[2712]},{modifiers[2713]},{modifiers[2714]},{modifiers[2715]},{modifiers[2716]},{modifiers[2717]},{modifiers[2718]},
+				{modifiers[2633]},{modifiers[2634]},{modifiers[2635]},{modifiers[2636]},{modifiers[2637]},{modifiers[2638]},{modifiers[2639]},{modifiers[2640]},{modifiers[2641]},{modifiers[2642]},{modifiers[2643]},{modifiers[2644]},{modifiers[2645]},
 			}},
 			{EffectID::moduleBonusOmnidirectionalTrackingLinkOverload, Effect::MetaInfo::Category::overloaded, false, false, {
-				{modifiers[2068]},{modifiers[2069]},{modifiers[2070]},{modifiers[2305]},{modifiers[2306]},
+				{modifiers[2011]},{modifiers[2012]},{modifiers[2013]},{modifiers[2232]},{modifiers[2233]},
 			}},
 			{EffectID::moduleBonusOmnidirectionalTrackingEnhancer, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2706]},{modifiers[2707]},{modifiers[2708]},{modifiers[2709]},{modifiers[2710]},{modifiers[2711]},{modifiers[2712]},{modifiers[2713]},{modifiers[2714]},{modifiers[2715]},{modifiers[2716]},{modifiers[2717]},{modifiers[2718]},
+				{modifiers[2633]},{modifiers[2634]},{modifiers[2635]},{modifiers[2636]},{modifiers[2637]},{modifiers[2638]},{modifiers[2639]},{modifiers[2640]},{modifiers[2641]},{modifiers[2642]},{modifiers[2643]},{modifiers[2644]},{modifiers[2645]},
 			}},
 			{EffectID::skillBonusFighters, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2719]},{modifiers[2720]},{modifiers[2721]},
+				{modifiers[2646]},{modifiers[2647]},{modifiers[2648]},
 			}},
 			{EffectID::skillBonusLightFighters, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2722]},
+				{modifiers[2649]},
 			}},
 			{EffectID::skillBonusSupportFightersShield, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2723]},
+				{modifiers[2650]},
 			}},
 			{EffectID::skillBonusHeavyFighters, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2724]},{modifiers[2725]},{modifiers[2726]},
+				{modifiers[2651]},{modifiers[2652]},{modifiers[2653]},
 			}},
 			{EffectID::citadelRigBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2727]},{modifiers[2728]},{modifiers[2729]},{modifiers[2730]},{modifiers[2731]},{modifiers[2732]},{modifiers[2733]},{modifiers[2734]},{modifiers[2735]},{modifiers[2736]},
+				{modifiers[2654]},{modifiers[2655]},{modifiers[2656]},{modifiers[2657]},{modifiers[2658]},{modifiers[2659]},{modifiers[2660]},{modifiers[2661]},{modifiers[2662]},{modifiers[2663]},
 			}},
 			{EffectID::moduleBonusFighterSupportUnit, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[2737]},{modifiers[2738]},{modifiers[2739]},{modifiers[2740]},{modifiers[2741]},{modifiers[2742]},
+				{modifiers[2664]},{modifiers[2665]},{modifiers[2666]},{modifiers[2667]},{modifiers[2668]},{modifiers[2669]},
 			}},
 			{EffectID::moduleBonusNetworkedSensorArray, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[232]},{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},{modifiers[1476]},{modifiers[1477]},{modifiers[2743]},{modifiers[2744]},{modifiers[2745]},{modifiers[2746]},{modifiers[2747]},{modifiers[2748]},{modifiers[2749]},{modifiers[2750]},{modifiers[2751]},{modifiers[2752]},{modifiers[2753]},
+				{modifiers[232]},{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},{modifiers[1423]},{modifiers[1424]},{modifiers[2670]},{modifiers[2671]},{modifiers[2672]},{modifiers[2673]},{modifiers[2674]},{modifiers[2675]},{modifiers[2676]},{modifiers[2677]},{modifiers[2678]},{modifiers[2679]},{modifiers[2680]},
 			}},
 			{EffectID::citadelServiceFuelBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2754]},{modifiers[2755]},
+				{modifiers[2681]},{modifiers[2682]},
 			}},
 			{EffectID::skillMultiplierFighterHangarSize, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2756]},
+				{modifiers[2683]},
 			}},
 			{EffectID::skillBonusFighterHangarManagement, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2757]},
+				{modifiers[2684]},
 			}},
 			{EffectID::skillBonusCapitalAutocannonSpecialization, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2758]},
+				{modifiers[2685]},
 			}},
 			{EffectID::skillBonusCapitalArtillerySpecialization, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2759]},
+				{modifiers[2686]},
 			}},
 			{EffectID::skillBonusCapitalBlasterSpecialization, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2760]},
+				{modifiers[2687]},
 			}},
 			{EffectID::skillBonusCapitalRailgunSpecialization, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2761]},
+				{modifiers[2688]},
 			}},
 			{EffectID::skillBonusCapitalPulseLaserSpecialization, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2762]},
+				{modifiers[2689]},
 			}},
 			{EffectID::skillBonusCapitalBeamLaserSpecialization, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2763]},
+				{modifiers[2690]},
 			}},
 			{EffectID::skillBonusXLCruiseMissileSpecialization, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2764]},
+				{modifiers[2691]},
 			}},
 			{EffectID::skillBonusXLTorpedoSpecialization, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2765]},
+				{modifiers[2692]},
 			}},
 			{EffectID::shipBonusRole2LogisticDroneRepAmountBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2766]},{modifiers[2767]},{modifiers[2768]},
+				{modifiers[2693]},{modifiers[2694]},{modifiers[2695]},
 			}},
 			{EffectID::moduleBonusTriageModule, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[33]},{modifiers[616]},{modifiers[617]},{modifiers[1475]},{modifiers[1476]},{modifiers[1477]},{modifiers[1478]},{modifiers[1479]},{modifiers[1480]},{modifiers[1481]},{modifiers[1482]},{modifiers[1483]},{modifiers[2743]},{modifiers[2744]},{modifiers[2745]},{modifiers[2746]},{modifiers[2747]},{modifiers[2748]},{modifiers[2749]},{modifiers[2769]},{modifiers[2770]},{modifiers[2771]},{modifiers[2772]},{modifiers[2773]},{modifiers[2774]},{modifiers[2775]},{modifiers[2776]},{modifiers[2777]},{modifiers[2778]},{modifiers[2779]},{modifiers[2780]},{modifiers[2781]},{modifiers[2782]},{modifiers[2783]},{modifiers[2784]},{modifiers[2785]},{modifiers[2786]},{modifiers[2787]},{modifiers[2788]},{modifiers[2789]},{modifiers[2790]},{modifiers[2791]},{modifiers[2792]},
+				{modifiers[33]},{modifiers[616]},{modifiers[617]},{modifiers[1422]},{modifiers[1423]},{modifiers[1424]},{modifiers[1425]},{modifiers[1426]},{modifiers[1427]},{modifiers[1428]},{modifiers[1429]},{modifiers[1430]},{modifiers[2670]},{modifiers[2671]},{modifiers[2672]},{modifiers[2673]},{modifiers[2674]},{modifiers[2675]},{modifiers[2676]},{modifiers[2696]},{modifiers[2697]},{modifiers[2698]},{modifiers[2699]},{modifiers[2700]},{modifiers[2701]},{modifiers[2702]},{modifiers[2703]},{modifiers[2704]},{modifiers[2705]},{modifiers[2706]},{modifiers[2707]},{modifiers[2708]},{modifiers[2709]},{modifiers[2710]},{modifiers[2711]},{modifiers[2712]},{modifiers[2713]},{modifiers[2714]},{modifiers[2715]},{modifiers[2716]},{modifiers[2717]},{modifiers[2718]},{modifiers[2719]},
 			}},
 			{EffectID::moduleBonusSiegeModule, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[616]},{modifiers[617]},{modifiers[1475]},{modifiers[1476]},{modifiers[1477]},{modifiers[1478]},{modifiers[1479]},{modifiers[1480]},{modifiers[1481]},{modifiers[1482]},{modifiers[2789]},{modifiers[2790]},{modifiers[2791]},{modifiers[2792]},{modifiers[2793]},{modifiers[2794]},{modifiers[2795]},{modifiers[2796]},{modifiers[2797]},{modifiers[2798]},{modifiers[2799]},{modifiers[2800]},{modifiers[2801]},{modifiers[2802]},{modifiers[2803]},{modifiers[2804]},{modifiers[2805]},{modifiers[2806]},{modifiers[2807]},{modifiers[2808]},{modifiers[2809]},{modifiers[2810]},{modifiers[2811]},{modifiers[2812]},
+				{modifiers[616]},{modifiers[617]},{modifiers[1422]},{modifiers[1423]},{modifiers[1424]},{modifiers[1425]},{modifiers[1426]},{modifiers[1427]},{modifiers[1428]},{modifiers[1429]},{modifiers[2716]},{modifiers[2717]},{modifiers[2718]},{modifiers[2719]},{modifiers[2720]},{modifiers[2721]},{modifiers[2722]},{modifiers[2723]},{modifiers[2724]},{modifiers[2725]},{modifiers[2726]},{modifiers[2727]},{modifiers[2728]},{modifiers[2729]},{modifiers[2730]},{modifiers[2731]},{modifiers[2732]},{modifiers[2733]},{modifiers[2734]},{modifiers[2735]},{modifiers[2736]},{modifiers[2737]},{modifiers[2738]},{modifiers[2739]},
 			}},
 			{EffectID::skillMultiplierShipBonusCarrierAmarr, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2813]},{modifiers[2814]},{modifiers[2815]},{modifiers[2816]},
+				{modifiers[2740]},{modifiers[2741]},{modifiers[2742]},{modifiers[2743]},
 			}},
 			{EffectID::skillMultiplierShipBonusCarrierCaldari, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2817]},{modifiers[2818]},{modifiers[2819]},{modifiers[2820]},
+				{modifiers[2744]},{modifiers[2745]},{modifiers[2746]},{modifiers[2747]},
 			}},
 			{EffectID::skillMultiplierShipBonusCarrierGallente, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2821]},{modifiers[2822]},{modifiers[2823]},{modifiers[2824]},
+				{modifiers[2748]},{modifiers[2749]},{modifiers[2750]},{modifiers[2751]},
 			}},
 			{EffectID::skillMultiplierShipBonusCarrierMinmatar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2825]},{modifiers[2826]},{modifiers[2827]},{modifiers[2828]},
+				{modifiers[2752]},{modifiers[2753]},{modifiers[2754]},{modifiers[2755]},
 			}},
 			{EffectID::skillMultiplierShipBonusSupercarrierAmarr, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2829]},{modifiers[2830]},{modifiers[2831]},{modifiers[2832]},{modifiers[2833]},
+				{modifiers[2756]},{modifiers[2757]},{modifiers[2758]},{modifiers[2759]},{modifiers[2760]},
 			}},
 			{EffectID::skillMultiplierShipBonusSupercarrierCaldari, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2834]},{modifiers[2835]},{modifiers[2836]},{modifiers[2837]},{modifiers[2838]},
+				{modifiers[2761]},{modifiers[2762]},{modifiers[2763]},{modifiers[2764]},{modifiers[2765]},
 			}},
 			{EffectID::skillMultiplierShipBonusSupercarrierGallente, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2839]},{modifiers[2840]},{modifiers[2841]},{modifiers[2842]},{modifiers[2843]},
+				{modifiers[2766]},{modifiers[2767]},{modifiers[2768]},{modifiers[2769]},{modifiers[2770]},
 			}},
 			{EffectID::skillMultiplierShipBonusSupercarrierMinmatar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2844]},{modifiers[2845]},{modifiers[2846]},{modifiers[2847]},{modifiers[2848]},
+				{modifiers[2771]},{modifiers[2772]},{modifiers[2773]},{modifiers[2774]},{modifiers[2775]},
 			}},
 			{EffectID::shipBonusSupercarrierA3WarpStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2849]},
+				{modifiers[2776]},
 			}},
 			{EffectID::shipBonusSupercarrierC3WarpStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2850]},
+				{modifiers[2777]},
 			}},
 			{EffectID::shipBonusSupercarrierG3WarpStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2851]},
+				{modifiers[2778]},
 			}},
 			{EffectID::shipBonusSupercarrierM3WarpStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2852]},
+				{modifiers[2779]},
 			}},
 			{EffectID::shipBonusCarrierA4WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2853]},{modifiers[2854]},{modifiers[2855]},{modifiers[2856]},{modifiers[2857]},{modifiers[2858]},{modifiers[2859]},{modifiers[2860]},{modifiers[2861]},{modifiers[2862]},
+				{modifiers[2780]},{modifiers[2781]},{modifiers[2782]},{modifiers[2783]},{modifiers[2784]},{modifiers[2785]},{modifiers[2786]},{modifiers[2787]},{modifiers[2788]},{modifiers[2789]},
 			}},
 			{EffectID::shipBonusCarrierC4WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2863]},{modifiers[2864]},{modifiers[2865]},{modifiers[2866]},{modifiers[2867]},{modifiers[2868]},{modifiers[2869]},{modifiers[2870]},{modifiers[2871]},{modifiers[2872]},
+				{modifiers[2790]},{modifiers[2791]},{modifiers[2792]},{modifiers[2793]},{modifiers[2794]},{modifiers[2795]},{modifiers[2796]},{modifiers[2797]},{modifiers[2798]},{modifiers[2799]},
 			}},
 			{EffectID::shipBonusCarrierG4WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2873]},{modifiers[2874]},{modifiers[2875]},{modifiers[2876]},{modifiers[2877]},{modifiers[2878]},{modifiers[2879]},{modifiers[2880]},{modifiers[2881]},{modifiers[2882]},
+				{modifiers[2800]},{modifiers[2801]},{modifiers[2802]},{modifiers[2803]},{modifiers[2804]},{modifiers[2805]},{modifiers[2806]},{modifiers[2807]},{modifiers[2808]},{modifiers[2809]},
 			}},
 			{EffectID::shipBonusCarrierM4WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2883]},{modifiers[2884]},{modifiers[2885]},{modifiers[2886]},{modifiers[2887]},{modifiers[2888]},{modifiers[2889]},{modifiers[2890]},{modifiers[2891]},{modifiers[2892]},
+				{modifiers[2810]},{modifiers[2811]},{modifiers[2812]},{modifiers[2813]},{modifiers[2814]},{modifiers[2815]},{modifiers[2816]},{modifiers[2817]},{modifiers[2818]},{modifiers[2819]},
 			}},
 			{EffectID::shipBonusCarrierA1ArmorResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2893]},{modifiers[2894]},{modifiers[2895]},{modifiers[2896]},
+				{modifiers[2820]},{modifiers[2821]},{modifiers[2822]},{modifiers[2823]},
 			}},
 			{EffectID::shipBonusCarrierC1ShieldResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2897]},{modifiers[2898]},{modifiers[2899]},{modifiers[2900]},
+				{modifiers[2824]},{modifiers[2825]},{modifiers[2826]},{modifiers[2827]},
 			}},
 			{EffectID::shipBonusCarrierG1FighterDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2901]},{modifiers[2902]},{modifiers[2903]},
+				{modifiers[2828]},{modifiers[2829]},{modifiers[2830]},
 			}},
 			{EffectID::shipBonusCarrierM1FighterDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2904]},{modifiers[2905]},{modifiers[2906]},
+				{modifiers[2831]},{modifiers[2832]},{modifiers[2833]},
 			}},
 			{EffectID::shipBonusSupercarrierA1FighterDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2907]},{modifiers[2908]},{modifiers[2909]},
+				{modifiers[2834]},{modifiers[2835]},{modifiers[2836]},
 			}},
 			{EffectID::shipBonusSupercarrierC1FighterDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2910]},{modifiers[2911]},{modifiers[2912]},
+				{modifiers[2837]},{modifiers[2838]},{modifiers[2839]},
 			}},
 			{EffectID::shipBonusSupercarrierG1FighterDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2913]},{modifiers[2914]},{modifiers[2915]},
+				{modifiers[2840]},{modifiers[2841]},{modifiers[2842]},
 			}},
 			{EffectID::shipBonusSupercarrierM1FighterDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2916]},{modifiers[2917]},{modifiers[2918]},
+				{modifiers[2843]},{modifiers[2844]},{modifiers[2845]},
 			}},
 			{EffectID::shipBonusSupercarrierA5WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2919]},{modifiers[2920]},{modifiers[2921]},{modifiers[2922]},{modifiers[2923]},{modifiers[2924]},{modifiers[2925]},{modifiers[2926]},{modifiers[2927]},{modifiers[2928]},
+				{modifiers[2846]},{modifiers[2847]},{modifiers[2848]},{modifiers[2849]},{modifiers[2850]},{modifiers[2851]},{modifiers[2852]},{modifiers[2853]},{modifiers[2854]},{modifiers[2855]},
 			}},
 			{EffectID::shipBonusSupercarrierC5WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2929]},{modifiers[2930]},{modifiers[2931]},{modifiers[2932]},{modifiers[2933]},{modifiers[2934]},{modifiers[2935]},{modifiers[2936]},{modifiers[2937]},{modifiers[2938]},
+				{modifiers[2856]},{modifiers[2857]},{modifiers[2858]},{modifiers[2859]},{modifiers[2860]},{modifiers[2861]},{modifiers[2862]},{modifiers[2863]},{modifiers[2864]},{modifiers[2865]},
 			}},
 			{EffectID::shipBonusSupercarrierG5WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2939]},{modifiers[2940]},{modifiers[2941]},{modifiers[2942]},{modifiers[2943]},{modifiers[2944]},{modifiers[2945]},{modifiers[2946]},{modifiers[2947]},{modifiers[2948]},
+				{modifiers[2866]},{modifiers[2867]},{modifiers[2868]},{modifiers[2869]},{modifiers[2870]},{modifiers[2871]},{modifiers[2872]},{modifiers[2873]},{modifiers[2874]},{modifiers[2875]},
 			}},
 			{EffectID::shipBonusSupercarrierM5WarfareLinksBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2949]},{modifiers[2950]},{modifiers[2951]},{modifiers[2952]},{modifiers[2953]},{modifiers[2954]},{modifiers[2955]},{modifiers[2956]},{modifiers[2957]},{modifiers[2958]},
+				{modifiers[2876]},{modifiers[2877]},{modifiers[2878]},{modifiers[2879]},{modifiers[2880]},{modifiers[2881]},{modifiers[2882]},{modifiers[2883]},{modifiers[2884]},{modifiers[2885]},
 			}},
 			{EffectID::shipBonusSupercarrierC2AfterburnerBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2959]},
+				{modifiers[2886]},
 			}},
 			{EffectID::shipBonusSupercarrierA2FighterApplicationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2960]},{modifiers[2961]},
+				{modifiers[2887]},{modifiers[2888]},
 			}},
 			{EffectID::shipBonusSupercarrierRole1NumWarfareLinks, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2962]},{modifiers[2963]},
+				{modifiers[2889]},{modifiers[2890]},
 			}},
 			{EffectID::shipBonusSupercarrierRole2ArmorShieldModuleBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2964]},{modifiers[2965]},
+				{modifiers[2891]},{modifiers[2892]},
 			}},
 			{EffectID::shipBonusSupercarrierA4BurstProjectorBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2966]},
+				{modifiers[2893]},
 			}},
 			{EffectID::shipBonusSupercarrierC4BurstProjectorBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2967]},
+				{modifiers[2894]},
 			}},
 			{EffectID::shipBonusSupercarrierG4BurstProjectorBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2968]},
+				{modifiers[2895]},
 			}},
 			{EffectID::shipBonusSupercarrierM4BurstProjectorBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2969]},
+				{modifiers[2896]},
 			}},
 			{EffectID::shipBonusCarrierRole1NumWarfareLinks, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2962]},{modifiers[2963]},
+				{modifiers[2889]},{modifiers[2890]},
 			}},
 			{EffectID::shipBonusDreadnoughtC3ReloadBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2970]},
+				{modifiers[2897]},
 			}},
 			{EffectID::shipBonusSupercarrierA2ArmorResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2971]},{modifiers[2972]},{modifiers[2973]},{modifiers[2974]},
+				{modifiers[2898]},{modifiers[2899]},{modifiers[2900]},{modifiers[2901]},
 			}},
 			{EffectID::shipBonusSupercarrierC2ShieldResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2975]},{modifiers[2976]},{modifiers[2977]},{modifiers[2978]},
+				{modifiers[2902]},{modifiers[2903]},{modifiers[2904]},{modifiers[2905]},
 			}},
 			{EffectID::shipBonusSupercarrierG2FighterHitpoints, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2979]},
+				{modifiers[2906]},
 			}},
 			{EffectID::shipBonusSupercarrierM2FighterVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2980]},
+				{modifiers[2907]},
 			}},
 			{EffectID::shipBonusCarrierA2SupportFighterBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2981]},{modifiers[2982]},
+				{modifiers[2908]},{modifiers[2909]},
 			}},
 			{EffectID::shipBonusCarrierC2SupportFighterBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2983]},{modifiers[2984]},
+				{modifiers[2910]},{modifiers[2911]},
 			}},
 			{EffectID::shipBonusCarrierG2SupportFighterBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2985]},{modifiers[2986]},
+				{modifiers[2912]},{modifiers[2913]},
 			}},
 			{EffectID::shipBonusCarrierM2SupportFighterBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2987]},{modifiers[2988]},
+				{modifiers[2914]},{modifiers[2915]},
 			}},
 			{EffectID::scriptResistanceBonusBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2989]},{modifiers[2990]},{modifiers[2991]},{modifiers[2992]},
+				{modifiers[2916]},{modifiers[2917]},{modifiers[2918]},{modifiers[2919]},
 			}},
 			{EffectID::skillMultiplierShipBonusTitanAmarr, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2993]},{modifiers[2994]},{modifiers[2995]},{modifiers[2996]},
+				{modifiers[2920]},{modifiers[2921]},{modifiers[2922]},{modifiers[2923]},
 			}},
 			{EffectID::skillMultiplierShipBonusTitanCaldari, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2997]},{modifiers[2998]},{modifiers[2999]},{modifiers[3000]},{modifiers[3001]},
+				{modifiers[2924]},{modifiers[2925]},{modifiers[2926]},{modifiers[2927]},{modifiers[2928]},
 			}},
 			{EffectID::skillMultiplierShipBonusTitanGallente, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3002]},{modifiers[3003]},{modifiers[3004]},{modifiers[3005]},
+				{modifiers[2929]},{modifiers[2930]},{modifiers[2931]},{modifiers[2932]},
 			}},
 			{EffectID::skillMultiplierShipBonusTitanMinmatar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3006]},{modifiers[3007]},{modifiers[3008]},{modifiers[3009]},
+				{modifiers[2933]},{modifiers[2934]},{modifiers[2935]},{modifiers[2936]},
 			}},
 			{EffectID::shipBonusTitanA1DamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3010]},
+				{modifiers[2937]},
 			}},
 			{EffectID::shipBonusTitanC1KinDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3011]},{modifiers[3012]},{modifiers[3013]},
+				{modifiers[2938]},{modifiers[2939]},{modifiers[2940]},
 			}},
 			{EffectID::shipBonusTitanG1DamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3014]},
+				{modifiers[2941]},
 			}},
 			{EffectID::shipBonusTitanM1DamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3015]},
+				{modifiers[2942]},
 			}},
 			{EffectID::shipBonusTitanC2ROFBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3016]},{modifiers[3017]},{modifiers[3018]},
+				{modifiers[2943]},{modifiers[2944]},{modifiers[2945]},
 			}},
 			{EffectID::shipBonusSupercarrierA4FighterApplicationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3019]},{modifiers[3020]},
+				{modifiers[2946]},{modifiers[2947]},
 			}},
 			{EffectID::shipBonusRole1NumWarfareLinks, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2962]},{modifiers[2963]},
+				{modifiers[2889]},{modifiers[2890]},
 			}},
 			{EffectID::shipBonusRole2ArmorPlatesShieldExtendersBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2964]},{modifiers[2965]},
+				{modifiers[2891]},{modifiers[2892]},
 			}},
 			{EffectID::skillBonusDoomsdayRapidFiring, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3021]},
+				{modifiers[2948]},
 			}},
 			{EffectID::shipBonusTitanA3WarpStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3022]},
+				{modifiers[2949]},
 			}},
 			{EffectID::shipBonusTitanC3WarpStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3023]},
+				{modifiers[2950]},
 			}},
 			{EffectID::shipBonusTitanG3WarpStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3024]},
+				{modifiers[2951]},
 			}},
 			{EffectID::shipBonusTitanM3WarpStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3025]},
+				{modifiers[2952]},
 			}},
 			{EffectID::shipModuleAncillaryRemoteArmorRepairer, Effect::MetaInfo::Category::target, false, true, {
 				{modifiers[206]},
@@ -6828,85 +6588,85 @@ namespace dgmpp2 {
 				{modifiers[3]},
 			}},
 			{EffectID::shipBonusTitanA2CapNeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3026]},
+				{modifiers[2953]},
 			}},
 			{EffectID::shipBonusTitanG2ROFBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3027]},
+				{modifiers[2954]},
 			}},
 			{EffectID::shipBonusTitanM2ROFBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3028]},
+				{modifiers[2955]},
 			}},
 			{EffectID::shipBonusRole3XLTorpdeoVelocityBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3029]},
+				{modifiers[2956]},
 			}},
 			{EffectID::shipBonusTitanC5AllDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3030]},{modifiers[3031]},{modifiers[3032]},{modifiers[3033]},{modifiers[3034]},{modifiers[3035]},{modifiers[3036]},{modifiers[3037]},{modifiers[3038]},
+				{modifiers[2957]},{modifiers[2958]},{modifiers[2959]},{modifiers[2960]},{modifiers[2961]},{modifiers[2962]},{modifiers[2963]},{modifiers[2964]},{modifiers[2965]},
 			}},
 			{EffectID::moduleBonusBastionModule, Effect::MetaInfo::Category::active, true, false, {
-				{modifiers[431]},{modifiers[616]},{modifiers[617]},{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},{modifiers[660]},{modifiers[661]},{modifiers[662]},{modifiers[663]},{modifiers[664]},{modifiers[665]},{modifiers[666]},{modifiers[667]},{modifiers[668]},{modifiers[669]},{modifiers[670]},{modifiers[671]},{modifiers[1476]},{modifiers[1477]},{modifiers[1479]},{modifiers[1480]},{modifiers[1481]},{modifiers[1482]},{modifiers[1831]},{modifiers[2793]},{modifiers[3039]},{modifiers[3040]},{modifiers[3041]},{modifiers[3042]},{modifiers[3043]},{modifiers[3044]},{modifiers[3045]},{modifiers[3046]},{modifiers[3047]},{modifiers[3048]},{modifiers[3049]},{modifiers[3050]},
+				{modifiers[431]},{modifiers[616]},{modifiers[617]},{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},{modifiers[660]},{modifiers[661]},{modifiers[662]},{modifiers[663]},{modifiers[664]},{modifiers[665]},{modifiers[666]},{modifiers[667]},{modifiers[668]},{modifiers[669]},{modifiers[670]},{modifiers[671]},{modifiers[1423]},{modifiers[1424]},{modifiers[1426]},{modifiers[1427]},{modifiers[1428]},{modifiers[1429]},{modifiers[1775]},{modifiers[2720]},{modifiers[2966]},{modifiers[2967]},{modifiers[2968]},{modifiers[2969]},{modifiers[2970]},{modifiers[2971]},{modifiers[2972]},{modifiers[2973]},{modifiers[2974]},{modifiers[2975]},{modifiers[2976]},{modifiers[2977]},
 			}},
 			{EffectID::higgsWarpBubbleImmuneRemoval, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3051]},
+				{modifiers[2978]},
 			}},
 			{EffectID::shipBonusCarrierM3FighterVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3052]},
+				{modifiers[2979]},
 			}},
 			{EffectID::shipBonusCarrierG3FighterHitpoints, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3053]},
+				{modifiers[2980]},
 			}},
 			{EffectID::skillBonusDroneInterfacing, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[216]},{modifiers[615]},{modifiers[2719]},{modifiers[2720]},{modifiers[2721]},
+				{modifiers[216]},{modifiers[615]},{modifiers[2646]},{modifiers[2647]},{modifiers[2648]},
 			}},
 			{EffectID::skillBonusDroneSharpshooting, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[578]},{modifiers[3054]},{modifiers[3055]},{modifiers[3056]},
+				{modifiers[578]},{modifiers[2981]},{modifiers[2982]},{modifiers[2983]},
 			}},
 			{EffectID::skillBonusDroneDurability, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[581]},{modifiers[3057]},{modifiers[3058]},{modifiers[3059]},
+				{modifiers[581]},{modifiers[2984]},{modifiers[2985]},{modifiers[2986]},
 			}},
 			{EffectID::skillMultiplierMaxVelocityBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3060]},
+				{modifiers[2987]},
 			}},
 			{EffectID::skillBonusDroneNavigation, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3061]},{modifiers[3062]},
+				{modifiers[2988]},{modifiers[2989]},
 			}},
 			{EffectID::skillMultiplierShieldBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3063]},
+				{modifiers[2990]},
 			}},
 			{EffectID::moduleBonusCapitalDroneDurabilityEnhancer, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[579]},{modifiers[580]},{modifiers[581]},{modifiers[738]},{modifiers[2544]},
+				{modifiers[579]},{modifiers[580]},{modifiers[581]},{modifiers[738]},{modifiers[2471]},
 			}},
 			{EffectID::moduleBonusCapitalDroneScopeChip, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[578]},{modifiers[738]},{modifiers[3054]},{modifiers[3055]},{modifiers[3056]},
+				{modifiers[578]},{modifiers[738]},{modifiers[2981]},{modifiers[2982]},{modifiers[2983]},
 			}},
 			{EffectID::moduleBonusCapitalDroneSpeedAugmentor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[577]},{modifiers[738]},{modifiers[2548]},
+				{modifiers[577]},{modifiers[738]},{modifiers[2475]},
 			}},
 			{EffectID::structureCombatRigSecurityModification, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3064]},{modifiers[3065]},{modifiers[3066]},{modifiers[3067]},{modifiers[3068]},{modifiers[3069]},{modifiers[3070]},{modifiers[3071]},{modifiers[3072]},{modifiers[3073]},
+				{modifiers[2991]},{modifiers[2992]},{modifiers[2993]},{modifiers[2994]},{modifiers[2995]},{modifiers[2996]},{modifiers[2997]},{modifiers[2998]},{modifiers[2999]},{modifiers[3000]},
 			}},
 			{EffectID::structureReprocessingRigSecurityModification, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3074]},
+				{modifiers[3001]},
 			}},
 			{EffectID::structureRigAsteroidOreYield, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3075]},
+				{modifiers[3002]},
 			}},
 			{EffectID::structureRigMoonOreYield, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3076]},
+				{modifiers[3003]},
 			}},
 			{EffectID::structureRigCalAmarrIceYield, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3077]},
+				{modifiers[3004]},
 			}},
 			{EffectID::structureRigGalMinIceYield, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3078]},
+				{modifiers[3005]},
 			}},
 			{EffectID::structureRigIceYield, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3079]},
+				{modifiers[3006]},
 			}},
 			{EffectID::skillStructureDoomsdayDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3080]},
+				{modifiers[3007]},
 			}},
 			{EffectID::shipBonusRole3NumWarfareLinks, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3081]},{modifiers[3082]},
+				{modifiers[3008]},{modifiers[3009]},
 			}},
 			{EffectID::structureModuleEffectStasisWebifier, Effect::MetaInfo::Category::target, true, false, {
 				
@@ -6954,52 +6714,52 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::rigDrawbackReductionArmor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3083]},{modifiers[3084]},
+				{modifiers[3010]},{modifiers[3011]},
 			}},
 			{EffectID::rigDrawbackReductionAstronautics, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3085]},{modifiers[3086]},
+				{modifiers[3012]},{modifiers[3013]},
 			}},
 			{EffectID::rigDrawbackReductionDrones, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3087]},
+				{modifiers[3014]},
 			}},
 			{EffectID::rigDrawbackReductionElectronic, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3088]},{modifiers[3089]},{modifiers[3090]},
+				{modifiers[3015]},{modifiers[3016]},{modifiers[3017]},
 			}},
 			{EffectID::rigDrawbackReductionProjectile, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3091]},
+				{modifiers[3018]},
 			}},
 			{EffectID::rigDrawbackReductionEnergyWeapon, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3092]},
+				{modifiers[3019]},
 			}},
 			{EffectID::rigDrawbackReductionHybrid, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3093]},
+				{modifiers[3020]},
 			}},
 			{EffectID::rigDrawbackReductionLauncher, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3094]},
+				{modifiers[3021]},
 			}},
 			{EffectID::rigDrawbackReductionShield, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3095]},
+				{modifiers[3022]},
 			}},
 			{EffectID::setBonusAsklepian, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3096]},
+				{modifiers[3023]},
 			}},
 			{EffectID::armorRepairAmountBonusSubcap, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3097]},
+				{modifiers[3024]},
 			}},
 			{EffectID::shipBonusRole1CapitalHybridDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3098]},
+				{modifiers[3025]},
 			}},
 			{EffectID::shipBonusDreadnoughtM1WebStrengthBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3099]},
+				{modifiers[3026]},
 			}},
 			{EffectID::shipBonusRole3CapitalHybridDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3100]},
+				{modifiers[3027]},
 			}},
 			{EffectID::shipBonusTitanM1WebStrengthBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3101]},
+				{modifiers[3028]},
 			}},
 			{EffectID::shipBonusSupercarrierM1BurstProjectorWebBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3102]},
+				{modifiers[3029]},
 			}},
 			{EffectID::ECMBurstJammer, Effect::MetaInfo::Category::active, true, false, {
 				
@@ -7011,43 +6771,43 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::roleBonusIceOreMiningDurationCap, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3103]},{modifiers[3104]},{modifiers[3105]},{modifiers[3106]},
+				{modifiers[3030]},{modifiers[3031]},{modifiers[3032]},{modifiers[3033]},
 			}},
 			{EffectID::logisticSkillMultiplier3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3107]},
+				{modifiers[3034]},
 			}},
 			{EffectID::moduleBonusIndustrialInvulnerability, Effect::MetaInfo::Category::active, false, false, {
 				
 			}},
 			{EffectID::shipBonusDroneRepairMC1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3108]},{modifiers[3109]},{modifiers[3110]},
+				{modifiers[3035]},{modifiers[3036]},{modifiers[3037]},
 			}},
 			{EffectID::eliteBonusLogisticRemoteArmorRepairOptimalFalloff1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3111]},{modifiers[3112]},
+				{modifiers[3038]},{modifiers[3039]},
 			}},
 			{EffectID::roleBonusRemoteArmorRepairOptimalFalloff, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3113]},{modifiers[3114]},
+				{modifiers[3040]},{modifiers[3041]},
 			}},
 			{EffectID::shipBonusCloakCpuMC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3115]},
+				{modifiers[3042]},
 			}},
 			{EffectID::eliteBonusLogisticRemoteArmorRepairDuration3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3116]},
+				{modifiers[3043]},
 			}},
 			{EffectID::shipBonusSETFalloffAF2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3117]},
+				{modifiers[3044]},
 			}},
 			{EffectID::shipBonusCloakCpuMF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3118]},
+				{modifiers[3045]},
 			}},
 			{EffectID::eliteBonusCoverOpsNOSNeutFalloff1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3119]},{modifiers[3120]},
+				{modifiers[3046]},{modifiers[3047]},
 			}},
 			{EffectID::moduleBonusMicrowarpdrive, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[380]},{modifiers[570]},{modifiers[3121]},
+				{modifiers[380]},{modifiers[570]},{modifiers[3048]},
 			}},
 			{EffectID::moduleBonusAfterburner, Effect::MetaInfo::Category::active, false, false, {
-				{modifiers[570]},{modifiers[3121]},
+				{modifiers[570]},{modifiers[3048]},
 			}},
 			{EffectID::moduleBonusWarfareLinkArmor, Effect::MetaInfo::Category::active, false, false, {
 				
@@ -7065,394 +6825,394 @@ namespace dgmpp2 {
 				
 			}},
 			{EffectID::chargeBonusWarfareCharge, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3122]},{modifiers[3123]},{modifiers[3124]},{modifiers[3125]},{modifiers[3126]},{modifiers[3127]},{modifiers[3128]},{modifiers[3129]},
+				{modifiers[3049]},{modifiers[3050]},{modifiers[3051]},{modifiers[3052]},{modifiers[3053]},{modifiers[3054]},{modifiers[3055]},{modifiers[3056]},
 			}},
 			{EffectID::industrialCommandShipSkillLevelMultiplierICS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3130]},
+				{modifiers[3057]},
 			}},
 			{EffectID::industrialCommandShipSkillLevelMultiplierICS4, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3131]},
+				{modifiers[3058]},
 			}},
 			{EffectID::moduleTitanEffectGenerator, Effect::MetaInfo::Category::active, false, false, {
 				
 			}},
 			{EffectID::engComplexServiceFuelBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3132]},{modifiers[3133]},
+				{modifiers[3059]},{modifiers[3060]},
 			}},
 			{EffectID::miningDroneSpecBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3134]},{modifiers[3135]},
+				{modifiers[3061]},{modifiers[3062]},
 			}},
 			{EffectID::iceHarvestingDroneOperationDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3136]},
+				{modifiers[3063]},
 			}},
 			{EffectID::iceHarvestingDroneSpecBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3137]},{modifiers[3138]},
+				{modifiers[3064]},{modifiers[3065]},
 			}},
 			{EffectID::spatialPhenomenaGenerationDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3139]},
+				{modifiers[3066]},
 			}},
 			{EffectID::commandProcessorEffect, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[455]},{modifiers[649]},
 			}},
 			{EffectID::areaOfEffectSkillBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3140]},
+				{modifiers[3067]},
 			}},
 			{EffectID::commandBurstAoEBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3141]},
+				{modifiers[3068]},
 			}},
 			{EffectID::armoredCommandDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3142]},
+				{modifiers[3069]},
 			}},
 			{EffectID::shieldCommandDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3143]},
+				{modifiers[3070]},
 			}},
 			{EffectID::informationCommandDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3144]},
+				{modifiers[3071]},
 			}},
 			{EffectID::skirmishCommandDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3145]},
+				{modifiers[3072]},
 			}},
 			{EffectID::miningForemanDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3146]},
+				{modifiers[3073]},
 			}},
 			{EffectID::commandBurstStrengthSkillBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3147]},
+				{modifiers[3074]},
 			}},
 			{EffectID::armoredCommandStrengthBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3148]},{modifiers[3149]},{modifiers[3150]},{modifiers[3151]},
+				{modifiers[3075]},{modifiers[3076]},{modifiers[3077]},{modifiers[3078]},
 			}},
 			{EffectID::shieldCommandStrengthBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3152]},{modifiers[3153]},{modifiers[3154]},{modifiers[3155]},
+				{modifiers[3079]},{modifiers[3080]},{modifiers[3081]},{modifiers[3082]},
 			}},
 			{EffectID::informationCommandStrengthBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3156]},{modifiers[3157]},{modifiers[3158]},{modifiers[3159]},
+				{modifiers[3083]},{modifiers[3084]},{modifiers[3085]},{modifiers[3086]},
 			}},
 			{EffectID::skirmishCommandStrengthBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3160]},{modifiers[3161]},{modifiers[3162]},{modifiers[3163]},
+				{modifiers[3087]},{modifiers[3088]},{modifiers[3089]},{modifiers[3090]},
 			}},
 			{EffectID::miningForemanStrengthBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3164]},{modifiers[3165]},{modifiers[3166]},{modifiers[3167]},
+				{modifiers[3091]},{modifiers[3092]},{modifiers[3093]},{modifiers[3094]},
 			}},
 			{EffectID::reloadTimeSkillBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3168]},
+				{modifiers[3095]},
 			}},
 			{EffectID::commandBurstReloadTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3169]},
+				{modifiers[3096]},
 			}},
 			{EffectID::commandBurstAoERoleBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3170]},
+				{modifiers[3097]},
 			}},
 			{EffectID::industrialCommandShipSkillLevelMultiplierICS5, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3171]},
+				{modifiers[3098]},
 			}},
 			{EffectID::shieldCommandBurstBonusICS3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3172]},{modifiers[3173]},{modifiers[3174]},{modifiers[3175]},{modifiers[3176]},
+				{modifiers[3099]},{modifiers[3100]},{modifiers[3101]},{modifiers[3102]},{modifiers[3103]},
 			}},
 			{EffectID::shipBonusDroneHPDamageMiningICS4, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3177]},{modifiers[3178]},{modifiers[3179]},{modifiers[3180]},{modifiers[3181]},
+				{modifiers[3104]},{modifiers[3105]},{modifiers[3106]},{modifiers[3107]},{modifiers[3108]},
 			}},
 			{EffectID::shipBonusDroneIceHarvestingICS5, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3182]},
+				{modifiers[3109]},
 			}},
 			{EffectID::industrialBonusDroneDamage, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3183]},
+				{modifiers[3110]},
 			}},
 			{EffectID::shipBonusDroneIceHarvestingRole, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3184]},
+				{modifiers[3111]},
 			}},
 			{EffectID::oreCapitalShipSkillMultiplier5, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3185]},
+				{modifiers[3112]},
 			}},
 			{EffectID::shipBonusDroneHPDamageMiningORECapital4, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[933]},{modifiers[934]},{modifiers[935]},{modifiers[936]},{modifiers[3186]},
+				{modifiers[933]},{modifiers[934]},{modifiers[935]},{modifiers[936]},{modifiers[3113]},
 			}},
 			{EffectID::miningForemanBurstBonusORECapital2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3187]},{modifiers[3188]},{modifiers[3189]},{modifiers[3190]},{modifiers[3191]},
+				{modifiers[3114]},{modifiers[3115]},{modifiers[3116]},{modifiers[3117]},{modifiers[3118]},
 			}},
 			{EffectID::shieldCommandBurstBonusORECapital3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3192]},{modifiers[3193]},{modifiers[3194]},{modifiers[3195]},{modifiers[3196]},
+				{modifiers[3119]},{modifiers[3120]},{modifiers[3121]},{modifiers[3122]},{modifiers[3123]},
 			}},
 			{EffectID::shipBonusDroneIceHarvestingORECapital5, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3197]},
+				{modifiers[3124]},
 			}},
 			{EffectID::shipModeSHTDamagePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3198]},
+				{modifiers[3125]},
 			}},
 			{EffectID::shipModeSPTDamagePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3199]},
+				{modifiers[3126]},
 			}},
 			{EffectID::shipModeSETDamagePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3200]},
+				{modifiers[3127]},
 			}},
 			{EffectID::shipModeSmallMissileDamagePostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3201]},{modifiers[3202]},{modifiers[3203]},{modifiers[3204]},{modifiers[3205]},{modifiers[3206]},{modifiers[3207]},{modifiers[3208]},
+				{modifiers[3128]},{modifiers[3129]},{modifiers[3130]},{modifiers[3131]},{modifiers[3132]},{modifiers[3133]},{modifiers[3134]},{modifiers[3135]},
 			}},
 			{EffectID::modeDampTDResistsPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3209]},{modifiers[3210]},
+				{modifiers[3136]},{modifiers[3137]},
 			}},
 			{EffectID::modeMWDandABBoostPostDiv, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3211]},{modifiers[3212]},
+				{modifiers[3138]},{modifiers[3139]},
 			}},
 			{EffectID::rigEquipmentManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3213]},
+				{modifiers[3140]},
 			}},
 			{EffectID::rigEquipmentManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3214]},
+				{modifiers[3141]},
 			}},
 			{EffectID::invulnerabilityCoreDurationBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3215]},{modifiers[3216]},
+				{modifiers[3142]},{modifiers[3143]},
 			}},
 			{EffectID::rigAmmoManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3217]},
+				{modifiers[3144]},
 			}},
 			{EffectID::rigAmmoManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3218]},
+				{modifiers[3145]},
 			}},
 			{EffectID::rigDroneManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3219]},
+				{modifiers[3146]},
 			}},
 			{EffectID::rigDroneManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3220]},
+				{modifiers[3147]},
 			}},
 			{EffectID::rigSmallshipManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3221]},
+				{modifiers[3148]},
 			}},
 			{EffectID::rigSmallshipManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3222]},
+				{modifiers[3149]},
 			}},
 			{EffectID::rigMediumshipManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3223]},
+				{modifiers[3150]},
 			}},
 			{EffectID::rigMediumshipsManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3224]},
+				{modifiers[3151]},
 			}},
 			{EffectID::rigLargeshipManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3225]},
+				{modifiers[3152]},
 			}},
 			{EffectID::rigLargeshipManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3226]},
+				{modifiers[3153]},
 			}},
 			{EffectID::rigAdvSmshipManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3227]},
+				{modifiers[3154]},
 			}},
 			{EffectID::rigAdvSmshipManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3228]},
+				{modifiers[3155]},
 			}},
 			{EffectID::rigAdvMedShipManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3229]},
+				{modifiers[3156]},
 			}},
 			{EffectID::rigAdvMedShipManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3230]},
+				{modifiers[3157]},
 			}},
 			{EffectID::rigAdvLarShipManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3231]},
+				{modifiers[3158]},
 			}},
 			{EffectID::rigAdvLarShipManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3232]},
+				{modifiers[3159]},
 			}},
 			{EffectID::rigAdvComponentManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3233]},
+				{modifiers[3160]},
 			}},
 			{EffectID::rigAdvComponentManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3234]},
+				{modifiers[3161]},
 			}},
 			{EffectID::rigBasCapCompManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3235]},
+				{modifiers[3162]},
 			}},
 			{EffectID::rigBasCapCompManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3236]},
+				{modifiers[3163]},
 			}},
 			{EffectID::rigStructureManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3237]},
+				{modifiers[3164]},
 			}},
 			{EffectID::rigStructureManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3238]},
+				{modifiers[3165]},
 			}},
 			{EffectID::rigInventionCostBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3239]},
+				{modifiers[3166]},
 			}},
 			{EffectID::rigInventionTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3240]},
+				{modifiers[3167]},
 			}},
 			{EffectID::rigMEResearchCostBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3241]},
+				{modifiers[3168]},
 			}},
 			{EffectID::rigMEResearchTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3242]},
+				{modifiers[3169]},
 			}},
 			{EffectID::rigTEResearchCostBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3243]},
+				{modifiers[3170]},
 			}},
 			{EffectID::rigTEResearchTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3244]},
+				{modifiers[3171]},
 			}},
 			{EffectID::rigCopyCostBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3245]},
+				{modifiers[3172]},
 			}},
 			{EffectID::rigCopyTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3246]},
+				{modifiers[3173]},
 			}},
 			{EffectID::rigCapShipManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3247]},
+				{modifiers[3174]},
 			}},
 			{EffectID::rigCapShipManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3248]},
+				{modifiers[3175]},
 			}},
 			{EffectID::rigAllShipManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3249]},
+				{modifiers[3176]},
 			}},
 			{EffectID::rigAllShipManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3250]},
+				{modifiers[3177]},
 			}},
 			{EffectID::structureEngineeringRigSecurityModification, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3251]},{modifiers[3252]},{modifiers[3253]},{modifiers[3254]},
+				{modifiers[3178]},{modifiers[3179]},{modifiers[3180]},{modifiers[3181]},
 			}},
 			{EffectID::skillMultiplierMissileVelocityBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3255]},
+				{modifiers[3182]},
 			}},
 			{EffectID::skillMultiplierDefenderMissileVelocity, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3256]},
+				{modifiers[3183]},
 			}},
 			{EffectID::shipBonusCommandDestroyerRole1DefenderBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3257]},
+				{modifiers[3184]},
 			}},
 			{EffectID::shipModuleFocusedWarpScramblingScript, Effect::MetaInfo::Category::target, true, false, {
-				{modifiers[8]},{modifiers[2184]},{modifiers[2185]},{modifiers[3258]},{modifiers[3259]},
+				{modifiers[8]},{modifiers[2111]},{modifiers[2112]},{modifiers[3185]},{modifiers[3186]},
 			}},
 			{EffectID::shipModuleFocusedWarpDisruptionScript, Effect::MetaInfo::Category::target, true, false, {
-				{modifiers[8]},{modifiers[2185]},{modifiers[3259]},
+				{modifiers[8]},{modifiers[2112]},{modifiers[3186]},
 			}},
 			{EffectID::chargeRateStructureModulesMultiply, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3260]},
+				{modifiers[3187]},
 			}},
 			{EffectID::shipBonusRole3CapitalEnergyDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3261]},
+				{modifiers[3188]},
 			}},
 			{EffectID::shipBonusTitanM1WebRangeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3262]},
+				{modifiers[3189]},
 			}},
 			{EffectID::shipBonusTitanA1EnergyWarfareAmountBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3263]},{modifiers[3264]},
+				{modifiers[3190]},{modifiers[3191]},
 			}},
 			{EffectID::shipBonusDreadnoughtA1EnergyWarfareAmountBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3265]},{modifiers[3266]},
+				{modifiers[3192]},{modifiers[3193]},
 			}},
 			{EffectID::shipBonusDreadnoughtM1WebRangeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3267]},
+				{modifiers[3194]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryA1NosferatuRangeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3268]},{modifiers[3269]},
+				{modifiers[3195]},{modifiers[3196]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryA1NosferatuDrainAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3270]},
+				{modifiers[3197]},
 			}},
 			{EffectID::shipBonusRole4NosferatuCPUBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3271]},
+				{modifiers[3198]},
 			}},
 			{EffectID::shipBonusRole5RemoteArmorRepairPowergridBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3272]},
+				{modifiers[3199]},
 			}},
 			{EffectID::shipBonusRole5CapitalRemoteArmorRepairPowergridBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3273]},
+				{modifiers[3200]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryM1RemoteArmorRepairDuration, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2696]},
+				{modifiers[2623]},
 			}},
 			{EffectID::eliteBonusCoverOpsWarpVelocity1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3274]},
+				{modifiers[3201]},
 			}},
 			{EffectID::shipBonusSmallMissileFlightTimeCF1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3275]},{modifiers[3276]},
+				{modifiers[3202]},{modifiers[3203]},
 			}},
 			{EffectID::shipBonusSPTRoFMF, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3277]},
+				{modifiers[3204]},
 			}},
 			{EffectID::roleBonusConcordSecGain, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3278]},
+				{modifiers[3205]},
 			}},
 			{EffectID::concordIntermediateSecStatus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3279]},
+				{modifiers[3206]},
 			}},
 			{EffectID::concordAssignTankBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3280]},
+				{modifiers[3207]},
 			}},
 			{EffectID::concordSecStatusTankBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3281]},{modifiers[3282]},
+				{modifiers[3208]},{modifiers[3209]},
 			}},
 			{EffectID::eliteReconStasisWebBonus1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3283]},
+				{modifiers[3210]},
 			}},
 			{EffectID::eliteBonusReconWarpVelocity3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3284]},
+				{modifiers[3211]},
 			}},
 			{EffectID::shipBonusMedMissileFlightTimeCC2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3285]},{modifiers[3286]},
+				{modifiers[3212]},{modifiers[3213]},
 			}},
 			{EffectID::blackOpsSkillMultiplier3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3287]},
+				{modifiers[3214]},
 			}},
 			{EffectID::blackOpsSkillMultiplier4, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3288]},
+				{modifiers[3215]},
 			}},
 			{EffectID::eliteBonusBlackOpsWarpVelocity1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3289]},
+				{modifiers[3216]},
 			}},
 			{EffectID::eliteBonusBlackOpsScramblerRange4, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3290]},
+				{modifiers[3217]},
 			}},
 			{EffectID::eliteBonusBlackOpsWebRange3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3291]},
+				{modifiers[3218]},
 			}},
 			{EffectID::shipBonusLauncherRoF2CB, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[555]},{modifiers[556]},{modifiers[2022]},
+				{modifiers[555]},{modifiers[556]},{modifiers[1965]},
 			}},
 			{EffectID::shipBonusLargeMissileFlightTimeCB1, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3292]},{modifiers[3293]},
+				{modifiers[3219]},{modifiers[3220]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryM2LocalRepairAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3294]},{modifiers[3295]},
+				{modifiers[3221]},{modifiers[3222]},
 			}},
 			{EffectID::rigThukkerBasCapCompManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3296]},
+				{modifiers[3223]},
 			}},
 			{EffectID::rigAdvCapComponentManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3297]},
+				{modifiers[3224]},
 			}},
 			{EffectID::rigAdvCapComponentManufactureTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3298]},
+				{modifiers[3225]},
 			}},
 			{EffectID::rigThukkerAdvCapCompManufactureMaterialBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3299]},
+				{modifiers[3226]},
 			}},
 			{EffectID::reactionTimeBonusPostPercentManufactureTimeMultiplierChar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3300]},
+				{modifiers[3227]},
 			}},
 			{EffectID::reactionSkillBoostManufacturingTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3301]},
+				{modifiers[3228]},
 			}},
 			{EffectID::massReactionSkillLevelModAddReactionSlotLimitChar, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3302]},
+				{modifiers[3229]},
 			}},
 			{EffectID::subsystemEnergyNeutFittingReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3303]},{modifiers[3304]},{modifiers[3305]},{modifiers[3306]},
+				{modifiers[3230]},{modifiers[3231]},{modifiers[3232]},{modifiers[3233]},
 			}},
 			{EffectID::subsystemMETFittingReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3307]},{modifiers[3308]},
+				{modifiers[3234]},{modifiers[3235]},
 			}},
 			{EffectID::subsystemMHTFittingReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3309]},{modifiers[3310]},
+				{modifiers[3236]},{modifiers[3237]},
 			}},
 			{EffectID::subsystemMPTFittingReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3311]},{modifiers[3312]},
+				{modifiers[3238]},{modifiers[3239]},
 			}},
 			{EffectID::subsystemMRARFittingReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3313]},
+				{modifiers[3240]},
 			}},
 			{EffectID::subsystemMRSBFittingReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3314]},
+				{modifiers[3241]},
 			}},
 			{EffectID::subsystemMMissileFittingReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3315]},{modifiers[3316]},{modifiers[3317]},{modifiers[3318]},{modifiers[3319]},{modifiers[3320]},
+				{modifiers[3242]},{modifiers[3243]},{modifiers[3244]},{modifiers[3245]},{modifiers[3246]},{modifiers[3247]},
 			}},
 			{EffectID::shipModuleNonRepeatingShieldHardener, Effect::MetaInfo::Category::active, true, false, {
 				{modifiers[590]},{modifiers[591]},{modifiers[592]},{modifiers[593]},
@@ -7461,253 +7221,253 @@ namespace dgmpp2 {
 				{modifiers[586]},{modifiers[587]},{modifiers[588]},{modifiers[589]},
 			}},
 			{EffectID::strategicCruiserMinmatarSkillLevel2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3321]},
+				{modifiers[3248]},
 			}},
 			{EffectID::strategicCruiserAmarrSkillLevel2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3322]},
+				{modifiers[3249]},
 			}},
 			{EffectID::strategicCruiserCaldariSkillLevel2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3323]},
+				{modifiers[3250]},
 			}},
 			{EffectID::strategicCruiserGallenteSkillLevel2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3324]},
+				{modifiers[3251]},
 			}},
 			{EffectID::shipBonusStrategicCruiserCaldariNaniteRepairTime2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3325]},
+				{modifiers[3252]},
 			}},
 			{EffectID::shipBonusStrategicCruiserAmarrNaniteRepairTime2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3326]},
+				{modifiers[3253]},
 			}},
 			{EffectID::shipBonusStrategicCruiserGallenteNaniteRepairTime2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3327]},
+				{modifiers[3254]},
 			}},
 			{EffectID::shipBonusStrategicCruiserMinmatarNaniteRepairTime2, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3328]},
+				{modifiers[3255]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrDefensive3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3329]},
+				{modifiers[3256]},
 			}},
 			{EffectID::subsystemSkillLevelAmarrEngineering3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3330]},
+				{modifiers[3257]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariEngineering3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3331]},
+				{modifiers[3258]},
 			}},
 			{EffectID::subsystemSkillLevelCaldariDefensive3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3332]},
+				{modifiers[3259]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteEngineering3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3333]},
+				{modifiers[3260]},
 			}},
 			{EffectID::subsystemSkillLevelGallenteDefensive3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3334]},
+				{modifiers[3261]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarEngineering3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3335]},
+				{modifiers[3262]},
 			}},
 			{EffectID::subsystemSkillLevelMinmatarDefensive3, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3336]},
+				{modifiers[3263]},
 			}},
 			{EffectID::structureHPBonusAddPassive, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3337]},
+				{modifiers[3264]},
 			}},
 			{EffectID::subSystemBonusAmarrDefensive2ScanProbeStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3338]},
+				{modifiers[3265]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensive1HMLHAMVelo, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3339]},{modifiers[3340]},
+				{modifiers[3266]},{modifiers[3267]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensive3MissileExpVelo, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3341]},
+				{modifiers[3268]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensive2DroneVeloTracking, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3342]},{modifiers[3343]},
+				{modifiers[3269]},{modifiers[3270]},
 			}},
 			{EffectID::subsystemBonusAmarrPropulsionWarpCapacitor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3344]},
+				{modifiers[3271]},
 			}},
 			{EffectID::subsystemBonusMinmatarPropulsionWarpCapacitor, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3345]},
+				{modifiers[3272]},
 			}},
 			{EffectID::subsystemBonusCaldariPropulsion2PropModHeatBenefit, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3346]},{modifiers[3347]},
+				{modifiers[3273]},{modifiers[3274]},
 			}},
 			{EffectID::subsystemBonusGallentePropulsion2PropModHeatBenefit, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3348]},{modifiers[3349]},
+				{modifiers[3275]},{modifiers[3276]},
 			}},
 			{EffectID::subsystemBonusAmarrCore2EnergyResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3350]},
+				{modifiers[3277]},
 			}},
 			{EffectID::subsystemBonusMinmatarCore2EnergyResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3351]},
+				{modifiers[3278]},
 			}},
 			{EffectID::subsystemBonusGallenteCore2EnergyResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3352]},
+				{modifiers[3279]},
 			}},
 			{EffectID::subsystemBonusCaldariCore2EnergyResistance, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3353]},
+				{modifiers[3280]},
 			}},
 			{EffectID::shipMaxLockedTargetsBonusAddPassive, Effect::MetaInfo::Category::generic, false, false, {
 				{modifiers[33]},
 			}},
 			{EffectID::subsystemBonusAmarrCore3EnergyWarHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3354]},{modifiers[3355]},
+				{modifiers[3281]},{modifiers[3282]},
 			}},
 			{EffectID::subsystemBonusMinmatarCore3StasisWebHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3356]},
+				{modifiers[3283]},
 			}},
 			{EffectID::subsystemBonusGallenteCore3WarpScramHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3357]},
+				{modifiers[3284]},
 			}},
 			{EffectID::subsystemBonusCaldariCore3ECMHeatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3358]},
+				{modifiers[3285]},
 			}},
 			{EffectID::subsystemBonusAmarrDefensive2HardenerHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3359]},{modifiers[3360]},
+				{modifiers[3286]},{modifiers[3287]},
 			}},
 			{EffectID::subsystemBonusGallenteDefensive2HardenerHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3361]},{modifiers[3362]},
+				{modifiers[3288]},{modifiers[3289]},
 			}},
 			{EffectID::subsystemBonusCaldariDefensive2HardenerHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3363]},
+				{modifiers[3290]},
 			}},
 			{EffectID::subsystemBonusMinmatarDefensive2HardenerHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3364]},{modifiers[3365]},{modifiers[3366]},
+				{modifiers[3291]},{modifiers[3292]},{modifiers[3293]},
 			}},
 			{EffectID::subsystemBonusAmarrDefensive3ArmorRepHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3367]},{modifiers[3368]},
+				{modifiers[3294]},{modifiers[3295]},
 			}},
 			{EffectID::subsystemBonusGallenteDefensive3ArmorRepHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3369]},{modifiers[3370]},
+				{modifiers[3296]},{modifiers[3297]},
 			}},
 			{EffectID::subsystemBonusCaldariDefensive3ShieldBoostHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3371]},{modifiers[3372]},
+				{modifiers[3298]},{modifiers[3299]},
 			}},
 			{EffectID::subsystemBonusMinmatarDefensive3LocalRepHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3373]},{modifiers[3374]},{modifiers[3375]},{modifiers[3376]},
+				{modifiers[3300]},{modifiers[3301]},{modifiers[3302]},{modifiers[3303]},
 			}},
 			{EffectID::subSystemBonusCaldariDefensive2ScanProbeStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3377]},
+				{modifiers[3304]},
 			}},
 			{EffectID::subSystemBonusGallenteDefensive2ScanProbeStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3378]},
+				{modifiers[3305]},
 			}},
 			{EffectID::subSystemBonusMinmatarDefensive2ScanProbeStrength, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3379]},
+				{modifiers[3306]},
 			}},
 			{EffectID::mediumRemoteRepFittingAdjustment, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3380]},{modifiers[3381]},
+				{modifiers[3307]},{modifiers[3308]},
 			}},
 			{EffectID::subsystemBonusCommandBurstFittingReduction, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3382]},{modifiers[3383]},
+				{modifiers[3309]},{modifiers[3310]},
 			}},
 			{EffectID::subsystemRemoteShieldBoostFalloffBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3384]},{modifiers[3385]},
+				{modifiers[3311]},{modifiers[3312]},
 			}},
 			{EffectID::subsystemRemoteArmorRepairerOptimalBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3386]},{modifiers[3387]},
+				{modifiers[3313]},{modifiers[3314]},
 			}},
 			{EffectID::subsystemRemoteArmorRepairerFalloffBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3388]},{modifiers[3389]},
+				{modifiers[3315]},{modifiers[3316]},
 			}},
 			{EffectID::subsystemBonusAmarrOffensive3RemoteArmorRepairHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3390]},
+				{modifiers[3317]},
 			}},
 			{EffectID::subsystemBonusGallenteOffensive3RemoteArmorRepairHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3391]},
+				{modifiers[3318]},
 			}},
 			{EffectID::subsystemBonusCaldariOffensive3RemoteShieldBoosterHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3392]},
+				{modifiers[3319]},
 			}},
 			{EffectID::subsystemBonusMinmatarOffensive3RemoteRepHeat, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3393]},{modifiers[3394]},
+				{modifiers[3320]},{modifiers[3321]},
 			}},
 			{EffectID::subsystemBonusAmarrPropulsion2WarpSpeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3395]},
+				{modifiers[3322]},
 			}},
 			{EffectID::subsystemBonusMinmatarPropulsion2WarpSpeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3396]},
+				{modifiers[3323]},
 			}},
 			{EffectID::subsystemBonusGallentePropulsionWarpSpeed, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3397]},
+				{modifiers[3324]},
 			}},
 			{EffectID::surveyProbeExplosionDelayOnline, Effect::MetaInfo::Category::passive, false, false, {
-				{modifiers[3398]},
+				{modifiers[3325]},
 			}},
 			{EffectID::rigReactionHybTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3399]},
+				{modifiers[3326]},
 			}},
 			{EffectID::rigReactionHybMatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3400]},
+				{modifiers[3327]},
 			}},
 			{EffectID::rigReactionCompTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3401]},
+				{modifiers[3328]},
 			}},
 			{EffectID::rigReactionCompMatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3402]},
+				{modifiers[3329]},
 			}},
 			{EffectID::rigReactionBioTimeBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3403]},
+				{modifiers[3330]},
 			}},
 			{EffectID::rigReactionBioMatBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3404]},
+				{modifiers[3331]},
 			}},
 			{EffectID::structureReactionRigSecurityModification, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3405]},{modifiers[3406]},
+				{modifiers[3332]},{modifiers[3333]},
 			}},
 			{EffectID::rigMoonSpewVolBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3407]},
+				{modifiers[3334]},
 			}},
 			{EffectID::rigMoonSpewRadBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3408]},
+				{modifiers[3335]},
 			}},
 			{EffectID::rigMoonFractureDelay, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3409]},
+				{modifiers[3336]},
 			}},
 			{EffectID::rigMoonAsteroidDecayBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3410]},
+				{modifiers[3337]},
 			}},
 			{EffectID::shipBonusTitanG1KinThermDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3411]},{modifiers[3412]},{modifiers[3413]},{modifiers[3414]},{modifiers[3415]},{modifiers[3416]},
+				{modifiers[3338]},{modifiers[3339]},{modifiers[3340]},{modifiers[3341]},{modifiers[3342]},{modifiers[3343]},
 			}},
 			{EffectID::shipBonusTitanG2AllDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3417]},{modifiers[3418]},{modifiers[3419]},{modifiers[3420]},{modifiers[3421]},{modifiers[3422]},{modifiers[3423]},{modifiers[3424]},{modifiers[3425]},
+				{modifiers[3344]},{modifiers[3345]},{modifiers[3346]},{modifiers[3347]},{modifiers[3348]},{modifiers[3349]},{modifiers[3350]},{modifiers[3351]},{modifiers[3352]},
 			}},
 			{EffectID::shipBonusTitanC1ShieldResists, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3426]},{modifiers[3427]},{modifiers[3428]},{modifiers[3429]},
+				{modifiers[3353]},{modifiers[3354]},{modifiers[3355]},{modifiers[3356]},
 			}},
 			{EffectID::shipBonusRole4FighterDamageAndHitpoints, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3430]},{modifiers[3431]},{modifiers[3432]},{modifiers[3433]},
+				{modifiers[3357]},{modifiers[3358]},{modifiers[3359]},{modifiers[3360]},
 			}},
 			{EffectID::shipBonusDreadnoughtG1KinThermDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3434]},{modifiers[3435]},{modifiers[3436]},{modifiers[3437]},{modifiers[3438]},{modifiers[3439]},
+				{modifiers[3361]},{modifiers[3362]},{modifiers[3363]},{modifiers[3364]},{modifiers[3365]},{modifiers[3366]},
 			}},
 			{EffectID::shipBonusForceAuxiliaryG1RemoteShieldBoostAmount, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3440]},
+				{modifiers[3367]},
 			}},
 			{EffectID::shipBonusRole2LogisticDroneRepAmountAndHitpointBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[2766]},{modifiers[2767]},{modifiers[2768]},{modifiers[3441]},{modifiers[3442]},{modifiers[3443]},
+				{modifiers[2693]},{modifiers[2694]},{modifiers[2695]},{modifiers[3368]},{modifiers[3369]},{modifiers[3370]},
 			}},
 			{EffectID::refineryServiceFuelBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3444]},{modifiers[3445]},
+				{modifiers[3371]},{modifiers[3372]},
 			}},
 			{EffectID::refineryRefiningYieldBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3446]},{modifiers[3447]},{modifiers[3448]},
+				{modifiers[3373]},{modifiers[3374]},{modifiers[3375]},
 			}},
 			{EffectID::asteroidDecayTimeDisplayUpdate, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3449]},
+				{modifiers[3376]},
 			}},
 			{EffectID::characterDamageMissiles, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3450]},{modifiers[3451]},{modifiers[3452]},{modifiers[3453]},
+				{modifiers[3377]},{modifiers[3378]},{modifiers[3379]},{modifiers[3380]},
 			}},
 			{EffectID::naniteRepairPasteArmorDamageBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3454]},
+				{modifiers[3381]},
 			}},
 			{EffectID::tacticalMode, Effect::MetaInfo::Category::generic, false, false, {
 				
 			}},
 			{EffectID::fueledArmorRepairBonus, Effect::MetaInfo::Category::generic, false, false, {
-				{modifiers[3455]},{modifiers[3456]},
+				{modifiers[3382]},{modifiers[3383]},
 			}},
 			{EffectID::gangBoost, Effect::MetaInfo::Category::active, false, false, {
 				

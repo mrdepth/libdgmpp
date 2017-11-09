@@ -254,3 +254,38 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Gang& gang)
 	os << "]}";
 	return os;
 }
+
+
+namespace dgmpp2 {
+	Character* Gang::add(std::unique_ptr<Character> pilot) {
+		return Type::add(std::move(pilot));
+	}
+
+	void Gang::remove(Character* pilot) {
+		Type::remove(pilot);
+	}
+	
+	std::vector<Character*> Gang::pilots() const {
+		const auto& pilots = children();
+		std::vector<Character*> v;
+		v.reserve(pilots.size());
+		for (const auto& i: pilots) {
+			if (auto pilot = dynamic_cast<Character*>(i.get())) {
+				v.push_back(pilot);
+			}
+		}
+		return v;
+	}
+	
+
+	Type* Gang::domain(Modifier::MetaInfo::Domain domain) {
+		switch (domain) {
+			case Modifier::MetaInfo::Domain::self:
+				return this;
+			default:
+				return nullptr;
+		}
+		return nullptr;
+	}
+
+}
