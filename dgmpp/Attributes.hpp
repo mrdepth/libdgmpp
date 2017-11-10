@@ -1,9 +1,9 @@
 #pragma once
-#include "Attribute.h"
+#include "MetaInfo.hpp"
 
 namespace dgmpp2 {
 	namespace SDE {
-		constexpr const Attribute::MetaInfo attributes[] {
+		constexpr const MetaInfo::Attribute attributes[] {
 			{AttributeID::isOnline, AttributeID::none, 0, true, true},
 			{AttributeID::damage, AttributeID::none, 0, true, true},
 			{AttributeID::mass, AttributeID::none, 0, false, true},

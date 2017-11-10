@@ -274,18 +274,74 @@ template <typename Iterator, typename F> TransformIterator<Iterator, F> MakeTran
 //	return TransformIterator<Iterator, F> {std::forward<Iterator>(i), std::forward<F>(f)};
 }
 
-enum class E1 {
-	e1
+class E1 {
+public:
+	E1() {
+		std::cout << "E1()" << std::endl;
+	};
+	~E1() {
+		std::cout << "~E1()" << std::endl;
+	}
+
 };
 
-enum class E2 {
-	e2
+class E2: public E1 {
+public:
+	E2() {};
 };
 
+const char* f() {
+	return nullptr;
+}
 
+template <typename C> class View {
+public:
+	typedef typename C::iterator Iter;
+	
+	template <typename I>
+	View(I&& from, I&& to) : from_(std::forward<I>(from)), to_(std::forward<I>(to)) {}
+	
+	Iter begin() {
+		return from_;
+	}
+	Iter end() {
+		return to_;
+	}
+	
+private:
+	Iter from_;
+	Iter to_;
+};
+
+template <typename C, typename Iter = typename C::iterator> View<C> MakeView(Iter&& from, Iter&& to) {
+	return View<C>(std::forward<Iter>(from), std::forward<Iter>(to));
+}
+
+template <typename C, typename Iter = typename C::iterator,
+	typename std::enable_if(std::is_same(std::iterator_traits<Iter>::iterator_category,std::input_terator_tag))::type>
+
+View<C> MakeView(Iter&& from, Iter&& to) {
+	return View<C>(std::forward<Iter>(from), std::forward<Iter>(to));
+}
+
+
+template <typename С> std::string fun2 (typename С::iterator i, std::output_iterator_tag) {
+	return "iterator";
+}
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
+		
+		std::list<int> l = {1,2,3,4,5};
+		
+		auto view = MakeView<std::list<int>>(std::find(l.begin(), l.end(), 2), std::find(l.begin(), l.end(), 4));
+		
+		std::list<int> l2  { std::find(l.begin(), l.end(), 2), std::find(l.begin(), l.end(), 4) };
+		(*view.begin()) = 10;
+		
+		for (auto i: view)
+			std::cout << i << " ";
+		std::cout << std::endl;
 
 		{
 			auto gang = dgmpp2::Gang::Create();

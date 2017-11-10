@@ -52,20 +52,20 @@ namespace dgmpp2 {
 			}*/
 		}
 		
-		template<> AttributeID getKey<AttributeID, Attribute::MetaInfo>(const Attribute::MetaInfo& value) {
+		template<> AttributeID getKey<AttributeID, MetaInfo::Attribute>(const MetaInfo::Attribute& value) {
 			return value.attributeID;
 		}
 
-		template<> TypeID getKey<TypeID, Type::MetaInfo>(const Type::MetaInfo& value) {
+		template<> TypeID getKey<TypeID, MetaInfo::Type>(const MetaInfo::Type& value) {
 			return value.typeID;
 		}
 
-		const Attribute::MetaInfo& get(AttributeID attributeID) {
-			return get<AttributeID, Attribute::MetaInfo, sizeof(attributes) / sizeof(decltype(*attributes)), attributes>(attributeID);
+		const MetaInfo::Attribute& get(AttributeID attributeID) {
+			return get<AttributeID, MetaInfo::Attribute, sizeof(attributes) / sizeof(decltype(*attributes)), attributes>(attributeID);
 		}
 		
-		const Type::MetaInfo& get(TypeID typeID) {
-			return get<TypeID, Type::MetaInfo, sizeof(types) / sizeof(decltype(*types)), types>(typeID);
+		const MetaInfo::Type& get(TypeID typeID) {
+			return get<TypeID, MetaInfo::Type, sizeof(types) / sizeof(decltype(*types)), types>(typeID);
 		}
 	}
 }

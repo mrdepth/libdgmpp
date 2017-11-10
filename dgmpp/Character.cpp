@@ -528,19 +528,13 @@ namespace dgmpp2 {
 		return ship_;
 	}
 	
-	Type* Character::domain(Modifier::MetaInfo::Domain domain) {
+	Type* Character::domain(MetaInfo::Modifier::Domain domain) {
 		switch (domain) {
-			case Modifier::MetaInfo::Domain::self:
-			case Modifier::MetaInfo::Domain::character:
+			case MetaInfo::Modifier::Domain::character:
 				return this;
-			case Modifier::MetaInfo::Domain::ship:
-				return ship_;
-			case Modifier::MetaInfo::Domain::gang:
-				return parent();
 			default:
-				return nullptr;
+				return Type::domain(domain);
 		}
-		return nullptr;
 	}
 
 }

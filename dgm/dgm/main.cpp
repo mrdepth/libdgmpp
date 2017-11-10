@@ -51,10 +51,10 @@ void dumpAttributeTypes(SQLiteDatabase& database) {
 	
 	std::cout
 	<< "#pragma once" << std::endl
-	<< "#include \"Attribute.h\"\n" << std::endl
+	<< "#include \"MetaInfo.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const Attribute::MetaInfo attributes[] {" << std::endl;
+	<< "		constexpr const MetaInfo::Attribute attributes[] {" << std::endl;
 	
 	
 	while (auto row = result.next()) {
@@ -138,12 +138,12 @@ void dumpItems(SQLiteDatabase& database) {
 
 	std::cout
 	<< "#pragma once" << std::endl
-	<< "#include \"Type.hpp\"" << std::endl
+	<< "#include \"MetaInfo.hpp\"" << std::endl
 	<< "#include \"Attributes.hpp\"" << std::endl
 	<< "#include \"Effects.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const Type::MetaInfo types[] {" << std::endl;
+	<< "		constexpr const MetaInfo::Type types[] {" << std::endl;
 
 	std::cout << "\t\t\t"
 	<< "{TypeID::none, GroupID::none, CategoryID::none, {}, {}, {}}," << std::endl;
@@ -321,10 +321,10 @@ void dumpModifiers(SQLiteDatabase& database) {
 	
 	std::cout
 	<< "#pragma once" << std::endl
-	<< "#include \"Modifier.h\"" << std::endl
+	<< "#include \"MetaInfo.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const Modifier::MetaInfo modifiers[] {" << std::endl;
+	<< "		constexpr const MetaInfo::Modifier modifiers[] {" << std::endl;
 
 	
 	while (auto row = result.next()) {
@@ -338,9 +338,9 @@ void dumpModifiers(SQLiteDatabase& database) {
 		auto requiredID = row.get<7>();
 
 		std::cout << "\t\t\t"
-		<< "{Modifier::MetaInfo::ModifierType::" << type.to_str()
-		<< ", Modifier::MetaInfo::Association::" << association.to_str()
-		<< ", Modifier::MetaInfo::Domain::" << domain.to_str()
+		<< "{MetaInfo::Modifier::ModifierType::" << type.to_str()
+		<< ", MetaInfo::Modifier::Association::" << association.to_str()
+		<< ", MetaInfo::Modifier::Domain::" << domain.to_str()
 		<< ", AttributeID::" << modified
 		<< ", AttributeID::" << modifying;
 
@@ -353,7 +353,7 @@ void dumpModifiers(SQLiteDatabase& database) {
 				std::cout << ", TypeID::" << Name(*typeName);
 				break;
 			case 5:
-				std::cout << ", Modifier::MetaInfo::Domain::" << Domain(*requiredID).to_str();
+				std::cout << ", MetaInfo::Modifier::Domain::" << Domain(*requiredID).to_str();
 				break;
 			default:
 				break;
@@ -398,11 +398,11 @@ void dumpEffects(SQLiteDatabase& database) {
 	
 	std::cout
 	<< "#pragma once" << std::endl
-	<< "#include \"Effect.h\"" << std::endl
+	<< "#include \"MetaInfo.hpp\"" << std::endl
 	<< "#include \"Modifiers.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const Effect::MetaInfo effects[] {" << std::endl;
+	<< "		constexpr const MetaInfo::Effect effects[] {" << std::endl;
 	
 	
 	while (auto row = result.next()) {
@@ -414,7 +414,7 @@ void dumpEffects(SQLiteDatabase& database) {
 
 		std::cout << "\t\t\t"
 		<< "{EffectID::" << effectName
-		<< ", Effect::MetaInfo::Category::" << category.to_str()
+		<< ", MetaInfo::Effect::Category::" << category.to_str()
 		<< ", " << isOffensive
 		<< ", " << isAssistance
 		<< ", {" << std::endl;

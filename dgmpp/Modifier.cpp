@@ -142,7 +142,7 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Modifier& modifier)
 
 namespace dgmpp2 {
 	
-	Modifier::Modifier(const MetaInfo& metaInfo, Type& owner, const Effect& effect)
+	Modifier::Modifier(const MetaInfo::Modifier& metaInfo, Type& owner, const Effect& effect)
 	: metaInfo_(metaInfo), owner_(owner), effect_(effect), modifyingAttribute_(*owner[metaInfo.modifyingAttributeID]) {
 		switch (owner.metaInfo().categoryID) {
 			case CategoryID::module:
@@ -163,21 +163,21 @@ namespace dgmpp2 {
 	
 	bool Modifier::match(const Type* type) const {
 		switch (metaInfo_.type) {
-			case MetaInfo::ModifierType::item:
-			case MetaInfo::ModifierType::location:
+			case MetaInfo::Modifier::ModifierType::item:
+			case MetaInfo::Modifier::ModifierType::location:
 				return true;
-			case MetaInfo::ModifierType::locationGroup:
+			case MetaInfo::Modifier::ModifierType::locationGroup:
 				return type->metaInfo().groupID == metaInfo_.require.groupID;
-			case MetaInfo::ModifierType::locationRequiredSkill:
-			case MetaInfo::ModifierType::ownerRequiredSkill:
+			case MetaInfo::Modifier::ModifierType::locationRequiredSkill:
+			case MetaInfo::Modifier::ModifierType::ownerRequiredSkill:
 				return type->metaInfo().requireSkill(metaInfo_.require.typeID);
-			case MetaInfo::ModifierType::locationRequiredDomainSkill:
+			case MetaInfo::Modifier::ModifierType::locationRequiredDomainSkill:
 				if (auto type = owner_.domain(metaInfo_.domain))
 					return type->metaInfo().requireSkill(type->metaInfo().typeID);
 				else
 					return false;
 			default:
-				assert(!"Invalid Modifier::MetaInfo::ModifierType value");
+				assert(!"Invalid MetaInfo::Modifier::ModifierType value");
 		}
 	}
 	
@@ -185,12 +185,12 @@ namespace dgmpp2 {
 		switch (metaInfo_.association) {
 			using namespace std::chrono_literals;
 				
-			case MetaInfo::Association::postDiv:
+			case MetaInfo::Modifier::Association::postDiv:
 				return 1.0 / modifyingAttribute_.value();
-			case MetaInfo::Association::postPercent:
+			case MetaInfo::Modifier::Association::postPercent:
 				return 1.0 + modifyingAttribute_.value() / 100.0;
-			case MetaInfo::Association::addRate:
-			case MetaInfo::Association::subRate:
+			case MetaInfo::Modifier::Association::addRate:
+			case MetaInfo::Modifier::Association::subRate:
 				std::chrono::duration<Float> duration;
 				if (auto attr = owner_[AttributeID::duration])
 					duration = std::chrono::duration<Float, std::milli>(attr->value());

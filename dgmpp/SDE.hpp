@@ -15,10 +15,10 @@ namespace dgmpp2 {
 		template<typename T>
 		class NotFound : public std::runtime_error {
 		public:
-			NotFound(T identifier): std::runtime_error ("id = " + std::to_string(static_cast<int>(identifier))) {};
+			NotFound (T identifier) : std::runtime_error("id = " + std::to_string(static_cast<int>(identifier))) {};
 		};
 		
-		const Attribute::MetaInfo& get(AttributeID attributeID);
-		const Type::MetaInfo& get(TypeID typeID);
+		const MetaInfo::Attribute& get (AttributeID attributeID);
+		const MetaInfo::Type& get (TypeID typeID);
 	}
 }

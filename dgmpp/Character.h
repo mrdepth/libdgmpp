@@ -76,13 +76,13 @@ namespace dgmpp2 {
 	
 	class Character: public Type {
 	public:
-		static std::unique_ptr<Character> Create() {return std::unique_ptr<Character>(new Character);}
-		Ship* setShip(std::unique_ptr<Ship> ship);
+		static std::unique_ptr<Character> Create() { return std::unique_ptr<Character>(new Character); }
+		Ship* setShip (std::unique_ptr<Ship> ship);
 	protected:
-		virtual Type* domain(Modifier::MetaInfo::Domain domain) override;
+		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 
 	private:
 		Ship* ship_ = nullptr;
-		Character(): Type(TypeID::characterGallente){}
+		Character() : Type(TypeID::characterGallente){}
 	};
 }

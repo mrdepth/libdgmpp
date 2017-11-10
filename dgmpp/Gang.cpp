@@ -278,14 +278,13 @@ namespace dgmpp2 {
 	}
 	
 
-	Type* Gang::domain(Modifier::MetaInfo::Domain domain) {
+	Type* Gang::domain(MetaInfo::Modifier::Domain domain) {
 		switch (domain) {
-			case Modifier::MetaInfo::Domain::self:
+			case MetaInfo::Modifier::Domain::gang:
 				return this;
 			default:
-				return nullptr;
+				return Type::domain(domain);
 		}
-		return nullptr;
 	}
 
 }

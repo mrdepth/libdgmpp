@@ -58,3 +58,4 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <dgmpp/Type.hpp>
 #include <dgmpp/SDE.hpp>
 #include <dgmpp/Modifier.h>
+#include <dgmpp/MetaInfo.hpp>

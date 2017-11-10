@@ -248,6 +248,10 @@
 		12DC155C1FA7271500F1B6F1 /* Type.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12DC15581FA7271500F1B6F1 /* Type.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
 		12DFCED31CD74242006A19BD /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */; };
+		12FC63931FB59C2E005F2B66 /* MetaInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12FC63911FB59C2E005F2B66 /* MetaInfo.cpp */; };
+		12FC63941FB59C2E005F2B66 /* MetaInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12FC63911FB59C2E005F2B66 /* MetaInfo.cpp */; };
+		12FC63951FB59C2E005F2B66 /* MetaInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12FC63921FB59C2E005F2B66 /* MetaInfo.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12FC63961FB59C2E005F2B66 /* MetaInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12FC63921FB59C2E005F2B66 /* MetaInfo.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12FE6F7F1FA9F8D7005A19F2 /* SDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12FE6F7D1FA9F8D7005A19F2 /* SDE.cpp */; };
 		12FE6F801FA9F8D7005A19F2 /* SDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12FE6F7D1FA9F8D7005A19F2 /* SDE.cpp */; };
 		12FE6F811FA9F8D7005A19F2 /* SDE.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12FE6F7E1FA9F8D7005A19F2 /* SDE.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -350,6 +354,8 @@
 		12DFCED01CD74242006A19BD /* dgmppTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = dgmppTests.mm; sourceTree = "<group>"; };
 		12DFCED21CD74242006A19BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12EFCCDD1C1ACE4E003ECA7F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		12FC63911FB59C2E005F2B66 /* MetaInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetaInfo.cpp; sourceTree = "<group>"; };
+		12FC63921FB59C2E005F2B66 /* MetaInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetaInfo.hpp; sourceTree = "<group>"; };
 		12FE6F7D1FA9F8D7005A19F2 /* SDE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SDE.cpp; sourceTree = "<group>"; };
 		12FE6F7E1FA9F8D7005A19F2 /* SDE.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SDE.hpp; sourceTree = "<group>"; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; };
@@ -531,6 +537,8 @@
 		12C2318D1FADEA8100180EA0 /* SDE */ = {
 			isa = PBXGroup;
 			children = (
+				12FC63911FB59C2E005F2B66 /* MetaInfo.cpp */,
+				12FC63921FB59C2E005F2B66 /* MetaInfo.hpp */,
 				122599B41FAB66F5007B303F /* Attributes.hpp */,
 				122599B51FAB66F5007B303F /* Modifiers.hpp */,
 				122599B31FAB66F5007B303F /* Types.hpp */,
@@ -765,6 +773,7 @@
 				12A156921C464FD300C3CF0B /* Spaceport.h in Headers */,
 				12564BFB1B84B07F000F68D8 /* Engine.h in Headers */,
 				122599AB1FAB65A7007B303F /* EffectID.hpp in Headers */,
+				12FC63951FB59C2E005F2B66 /* MetaInfo.hpp in Headers */,
 				12AEEFCE1C25BAC200FB7B1D /* Environment.h in Headers */,
 				12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */,
 				12215B491C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */,
@@ -837,6 +846,7 @@
 				12D9F9E01CC3A98B00313F8D /* Spaceport.h in Headers */,
 				12D9F9E11CC3A98B00313F8D /* Engine.h in Headers */,
 				122599B01FAB65A8007B303F /* EffectID.hpp in Headers */,
+				12FC63961FB59C2E005F2B66 /* MetaInfo.hpp in Headers */,
 				12D9F9E21CC3A98B00313F8D /* Environment.h in Headers */,
 				12D9F9E31CC3A98B00313F8D /* FetchRequest.h in Headers */,
 				12D9F9E41CC3A98B00313F8D /* SqliteFetchRequest.h in Headers */,
@@ -999,6 +1009,7 @@
 				12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */,
 				1248DB4D1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */,
 				12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */,
+				12FC63931FB59C2E005F2B66 /* MetaInfo.cpp in Sources */,
 				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
 				12AEEFDA1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
 				12A156A21C46518000C3CF0B /* Commodity.cpp in Sources */,
@@ -1061,6 +1072,7 @@
 				12D9F9981CC3A98B00313F8D /* Attribute.cpp in Sources */,
 				1248DB4E1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */,
 				12D9F99A1CC3A98B00313F8D /* DamageVector.cpp in Sources */,
+				12FC63941FB59C2E005F2B66 /* MetaInfo.cpp in Sources */,
 				12D9F99B1CC3A98B00313F8D /* Booster.cpp in Sources */,
 				12D9F99C1CC3A98B00313F8D /* AttributePrototype.cpp in Sources */,
 				12D9F99D1CC3A98B00313F8D /* Commodity.cpp in Sources */,

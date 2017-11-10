@@ -24,3 +24,6 @@ INSERT INTO dgmTypeAttributes (typeID,attributeID,value) VALUES(33330,128,0);
 
 --Subsystems fix
 UPDATE dgmTypeAttributes SET value=4 WHERE attributeID=1367;
+
+--Online effect fix
+UPDATE dgmEffects SET effectCategory = 4 WHERE effectName = "online"

@@ -692,78 +692,66 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Attribute& attribute)
 
 namespace dgmpp2 {
 
-	constexpr std::size_t sfCount = 10;
-	constexpr int expIterations = 10;
-	
-	constexpr double pow(double x, int y) {
-		return y == 0 ? 1.0 : x * pow(x, y-1);
-	}
-	
-	constexpr int factorial(int x) {
-		return x == 0 ? 1 : x * factorial(x-1);
-	}
-	
-	constexpr Float exp(Float x, int n = expIterations) {
-		return n == 0 ? 1 : exp(x, n-1) + pow(x,n) / factorial(n);
-	};
-
-	constexpr Float sf(int n) {
-		return exp(-static_cast<Float>(n * n) / 7.1289);
-	}
-
-	template<class Function, std::size_t... Indices>
-	constexpr auto make_array_helper(Function f, std::index_sequence<Indices...>)
-	-> std::array<typename std::result_of<Function(std::size_t)>::type, sizeof...(Indices)>
-	{
-		return {{ f(Indices)... }};
-	}
-	
-	template<int N, class Function>
-	constexpr auto make_array(Function f)
-	-> std::array<typename std::result_of<Function(std::size_t)>::type, N>
-	{
-		return make_array_helper(f, std::make_index_sequence<N>{});
-	}
-	
-	constexpr auto stackingFactor = make_array<sfCount>(sf);
-	
-//	template<typename InputIterator, typename Output>
-//	Output multiply(InputIterator first, InputIterator last, Output value, bool useStackingPenalty) {
-//		if (useStackingPenalty) {
-//			for (int i = 0; first != last && i < sfCount; first++, i++)
-//				value *= 1.0 + (*first - 1.0) * stackingFactor[i];
-//		}
-//		else {
-//			for (; first != last; first++)
-//				value *= *first;
-//		}
-//		return value;
-//	}
-	
-	template <typename... Args>
-	struct _AssociationComparer {
-		bool operator()(const Modifier* modifier) {
-			return std::find(associations.begin(), associations.end(), modifier->metaInfo().association) != associations.end();
+	namespace {
+		constexpr std::size_t sfCount = 10;
+		constexpr int expIterations = 10;
+		
+		constexpr double pow(double x, int y) {
+			return y == 0 ? 1.0 : x * pow(x, y-1);
 		}
 		
-		constexpr _AssociationComparer(Args... arg): associations{arg...} {};
-		std::array<Modifier::MetaInfo::Association, sizeof...(Args)> associations;
-	};
-	
-	template <typename... Args>
-	_AssociationComparer<Args...> AssociationComparer(Args&&... args) {
-		return _AssociationComparer<Args...>(std::forward<Args>(args)...);
+		constexpr int factorial(int x) {
+			return x == 0 ? 1 : x * factorial(x-1);
+		}
+		
+		constexpr Float exp(Float x, int n = expIterations) {
+			return n == 0 ? 1 : exp(x, n-1) + pow(x,n) / factorial(n);
+		};
+		
+		constexpr Float sf(int n) {
+			return exp(-static_cast<Float>(n * n) / 7.1289);
+		}
+		
+		template<class Function, std::size_t... Indices>
+		constexpr auto make_array_helper(Function f, std::index_sequence<Indices...>)
+		-> std::array<typename std::result_of<Function(std::size_t)>::type, sizeof...(Indices)>
+		{
+			return {{ f(Indices)... }};
+		}
+		
+		template<int N, class Function>
+		constexpr auto make_array(Function f)
+		-> std::array<typename std::result_of<Function(std::size_t)>::type, N>
+		{
+			return make_array_helper(f, std::make_index_sequence<N>{});
+		}
+		
+		constexpr auto stackingFactor = make_array<sfCount>(sf);
+		
+		template <typename... Args>
+		struct _AssociationComparer {
+			bool operator()(const Modifier* modifier) {
+				return std::find(associations.begin(), associations.end(), modifier->metaInfo().association) != associations.end();
+			}
+			
+			constexpr _AssociationComparer(Args... arg): associations{arg...} {};
+			std::array<MetaInfo::Modifier::Association, sizeof...(Args)> associations;
+		};
+		
+		template <typename... Args>
+		_AssociationComparer<Args...> AssociationComparer(Args&&... args) {
+			return _AssociationComparer<Args...>(std::forward<Args>(args)...);
+		}
 	}
-
 	
 //	struct ModifierAssociationPredicate {
-//		std::vector<Modifier::MetaInfo::Association> associations;
+//		std::vector<MetaInfo::Modifier::Association> associations;
 //		bool operator ()(const Modifier* modifier) {
 //			return std::find(associations.begin(), associations.end(), modifier->metaInfo().association) != associations.end();
 //		}
 //	};
 	
-	Attribute::Attribute(const MetaInfo& metaInfo, Float initialValue, Type& owner)
+	Attribute::Attribute(const MetaInfo::Attribute& metaInfo, Float initialValue, Type& owner)
 	: metaInfo_(metaInfo), initialValue_(initialValue), owner_(owner) {
 		if (metaInfo.maxAttributeID != AttributeID::none) {
 			maxAttribute_ = owner[metaInfo.maxAttributeID];
@@ -788,7 +776,7 @@ namespace dgmpp2 {
 		return *attribute_->second;
 	}
 	
-	const Attribute::MetaInfo& Attribute::Proxy::metaInfo() const {
+	const MetaInfo::Attribute& Attribute::Proxy::metaInfo() const {
 		if (!metaInfo_) {
 			if (attribute_->second)
 			metaInfo_ = &attribute_->second->metaInfo();
@@ -820,7 +808,7 @@ namespace dgmpp2 {
 			const bool isStackable = metaInfo().isStackable;
 			const bool highIsGood = metaInfo().highIsGood;
 
-			auto character = owner().domain(Modifier::MetaInfo::Domain::character);
+			auto character = owner().domain(MetaInfo::Modifier::Domain::character);
 			
 			auto begin = modifiers.begin();
 			auto end = modifiers.end();
@@ -900,32 +888,32 @@ namespace dgmpp2 {
 				};
 			}
 			
-			auto postAssignments = partition(AssociationComparer(Modifier::MetaInfo::Association::postAssignment));
+			auto postAssignments = partition(AssociationComparer(MetaInfo::Modifier::Association::postAssignment));
 			
 			if (postAssignments.first != postAssignments.second) {
 				value = extract(*postAssignments.first);
 			}
 			else {
-				auto range = partition(AssociationComparer(Modifier::MetaInfo::Association::modAdd, Modifier::MetaInfo::Association::addRate));
+				auto range = partition(AssociationComparer(MetaInfo::Modifier::Association::modAdd, MetaInfo::Modifier::Association::addRate));
 				value = std::accumulate(range.first, range.second, value, add);
 				
-				range = partition(AssociationComparer(Modifier::MetaInfo::Association::modSub, Modifier::MetaInfo::Association::subRate));
+				range = partition(AssociationComparer(MetaInfo::Modifier::Association::modSub, MetaInfo::Modifier::Association::subRate));
 				value = std::accumulate(range.first, range.second, value, sub);
 				
-				range = partition(AssociationComparer(Modifier::MetaInfo::Association::preMul));
+				range = partition(AssociationComparer(MetaInfo::Modifier::Association::preMul));
 				value = multiply(range, value);
 
-				range = partition(AssociationComparer(Modifier::MetaInfo::Association::preDiv));
+				range = partition(AssociationComparer(MetaInfo::Modifier::Association::preDiv));
 				value = multiply(range, value);
 			}
 			
-			auto range = partition(AssociationComparer(Modifier::MetaInfo::Association::postMul));
+			auto range = partition(AssociationComparer(MetaInfo::Modifier::Association::postMul));
 			value = multiply(range, value);
 
-			range = partition(AssociationComparer(Modifier::MetaInfo::Association::postDiv));
+			range = partition(AssociationComparer(MetaInfo::Modifier::Association::postDiv));
 			value = multiply(range, value);
 
-			range = partition(AssociationComparer(Modifier::MetaInfo::Association::postPercent));
+			range = partition(AssociationComparer(MetaInfo::Modifier::Association::postPercent));
 			value = multiply(range, value);
 
 			if (maxAttribute_) {

@@ -170,9 +170,11 @@ namespace dgmpp {
 }
 
 namespace dgmpp2 {
+	class Charge;
+	
 	class Module: public Type {
 	public:
-		static std::unique_ptr<Module> Create(TypeID typeID) {return std::unique_ptr<Module>(new Module(typeID));}
+		static std::unique_ptr<Module> Create (TypeID typeID) { return std::unique_ptr<Module>(new Module(typeID)); }
 
 		enum class State {
 			unknown = -1,
@@ -182,14 +184,37 @@ namespace dgmpp2 {
 			overloaded
 		};
 
-		bool isDummy() {return false;}
-		bool canHaveState(State state);
-		void state(State state);
+		bool isDummy() const { return metaInfo().typeID == TypeID::none; }
+		bool canHaveState (State state) const;
+		void state (State state);
 		State state() const {return state_;};
+		
+		virtual void setEnabled (bool enabled) override;
+		
+		Charge* charge() const;
+		void charge (std::unique_ptr<Charge> charge);
+		
+		bool canBeOnline()		const	{return flags_.canBeOnline;}
+		bool canBeActive()		const;
+		bool canBeOverloaded()	const	{return flags_.canBeOverloaded;}
+		bool requireTarget()	const;
+
 	protected:
-		virtual Type* domain(Modifier::MetaInfo::Domain domain) override;
+		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
+		
 	private:
 		State state_ = State::unknown;
-		Module(TypeID typeID): Type(typeID) {};
+		
+		struct {
+			bool canBeOnline : 1;
+			bool canBeActive : 1;
+			bool canBeOverloaded : 1;
+			bool forceReload : 1;
+			bool factorReload : 1;
+			bool requireTarget : 1;
+		} flags_;
+		std::vector<GroupID> chargeGroups_;
+		
+		Module (TypeID typeID);
 	};
 }

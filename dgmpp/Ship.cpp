@@ -1538,41 +1538,38 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Ship& ship)
 }
 
 namespace dgmpp2 {
-	Module* Ship::add(std::unique_ptr<Module> module) {
+	
+	Module* Ship::add (std::unique_ptr<Module> module) {
 		auto state = module->state();
 		module->state(dgmpp2::Module::State::unknown);
 		
 		auto m = Type::add(std::move(module));
 		
 		if (state == Module::State::unknown) {
-			m->state(dgmpp2::Module::State::active);
+			if (m->canHaveState(dgmpp2::Module::State::active))
+				m->state(dgmpp2::Module::State::active);
+			else if (m->canHaveState(dgmpp2::Module::State::online))
+				m->state(dgmpp2::Module::State::online);
+			else if (m->canHaveState(dgmpp2::Module::State::offline))
+				m->state(dgmpp2::Module::State::offline);
 		}
-		else {
+		else
 			m->state(state);
-		}
+		
 		return m;
 	}
 	
-	void Ship::remove(Module* module) {
+	void Ship::remove (Module* module) {
 		Type::remove(module);
 	}
 
-	Type* Ship::domain(Modifier::MetaInfo::Domain domain) {
+	Type* Ship::domain (MetaInfo::Modifier::Domain domain) {
 		switch (domain) {
-			case Modifier::MetaInfo::Domain::self:
+			case MetaInfo::Modifier::Domain::ship :
 				return this;
-			case Modifier::MetaInfo::Domain::ship:
-			case Modifier::MetaInfo::Domain::character:
-				return parent();
-			case Modifier::MetaInfo::Domain::gang:
-				if (auto parent = this->parent()) {
-					return parent->parent();
-				}
-				return nullptr;
 			default:
-				return nullptr;
+				return Type::domain(domain);
 		}
-		return nullptr;
 	}
 	
 }

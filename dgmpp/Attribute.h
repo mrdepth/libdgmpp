@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include "MetaInfo.hpp"
 
 namespace dgmpp {
 
@@ -57,9 +58,10 @@ namespace dgmpp {
 }
 
 namespace dgmpp2 {
+	class Type;
+	
 	class Attribute {
 	public:
-		struct MetaInfo;
 		class Proxy;
 		
 		Attribute(const Attribute& other) = delete;
@@ -68,7 +70,7 @@ namespace dgmpp2 {
 		Attribute& operator=(Attribute&& other) = delete;
 		~Attribute() = default;
 
-		const MetaInfo& metaInfo() const {return metaInfo_;}
+		const MetaInfo::Attribute& metaInfo() const {return metaInfo_;}
 		Type& owner() const {return owner_;}
 		
 		Float value() const;
@@ -79,14 +81,14 @@ namespace dgmpp2 {
 	private:
 		friend class Type;
 		friend class AttributeProxy;
-		const MetaInfo& metaInfo_;
+		const MetaInfo::Attribute& metaInfo_;
 		Type& owner_;
 		Float initialValue_;
 		optional<Float> forcedValue_ = nullopt;
 		mutable optional<Float> value_ = nullopt;
 		optional<Proxy> maxAttribute_ = nullopt;
 
-		Attribute(const MetaInfo& metaInfo, Float initialValue, Type& owner);
+		Attribute(const MetaInfo::Attribute& metaInfo, Float initialValue, Type& owner);
 		
 		void reset() {value_ = nullopt;}
 		
@@ -94,21 +96,6 @@ namespace dgmpp2 {
 		mutable bool recursionFlag_ = false;
 #endif
 		
-	};
-	
-	struct Attribute::MetaInfo {
-		AttributeID attributeID;
-		AttributeID maxAttributeID;
-		Float defaultValue;
-		bool isStackable;
-		bool highIsGood;
-	
-		MetaInfo(const MetaInfo& other) = delete;
-		MetaInfo(MetaInfo&& other) = delete;
-		MetaInfo& operator=(const MetaInfo& other) = delete;
-		MetaInfo& operator=(MetaInfo&& other) = delete;
-		~MetaInfo() = default;
-
 	};
 	
 	using AttributesMap = std::unordered_map<AttributeID, std::unique_ptr<Attribute>>;
@@ -137,13 +124,13 @@ namespace dgmpp2 {
 	private:
 		Type& owner_;
 		AttributesMap::iterator attribute_;
-		mutable const Attribute::MetaInfo* metaInfo_ = nullptr;
+		mutable const MetaInfo::Attribute* metaInfo_ = nullptr;
 		friend class Type;
 		
 		Proxy(Type& owner, AttributesMap::iterator attribute)
 		: owner_(owner), attribute_(attribute) {}
 		
-		const Attribute::MetaInfo& metaInfo() const;
+		const MetaInfo::Attribute& metaInfo() const;
 	};
 
 }

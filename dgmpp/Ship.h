@@ -200,12 +200,13 @@ namespace dgmpp2 {
 	
 	class Ship: public Type {
 	public:
-		static std::unique_ptr<Ship> Create(TypeID typeID) {return std::unique_ptr<Ship>(new Ship(typeID));}
-		Module* add(std::unique_ptr<Module> module);
-		void remove(Module* module);
+		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
+		Module* add (std::unique_ptr<Module> module);
+		void remove (Module* module);
 	protected:
-		virtual Type* domain(Modifier::MetaInfo::Domain domain) override;
+		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 	private:
-		Ship(TypeID typeID): Type(typeID) {};
+		Ship (TypeID typeID): Type(typeID) {};
+		std::vector<Module*> modules_;
 	};
 }

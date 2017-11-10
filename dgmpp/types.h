@@ -233,6 +233,23 @@ namespace dgmpp2 {
 		T& ref_;
 	};
 	
-	class Type;
+	template <typename Iter> class view {
+	public:
+		view(Iter from, Iter to) : from_(from), to_(to) {}
+		
+		Iter begin() {
+			return from_;
+		}
+		Iter end() {
+			return to_;
+		}
+		
+	private:
+		Iter from_;
+		Iter to_;
+	};
 	
+	template <typename Iter> view<Iter> make_view(Iter from, Iter to) {
+		return view<Iter>(from, to);
+	}
 }

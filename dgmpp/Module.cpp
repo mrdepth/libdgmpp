@@ -1060,61 +1060,147 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Module& module)
 
 
 namespace dgmpp2 {
-	void Module::state(dgmpp2::Module::State state) {
+	
+	Module::Module (TypeID typeID) : Type(typeID) {
+		const auto& effects = this->effects();
+		
+		flags_.canBeOnline = (*this)[EffectID::online] != nullptr || (*this)[EffectID::onlineForStructures];
+		
+		flags_.canBeOverloaded = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+			return i->metaInfo().category == MetaInfo::Effect::Category::overloaded;
+		});
+		
+		flags_.requireTarget = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+			return i->metaInfo().category == MetaInfo::Effect::Category::target;
+		});
+		
+		flags_.canBeActive = flags_.canBeOverloaded || flags_.requireTarget || std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+			return i->metaInfo().category == MetaInfo::Effect::Category::active;
+		});
+		
+		flags_.forceReload = metaInfo().groupID == GroupID::capacitorBooster;
+		
+		auto chargeGroupAttributeIDs = {AttributeID::chargeGroup1, AttributeID::chargeGroup2, AttributeID::chargeGroup3, AttributeID::chargeGroup4, AttributeID::chargeGroup5};
+		
+		for (auto attributeID : chargeGroupAttributeIDs) {
+			if (auto groupIDAttribute = (*this)[attributeID]) {
+				GroupID groupID = static_cast<GroupID>(groupIDAttribute->value());
+				if (groupID != GroupID::none) {
+					chargeGroups_.push_back(groupID);
+					if (groupID == GroupID::capacitorBoosterCharge || groupID == GroupID::naniteRepairPaste)
+						flags_.forceReload = true;
+				}
+			}
+		}
+		chargeGroups_.shrink_to_fit();
+		std::sort(chargeGroups_.begin(), chargeGroups_.end());
+		
+	}
+	
+	void Module::state (dgmpp2::Module::State state) {
 		
 		if (!isDummy() && state != state_ && canHaveState(state)) {
 			if (state < state_) {
-				if (state_ >= State::overloaded && state < State::overloaded)
-					deactivateEffects(Effect::MetaInfo::Category::overloaded);
-				if (state_ >= State::active && state < State::active) {
-					deactivateEffects(Effect::MetaInfo::Category::active);
-					deactivateEffects(Effect::MetaInfo::Category::target);
+				if (state_ >= State::overloaded	&& state < State::overloaded)
+					deactivateEffects(MetaInfo::Effect::Category::overloaded);
+				
+				if (state_ >= State::active		&& state < State::active) {
+					deactivateEffects(MetaInfo::Effect::Category::active);
+					deactivateEffects(MetaInfo::Effect::Category::target);
 				}
-				if (state_ >= State::online && state < State::online) {
-					deactivateEffects(Effect::MetaInfo::Category::passive);
-					if (auto online = (*this)[EffectID::online]) {
-						online->deactivate();
-					}
-				}
+				
+				if (state_ >= State::online		&& state < State::online)
+					deactivateEffects(MetaInfo::Effect::Category::passive);
 			}
 			else if (state > state_) {
-				if (state_ < State::online && state >= State::online) {
-					activateEffects(Effect::MetaInfo::Category::passive);
-					if (auto online = (*this)[EffectID::online]) {
-						online->activate();
-					}
+				if (state_ < State::online		&& state >= State::online)
+					activateEffects(MetaInfo::Effect::Category::passive);
+				
+				if (state_ < State::active		&& state >= State::active) {
+					activateEffects(MetaInfo::Effect::Category::active);
+					activateEffects(MetaInfo::Effect::Category::target);
 				}
-				if (state_ < State::active && state >= State::active) {
-					activateEffects(Effect::MetaInfo::Category::active);
-					activateEffects(Effect::MetaInfo::Category::target);
-				}
-				if (state_ < State::overloaded && state >= State::overloaded)
-					activateEffects(Effect::MetaInfo::Category::overloaded);
+				
+				if (state_ < State::overloaded	&& state >= State::overloaded)
+					activateEffects(MetaInfo::Effect::Category::overloaded);
 			}
 			state_ = state;
 		}
 	}
 	
-	bool Module::canHaveState(State state) {
+	bool Module::canHaveState (State state) const {
 		if (isDummy())
 			return false;
-		
-		return true;
+		if (isEnabled()) {
+			
+		}
+		return false;
 	}
 	
-	Type* Module::domain(Modifier::MetaInfo::Domain domain) {
+	Type* Module::domain (MetaInfo::Modifier::Domain domain) {
 		switch (domain) {
-			case Modifier::MetaInfo::Domain::self:
-				return this;
-			case Modifier::MetaInfo::Domain::ship:
-				return parent();
-			case Modifier::MetaInfo::Domain::character:
-				!return (parent() ?: nullptr)->parent();
-			case Modifier::MetaInfo::Domain::gang:
-				!return ((parent() ?: nullptr)->parent() ?: nullptr)->parent();
-			default:
+			case MetaInfo::Modifier::Domain::target :
 				return nullptr;
+			default:
+				return Type::domain(domain);
+		}
+	}
+	
+	void Module::setEnabled (bool enabled) {
+		Type::setEnabled(enabled);
+		if (enabled) {
+			if (state_ >= State::online)
+				activateEffects(MetaInfo::Effect::Category::passive);
+			if (state_ >= State::active) {
+				activateEffects(MetaInfo::Effect::Category::active);
+				activateEffects(MetaInfo::Effect::Category::target);
+			}
+			if (state_  >= State::overloaded)
+				activateEffects(MetaInfo::Effect::Category::overloaded);
+		}
+		else {
+			if (state_  >= State::overloaded)
+				deactivateEffects(MetaInfo::Effect::Category::overloaded);
+			if (state_ >= State::active) {
+				deactivateEffects(MetaInfo::Effect::Category::active);
+				deactivateEffects(MetaInfo::Effect::Category::target);
+			}
+			if (state_ >= State::online)
+				deactivateEffects(MetaInfo::Effect::Category::passive);
+		}
+	}
+	
+	Charge* Module::charge() const {
+		for (const auto& child: children()) {
+			if (auto charge = dynamic_cast<Charge*>(child.get()))
+				return charge;
 		}
 		return nullptr;
 	}
+	
+	void Module::charge (std::unique_ptr<Charge> charge) {
+		if (auto currentCharge = this->charge())
+			Type::remove(currentCharge);
+		if (charge != nullptr)
+			Type::add(std::move(charge));
+	}
+	
+	bool Module::canBeActive() const {
+		if (flags_.canBeActive)
+			return true;
+		else if (auto charge = this->charge())
+			return charge->canBeActive();
+		else
+			return false;
+	}
+
+	bool Module::requireTarget() const {
+		if (flags_.requireTarget)
+			return true;
+		else if (auto charge = this->charge())
+			return charge->requireTarget();
+		else
+			return false;
+	}
+
 }

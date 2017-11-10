@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <vector>
 #include <unordered_map>
+#include "MetaInfo.hpp"
 
 namespace dgmpp {
 
@@ -48,54 +49,26 @@ namespace dgmpp2 {
 	
 	class Effect {
 	public:
-		struct MetaInfo;
-		Effect(const Effect& other) = delete;
-		Effect(Effect&& other) = delete;
-		Effect& operator=(const Effect& other) = delete;
-		Effect& operator=(Effect&& other) = delete;
+		Effect (const Effect& other) = delete;
+		Effect (Effect&& other) = delete;
+		Effect& operator= (const Effect& other) = delete;
+		Effect& operator= (Effect&& other) = delete;
 		~Effect() = default;
 
+		const MetaInfo::Effect& metaInfo() const			{ return metaInfo_; }
+		const std::list<const Modifier>& modifiers() const	{ return modifiers_; };
 		
-		const MetaInfo& metaInfo() const {return metaInfo_;}
-//		Type& owner() const {return owner_;}
-		const std::list<const Modifier>& modifiers() {return modifiers_;};
+		bool active() const { return active_; }
 		
-		void activate();
-		void deactivate();
-		bool isActive() {return isActive_;}
 	private:
 		friend class Type;
-		bool isActive_ = false;
-		const MetaInfo& metaInfo_;
-//		Type& owner_;
-		std::list<const Modifier> modifiers_;
 		
-		Effect(const MetaInfo& metaInfo, Type& owner);
-	};
-	
-	struct Effect::MetaInfo {
-		enum class Category {
-			generic,
-			active, //also online effect
-			target,
-			passive,
-			overloaded,
-			dungeon,
-			system
-		};
+		bool active_ = false;
+		const MetaInfo::Effect&		metaInfo_;
+		std::list<const Modifier>	modifiers_;
 		
-		EffectID effectID;
-		Category category;
-		bool isAssistance;
-		bool isOffensive;
-		std::initializer_list<ref<const Modifier::MetaInfo>> modifiers;
-		
-		MetaInfo(const MetaInfo& other) = delete;
-		MetaInfo(MetaInfo&& other) = delete;
-		MetaInfo& operator=(const MetaInfo& other) = delete;
-		MetaInfo& operator=(MetaInfo&& other) = delete;
-		~MetaInfo() = default;
-
+		Effect (const MetaInfo::Effect& metaInfo, Type& owner);
+		void active (bool active) { active_ = active; }
 	};
 
 }
