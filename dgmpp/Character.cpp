@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <limits>
 #include "Structure.h"
+#include "SDE.hpp"
 
 using namespace dgmpp;
 
@@ -517,7 +518,18 @@ std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Character& character)
 }
 
 namespace dgmpp2 {
+	
+	Character::Character() : Type(TypeID::characterGallente) {
+		for (const auto& metaInfo: SDE::skills) {
+			auto skill = Type::add(Skill::Create(metaInfo.get()));
+			skills_.emplace(metaInfo.get().typeID, skill);
+		}
+	}
+	
 	Ship* Character::setShip(std::unique_ptr<Ship> ship) {
+		auto enabled = isEnabled();
+		if (enabled)
+			setEnabled(false);
 		if (ship_)
 			remove(ship_);
 		
@@ -525,6 +537,8 @@ namespace dgmpp2 {
 			ship_ = Type::add(std::move(ship));
 		else
 			ship_ = nullptr;
+		if (enabled)
+			setEnabled(enabled);
 		return ship_;
 	}
 	
@@ -532,9 +546,26 @@ namespace dgmpp2 {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::character:
 				return this;
+			case MetaInfo::Modifier::Domain::ship:
+				return ship_;
 			default:
 				return Type::domain(domain);
 		}
 	}
+	
+	void Character::reset() {
+		if (ship_) {
+			ship_->reset();
+		}
+	}
 
+	void Character::setSkillLevels(int level) {
+		if (level >= 0 && level <= 5) {
+			for (const auto& i: skills_) {
+				i.second->level(level);
+			}
+		}
+		else
+			throw InvalidSkillLevel();
+	}
 }

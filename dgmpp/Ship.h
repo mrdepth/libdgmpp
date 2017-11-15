@@ -7,6 +7,7 @@
 #include "DamagePattern.h"
 #include "Cargo.h"
 #include "Type.hpp"
+#include <stdexcept>
 
 namespace dgmpp {
 
@@ -200,12 +201,39 @@ namespace dgmpp2 {
 	
 	class Ship: public Type {
 	public:
+		using Position = std::vector<Module*>::const_iterator;
+		using ModulesContainer = std::vector<Module*>;
+		
+		template <typename T>
+		struct CannotFit: public std::runtime_error {
+			CannotFit(std::unique_ptr<T> type): type(std::move(type)), std::runtime_error("Cannot fit") {}
+			std::unique_ptr<T> type;
+		};
+		
 		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
-		Module* add (std::unique_ptr<Module> module);
+		
+		Module* add (std::unique_ptr<Module> module, bool forced = false, Module::Socket socket = Module::anySocket);
 		void remove (Module* module);
+		bool canFit (Module* module);
+		slice<ModulesContainer::const_iterator> modules (Module::Slot slot) const;
+		const std::vector<Module*>& modules () const {return modules_;}
+
+		size_t totalSlots (Module::Slot slot);
+		size_t freeSlots (Module::Slot slot) {return totalSlots(slot) - usedSlots(slot);}
+		size_t usedSlots (Module::Slot slot) {return modules(slot).size();}
+
+		size_t totalHardpoints (Module::Hardpoint hardpoint);
+		size_t freeHardpoints (Module::Hardpoint hardpoint);
+		size_t usedHardpoints (Module::Hardpoint hardpoint);
+		
+		int rigSize() {return static_cast<int>((*this)[AttributeID::rigSize]->value());}
+
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
+		virtual void reset() override;
 	private:
+		friend class Character;
+		
 		Ship (TypeID typeID): Type(typeID) {};
 		std::vector<Module*> modules_;
 	};

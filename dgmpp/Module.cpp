@@ -1064,6 +1064,7 @@ namespace dgmpp2 {
 	Module::Module (TypeID typeID) : Type(typeID) {
 		const auto& effects = this->effects();
 		
+		
 		flags_.canBeOnline = (*this)[EffectID::online] != nullptr || (*this)[EffectID::onlineForStructures];
 		
 		flags_.canBeOverloaded = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
@@ -1080,6 +1081,32 @@ namespace dgmpp2 {
 		
 		flags_.forceReload = metaInfo().groupID == GroupID::capacitorBooster;
 		
+		if ((*this)[EffectID::loPower])
+			slot_ = Module::Slot::low;
+		else if ((*this)[EffectID::medPower])
+			slot_ = Module::Slot::med;
+		else if ((*this)[EffectID::hiPower])
+			slot_ = Module::Slot::hi;
+		else if ((*this)[EffectID::rigSlot])
+			slot_ = Module::Slot::rig;
+		else if ((*this)[EffectID::subSystem])
+			slot_ = Module::Slot::subsystem;
+		else if ((*this)[EffectID::tacticalMode])
+			slot_ = Module::Slot::mode;
+		else if (metaInfo().categoryID == CategoryID::starbase)
+			slot_ = Module::Slot::starbaseStructure;
+		else if ((*this)[EffectID::serviceSlot])
+			slot_ = Module::Slot::service;
+		else
+			slot_ = Module::Slot::none;
+		
+		if ((*this)[EffectID::turretFitted])
+			hardpoint_ = Module::Hardpoint::turret;
+		else if ((*this)[EffectID::launcherFitted])
+			hardpoint_ = Module::Hardpoint::turret;
+		else
+			hardpoint_ = Module::Hardpoint::none;
+
 		auto chargeGroupAttributeIDs = {AttributeID::chargeGroup1, AttributeID::chargeGroup2, AttributeID::chargeGroup3, AttributeID::chargeGroup4, AttributeID::chargeGroup5};
 		
 		for (auto attributeID : chargeGroupAttributeIDs) {
@@ -1098,45 +1125,95 @@ namespace dgmpp2 {
 	}
 	
 	void Module::state (dgmpp2::Module::State state) {
-		
-		if (!isDummy() && state != state_ && canHaveState(state)) {
-			if (state < state_) {
-				if (state_ >= State::overloaded	&& state < State::overloaded)
-					deactivateEffects(MetaInfo::Effect::Category::overloaded);
-				
-				if (state_ >= State::active		&& state < State::active) {
-					deactivateEffects(MetaInfo::Effect::Category::active);
-					deactivateEffects(MetaInfo::Effect::Category::target);
-				}
-				
-				if (state_ >= State::online		&& state < State::online)
-					deactivateEffects(MetaInfo::Effect::Category::passive);
-			}
-			else if (state > state_) {
-				if (state_ < State::online		&& state >= State::online)
-					activateEffects(MetaInfo::Effect::Category::passive);
-				
-				if (state_ < State::active		&& state >= State::active) {
-					activateEffects(MetaInfo::Effect::Category::active);
-					activateEffects(MetaInfo::Effect::Category::target);
-				}
-				
-				if (state_ < State::overloaded	&& state >= State::overloaded)
-					activateEffects(MetaInfo::Effect::Category::overloaded);
-			}
-			state_ = state;
-		}
+		preferredState_ = state;
+		adjustState();
 	}
 	
-	bool Module::canHaveState (State state) const {
-		if (isDummy())
+	bool Module::canHaveState (State state) {
+		/*if (isDummy())
 			return false;
 		if (isEnabled()) {
-			
+			auto canHaveState = state == State::offline ||
+				(state == State::online && canBeOnline()) ||
+				(state == State::active && canBeActive()) ||
+				(state == State::overloaded && canBeOverloaded());
+			if (canHaveState && state >= State::active) {
+				if ((*this)[AttributeID::activationBlocked]->value() > 0)
+					return false;
+				
+				if (auto ship = dynamic_cast<Ship*>(parent())) {
+					
+					if (auto attribute = (*this)[AttributeID::maxGroupActive]) {
+						auto maxGroupActive = static_cast<size_t>(attribute->value());
+						auto groupID = metaInfo().groupID;
+						
+						for (const auto& module: ship->modules()) {
+							if (module == this)
+								continue;
+							
+							if (module->state() >= Module::State::active && module->metaInfo().groupID == groupID)
+								maxGroupActive--;
+							if (maxGroupActive <= 0)
+								return false;
+						}
+					}
+				}
+			}
+			return canHaveState;
 		}
-		return false;
+		return false;*/
+		auto states = availableStates();
+		return std::find(states.begin(), states.end(), state) != states.end();
 	}
 	
+	std::vector<Module::State> Module::availableStates() {
+		if (isEnabled()) {
+			std::vector<Module::State> states;
+			states.reserve(4);
+			states.push_back(Module::State::offline);
+			
+			if (canBeOnline()) {
+				states.push_back(Module::State::online);
+
+				bool canBeActive = this->canBeActive();
+
+				if (canBeActive) {
+					if ((*this)[AttributeID::activationBlocked]->value() > 0)
+						canBeActive = false;
+					else if (auto ship = dynamic_cast<Ship*>(parent())) {
+						if (auto attribute = (*this)[AttributeID::maxGroupActive]) {
+							auto maxGroupActive = static_cast<size_t>(attribute->value());
+							auto groupID = metaInfo().groupID;
+							
+							for (const auto& module: ship->modules()) {
+								if (module == this)
+									continue;
+								
+								if (module->state() >= Module::State::active && module->metaInfo().groupID == groupID)
+									maxGroupActive--;
+								if (maxGroupActive <= 0) {
+									canBeActive = false;
+									break;
+								}
+							}
+						}
+					}
+					
+					if (canBeActive) {
+						states.push_back(Module::State::active);
+						if (canBeOverloaded())
+							states.push_back(Module::State::overloaded);
+					}
+				}
+			}
+			
+			
+			return states;
+		}
+		else
+			return {};
+	}
+
 	Type* Module::domain (MetaInfo::Modifier::Domain domain) {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::target :
@@ -1203,4 +1280,42 @@ namespace dgmpp2 {
 			return false;
 	}
 
+	void Module::adjustState() {
+		if (isEnabled()) {
+			auto availableStates = this->availableStates();
+			auto i = std::lower_bound(availableStates.begin(), availableStates.end(), preferredState_);
+			auto state = i != availableStates.end() ? *i : State::offline;
+			
+			if (state != state_) {
+				if (state < state_) {
+					if (state_ >= State::overloaded	&& state < State::overloaded)
+						deactivateEffects(MetaInfo::Effect::Category::overloaded);
+					
+					if (state_ >= State::active		&& state < State::active) {
+						deactivateEffects(MetaInfo::Effect::Category::active);
+						deactivateEffects(MetaInfo::Effect::Category::target);
+					}
+					
+					if (state_ >= State::online		&& state < State::online)
+						deactivateEffects(MetaInfo::Effect::Category::passive);
+				}
+				else if (state > state_) {
+					if (state_ < State::online		&& state >= State::online)
+						activateEffects(MetaInfo::Effect::Category::passive);
+					
+					if (state_ < State::active		&& state >= State::active) {
+						activateEffects(MetaInfo::Effect::Category::active);
+						activateEffects(MetaInfo::Effect::Category::target);
+					}
+					
+					if (state_ < State::overloaded	&& state >= State::overloaded)
+						activateEffects(MetaInfo::Effect::Category::overloaded);
+				}
+				state_ = state;
+			}
+		}
+		else {
+			state_ = State::unknown;
+		}
+	}
 }

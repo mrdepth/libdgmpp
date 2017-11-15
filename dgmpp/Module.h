@@ -174,6 +174,10 @@ namespace dgmpp2 {
 	
 	class Module: public Type {
 	public:
+		typedef int Socket;
+		static const Socket anySocket;
+
+
 		static std::unique_ptr<Module> Create (TypeID typeID) { return std::unique_ptr<Module>(new Module(typeID)); }
 
 		enum class State {
@@ -184,11 +188,38 @@ namespace dgmpp2 {
 			overloaded
 		};
 
-		bool isDummy() const { return metaInfo().typeID == TypeID::none; }
-		bool canHaveState (State state) const;
-		void state (State state);
-		State state() const {return state_;};
+		enum class Slot
+		{
+			none,
+			hi,
+			med,
+			low,
+			rig,
+			subsystem,
+			mode,
+			service,
+			starbaseStructure
+		};
 		
+		enum class Hardpoint
+		{
+			none,
+			launcher,
+			turret
+		};
+		
+		bool isDummy() const { return metaInfo().typeID == TypeID::none; }
+		bool canHaveState (State state);
+		std::vector<State> availableStates();
+
+		State state() const {return state_;}
+		State preferredState() const {return preferredState_;}
+		void state (State state);
+		
+		Slot slot() const {return slot_;}
+		Hardpoint hardpoint() const {return hardpoint_;}
+		Socket socket() const {return socket_;}
+
 		virtual void setEnabled (bool enabled) override;
 		
 		Charge* charge() const;
@@ -203,7 +234,12 @@ namespace dgmpp2 {
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		
 	private:
+		friend class Ship;
 		State state_ = State::unknown;
+		State preferredState_ = State::unknown;
+		Slot slot_;
+		Hardpoint hardpoint_;
+		Socket socket_;
 		
 		struct {
 			bool canBeOnline : 1;
@@ -216,5 +252,8 @@ namespace dgmpp2 {
 		std::vector<GroupID> chargeGroups_;
 		
 		Module (TypeID typeID);
+		
+		void socket(Socket socket) {socket_ = socket;}
+		void adjustState();
 	};
 }

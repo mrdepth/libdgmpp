@@ -3,7 +3,7 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		constexpr const MetaInfo::Modifier modifiers[] {
+		constexpr MetaInfo::Modifier modifiers[] {
 			{MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::addRate, MetaInfo::Modifier::Domain::ship, AttributeID::shieldCharge, AttributeID::shieldBonus},
 			{MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::modAdd, MetaInfo::Modifier::Domain::ship, AttributeID::cpuLoad, AttributeID::cpu},
 			{MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::modAdd, MetaInfo::Modifier::Domain::ship, AttributeID::powerLoad, AttributeID::power},

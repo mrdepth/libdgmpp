@@ -54,7 +54,7 @@ void dumpAttributeTypes(SQLiteDatabase& database) {
 	<< "#include \"MetaInfo.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const MetaInfo::Attribute attributes[] {" << std::endl;
+	<< "		constexpr MetaInfo::Attribute attributes[] {" << std::endl;
 	
 	
 	while (auto row = result.next()) {
@@ -143,7 +143,7 @@ void dumpItems(SQLiteDatabase& database) {
 	<< "#include \"Effects.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const MetaInfo::Type types[] {" << std::endl;
+	<< "		constexpr MetaInfo::Type types[] {" << std::endl;
 
 	std::cout << "\t\t\t"
 	<< "{TypeID::none, GroupID::none, CategoryID::none, {}, {}, {}}," << std::endl;
@@ -324,7 +324,7 @@ void dumpModifiers(SQLiteDatabase& database) {
 	<< "#include \"MetaInfo.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const MetaInfo::Modifier modifiers[] {" << std::endl;
+	<< "		constexpr MetaInfo::Modifier modifiers[] {" << std::endl;
 
 	
 	while (auto row = result.next()) {
@@ -402,7 +402,7 @@ void dumpEffects(SQLiteDatabase& database) {
 	<< "#include \"Modifiers.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const MetaInfo::Effect effects[] {" << std::endl;
+	<< "		constexpr MetaInfo::Effect effects[] {" << std::endl;
 	
 	
 	while (auto row = result.next()) {
@@ -427,6 +427,31 @@ void dumpEffects(SQLiteDatabase& database) {
 		
 		std::cout << std::endl << "\t\t\t}}," << std::endl;
 		
+	}
+	
+	std::cout
+	<< "		};" << std::endl
+	<< "	}" << std::endl
+	<< "}" << std::endl;
+}
+
+void dumpSkills(SQLiteDatabase& database) {
+	auto result = database.fetch<int, std::string>("SELECT a.rowID, typeName FROM invTypes AS a, invGroups AS b WHERE a.groupID=b.groupID and b.categoryID=16 ORDER BY a.rowID");
+	
+	std::cout
+	<< "#pragma once" << std::endl
+	<< "#include \"Types.hpp\"\n" << std::endl
+	<< "namespace dgmpp2 {" << std::endl
+	<< "	namespace SDE {" << std::endl
+	<< "		constexpr std::initializer_list<ref<const MetaInfo::Type>> skills {" << std::endl;
+	
+	
+	while (auto row = result.next()) {
+		auto rowID = row.get<0>();
+		auto typeName = Name(row.get<1>());
+		
+		std::cout << "\t\t\t"
+		<< "{types[" << rowID<< "]}, //" << typeName << std::endl;
 	}
 	
 	std::cout
@@ -477,6 +502,10 @@ int main(int argc, const char * argv[]) {
 		}
 		else if (action == "--effects") {
 			dumpEffects(database);
+			return 0;
+		}
+		else if (action == "--skills") {
+			dumpSkills(database);
 			return 0;
 		}
 	}

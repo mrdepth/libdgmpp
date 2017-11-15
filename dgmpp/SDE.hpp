@@ -9,9 +9,12 @@
 #include "Attribute.h"
 #include "Type.hpp"
 #include <stdexcept>
+#include "MetaInfo.hpp"
 
 namespace dgmpp2 {
 	namespace SDE {
+		extern const std::initializer_list<ref<const MetaInfo::Type>> skills;
+		
 		template<typename T>
 		class NotFound : public std::runtime_error {
 		public:

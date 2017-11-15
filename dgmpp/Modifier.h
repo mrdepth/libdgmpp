@@ -103,7 +103,7 @@ namespace dgmpp2 {
 		const MetaInfo::Modifier&	metaInfo_;
 		Type&				owner_;
 		const Effect&		effect_;
-		const Attribute&	modifyingAttribute_;
+		Attribute&			modifyingAttribute_;
 		bool				needsStackingCheck_;
 		
 	};	

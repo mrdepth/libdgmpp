@@ -52,3 +52,7 @@ Item* Skill::ship() {
 Item* Skill::structure() {
 	return character()->structure();
 }
+
+namespace dgmpp2 {
+	
+}

@@ -15,6 +15,8 @@
 #include <future>
 #include <array>
 #include <numeric>
+#include <type_traits>
+#include <sstream>
 
 using namespace dgmpp;
 
@@ -135,7 +137,7 @@ struct Str {
 	int i;
 };
 
-constexpr const Str v[] = {{1},{2},{3},{4},{5}};
+constexpr Str v[] = {{1},{2},{3},{4},{5}};
 
 constexpr const Str& vv(int i) {
 	for (int j = 0; j < sizeof(v); j++) {
@@ -274,94 +276,89 @@ template <typename Iterator, typename F> TransformIterator<Iterator, F> MakeTran
 //	return TransformIterator<Iterator, F> {std::forward<Iterator>(i), std::forward<F>(f)};
 }
 
-class E1 {
-public:
-	E1() {
-		std::cout << "E1()" << std::endl;
-	};
-	~E1() {
-		std::cout << "~E1()" << std::endl;
-	}
-
-};
-
-class E2: public E1 {
-public:
-	E2() {};
-};
-
-const char* f() {
-	return nullptr;
-}
-
-template <typename C> class View {
-public:
-	typedef typename C::iterator Iter;
-	
-	template <typename I>
-	View(I&& from, I&& to) : from_(std::forward<I>(from)), to_(std::forward<I>(to)) {}
-	
-	Iter begin() {
-		return from_;
-	}
-	Iter end() {
-		return to_;
+struct C {
+	int i = 0;
+	void fun() {
+		
 	}
 	
-private:
-	Iter from_;
-	Iter to_;
 };
 
-template <typename C, typename Iter = typename C::iterator> View<C> MakeView(Iter&& from, Iter&& to) {
-	return View<C>(std::forward<Iter>(from), std::forward<Iter>(to));
-}
+template <typename... Args>
+struct KeyComparator {
+	using Key = std::tuple<Args...>;
+	
+	bool operator()(const Key& lhs, const Key& rhs) const {
+		return lhs < rhs;
+	}
+	
+	template <typename... Args2, size_t... Is>
+	std::tuple<Args2...> get(const Key& lhs, std::index_sequence<Is...>) const {
+		return std::make_tuple(std::get<Is>(lhs)...);
+	}
+	
+	template <typename... Args2>
+	bool operator()(const Key& lhs, const std::tuple<Args2...>& rhs) const {
+		return get<Args2...>(lhs, std::index_sequence_for<Args2...>{}) < rhs;
+	}
+	
+	template <typename... Args2>
+	bool operator()(const std::tuple<Args2...>& lhs, const Key& rhs) const {
+		return lhs < get<Args2...>(rhs, std::index_sequence_for<Args2...>{});
+	}
+	
+	typedef void is_transparent;
+};
 
-template <typename C, typename Iter = typename C::iterator,
-	typename std::enable_if(std::is_same(std::iterator_traits<Iter>::iterator_category,std::input_terator_tag))::type>
-
-View<C> MakeView(Iter&& from, Iter&& to) {
-	return View<C>(std::forward<Iter>(from), std::forward<Iter>(to));
-}
-
-
-template <typename С> std::string fun2 (typename С::iterator i, std::output_iterator_tag) {
-	return "iterator";
+template<typename C, typename K> std::pair<typename C::iterator, typename C::iterator> equal_range (const C& c, const K& k) {
+	return std::make_pair(c.lower_bound(k), c.upper_bound(k));
 }
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
+
+		std::set<std::tuple<int, int>, KeyComparator<int, int>> set;
+		for (int i = 0; i < 3; i++)
+			for (int j = 0; j < 3; j++)
+				set.emplace(i,j);
 		
-		std::list<int> l = {1,2,3,4,5};
+		auto print = [](decltype(set)::iterator first, decltype(set)::iterator last) {
+			std::transform(first, last, std::ostream_iterator<std::string>(std::cout, "\n"), [](auto i) {
+				std::stringstream s;
+				s << "{" << std::get<0>(i) << "," << std::get<1>(i) << "}";
+				return s.str();
+			});
+			std::cout << std::endl;
+		};
 		
-		auto view = MakeView<std::list<int>>(std::find(l.begin(), l.end(), 2), std::find(l.begin(), l.end(), 4));
+		print(set.begin(), set.end());
+//		auto range = set.equal_range(std::make_tuple(1));
+		auto range = equal_range(set, std::make_tuple(1));
 		
-		std::list<int> l2  { std::find(l.begin(), l.end(), 2), std::find(l.begin(), l.end(), 4) };
-		(*view.begin()) = 10;
-		
-		for (auto i: view)
-			std::cout << i << " ";
-		std::cout << std::endl;
+//		print(range.first, range.second);
 
 		{
+		
 			auto gang = dgmpp2::Gang::Create();
 			auto pilot = gang->add(dgmpp2::Character::Create());
+			pilot->setSkillLevels(5);
 			auto ship = pilot->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-//			std::cout << (*ship)[dgmpp2::AttributeID::armorEmDamageResonance]->value() << " ";
-//			ship->add(dgmpp2::Module::Create(TypeID::damageControlII));
-//			ship->add(dgmpp2::Module::Create(TypeID::armorEMHardenerII));
-//			ship->add(dgmpp2::Module::Create(TypeID::armorEMHardenerI));
-			ship->add(dgmpp2::Module::Create(TypeID::_500MNMicrowarpdriveII));
+			auto module = ship->add(dgmpp2::Module::Create(TypeID::_500MNMicrowarpdriveII));
+			
+			module->state(dgmpp2::Module::State::overloaded);
 			Float v1 = (*ship)[dgmpp2::AttributeID::maxVelocity]->value();
-			std::cout << v1 << std::endl;
+//			Float v2 = (*ship)[dgmpp2::AttributeID::maxVelocity]->value();
+			std::cout << v1 << std::endl;// << v2 << std::endl;
 		}
 		{
 			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 			auto pilot = engine->getGang()->addPilot();
+			pilot->setAllSkillsLevel(5);
 			auto ship = pilot->setShip(dgmpp::TypeID::dominix);
 //			ship->addModule(dgmpp::TypeID::armorEMHardenerII);
 //			ship->addModule(dgmpp::TypeID::armorEMHardenerI);
-			ship->addModule(dgmpp::TypeID::_500MNMicrowarpdriveII);
+			auto module = ship->addModule(dgmpp::TypeID::_500MNMicrowarpdriveII);
+			module->setState(dgmpp::Module::State::overloaded);
 			std::cout << ship->getAttribute(dgmpp::AttributeID::maxVelocity)->getValue() << std::endl;
 		}
 //		578=2

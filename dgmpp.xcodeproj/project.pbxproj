@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		120B84E31FBC906000BC0EE1 /* Utility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 120B84E21FBC906000BC0EE1 /* Utility.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		120B84E41FBC906000BC0EE1 /* Utility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 120B84E21FBC906000BC0EE1 /* Utility.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		121064A51C9312370032B3DB /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* Structure.cpp */; };
 		121064A71C9312370032B3DB /* Structure.h in Headers */ = {isa = PBXBuildFile; fileRef = 121064A41C9312370032B3DB /* Structure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */; };
@@ -139,6 +141,10 @@
 		12B0A3001C0DC5CC00194715 /* CombatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */; };
 		12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B0A30C1C0EEC8400194715 /* dgmpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* dgmpp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12D38B401FBAD54600D2C0F2 /* Skills.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12D38B3F1FBAD54600D2C0F2 /* Skills.hpp */; };
+		12D38B411FBAD55000D2C0F2 /* Effects.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599BD1FAC4C51007B303F /* Effects.hpp */; };
+		12D38B421FBAD55000D2C0F2 /* Skills.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12D38B3F1FBAD54600D2C0F2 /* Skills.hpp */; };
+		12D38B431FBAD55100D2C0F2 /* Effects.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599BD1FAC4C51007B303F /* Effects.hpp */; };
 		12D9F9841CC3A98B00313F8D /* SqliteFetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */; };
 		12D9F9851CC3A98B00313F8D /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9EC51147FA61C00B12A7F /* Area.cpp */; };
 		12D9F9861CC3A98B00313F8D /* Cycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */; };
@@ -269,6 +275,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		120B84E21FBC906000BC0EE1 /* Utility.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Utility.hpp; sourceTree = "<group>"; };
 		121064A31C9312370032B3DB /* Structure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Structure.cpp; sourceTree = "<group>"; };
 		121064A41C9312370032B3DB /* Structure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Structure.h; sourceTree = "<group>"; };
 		12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FetchRequest.cpp; sourceTree = "<group>"; };
@@ -345,6 +352,7 @@
 		12B0A0621C0C9C5600194715 /* DamageVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamageVector.h; sourceTree = "<group>"; };
 		12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombatSimulator.cpp; sourceTree = "<group>"; };
 		12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatSimulator.h; sourceTree = "<group>"; };
+		12D38B3F1FBAD54600D2C0F2 /* Skills.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Skills.hpp; sourceTree = "<group>"; };
 		12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
 		12DC15571FA7271500F1B6F1 /* Type.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Type.cpp; sourceTree = "<group>"; };
@@ -543,6 +551,7 @@
 				122599B51FAB66F5007B303F /* Modifiers.hpp */,
 				122599B31FAB66F5007B303F /* Types.hpp */,
 				122599BD1FAC4C51007B303F /* Effects.hpp */,
+				12D38B3F1FBAD54600D2C0F2 /* Skills.hpp */,
 			);
 			name = SDE;
 			sourceTree = "<group>";
@@ -588,6 +597,7 @@
 				122599A41FAB657B007B303F /* EffectID.hpp */,
 				122599A61FAB657B007B303F /* GroupID.hpp */,
 				122599A71FAB657B007B303F /* TypeID.hpp */,
+				120B84E21FBC906000BC0EE1 /* Utility.hpp */,
 				12A354311FA8626D0053CEEC /* dgmpp2 */,
 			);
 			name = dgmpp;
@@ -723,10 +733,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				122599AD1FAB65A7007B303F /* TypeID.hpp in Headers */,
+				12D38B431FBAD55100D2C0F2 /* Effects.hpp in Headers */,
 				12AEEFDC1C26B8AA00FB7B1D /* AttributePrototype.h in Headers */,
 				12564BD41B84B07E000F68D8 /* Effect.h in Headers */,
 				12B0A30C1C0EEC8400194715 /* dgmpp.h in Headers */,
 				12564BE11B84B07E000F68D8 /* Modifier.h in Headers */,
+				120B84E31FBC906000BC0EE1 /* Utility.hpp in Headers */,
 				125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */,
 				1293C42B1C46C10A00B33378 /* Planet.h in Headers */,
 				12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */,
@@ -772,6 +784,7 @@
 				12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */,
 				12A156921C464FD300C3CF0B /* Spaceport.h in Headers */,
 				12564BFB1B84B07F000F68D8 /* Engine.h in Headers */,
+				12D38B401FBAD54600D2C0F2 /* Skills.hpp in Headers */,
 				122599AB1FAB65A7007B303F /* EffectID.hpp in Headers */,
 				12FC63951FB59C2E005F2B66 /* MetaInfo.hpp in Headers */,
 				12AEEFCE1C25BAC200FB7B1D /* Environment.h in Headers */,
@@ -801,6 +814,8 @@
 				12D9F9BB1CC3A98B00313F8D /* dgmpp.h in Headers */,
 				12D9F9BC1CC3A98B00313F8D /* Modifier.h in Headers */,
 				12D9F9BD1CC3A98B00313F8D /* ProductionCycle.h in Headers */,
+				120B84E41FBC906000BC0EE1 /* Utility.hpp in Headers */,
+				12D38B421FBAD55000D2C0F2 /* Skills.hpp in Headers */,
 				12D9F9BE1CC3A98B00313F8D /* Planet.h in Headers */,
 				12D9F9BF1CC3A98B00313F8D /* LocationGroupModifier.h in Headers */,
 				12DC155C1FA7271500F1B6F1 /* Type.hpp in Headers */,
@@ -836,6 +851,7 @@
 				12D9F9D71CC3A98B00313F8D /* DamageVector.h in Headers */,
 				12D9F9D81CC3A98B00313F8D /* SqliteConnector.h in Headers */,
 				12D9F9DA1CC3A98B00313F8D /* SqliteFetchResult.h in Headers */,
+				12D38B411FBAD55000D2C0F2 /* Effects.hpp in Headers */,
 				12D9F9DB1CC3A98B00313F8D /* Facility.h in Headers */,
 				12D9F9DC1CC3A98B00313F8D /* StorageFacility.h in Headers */,
 				12D9F9DD1CC3A98B00313F8D /* Area.h in Headers */,

@@ -3,7 +3,7 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		constexpr const MetaInfo::Attribute attributes[] {
+		constexpr MetaInfo::Attribute attributes[] {
 			{AttributeID::isOnline, AttributeID::none, 0, true, true},
 			{AttributeID::damage, AttributeID::none, 0, true, true},
 			{AttributeID::mass, AttributeID::none, 0, false, true},

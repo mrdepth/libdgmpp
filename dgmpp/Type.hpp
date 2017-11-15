@@ -19,6 +19,7 @@
 #include <unordered_set>
 #include <functional>
 #include "MetaInfo.hpp"
+#include "Utility.hpp"
 
 namespace dgmpp2 {
 	
@@ -33,7 +34,7 @@ namespace dgmpp2 {
 		Type* parent() const { return parent_; }
 		
 		Attribute::Proxy operator[] (AttributeID attributeID);
-		Effect* operator[] (EffectID effectID);
+		Effect* operator[] (EffectID effectID) const;
 		
 		virtual bool isDisallowedAssistance() const {
 			if (auto parent = this->parent())
@@ -63,8 +64,9 @@ namespace dgmpp2 {
 	protected:
 		using TypesContainer = std::list<std::unique_ptr<Type>>;
 		
-		Type(TypeID typeID);
-		
+		Type (TypeID typeID);
+		Type (const MetaInfo::Type& metaInfo);
+
 		template<typename T>
 		T* add (std::unique_ptr<T> child) {
 			assert(child != nullptr);
@@ -76,6 +78,12 @@ namespace dgmpp2 {
 			if (type->isEnabled())
 				type->setEnabled(false);
 			
+			if (type->cache_ != nullptr) {
+				if (cache_ == nullptr)
+					cache_ = std::move(type->cache_);
+				else
+					cache_ = nullptr;
+			}
 			type->parent(this);
 			
 			assert(std::find(children_.begin(), children_.end(), type) == children_.end());
@@ -104,38 +112,70 @@ namespace dgmpp2 {
 		void deactivateEffects (MetaInfo::Effect::Category category);
 		const std::vector<std::unique_ptr<Effect>>& effects() const { return effects_; }
 		
+		virtual void reset();
+		
 	private:
+		struct AttributesCache;
+		
 		friend class AttributeProxy;
 		friend class Attribute;
 		friend class Modifier;
-		
 		
 		const MetaInfo::Type&					metaInfo_;
 		Type*									parent_ = nullptr;
 		AttributesMap							attributes_;
 		std::vector<std::unique_ptr<Effect>>	effects_;
 		TypesContainer							children_;
-		mutable bool							isReset_ = true;
 		bool									enabled_ = false;
+		bool									resetFlag_ = false;
 
-		std::vector<const Modifier*> itemModifiers_;
-		std::vector<const Modifier*> locationModifiers_;
-		std::vector<const Modifier*> locationGroupModifiers_;
-		std::vector<std::pair<TypeID, const Modifier*>> locationRequiredSkillModifiers_;
 
+		ModifiersContainer<AttributeID, const Modifier*> itemModifiers_;
+		ModifiersContainer<AttributeID, const Modifier*> locationModifiers_;
+		ModifiersContainer<AttributeID, GroupID, const Modifier*> locationGroupModifiers_;
+		ModifiersContainer<AttributeID, TypeID, const Modifier*> locationRequiredSkillModifiers_;
 		
-		Type (const MetaInfo::Type& metaInfo);
+		std::unique_ptr<AttributesCache> cache_;
+		
 		void parent (Type* parent) { parent_ = parent; }
 		
 		void addModifier (const Modifier* modifier);
 		void removeModifier (const Modifier* modifier);
 		std::vector<Effect*> activeEffects() const;
-		void reset();
-		void reset (AttributeID modifyingAttribute);
+		void resetCache ();
 		
 		void activate	(Effect* effect);
 		void deactivate	(Effect* effect);
+		
+		AttributesCache& cache();
 
+	};
+	
+	class Type::AttributesCache {
+	public:
+		void add(Attribute* attribute) {
+			attributes_.push_back(attribute);
+		}
+		
+		void reset() {
+			std::list<Type*> types;
+			for (auto attribute: attributes_) {
+				attribute->reset();
+				auto type = &attribute->owner();
+				if (!type->resetFlag_) {
+					type->resetFlag_ = true;
+					types.push_back(type);
+				}
+			}
+			attributes_.clear();
+			for (auto type: types) {
+				type->reset();
+				type->resetFlag_ = false;
+			}
+		}
+		
+	private:
+		std::list<Attribute*> attributes_;
 	};
 	
 }

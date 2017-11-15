@@ -6,7 +6,7 @@
 //
 
 #include "SDE.hpp"
-#include "Types.hpp"
+#include "Skills.hpp"
 
 namespace dgmpp2 {
 	namespace SDE {

@@ -666,6 +666,7 @@ void Attribute::calculate()
 			Float maxValue = owner->getAttribute(maxAttributeID)->getValue();
 			value_ = std::min(value_, maxValue);
 		}
+//		std::cout << static_cast<int>(attributeID) << ": " << value_ << std::endl;
 		sync = false;
 		
 	}
@@ -779,21 +780,23 @@ namespace dgmpp2 {
 	const MetaInfo::Attribute& Attribute::Proxy::metaInfo() const {
 		if (!metaInfo_) {
 			if (attribute_->second)
-			metaInfo_ = &attribute_->second->metaInfo();
+				metaInfo_ = &attribute_->second->metaInfo();
 			else
-			metaInfo_ = &SDE::get(attribute_->first);
+				metaInfo_ = &SDE::get(attribute_->first);
 		}
 		return *metaInfo_;
 	}
 	
-	Attribute& Attribute::operator= (Float value) {
-		forcedValue_ = value;
-		owner().reset(metaInfo().attributeID);
+	Attribute& Attribute::operator= (optional<Float>&& value) {
+		forcedValue_ = std::move(value);
+		owner().resetCache();
 		return *this;
 	}
 	
-	Float Attribute::value() const {
+	Float Attribute::value() {
 		using namespace std::placeholders;
+		if (forcedValue_)
+			return *forcedValue_;
 
 		if (!value_) {
 #if DEBUG
@@ -919,9 +922,9 @@ namespace dgmpp2 {
 			if (maxAttribute_) {
 				value = std::min(value, maxAttribute_->value());
 			}
-			
+//			std::cout << static_cast<int>(metaInfo().attributeID) << ": " << value << std::endl;
 			value_ = value;
-			
+			owner_.cache().add(this);
 #if DEBUG
 			recursionFlag_ = false;
 #endif

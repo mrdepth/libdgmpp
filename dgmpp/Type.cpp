@@ -13,6 +13,22 @@
 
 
 namespace dgmpp2 {
+	
+	/*(struct Type::AttributeIDComparator {
+		bool operator()(const Modifier* a, const Modifier* b) const {
+			return a->metaInfo().modifiedAttributeID < b->metaInfo().modifiedAttributeID;
+		}
+		
+		bool operator()(const Modifier* a, AttributeID b) const {
+			return a->metaInfo().modifiedAttributeID < b;
+		}
+		
+		bool operator()(AttributeID a, const Modifier* b) const {
+			return a < b->metaInfo().modifiedAttributeID;
+		}
+		
+	};*/
+	
 	struct ModifierComparator {
 		
 		bool operator() (const Modifier* lhs, AttributeID rhs) {
@@ -93,16 +109,22 @@ namespace dgmpp2 {
 	Attribute::Proxy Type::operator[] (AttributeID attributeID) {
 		return {*this, attributes_.emplace(attributeID, nullptr).first};
 	}
-	
-	Effect* Type::operator[] (EffectID effectID) {
-		auto i = std::lower_bound(effects_.begin(), effects_.end(), effectID, [] (const auto& a, auto b) {
-			return a->metaInfo().effectID == b;
+
+	Effect* Type::operator[] (EffectID effectID) const {
+		auto i = std::find_if(effects_.begin(), effects_.end(), [=](const auto& a) {
+			return a->metaInfo().effectID == effectID;
 		});
-		return i != effects_.end() && (*i)->metaInfo().effectID == effectID ? i->get() : nullptr;
+		return i != effects_.end() ? i->get() : nullptr;
+//		auto i = std::lower_bound(effects_.begin(), effects_.end(), effectID, [] (const auto& a, auto b) {
+//			return a->metaInfo().effectID < b;
+//		});
+//		return i != effects_.end() && (*i)->metaInfo().effectID == effectID ? i->get() : nullptr;
 	}
 	
 	void Type::setEnabled (bool enabled) {
-		assert(enabled_ != enabled);
+		if (enabled == enabled_)
+			return;
+
 		enabled_ = enabled;
 
 		if (enabled)
@@ -132,44 +154,42 @@ namespace dgmpp2 {
 	void Type::addModifier(const Modifier* modifier) {
 		switch (modifier->metaInfo().type) {
 			case MetaInfo::Modifier::ModifierType::item : {
-				auto i = std::upper_bound(itemModifiers_.begin(), itemModifiers_.end(), modifier->metaInfo().modifiedAttributeID, ModifierComparator());
-				assert(i == itemModifiers_.end() || *i != modifier);
-				itemModifiers_.insert(i, modifier);
+				auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, modifier);
+				assert (itemModifiers_.find(key) == itemModifiers_.end());
+				itemModifiers_.insert(key);
 				break;
 			}
 				
 			case MetaInfo::Modifier::ModifierType::location : {
-				auto i = std::upper_bound(locationModifiers_.begin(), locationModifiers_.end(), modifier->metaInfo().modifiedAttributeID, ModifierComparator());
-				assert(i == locationModifiers_.end() || *i != modifier);
-				locationModifiers_.insert(i, modifier);
+				auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, modifier);
+				assert (locationModifiers_.find(key) == locationModifiers_.end());
+				locationModifiers_.insert(key);
 				break;
 			}
 				
 			case MetaInfo::Modifier::ModifierType::locationGroup : {
-				auto what = std::make_pair(modifier->metaInfo().modifiedAttributeID, modifier->metaInfo().require.groupID);
-				auto i = std::upper_bound(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), what, ModifierComparator());
-				assert(i == locationGroupModifiers_.end() || *i != modifier);
-				locationGroupModifiers_.insert(i, modifier);
+				auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, modifier->metaInfo().require.groupID, modifier);
+				assert (locationGroupModifiers_.find(key) == locationGroupModifiers_.end());
+				locationGroupModifiers_.insert(key);
 				break;
 			}
 				
 			case MetaInfo::Modifier::ModifierType::locationRequiredSkill :
 			case MetaInfo::Modifier::ModifierType::ownerRequiredSkill : {
 				auto skillID = modifier->metaInfo().require.typeID;
-				auto what = std::make_pair(modifier->metaInfo().modifiedAttributeID, skillID);
-				auto i = std::upper_bound(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), what, ModifierComparator());
-				assert(i == locationRequiredSkillModifiers_.end() || i->second != modifier);
-				locationRequiredSkillModifiers_.insert(i, std::make_pair(skillID, modifier));
+				auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, skillID, modifier);
+				assert (locationRequiredSkillModifiers_.find(key) == locationRequiredSkillModifiers_.end());
+				locationRequiredSkillModifiers_.insert(key);
 				break;
 			}
 				
 			case MetaInfo::Modifier::ModifierType::locationRequiredDomainSkill : {
 				if (auto type = modifier->owner().domain(modifier->metaInfo().require.domain)) {
 					auto skillID = type->metaInfo().typeID;
-					auto what = std::make_pair(modifier->metaInfo().modifiedAttributeID, skillID);
-					auto i = std::upper_bound(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), what, ModifierComparator());
-					assert(i == locationRequiredSkillModifiers_.end() || i->second != modifier);
-					locationRequiredSkillModifiers_.insert(i, std::make_pair(skillID, modifier));
+					auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, skillID, modifier);
+					assert (locationRequiredSkillModifiers_.find(key) == locationRequiredSkillModifiers_.end());
+					locationRequiredSkillModifiers_.insert(key);
+					break;
 				}
 				break;
 			}
@@ -177,50 +197,49 @@ namespace dgmpp2 {
 			default:
 				assert(!"Invalid MetaInfo::Modifier::ModifierType value");
 		}
-		reset();
+		resetCache();
 	}
 	
 	void Type::removeModifier (const Modifier* modifier) {
+		
 		switch (modifier->metaInfo().type) {
 			case MetaInfo::Modifier::ModifierType::item : {
-				auto i = std::upper_bound(itemModifiers_.begin(), itemModifiers_.end(), modifier->metaInfo().modifiedAttributeID, ModifierComparator());
-				assert(*i == modifier);
-				itemModifiers_.erase(i);
+				auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, modifier);
+				assert (itemModifiers_.find(key) != itemModifiers_.end());
+				itemModifiers_.erase(key);
 				break;
 			}
 				
 			case MetaInfo::Modifier::ModifierType::location : {
-				auto i = std::upper_bound(locationModifiers_.begin(), locationModifiers_.end(), modifier->metaInfo().modifiedAttributeID, ModifierComparator());
-				assert(*i == modifier);
-				locationModifiers_.erase(i);
+				auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, modifier);
+				assert (locationModifiers_.find(key) != locationModifiers_.end());
+				locationModifiers_.erase(key);
 				break;
 			}
 				
 			case MetaInfo::Modifier::ModifierType::locationGroup : {
-				auto what = std::make_pair(modifier->metaInfo().modifiedAttributeID, modifier->metaInfo().require.groupID);
-				auto i = std::upper_bound(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), what, ModifierComparator());
-				assert(*i == modifier);
-				locationGroupModifiers_.erase(i);
+				auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, modifier->metaInfo().require.groupID, modifier);
+				assert (locationGroupModifiers_.find(key) != locationGroupModifiers_.end());
+				locationGroupModifiers_.erase(key);
 				break;
 			}
 				
 			case MetaInfo::Modifier::ModifierType::locationRequiredSkill :
-			case MetaInfo::Modifier::ModifierType::ownerRequiredSkill: {
+			case MetaInfo::Modifier::ModifierType::ownerRequiredSkill : {
 				auto skillID = modifier->metaInfo().require.typeID;
-				auto what = std::make_pair(modifier->metaInfo().modifiedAttributeID, skillID);
-				auto i = std::upper_bound(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), what, ModifierComparator());
-				assert(i->second == modifier);
-				locationRequiredSkillModifiers_.erase(i);
+				auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, skillID, modifier);
+				assert (locationRequiredSkillModifiers_.find(key) != locationRequiredSkillModifiers_.end());
+				locationRequiredSkillModifiers_.erase(key);
 				break;
 			}
 				
 			case MetaInfo::Modifier::ModifierType::locationRequiredDomainSkill : {
 				if (auto type = modifier->owner().domain(modifier->metaInfo().require.domain)) {
 					auto skillID = type->metaInfo().typeID;
-					auto what = std::make_pair(modifier->metaInfo().modifiedAttributeID, skillID);
-					auto i = std::upper_bound(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), what, ModifierComparator());
-					assert(i->second == modifier);
-					locationRequiredSkillModifiers_.erase(i);
+					auto key = std::make_tuple(modifier->metaInfo().modifiedAttributeID, skillID, modifier);
+					assert (locationRequiredSkillModifiers_.find(key) != locationRequiredSkillModifiers_.end());
+					locationRequiredSkillModifiers_.erase(key);
+					break;
 				}
 				break;
 			}
@@ -228,47 +247,50 @@ namespace dgmpp2 {
 			default:
 				assert(!"Invalid MetaInfo::Modifier::ModifierType value");
 		}
-		reset();
+		resetCache();
 	}
 
 	std::list<const Modifier*> Type::itemModifiers (const MetaInfo::Attribute& attribute) const {
-		isReset_ = false;
-		
-		auto what = attribute.attributeID;
-		auto range = std::equal_range(itemModifiers_.begin(), itemModifiers_.end(), what, ModifierComparator());
-		return {range.first, range.second};
+		auto key = std::make_tuple(attribute.attributeID);
+		auto range = equal_range(itemModifiers_, key);
+		std::list<const Modifier*> result;
+		std::transform(range.first, range.second, std::back_inserter(result), [](const auto& i) { return std::get<const Modifier*>(i); });
+		return result;
 	}
 
 	std::list<const Modifier*> Type::locationModifiers (const MetaInfo::Attribute& attribute) const {
-		isReset_ = false;
-		
-		auto what = attribute.attributeID;
-		auto range = std::equal_range(locationModifiers_.begin(), locationModifiers_.end(), what, ModifierComparator());
-		return {range.first, range.second};
+		auto key = std::make_tuple(attribute.attributeID);
+		auto range = equal_range(locationModifiers_, key);
+		std::list<const Modifier*> result;
+		std::transform(range.first, range.second, std::back_inserter(result), [](const auto& i) { return std::get<const Modifier*>(i); });
+		return result;
 	}
 	
 	std::list<const Modifier*> Type::locationGroupModifiers (const MetaInfo::Attribute& attribute, const Type& type) const {
-		isReset_ = false;
-		
-		auto what = std::make_pair(attribute.attributeID, type.metaInfo().groupID);
-		auto range = std::equal_range(locationGroupModifiers_.begin(), locationGroupModifiers_.end(), what, ModifierComparator());
-		return {range.first, range.second};
+		auto key = std::make_tuple(attribute.attributeID, type.metaInfo().groupID);
+		auto range = equal_range(locationGroupModifiers_, key);
+
+		std::list<const Modifier*> result;
+		std::transform(range.first, range.second, std::back_inserter(result), [](const auto& i) { return std::get<const Modifier*>(i); });
+		return result;
 	}
 	
 	std::list<const Modifier*> Type::locationRequiredSkillModifiers (const MetaInfo::Attribute& attribute, const Type& type) const {
-		isReset_ = false;
-		
 		auto attributeID = attribute.attributeID;
-		auto range = std::equal_range(locationRequiredSkillModifiers_.begin(), locationRequiredSkillModifiers_.end(), attributeID, ModifierComparator());
-		
-		if (range.first < range.second) {
+		auto key = std::make_tuple(attributeID);
+		auto range = locationRequiredSkillModifiers_.equal_range(key);
+
+		if (range.first != range.second) {
+//			auto subset = decltype(locationRequiredSkillModifiers_)(range.first, range.second);
+			auto &subset = locationRequiredSkillModifiers_;
+			
 			for (auto skillID: type.metaInfo().requiredSkills) {
-				auto what = std::make_pair(attributeID, skillID);
-				auto result = std::equal_range(range.first, range.second, what, ModifierComparator());
+				auto key = std::make_tuple(attributeID, skillID);
+				auto result = subset.equal_range(key);
 				
-				if (result.first < result.second) {
+				if (result.first != result.second) {
 					std::list<const Modifier*> list;
-					std::transform(result.first, result.second, std::back_inserter(list), [](const auto& i) {return i.second;});
+					std::transform(range.first, range.second, std::back_inserter(list), [](const auto& i) { return std::get<const Modifier*>(i); });
 					return list;
 				}
 			}
@@ -303,8 +325,11 @@ namespace dgmpp2 {
 				activate(i.get());
 			}
 		});
-		for (const auto& child: children_)
-			child->activateEffects(category);
+
+		if (category != MetaInfo::Effect::Category::generic) {
+			for (const auto& child: children_)
+				child->activateEffects(category);
+		}
 	}
 	
 	void Type::deactivateEffects (MetaInfo::Effect::Category category) {
@@ -314,24 +339,27 @@ namespace dgmpp2 {
 				deactivate(i.get());
 			}
 		});
-		for (const auto& child: children_)
-			child->deactivateEffects(category);
+		
+		if (category != MetaInfo::Effect::Category::generic) {
+			for (const auto& child: children_)
+				child->deactivateEffects(category);
+		}
 	}
 	
 	void Type::activate (Effect* effect) {
+		effect->active(true);
 		for (const auto& modifier: effect->modifiers()) {
 			if (auto type = modifier.domain())
 				type->addModifier(&modifier);
 		}
-		effect->active(true);
 	}
 	
 	void Type::deactivate (Effect* effect) {
+		effect->active(false);
 		for (const auto& modifier: effect->modifiers()) {
 			if (auto type = modifier.domain())
 				type->removeModifier(&modifier);
 		}
-		effect->active(false);
 	}
 
 	std::vector<Effect*> Type::activeEffects() const {
@@ -346,29 +374,13 @@ namespace dgmpp2 {
 	}
 	
 	void Type::reset() {
-		if (!isReset_) {
-			for (const auto& i: attributes_)
-				if (i.second)
-					i.second->reset();
-			
-			for (const auto& i: children_)
-				i->reset();
-			isReset_ = true;
-		}
+//		for (const auto& child: children_) {
+//			child->reset();
+//		}
 	}
 	
-	void Type::reset (AttributeID modifyingAttribute) {
-		for (const auto& effect: effects_) {
-			if (!effect->active())
-				continue;
-			
-			for (const auto& modifier: effect->modifiers()) {
-				if (modifier.metaInfo().modifyingAttributeID == modifyingAttribute) {
-					if (auto type = modifier.domain())
-						type->reset();
-				}
-			}
-		}
+	void Type::resetCache() {
+		cache().reset();
 	}
 	
 	Type* Type::domain (MetaInfo::Modifier::Domain domain) {
@@ -378,5 +390,17 @@ namespace dgmpp2 {
 			return parent->domain(domain);
 		else
 			return nullptr;
+	}
+	
+	Type::AttributesCache& Type::cache() {
+		if (cache_ != nullptr)
+			return *cache_;
+		else if (auto parent = this->parent()) {
+			return parent->cache();
+		}
+		else {
+			cache_ = std::unique_ptr<Type::AttributesCache>(new Type::AttributesCache);
+			return *cache_;
+		}
 	}
 }

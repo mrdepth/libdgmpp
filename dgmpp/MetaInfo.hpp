@@ -7,6 +7,7 @@
 
 #pragma once
 #include "types.h"
+#include "Utility.hpp"
 
 namespace dgmpp2 {
 	namespace MetaInfo {

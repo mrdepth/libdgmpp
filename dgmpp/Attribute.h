@@ -73,10 +73,10 @@ namespace dgmpp2 {
 		const MetaInfo::Attribute& metaInfo() const {return metaInfo_;}
 		Type& owner() const {return owner_;}
 		
-		Float value() const;
+		Float value();
 //		operator Float() const {return get();}
 		
-		Attribute& operator= (Float value);
+		Attribute& operator= (optional<Float>&& value);
 
 	private:
 		friend class Type;

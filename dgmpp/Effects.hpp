@@ -4,7 +4,7 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		constexpr const MetaInfo::Effect effects[] {
+		constexpr MetaInfo::Effect effects[] {
 			{EffectID::shieldBoosting, MetaInfo::Effect::Category::active, false, false, {
 				{modifiers[0]},
 			}},
