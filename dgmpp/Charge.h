@@ -28,24 +28,3 @@ namespace dgmpp {
 	
 }
 
-namespace dgmpp2 {
-	class Charge: public Type {
-	public:
-		static std::unique_ptr<Charge> Create (TypeID typeID) { return std::unique_ptr<Charge>(new Charge(typeID)); }
-		
-	protected:
-		virtual Type* domain(MetaInfo::Modifier::Domain domain) override;
-		bool canBeActive() const	{ return flags_.canBeActive; }
-		bool requireTarget() const	{ return flags_.requireTarget; }
-		
-	private:
-		friend class Module;
-		
-		struct {
-			bool canBeActive : 1;
-			bool requireTarget : 1;
-		} flags_;
-		
-		Charge(TypeID typeID);
-	};
-}

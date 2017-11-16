@@ -148,13 +148,13 @@ namespace dgmpp {
 }
 
 namespace dgmpp2 {
-	using Float = double;
-	using TypeID = dgmpp::TypeID;
-	using GroupID = dgmpp::GroupID;
-	using CategoryID = dgmpp::CategoryID;
-	using AttributeID = dgmpp::AttributeID;
-	using EffectID = dgmpp::EffectID;
-	using ModifierID = dgmpp::ModifierID;
-	using SchematicID = dgmpp::SchematicID;
+//	using Float = double;
+//	using TypeID = dgmpp::TypeID;
+//	using GroupID = dgmpp::GroupID;
+//	using CategoryID = dgmpp::CategoryID;
+//	using AttributeID = dgmpp::AttributeID;
+//	using EffectID = dgmpp::EffectID;
+//	using ModifierID = dgmpp::ModifierID;
+//	using SchematicID = dgmpp::SchematicID;
 	
 }

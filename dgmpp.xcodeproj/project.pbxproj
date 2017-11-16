@@ -7,30 +7,60 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		120B84E31FBC906000BC0EE1 /* Utility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 120B84E21FBC906000BC0EE1 /* Utility.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		120B84E41FBC906000BC0EE1 /* Utility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 120B84E21FBC906000BC0EE1 /* Utility.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		121064A51C9312370032B3DB /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 121064A31C9312370032B3DB /* Structure.cpp */; };
 		121064A71C9312370032B3DB /* Structure.h in Headers */ = {isa = PBXBuildFile; fileRef = 121064A41C9312370032B3DB /* Structure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */; };
 		12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B401C1D7643003B6DA5 /* FetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */; };
 		12215B491C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599A91FAB65A7007B303F /* AttributeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A81FAB657C007B303F /* AttributeID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599AA1FAB65A7007B303F /* CategoryID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A51FAB657B007B303F /* CategoryID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599AB1FAB65A7007B303F /* EffectID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A41FAB657B007B303F /* EffectID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599AC1FAB65A7007B303F /* GroupID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A61FAB657B007B303F /* GroupID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599AD1FAB65A7007B303F /* TypeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A71FAB657B007B303F /* TypeID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599AE1FAB65A8007B303F /* AttributeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A81FAB657C007B303F /* AttributeID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599AF1FAB65A8007B303F /* CategoryID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A51FAB657B007B303F /* CategoryID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599B01FAB65A8007B303F /* EffectID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A41FAB657B007B303F /* EffectID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599B11FAB65A8007B303F /* GroupID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A61FAB657B007B303F /* GroupID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599B21FAB65A8007B303F /* TypeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599A71FAB657B007B303F /* TypeID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		122599B61FAB66FA007B303F /* Attributes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599B41FAB66F5007B303F /* Attributes.hpp */; };
-		122599B71FAB66FA007B303F /* Modifiers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599B51FAB66F5007B303F /* Modifiers.hpp */; };
-		122599B81FAB66FA007B303F /* Types.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599B31FAB66F5007B303F /* Types.hpp */; };
-		122599B91FAB66FA007B303F /* Attributes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599B41FAB66F5007B303F /* Attributes.hpp */; };
-		122599BA1FAB66FA007B303F /* Modifiers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599B51FAB66F5007B303F /* Modifiers.hpp */; };
-		122599BB1FAB66FA007B303F /* Types.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599B31FAB66F5007B303F /* Types.hpp */; };
+		123BEF071FBD9E4F00AC8EB1 /* SDE.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FA1FBD97F80072D4E4 /* SDE.hpp */; };
+		123BEF081FBD9E4F00AC8EB1 /* SDE.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FA1FBD97F80072D4E4 /* SDE.hpp */; };
+		123BEF091FBD9E5F00AC8EB1 /* Attributes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F61FBD97F80072D4E4 /* Attributes.hpp */; };
+		123BEF0A1FBD9E5F00AC8EB1 /* Effects.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FD1FBD97F80072D4E4 /* Effects.hpp */; };
+		123BEF0B1FBD9E5F00AC8EB1 /* Modifiers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FE1FBD97F80072D4E4 /* Modifiers.hpp */; };
+		123BEF0C1FBD9E5F00AC8EB1 /* Skills.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B331021FBD97F80072D4E4 /* Skills.hpp */; };
+		123BEF0D1FBD9E5F00AC8EB1 /* Types.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FF1FBD97F80072D4E4 /* Types.hpp */; };
+		123BEF0E1FBD9E6000AC8EB1 /* Attributes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F61FBD97F80072D4E4 /* Attributes.hpp */; };
+		123BEF0F1FBD9E6000AC8EB1 /* Effects.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FD1FBD97F80072D4E4 /* Effects.hpp */; };
+		123BEF101FBD9E6000AC8EB1 /* Modifiers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FE1FBD97F80072D4E4 /* Modifiers.hpp */; };
+		123BEF111FBD9E6000AC8EB1 /* Skills.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B331021FBD97F80072D4E4 /* Skills.hpp */; };
+		123BEF121FBD9E6000AC8EB1 /* Types.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FF1FBD97F80072D4E4 /* Types.hpp */; };
+		123BEF151FBDA20F00AC8EB1 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF131FBDA20F00AC8EB1 /* Modifier.cpp */; };
+		123BEF161FBDA20F00AC8EB1 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF131FBDA20F00AC8EB1 /* Modifier.cpp */; };
+		123BEF171FBDA20F00AC8EB1 /* Modifier.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF141FBDA20F00AC8EB1 /* Modifier.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF181FBDA20F00AC8EB1 /* Modifier.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF141FBDA20F00AC8EB1 /* Modifier.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF1B1FBDA2A900AC8EB1 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF191FBDA2A900AC8EB1 /* Effect.cpp */; };
+		123BEF1C1FBDA2A900AC8EB1 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF191FBDA2A900AC8EB1 /* Effect.cpp */; };
+		123BEF1D1FBDA2A900AC8EB1 /* Effect.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF1A1FBDA2A900AC8EB1 /* Effect.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF1E1FBDA2A900AC8EB1 /* Effect.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF1A1FBDA2A900AC8EB1 /* Effect.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF231FBDA52500AC8EB1 /* Gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF211FBDA52500AC8EB1 /* Gang.cpp */; };
+		123BEF241FBDA52500AC8EB1 /* Gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF211FBDA52500AC8EB1 /* Gang.cpp */; };
+		123BEF251FBDA52500AC8EB1 /* Gang.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF221FBDA52500AC8EB1 /* Gang.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF261FBDA52500AC8EB1 /* Gang.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF221FBDA52500AC8EB1 /* Gang.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF291FBDA58700AC8EB1 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF271FBDA58700AC8EB1 /* Character.cpp */; };
+		123BEF2A1FBDA58700AC8EB1 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF271FBDA58700AC8EB1 /* Character.cpp */; };
+		123BEF2B1FBDA58700AC8EB1 /* Character.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF281FBDA58700AC8EB1 /* Character.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF2C1FBDA58700AC8EB1 /* Character.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF281FBDA58700AC8EB1 /* Character.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF2F1FBDB3AB00AC8EB1 /* Skill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF2D1FBDB3AB00AC8EB1 /* Skill.cpp */; };
+		123BEF301FBDB3AB00AC8EB1 /* Skill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF2D1FBDB3AB00AC8EB1 /* Skill.cpp */; };
+		123BEF311FBDB3AB00AC8EB1 /* Skill.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF2E1FBDB3AB00AC8EB1 /* Skill.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF321FBDB3AB00AC8EB1 /* Skill.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF2E1FBDB3AB00AC8EB1 /* Skill.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF351FBDB40800AC8EB1 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF331FBDB40800AC8EB1 /* Ship.cpp */; };
+		123BEF361FBDB40800AC8EB1 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF331FBDB40800AC8EB1 /* Ship.cpp */; };
+		123BEF371FBDB40800AC8EB1 /* Ship.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF341FBDB40800AC8EB1 /* Ship.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF381FBDB40800AC8EB1 /* Ship.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF341FBDB40800AC8EB1 /* Ship.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF3B1FBDB4A200AC8EB1 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF391FBDB4A200AC8EB1 /* Module.cpp */; };
+		123BEF3C1FBDB4A200AC8EB1 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF391FBDB4A200AC8EB1 /* Module.cpp */; };
+		123BEF3D1FBDB4A200AC8EB1 /* Module.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF3A1FBDB4A200AC8EB1 /* Module.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF3E1FBDB4A200AC8EB1 /* Module.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF3A1FBDB4A200AC8EB1 /* Module.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF411FBDB59200AC8EB1 /* Charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF3F1FBDB59200AC8EB1 /* Charge.cpp */; };
+		123BEF421FBDB59200AC8EB1 /* Charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF3F1FBDB59200AC8EB1 /* Charge.cpp */; };
+		123BEF431FBDB59200AC8EB1 /* Charge.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF401FBDB59200AC8EB1 /* Charge.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF441FBDB59200AC8EB1 /* Charge.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF401FBDB59200AC8EB1 /* Charge.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF471FBDB5D200AC8EB1 /* Drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF451FBDB5D200AC8EB1 /* Drone.cpp */; };
+		123BEF481FBDB5D200AC8EB1 /* Drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF451FBDB5D200AC8EB1 /* Drone.cpp */; };
+		123BEF491FBDB5D200AC8EB1 /* Drone.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF461FBDB5D200AC8EB1 /* Drone.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123BEF4A1FBDB5D200AC8EB1 /* Drone.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF461FBDB5D200AC8EB1 /* Drone.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12424E391E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3B1E36397F0078AB0F /* Cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 12424E381E36397F0078AB0F /* Cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -141,10 +171,30 @@
 		12B0A3001C0DC5CC00194715 /* CombatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */; };
 		12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B0A30C1C0EEC8400194715 /* dgmpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* dgmpp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12D38B401FBAD54600D2C0F2 /* Skills.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12D38B3F1FBAD54600D2C0F2 /* Skills.hpp */; };
-		12D38B411FBAD55000D2C0F2 /* Effects.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599BD1FAC4C51007B303F /* Effects.hpp */; };
-		12D38B421FBAD55000D2C0F2 /* Skills.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12D38B3F1FBAD54600D2C0F2 /* Skills.hpp */; };
-		12D38B431FBAD55100D2C0F2 /* Effects.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 122599BD1FAC4C51007B303F /* Effects.hpp */; };
+		12B331061FBD98F50072D4E4 /* AttributeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F21FBD97F80072D4E4 /* AttributeID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331071FBD98F50072D4E4 /* CategoryID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F81FBD97F80072D4E4 /* CategoryID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331081FBD98F50072D4E4 /* GroupID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F91FBD97F80072D4E4 /* GroupID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331091FBD98F50072D4E4 /* TypeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FC1FBD97F80072D4E4 /* TypeID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B3310A1FBD98F60072D4E4 /* AttributeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F21FBD97F80072D4E4 /* AttributeID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B3310B1FBD98F60072D4E4 /* CategoryID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F81FBD97F80072D4E4 /* CategoryID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B3310C1FBD98F60072D4E4 /* GroupID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F91FBD97F80072D4E4 /* GroupID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B3310D1FBD98F60072D4E4 /* TypeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FC1FBD97F80072D4E4 /* TypeID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B3310E1FBD99070072D4E4 /* EffectID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FB1FBD97F80072D4E4 /* EffectID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B3310F1FBD99070072D4E4 /* MetaInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B331001FBD97F80072D4E4 /* MetaInfo.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331101FBD99080072D4E4 /* EffectID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FB1FBD97F80072D4E4 /* EffectID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331111FBD99080072D4E4 /* MetaInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B331001FBD97F80072D4E4 /* MetaInfo.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331121FBD990F0072D4E4 /* Utility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F41FBD97F80072D4E4 /* Utility.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331131FBD990F0072D4E4 /* Type.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F51FBD97F80072D4E4 /* Type.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331141FBD990F0072D4E4 /* Utility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F41FBD97F80072D4E4 /* Utility.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331151FBD990F0072D4E4 /* Type.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F51FBD97F80072D4E4 /* Type.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B331161FBD99140072D4E4 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B331011FBD97F80072D4E4 /* Type.cpp */; };
+		12B331171FBD99150072D4E4 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B331011FBD97F80072D4E4 /* Type.cpp */; };
+		12B331181FBD999F0072D4E4 /* SDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B330F71FBD97F80072D4E4 /* SDE.cpp */; };
+		12B331191FBD999F0072D4E4 /* SDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B330F71FBD97F80072D4E4 /* SDE.cpp */; };
+		12B3311C1FBD99B40072D4E4 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B3311A1FBD99B40072D4E4 /* Attribute.cpp */; };
+		12B3311D1FBD99B40072D4E4 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B3311A1FBD99B40072D4E4 /* Attribute.cpp */; };
+		12B3311E1FBD99B40072D4E4 /* Attribute.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B3311B1FBD99B40072D4E4 /* Attribute.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B3311F1FBD99B40072D4E4 /* Attribute.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B3311B1FBD99B40072D4E4 /* Attribute.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9841CC3A98B00313F8D /* SqliteFetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */; };
 		12D9F9851CC3A98B00313F8D /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9EC51147FA61C00B12A7F /* Area.cpp */; };
 		12D9F9861CC3A98B00313F8D /* Cycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */; };
@@ -248,20 +298,8 @@
 		12D9F9EC1CC3A98B00313F8D /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B33D6C1473CA5E006B18D7 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9ED1CC3A98B00313F8D /* EffectPrototype.h in Headers */ = {isa = PBXBuildFile; fileRef = 12AEEFE31C26C54200FB7B1D /* EffectPrototype.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DBEAB31E1D3B9D0088A486 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */; };
-		12DC15591FA7271500F1B6F1 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DC15571FA7271500F1B6F1 /* Type.cpp */; };
-		12DC155A1FA7271500F1B6F1 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DC15571FA7271500F1B6F1 /* Type.cpp */; };
-		12DC155B1FA7271500F1B6F1 /* Type.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12DC15581FA7271500F1B6F1 /* Type.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		12DC155C1FA7271500F1B6F1 /* Type.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12DC15581FA7271500F1B6F1 /* Type.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
 		12DFCED31CD74242006A19BD /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */; };
-		12FC63931FB59C2E005F2B66 /* MetaInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12FC63911FB59C2E005F2B66 /* MetaInfo.cpp */; };
-		12FC63941FB59C2E005F2B66 /* MetaInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12FC63911FB59C2E005F2B66 /* MetaInfo.cpp */; };
-		12FC63951FB59C2E005F2B66 /* MetaInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12FC63921FB59C2E005F2B66 /* MetaInfo.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		12FC63961FB59C2E005F2B66 /* MetaInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12FC63921FB59C2E005F2B66 /* MetaInfo.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		12FE6F7F1FA9F8D7005A19F2 /* SDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12FE6F7D1FA9F8D7005A19F2 /* SDE.cpp */; };
-		12FE6F801FA9F8D7005A19F2 /* SDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12FE6F7D1FA9F8D7005A19F2 /* SDE.cpp */; };
-		12FE6F811FA9F8D7005A19F2 /* SDE.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12FE6F7E1FA9F8D7005A19F2 /* SDE.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		12FE6F821FA9F8D7005A19F2 /* SDE.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12FE6F7E1FA9F8D7005A19F2 /* SDE.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -275,22 +313,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		120B84E21FBC906000BC0EE1 /* Utility.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Utility.hpp; sourceTree = "<group>"; };
 		121064A31C9312370032B3DB /* Structure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Structure.cpp; sourceTree = "<group>"; };
 		121064A41C9312370032B3DB /* Structure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Structure.h; sourceTree = "<group>"; };
 		12215B3F1C1D7643003B6DA5 /* FetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FetchRequest.cpp; sourceTree = "<group>"; };
 		12215B401C1D7643003B6DA5 /* FetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchRequest.h; sourceTree = "<group>"; };
 		12215B451C1D7725003B6DA5 /* SqliteFetchRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SqliteFetchRequest.cpp; sourceTree = "<group>"; };
 		12215B461C1D7725003B6DA5 /* SqliteFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqliteFetchRequest.h; sourceTree = "<group>"; };
-		122599A41FAB657B007B303F /* EffectID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EffectID.hpp; sourceTree = "<group>"; };
-		122599A51FAB657B007B303F /* CategoryID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CategoryID.hpp; sourceTree = "<group>"; };
-		122599A61FAB657B007B303F /* GroupID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GroupID.hpp; sourceTree = "<group>"; };
-		122599A71FAB657B007B303F /* TypeID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TypeID.hpp; sourceTree = "<group>"; };
-		122599A81FAB657C007B303F /* AttributeID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AttributeID.hpp; sourceTree = "<group>"; };
-		122599B31FAB66F5007B303F /* Types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Types.hpp; sourceTree = "<group>"; };
-		122599B41FAB66F5007B303F /* Attributes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Attributes.hpp; sourceTree = "<group>"; };
-		122599B51FAB66F5007B303F /* Modifiers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Modifiers.hpp; sourceTree = "<group>"; };
-		122599BD1FAC4C51007B303F /* Effects.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Effects.hpp; sourceTree = "<group>"; };
+		123BEF131FBDA20F00AC8EB1 /* Modifier.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Modifier.cpp; sourceTree = "<group>"; };
+		123BEF141FBDA20F00AC8EB1 /* Modifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Modifier.hpp; sourceTree = "<group>"; };
+		123BEF191FBDA2A900AC8EB1 /* Effect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Effect.cpp; sourceTree = "<group>"; };
+		123BEF1A1FBDA2A900AC8EB1 /* Effect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Effect.hpp; sourceTree = "<group>"; };
+		123BEF211FBDA52500AC8EB1 /* Gang.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Gang.cpp; sourceTree = "<group>"; };
+		123BEF221FBDA52500AC8EB1 /* Gang.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Gang.hpp; sourceTree = "<group>"; };
+		123BEF271FBDA58700AC8EB1 /* Character.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Character.cpp; sourceTree = "<group>"; };
+		123BEF281FBDA58700AC8EB1 /* Character.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Character.hpp; sourceTree = "<group>"; };
+		123BEF2D1FBDB3AB00AC8EB1 /* Skill.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Skill.cpp; sourceTree = "<group>"; };
+		123BEF2E1FBDB3AB00AC8EB1 /* Skill.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Skill.hpp; sourceTree = "<group>"; };
+		123BEF331FBDB40800AC8EB1 /* Ship.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ship.cpp; sourceTree = "<group>"; };
+		123BEF341FBDB40800AC8EB1 /* Ship.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ship.hpp; sourceTree = "<group>"; };
+		123BEF391FBDB4A200AC8EB1 /* Module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Module.cpp; sourceTree = "<group>"; };
+		123BEF3A1FBDB4A200AC8EB1 /* Module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Module.hpp; sourceTree = "<group>"; };
+		123BEF3F1FBDB59200AC8EB1 /* Charge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
+		123BEF401FBDB59200AC8EB1 /* Charge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Charge.hpp; sourceTree = "<group>"; };
+		123BEF451FBDB5D200AC8EB1 /* Drone.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Drone.cpp; sourceTree = "<group>"; };
+		123BEF461FBDB5D200AC8EB1 /* Drone.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Drone.hpp; sourceTree = "<group>"; };
 		12424E371E36397F0078AB0F /* Cargo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cargo.cpp; sourceTree = "<group>"; };
 		12424E381E36397F0078AB0F /* Cargo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cargo.h; sourceTree = "<group>"; };
 		1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GangBoostEffect.cpp; sourceTree = "<group>"; };
@@ -352,20 +398,31 @@
 		12B0A0621C0C9C5600194715 /* DamageVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamageVector.h; sourceTree = "<group>"; };
 		12B0A2FE1C0DC5CC00194715 /* CombatSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombatSimulator.cpp; sourceTree = "<group>"; };
 		12B0A2FF1C0DC5CC00194715 /* CombatSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatSimulator.h; sourceTree = "<group>"; };
-		12D38B3F1FBAD54600D2C0F2 /* Skills.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Skills.hpp; sourceTree = "<group>"; };
+		12B330F21FBD97F80072D4E4 /* AttributeID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AttributeID.hpp; sourceTree = "<group>"; };
+		12B330F41FBD97F80072D4E4 /* Utility.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Utility.hpp; sourceTree = "<group>"; };
+		12B330F51FBD97F80072D4E4 /* Type.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Type.hpp; sourceTree = "<group>"; };
+		12B330F61FBD97F80072D4E4 /* Attributes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Attributes.hpp; sourceTree = "<group>"; };
+		12B330F71FBD97F80072D4E4 /* SDE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SDE.cpp; sourceTree = "<group>"; };
+		12B330F81FBD97F80072D4E4 /* CategoryID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CategoryID.hpp; sourceTree = "<group>"; };
+		12B330F91FBD97F80072D4E4 /* GroupID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GroupID.hpp; sourceTree = "<group>"; };
+		12B330FA1FBD97F80072D4E4 /* SDE.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SDE.hpp; sourceTree = "<group>"; };
+		12B330FB1FBD97F80072D4E4 /* EffectID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EffectID.hpp; sourceTree = "<group>"; };
+		12B330FC1FBD97F80072D4E4 /* TypeID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TypeID.hpp; sourceTree = "<group>"; };
+		12B330FD1FBD97F80072D4E4 /* Effects.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Effects.hpp; sourceTree = "<group>"; };
+		12B330FE1FBD97F80072D4E4 /* Modifiers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Modifiers.hpp; sourceTree = "<group>"; };
+		12B330FF1FBD97F80072D4E4 /* Types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Types.hpp; sourceTree = "<group>"; };
+		12B331001FBD97F80072D4E4 /* MetaInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetaInfo.hpp; sourceTree = "<group>"; };
+		12B331011FBD97F80072D4E4 /* Type.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Type.cpp; sourceTree = "<group>"; };
+		12B331021FBD97F80072D4E4 /* Skills.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Skills.hpp; sourceTree = "<group>"; };
+		12B3311A1FBD99B40072D4E4 /* Attribute.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Attribute.cpp; sourceTree = "<group>"; };
+		12B3311B1FBD99B40072D4E4 /* Attribute.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Attribute.hpp; sourceTree = "<group>"; };
 		12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
-		12DC15571FA7271500F1B6F1 /* Type.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Type.cpp; sourceTree = "<group>"; };
-		12DC15581FA7271500F1B6F1 /* Type.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Type.hpp; sourceTree = "<group>"; };
 		12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		12DFCECE1CD74242006A19BD /* dgmppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dgmppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DFCED01CD74242006A19BD /* dgmppTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = dgmppTests.mm; sourceTree = "<group>"; };
 		12DFCED21CD74242006A19BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12EFCCDD1C1ACE4E003ECA7F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		12FC63911FB59C2E005F2B66 /* MetaInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MetaInfo.cpp; sourceTree = "<group>"; };
-		12FC63921FB59C2E005F2B66 /* MetaInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MetaInfo.hpp; sourceTree = "<group>"; };
-		12FE6F7D1FA9F8D7005A19F2 /* SDE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SDE.cpp; sourceTree = "<group>"; };
-		12FE6F7E1FA9F8D7005A19F2 /* SDE.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SDE.hpp; sourceTree = "<group>"; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		3708AE3B14892DCC005492F5 /* Charge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charge.cpp; sourceTree = "<group>"; };
@@ -409,9 +466,6 @@
 		37BBC5961512068400EDE204 /* ControlTower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ControlTower.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37BBC598151219B500EDE204 /* StarbaseStructure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StarbaseStructure.cpp; sourceTree = "<group>"; };
 		37BBC59A151219C200EDE204 /* StarbaseStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarbaseStructure.h; sourceTree = "<group>"; };
-		37C1C43214755128002AC3E7 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = sqlite3.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		37C1C43314755128002AC3E7 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = sqlite3.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		37C1C43414755128002AC3E7 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		37D72CAF1497770C00B13A9D /* DamagePattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = DamagePattern.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		37D72CB21497771600B13A9D /* DamagePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DamagePattern.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -453,6 +507,43 @@
 			name = Structure;
 			sourceTree = "<group>";
 		};
+		123BEF1F1FBDA4A100AC8EB1 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				12B3311A1FBD99B40072D4E4 /* Attribute.cpp */,
+				12B3311B1FBD99B40072D4E4 /* Attribute.hpp */,
+				123BEF191FBDA2A900AC8EB1 /* Effect.cpp */,
+				123BEF1A1FBDA2A900AC8EB1 /* Effect.hpp */,
+				12B331001FBD97F80072D4E4 /* MetaInfo.hpp */,
+				123BEF131FBDA20F00AC8EB1 /* Modifier.cpp */,
+				123BEF141FBDA20F00AC8EB1 /* Modifier.hpp */,
+				12B331011FBD97F80072D4E4 /* Type.cpp */,
+				12B330F51FBD97F80072D4E4 /* Type.hpp */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		123BEF201FBDA51000AC8EB1 /* Ship */ = {
+			isa = PBXGroup;
+			children = (
+				123BEF211FBDA52500AC8EB1 /* Gang.cpp */,
+				123BEF221FBDA52500AC8EB1 /* Gang.hpp */,
+				123BEF271FBDA58700AC8EB1 /* Character.cpp */,
+				123BEF281FBDA58700AC8EB1 /* Character.hpp */,
+				123BEF2D1FBDB3AB00AC8EB1 /* Skill.cpp */,
+				123BEF2E1FBDB3AB00AC8EB1 /* Skill.hpp */,
+				123BEF331FBDB40800AC8EB1 /* Ship.cpp */,
+				123BEF341FBDB40800AC8EB1 /* Ship.hpp */,
+				123BEF391FBDB4A200AC8EB1 /* Module.cpp */,
+				123BEF3A1FBDB4A200AC8EB1 /* Module.hpp */,
+				123BEF3F1FBDB59200AC8EB1 /* Charge.cpp */,
+				123BEF401FBDB59200AC8EB1 /* Charge.hpp */,
+				123BEF451FBDB5D200AC8EB1 /* Drone.cpp */,
+				123BEF461FBDB5D200AC8EB1 /* Drone.hpp */,
+			);
+			name = Ship;
+			sourceTree = "<group>";
+		};
 		12A156751C464E2600C3CF0B /* PlanetaryInteraction */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,20 +577,6 @@
 				128656541C57AE6A0002BA7E /* ProductionState.h */,
 			);
 			name = PlanetaryInteraction;
-			sourceTree = "<group>";
-		};
-		12A354311FA8626D0053CEEC /* dgmpp2 */ = {
-			isa = PBXGroup;
-			children = (
-				12C2318D1FADEA8100180EA0 /* SDE */,
-				12FE6F7D1FA9F8D7005A19F2 /* SDE.cpp */,
-				12FE6F7E1FA9F8D7005A19F2 /* SDE.hpp */,
-				12DC15571FA7271500F1B6F1 /* Type.cpp */,
-				12DC15581FA7271500F1B6F1 /* Type.hpp */,
-				12A354321FA862880053CEEC /* SQLiteConnection.cpp */,
-				12A354331FA862880053CEEC /* SQLiteConnection.hpp */,
-			);
-			name = dgmpp2;
 			sourceTree = "<group>";
 		};
 		12A3C6B0177C283E0067E00C /* Frameworks */ = {
@@ -542,16 +619,32 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		12C2318D1FADEA8100180EA0 /* SDE */ = {
+		12B330F11FBD97F80072D4E4 /* dgmpp2 */ = {
 			isa = PBXGroup;
 			children = (
-				12FC63911FB59C2E005F2B66 /* MetaInfo.cpp */,
-				12FC63921FB59C2E005F2B66 /* MetaInfo.hpp */,
-				122599B41FAB66F5007B303F /* Attributes.hpp */,
-				122599B51FAB66F5007B303F /* Modifiers.hpp */,
-				122599B31FAB66F5007B303F /* Types.hpp */,
-				122599BD1FAC4C51007B303F /* Effects.hpp */,
-				12D38B3F1FBAD54600D2C0F2 /* Skills.hpp */,
+				123BEF1F1FBDA4A100AC8EB1 /* Base */,
+				12B331051FBD982B0072D4E4 /* SDE */,
+				123BEF201FBDA51000AC8EB1 /* Ship */,
+				12B330F41FBD97F80072D4E4 /* Utility.hpp */,
+				12B330F71FBD97F80072D4E4 /* SDE.cpp */,
+				12B330FA1FBD97F80072D4E4 /* SDE.hpp */,
+			);
+			path = dgmpp2;
+			sourceTree = SOURCE_ROOT;
+		};
+		12B331051FBD982B0072D4E4 /* SDE */ = {
+			isa = PBXGroup;
+			children = (
+				12B330F21FBD97F80072D4E4 /* AttributeID.hpp */,
+				12B330F61FBD97F80072D4E4 /* Attributes.hpp */,
+				12B330F81FBD97F80072D4E4 /* CategoryID.hpp */,
+				12B330FB1FBD97F80072D4E4 /* EffectID.hpp */,
+				12B330FD1FBD97F80072D4E4 /* Effects.hpp */,
+				12B330F91FBD97F80072D4E4 /* GroupID.hpp */,
+				12B330FE1FBD97F80072D4E4 /* Modifiers.hpp */,
+				12B331021FBD97F80072D4E4 /* Skills.hpp */,
+				12B330FC1FBD97F80072D4E4 /* TypeID.hpp */,
+				12B330FF1FBD97F80072D4E4 /* Types.hpp */,
 			);
 			name = SDE;
 			sourceTree = "<group>";
@@ -568,7 +661,6 @@
 		37AAD066149A33B5004BDA18 /* dgmpp */ = {
 			isa = PBXGroup;
 			children = (
-				37C1C43114755128002AC3E7 /* ThirdParty */,
 				37D72CC91497A03E00B13A9D /* Effects */,
 				37AC5DA8149A3B8E005DEAEB /* Modifiers */,
 				37BBC5931512064200EDE204 /* Character */,
@@ -592,13 +684,8 @@
 				12AEEFCA1C25BAC200FB7B1D /* Environment.cpp */,
 				12AEEFCB1C25BAC200FB7B1D /* Environment.h */,
 				37B33D6C1473CA5E006B18D7 /* types.h */,
-				122599A81FAB657C007B303F /* AttributeID.hpp */,
-				122599A51FAB657B007B303F /* CategoryID.hpp */,
-				122599A41FAB657B007B303F /* EffectID.hpp */,
-				122599A61FAB657B007B303F /* GroupID.hpp */,
-				122599A71FAB657B007B303F /* TypeID.hpp */,
-				120B84E21FBC906000BC0EE1 /* Utility.hpp */,
-				12A354311FA8626D0053CEEC /* dgmpp2 */,
+				12A354321FA862880053CEEC /* SQLiteConnection.cpp */,
+				12A354331FA862880053CEEC /* SQLiteConnection.hpp */,
 			);
 			name = dgmpp;
 			path = ../dgmpp;
@@ -635,6 +722,7 @@
 			isa = PBXGroup;
 			children = (
 				37AAD066149A33B5004BDA18 /* dgmpp */,
+				12B330F11FBD97F80072D4E4 /* dgmpp2 */,
 				12564BA71B84AFAD000F68D8 /* dgmpp.h */,
 			);
 			path = dgmpp;
@@ -698,17 +786,6 @@
 			path = ../dgmpp;
 			sourceTree = "<group>";
 		};
-		37C1C43114755128002AC3E7 /* ThirdParty */ = {
-			isa = PBXGroup;
-			children = (
-				37C1C43214755128002AC3E7 /* sqlite3.c */,
-				37C1C43314755128002AC3E7 /* sqlite3.h */,
-				37C1C43414755128002AC3E7 /* sqlite3ext.h */,
-			);
-			name = ThirdParty;
-			path = ../dgmpp/ThirdParty;
-			sourceTree = "<group>";
-		};
 		37D72CC91497A03E00B13A9D /* Effects */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,42 +809,47 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				122599AD1FAB65A7007B303F /* TypeID.hpp in Headers */,
-				12D38B431FBAD55100D2C0F2 /* Effects.hpp in Headers */,
 				12AEEFDC1C26B8AA00FB7B1D /* AttributePrototype.h in Headers */,
 				12564BD41B84B07E000F68D8 /* Effect.h in Headers */,
+				123BEF431FBDB59200AC8EB1 /* Charge.hpp in Headers */,
 				12B0A30C1C0EEC8400194715 /* dgmpp.h in Headers */,
 				12564BE11B84B07E000F68D8 /* Modifier.h in Headers */,
-				120B84E31FBC906000BC0EE1 /* Utility.hpp in Headers */,
 				125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */,
+				123BEF1D1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
+				12B3310C1FBD98F60072D4E4 /* GroupID.hpp in Headers */,
 				1293C42B1C46C10A00B33378 /* Planet.h in Headers */,
+				123BEF2B1FBDA58700AC8EB1 /* Character.hpp in Headers */,
+				123BEF091FBD9E5F00AC8EB1 /* Attributes.hpp in Headers */,
 				12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */,
-				12DC155B1FA7271500F1B6F1 /* Type.hpp in Headers */,
+				12B3310D1FBD98F60072D4E4 /* TypeID.hpp in Headers */,
 				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
+				123BEF171FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
+				123BEF371FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				12564BE41B84B07F000F68D8 /* Booster.h in Headers */,
 				125ECFD21C4A28DD00A1CDA9 /* Cycle.h in Headers */,
-				122599B81FAB66FA007B303F /* Types.hpp in Headers */,
-				12FE6F811FA9F8D7005A19F2 /* SDE.hpp in Headers */,
 				12B0A0511C0C386C00194715 /* HostileTarget.h in Headers */,
 				12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */,
 				12564BE51B84B07F000F68D8 /* Character.h in Headers */,
+				123BEF0D1FBD9E5F00AC8EB1 /* Types.hpp in Headers */,
 				12564BE61B84B07F000F68D8 /* Implant.h in Headers */,
 				12564BE71B84B07F000F68D8 /* Skill.h in Headers */,
-				122599A91FAB65A7007B303F /* AttributeID.hpp in Headers */,
 				12A156A41C46518000C3CF0B /* Commodity.h in Headers */,
+				123BEF311FBDB3AB00AC8EB1 /* Skill.hpp in Headers */,
 				12564BE81B84B07F000F68D8 /* CapacitorSimulator.h in Headers */,
 				128656571C57AE6A0002BA7E /* ProductionState.h in Headers */,
 				12564BE91B84B07F000F68D8 /* Charge.h in Headers */,
 				12564BEA1B84B07F000F68D8 /* DamagePattern.h in Headers */,
+				12B331131FBD990F0072D4E4 /* Type.hpp in Headers */,
 				12564BEB1B84B07F000F68D8 /* Drone.h in Headers */,
 				121064A71C9312370032B3DB /* Structure.h in Headers */,
 				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
-				122599AC1FAB65A7007B303F /* GroupID.hpp in Headers */,
 				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
 				12424E3B1E36397F0078AB0F /* Cargo.h in Headers */,
+				12B331121FBD990F0072D4E4 /* Utility.hpp in Headers */,
+				12B3310F1FBD99070072D4E4 /* MetaInfo.hpp in Headers */,
 				12564BEE1B84B07F000F68D8 /* HeatSimulator.h in Headers */,
 				12564BEF1B84B07F000F68D8 /* ControlTower.h in Headers */,
-				122599AA1FAB65A7007B303F /* CategoryID.hpp in Headers */,
+				123BEF0C1FBD9E5F00AC8EB1 /* Skills.hpp in Headers */,
 				12564BF01B84B07F000F68D8 /* StarbaseStructure.h in Headers */,
 				12564BF11B84B07F000F68D8 /* Blob.h in Headers */,
 				12564BF21B84B07F000F68D8 /* FetchResult.h in Headers */,
@@ -776,17 +858,17 @@
 				12564BF41B84B07F000F68D8 /* SqliteConnector.h in Headers */,
 				12564BF51B84B07F000F68D8 /* SqliteFetchResult.h in Headers */,
 				12A156981C4650A700C3CF0B /* Facility.h in Headers */,
+				123BEF0A1FBD9E5F00AC8EB1 /* Effects.hpp in Headers */,
 				12A1568C1C464FC400C3CF0B /* StorageFacility.h in Headers */,
 				12564BF91B84B07F000F68D8 /* Area.h in Headers */,
-				122599B61FAB66FA007B303F /* Attributes.hpp in Headers */,
-				122599B71FAB66FA007B303F /* Modifiers.hpp in Headers */,
 				128656511C57AD440002BA7E /* State.h in Headers */,
+				123BEF0B1FBD9E5F00AC8EB1 /* Modifiers.hpp in Headers */,
+				123BEF071FBD9E4F00AC8EB1 /* SDE.hpp in Headers */,
 				12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */,
 				12A156921C464FD300C3CF0B /* Spaceport.h in Headers */,
+				123BEF3D1FBDB4A200AC8EB1 /* Module.hpp in Headers */,
+				123BEF491FBDB5D200AC8EB1 /* Drone.hpp in Headers */,
 				12564BFB1B84B07F000F68D8 /* Engine.h in Headers */,
-				12D38B401FBAD54600D2C0F2 /* Skills.hpp in Headers */,
-				122599AB1FAB65A7007B303F /* EffectID.hpp in Headers */,
-				12FC63951FB59C2E005F2B66 /* MetaInfo.hpp in Headers */,
 				12AEEFCE1C25BAC200FB7B1D /* Environment.h in Headers */,
 				12215B431C1D7643003B6DA5 /* FetchRequest.h in Headers */,
 				12215B491C1D7725003B6DA5 /* SqliteFetchRequest.h in Headers */,
@@ -796,10 +878,15 @@
 				12A156861C464FA400C3CF0B /* IndustryFacility.h in Headers */,
 				12564BFC1B84B07F000F68D8 /* Gang.h in Headers */,
 				12A156801C464EE800C3CF0B /* ExtractorControlUnit.h in Headers */,
+				12B3311E1FBD99B40072D4E4 /* Attribute.hpp in Headers */,
 				12564BFD1B84B07F000F68D8 /* Item.h in Headers */,
 				12A156B01C46548D00C3CF0B /* Route.h in Headers */,
 				12A1567A1C464E6400C3CF0B /* CommandCenter.h in Headers */,
 				12564BFE1B84B07F000F68D8 /* types.h in Headers */,
+				12B3310E1FBD99070072D4E4 /* EffectID.hpp in Headers */,
+				12B3310B1FBD98F60072D4E4 /* CategoryID.hpp in Headers */,
+				12B3310A1FBD98F60072D4E4 /* AttributeID.hpp in Headers */,
+				123BEF251FBDA52500AC8EB1 /* Gang.hpp in Headers */,
 				12AEEFE61C26C54200FB7B1D /* EffectPrototype.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -808,42 +895,47 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				122599B21FAB65A8007B303F /* TypeID.hpp in Headers */,
 				12D9F9B91CC3A98B00313F8D /* AttributePrototype.h in Headers */,
 				12D9F9BA1CC3A98B00313F8D /* Effect.h in Headers */,
+				123BEF441FBDB59200AC8EB1 /* Charge.hpp in Headers */,
 				12D9F9BB1CC3A98B00313F8D /* dgmpp.h in Headers */,
 				12D9F9BC1CC3A98B00313F8D /* Modifier.h in Headers */,
 				12D9F9BD1CC3A98B00313F8D /* ProductionCycle.h in Headers */,
-				120B84E41FBC906000BC0EE1 /* Utility.hpp in Headers */,
-				12D38B421FBAD55000D2C0F2 /* Skills.hpp in Headers */,
+				123BEF1E1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
+				12B331081FBD98F50072D4E4 /* GroupID.hpp in Headers */,
 				12D9F9BE1CC3A98B00313F8D /* Planet.h in Headers */,
+				123BEF2C1FBDA58700AC8EB1 /* Character.hpp in Headers */,
+				123BEF0E1FBD9E6000AC8EB1 /* Attributes.hpp in Headers */,
 				12D9F9BF1CC3A98B00313F8D /* LocationGroupModifier.h in Headers */,
-				12DC155C1FA7271500F1B6F1 /* Type.hpp in Headers */,
+				12B331091FBD98F50072D4E4 /* TypeID.hpp in Headers */,
 				12D9F9C01CC3A98B00313F8D /* LocationRequiredSkillModifier.h in Headers */,
+				123BEF181FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
+				123BEF381FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				12D9F9C11CC3A98B00313F8D /* Booster.h in Headers */,
 				12D9F9C21CC3A98B00313F8D /* Cycle.h in Headers */,
-				122599BB1FAB66FA007B303F /* Types.hpp in Headers */,
-				12FE6F821FA9F8D7005A19F2 /* SDE.hpp in Headers */,
 				12D9F9C31CC3A98B00313F8D /* HostileTarget.h in Headers */,
 				12D9F9C41CC3A98B00313F8D /* CombatSimulator.h in Headers */,
 				12D9F9C51CC3A98B00313F8D /* Character.h in Headers */,
+				123BEF121FBD9E6000AC8EB1 /* Types.hpp in Headers */,
 				12D9F9C61CC3A98B00313F8D /* Implant.h in Headers */,
 				12D9F9C71CC3A98B00313F8D /* Skill.h in Headers */,
-				122599AE1FAB65A8007B303F /* AttributeID.hpp in Headers */,
 				12D9F9C81CC3A98B00313F8D /* Commodity.h in Headers */,
+				123BEF321FBDB3AB00AC8EB1 /* Skill.hpp in Headers */,
 				12D9F9C91CC3A98B00313F8D /* CapacitorSimulator.h in Headers */,
 				12D9F9CA1CC3A98B00313F8D /* ProductionState.h in Headers */,
 				12D9F9CB1CC3A98B00313F8D /* Charge.h in Headers */,
 				12D9F9CC1CC3A98B00313F8D /* DamagePattern.h in Headers */,
+				12B331151FBD990F0072D4E4 /* Type.hpp in Headers */,
 				12D9F9CD1CC3A98B00313F8D /* Drone.h in Headers */,
 				12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */,
 				12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */,
-				122599B11FAB65A8007B303F /* GroupID.hpp in Headers */,
 				12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */,
 				12424E3C1E36397F0078AB0F /* Cargo.h in Headers */,
+				12B331141FBD990F0072D4E4 /* Utility.hpp in Headers */,
+				12B331111FBD99080072D4E4 /* MetaInfo.hpp in Headers */,
 				12D9F9D11CC3A98B00313F8D /* HeatSimulator.h in Headers */,
 				12D9F9D21CC3A98B00313F8D /* ControlTower.h in Headers */,
-				122599AF1FAB65A8007B303F /* CategoryID.hpp in Headers */,
+				123BEF111FBD9E6000AC8EB1 /* Skills.hpp in Headers */,
 				12D9F9D31CC3A98B00313F8D /* StarbaseStructure.h in Headers */,
 				12D9F9D41CC3A98B00313F8D /* Blob.h in Headers */,
 				12D9F9D51CC3A98B00313F8D /* FetchResult.h in Headers */,
@@ -851,18 +943,18 @@
 				12D9F9D71CC3A98B00313F8D /* DamageVector.h in Headers */,
 				12D9F9D81CC3A98B00313F8D /* SqliteConnector.h in Headers */,
 				12D9F9DA1CC3A98B00313F8D /* SqliteFetchResult.h in Headers */,
-				12D38B411FBAD55000D2C0F2 /* Effects.hpp in Headers */,
 				12D9F9DB1CC3A98B00313F8D /* Facility.h in Headers */,
+				123BEF0F1FBD9E6000AC8EB1 /* Effects.hpp in Headers */,
 				12D9F9DC1CC3A98B00313F8D /* StorageFacility.h in Headers */,
 				12D9F9DD1CC3A98B00313F8D /* Area.h in Headers */,
-				122599B91FAB66FA007B303F /* Attributes.hpp in Headers */,
-				122599BA1FAB66FA007B303F /* Modifiers.hpp in Headers */,
 				12D9F9DE1CC3A98B00313F8D /* State.h in Headers */,
+				123BEF101FBD9E6000AC8EB1 /* Modifiers.hpp in Headers */,
+				123BEF081FBD9E4F00AC8EB1 /* SDE.hpp in Headers */,
 				12D9F9DF1CC3A98B00313F8D /* Attribute.h in Headers */,
 				12D9F9E01CC3A98B00313F8D /* Spaceport.h in Headers */,
+				123BEF3E1FBDB4A200AC8EB1 /* Module.hpp in Headers */,
+				123BEF4A1FBDB5D200AC8EB1 /* Drone.hpp in Headers */,
 				12D9F9E11CC3A98B00313F8D /* Engine.h in Headers */,
-				122599B01FAB65A8007B303F /* EffectID.hpp in Headers */,
-				12FC63961FB59C2E005F2B66 /* MetaInfo.hpp in Headers */,
 				12D9F9E21CC3A98B00313F8D /* Environment.h in Headers */,
 				12D9F9E31CC3A98B00313F8D /* FetchRequest.h in Headers */,
 				12D9F9E41CC3A98B00313F8D /* SqliteFetchRequest.h in Headers */,
@@ -872,10 +964,15 @@
 				12D9F9E61CC3A98B00313F8D /* IndustryFacility.h in Headers */,
 				12D9F9E71CC3A98B00313F8D /* Gang.h in Headers */,
 				12D9F9E81CC3A98B00313F8D /* ExtractorControlUnit.h in Headers */,
+				12B3311F1FBD99B40072D4E4 /* Attribute.hpp in Headers */,
 				12D9F9E91CC3A98B00313F8D /* Item.h in Headers */,
 				12D9F9EA1CC3A98B00313F8D /* Route.h in Headers */,
 				12D9F9EB1CC3A98B00313F8D /* CommandCenter.h in Headers */,
 				12D9F9EC1CC3A98B00313F8D /* types.h in Headers */,
+				12B331101FBD99080072D4E4 /* EffectID.hpp in Headers */,
+				12B331071FBD98F50072D4E4 /* CategoryID.hpp in Headers */,
+				12B331061FBD98F50072D4E4 /* AttributeID.hpp in Headers */,
+				123BEF261FBDA52500AC8EB1 /* Gang.hpp in Headers */,
 				12D9F9ED1CC3A98B00313F8D /* EffectPrototype.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1003,21 +1100,29 @@
 			files = (
 				12564BC61B84B027000F68D8 /* SqliteFetchResult.cpp in Sources */,
 				12564BCA1B84B027000F68D8 /* Area.cpp in Sources */,
+				12B3311C1FBD99B40072D4E4 /* Attribute.cpp in Sources */,
+				123BEF291FBDA58700AC8EB1 /* Character.cpp in Sources */,
 				125ECFD01C4A28DD00A1CDA9 /* Cycle.cpp in Sources */,
+				123BEF411FBDB59200AC8EB1 /* Charge.cpp in Sources */,
 				12564BD01B84B03C000F68D8 /* Character.cpp in Sources */,
 				1248DB541F1E445C009625EC /* GangBoost.cpp in Sources */,
 				1286564F1C57AD440002BA7E /* State.cpp in Sources */,
 				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
+				123BEF151FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
 				121064A51C9312370032B3DB /* Structure.cpp in Sources */,
 				12564BBE1B84B027000F68D8 /* Ship.cpp in Sources */,
 				12B0A0501C0C386C00194715 /* HostileTarget.cpp in Sources */,
 				12564BB91B84B027000F68D8 /* CapacitorSimulator.cpp in Sources */,
+				123BEF471FBDB5D200AC8EB1 /* Drone.cpp in Sources */,
 				12A156901C464FD300C3CF0B /* Spaceport.cpp in Sources */,
 				12AEEFCC1C25BAC200FB7B1D /* Environment.cpp in Sources */,
 				12564BB71B84B027000F68D8 /* LocationRequiredSkillModifier.cpp in Sources */,
+				123BEF351FBDB40800AC8EB1 /* Ship.cpp in Sources */,
 				12A1567E1C464EE800C3CF0B /* ExtractorControlUnit.cpp in Sources */,
 				12564BC41B84B027000F68D8 /* SqlConnector.cpp in Sources */,
+				123BEF1B1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
 				12564BB61B84B027000F68D8 /* LocationGroupModifier.cpp in Sources */,
+				123BEF231FBDA52500AC8EB1 /* Gang.cpp in Sources */,
 				12AEEFE41C26C54200FB7B1D /* EffectPrototype.cpp in Sources */,
 				12564BBD1B84B027000F68D8 /* Module.cpp in Sources */,
 				12564BBC1B84B027000F68D8 /* Drone.cpp in Sources */,
@@ -1025,19 +1130,18 @@
 				12564BCB1B84B027000F68D8 /* Attribute.cpp in Sources */,
 				1248DB4D1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */,
 				12B0A0631C0C9C5600194715 /* DamageVector.cpp in Sources */,
-				12FC63931FB59C2E005F2B66 /* MetaInfo.cpp in Sources */,
 				12564BCF1B84B03C000F68D8 /* Booster.cpp in Sources */,
 				12AEEFDA1C26B8AA00FB7B1D /* AttributePrototype.cpp in Sources */,
 				12A156A21C46518000C3CF0B /* Commodity.cpp in Sources */,
-				12DC15591FA7271500F1B6F1 /* Type.cpp in Sources */,
+				12B331161FBD99140072D4E4 /* Type.cpp in Sources */,
 				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
 				1293C4291C46C10A00B33378 /* Planet.cpp in Sources */,
 				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
 				12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */,
 				12424E391E36397F0078AB0F /* Cargo.cpp in Sources */,
+				12B331181FBD999F0072D4E4 /* SDE.cpp in Sources */,
 				12A156961C4650A700C3CF0B /* Facility.cpp in Sources */,
 				12A1568A1C464FC400C3CF0B /* StorageFacility.cpp in Sources */,
-				12FE6F7F1FA9F8D7005A19F2 /* SDE.cpp in Sources */,
 				128656551C57AE6A0002BA7E /* ProductionState.cpp in Sources */,
 				12564BBB1B84B027000F68D8 /* DamagePattern.cpp in Sources */,
 				12564BC21B84B027000F68D8 /* Blob.cpp in Sources */,
@@ -1048,11 +1152,13 @@
 				12564BA91B84B027000F68D8 /* Effect.cpp in Sources */,
 				12564BCD1B84B027000F68D8 /* Gang.cpp in Sources */,
 				12564BCC1B84B027000F68D8 /* Engine.cpp in Sources */,
+				123BEF3B1FBDB4A200AC8EB1 /* Module.cpp in Sources */,
 				12564BC11B84B027000F68D8 /* StarbaseStructure.cpp in Sources */,
 				12A156841C464FA400C3CF0B /* IndustryFacility.cpp in Sources */,
 				12564BC01B84B027000F68D8 /* ControlTower.cpp in Sources */,
 				12564BCE1B84B027000F68D8 /* Item.cpp in Sources */,
 				125ECFD61C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */,
+				123BEF2F1FBDB3AB00AC8EB1 /* Skill.cpp in Sources */,
 				12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */,
 				12A156AE1C46548D00C3CF0B /* Route.cpp in Sources */,
 				12564BBF1B84B027000F68D8 /* HeatSimulator.cpp in Sources */,
@@ -1066,21 +1172,29 @@
 			files = (
 				12D9F9841CC3A98B00313F8D /* SqliteFetchResult.cpp in Sources */,
 				12D9F9851CC3A98B00313F8D /* Area.cpp in Sources */,
+				12B3311D1FBD99B40072D4E4 /* Attribute.cpp in Sources */,
+				123BEF2A1FBDA58700AC8EB1 /* Character.cpp in Sources */,
 				12D9F9861CC3A98B00313F8D /* Cycle.cpp in Sources */,
+				123BEF421FBDB59200AC8EB1 /* Charge.cpp in Sources */,
 				12D9F9871CC3A98B00313F8D /* Character.cpp in Sources */,
 				1248DB551F1E445C009625EC /* GangBoost.cpp in Sources */,
 				12D9F9881CC3A98B00313F8D /* State.cpp in Sources */,
 				12D9F9891CC3A98B00313F8D /* Modifier.cpp in Sources */,
+				123BEF161FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
 				12D9F98A1CC3A98B00313F8D /* Structure.cpp in Sources */,
 				12D9F98B1CC3A98B00313F8D /* Ship.cpp in Sources */,
 				12D9F98C1CC3A98B00313F8D /* HostileTarget.cpp in Sources */,
 				12D9F98D1CC3A98B00313F8D /* CapacitorSimulator.cpp in Sources */,
+				123BEF481FBDB5D200AC8EB1 /* Drone.cpp in Sources */,
 				12D9F98E1CC3A98B00313F8D /* Spaceport.cpp in Sources */,
 				12D9F98F1CC3A98B00313F8D /* Environment.cpp in Sources */,
 				12D9F9901CC3A98B00313F8D /* LocationRequiredSkillModifier.cpp in Sources */,
+				123BEF361FBDB40800AC8EB1 /* Ship.cpp in Sources */,
 				12D9F9911CC3A98B00313F8D /* ExtractorControlUnit.cpp in Sources */,
 				12D9F9921CC3A98B00313F8D /* SqlConnector.cpp in Sources */,
+				123BEF1C1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
 				12D9F9931CC3A98B00313F8D /* LocationGroupModifier.cpp in Sources */,
+				123BEF241FBDA52500AC8EB1 /* Gang.cpp in Sources */,
 				12D9F9941CC3A98B00313F8D /* EffectPrototype.cpp in Sources */,
 				12D9F9951CC3A98B00313F8D /* Module.cpp in Sources */,
 				12D9F9961CC3A98B00313F8D /* Drone.cpp in Sources */,
@@ -1088,19 +1202,18 @@
 				12D9F9981CC3A98B00313F8D /* Attribute.cpp in Sources */,
 				1248DB4E1F1E3EDC009625EC /* GangBoostEffect.cpp in Sources */,
 				12D9F99A1CC3A98B00313F8D /* DamageVector.cpp in Sources */,
-				12FC63941FB59C2E005F2B66 /* MetaInfo.cpp in Sources */,
 				12D9F99B1CC3A98B00313F8D /* Booster.cpp in Sources */,
 				12D9F99C1CC3A98B00313F8D /* AttributePrototype.cpp in Sources */,
 				12D9F99D1CC3A98B00313F8D /* Commodity.cpp in Sources */,
-				12DC155A1FA7271500F1B6F1 /* Type.cpp in Sources */,
+				12B331171FBD99150072D4E4 /* Type.cpp in Sources */,
 				12D9F99E1CC3A98B00313F8D /* FetchResult.cpp in Sources */,
 				12D9F99F1CC3A98B00313F8D /* Planet.cpp in Sources */,
 				12D9F9A01CC3A98B00313F8D /* FetchRequest.cpp in Sources */,
 				12D9F9A11CC3A98B00313F8D /* SqliteFetchRequest.cpp in Sources */,
 				12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */,
+				12B331191FBD999F0072D4E4 /* SDE.cpp in Sources */,
 				12D9F9A21CC3A98B00313F8D /* Facility.cpp in Sources */,
 				12D9F9A31CC3A98B00313F8D /* StorageFacility.cpp in Sources */,
-				12FE6F801FA9F8D7005A19F2 /* SDE.cpp in Sources */,
 				12D9F9A41CC3A98B00313F8D /* ProductionState.cpp in Sources */,
 				12D9F9A51CC3A98B00313F8D /* DamagePattern.cpp in Sources */,
 				12D9F9A61CC3A98B00313F8D /* Blob.cpp in Sources */,
@@ -1111,11 +1224,13 @@
 				12D9F9AB1CC3A98B00313F8D /* Effect.cpp in Sources */,
 				12D9F9AC1CC3A98B00313F8D /* Gang.cpp in Sources */,
 				12D9F9AD1CC3A98B00313F8D /* Engine.cpp in Sources */,
+				123BEF3C1FBDB4A200AC8EB1 /* Module.cpp in Sources */,
 				12D9F9AE1CC3A98B00313F8D /* StarbaseStructure.cpp in Sources */,
 				12D9F9AF1CC3A98B00313F8D /* IndustryFacility.cpp in Sources */,
 				12D9F9B01CC3A98B00313F8D /* ControlTower.cpp in Sources */,
 				12D9F9B11CC3A98B00313F8D /* Item.cpp in Sources */,
 				12D9F9B21CC3A98B00313F8D /* ProductionCycle.cpp in Sources */,
+				123BEF301FBDB3AB00AC8EB1 /* Skill.cpp in Sources */,
 				12D9F9B31CC3A98B00313F8D /* Implant.cpp in Sources */,
 				12D9F9B41CC3A98B00313F8D /* Route.cpp in Sources */,
 				12D9F9B51CC3A98B00313F8D /* HeatSimulator.cpp in Sources */,
@@ -1147,7 +1262,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ADDITIONAL_SDKS = "";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1192,7 +1307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ADDITIONAL_SDKS = "";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;

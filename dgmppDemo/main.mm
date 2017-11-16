@@ -160,7 +160,7 @@ template <std::size_t N>
 constexpr std::array<char, N - 1> obf(const char (&s)[N]) {
 	std::array<char, N - 1> result;
 	for (int i = 0; i < N - 1; i++) {
-		result[i] = s[i] ^ 0x55;
+		result[i] = s[i] ^ 0x55; //Можно выбрать другое значение для XOR
 	}
 	return result;
 }
@@ -172,7 +172,7 @@ std::string de_obf(const std::array<char, N>& a) {
 	return s;
 }
 
-const auto s = obf("hello my world");
+const auto s = obf("hello world");
 
 namespace my {
 constexpr std::size_t sfCount = 10;
@@ -314,9 +314,17 @@ template<typename C, typename K> std::pair<typename C::iterator, typename C::ite
 	return std::make_pair(c.lower_bound(k), c.upper_bound(k));
 }
 
+bool funn(int i) {
+	std::cout << "funn(" << i << ")\n";
+	return i < 3;
+}
+
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-
+		
+		auto n = std::gcd(54, 24);
+		
+		
 		std::set<std::tuple<int, int>, KeyComparator<int, int>> set;
 		for (int i = 0; i < 3; i++)
 			for (int j = 0; j < 3; j++)
