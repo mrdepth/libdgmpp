@@ -17,6 +17,7 @@
 #include <numeric>
 #include <type_traits>
 #include <sstream>
+#include <queue>
 
 using namespace dgmpp;
 
@@ -319,29 +320,92 @@ bool funn(int i) {
 	return i < 3;
 }
 
+template<typename Rep, typename Period = std::chrono::seconds>
+class rate {
+public:
+	using rep = Rep;
+	using period = Period;
+	
+	constexpr explicit rate(const Rep& rep) : rep_(rep) {}
+	
+	template<typename Period2>
+	constexpr operator rate<Rep, Period2> () {
+		using r = std::ratio_divide<typename Period::period::ratio, typename Period2::period::ratio>;
+		return rate<Rep, Period2>{rep_ * r::den / r::num};
+	};
+	
+	Rep count() const {return rep_;}
+	
+	auto operator+ (const rate<Rep, Period>& other) {
+		return rate<Rep, Period>(rep_ + other.rep_);
+	}
+
+	auto operator- (const rate<Rep, Period>& other) {
+		return rate<Rep, Period>(rep_ + other.rep_);
+	}
+
+	auto operator* (const rate<Rep, Period>& other) {
+		return rate<Rep, Period>(rep_ * other.rep_);
+	}
+	
+	auto operator/ (const rate<Rep, Period>& other) {
+		return rate<Rep, Period>(rep_ / other.rep_);
+	}
+
+	rate<Rep, Period>& operator+= (const rate<Rep, Period>& other) {
+		rep_ += other.rep_;
+		return *this;
+	}
+
+	rate<Rep, Period>& operator-= (const rate<Rep, Period>& other) {
+		rep_ -= other.rep_;
+		return *this;
+	}
+
+	rate<Rep, Period>& operator*= (const rate<Rep, Period>& other) {
+		rep_ *= other.rep_;
+		return *this;
+	}
+	
+	rate<Rep, Period>& operator/= (const rate<Rep, Period>& other) {
+		rep_ /= other.rep_;
+		return *this;
+	}
+
+private:
+	Rep rep_;
+};
+
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
 		
-		auto n = std::gcd(54, 24);
+		std::vector<int> i = {4,533,5,3,5,6,5,6,45,3,42,5};
+		std::priority_queue<int> pq (std::priority_queue<int>::value_compare(), std::move(i));
+		pq.pop();
+		
+		auto r = rate<dgmpp2::GigaJoule, std::chrono::hours>(1.0);
+		rate<dgmpp2::GigaJoule> r2 = r;
+		
+		r = rate<dgmpp2::GigaJoule>(2.0);
+		
+		auto r3 = r + r2;
+		r += r2;
+		
+		/*const char* s[] = {"a", "b", "c"};
+		dgmpp2::TuplesSet<int, int, const char*> set;
+		for (int i = 0; i < 100; i++)
+			for (int j = 0; j < 100; j++)
+				for (int k = 0; k < 3; k++) {
+					set.emplace(i, j, s[k]);
+				}
 		
 		
-		std::set<std::tuple<int, int>, KeyComparator<int, int>> set;
-		for (int i = 0; i < 3; i++)
-			for (int j = 0; j < 3; j++)
-				set.emplace(i,j);
 		
-		auto print = [](decltype(set)::iterator first, decltype(set)::iterator last) {
-			std::transform(first, last, std::ostream_iterator<std::string>(std::cout, "\n"), [](auto i) {
-				std::stringstream s;
-				s << "{" << std::get<0>(i) << "," << std::get<1>(i) << "}";
-				return s.str();
-			});
-			std::cout << std::endl;
-		};
+		auto range = dgmpp2::equal_range(set, std::make_tuple(50, 60));
 		
-		print(set.begin(), set.end());
-//		auto range = set.equal_range(std::make_tuple(1));
-		auto range = equal_range(set, std::make_tuple(1));
+		std::transform(range.first, range.second, std::ostream_iterator<std::string>(std::cout, "\n"), [](auto i) {
+			return "{" + std::to_string(std::get<0>(i)) + "," + std::to_string(std::get<1>(i)) + "}";
+		});*/
 		
 //		print(range.first, range.second);
 
@@ -351,12 +415,10 @@ int main(int argc, const char * argv[]) {
 			auto pilot = gang->add(dgmpp2::Character::Create());
 			pilot->setSkillLevels(5);
 			auto ship = pilot->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-			auto module = ship->add(dgmpp2::Module::Create(TypeID::_500MNMicrowarpdriveII));
+			auto module = ship->add(dgmpp2::Module::Create(TypeID::_50MNMicrowarpdriveII));
 			
 			module->state(dgmpp2::Module::State::overloaded);
-			Float v1 = (*ship)[dgmpp2::AttributeID::maxVelocity]->value();
-//			Float v2 = (*ship)[dgmpp2::AttributeID::maxVelocity]->value();
-			std::cout << v1 << std::endl;// << v2 << std::endl;
+			std::cout << ship->capacitor().stableLevel() << std::endl;// << v2 << std::endl;
 		}
 		{
 			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
@@ -365,9 +427,9 @@ int main(int argc, const char * argv[]) {
 			auto ship = pilot->setShip(dgmpp::TypeID::dominix);
 //			ship->addModule(dgmpp::TypeID::armorEMHardenerII);
 //			ship->addModule(dgmpp::TypeID::armorEMHardenerI);
-			auto module = ship->addModule(dgmpp::TypeID::_500MNMicrowarpdriveII);
+			auto module = ship->addModule(dgmpp::TypeID::_50MNMicrowarpdriveII);
 			module->setState(dgmpp::Module::State::overloaded);
-			std::cout << ship->getAttribute(dgmpp::AttributeID::maxVelocity)->getValue() << std::endl;
+			std::cout << ship->getCapStableLevel() << std::endl;
 		}
 //		578=2
 //		37=218

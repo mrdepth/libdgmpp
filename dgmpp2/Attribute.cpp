@@ -11,6 +11,9 @@
 #include "Type.hpp"
 #include "SDE.hpp"
 
+
+#include <iostream>
+
 namespace dgmpp2 {
 	
 	namespace {
@@ -136,7 +139,7 @@ namespace dgmpp2 {
 			auto begin = modifiers.begin();
 			auto end = modifiers.end();
 			if (character) {
-				std::partition(begin, end, [=](const auto modifier) {
+				end = std::partition(begin, end, [=](const auto modifier) {
 					const auto& affector = modifier->owner();
 					const auto isProjected = !affector.isDescendant(*character);
 					return !(isProjected &&
@@ -165,7 +168,7 @@ namespace dgmpp2 {
 			
 			
 			std::vector<Float> values;
-			values.reserve(modifiers.size());
+			values.reserve(std::distance(end, begin));
 			auto extract = [](auto a) {
 				return a->get();
 			};
@@ -242,7 +245,7 @@ namespace dgmpp2 {
 			if (maxAttribute_) {
 				value = std::min(value, maxAttribute_->value());
 			}
-			//			std::cout << static_cast<int>(metaInfo().attributeID) << ": " << value << std::endl;
+//			std::cout << static_cast<int>(metaInfo().attributeID) << ": " << value << std::endl;
 			value_ = value;
 			owner_.cache().add(this);
 #if DEBUG

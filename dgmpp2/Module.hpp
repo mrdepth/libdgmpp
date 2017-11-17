@@ -77,13 +77,13 @@ namespace dgmpp2 {
 
 		
 		//Calculations
-		std::chrono::duration<Float> reloadTime();
-		std::chrono::duration<Float> cycleTime();
-		std::chrono::duration<Float> rawCycleTime();
+		std::chrono::milliseconds reloadTime();
+		std::chrono::milliseconds cycleTime();
+		std::chrono::milliseconds rawCycleTime();
 
 		size_t charges();
 		size_t shots();
-		GigaJoule capUse();
+		rate<GigaJoule, std::chrono::seconds> capUse();
 		
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
@@ -95,7 +95,7 @@ namespace dgmpp2 {
 		Slot slot_;
 		Hardpoint hardpoint_;
 		Socket socket_ = anySocket;
-		std::chrono::duration<Float> defaultReloadTime_;
+		std::chrono::milliseconds defaultReloadTime_;
 		
 		struct {
 			bool canBeOnline : 1;

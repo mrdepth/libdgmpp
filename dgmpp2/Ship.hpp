@@ -9,6 +9,7 @@
 #include "Type.hpp"
 #include "Module.hpp"
 #include "Drone.hpp"
+#include "Capacitor.hpp"
 
 namespace dgmpp2 {
 	class Module;
@@ -47,21 +48,30 @@ namespace dgmpp2 {
 		size_t freeHardpoints (Module::Hardpoint hardpoint);
 		size_t usedHardpoints (Module::Hardpoint hardpoint);
 		
+		Capacitor& capacitor() { return capacitor_; }
+		
 		int rigSize() { return static_cast<int>((*this)[AttributeID::rigSize]->value()); }
 		
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		virtual void reset() override;
+		
+		const std::list<Module*>& projectedModules() const { return projectedModules_; }
+		const std::list<Drone*>& projectedDrones() const { return projectedDrones_; }
+
 	private:
 		friend class Character;
+		friend class Capacitor;
 		
-		Ship (TypeID typeID): Type(typeID) {};
+		Ship (TypeID typeID): Type(typeID), capacitor_(*this) {};
 		
 		ModulesContainer modules_;
 		DronesContainer drones_;
 		
 		std::list<Module*> projectedModules_;
 		std::list<Drone*> projectedDrones_;
+		
+		Capacitor capacitor_;
 
 	};
 }

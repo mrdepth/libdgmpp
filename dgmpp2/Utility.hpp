@@ -34,6 +34,13 @@ namespace dgmpp2 {
 	using ModifierID = int;
 	using SchematicID = int;
 	using GigaJoule = Float;
+	using Percent = Float;
+	
+	namespace config {
+		const Percent capacitorPeakRecharge = 0.5; //sqrt(0.25)
+		const Percent shieldPeakRecharge = 0.5; //sqrt(0.25)
+		const std::chrono::milliseconds capacitorSimulationMaxTime = std::chrono::hours(6);
+	}
 
 	template <typename... Args>
 	struct KeyComparator {
@@ -170,5 +177,71 @@ namespace dgmpp2 {
 		return slice<Iter>(std::forward<Iter>(from), std::forward<Iter>(to));
 	}
 
+	template<typename Rep, typename Period = std::chrono::seconds>
+	class rate {
+	public:
+		using rep = Rep;
+		using period = Period;
+		
+		rate() {};
+		constexpr explicit rate(const Rep& value) : rep_(value) {}
+		
+		template<typename Period2>
+		constexpr operator rate<Rep, Period2> () {
+			using r = std::ratio_divide<typename Period::period::ratio, typename Period2::period::ratio>;
+			return rate<Rep, Period2>{rep_ * r::den / r::num};
+		};
+		
+		Rep count() const {return rep_;}
+		
+		auto operator+ (const rate<Rep, Period>& other) const {
+			return rate<Rep, Period>(rep_ + other.rep_);
+		}
+		
+		auto operator- (const rate<Rep, Period>& other) const {
+			return rate<Rep, Period>(rep_ + other.rep_);
+		}
+		
+		auto operator* (const rate<Rep, Period>& other) const {
+			return rate<Rep, Period>(rep_ * other.rep_);
+		}
+
+		template<typename Period2>
+		Rep operator* (const Period2& p) const {
+			return rep_ * std::chrono::duration_cast<Period>(p).count();
+		}
+
+		auto operator/ (const rate<Rep, Period>& other) const {
+			return rate<Rep, Period>(rep_ / other.rep_);
+		}
+		
+		rate<Rep, Period>& operator+= (const rate<Rep, Period>& other) {
+			rep_ += other.rep_;
+			return *this;
+		}
+		
+		rate<Rep, Period>& operator-= (const rate<Rep, Period>& other) {
+			rep_ -= other.rep_;
+			return *this;
+		}
+		
+		rate<Rep, Period>& operator*= (const rate<Rep, Period>& other) {
+			rep_ *= other.rep_;
+			return *this;
+		}
+		
+		rate<Rep, Period>& operator/= (const rate<Rep, Period>& other) {
+			rep_ /= other.rep_;
+			return *this;
+		}
+		
+	private:
+		Rep rep_ = 0;
+	};
 	
+	template<typename Rep, typename Period>
+	auto make_rate(const Rep& value, const Period& period) {
+		auto c = period.count();
+		return rate<Rep, Period> (c > 0 ? value / c : 0);
+	}
 };

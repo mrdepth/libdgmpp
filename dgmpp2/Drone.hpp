@@ -40,6 +40,9 @@ namespace dgmpp2 {
 
 		virtual void setEnabled (bool enabled) override;
 		
+		//Calculations
+		std::chrono::milliseconds cycleTime();
+
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		

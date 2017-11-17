@@ -8,24 +8,6 @@ namespace dgmpp {
 	{
 	public:
 		
-		class Drain
-		{
-		public:
-			Drain(std::shared_ptr<Module> const& module, Float cycleTime = 0, Float capacitorNeed = 0, Float clipSize = 0, Float reloadTime = 0) : cycleTime_(cycleTime), capacitorNeed_(capacitorNeed), clipSize_(clipSize), reloadTime_(reloadTime), module_(module) {};
-			
-			bool operator == (const Drain& other)
-			{
-				return module_.lock() == other.module_.lock();
-			}
-
-			Float cycleTime_;
-			Float capacitorNeed_;
-			Float clipSize_;
-			Float reloadTime_;
-		private:
-			std::weak_ptr<Module> module_;
-		};
-		
 		struct State {
 			int tNow;
 			int duration;

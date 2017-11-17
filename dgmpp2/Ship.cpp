@@ -354,5 +354,6 @@ namespace dgmpp2 {
 		for (auto module: modules()) {
 			module->adjustState();
 		}
+		capacitor_.reset();
 	}
 }

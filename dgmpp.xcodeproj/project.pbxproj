@@ -300,6 +300,10 @@
 		12DBEAB31E1D3B9D0088A486 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */; };
 		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
 		12DFCED31CD74242006A19BD /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */; };
+		12EC66511FBECD840083DBB8 /* Capacitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EC664F1FBECD840083DBB8 /* Capacitor.cpp */; };
+		12EC66521FBECD840083DBB8 /* Capacitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EC664F1FBECD840083DBB8 /* Capacitor.cpp */; };
+		12EC66531FBECD840083DBB8 /* Capacitor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12EC66501FBECD840083DBB8 /* Capacitor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12EC66541FBECD840083DBB8 /* Capacitor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12EC66501FBECD840083DBB8 /* Capacitor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -422,6 +426,8 @@
 		12DFCECE1CD74242006A19BD /* dgmppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dgmppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DFCED01CD74242006A19BD /* dgmppTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = dgmppTests.mm; sourceTree = "<group>"; };
 		12DFCED21CD74242006A19BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		12EC664F1FBECD840083DBB8 /* Capacitor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Capacitor.cpp; sourceTree = "<group>"; };
+		12EC66501FBECD840083DBB8 /* Capacitor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Capacitor.hpp; sourceTree = "<group>"; };
 		12EFCCDD1C1ACE4E003ECA7F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3700DA7014869A570026EA83 /* Modifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Modifier.h; sourceTree = "<group>"; };
 		3700DA7214869A620026EA83 /* Modifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Modifier.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -540,6 +546,8 @@
 				123BEF401FBDB59200AC8EB1 /* Charge.hpp */,
 				123BEF451FBDB5D200AC8EB1 /* Drone.cpp */,
 				123BEF461FBDB5D200AC8EB1 /* Drone.hpp */,
+				12EC664F1FBECD840083DBB8 /* Capacitor.cpp */,
+				12EC66501FBECD840083DBB8 /* Capacitor.hpp */,
 			);
 			name = Ship;
 			sourceTree = "<group>";
@@ -834,6 +842,7 @@
 				12564BE61B84B07F000F68D8 /* Implant.h in Headers */,
 				12564BE71B84B07F000F68D8 /* Skill.h in Headers */,
 				12A156A41C46518000C3CF0B /* Commodity.h in Headers */,
+				12EC66531FBECD840083DBB8 /* Capacitor.hpp in Headers */,
 				123BEF311FBDB3AB00AC8EB1 /* Skill.hpp in Headers */,
 				12564BE81B84B07F000F68D8 /* CapacitorSimulator.h in Headers */,
 				128656571C57AE6A0002BA7E /* ProductionState.h in Headers */,
@@ -920,6 +929,7 @@
 				12D9F9C61CC3A98B00313F8D /* Implant.h in Headers */,
 				12D9F9C71CC3A98B00313F8D /* Skill.h in Headers */,
 				12D9F9C81CC3A98B00313F8D /* Commodity.h in Headers */,
+				12EC66541FBECD840083DBB8 /* Capacitor.hpp in Headers */,
 				123BEF321FBDB3AB00AC8EB1 /* Skill.hpp in Headers */,
 				12D9F9C91CC3A98B00313F8D /* CapacitorSimulator.h in Headers */,
 				12D9F9CA1CC3A98B00313F8D /* ProductionState.h in Headers */,
@@ -1162,6 +1172,7 @@
 				12564BD11B84B03C000F68D8 /* Implant.cpp in Sources */,
 				12A156AE1C46548D00C3CF0B /* Route.cpp in Sources */,
 				12564BBF1B84B027000F68D8 /* HeatSimulator.cpp in Sources */,
+				12EC66511FBECD840083DBB8 /* Capacitor.cpp in Sources */,
 				12564BC51B84B027000F68D8 /* SqliteConnector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1234,6 +1245,7 @@
 				12D9F9B31CC3A98B00313F8D /* Implant.cpp in Sources */,
 				12D9F9B41CC3A98B00313F8D /* Route.cpp in Sources */,
 				12D9F9B51CC3A98B00313F8D /* HeatSimulator.cpp in Sources */,
+				12EC66521FBECD840083DBB8 /* Capacitor.cpp in Sources */,
 				12D9F9B61CC3A98B00313F8D /* SqliteConnector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

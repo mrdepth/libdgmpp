@@ -9,7 +9,8 @@
 #include "Ship.hpp"
 
 namespace dgmpp2 {
-	
+	using namespace std::chrono_literals;
+
 	Module::Module (TypeID typeID) : Type(typeID) {
 		const auto& effects = this->effects();
 		
@@ -280,28 +281,29 @@ namespace dgmpp2 {
 	
 	//Calculations
 	
-	std::chrono::duration<Float> Module::reloadTime() {
+	std::chrono::milliseconds Module::reloadTime() {
 		if (auto attribute = (*this)[AttributeID::reloadTime])
-			return std::chrono::duration<Float, std::milli>(attribute->value());
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
 		else
 			return defaultReloadTime_;
 	}
 
 	
-	std::chrono::duration<Float> Module::cycleTime() {
-		std::chrono::duration<Float> reactivation{0};
+	std::chrono::milliseconds Module::cycleTime() {
+		auto reactivation = 0ms;
+		
 		if (auto attribute = (*this)[AttributeID::moduleReactivationDelay])
-			reactivation = std::chrono::duration<Float, std::milli>(attribute->value());
+			reactivation = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
 		
 		auto speed = rawCycleTime();
 		auto factorReload = flags_.factorReload || flags_.forceReload;
 		
 		if (factorReload && charge() != nullptr) {
 			auto reload = reloadTime();
-			if (reload > decltype(reload)::zero()) {
+			if (reload > 0ms) {
 				auto shots = this->shots();
 				if (shots > 0)
-					speed = (speed * shots + std::max(reload, reactivation));
+					speed = (speed * shots + std::max(reload, reactivation)) / shots;
 			}
 		}
 		
@@ -309,15 +311,23 @@ namespace dgmpp2 {
 		return speed;
 	}
 	
-	std::chrono::duration<Float> Module::rawCycleTime() {
-		std::chrono::duration<Float> speed(0);
+	std::chrono::milliseconds Module::rawCycleTime() {
 		if (auto attribute = (*this)[AttributeID::speed])
-			speed = std::chrono::duration<Float, std::milli>(attribute->value());
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
 		else if (auto attribute = (*this)[AttributeID::duration])
-			speed = std::chrono::duration<Float, std::milli>(attribute->value());
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		else if (auto attribute = (*this)[AttributeID::durationSensorDampeningBurstProjector])
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		else if (auto attribute = (*this)[AttributeID::durationTargetIlluminationBurstProjector])
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		else if (auto attribute = (*this)[AttributeID::durationECMJammerBurstProjector])
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		else if (auto attribute = (*this)[AttributeID::durationWeaponDisruptionBurstProjector])
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
 		else if (auto attribute = (*this)[AttributeID::missileLaunchDuration])
-			speed = std::chrono::duration<Float, std::milli>(attribute->value());
-		return speed;
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		else
+			return 0ms;
 	}
 	
 	size_t Module::charges() {
@@ -354,7 +364,7 @@ namespace dgmpp2 {
 		return 0;
 	}
 	
-	GigaJoule Module::capUse() {
+	rate<GigaJoule, std::chrono::seconds> Module::capUse() {
 		if (state() >= State::active) {
 			GigaJoule capNeed = 0.0;
 			if (auto attribute = (*this)[AttributeID::capacitorNeed])
@@ -363,11 +373,9 @@ namespace dgmpp2 {
 				capNeed -= static_cast<GigaJoule>((*this)[AttributeID::powerTransferAmount]->value());
 			if (capNeed == 0.0 && (*this)[EffectID::powerBooster] != nullptr)
 				capNeed -= static_cast<GigaJoule>((*this)[AttributeID::capacitorBonus]->value());
-			auto cycleTime = this->cycleTime();
-			if (cycleTime > decltype(cycleTime)::zero())
-				return capNeed / cycleTime.count();
+			return make_rate(capNeed, cycleTime());
 		}
-		return 0.0;
+		return rate<GigaJoule, std::chrono::seconds>(0);
 	}
 
 	

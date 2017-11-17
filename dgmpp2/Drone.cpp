@@ -101,4 +101,15 @@ namespace dgmpp2 {
 		else
 			return static_cast<size_t>((*this)[AttributeID::fighterSquadronMaxSize]->value()) ?: 5;
 	}
+	
+	//Calculations
+	
+	std::chrono::milliseconds Drone::cycleTime() {
+		if (auto attribute = (*this)[AttributeID::speed])
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		else if (auto attribute = (*this)[AttributeID::duration])
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		else
+			return std::chrono::milliseconds::zero();
+	}
 }

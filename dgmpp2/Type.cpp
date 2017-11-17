@@ -209,19 +209,19 @@ namespace dgmpp2 {
 	std::list<const Modifier*> Type::locationRequiredSkillModifiers (const MetaInfo::Attribute& attribute, const Type& type) const {
 		auto attributeID = attribute.attributeID;
 		auto key = std::make_tuple(attributeID);
-		auto range = locationRequiredSkillModifiers_.equal_range(key);
+		auto range = equal_range(locationRequiredSkillModifiers_, key);
 
 		if (range.first != range.second) {
-//			auto subset = decltype(locationRequiredSkillModifiers_)(range.first, range.second);
-			auto &subset = locationRequiredSkillModifiers_;
+			auto subset = decltype(locationRequiredSkillModifiers_)(range.first, range.second);
+//			auto &subset = locationRequiredSkillModifiers_;
 			
 			for (auto skillID: type.metaInfo().requiredSkills) {
 				auto key = std::make_tuple(attributeID, skillID);
-				auto result = subset.equal_range(key);
+				auto result = equal_range(subset, key);
 				
 				if (result.first != result.second) {
 					std::list<const Modifier*> list;
-					std::transform(range.first, range.second, std::back_inserter(list), [](const auto& i) { return std::get<const Modifier*>(i); });
+					std::transform(result.first, result.second, std::back_inserter(list), [](const auto& i) { return std::get<const Modifier*>(i); });
 					return list;
 				}
 			}
