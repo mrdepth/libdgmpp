@@ -23,8 +23,9 @@ namespace dgmpp2 {
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		virtual void reset() override;
 	private:
-		Ship* ship_ = nullptr;
-		std::map<TypeID, class Skill*> skills_;
+		friend class Gang;
+		std::unique_ptr<Ship> ship_;
+		std::map<TypeID, std::unique_ptr<Skill>> skills_;
 		
 		Character();
 	};

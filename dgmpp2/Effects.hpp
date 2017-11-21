@@ -4,7474 +4,2497 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		constexpr const MetaInfo::Effect effects[] {
-			{EffectID::shieldBoosting, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[0]},
-			}},
-			{EffectID::missileLaunching, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::targetAttack, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::loPower, MetaInfo::Effect::Category::generic, false, false, {
-				
-			}},
-			{EffectID::hiPower, MetaInfo::Effect::Category::generic, false, false, {
-				
-			}},
-			{EffectID::medPower, MetaInfo::Effect::Category::generic, false, false, {
-				
-			}},
-			{EffectID::online, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1]},{modifiers[2]},
-			}},
-			{EffectID::mining, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::shieldTransfer, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[3]},
-			}},
-			{EffectID::shieldCapacityBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[4]},
-			}},
-			{EffectID::capacitorCapacityBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[5]},
-			}},
-			{EffectID::structureRepair, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[6]},
-			}},
-			{EffectID::armorRepair, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[7]},
-			}},
-			{EffectID::projectileFired, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::empWave, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::warpScramble, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[8]},
-			}},
-			{EffectID::launcherFitted, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[9]},
-			}},
-			{EffectID::turretFitted, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[10]},
-			}},
-			{EffectID::shipScan, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::cargoScan, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::powerBooster, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::modifyShieldRechargeRate, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[11]},
-			}},
-			{EffectID::modifyPowerRechargeRate, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[12]},
-			}},
-			{EffectID::targetPassively, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::targetHostiles, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::powerOutputMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[13]},
-			}},
-			{EffectID::shieldCapacityMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[14]},
-			}},
-			{EffectID::capacitorCapacityMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[15]},
-			}},
-			{EffectID::cargoCapacityMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[16]},
-			}},
-			{EffectID::structureHPMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[17]},
-			}},
-			{EffectID::agilityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[18]},
-			}},
-			{EffectID::armorHPMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[19]},
-			}},
-			{EffectID::miningLaser, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::surveyScan, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::corporationMemberLimitBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[20]},
-			}},
-			{EffectID::projectileWeaponSpeedMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[21]},
-			}},
-			{EffectID::energyWeaponDamageMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[22]},
-			}},
-			{EffectID::projectileWeaponDamageMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[23]},
-			}},
-			{EffectID::hybridWeaponDamageMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[24]},
-			}},
-			{EffectID::energyWeaponSpeedMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[25]},
-			}},
-			{EffectID::hybridWeaponSpeedMultiply, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[26]},
-			}},
-			{EffectID::useMissiles, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::mineLaying, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::defenderMissileLaunching, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::fofMissileLaunching, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::shieldResonanceMultiplyOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[27]},{modifiers[28]},{modifiers[29]},{modifiers[30]},
-			}},
-			{EffectID::electronicAttributeModifyOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[31]},{modifiers[32]},{modifiers[33]},
-			}},
-			{EffectID::torpedoLaunching, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::skillEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[34]},{modifiers[35]},
-			}},
-			{EffectID::damageMultiplierSkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[36]},
-			}},
-			{EffectID::skillBoostDamageMultiplierBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[36]},
-			}},
-			{EffectID::largeHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeHybridTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[37]},
-			}},
-			{EffectID::mediumEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumEnergyTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[38]},
-			}},
-			{EffectID::mediumHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumHybridTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[39]},
-			}},
-			{EffectID::mediumProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumProjectileTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[40]},
-			}},
-			{EffectID::largeEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeEnergyTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[41]},
-			}},
-			{EffectID::rapidFiringSkillBoostRofBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[42]},
-			}},
-			{EffectID::sharpshooterSkillBoostRangeSkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[43]},
-			}},
-			{EffectID::smallEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallEnergyTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[44]},
-			}},
-			{EffectID::smallHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallHybridTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[45]},
-			}},
-			{EffectID::smallProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallProjectileTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[46]},
-			}},
-			{EffectID::caldariCruiserSkillBoostCcTRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[47]},
-			}},
-			{EffectID::caldariFrigateSkillBoostCfTRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[48]},
-			}},
-			{EffectID::signatureAnalysisSkillBoostScanspeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[49]},
-			}},
-			{EffectID::signatureAnalysisScanspeedBonusPostPercentScanSpeedLocationShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[50]},
-			}},
-			{EffectID::longRangeTargetingSkillBoostMaxTargetRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[51]},
-			}},
-			{EffectID::propulsionJammingSkillBoostDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[52]},
-			}},
-			{EffectID::sensorUpgradesSkillBoostCpuNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[53]},
-			}},
-			{EffectID::sensorUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringSensorUpgrades, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[54]},
-			}},
-			{EffectID::targetingSkillBoostMaxTargetBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[55]},
-			}},
-			{EffectID::targetingMaxTargetBonusModAddMaxLockedTargetsLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[56]},
-			}},
-			{EffectID::electronicWarfareSkillBoostDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[57]},
-			}},
-			{EffectID::engineeringSkillBoostPowerOutputBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[58]},
-			}},
-			{EffectID::energyManagementSkillBoostCapRechargeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[59]},
-			}},
-			{EffectID::navigationSkillBoostVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[60]},
-			}},
-			{EffectID::navigationVelocityBonusPostPercentMaxVelocityLocationShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[61]},
-			}},
-			{EffectID::accerationControlSkillBoostCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[62]},
-			}},
-			{EffectID::accerationControlCapNeedBonusPostPercentCapacitorNeedLocationShipGroupAfterburner, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[63]},
-			}},
-			{EffectID::accerationControlSkillBoostSpeedFBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[64]},
-			}},
-			{EffectID::afterburnerDurationBonusPostPercentDurationLocationShipModulesRequiringAfterburner, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[65]},
-			}},
-			{EffectID::evasiveManuveringSkillBoostAgilityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[66]},
-			}},
-			{EffectID::warpdriveoperationSkillBoostWarpCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[67]},
-			}},
-			{EffectID::warpdriveoperationWarpCapacitorNeedBonusPostPercentWarpCapacitorNeedLocationShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[68]},
-			}},
-			{EffectID::corporationManagementSkillBoostCorporationMemberBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[69]},
-			}},
-			{EffectID::accerationControlSpeedFBonusPostPercentSpeedFactorLocationShipGroupAfterburner, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[70]},
-			}},
-			{EffectID::highSpeedManuveringSkillBoostCapacitorNeedMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[71]},
-			}},
-			{EffectID::highSpeedManuveringCapacitorNeedMultiplierPostPercentCapacitorNeedLocationShipModulesRequiringHighSpeedManuvering, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[72]},
-			}},
-			{EffectID::sensorUpgradesSkillBoostPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[73]},
-			}},
-			{EffectID::hullUpgradesSkillBoostHullHpBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[74]},
-			}},
-			{EffectID::shadowBarrageDmgMultiplierWithDamageMultiplierPostPercentBarrageDmgMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[75]},{modifiers[76]},
-			}},
-			{EffectID::shadowBarrageFalloffWithFalloffPostPercentBarrageFalloffMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[77]},{modifiers[78]},
-			}},
-			{EffectID::barrage, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::amarrCruiserSkillBoostPowerOutputBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[79]},
-			}},
-			{EffectID::hullUpgradesSkillBoostArmorHpBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[80]},
-			}},
-			{EffectID::hullUpgradesArmorHpBonusPostPercentHpLocationShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[81]},
-			}},
-			{EffectID::repairSystemsDurationBonusPostPercentDurationLocationShipModulesRequiringRepairSystems, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[82]},
-			}},
-			{EffectID::shieldUpgradesPowerNeedBonusPostPercentPowerLocationShipModulesRequiringShieldUpgrades, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[83]},
-			}},
-			{EffectID::tacticalshieldManipulationSkillBoostUniformityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[84]},
-			}},
-			{EffectID::shieldEmmisionSystemsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringShieldEmmisionSystems, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[85]},
-			}},
-			{EffectID::shieldManagementSkillBoostShieldCapacityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[86]},
-			}},
-			{EffectID::shieldoperationSkillBoostRechargeratebonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[87]},
-			}},
-			{EffectID::controlledBurstsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[88]},
-			}},
-			{EffectID::motionPredictionTrackingSpeedMultiplierPostPercentTrackingSpeedLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[89]},
-			}},
-			{EffectID::sharpshooterRangeSkillBonusPostPercentMaxRangeLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[90]},
-			}},
-			{EffectID::skillBoostFalloffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[91]},
-			}},
-			{EffectID::surgicalStrikeFalloffBonusPostPercentFalloffLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[92]},
-			}},
-			{EffectID::empathyCharismaBonusModAddCharismaLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[93]},
-			}},
-			{EffectID::instantRecallMemoryBonusModAddMemoryLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[94]},
-			}},
-			{EffectID::analyticalMindIntelligenceBonusModAddIntelligenceLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[95]},
-			}},
-			{EffectID::ironWillWillpowerBonusModAddWillpowerLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[96]},
-			}},
-			{EffectID::spatialAwarenessPerceptionBonusModAddPerceptionLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[97]},
-			}},
-			{EffectID::dronesSkillBoostMaxActiveDroneBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[98]},
-			}},
-			{EffectID::dronesMaxActiveDroneBonusModAddMaxActiveLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[99]},
-			}},
-			{EffectID::amarrTechSkillBoostAmarrTechMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[100]},
-			}},
-			{EffectID::amarrTechAmarrTechMutatorPostPercentAmarrTechTimePercentLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[101]},
-			}},
-			{EffectID::caldariTechSkillBoostCaldariTechMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[102]},
-			}},
-			{EffectID::caldariTechCaldariTechMutatorPostPercentCaldariTechTimePercentLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[103]},
-			}},
-			{EffectID::gallenteTechSkillBoostGallenteTechMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[104]},
-			}},
-			{EffectID::gallenteTechGallenteTechMutatorPostPercentGallenteTechTimePercentLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[105]},
-			}},
-			{EffectID::refineryEfficiencySkillBoostRefiningYieldMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[106]},
-			}},
-			{EffectID::cSOTrainingSkillBoostResearchGangSizeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[107]},
-			}},
-			{EffectID::cSOTrainingResearchGangSizeBonusModAddMaxResearchGangSizeShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[108]},
-			}},
-			{EffectID::battleshipConstructionSkillBoostBattleshipConstructionTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[109]},
-			}},
-			{EffectID::battleshipConstructionBattleshipConstructionTimeBonusPostPercentBattleshipConstructionTimeChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[110]},
-			}},
-			{EffectID::cruiserConstructionSkillBoostCruiserConstructionTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[111]},
-			}},
-			{EffectID::cruiserConstructionCruiserConstructionTimeBonusPostPercentCruiserConstructionTimeChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[112]},
-			}},
-			{EffectID::frigateConstructionSkillBoostFrigateConstructionTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[113]},
-			}},
-			{EffectID::frigateConstructionFrigateConstructionTimeBonusPostPercentFrigateConstructionTimeChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[114]},
-			}},
-			{EffectID::industrialConstructionSkillBoostIndustrialConstructionTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[115]},
-			}},
-			{EffectID::industrialConstructionIndustrialConstructionTimeBonusPostPercentIndustrialConstructionTimeChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[116]},
-			}},
-			{EffectID::connectionsSkillBoostConnectionBonusMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[117]},
-			}},
-			{EffectID::criminalConnectionsSkillBoostCriminalConnectionsMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[118]},
-			}},
-			{EffectID::diplomacySkillBoostDiplomacyMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[119]},
-			}},
-			{EffectID::diplomacyDiplomacyMutatorModAddDiplomacyBonusChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[120]},
-			}},
-			{EffectID::fasttalkSkillBoostFastTalkMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[121]},
-			}},
-			{EffectID::fasttalkFastTalkMutatorPostPercentFastTalkPercentageChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[122]},
-			}},
-			{EffectID::gallenteFrigateSkillBoostCpuOutputBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[123]},
-			}},
-			{EffectID::astrogeologySkillBoostMiningAmountBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[124]},
-			}},
-			{EffectID::astrogeologyMiningAmountBonusPostPercentMiningAmountLocationShipModulesRequiringMining, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[125]},
-			}},
-			{EffectID::mechanicHullHpBonusPostPercentHpShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[126]},
-			}},
-			{EffectID::navigationVelocityBonusPostPercentMaxVelocityShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[61]},
-			}},
-			{EffectID::evasiveManeuveringAgilityBonusPostPercentAgilityShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[127]},
-			}},
-			{EffectID::energyGridUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringEnergyGridUpgrades, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[128]},
-			}},
-			{EffectID::electronicsCpuOutputBonusPostPercentCpuOutputLocationShipGroupComputer, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[129]},
-			}},
-			{EffectID::connectionsConnectionBonusMutatorModAddConnectionsBonusChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[130]},
-			}},
-			{EffectID::criminalConnectionsCriminalConnectionsMutatorModAddCriminalConnectionsBonusChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[131]},
-			}},
-			{EffectID::negotiationSkillBoostNegotiationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[132]},
-			}},
-			{EffectID::negotiationNegotiationBonusPostPercentNegotiationPercentageChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[133]},
-			}},
-			{EffectID::socialSkillBoostSocialMutator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[134]},
-			}},
-			{EffectID::socialSocialMutatorPostPercentSocialBonusChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[135]},
-			}},
-			{EffectID::largeProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeProjectileTurret, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[136]},
-			}},
-			{EffectID::industrySkillBoostManufacturingTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[137]},
-			}},
-			{EffectID::gunnerySkillBoostTurretSpeeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[138]},
-			}},
-			{EffectID::gunneryTurretSpeeBonusPostPercentSpeedLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[139]},
-			}},
-			{EffectID::tradeSkillBoostTradePremiumBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[140]},
-			}},
-			{EffectID::tradeTradePremiumBonusPostPercentTradePremiumChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[141]},
-			}},
-			{EffectID::smugglingSkillBoostSmugglingChanceBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[142]},
-			}},
-			{EffectID::industryManufacturingTimeBonusPostPercentManufactureTimeMultiplierChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[143]},
-			}},
-			{EffectID::scienceSkillBoostCopySpeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[144]},
-			}},
-			{EffectID::scienceCopySpeedBonusPostPercentCopySpeedPercentChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[145]},
-			}},
-			{EffectID::researchSkillBoostBlueprintmanufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[146]},
-			}},
-			{EffectID::researchBlueprintmanufactureTimeBonusPostPercentProductionTimeResearchSpeedChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[147]},
-			}},
-			{EffectID::refineryEfficiencyRefiningYieldMutatorPostPercentRefiningYieldPercentageChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[148]},
-			}},
-			{EffectID::missileLauncherOperationSpeedBonusPostPercentSpeedLocationShipModulesRequiringMissileLauncherOperation, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[149]},
-			}},
-			{EffectID::energyManagementCapacitorBonusPostPercentCapacityLocationShipGroupCapacitor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[150]},
-			}},
-			{EffectID::shieldManagementShieldCapacityBonusPostPercentCapacityLocationShipGroupShield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[151]},
-			}},
-			{EffectID::scoutDroneOperationSkillBoostDroneRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[152]},
-			}},
-			{EffectID::minmatarFrigateSkillLevelPreMulShipBonusMFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[153]},
-			}},
-			{EffectID::shipTargetRangeBonusMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[154]},
-			}},
-			{EffectID::caldariFrigateSkillLevelPreMulShipBonusCFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[155]},
-			}},
-			{EffectID::shipShieldCapBonusCF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[156]},
-			}},
-			{EffectID::gallenteFrigateSkillLevelPreMulShipBonusGFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[157]},
-			}},
-			{EffectID::amarrFrigateSkillLevelPreMulShipBonusAFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[158]},
-			}},
-			{EffectID::metallurgySkillBoostMineralNeedResearchBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[159]},
-			}},
-			{EffectID::energysystemsoperationCapRechargeBonusPostPercentRechargeRateLocationShipGroupCapacitor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[160]},
-			}},
-			{EffectID::shieldOperationRechargeratebonusPostPercentRechargeRateLocationShipGroupShield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[161]},
-			}},
-			{EffectID::engineeringPowerEngineeringOutputBonusPostPercentPowerOutputLocationShipGroupPowerCore, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[162]},
-			}},
-			{EffectID::warpDriveOperationWarpCapacitorNeedBonusPostPercentWarpCapacitorNeedLocationShipGroupPropulsion, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[68]},
-			}},
-			{EffectID::inventionSkillBoostInventionBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[163]},
-			}},
-			{EffectID::amarrCruiserSkillLevelPreMulShipBonusACShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[164]},
-			}},
-			{EffectID::scoutDroneOperationDroneRangeBonusModAddDroneControlDistanceChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[165]},
-			}},
-			{EffectID::fuelConservationCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringAfterburner, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[166]},
-			}},
-			{EffectID::longRangeTargetingMaxTargetRangeBonusPostPercentMaxTargetRangeLocationShipGroupElectronic, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[167]},
-			}},
-			{EffectID::shipPDmgBonusMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[168]},
-			}},
-			{EffectID::amarrFrigateSkillLevelPreMulShipBonus2AFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[169]},
-			}},
-			{EffectID::shipEnergyTCapNeedBonusAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[170]},
-			}},
-			{EffectID::shipSHTDmgBonusGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[171]},
-			}},
-			{EffectID::shipSETDmgBonusAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[172]},
-			}},
-			{EffectID::shipTCapNeedBonusAC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[173]},
-			}},
-			{EffectID::gallenteCruiserSkillLevelPreMulShipBonusGCShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[174]},
-			}},
-			{EffectID::caldariCruiserSkillLevelPreMulShipBonusCCShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[175]},
-			}},
-			{EffectID::shipHRangeBonusCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[176]},
-			}},
-			{EffectID::minmatarCruiserSkillLevelPreMulShipBonusMCShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[177]},
-			}},
-			{EffectID::minmatarIndustrialSkillLevelPreMulShipBonusMIShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[178]},
-			}},
-			{EffectID::shipVelocityBonusMI, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[179]},
-			}},
-			{EffectID::shipCargoBonusAI, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[180]},
-			}},
-			{EffectID::caldariIndustrialSkillLevelPreMulShipBonusCIShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[181]},
-			}},
-			{EffectID::gallenteIndustrialSkillLevelPreMulShipBonusGIShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[182]},
-			}},
-			{EffectID::cpuMultiplierPostMulCpuOutputShip, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[183]},
-			}},
-			{EffectID::amarrBattleshipSkillLevelPostMulShipBonusABShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[184]},
-			}},
-			{EffectID::caldariBattleshipSkillLevelPreMulShipBonusCBShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[185]},
-			}},
-			{EffectID::shipCapNeedBonusAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[186]},
-			}},
-			{EffectID::minmatarBattleshipSkillLevelPreMulShipBonusMBShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[187]},
-			}},
-			{EffectID::shipPTDmgBonusMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[188]},
-			}},
-			{EffectID::shipHTDmgBonusGB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[189]},
-			}},
-			{EffectID::shipHTTrackingBonusGB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[190]},
-			}},
-			{EffectID::caldariBattleshipSkillLevelPreMulShipBonus2CBShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[191]},
-			}},
-			{EffectID::metallurgyMineralNeedResearchBonusPostPercentMineralNeedResearchSpeedChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[192]},
-			}},
-			{EffectID::shipHTDmgBonusfixedGC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[193]},
-			}},
-			{EffectID::laboratoryOperationSkillLevelModAddMaxLaborotorySlotsChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[194]},
-			}},
-			{EffectID::massProductionSkillLevelModAddManufactureSlotLimitChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[195]},
-			}},
-			{EffectID::missileLaunchingForEntity, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::reverseEngineeringInventionBonusModAddReverseEngineeringChanceLocationChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[196]},
-			}},
-			{EffectID::weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[197]},
-			}},
-			{EffectID::rapidFiringRofBonusPostPercentSpeedLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[198]},
-			}},
-			{EffectID::amarrIndustrialSkillLevelPreMulShipBonusAI2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[199]},
-			}},
-			{EffectID::surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[200]},
-			}},
-			{EffectID::decreaseTargetSpeed, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[201]},
-			}},
-			{EffectID::surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupEnergyWeapon, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[202]},
-			}},
-			{EffectID::surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupProjectileWeapon, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[203]},
-			}},
-			{EffectID::surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupHybridWeapon, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[204]},
-			}},
-			{EffectID::energyPulseWeaponsDurationBonusPostPercentDurationLocationShipModulesRequiringEnergyPulseWeapons, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[205]},
-			}},
-			{EffectID::targetArmorRepair, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[206]},
-			}},
-			{EffectID::ammoInfluenceRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[207]},
-			}},
-			{EffectID::ammoSpeedMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[208]},
-			}},
-			{EffectID::ammoFallofMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[209]},
-			}},
-			{EffectID::ammoTrackingMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[210]},
-			}},
-			{EffectID::shipPTurretSpeedBonusMC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[211]},
-			}},
-			{EffectID::shipPTspeedBonusMB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[212]},
-			}},
-			{EffectID::minmatarBattleshipSkillLevelPreMulShipBonusMB2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[213]},
-			}},
-			{EffectID::cloaking, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[214]},
-			}},
-			{EffectID::gallenteBattleshipSkillLevelPreMulShipBonusGBShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[215]},
-			}},
-			{EffectID::miningDroneOperationMiningAmountBonusPostPercentMiningDroneAmountPercentChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[216]},
-			}},
-			{EffectID::powerIncrease, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[217]},
-			}},
-			{EffectID::shipSpecialityMining, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[218]},
-			}},
-			{EffectID::anchorDrop, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::anchorLift, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::cloakingSkillBoostCloakVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[219]},
-			}},
-			{EffectID::agilityMultiplierEffect, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[220]},
-			}},
-			{EffectID::missileEMDmgBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[221]},
-			}},
-			{EffectID::missileExplosiveDmgBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[222]},
-			}},
-			{EffectID::missileThermalDmgBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[223]},
-			}},
-			{EffectID::heavyMissilesSkillBoostMaxflightTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[224]},
-			}},
-			{EffectID::missileKineticDmgBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[225]},
-			}},
-			{EffectID::antiWarpScramblingPassive, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[226]},
-			}},
-			{EffectID::weaponUpgradesSkillBoostCpu, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[227]},
-			}},
-			{EffectID::weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringEnergyPulseWeapons, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[228]},
-			}},
-			{EffectID::weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringMissileLauncherOperation, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[229]},
-			}},
-			{EffectID::gallenteBattleshipSkillLevelPreMulShipBonusGB2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[230]},
-			}},
-			{EffectID::signatureAnalysisSkillLevelPreMulScanResolutionBonusSelf, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[231]},
-			}},
-			{EffectID::signatureAnalysisScanResolutionBonusPostPercentScanResolutionShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[232]},
-			}},
-			{EffectID::interceptorsSkillLevelPreMulEliteBonusInterceptorShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[233]},
-			}},
-			{EffectID::covertOpsSkillLevelPreMulEliteBonusCoverOpsShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[234]},
-			}},
-			{EffectID::covertOpsWarpResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[235]},
-			}},
-			{EffectID::bomberRocketRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[236]},
-			}},
-			{EffectID::bomberLightsRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[237]},
-			}},
-			{EffectID::interceptorSignatoreRadiusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[238]},
-			}},
-			{EffectID::speedBoostFactorCalculator, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[239]},{modifiers[240]},
-			}},
-			{EffectID::speedBoostFactorCalculator2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[241]},
-			}},
-			{EffectID::stealthActive, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[242]},
-			}},
-			{EffectID::shipBonusCargo2GI, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[243]},
-			}},
-			{EffectID::shipBonusCargoCI, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[244]},
-			}},
-			{EffectID::shipBonusCargoMI, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[245]},
-			}},
-			{EffectID::shipBonusVelocityGI, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[246]},
-			}},
-			{EffectID::shipBonusVelocityCI, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[247]},
-			}},
-			{EffectID::shipVelocityBonusAI, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[248]},
-			}},
-			{EffectID::amarrBattleshipSkillLevelPreMulShipBonusAB2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[249]},
-			}},
-			{EffectID::shipBonusCapCapAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[250]},
-			}},
-			{EffectID::surveyScanspeedBonusPostPercentDurationLocationShipModulesRequiringElectronics, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[251]},
-			}},
-			{EffectID::gallenteFrigateSkillLevelPreMulShipBonusGF2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[252]},
-			}},
-			{EffectID::shipHybridDamageBonusCF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[253]},
-			}},
-			{EffectID::shipETDamageAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[172]},
-			}},
-			{EffectID::shipBonusSmallMissileRoFCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[254]},{modifiers[255]},
-			}},
-			{EffectID::caldariFrigateSkillLevelPreMulShipBonusCF2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[256]},
-			}},
-			{EffectID::minmatarFrigateSkillLevelPreMulShipBonusMF2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[257]},
-			}},
-			{EffectID::missileDMGBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[258]},
-			}},
-			{EffectID::hypereuclideanNavigationCloakVelocityBonusModAddSpeedFactorLocationShipModulesRequiringCloaking, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[259]},
-			}},
-			{EffectID::missileBombardmentMaxFlightTimeBonusPostPercentExplosionDelayOwnerCharModulesRequiringMissileLauncherOperation, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[260]},
-			}},
-			{EffectID::escortHullUpgradeCpuBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[261]},
-			}},
-			{EffectID::escortShieldUpgradeCpuBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[262]},
-			}},
-			{EffectID::caldariBattleshipSkillLevelPreMulShipBonusCB3Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[263]},
-			}},
-			{EffectID::ammoInfluenceCapNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[264]},
-			}},
-			{EffectID::ammoInfluenceCapRecharge, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[12]},
-			}},
-			{EffectID::freightSkillBoostCargoCapacityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[265]},
-			}},
-			{EffectID::skillFreightBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[266]},
-			}},
-			{EffectID::ammoInfluenceShipVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[214]},
-			}},
-			{EffectID::cloakingTargetingDelayBonusPostPercentCloakingTargetingDelayBonusForShipModulesRequiringCloaking, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[267]},
-			}},
-			{EffectID::cloakingSkillBoostCloakingTargetingDelayBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[268]},
-			}},
-			{EffectID::cloakingScanResolutionMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[269]},
-			}},
-			{EffectID::warpSkillSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[270]},
-			}},
-			{EffectID::bountyHuntingSkillBoostBountySkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[271]},
-			}},
-			{EffectID::bountyhunterskill, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[272]},
-			}},
-			{EffectID::shipProjectileOptimalBonuseMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[273]},
-			}},
-			{EffectID::shipHybridRangeBonusCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[274]},
-			}},
-			{EffectID::shipETspeedBonusAB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[275]},
-			}},
-			{EffectID::missileLauncherSpeedMultiplier, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[276]},
-			}},
-			{EffectID::shipCruiseMissileVelocityBonusCB3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[277]},
-			}},
-			{EffectID::shipTorpedosVelocityBonusCB3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[278]},
-			}},
-			{EffectID::covertOpsCpuBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[279]},
-			}},
-			{EffectID::shipMissileKineticDamageCF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[280]},
-			}},
-			{EffectID::shipMissileKineticDamageCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[281]},
-			}},
-			{EffectID::shipDroneScoutThermalDamageGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[282]},
-			}},
-			{EffectID::onlineForStructures, MetaInfo::Effect::Category::passive, false, false, {
-				
-			}},
-			{EffectID::ammoInfluenceSignatureRadius, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[283]},
-			}},
-			{EffectID::ammoInfluenceShieldCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[14]},
-			}},
-			{EffectID::shipLaserRofAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[284]},
-			}},
-			{EffectID::shipArmorHpAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[285]},
-			}},
-			{EffectID::shipMissileLauncherRofCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[286]},
-			}},
-			{EffectID::shipDronesMaxGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[287]},
-			}},
-			{EffectID::shipHybridTrackingGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[288]},
-			}},
-			{EffectID::amarrCruiserSkillLevelPreMulShipBonusAC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[289]},
-			}},
-			{EffectID::caldariCruiserSkillLevelPreMulShipBonusCC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[290]},
-			}},
-			{EffectID::gallenteCruiserSkillLevelPreMulShipBonusGC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[291]},
-			}},
-			{EffectID::minmatarCruiserSkillLevelPreMulShipBonusMC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[292]},
-			}},
-			{EffectID::shipArmorEmResistanceAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[293]},
-			}},
-			{EffectID::shipArmorExplosiveResistanceAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[294]},
-			}},
-			{EffectID::shipArmorKineticResistanceAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[295]},
-			}},
-			{EffectID::shipArmorThermalResistanceAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[296]},
-			}},
-			{EffectID::shipProjectileDmgMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[297]},
-			}},
-			{EffectID::cloakingWarpSafe, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[214]},
-			}},
-			{EffectID::gunshipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[298]},
-			}},
-			{EffectID::gunshipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[299]},
-			}},
-			{EffectID::eliteBonusGunshipHybridOptimal1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[300]},
-			}},
-			{EffectID::eliteBonusGunshipProjectileOptimal1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[301]},
-			}},
-			{EffectID::eliteBonusGunshipLaserOptimal1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[302]},
-			}},
-			{EffectID::eliteBonusGunshipHybridTracking2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[303]},
-			}},
-			{EffectID::eliteBonusGunshipProjectileFalloff2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[304]},
-			}},
-			{EffectID::eliteBonusGunshipShieldBoost2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[305]},
-			}},
-			{EffectID::eliteBonusGunshipCapRecharge2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[306]},
-			}},
-			{EffectID::eliteBonusGunshipDroneCapacity2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[307]},
-			}},
-			{EffectID::selfT2SmallLaserPulseDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[308]},
-			}},
-			{EffectID::selfT2SmallLaserBeamDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[309]},
-			}},
-			{EffectID::selfT2SmallHybridBlasterDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[310]},
-			}},
-			{EffectID::selfT2SmallHybridRailDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[311]},
-			}},
-			{EffectID::selfT2SmallProjectileACDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[312]},
-			}},
-			{EffectID::selfT2SmallProjectileArtyDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[313]},
-			}},
-			{EffectID::selfT2MediumLaserPulseDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[314]},
-			}},
-			{EffectID::selfT2MediumLaserBeamDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[315]},
-			}},
-			{EffectID::selfT2MediumHybridBlasterDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[316]},
-			}},
-			{EffectID::selfT2MediumHybridRailDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[317]},
-			}},
-			{EffectID::selfT2MediumProjectileACDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[318]},
-			}},
-			{EffectID::selfT2MediumProjectileArtyDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[319]},
-			}},
-			{EffectID::selfT2LargeLaserPulseDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[320]},
-			}},
-			{EffectID::selfT2LargeLaserBeamDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[321]},
-			}},
-			{EffectID::selfT2LargeHybridBlasterDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[322]},
-			}},
-			{EffectID::selfT2LargeHybridRailDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[323]},
-			}},
-			{EffectID::selfT2LargeProjectileACDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[324]},
-			}},
-			{EffectID::selfT2LargeProjectileArtyDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[325]},
-			}},
-			{EffectID::eliteBonusGunshipHybridDmg2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[326]},
-			}},
-			{EffectID::anchorDropForStructures, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::anchorLiftForStructures, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::shipMissileHeavyVelocityBonusCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[327]},
-			}},
-			{EffectID::shipMissileLightVelocityBonusCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[328]},
-			}},
-			{EffectID::remoteArmorSystemsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringRemoteArmorSystems, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[329]},
-			}},
-			{EffectID::eliteBonusLogisticRemoteArmorRepairCapNeed1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[330]},
-			}},
-			{EffectID::eliteBonusLogisticRemoteArmorRepairCapNeed2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[331]},
-			}},
-			{EffectID::eliteBonusLogisticShieldTransferCapNeed2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[332]},
-			}},
-			{EffectID::eliteBonusLogisticShieldTransferCapNeed1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[333]},
-			}},
-			{EffectID::shipRemoteArmorRangeGC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[334]},
-			}},
-			{EffectID::shipRemoteArmorRangeAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[335]},
-			}},
-			{EffectID::shipShieldTransferRangeCC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[336]},
-			}},
-			{EffectID::shipShieldTransferRangeMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[337]},
-			}},
-			{EffectID::logisticSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[338]},
-			}},
-			{EffectID::logisticSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[339]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipHybridOptimal1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[340]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipProjectileOptimal1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[341]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipLaserOptimal1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[342]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipProjectileFallOff1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[343]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipHybridDmg2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[344]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipLaserDmg2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[345]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipProjectileTracking2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[346]},
-			}},
-			{EffectID::warshipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[347]},
-			}},
-			{EffectID::warshipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[348]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipHybridFallOff1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[349]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipHeavyMissileFlightTime1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[350]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipLightMissileFlightTime1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[351]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipDroneControlRange1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[352]},
-			}},
-			{EffectID::projectileFiredForEntities, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::eliteBonusHeavyGunshipProjectileDmg2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[353]},
-			}},
-			{EffectID::shipProjectileTrackingMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[354]},
-			}},
-			{EffectID::controlTowerAmarrLaserDMGBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[355]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusBC1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[356]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusBC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[357]},
-			}},
-			{EffectID::structureUnanchorForced, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::controlTowerAmarrLaserOptimalBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[358]},
-			}},
-			{EffectID::controlTowerSiloCapacityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[359]},
-			}},
-			{EffectID::controlTowerMinmatarProjectileOptimalBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[360]},
-			}},
-			{EffectID::controlTowerMinmatarProjectileFallOffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[361]},
-			}},
-			{EffectID::controlTowerMinmatarProjectileRofBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[362]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusDF2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[363]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusDF1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[364]},
-			}},
-			{EffectID::controlTowerGallenteHybridDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[365]},
-			}},
-			{EffectID::controlTowerTrackingArrayHybridOptimalBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[366]},
-			}},
-			{EffectID::controlTowerTrackingArrayLaserOptimalBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[367]},
-			}},
-			{EffectID::controlTowerTrackingArrayProjectileOptimalBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[368]},
-			}},
-			{EffectID::controlTowerTrackingArrayProjectileTrackingBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[369]},
-			}},
-			{EffectID::controlTowerTrackingArrayHybridTrackingBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[370]},
-			}},
-			{EffectID::controlTowerTrackingArrayLaserTrackingBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[371]},
-			}},
-			{EffectID::massFactor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[372]},
-			}},
-			{EffectID::ammoInfluenceEntityFlyRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[373]},
-			}},
-			{EffectID::accerationControlSkillAbMwdSpeedBoost, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[70]},{modifiers[374]},
-			}},
-			{EffectID::eliteBonusGunshipLaserDamage2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[375]},
-			}},
-			{EffectID::eliteBonusLogisticEnergyTransferCapNeed1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[376]},
-			}},
-			{EffectID::shipEnergyTransferRange1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[377]},
-			}},
-			{EffectID::eliteBonusLogisticEnergyTransferCapNeed2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[378]},
-			}},
-			{EffectID::shipEnergyTransferRange2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[379]},
-			}},
-			{EffectID::structureStealthEmitterArraySigDecrease, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[380]},
-			}},
-			{EffectID::miningBargeSkillLevelPostMulShipBonusORE2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[381]},
-			}},
-			{EffectID::iceHarvestCycleTimeModulesRequiringIceHarvesting, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[382]},
-			}},
-			{EffectID::iceHarvestCycleTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[383]},
-			}},
-			{EffectID::controlTowerCaldariEwTargetSwitchDelayBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[384]},
-			}},
-			{EffectID::targetAttackForStructures, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::miningInfoMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[385]},
-			}},
-			{EffectID::controlTowerCaldariMissileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[386]},
-			}},
-			{EffectID::controlTowerCaldariMissileRofBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[387]},
-			}},
-			{EffectID::crystalMiningamountInfo2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[388]},
-			}},
-			{EffectID::shipEnergyDrainAmountAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[389]},
-			}},
-			{EffectID::shipBonusPirateSmallHybridDmg, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[390]},
-			}},
-			{EffectID::shipEnergyVampireTransferAmountBonusAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[391]},
-			}},
-			{EffectID::shipEnergyVampireTransferAmountBonusAc, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[392]},
-			}},
-			{EffectID::shipStasisWebRangeBonusMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[393]},
-			}},
-			{EffectID::shipStasisWebRangeBonusMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[394]},
-			}},
-			{EffectID::shipProjectileTrackingGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[395]},
-			}},
-			{EffectID::shipMissileVelocityPirateFactionFrigate, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[396]},
-			}},
-			{EffectID::shipProjectileRofPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[397]},
-			}},
-			{EffectID::shipHybridDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[398]},
-			}},
-			{EffectID::shipMissileVelocityPirateFactionLight, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[399]},
-			}},
-			{EffectID::shipProjectileRofPirateBattleship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[400]},
-			}},
-			{EffectID::shipHybridDmgPirateBattleship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[401]},
-			}},
-			{EffectID::smugglingModifier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[402]},
-			}},
-			{EffectID::setBonusBloodraider, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[403]},
-			}},
-			{EffectID::setBonusBloodraiderNosferatu, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[404]},
-			}},
-			{EffectID::blackMarketTradingSkillBoostContrabandDetectionChanceBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[405]},
-			}},
-			{EffectID::skillBoostContrabandDetectionChanceBonusEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[406]},
-			}},
-			{EffectID::setBonusSerpentis, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[407]},
-			}},
-			{EffectID::setBonusSerpentis2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[408]},
-			}},
-			{EffectID::interceptor2HybridTracking, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[409]},
-			}},
-			{EffectID::interceptor2LaserTracking, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[410]},
-			}},
-			{EffectID::interceptors2SkillLevelPreMulEliteBonusInterceptorShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[411]},
-			}},
-			{EffectID::structuralAnalysisEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[412]},
-			}},
-			{EffectID::eliteIndustrial1SkillLevelPreMulEliteBonusEliteIndustrialShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[413]},
-			}},
-			{EffectID::eliteIndustrial2SkillLevelPreMulEliteBonusEliteIndustrialShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[414]},
-			}},
-			{EffectID::amarrIndustrialSkillLevelPreMulShipBonusAI22Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[415]},
-			}},
-			{EffectID::caldariIndustrialSkillLevelPreMulShipBonusCI2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[416]},
-			}},
-			{EffectID::gallenteIndustrialSkillLevelPreMulShipBonusGI2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[417]},
-			}},
-			{EffectID::minmatarIndustrialSkillLevelPreMulShipBonusMI2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[418]},
-			}},
-			{EffectID::ewSkillScanStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[419]},{modifiers[420]},{modifiers[421]},{modifiers[422]},
-			}},
-			{EffectID::ewSkillScanStrengthBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[423]},
-			}},
-			{EffectID::propulsionSkillPropulsionStrengthBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[424]},
-			}},
-			{EffectID::ewSkillRsdCapNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[425]},
-			}},
-			{EffectID::ewSkillTdCapNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[426]},
-			}},
-			{EffectID::ewSkillTpCapNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[427]},
-			}},
-			{EffectID::ewSkillEwCapNeedSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[428]},
-			}},
-			{EffectID::ewSkillTargetPaintingStrengthBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[429]},
-			}},
-			{EffectID::leadershipCpuBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[430]},
-			}},
-			{EffectID::shieldBoostAmplifierPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[431]},
-			}},
-			{EffectID::setBonusGuristas, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[432]},
-			}},
-			{EffectID::covertOpsSkillLevelPreMulEliteBonusCoverOpsShip2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[433]},
-			}},
-			{EffectID::systemScanDurationSkillAstrometrics, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[434]},
-			}},
-			{EffectID::propulsionSkillCapNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[435]},
-			}},
-			{EffectID::shipBonusHybridOptimalCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[436]},
-			}},
-			{EffectID::caldariShipEwStrengthCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[437]},{modifiers[438]},{modifiers[439]},{modifiers[440]},
-			}},
-			{EffectID::caldariShipEwOptimalRangeCB3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[441]},
-			}},
-			{EffectID::caldariShipEwOptimalRangeCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[442]},
-			}},
-			{EffectID::caldariShipEwCapacitorNeedCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[443]},
-			}},
-			{EffectID::ewSkillRsdMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[444]},
-			}},
-			{EffectID::ewSkillTpMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[445]},
-			}},
-			{EffectID::ewSkillTdMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[446]},
-			}},
-			{EffectID::ewSkillRsdFallOffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[447]},
-			}},
-			{EffectID::ewSkillTpFallOffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[448]},
-			}},
-			{EffectID::ewSkillTdFallOffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[449]},
-			}},
-			{EffectID::ewSkillEwMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[450]},
-			}},
-			{EffectID::ewSkillEwFallOffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[451]},
-			}},
-			{EffectID::missileSkillAoeVelocityBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[452]},
-			}},
-			{EffectID::missileSkillAoeCloudSizeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[453]},
-			}},
-			{EffectID::missileSkillAoeCloudSizeBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[454]},
-			}},
-			{EffectID::contrabandMasking, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[242]},{modifiers[406]},
-			}},
-			{EffectID::flagshipmultiRelayEffect, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[455]},
-			}},
-			{EffectID::shieldOperationSkillBoostCapacitorNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[456]},
-			}},
-			{EffectID::shieldOperationSkillBoostCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[457]},
-			}},
-			{EffectID::ewTargetPaint, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[458]},
-			}},
-			{EffectID::ewSkillTargetPaintingStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[459]},
-			}},
-			{EffectID::minmatarShipEwTargetPainterMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[460]},
-			}},
-			{EffectID::angelsetbonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[461]},
-			}},
-			{EffectID::setBonusSansha, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[462]},
-			}},
-			{EffectID::jumpDriveSkillsRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[463]},
-			}},
-			{EffectID::jumpDriveSkillsRangeBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[464]},
-			}},
-			{EffectID::capitalTurretSkillLaserDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[465]},
-			}},
-			{EffectID::capitalTurretSkillProjectileDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[466]},
-			}},
-			{EffectID::capitalTurretSkillHybridDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[467]},
-			}},
-			{EffectID::capitalLauncherSkillCitadelKineticDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[468]},
-			}},
-			{EffectID::missileSkillAoeVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[469]},
-			}},
-			{EffectID::capitalLauncherSkillCitadelEmDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[470]},
-			}},
-			{EffectID::capitalLauncherSkillCitadelExplosiveDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[471]},
-			}},
-			{EffectID::capitalLauncherSkillCitadelThermalDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[472]},
-			}},
-			{EffectID::missileSkillWarheadUpgradesEmDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[473]},
-			}},
-			{EffectID::missileSkillWarheadUpgradesExplosiveDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[474]},
-			}},
-			{EffectID::missileSkillWarheadUpgradesKineticDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[475]},
-			}},
-			{EffectID::skillAdvancedSpaceshipAgilityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[476]},
-			}},
-			{EffectID::shipAdvancedSpaceshipCommandAgilityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[477]},
-			}},
-			{EffectID::skillCapitalShipsAdvancedAgility, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[478]},
-			}},
-			{EffectID::shipCapitalAgilityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[479]},
-			}},
-			{EffectID::capitalShieldOperationSkillCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[480]},
-			}},
-			{EffectID::capitalRepairSystemsSkillDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[481]},
-			}},
-			{EffectID::skillAdvancedWeaponUpgradesPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[482]},{modifiers[483]},
-			}},
-			{EffectID::armoredCommandMindlink, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[484]},{modifiers[485]},{modifiers[486]},{modifiers[487]},{modifiers[488]},
-			}},
-			{EffectID::skirmishCommandMindlink, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[489]},{modifiers[490]},{modifiers[491]},{modifiers[492]},{modifiers[493]},
-			}},
-			{EffectID::shieldCommandMindlink, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[494]},{modifiers[495]},{modifiers[496]},{modifiers[497]},{modifiers[498]},
-			}},
-			{EffectID::informationCommandMindlink, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[499]},{modifiers[500]},{modifiers[501]},{modifiers[502]},{modifiers[503]},
-			}},
-			{EffectID::skillSiegeModuleConsumptionQuantityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[504]},
-			}},
-			{EffectID::skillCynosuralSiegeConsumQuantityBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[505]},
-			}},
-			{EffectID::missileSkillWarheadUpgradesThermalDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[506]},
-			}},
-			{EffectID::freighterA1SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[507]},
-			}},
-			{EffectID::freighterA2SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[508]},
-			}},
-			{EffectID::freighterC1SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[509]},
-			}},
-			{EffectID::freighterC2SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[510]},
-			}},
-			{EffectID::freighterG1SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[511]},
-			}},
-			{EffectID::freighterG2SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[512]},
-			}},
-			{EffectID::freighterM1SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[513]},
-			}},
-			{EffectID::freighterM2SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[514]},
-			}},
-			{EffectID::freighterCargoBonusA2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[515]},
-			}},
-			{EffectID::freighterCargoBonusC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[516]},
-			}},
-			{EffectID::freighterCargoBonusG2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[517]},
-			}},
-			{EffectID::freighterCargoBonusM2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[518]},
-			}},
-			{EffectID::freighterMaxVelocityBonusA1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[519]},
-			}},
-			{EffectID::freighterMaxVelocityBonusC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[520]},
-			}},
-			{EffectID::freighterMaxVelocityBonusG1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[521]},
-			}},
-			{EffectID::freighterMaxVelocityBonusM1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[522]},
-			}},
-			{EffectID::shieldBoostAmplifier, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[431]},{modifiers[523]},
-			}},
-			{EffectID::jumpDriveSkillsCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[524]},
-			}},
-			{EffectID::jumpDriveSkillsCapacitorNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[525]},
-			}},
-			{EffectID::droneDmgBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[526]},
-			}},
-			{EffectID::doHacking, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::missileSkillRapidLauncherRoF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[527]},
-			}},
-			{EffectID::missileSkillMissileProjectileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[528]},
-			}},
-			{EffectID::missileSkillMissileProjectileVelocityBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[529]},
-			}},
-			{EffectID::shipFalloffBonusGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[530]},
-			}},
-			{EffectID::shipArmorEMResistanceAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[531]},
-			}},
-			{EffectID::shipArmorTHResistanceAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[532]},
-			}},
-			{EffectID::shipArmorKNResistanceAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[533]},
-			}},
-			{EffectID::shipArmorEXResistanceAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[534]},
-			}},
-			{EffectID::shipShieldEMResistanceCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[535]},
-			}},
-			{EffectID::shipShieldThermalResistanceCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[536]},
-			}},
-			{EffectID::shipShieldKineticResistanceCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[537]},
-			}},
-			{EffectID::shipShieldExplosiveResistanceCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[538]},
-			}},
-			{EffectID::shipShieldEMResistanceCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[539]},
-			}},
-			{EffectID::shipShieldThermalResistanceCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[540]},
-			}},
-			{EffectID::shipShieldKineticResistanceCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[541]},
-			}},
-			{EffectID::shipShieldExplosiveResistanceCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[542]},
-			}},
-			{EffectID::eliteBargeSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[543]},
-			}},
-			{EffectID::eliteBargeSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[544]},
-			}},
-			{EffectID::miningForemanMindlink, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[545]},{modifiers[546]},{modifiers[547]},{modifiers[548]},{modifiers[549]},
-			}},
-			{EffectID::miningBargeSkillLevelPostMulShipBonusORE3Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[550]},
-			}},
-			{EffectID::selfRof, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[551]},
-			}},
-			{EffectID::shipMissileEMDamageCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[552]},
-			}},
-			{EffectID::shipMissileThermalDamageCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[553]},
-			}},
-			{EffectID::shipMissileExplosiveDamageCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[554]},
-			}},
-			{EffectID::miningYieldMultiplyPercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[125]},
-			}},
-			{EffectID::shipCruiseLauncherROFBonus2CB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[555]},
-			}},
-			{EffectID::shipSiegeLauncherROFBonus2CB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[556]},
-			}},
-			{EffectID::miningUpgradeCPUReductionBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[557]},
-			}},
-			{EffectID::eliteBargeBonusIceHarvestingCycleTimeBarge3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[558]},
-			}},
-			{EffectID::shieldCompensationSkillBoostHardeningBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[559]},
-			}},
-			{EffectID::reconShipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[560]},
-			}},
-			{EffectID::reconShipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[561]},
-			}},
-			{EffectID::eliteBonusVampireDrainAmount2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[562]},
-			}},
-			{EffectID::eliteReconBonusGravimetricStrength2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[563]},
-			}},
-			{EffectID::eliteReconBonusMagnetometricStrength2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[564]},
-			}},
-			{EffectID::eliteReconBonusRadarStrength2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[565]},
-			}},
-			{EffectID::eliteReconBonusLadarStrength2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[566]},
-			}},
-			{EffectID::eliteReconStasisWebBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[567]},
-			}},
-			{EffectID::eliteReconScramblerRangeBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[568]},
-			}},
-			{EffectID::ammoEMResistOther, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[569]},
-			}},
-			{EffectID::armorReinforcerMassAdd, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[570]},
-			}},
-			{EffectID::signatureRadiusBonus, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[571]},
-			}},
-			{EffectID::shipBonusShieldTransferCapneed1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[572]},
-			}},
-			{EffectID::shipBonusRemoteArmorRepairCapNeedGC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[573]},
-			}},
-			{EffectID::caldariShipEwCapacitorNeedCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[574]},
-			}},
-			{EffectID::droneRangeBonusAdd, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[165]},
-			}},
-			{EffectID::cynosuralDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[575]},
-			}},
-			{EffectID::propulsionDroneJammingStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[576]},
-			}},
-			{EffectID::droneMaxVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[577]},
-			}},
-			{EffectID::droneMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[578]},
-			}},
-			{EffectID::droneDurabilityShieldCapBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[579]},
-			}},
-			{EffectID::droneDurabilityArmorHPBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[580]},
-			}},
-			{EffectID::droneDurabilityHPBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[581]},
-			}},
-			{EffectID::damageRepairedSkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[582]},
-			}},
-			{EffectID::repairDroneShieldBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[583]},
-			}},
-			{EffectID::repairDroneArmorDamageAmountBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[584]},
-			}},
-			{EffectID::addToSignatureRadius2, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[585]},
-			}},
-			{EffectID::modifyArmorResonancePostPercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[586]},{modifiers[587]},{modifiers[588]},{modifiers[589]},
-			}},
-			{EffectID::modifyShieldResonancePostPercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[590]},{modifiers[591]},{modifiers[592]},{modifiers[593]},
-			}},
-			{EffectID::emShieldCompensationHardeningBonusGroupShieldAmp, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[594]},
-			}},
-			{EffectID::explosiveShieldCompensationHardeningBonusGroupShieldAmp, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[595]},
-			}},
-			{EffectID::kineticShieldCompensationHardeningBonusGroupShieldAmp, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[596]},
-			}},
-			{EffectID::thermalShieldCompensationHardeningBonusGroupShieldAmp, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[597]},
-			}},
-			{EffectID::emArmorCompensationHardeningBonusGroupArmorCoating, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[598]},
-			}},
-			{EffectID::explosiveArmorCompensationHardeningBonusGroupArmorCoating, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[599]},
-			}},
-			{EffectID::kineticArmorCompensationHardeningBonusGroupArmorCoating, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[600]},
-			}},
-			{EffectID::thermicArmorCompensationHardeningBonusGroupArmorCoating, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[601]},
-			}},
-			{EffectID::emArmorCompensationHardeningBonusGroupEnergized, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[602]},
-			}},
-			{EffectID::explosiveArmorCompensationHardeningBonusGroupEnergized, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[603]},
-			}},
-			{EffectID::kineticArmorCompensationHardeningBonusGroupEnergized, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[604]},
-			}},
-			{EffectID::thermicArmorCompensationHardeningBonusGroupEnergized, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[605]},
-			}},
-			{EffectID::smallHybridMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[606]},
-			}},
-			{EffectID::smallEnergyMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[607]},
-			}},
-			{EffectID::smallProjectileMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[608]},
-			}},
-			{EffectID::energyTransferArrayMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[609]},
-			}},
-			{EffectID::shieldTransporterMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[610]},{modifiers[611]},
-			}},
-			{EffectID::armorRepairProjectorMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[612]},{modifiers[613]},
-			}},
-			{EffectID::minmatarShipEwTargetPainterMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[614]},
-			}},
-			{EffectID::droneDamageBonusRequringDrones, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[615]},
-			}},
-			{EffectID::jumpPortalGeneration, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[616]},{modifiers[617]},
-			}},
-			{EffectID::eliteBonusCommandShipProjectileDamageCS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[618]},
-			}},
-			{EffectID::eliteBonusCommandShipProjectileFalloffCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[619]},
-			}},
-			{EffectID::eliteBonusCommandShipLaserDamageCS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[620]},
-			}},
-			{EffectID::eliteBonusCommandShipLaserROFCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[621]},
-			}},
-			{EffectID::eliteBonusCommandShipHybridFalloffCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[622]},
-			}},
-			{EffectID::eliteBonusCommandShipHybridOptimalCS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[623]},
-			}},
-			{EffectID::shipBonusDroneHitpointsGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[624]},{modifiers[625]},{modifiers[626]},
-			}},
-			{EffectID::shipBonusDroneHitpointsFixedAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[627]},{modifiers[628]},{modifiers[629]},
-			}},
-			{EffectID::shipBonusDroneHitpointsGB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[630]},{modifiers[631]},{modifiers[632]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierGB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[633]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[634]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[635]},
-			}},
-			{EffectID::eliteBonusInterdictorsMissileKineticDamage1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[636]},
-			}},
-			{EffectID::eliteBonusInterdictorsProjectileFalloff1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[637]},
-			}},
-			{EffectID::shipBonusPirateFrigateProjDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[638]},
-			}},
-			{EffectID::scanStrengthBonusPercentActivate, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},
-			}},
-			{EffectID::scanStrengthBonusPercentOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},
-			}},
-			{EffectID::scanStrengthTargetPercentBonus, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[643]},{modifiers[644]},{modifiers[645]},{modifiers[646]},
-			}},
-			{EffectID::shipBonusDroneMiningAmountAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[647]},
-			}},
-			{EffectID::shipBonusDroneMiningAmountGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[648]},
-			}},
-			{EffectID::commandshipMultiRelayEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[455]},{modifiers[649]},
-			}},
-			{EffectID::covertOpsAndReconOpsCloakModuleDelayBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[650]},
-			}},
-			{EffectID::covertOpsStealthBomberTargettingDelayBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[651]},
-			}},
-			{EffectID::tractorBeamCan, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::modifyArmorResonancePassivePostPercentPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[652]},{modifiers[653]},{modifiers[654]},{modifiers[655]},
-			}},
-			{EffectID::modifyShieldResonancePassivePostPercentPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[656]},{modifiers[657]},{modifiers[658]},{modifiers[659]},
-			}},
-			{EffectID::scanStrengthBonusPercentPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},
-			}},
-			{EffectID::damageControl, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[660]},{modifiers[661]},{modifiers[662]},{modifiers[663]},{modifiers[664]},{modifiers[665]},{modifiers[666]},{modifiers[667]},{modifiers[668]},{modifiers[669]},{modifiers[670]},{modifiers[671]},
-			}},
-			{EffectID::eliteReconBonusEnergyNeutAmount2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[672]},
-			}},
-			{EffectID::skillADDmaxJumpClones, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[673]},
-			}},
-			{EffectID::disallowOffensiveActChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[674]},
-			}},
-			{EffectID::capitalRemoteArmorRepairerCapNeedBonusSkill, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[675]},
-			}},
-			{EffectID::capitalRemoteShieldTransferCapNeedBonusSkill, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[676]},
-			}},
-			{EffectID::capitalRemoteEnergyTransferCapNeedBonusSkill, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[677]},
-			}},
-			{EffectID::skillSuperWeaponDmgBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[678]},{modifiers[679]},{modifiers[680]},{modifiers[681]},
-			}},
-			{EffectID::cloneVatMaxJumpCloneBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[682]},
-			}},
-			{EffectID::snowBallLaunching, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::implantVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[683]},
-			}},
-			{EffectID::skillInterdictorEliteBonus1SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[684]},
-			}},
-			{EffectID::skillInterdictorEliteBonus2SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[685]},
-			}},
-			{EffectID::energyManagementSkillBoostCapacitorCapacityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[686]},
-			}},
-			{EffectID::energyManagementCapacitorBonusPostPercentCapacityLocationShipGroupCapacitorCapacityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[687]},
-			}},
-			{EffectID::minerCpuUsageMultiplyPercent2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[688]},
-			}},
-			{EffectID::iceMinerCpuUsagePercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[689]},
-			}},
-			{EffectID::commandShipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[690]},
-			}},
-			{EffectID::commandShipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[691]},
-			}},
-			{EffectID::miningUpgradeCPUPenaltyReductionModulesRequiringMiningUpgradePercent, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[692]},
-			}},
-			{EffectID::shipBonusArmorResistAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[693]},{modifiers[694]},{modifiers[695]},{modifiers[696]},
-			}},
-			{EffectID::iceHarvestCycleTimeModulesRequiringIceHarvestingOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[382]},
-			}},
-			{EffectID::warpScrambleForStructure, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[8]},
-			}},
-			{EffectID::implantArmorHpBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[697]},
-			}},
-			{EffectID::implantVelocityBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[698]},
-			}},
-			{EffectID::shipBonusRemoteTrackingComputerFalloffMC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[699]},
-			}},
-			{EffectID::shipBonusRemoteTrackingComputerFalloffGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[700]},
-			}},
-			{EffectID::ewSkillEcmBurstRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[701]},
-			}},
-			{EffectID::ewSkillEcmBurstCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[702]},
-			}},
-			{EffectID::shipHTTrackingBonusGB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[703]},
-			}},
-			{EffectID::shipBonusHybridTrackingGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[704]},
-			}},
-			{EffectID::eliteBonusAssaultShipMissileVelocity1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[705]},
-			}},
-			{EffectID::neurotoxinRecoverySkillBoostChanceBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[706]},
-			}},
-			{EffectID::modifyBoosterEffectChanceWithBoosterChanceBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[707]},{modifiers[708]},{modifiers[709]},{modifiers[710]},{modifiers[711]},
-			}},
-			{EffectID::naniteControlSkillBoostBoosterAttributeModifier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[712]},
-			}},
-			{EffectID::shipBonusEmShieldResistanceCB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[713]},
-			}},
-			{EffectID::shipBonusExplosiveShieldResistanceCB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[714]},
-			}},
-			{EffectID::shipBonusKineticShieldResistanceCB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[715]},
-			}},
-			{EffectID::shipBonusThermicShieldResistanceCB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[716]},
-			}},
-			{EffectID::eliteBonusGunshipProjectileDamage1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[717]},
-			}},
-			{EffectID::eliteBonusGunshipProjectileDamage2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[718]},
-			}},
-			{EffectID::increaseSignatureRadiusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[380]},
-			}},
-			{EffectID::scanResolutionMultiplierOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[269]},
-			}},
-			{EffectID::maxTargetRangeBonus, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[167]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipHeavyMissileLaunhcerRof2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[719]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipHeavyAssaultMissileLaunhcerRof2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[720]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipAssaultMissileLaunhcerRof2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[721]},
-			}},
-			{EffectID::scanStrengthBonusSkillLevelIncrease, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[722]},
-			}},
-			{EffectID::rigSlot, MetaInfo::Effect::Category::generic, false, false, {
-				
-			}},
-			{EffectID::sensorBoosterActivePercentage, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[167]},{modifiers[232]},{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},
-			}},
-			{EffectID::capNeedBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[723]},
-			}},
-			{EffectID::capNeedBonusEffectHybrids, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[724]},
-			}},
-			{EffectID::cpuNeedBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[725]},
-			}},
-			{EffectID::cpuNeedBonusEffectHybrid, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[726]},
-			}},
-			{EffectID::cpuNeedBonusEffectProjectile, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[727]},
-			}},
-			{EffectID::falloffBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[728]},
-			}},
-			{EffectID::falloffBonusEffectHybrids, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[729]},
-			}},
-			{EffectID::falloffBonusEffectProjectiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[730]},
-			}},
-			{EffectID::maxRangeBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[731]},
-			}},
-			{EffectID::maxRangeBonusEffectHybrids, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[732]},
-			}},
-			{EffectID::maxRangeBonusEffectProjectiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[733]},
-			}},
-			{EffectID::drawbackPowerNeedLasers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[734]},
-			}},
-			{EffectID::drawbackPowerNeedHybrids, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[735]},
-			}},
-			{EffectID::drawbackPowerNeedProjectiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[736]},
-			}},
-			{EffectID::drawbackArmorHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[737]},
-			}},
-			{EffectID::drawbackCPUOutput, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[738]},
-			}},
-			{EffectID::drawbackCPUNeedLaunchers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[739]},
-			}},
-			{EffectID::drawbackSigRad, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[740]},
-			}},
-			{EffectID::drawbackMaxVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[741]},
-			}},
-			{EffectID::drawbackShieldCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[742]},
-			}},
-			{EffectID::rigDrawbackSkillEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[743]},
-			}},
-			{EffectID::miningClouds, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::gasCloudHarvestingMaxGroupSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[744]},
-			}},
-			{EffectID::shipECMScanStrengthBonusCF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[745]},{modifiers[746]},{modifiers[747]},{modifiers[748]},
-			}},
-			{EffectID::boosterArmorHpPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[749]},
-			}},
-			{EffectID::boosterArmorRepairAmountPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[750]},
-			}},
-			{EffectID::boosterShieldCapacityPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[751]},
-			}},
-			{EffectID::boosterTurretOptimalRangePenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[752]},
-			}},
-			{EffectID::boosterTurretFalloffPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[753]},
-			}},
-			{EffectID::boosterCapacitorCapacityPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[754]},
-			}},
-			{EffectID::boosterMaxVelocityPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[755]},
-			}},
-			{EffectID::boosterTurretTrackingPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[756]},
-			}},
-			{EffectID::boosterMissileVelocityPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[757]},
-			}},
-			{EffectID::boosterMissileExplosionVelocityPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[758]},
-			}},
-			{EffectID::shipBonusECMStrengthBonusCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[759]},{modifiers[760]},{modifiers[761]},{modifiers[762]},
-			}},
-			{EffectID::salvaging, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::boosterModifyBoosterArmorPenalties, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[763]},{modifiers[764]},
-			}},
-			{EffectID::boosterModifyBoosterShieldPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[765]},{modifiers[766]},
-			}},
-			{EffectID::boosterModifyBoosterMaxVelocityAndCapacitorPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[767]},{modifiers[768]},
-			}},
-			{EffectID::boosterModifyBoosterMissilePenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[769]},{modifiers[770]},{modifiers[771]},
-			}},
-			{EffectID::boosterModifyBoosterTurretPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[772]},{modifiers[773]},{modifiers[774]},
-			}},
-			{EffectID::boosterMissileExplosionCloudPenaltyFixed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[775]},
-			}},
-			{EffectID::modifyArmorResonancePostPercentPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[586]},{modifiers[587]},{modifiers[588]},{modifiers[589]},
-			}},
-			{EffectID::salvagingAccessDifficultyBonusEffectPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[776]},
-			}},
-			{EffectID::modifyShieldResonancePostPercentPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[590]},{modifiers[591]},{modifiers[592]},{modifiers[593]},
-			}},
-			{EffectID::massReductionBonusPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[777]},
-			}},
-			{EffectID::projectileWeaponSpeedMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[21]},
-			}},
-			{EffectID::projectileWeaponDamageMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[23]},
-			}},
-			{EffectID::missileLauncherSpeedMultiplierPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[276]},
-			}},
-			{EffectID::energyWeaponSpeedMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[25]},
-			}},
-			{EffectID::hybridWeaponDamageMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[24]},
-			}},
-			{EffectID::energyWeaponDamageMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[22]},
-			}},
-			{EffectID::hybridWeaponSpeedMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[26]},
-			}},
-			{EffectID::shipBonusLargeEnergyWeaponDamageAB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[778]},
-			}},
-			{EffectID::shipMissileAssaultMissileVelocityBonusCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[779]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipAssaultMissileFlightTime1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[780]},
-			}},
-			{EffectID::caldariShipECMBurstOptimalRangeCB3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[781]},
-			}},
-			{EffectID::maxScanDeviationSelfSkillModifier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[782]},
-			}},
-			{EffectID::armorHPBonusAdd, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[783]},
-			}},
-			{EffectID::skillBoostTrackingSpeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[784]},
-			}},
-			{EffectID::trackingSpeedBonusPassiveRequiringGunneryTrackingSpeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[785]},
-			}},
-			{EffectID::accessDifficultyBonusModifierRequiringArchaelogy, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[786]},
-			}},
-			{EffectID::accessDifficultyBonusModifierRequiringHacking, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[787]},
-			}},
-			{EffectID::durationBonusForGroupAfterburner, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[788]},
-			}},
-			{EffectID::missileDMGBonusPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[258]},
-			}},
-			{EffectID::maxTargetingRangeBonusPremulPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[31]},
-			}},
-			{EffectID::cloakingTargetingDelayBonusLRSMCloakingPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[789]},
-			}},
-			{EffectID::cynosuralGeneration, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[616]},{modifiers[617]},{modifiers[790]},
-			}},
-			{EffectID::cloneJumpAccepting, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[616]},{modifiers[617]},{modifiers[790]},
-			}},
-			{EffectID::velocityBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[683]},
-			}},
-			{EffectID::biologyTimeBonusFixed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[791]},
-			}},
-			{EffectID::sentryDroneDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[792]},
-			}},
-			{EffectID::armorDamageAmountBonusCapitalArmorRepairers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[793]},
-			}},
-			{EffectID::missileVelocityBonusDefender, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[794]},
-			}},
-			{EffectID::missileEMDmgBonusCruise3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[795]},
-			}},
-			{EffectID::missileExplosiveDmgBonusCruise3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[796]},
-			}},
-			{EffectID::missileKineticDmgBonusCruise3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[797]},
-			}},
-			{EffectID::missileThermalDmgBonusCruise3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[798]},
-			}},
-			{EffectID::gasHarvestingCycleTimeModulesRequiringGasCloudHarvesting, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[799]},
-			}},
-			{EffectID::setMaxLockedTargets, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[800]},
-			}},
-			{EffectID::missileEMDmgBonusRocket, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[801]},
-			}},
-			{EffectID::missileExplosiveDmgBonusRocket, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[802]},
-			}},
-			{EffectID::missileKineticDmgBonusRocket, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[803]},
-			}},
-			{EffectID::missileThermalDmgBonusRocket, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[804]},
-			}},
-			{EffectID::missileEMDmgBonusStandard, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[805]},
-			}},
-			{EffectID::missileExplosiveDmgBonusStandard, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[806]},
-			}},
-			{EffectID::missileKineticDmgBonusStandard, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[807]},
-			}},
-			{EffectID::missileThermalDmgBonusStandard, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[808]},
-			}},
-			{EffectID::missileEMDmgBonusHeavy, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[809]},
-			}},
-			{EffectID::missileExplosiveDmgBonusHeavy, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[810]},
-			}},
-			{EffectID::missileKineticDmgBonusHeavy, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[811]},
-			}},
-			{EffectID::missileThermalDmgBonusHeavy, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[812]},
-			}},
-			{EffectID::missileEMDmgBonusHAM, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[813]},
-			}},
-			{EffectID::missileExplosiveDmgBonusHAM, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[814]},
-			}},
-			{EffectID::missileKineticDmgBonusHAM, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[815]},
-			}},
-			{EffectID::missileThermalDmgBonusHAM, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[816]},
-			}},
-			{EffectID::missileEMDmgBonusTorpedo, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[817]},
-			}},
-			{EffectID::missileExplosiveDmgBonusTorpedo, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[818]},
-			}},
-			{EffectID::missileKineticDmgBonusTorpedo, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[819]},
-			}},
-			{EffectID::missileThermalDmgBonusTorpedo, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[820]},
-			}},
-			{EffectID::dataminerModuleDurationReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[821]},
-			}},
-			{EffectID::posStructureControlAmountBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[822]},
-			}},
-			{EffectID::skillTriageModuleConsumptionQuantityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[823]},
-			}},
-			{EffectID::bombLaunching, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::skillRemoteECMDurationBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[824]},
-			}},
-			{EffectID::tskillRemoteHullRepairSystemsCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[825]},
-			}},
-			{EffectID::skillCapitalRemoteHullRepairSystemsCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[826]},
-			}},
-			{EffectID::skillRemoteECMDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[827]},{modifiers[828]},{modifiers[829]},{modifiers[830]},{modifiers[831]},
-			}},
-			{EffectID::overloadRofBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[832]},
-			}},
-			{EffectID::overloadSelfDurationBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[833]},
-			}},
-			{EffectID::eliteBonusCoverOpsBombExplosiveDmg1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[834]},
-			}},
-			{EffectID::overloadSelfDamageBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[835]},
-			}},
-			{EffectID::eliteBonusCoverOpsBombKineticDmg1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[836]},
-			}},
-			{EffectID::eliteBonusCoverOpsBombThermalDmg1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[837]},
-			}},
-			{EffectID::eliteBonusCoverOpsBombEmDmg1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[838]},
-			}},
-			{EffectID::overloadSelfEmHardeningBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[839]},
-			}},
-			{EffectID::overloadSelfThermalHardeningBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[840]},
-			}},
-			{EffectID::overloadSelfExplosiveHardeningBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[841]},
-			}},
-			{EffectID::overloadSelfKineticHardeningBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[842]},
-			}},
-			{EffectID::overloadSelfHardeningInvulnerabilityBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[839]},{modifiers[840]},{modifiers[841]},{modifiers[842]},
-			}},
-			{EffectID::skillBombDeploymentModuleReactivationDelayBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[843]},
-			}},
-			{EffectID::modifyMaxVelocityOfShipPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[214]},
-			}},
-			{EffectID::structureHPMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[17]},
-			}},
-			{EffectID::heatDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[844]},
-			}},
-			{EffectID::controlTowerGenericHullResistanceBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[845]},{modifiers[846]},{modifiers[847]},{modifiers[848]},{modifiers[849]},{modifiers[850]},{modifiers[851]},{modifiers[852]},{modifiers[853]},{modifiers[854]},{modifiers[855]},{modifiers[856]},{modifiers[857]},{modifiers[858]},{modifiers[859]},{modifiers[860]},{modifiers[861]},{modifiers[862]},{modifiers[863]},{modifiers[864]},{modifiers[865]},{modifiers[866]},{modifiers[867]},{modifiers[868]},{modifiers[869]},{modifiers[870]},{modifiers[871]},{modifiers[872]},{modifiers[873]},{modifiers[874]},{modifiers[875]},{modifiers[876]},{modifiers[877]},{modifiers[878]},{modifiers[879]},{modifiers[880]},{modifiers[881]},{modifiers[882]},{modifiers[883]},{modifiers[884]},{modifiers[885]},{modifiers[886]},{modifiers[887]},{modifiers[888]},{modifiers[889]},{modifiers[890]},{modifiers[891]},{modifiers[892]},
-			}},
-			{EffectID::shieldTransportCpuNeedBonusEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[893]},
-			}},
-			{EffectID::droneArmorDamageBonusEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[894]},
-			}},
-			{EffectID::droneShieldBonusBonusEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[895]},
-			}},
-			{EffectID::overloadSelfRangeBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[896]},
-			}},
-			{EffectID::overloadSelfSpeedBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[897]},
-			}},
-			{EffectID::overloadSelfECMStrenghtBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[898]},{modifiers[899]},{modifiers[900]},{modifiers[901]},
-			}},
-			{EffectID::overloadSelfECCMStrenghtBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[902]},{modifiers[903]},{modifiers[904]},{modifiers[905]},
-			}},
-			{EffectID::thermodynamicsSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[906]},
-			}},
-			{EffectID::thermodynamicsSkillDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[907]},
-			}},
-			{EffectID::overloadSelfArmorDamageAmountDurationBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[833]},{modifiers[908]},
-			}},
-			{EffectID::overloadSelfShieldBonusDurationBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[833]},{modifiers[909]},
-			}},
-			{EffectID::missileSkillFoFAoeCloudSizeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[910]},
-			}},
-			{EffectID::shipRocketExplosiveDmgAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[911]},
-			}},
-			{EffectID::shipRocketKineticDmgAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[912]},
-			}},
-			{EffectID::shipRocketThermalDmgAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[913]},
-			}},
-			{EffectID::shipRocketEmDmgAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[914]},
-			}},
-			{EffectID::eliteBonusGunshipArmorEmResistance1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[915]},
-			}},
-			{EffectID::eliteBonusGunshipArmorThermalResistance1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[916]},
-			}},
-			{EffectID::eliteBonusGunshipArmorKineticResistance1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[917]},
-			}},
-			{EffectID::eliteBonusGunshipArmorExplosiveResistance1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[918]},
-			}},
-			{EffectID::shipCapRecharge2AF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[919]},
-			}},
-			{EffectID::tacticalShieldManipulationBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[920]},
-			}},
-			{EffectID::shipCommandBonusEffectiveMultiplierOreCapital2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[921]},
-			}},
-			{EffectID::oreCapitalShipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[922]},
-			}},
-			{EffectID::oreCapitalShipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[923]},
-			}},
-			{EffectID::skillIndustrialReconfigurationConsumptionQuantityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[924]},
-			}},
-			{EffectID::shipConsumptionQuantityBonusIndustrialReconfigurationORECapital1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[925]},
-			}},
-			{EffectID::miningDirectorBonusCommandBonusEffective, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[926]},
-			}},
-			{EffectID::shipEnergyNeutralizerTransferAmountBonusAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[927]},
-			}},
-			{EffectID::shipEnergyNeutralizerTransferAmountBonusAC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[928]},
-			}},
-			{EffectID::shipEnergyNeutralizerTransferAmountBonusAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[929]},
-			}},
-			{EffectID::oreCapitalShipShieldTransferRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[930]},
-			}},
-			{EffectID::oreCapitalShipSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[931]},
-			}},
-			{EffectID::cloneVatMaxJumpCloneBonusSkillNew, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[932]},
-			}},
-			{EffectID::shipBonusORECapShipDroneDmgBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[933]},
-			}},
-			{EffectID::shipBonusORECapShipDroneArmorHPAndShieldHPAndHpBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[934]},{modifiers[935]},{modifiers[936]},
-			}},
-			{EffectID::oreCapitalShipSkillMultiplier4, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[937]},
-			}},
-			{EffectID::eliteBonusCommandShipArmorHP1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[938]},
-			}},
-			{EffectID::shipArmorEmResistanceMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[939]},
-			}},
-			{EffectID::shipArmorExplosiveResistanceMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[940]},
-			}},
-			{EffectID::shipArmorKineticResistanceMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[941]},
-			}},
-			{EffectID::shipArmorThermalResistanceMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[942]},
-			}},
-			{EffectID::eliteBonusHeavyInterdictorsProjectileFalloff1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[943]},
-			}},
-			{EffectID::heavyInterdictorsSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[944]},
-			}},
-			{EffectID::heavyInterdictorsSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[945]},
-			}},
-			{EffectID::eliteBonusHeavyInterdictorHeavyMissileVelocityBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[946]},
-			}},
-			{EffectID::eliteBonusHeavyInterdictorHeavyAssaultMissileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[947]},
-			}},
-			{EffectID::eliteBonusHeavyInterdictorLightMissileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[948]},
-			}},
-			{EffectID::electronicAttackShipsSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[949]},
-			}},
-			{EffectID::electronicAttackShipsSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[950]},
-			}},
-			{EffectID::shipRemoteSensorDampenerCapNeedGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[951]},
-			}},
-			{EffectID::eliteBonusElectronicAttackShipWarpScramblerMaxRange1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[952]},
-			}},
-			{EffectID::eliteBonusElectronicAttackShipECMOptimalRange1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[953]},
-			}},
-			{EffectID::eliteBonusElectronicAttackShipStasisWebMaxRange1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[954]},
-			}},
-			{EffectID::eliteBonusElectronicAttackShipWarpScramblerCapNeed2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[955]},
-			}},
-			{EffectID::eliteBonusElectronicAttackShipSignatureRadius2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[956]},
-			}},
-			{EffectID::implantHardwiringABcapacitorNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[166]},
-			}},
-			{EffectID::warpDisruptSphere, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::eliteBonusBlackOpsLargeEnergyTurretTracking1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[957]},
-			}},
-			{EffectID::eliteBonusBlackOpsCloakVelocity2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[958]},
-			}},
-			{EffectID::blackOpsSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[959]},
-			}},
-			{EffectID::blackOpsSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[960]},
-			}},
-			{EffectID::eliteBonusBlackOpsMaxVelocity1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[961]},
-			}},
-			{EffectID::violatorsSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[962]},
-			}},
-			{EffectID::violatorsSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[963]},
-			}},
-			{EffectID::eliteBonusViolatorsLargeEnergyTurretDamageRole1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[964]},
-			}},
-			{EffectID::eliteBonusViolatorsLargeHybridTurretDamageRole1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[965]},
-			}},
-			{EffectID::eliteBonusViolatorsLargeProjectileTurretDamageRole1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[966]},
-			}},
-			{EffectID::eliteBonusViolatorsLargeHybridTurretTracking1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[967]},
-			}},
-			{EffectID::eliteBonusViolatorsLargeProjectileTurretTracking1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[968]},
-			}},
-			{EffectID::eliteBonusViolatorsTractorBeamMaxRangeRole2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[969]},
-			}},
-			{EffectID::eliteBonusViolatorsEwTargetPainting1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[970]},
-			}},
-			{EffectID::shipBonusPTFalloffMB1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[971]},
-			}},
-			{EffectID::eliteBonusElectronicAttackShipRechargeRate2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[972]},
-			}},
-			{EffectID::eliteBonusElectronicAttackShipCapacitorCapacity2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[973]},
-			}},
-			{EffectID::eliteBonusHeavyInterdictorsWarpDisruptFieldGeneratorWarpScrambleRange2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[974]},
-			}},
-			{EffectID::eliteBonusViolatorsTractorBeamMaxTractorVelocityRole3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[975]},
-			}},
-			{EffectID::shipLaserDamagePirateBattleship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[976]},
-			}},
-			{EffectID::shipTrackingBonusAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[977]},
-			}},
-			{EffectID::shipBonusMediumEnergyTurretDamagePirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[978]},
-			}},
-			{EffectID::shipBonusMediumEnergyTurretTrackingAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[979]},
-			}},
-			{EffectID::shipBonusSmallEnergyTurretDamagePirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[980]},
-			}},
-			{EffectID::shipBonusSmallEnergyTurretTracking2AF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[981]},
-			}},
-			{EffectID::rorqualCargoScanRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[982]},
-			}},
-			{EffectID::rorqualSurveyScannerRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[983]},
-			}},
-			{EffectID::shipCapPropulsionJamming, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[984]},
-			}},
-			{EffectID::setBonusThukker, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[985]},
-			}},
-			{EffectID::setBonusSisters, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[986]},
-			}},
-			{EffectID::setBonusSyndicate, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[987]},
-			}},
-			{EffectID::miningLaserMaxRangeMultBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[988]},
-			}},
-			{EffectID::setBonusMordus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[989]},
-			}},
-			{EffectID::interceptor2WarpScrambleRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[990]},
-			}},
-			{EffectID::weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringBombLauncher, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[991]},
-			}},
-			{EffectID::skillAdvancedWeaponUpgradesPowerNeedBonusBombLaunchers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[992]},
-			}},
-			{EffectID::skillNaniteOperationRepairCost, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[993]},
-			}},
-			{EffectID::skillNaniteOperationRepairCostLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[994]},
-			}},
-			{EffectID::skillNaniteInterfacingRepairTimeLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[995]},
-			}},
-			{EffectID::cynosuralTheoryConsumptionBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[996]},
-			}},
-			{EffectID::skillConsumptionQuantityBonusPercentageSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[997]},
-			}},
-			{EffectID::drawbackCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[998]},
-			}},
-			{EffectID::eliteBonusBlackOpsAgiliy1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[999]},
-			}},
-			{EffectID::skillJumpDriveConsumptionAmountBonusPercentage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1000]},
-			}},
-			{EffectID::gunneryMaxRangeBonus, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[1001]},
-			}},
-			{EffectID::ewSkillTrackingDisruptionTrackingSpeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1002]},
-			}},
-			{EffectID::eliteBonusLogisticsTrackingLinkMaxRangeBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1003]},
-			}},
-			{EffectID::eliteBonusLogisticsTrackingLinkMaxRangeBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1004]},
-			}},
-			{EffectID::eliteBonusLogisticsTrackingLinkTrackingSpeedBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1005]},
-			}},
-			{EffectID::eliteBonusLogisticsTrackingLinkTrackingSpeedBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1006]},
-			}},
-			{EffectID::ewSkillSignalSuppressionScanResolutionBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1007]},
-			}},
-			{EffectID::shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1008]},
-			}},
-			{EffectID::shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1009]},
-			}},
-			{EffectID::shipBonusEwRemoteSensorDampenerScanResolutionBonusGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1010]},
-			}},
-			{EffectID::shipBonusEwRemoteSensorDampenerScanResolutionBonusGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1011]},
-			}},
-			{EffectID::ewSkillSignalSuppressionMaxTargetRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1012]},
-			}},
-			{EffectID::eliteBonusJumpFreighterHullHP1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1013]},
-			}},
-			{EffectID::eliteBonusJumpFreighterJumpDriveConsumptionAmount2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1014]},
-			}},
-			{EffectID::jumpFreightersSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1015]},
-			}},
-			{EffectID::jumpFreightersSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1016]},
-			}},
-			{EffectID::scriptSensorBoosterScanResolutionBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1017]},
-			}},
-			{EffectID::scriptSensorBoosterMaxTargetRangeBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1018]},
-			}},
-			{EffectID::scriptTrackingComputerTrackingSpeedBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1019]},
-			}},
-			{EffectID::scriptTrackingComputerMaxRangeBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1020]},
-			}},
-			{EffectID::scriptWarpDisruptionFieldGeneratorSetDisallowInEmpireSpace, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1021]},
-			}},
-			{EffectID::scriptDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1022]},
-			}},
-			{EffectID::scriptWarpDisruptionFieldGeneratorSetScriptCapacitorNeedHidden, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1023]},
-			}},
-			{EffectID::scriptSignatureRadiusBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1024]},
-			}},
-			{EffectID::scriptMassBonusPercentageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1025]},
-			}},
-			{EffectID::scriptSpeedBoostFactorBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1026]},
-			}},
-			{EffectID::scriptSpeedFactorBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1027]},
-			}},
-			{EffectID::scriptWarpScrambleRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1028]},
-			}},
-			{EffectID::eliteBonusViolatorsLargeEnergyTurretDamage1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1029]},
-			}},
-			{EffectID::ewGroupRsdMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1030]},
-			}},
-			{EffectID::ewGroupTpMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1031]},
-			}},
-			{EffectID::ewGroupTdMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1032]},
-			}},
-			{EffectID::ewGroupEcmBurstMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1033]},
-			}},
-			{EffectID::gunneryMaxRangeBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1001]},
-			}},
-			{EffectID::gunneryTrackingSpeedBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[785]},
-			}},
-			{EffectID::shipScanResolutionBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[232]},
-			}},
-			{EffectID::shipMaxTargetRangeBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[167]},
-			}},
-			{EffectID::shipMaxLockedTargetsBonusAddOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[33]},
-			}},
-			{EffectID::miningLaserRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1034]},
-			}},
-			{EffectID::frequencyMiningLaserMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1035]},
-			}},
-			{EffectID::stripMinerMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1036]},
-			}},
-			{EffectID::gasHarvesterMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1037]},
-			}},
-			{EffectID::setBonusOre, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1038]},
-			}},
-			{EffectID::jumpPortalGenerationBO, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[616]},{modifiers[617]},
-			}},
-			{EffectID::shipBonusLargeEnergyTurretMaxRangeAB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1039]},
-			}},
-			{EffectID::eliteBonusJumpFreighterShieldHP1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1040]},
-			}},
-			{EffectID::eliteBonusJumpFreighterArmorHP1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1041]},
-			}},
-			{EffectID::freighterAgilityBonusC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1042]},
-			}},
-			{EffectID::freighterAgilityBonusM1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1043]},
-			}},
-			{EffectID::freighterAgilityBonusG1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1044]},
-			}},
-			{EffectID::freighterAgilityBonusA1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1045]},
-			}},
-			{EffectID::scriptTrackingComputerFalloffBonusBonus, MetaInfo::Effect::Category::generic, true, true, {
-				{modifiers[1046]},
-			}},
-			{EffectID::shipMissileLauncherSpeedBonusMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1047]},{modifiers[1048]},{modifiers[1049]},
-			}},
-			{EffectID::shipHybridTurretROFBonusGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1050]},
-			}},
-			{EffectID::shipBonusProjectileTrackingMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1051]},
-			}},
-			{EffectID::skillNaniteInterfacingRepairTime2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1052]},
-			}},
-			{EffectID::agilityMultiplierEffectPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[220]},
-			}},
-			{EffectID::velocityBonusPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[683]},
-			}},
-			{EffectID::zColinOrcaTractorRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1053]},
-			}},
-			{EffectID::zColinOrcaTractorVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1054]},
-			}},
-			{EffectID::industrialCommandShipSkillLevelMultiplierICS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1055]},
-			}},
-			{EffectID::cargoAndOreHoldCapacityBonusICS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1056]},{modifiers[1057]},
-			}},
-			{EffectID::industrialCommandShipSkillLevelMultiplierICS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1058]},
-			}},
-			{EffectID::miningForemanBurstBonusICS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1059]},{modifiers[1060]},{modifiers[1061]},{modifiers[1062]},{modifiers[1063]},
-			}},
-			{EffectID::zColinOrcaSurveyScannerBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1064]},
-			}},
-			{EffectID::eliteIndustrialExtenderSkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1065]},
-			}},
-			{EffectID::zColinSkillTransportCovertCloakMod, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1066]},
-			}},
-			{EffectID::covertOpsStealthBomberSiegeMissileLauncerPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1067]},
-			}},
-			{EffectID::interceptorMWDSignatureRadiusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1068]},
-			}},
-			{EffectID::eliteBonusCommandShipsHeavyMissileExplosionVelocityCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1069]},
-			}},
-			{EffectID::armorHPBonusAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[783]},
-			}},
-			{EffectID::subSystem, MetaInfo::Effect::Category::generic, false, false, {
-				
-			}},
-			{EffectID::hardPointModifierEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1070]},{modifiers[1071]},
-			}},
-			{EffectID::slotModifier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1072]},{modifiers[1073]},{modifiers[1074]},
-			}},
-			{EffectID::powerOutputAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1075]},
-			}},
-			{EffectID::cpuOutputAddCpuOutputPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1076]},
-			}},
-			{EffectID::maxVelocityAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1077]},
-			}},
-			{EffectID::modifyHullResonancePostPercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1078]},{modifiers[1079]},{modifiers[1080]},{modifiers[1081]},
-			}},
-			{EffectID::probeLaunching, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::droneBandwidthAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1082]},
-			}},
-			{EffectID::droneCapacityAdddroneCapacityPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1083]},
-			}},
-			{EffectID::scanStrengthAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1084]},{modifiers[1085]},{modifiers[1086]},{modifiers[1087]},
-			}},
-			{EffectID::maxTargetRangeAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1088]},
-			}},
-			{EffectID::signatureRadiusAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1089]},
-			}},
-			{EffectID::scanResolutionAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1090]},
-			}},
-			{EffectID::capacityAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1091]},
-			}},
-			{EffectID::capacitorCapacityAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1092]},
-			}},
-			{EffectID::shieldCapacityAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1093]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrDefensive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1094]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariDefensive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1095]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteDefensive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1096]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarDefensive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1097]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarElectronic, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1098]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteElectronic, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1099]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariElectronic, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1100]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrElectronic, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1101]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrEngineering, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1102]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariEngineering, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1103]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteEngineering, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1104]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarEngineering, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1105]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarOffensive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1106]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteOffensive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1107]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariOffensive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1108]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrOffensive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1109]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrPropulsion, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1110]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariPropulsion, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1111]},
-			}},
-			{EffectID::subsystemSkillLevelGallentePropulsion, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1112]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarPropulsion, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1113]},
-			}},
-			{EffectID::rechargeRateAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1114]},
-			}},
-			{EffectID::shieldRechargeRateAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1115]},
-			}},
-			{EffectID::subsystemBonusAmarrPropulsionMaxVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1116]},
-			}},
-			{EffectID::subsystemBonusCaldariPropulsionMaxVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1117]},
-			}},
-			{EffectID::subsystemBonusMinmatarPropulsionMaxVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1118]},
-			}},
-			{EffectID::subsystemBonusMinmatarPropulsionAfterburnerSpeedFactor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1119]},
-			}},
-			{EffectID::subsystemBonusCaldariPropulsionAfterburnerSpeedFactor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1120]},
-			}},
-			{EffectID::subsystemBonusAmarrPropulsionAfterburnerSpeedFactor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1121]},
-			}},
-			{EffectID::subsystemBonusAmarrPropulsion2Agility, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1122]},
-			}},
-			{EffectID::subsystemBonusCaldariPropulsion2Agility, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1123]},
-			}},
-			{EffectID::subsystemBonusGallentePropulsion2Agility, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1124]},
-			}},
-			{EffectID::subsystemBonusMinmatarPropulsion2Agility, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1125]},
-			}},
-			{EffectID::subsystemBonusMinmatarPropulsion2MWDPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1126]},
-			}},
-			{EffectID::subsystemBonusGallentePropulsionMWDPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1127]},
-			}},
-			{EffectID::subsystemBonusAmarrPropulsion2MWDPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1128]},
-			}},
-			{EffectID::subsystemBonusGallentePropulsionABMWDCapNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1129]},
-			}},
-			{EffectID::subsystemBonusGallenteElectronicCPU, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1130]},
-			}},
-			{EffectID::subsystemBonusCaldariElectronicCPU, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1131]},
-			}},
-			{EffectID::subsystemBonusMinmatarCoreScanStrengthLADAR, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1132]},
-			}},
-			{EffectID::subsystemBonusGallenteCoreScanStrengthMagnetometric, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1133]},
-			}},
-			{EffectID::subsystemBonusCaldariCoreScanStrengthGravimetric, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1134]},
-			}},
-			{EffectID::subsystemBonusAmarrCoreScanStrengthRADAR, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1135]},
-			}},
-			{EffectID::subsystemBonusAmarrDefensiveArmorResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1136]},{modifiers[1137]},{modifiers[1138]},{modifiers[1139]},
-			}},
-			{EffectID::subsystemBonusGallenteDefensiveArmorResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1140]},{modifiers[1141]},{modifiers[1142]},{modifiers[1143]},
-			}},
-			{EffectID::subsystemBonusMinmatarDefensiveArmorResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1144]},{modifiers[1145]},{modifiers[1146]},{modifiers[1147]},
-			}},
-			{EffectID::subsystemBonusMinmatarDefensiveShieldResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1148]},{modifiers[1149]},{modifiers[1150]},{modifiers[1151]},
-			}},
-			{EffectID::subsystemBonusCaldariDefensiveShieldResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1152]},{modifiers[1153]},{modifiers[1154]},{modifiers[1155]},
-			}},
-			{EffectID::subsystemBonusAmarrDefensiveArmorRepairAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1156]},
-			}},
-			{EffectID::subsystemBonusGallenteDefensiveArmorRepairAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1157]},
-			}},
-			{EffectID::subsystemBonusMinmatarDefensiveShieldArmorRepairAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1158]},{modifiers[1159]},
-			}},
-			{EffectID::subsystemBonusCaldariDefensiveShieldBoostAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1160]},
-			}},
-			{EffectID::subsystemBonusCaldariDefensiveShieldHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1161]},
-			}},
-			{EffectID::subsystemBonusMinmatarDefensiveShieldArmorHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1162]},{modifiers[1163]},
-			}},
-			{EffectID::subsystemBonusGallenteDefensiveArmorHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1164]},
-			}},
-			{EffectID::subsystemBonusAmarrDefensiveArmorHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1165]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensiveEnergyWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1166]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensiveHybridWeaponMaxRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1167]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensiveHybridWeaponFalloff, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1168]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensiveHybridWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1169]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1170]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponFalloff, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1171]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponMaxRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1172]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensiveHeavyMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1173]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensiveHeavyAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1174]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive1LauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1173]},{modifiers[1174]},{modifiers[1175]},
-			}},
-			{EffectID::subsystemBonusAmarrEngineeringHeatDamageReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1176]},
-			}},
-			{EffectID::subsystemBonusCaldariEngineeringHeatDamageReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1177]},
-			}},
-			{EffectID::subsystemBonusGallenteEngineeringHeatDamageReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1178]},
-			}},
-			{EffectID::subsystemBonusMinmatarEngineeringHeatDamageReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1179]},
-			}},
-			{EffectID::subsystemBonusMinmatarEngineeringCapacitorCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1180]},
-			}},
-			{EffectID::subsystemBonusCaldariCoreCapacitorCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1181]},
-			}},
-			{EffectID::subsystemBonusAmarrCoreCapacitorCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1182]},
-			}},
-			{EffectID::massAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1183]},
-			}},
-			{EffectID::baseMaxScanDeviationModifierRequiringAstrometrics, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1184]},
-			}},
-			{EffectID::baseSensorStrengthModifierRequiringAstrometrics, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1185]},
-			}},
-			{EffectID::shipBonusScanProbeStrengthCF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1186]},
-			}},
-			{EffectID::shipBonusScanProbeStrengthMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1187]},
-			}},
-			{EffectID::shipBonusScanProbeStrengthGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1188]},
-			}},
-			{EffectID::eliteBonusCoverOpsScanProbeStrength2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1189]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensiveEnergyWeaponCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1190]},
-			}},
-			{EffectID::shipBonusStrategicCruiserAmarrHeatDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1191]},
-			}},
-			{EffectID::shipBonusStrategicCruiserCaldariHeatDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1192]},
-			}},
-			{EffectID::shipBonusStrategicCruiserGallenteHeatDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1193]},
-			}},
-			{EffectID::shipBonusStrategicCruiserMinmatarHeatDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1194]},
-			}},
-			{EffectID::strategicCruiserAmarrSkillLevel1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1195]},
-			}},
-			{EffectID::strategicCruiserCaldariSkillLevel1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1196]},
-			}},
-			{EffectID::strategicCruiserGallenteSkillLevel1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1197]},
-			}},
-			{EffectID::strategicCruiserMinmatarSkillLevel1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1198]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrDefensive2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1199]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariDefensive2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1200]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteDefensive2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1201]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarDefensive2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1202]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarElectronic2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1203]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteElectronic2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1204]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariElectronic2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1205]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrElectronic2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1206]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrEngineering2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1207]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariEngineering2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1208]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteEngineering2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1209]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarEngineering2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1210]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarOffensive2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1211]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteOffensive2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1212]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariOffensive2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1213]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrOffensive2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1214]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrPropulsion2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1215]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariPropulsion2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1216]},
-			}},
-			{EffectID::subsystemSkillLevelGallentePropulsion2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1217]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarPropulsion2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1218]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive2EnergyWeaponCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1219]},
-			}},
-			{EffectID::subsystemBonusAmarrCore2EnergyVampireAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1220]},
-			}},
-			{EffectID::subsystemBonusAmarrCore2EnergyDestabilizerAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1221]},
-			}},
-			{EffectID::modifyArmorResonancePassivePreAssignment, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1222]},{modifiers[1223]},{modifiers[1224]},{modifiers[1225]},
-			}},
-			{EffectID::modifyShieldResonancePassivePreAssignment, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1226]},{modifiers[1227]},{modifiers[1228]},{modifiers[1229]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive2MissileLauncherKineticDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1230]},{modifiers[1231]},{modifiers[1232]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensiveDroneDamageHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1233]},{modifiers[1234]},{modifiers[1235]},{modifiers[1236]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensive2ProjectileWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1237]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensive2ProjectileWeaponROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1238]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensive2MissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1239]},{modifiers[1240]},{modifiers[1241]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensiveAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1242]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensiveHeavyMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1243]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensiveHeavyAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1244]},
-			}},
-			{EffectID::subsystemBonusAmarrEngineeringPowerOutput, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1245]},
-			}},
-			{EffectID::subsystemBonusCaldariEngineeringPowerOutput, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1246]},
-			}},
-			{EffectID::subsystemBonusGallenteEngineeringPowerOutput, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1247]},
-			}},
-			{EffectID::subsystemBonusMinmatarEngineeringPowerOutput, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1248]},
-			}},
-			{EffectID::subsystemBonusMinmatarCoreCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1249]},
-			}},
-			{EffectID::subsystemBonusGallenteCoreCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1250]},
-			}},
-			{EffectID::subsystemBonusCaldariEngineeringCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1251]},
-			}},
-			{EffectID::subsystemBonusAmarrEngineeringCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1252]},
-			}},
-			{EffectID::subsystemBonusAmarrCore3ScanResolution, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1253]},
-			}},
-			{EffectID::subsystemBonusMinmatarCore3ScanResolution, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1254]},
-			}},
-			{EffectID::subsystemBonusCaldariCore2MaxTargetingRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1255]},
-			}},
-			{EffectID::subsystemBonusGallenteCore2MaxTargetingRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1256]},
-			}},
-			{EffectID::subsystemBonusGallenteCore2WarpScrambleRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1257]},
-			}},
-			{EffectID::subsystemBonusMinmatarCore2StasisWebifierRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1258]},
-			}},
-			{EffectID::subsystemBonusCaldariPropulsion2WarpSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1259]},
-			}},
-			{EffectID::subsystemBonusGallentePropulsionWarpCapacitor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1260]},
-			}},
-			{EffectID::subsystemBonusGallentePropulsion2WarpSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1261]},
-			}},
-			{EffectID::modifyShipAgilityPassivePreAssignment, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1262]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensive2HybridWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1263]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive2HybridWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1264]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive2RemoteArmorRepairCapUse, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1265]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensive2RemoteArmorRepairCapUse, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1266]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensive2RemoteRepCapUse, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1267]},{modifiers[1268]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive2RemoteShieldBoosterCapUse, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1269]},
-			}},
-			{EffectID::subsystemBonusGallenteEngineeringDroneHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1270]},{modifiers[1271]},{modifiers[1272]},
-			}},
-			{EffectID::subsystemBonusGallenteEngineering2DroneMWD, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1273]},
-			}},
-			{EffectID::subsystemBonusCaldariCore2ECMStrengthRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1274]},{modifiers[1275]},{modifiers[1276]},{modifiers[1277]},{modifiers[1278]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensiveDroneDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1279]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive3DroneDamageHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1280]},{modifiers[1281]},{modifiers[1282]},{modifiers[1283]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensive3DroneDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1284]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive3EnergyWeaponMaxRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1285]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive3HMLHAMVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1286]},{modifiers[1287]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive3HeavyMissileVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1287]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive3EwStrengthGrav, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1288]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive3EwStrengthLadar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1289]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive3EwStrengthMagn, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1290]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive3EwStrengthRadar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1291]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrOffensive3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1292]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariOffensive3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1293]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteOffensive3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1294]},
-			}},
-			{EffectID::subsystemBonusMinmatarCore2MaxTargetingRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1295]},
-			}},
-			{EffectID::subsystemBonusAmarrCore2MaxTargetingRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1296]},
-			}},
-			{EffectID::subsystemBonusMinmatarDefensiveSignatureRadius, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1297]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensive3TurretTracking, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1298]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarOffensive3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1299]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensive3TurretTracking, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1300]},
-			}},
-			{EffectID::caldariCruiserSkillLevelPreMulShipBonusCC3Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1301]},
-			}},
-			{EffectID::ecmRangeBonusModuleEffect, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1302]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensiveHeavyMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1303]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensiveMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1303]},{modifiers[1304]},{modifiers[1305]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensiveHeavyAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1305]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive2MissileDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1306]},{modifiers[1307]},{modifiers[1308]},{modifiers[1309]},{modifiers[1310]},{modifiers[1311]},{modifiers[1312]},{modifiers[1313]},{modifiers[1314]},{modifiers[1315]},{modifiers[1316]},{modifiers[1317]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive2HAMThermalDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1318]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive2HAMKineticDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1319]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive2HAMExplosiveDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1320]},
-			}},
-			{EffectID::shipBonusMediumHybridDmgCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1321]},
-			}},
-			{EffectID::subsystemBonusWarpBubbleImmune, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1322]},
-			}},
-			{EffectID::caldariShipEwFalloffRangeCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1323]},
-			}},
-			{EffectID::caldariShipEwFalloffRangeCB3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1324]},
-			}},
-			{EffectID::subSystemBonusAmarrOffensiveCommandBursts, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1325]},{modifiers[1326]},{modifiers[1327]},{modifiers[1328]},{modifiers[1329]},{modifiers[1330]},{modifiers[1331]},{modifiers[1332]},{modifiers[1333]},{modifiers[1334]},{modifiers[1335]},{modifiers[1336]},{modifiers[1337]},{modifiers[1338]},{modifiers[1339]},
-			}},
-			{EffectID::subSystemBonusCaldariDefensiveSiegeWarfare, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1340]},{modifiers[1341]},{modifiers[1342]},{modifiers[1343]},{modifiers[1344]},
-			}},
-			{EffectID::subSystemBonusGallenteDefensiveInformationWarfare, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1345]},{modifiers[1346]},{modifiers[1347]},{modifiers[1348]},{modifiers[1349]},
-			}},
-			{EffectID::subSystemBonusMinmatarDefensiveSkirmishWarfare, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1350]},{modifiers[1351]},{modifiers[1352]},{modifiers[1353]},{modifiers[1354]},
-			}},
-			{EffectID::shipBonusTorpedoVelocityGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1355]},
-			}},
-			{EffectID::shipBonusTorpedoVelocityMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1356]},
-			}},
-			{EffectID::shipBonusTorpedoVelocity2AF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1357]},
-			}},
-			{EffectID::shipBonusTorpedoVelocityCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1358]},
-			}},
-			{EffectID::eliteReconBonusHeavyMissileVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1359]},
-			}},
-			{EffectID::eliteReconBonusHeavyAssaultMissileVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1360]},
-			}},
-			{EffectID::subSystemBonusAmarrElectronicScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1361]},
-			}},
-			{EffectID::subSystemBonusCaldariElectronicScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1362]},
-			}},
-			{EffectID::subSystemBonusGallenteElectronicScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1363]},
-			}},
-			{EffectID::subSystemBonusMinmatarElectronicScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1364]},
-			}},
-			{EffectID::shipBonusEliteCover2TorpedoThermalDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1365]},
-			}},
-			{EffectID::shipBonusEliteCover2TorpedoEMDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1366]},
-			}},
-			{EffectID::shipBonusEliteCover2TorpedoExplosiveDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1367]},
-			}},
-			{EffectID::shipBonusEliteCover2TorpedoKineticDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1368]},
-			}},
-			{EffectID::shipBonusGFTorpedoExplosionVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1369]},
-			}},
-			{EffectID::shipBonusMF1TorpedoExplosionVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1370]},
-			}},
-			{EffectID::shipBonusCF1TorpedoExplosionVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1371]},
-			}},
-			{EffectID::shipBonusAF1TorpedoExplosionVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1372]},
-			}},
-			{EffectID::subSystemBonusAmarrElectronic2TractorBeamVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1373]},
-			}},
-			{EffectID::subSystemBonusCaldariElectronic2TractorBeamVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1374]},
-			}},
-			{EffectID::subSystemBonusGallenteElectronic2TractorBeamVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1375]},
-			}},
-			{EffectID::subSystemBonusMinmatarElectronic2TractorBeamVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1376]},
-			}},
-			{EffectID::subSystemBonusMinmatarElectronic2TractorBeamRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1377]},
-			}},
-			{EffectID::subSystemBonusGallenteElectronic2TractorBeamRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1378]},
-			}},
-			{EffectID::subSystemBonusCaldariElectronic2TractorBeamRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1379]},
-			}},
-			{EffectID::subSystemBonusAmarrElectronic2TractorBeamRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1380]},
-			}},
-			{EffectID::signatureRadiusPreAssignment, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1381]},
-			}},
-			{EffectID::subsystemBonusScanProbeLauncherCPU, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1382]},
-			}},
-			{EffectID::subsystemBonusJumpHarmonics, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1383]},
-			}},
-			{EffectID::shipBonusGF1TorpedoFlightTime, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1384]},
-			}},
-			{EffectID::shipBonusMF1TorpedoFlightTime, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1385]},
-			}},
-			{EffectID::shipBonusCF1TorpedoFlightTime, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1386]},
-			}},
-			{EffectID::shipBonusAF1TorpedoFlightTime, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1387]},
-			}},
-			{EffectID::scanRadarStrengthModifierEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1388]},
-			}},
-			{EffectID::scanLadarStrengthModifierEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1389]},
-			}},
-			{EffectID::scanGravimetricStrengthModifierEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1390]},
-			}},
-			{EffectID::scanMagnetometricStrengthModifierEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1391]},
-			}},
-			{EffectID::federationsetbonus3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1392]},
-			}},
-			{EffectID::imperialsetbonus3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1393]},
-			}},
-			{EffectID::republicsetbonus3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1394]},
-			}},
-			{EffectID::caldarisetbonus3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1395]},
-			}},
-			{EffectID::imperialsetLGbonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1396]},
-			}},
-			{EffectID::federationsetLGbonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1397]},
-			}},
-			{EffectID::caldarisetLGbonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1398]},
-			}},
-			{EffectID::republicsetLGbonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1399]},
-			}},
-			{EffectID::shipBonusStasisMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1400]},
-			}},
-			{EffectID::shipProjectileDmgMC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1401]},
-			}},
-			{EffectID::shipVelocityBonusATC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1402]},
-			}},
-			{EffectID::shipMTMaxRangeBonusATC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1403]},
-			}},
-			{EffectID::shipMTFalloffBonusATC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1404]},
-			}},
-			{EffectID::shipMTFalloffBonusATF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1405]},
-			}},
-			{EffectID::shipMTMaxRangeBonusATF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1406]},
-			}},
-			{EffectID::shipBonusAfterburnerCapNeedATF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1407]},
-			}},
-			{EffectID::shipBonusSurveyProbeExplosionDelaySkillSurveyCovertOps3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1408]},
-			}},
-			{EffectID::covertOpsSkillLevelPreMulEliteBonusCoverOpsShip3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1409]},
-			}},
-			{EffectID::shipETOptimalRange2AF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1410]},
-			}},
-			{EffectID::shipPTurretFalloffBonusGB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1411]},
-			}},
-			{EffectID::shipBonusStasisWebSpeedFactorMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1412]},
-			}},
-			{EffectID::superWeaponAmarr, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::superWeaponCaldari, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::superWeaponGallente, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::superWeaponMinmatar, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::shipStasisWebStrengthBonusMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1413]},
-			}},
-			{EffectID::shipPTurretFalloffBonusGC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1414]},
-			}},
-			{EffectID::shipStasisWebStrengthBonusMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1415]},
-			}},
-			{EffectID::shipFalloffBonusMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1416]},
-			}},
-			{EffectID::shipHTurretFalloffBonusGC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1417]},
-			}},
-			{EffectID::gunneryFalloffBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[92]},
-			}},
-			{EffectID::tcapitalLauncherSkillCruiseCitadelEmDamage1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1418]},
-			}},
-			{EffectID::capitalLauncherSkillCruiseCitadelExplosiveDamage1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1419]},
-			}},
-			{EffectID::capitalLauncherSkillCruiseCitadelKineticDamage1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1420]},
-			}},
-			{EffectID::capitalLauncherSkillCruiseCitadelThermalDamage1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1421]},
-			}},
-			{EffectID::gunneryMaxRangeFalloffTrackingSpeedBonus, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[92]},{modifiers[785]},{modifiers[1001]},
-			}},
-			{EffectID::industrialCoreEffect2, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[616]},{modifiers[617]},{modifiers[1422]},{modifiers[1423]},{modifiers[1424]},{modifiers[1425]},{modifiers[1426]},{modifiers[1427]},{modifiers[1428]},{modifiers[1429]},{modifiers[1430]},{modifiers[1431]},{modifiers[1432]},{modifiers[1433]},{modifiers[1434]},{modifiers[1435]},{modifiers[1436]},{modifiers[1437]},{modifiers[1438]},{modifiers[1439]},{modifiers[1440]},{modifiers[1441]},{modifiers[1442]},{modifiers[1443]},{modifiers[1444]},{modifiers[1445]},{modifiers[1446]},{modifiers[1447]},{modifiers[1448]},
-			}},
-			{EffectID::eliteBonusLogisticsTrackingLinkFalloffBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1449]},
-			}},
-			{EffectID::eliteBonusLogisticsTrackingLinkFalloffBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1450]},
-			}},
-			{EffectID::droneRigStasisWebSpeedFactorBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1451]},
-			}},
-			{EffectID::amarrFrigateSkillLevelPreMulShipBonus3AFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1452]},
-			}},
-			{EffectID::caldariFrigateSkillLevelPreMulShipBonus3CFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1453]},
-			}},
-			{EffectID::gallenteFrigateSkillLevelPreMulShipBonus3GFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1454]},
-			}},
-			{EffectID::minmatarFrigateSkillLevelPreMulShipBonus3MFShip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1455]},
-			}},
-			{EffectID::shipBonusDroneDamageGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1456]},
-			}},
-			{EffectID::shipBonusWarpScramblerMaxRangeGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1457]},
-			}},
-			{EffectID::shipBonusHeatDamageATF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1458]},
-			}},
-			{EffectID::shipBonusSmallHybridMaxRangeATF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1459]},
-			}},
-			{EffectID::shipBonusSmallHybridTrackingSpeedATF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1460]},
-			}},
-			{EffectID::shipBonusHybridTrackingATC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1461]},
-			}},
-			{EffectID::shipBonusHybridFalloffATC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1462]},
-			}},
-			{EffectID::shipBonusWarpScramblerMaxRangeGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1463]},
-			}},
-			{EffectID::eliteBonusMaraudersCruiseAndTorpedoDamageRole1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1464]},{modifiers[1465]},{modifiers[1466]},{modifiers[1467]},{modifiers[1468]},{modifiers[1469]},{modifiers[1470]},{modifiers[1471]},
-			}},
-			{EffectID::shipBonusAoeVelocityCruiseAndTorpedoCB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1472]},{modifiers[1473]},
-			}},
-			{EffectID::shipCruiseAndTorpedoVelocityBonusCB3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[277]},{modifiers[278]},
-			}},
-			{EffectID::shipArmorEMAndExpAndkinAndThmResistanceAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[293]},{modifiers[294]},{modifiers[295]},{modifiers[296]},
-			}},
-			{EffectID::shipHeavyAssaultMissileEMAndExpAndKinAndThmDmgAC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1474]},{modifiers[1475]},{modifiers[1476]},{modifiers[1477]},
-			}},
-			{EffectID::eliteBonusHeavyGunshipHeavyAndHeavyAssaultAndAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[719]},{modifiers[720]},{modifiers[721]},
-			}},
-			{EffectID::eliteBonusBlackOpsECMGravAndLadarAndMagnetometricAndRadarStrength1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1478]},{modifiers[1479]},{modifiers[1480]},{modifiers[1481]},
-			}},
-			{EffectID::shipCruiseAndSiegeLauncherROFBonus2CB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[555]},{modifiers[556]},
-			}},
-			{EffectID::oreIndustrialSkillLevelPostMulShipBonusOreIndustrial1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1482]},
-			}},
-			{EffectID::oreIndustrialSkillLevelPostMulShipBonusOreIndustrial2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1483]},
-			}},
-			{EffectID::shipBonusNoctisSalvageCycle, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1484]},
-			}},
-			{EffectID::shipBonusNoctisTractorCycle, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1485]},
-			}},
-			{EffectID::shipBonusNoctisTractorVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1486]},
-			}},
-			{EffectID::shipBonusNoctisTractorRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1487]},
-			}},
-			{EffectID::subsystemBonusCaldariPropulsionWarpCapacitor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1488]},
-			}},
-			{EffectID::hackOrbital, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::shipEnergyNeutralizerTransferAmountBonusAF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1489]},
-			}},
-			{EffectID::shipBonusSmallEnergyWeaponOptimalRangeATF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1490]},
-			}},
-			{EffectID::shipBonusSmallEnergyTurretDamageATF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1491]},
-			}},
-			{EffectID::shipBonusMissileLauncherHeavyROFATC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1492]},
-			}},
-			{EffectID::shipBonusMissileLauncherAssaultROFATC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1493]},
-			}},
-			{EffectID::shipBonusMissileLauncherHeavyAssaultROFATC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1494]},
-			}},
-			{EffectID::eliteBonusBlackOpsECMBurstGravAndLadarAndMagnetoAndRadar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1495]},{modifiers[1496]},{modifiers[1497]},{modifiers[1498]},
-			}},
-			{EffectID::salvagingAccessDifficultyBonusMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1499]},
-			}},
-			{EffectID::hackingAccessDifficultyBonusMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1500]},
-			}},
-			{EffectID::archaeologyAccessDifficultyBonusMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1501]},
-			}},
-			{EffectID::dataMiningSkillBoostAccessDifficultyBonusAbsolutePercent, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1502]},
-			}},
-			{EffectID::ecmGravimetricStrengthBonusPercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1503]},
-			}},
-			{EffectID::ecmLadarStrengthBonusPercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1504]},
-			}},
-			{EffectID::ecmMagnetometricStrengthBonusPercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1505]},
-			}},
-			{EffectID::ecmRadarStrengthBonusPercent, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1506]},
-			}},
-			{EffectID::skillConsumptionQuantityBonusPercentSkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1507]},
-			}},
-			{EffectID::jumpPortalConsumptionBonusPercentSkill, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1508]},
-			}},
-			{EffectID::salvagerModuleDurationReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1509]},
-			}},
-			{EffectID::bcLargeEnergyTurretPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1510]},
-			}},
-			{EffectID::bcLargeHybridTurretPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1511]},
-			}},
-			{EffectID::bcLargeProjectileTurretPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1512]},
-			}},
-			{EffectID::bcLargeEnergyTurretCPUNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1513]},
-			}},
-			{EffectID::bcLargeHybridTurretCPUNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1514]},
-			}},
-			{EffectID::bcLargeProjectileTurretCPUNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1515]},
-			}},
-			{EffectID::bcLargeEnergyTurretCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1516]},
-			}},
-			{EffectID::bcLargeHybridTurretCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1517]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusBC3Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1518]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusBC4Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1519]},
-			}},
-			{EffectID::setBonusChristmasPowergrid, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1520]},
-			}},
-			{EffectID::setBonusChristmasCapacitorCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1521]},
-			}},
-			{EffectID::setBonusChristmasCPUOutput, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1522]},
-			}},
-			{EffectID::setBonusChristmasCapacitorRecharge2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1523]},
-			}},
-			{EffectID::maxRangeHiddenPreAssignmentWarpScrambleRange, MetaInfo::Effect::Category::generic, true, true, {
-				{modifiers[1524]},
-			}},
-			{EffectID::shipBonusDroneHitpointsGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1525]},
-			}},
-			{EffectID::shipBonusDroneArmorHitpointsGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1526]},
-			}},
-			{EffectID::shipBonusDroneShieldHitpointsGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1527]},
-			}},
-			{EffectID::shipSETTrackingBonusAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1528]},
-			}},
-			{EffectID::shipMissileSpeedBonusAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1529]},
-			}},
-			{EffectID::MWDSignatureRadiusRoleBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1530]},
-			}},
-			{EffectID::modifyShieldArmorHullResonancePostPercent, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[586]},{modifiers[587]},{modifiers[588]},{modifiers[589]},{modifiers[590]},{modifiers[591]},{modifiers[592]},{modifiers[593]},{modifiers[1078]},{modifiers[1079]},{modifiers[1080]},{modifiers[1081]},
-			}},
-			{EffectID::setWeaponSpeedToValue, MetaInfo::Effect::Category::generic, true, true, {
-				{modifiers[1531]},
-			}},
-			{EffectID::modifyShieldRechargeRatePassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[11]},
-			}},
-			{EffectID::damageMultiplierMultiplierActivation, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[1532]},
-			}},
-			{EffectID::missileDamageMultiplier, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1533]},
-			}},
-			{EffectID::setMassAndAgilityAndSpeed, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[1534]},{modifiers[1535]},{modifiers[1536]},
-			}},
-			{EffectID::microJumpDrive, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::skillMJDdurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1537]},
-			}},
-			{EffectID::adaptiveArmorHardener, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[1538]},{modifiers[1539]},{modifiers[1540]},{modifiers[1541]},
-			}},
-			{EffectID::scriptConsumptionQuantityBonus, MetaInfo::Effect::Category::generic, true, true, {
-				{modifiers[1542]},
-			}},
-			{EffectID::shipSETDmgBonus2AF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1543]},
-			}},
-			{EffectID::shipArmorRepairingGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1544]},
-			}},
-			{EffectID::fueledShieldBoosting, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[0]},
-			}},
-			{EffectID::shipHybridDamageBonusCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1545]},
-			}},
-			{EffectID::targetBreaker, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::skillTargetBreakerDurationBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1546]},
-			}},
-			{EffectID::skillTargetBreakerCapNeedBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1547]},
-			}},
-			{EffectID::shipBonusShieldBoosterMB1a, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1548]},
-			}},
-			{EffectID::shieldBoostAmplifierPassiveBooster, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[431]},{modifiers[523]},
-			}},
-			{EffectID::shieldBoosterDurationBonusShieldSkills, MetaInfo::Effect::Category::generic, true, true, {
-				{modifiers[1549]},{modifiers[1550]},
-			}},
-			{EffectID::boosterShieldBoostAmountPenaltyShieldSkills, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1551]},{modifiers[1552]},
-			}},
-			{EffectID::eliteBonusAssaultShipLightMissileROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1553]},
-			}},
-			{EffectID::eliteBonusAssaultShipRocketROF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1554]},
-			}},
-			{EffectID::eliteBonusMarauderShieldBonus2a, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1555]},
-			}},
-			{EffectID::shipBonusMissileKineticlATF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1556]},
-			}},
-			{EffectID::skillReactiveArmorHardenerDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1557]},{modifiers[1558]},
-			}},
-			{EffectID::skillWarAllyCostModifier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1559]},
-			}},
-			{EffectID::relationsAllyCostSkillBoost, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1560]},
-			}},
-			{EffectID::missileSkillAoeCloudSizeBonusAllIncludingCapitals, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[453]},
-			}},
-			{EffectID::shipEnergyTCapNeedBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1561]},
-			}},
-			{EffectID::shipSETDmgBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1562]},
-			}},
-			{EffectID::shipArmorEMResistanceRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1563]},
-			}},
-			{EffectID::shipArmorEXResistanceRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1564]},
-			}},
-			{EffectID::shipArmorKNResistanceRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1565]},
-			}},
-			{EffectID::shipArmorTHResistanceRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1566]},
-			}},
-			{EffectID::shipHybridRangeBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1567]},
-			}},
-			{EffectID::shipMissileKineticDamageRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1568]},
-			}},
-			{EffectID::shipShieldEMResistanceRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1569]},
-			}},
-			{EffectID::shipShieldExplosiveResistanceRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1570]},
-			}},
-			{EffectID::shipShieldKineticResistanceRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1571]},
-			}},
-			{EffectID::shipShieldThermalResistanceRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1572]},
-			}},
-			{EffectID::shipSHTDmgBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1573]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1574]},
-			}},
-			{EffectID::shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1575]},
-			}},
-			{EffectID::shipBonusEwRemoteSensorDampenerScanResolutionBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1576]},
-			}},
-			{EffectID::shipArmorRepairingRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1577]},
-			}},
-			{EffectID::shipVelocityBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1578]},
-			}},
-			{EffectID::minmatarShipEwTargetPainterRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1579]},
-			}},
-			{EffectID::shipSPTDmgBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1580]},
-			}},
-			{EffectID::shipShieldBoostRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1581]},
-			}},
-			{EffectID::shipECMScanStrengthBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1582]},{modifiers[1583]},{modifiers[1584]},{modifiers[1585]},
-			}},
-			{EffectID::shipBonusDroneMiningAmountRole, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1586]},
-			}},
-			{EffectID::shipBonusMiningDroneAmountPercentRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1587]},
-			}},
-			{EffectID::shipBonusDroneHitpointsRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1588]},{modifiers[1589]},{modifiers[1590]},
-			}},
-			{EffectID::shipBonusSalvageCycleAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1591]},
-			}},
-			{EffectID::shipBonusSalvageCycleCF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1592]},
-			}},
-			{EffectID::shipBonusSalvageCycleGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1593]},
-			}},
-			{EffectID::shipBonusSalvageCycleMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1594]},
-			}},
-			{EffectID::baseDefenderAllyCostCharAssignment, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1595]},
-			}},
-			{EffectID::iceHarvesterDurationMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1596]},
-			}},
-			{EffectID::iceHarvesterCapacitorNeedMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1597]},
-			}},
-			{EffectID::miningYieldMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1598]},
-			}},
-			{EffectID::shipBonusIceHarvesterDurationORE3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1599]},
-			}},
-			{EffectID::shipBonusTargetPainterOptimalMF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1600]},
-			}},
-			{EffectID::shipBonusOreHoldORE2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1601]},
-			}},
-			{EffectID::shipBonusShieldCapacityORE2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1602]},
-			}},
-			{EffectID::mercoxitCrystalBonus, MetaInfo::Effect::Category::generic, true, true, {
-				{modifiers[1603]},
-			}},
-			{EffectID::shipMissileKineticDamageCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1604]},
-			}},
-			{EffectID::shipMissileVelocityCF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1605]},
-			}},
-			{EffectID::maxTargetingRangeBonusPostPercentPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[167]},
-			}},
-			{EffectID::shipBonusDroneHitpointsGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1606]},{modifiers[1607]},{modifiers[1608]},
-			}},
-			{EffectID::shipShieldBoostMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1609]},
-			}},
-			{EffectID::shipBonusShieldTransferCapNeedCF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1610]},
-			}},
-			{EffectID::shipBonusShieldTransferBoostAmountCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1611]},
-			}},
-			{EffectID::shipBonusShieldTransferCapNeedMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1612]},
-			}},
-			{EffectID::shipBonusShieldTransferBoostAmountMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1613]},
-			}},
-			{EffectID::shipBonusRemoteArmorRepairCapNeedGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1614]},
-			}},
-			{EffectID::shipBonusRemoteArmorRepairAmountGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1615]},
-			}},
-			{EffectID::shipBonusRemoteArmorRepairCapNeedAF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1616]},
-			}},
-			{EffectID::shipBonusRemoteArmorRepairAmount2AF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1617]},
-			}},
-			{EffectID::shipBonusDroneTrackingGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1618]},
-			}},
-			{EffectID::shipBonusScanProbeStrength2AF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1619]},
-			}},
-			{EffectID::energyTransferArrayTransferAmountBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1620]},
-			}},
-			{EffectID::shipBonusShieldTransferCapneedMC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1621]},
-			}},
-			{EffectID::shipBonusRemoteArmorRepairCapNeedAC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1622]},
-			}},
-			{EffectID::shipBonusRemoteArmorRepairAmountAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1623]},
-			}},
-			{EffectID::shipBonusRemoteArmorRepairAmountGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1624]},
-			}},
-			{EffectID::shipBonusShieldTransferBoostAmountCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1625]},
-			}},
-			{EffectID::shipBonusShieldTransferBoostAmountMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1626]},
-			}},
-			{EffectID::shipBonusEwRemoteSensorDampenerOptimalBonusGC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1627]},
-			}},
-			{EffectID::minmatarShipEwTargetPainterMC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1628]},
-			}},
-			{EffectID::shipMissileRofCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1629]},{modifiers[1630]},{modifiers[1631]},
-			}},
-			{EffectID::shipPTurretFalloffBonusMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1632]},
-			}},
-			{EffectID::shipHTDamageBonusCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1633]},
-			}},
-			{EffectID::shipMETCDamageBonusAC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1634]},
-			}},
-			{EffectID::miningFrigateSkillLevelPostMulShipBonusORE1frig, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1635]},
-			}},
-			{EffectID::miningFrigateSkillLevelPostMulShipBonusORE2frig, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1636]},
-			}},
-			{EffectID::shipMiningBonusOREfrig1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1637]},
-			}},
-			{EffectID::GCHYieldMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1638]},
-			}},
-			{EffectID::shipMissileVelocityPirateFactionRocket, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1639]},
-			}},
-			{EffectID::shipGCHYieldBonusOREfrig2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1640]},
-			}},
-			{EffectID::skillReactiveArmorHardenerCapNeedBonus, MetaInfo::Effect::Category::generic, true, true, {
-				{modifiers[1641]},{modifiers[1642]},
-			}},
-			{EffectID::salvageDroneEffect, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::shipBonusDroneMWDboostrole, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1643]},
-			}},
-			{EffectID::droneSalvageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1644]},
-			}},
-			{EffectID::droneSalvageSkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1645]},
-			}},
-			{EffectID::sensorIntegritySkillLevelPreMulSensorStrengthBonusSelf, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1646]},
-			}},
-			{EffectID::sensorCompensationSensorStrengthBonusGravimetric, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1647]},
-			}},
-			{EffectID::sensorCompensationSensorStrengthBonusLadar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1648]},
-			}},
-			{EffectID::sensorCompensationSensorStrengthBonusMagnetometric, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1649]},
-			}},
-			{EffectID::sensorCompensationSensorStrengthBonusRadar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1650]},
-			}},
-			{EffectID::shipEnergyVampireAmountBonusFixedAF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1651]},
-			}},
-			{EffectID::shipBonusEwRemoteSensorDampenerFalloffBonusGC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1652]},
-			}},
-			{EffectID::trackingSpeedBonusEffectHybrids, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1653]},
-			}},
-			{EffectID::trackingSpeedBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1654]},
-			}},
-			{EffectID::trackingSpeedBonusEffectProjectiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1655]},
-			}},
-			{EffectID::spaceAnchorEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1656]},
-			}},
-			{EffectID::armorUpgradesSkillBoostMassPenaltyReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1657]},
-			}},
-			{EffectID::armorUpgradesMassPenaltyReductionBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1658]},
-			}},
-			{EffectID::shipSETTrackingBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1659]},
-			}},
-			{EffectID::shipSETOptimalBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1660]},
-			}},
-			{EffectID::shipNOSTransferAmountBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1661]},
-			}},
-			{EffectID::shipNeutDestabilizationAmountBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1662]},
-			}},
-			{EffectID::shipWebVelocityBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1663]},
-			}},
-			{EffectID::shipDroneMWDSpeedBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1664]},
-			}},
-			{EffectID::shipRocketMaxVelocityBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1665]},
-			}},
-			{EffectID::shipLightMissileMaxVelocityBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1666]},
-			}},
-			{EffectID::shipSHTTrackingSpeedBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1667]},
-			}},
-			{EffectID::shipSHTFalloffBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1668]},
-			}},
-			{EffectID::shipSPTTrackingSpeedBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1669]},
-			}},
-			{EffectID::shipSPTFalloffBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1670]},
-			}},
-			{EffectID::shipSPTOptimalRangeBonusRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1671]},
-			}},
-			{EffectID::shipProjectileDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1672]},
-			}},
-			{EffectID::shipHeavyAssaultMissileEMDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1673]},
-			}},
-			{EffectID::shipHeavyAssaultMissileKinDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1674]},
-			}},
-			{EffectID::shipHeavyAssaultMissileThermDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1675]},
-			}},
-			{EffectID::shipHeavyAssaultMissileExpDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1676]},
-			}},
-			{EffectID::shipHeavyMissileEMDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1677]},
-			}},
-			{EffectID::shipHeavyMissileExpDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1678]},
-			}},
-			{EffectID::shipHeavyMissileKinDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1679]},
-			}},
-			{EffectID::shipHeavyMissileThermDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1680]},
-			}},
-			{EffectID::shipScanProbeStrengthBonusPirateCruiser, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1681]},
-			}},
-			{EffectID::modifyActiveShieldResonancePostPercent, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[590]},{modifiers[591]},{modifiers[592]},{modifiers[593]},
-			}},
-			{EffectID::modifyActiveArmorResonancePostPercent, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[586]},{modifiers[587]},{modifiers[588]},{modifiers[589]},
-			}},
-			{EffectID::shipSmallMissileExpDmgCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1682]},{modifiers[1683]},
-			}},
-			{EffectID::shipSmallMissileKinDmgCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1684]},{modifiers[1685]},
-			}},
-			{EffectID::shipSmallMissileThermDmgCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1686]},{modifiers[1687]},
-			}},
-			{EffectID::shipSmallMissileEMDmgCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1688]},{modifiers[1689]},
-			}},
-			{EffectID::reconShipCloakCpuBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1690]},
-			}},
-			{EffectID::covertOpsCloakCpuPercentBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1691]},
-			}},
-			{EffectID::covertCloakCPUAddition, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1692]},
-			}},
-			{EffectID::covertOpsCloakCpuPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1693]},
-			}},
-			{EffectID::covertCynoCpuPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1694]},
-			}},
-			{EffectID::warfareLinkCPUAddition, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1695]},
-			}},
-			{EffectID::warfareLinkCpuPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1696]},
-			}},
-			{EffectID::blockadeRunnerCloakCpuPercentBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1697]},
-			}},
-			{EffectID::drawbackRepairSystemsPGNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1698]},
-			}},
-			{EffectID::drawbackCapRepPGNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1699]},
-			}},
-			{EffectID::fueledArmorRepair, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[7]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusAD1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1700]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusAD2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1701]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusCD1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1702]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusCD2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1703]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusGD1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1704]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusGD2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1705]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusMD1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1706]},
-			}},
-			{EffectID::destroyerSkillLevelPreMulShipBonusMD2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1707]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusABC1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1708]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusABC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1709]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusCBC1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1710]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusCBC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1711]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusGBC1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1712]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusGBC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1713]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusMBC1Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1714]},
-			}},
-			{EffectID::battlecruiserSkillLevelPreMulShipBonusMBC2Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1715]},
-			}},
-			{EffectID::shipLaserCapNeed2AD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1716]},
-			}},
-			{EffectID::shipLaserTracking2AD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1717]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierAD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1718]},
-			}},
-			{EffectID::shipBonusDroneHitpointsAD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1719]},{modifiers[1720]},{modifiers[1721]},
-			}},
-			{EffectID::shipHybridRange1CD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1722]},
-			}},
-			{EffectID::shipHybridTrackingCD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1723]},
-			}},
-			{EffectID::shipBonusFrigateSizedMissileKineticDamageCD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1724]},
-			}},
-			{EffectID::shipRocketKineticDmgCD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1725]},
-			}},
-			{EffectID::shipBonusAoeVelocityRocketsCD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1726]},
-			}},
-			{EffectID::shipBonusAoeVelocityStandardMissilesCD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1727]},
-			}},
-			{EffectID::shipHybridFallOff1GD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1728]},
-			}},
-			{EffectID::shipHybridTracking1GD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1729]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierGD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1730]},
-			}},
-			{EffectID::shipBonusDroneHitpointsGD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1731]},{modifiers[1732]},{modifiers[1733]},
-			}},
-			{EffectID::shipProjectileDamageMD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1734]},
-			}},
-			{EffectID::shipProjectileTracking1MD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1735]},
-			}},
-			{EffectID::shipBonusFrigateSizedLightMissileExplosiveDamageMD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1736]},
-			}},
-			{EffectID::shipRocketExplosiveDmgMD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1737]},
-			}},
-			{EffectID::shipBonusMWDSignatureRadiusMD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1738]},
-			}},
-			{EffectID::shipArmorEMResistance1ABC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1739]},
-			}},
-			{EffectID::shipArmorExplosiveResistance1ABC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1740]},
-			}},
-			{EffectID::shipArmorKineticResistance1ABC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1741]},
-			}},
-			{EffectID::shipArmorThermResistance1ABC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1742]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierABC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1743]},
-			}},
-			{EffectID::shipBonusDroneHitpointsABC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1744]},{modifiers[1745]},{modifiers[1746]},
-			}},
-			{EffectID::shipLaserCapABC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1747]},
-			}},
-			{EffectID::shipLaserDamageBonusABC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1748]},
-			}},
-			{EffectID::shipHybridOptimal1CBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1749]},
-			}},
-			{EffectID::shipShieldEmResistance1CBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1750]},
-			}},
-			{EffectID::shipShieldExplosiveResistance1CBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1751]},
-			}},
-			{EffectID::shipShieldKineticResistance1CBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1752]},
-			}},
-			{EffectID::shipShieldThermalResistance1CBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1753]},
-			}},
-			{EffectID::shipBonusHeavyAssaultMissileKineticDamageCBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1754]},
-			}},
-			{EffectID::shipBonusHeavyMissileKineticDamageCBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1755]},
-			}},
-			{EffectID::shipHybridDmg1GBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1756]},
-			}},
-			{EffectID::shipArmorRepairing1GBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1757]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierGBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1758]},
-			}},
-			{EffectID::shipBonusDroneHitpointsGBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1759]},{modifiers[1760]},{modifiers[1761]},
-			}},
-			{EffectID::shipBonusHeavyMissileLauncherRofMBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1762]},
-			}},
-			{EffectID::shipBonusHeavyAssaultMissileLauncherRofMBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1763]},
-			}},
-			{EffectID::shipShieldBoost1MBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1764]},
-			}},
-			{EffectID::shipBonusProjectileDamageMBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1765]},
-			}},
-			{EffectID::shipProjectileRof1MBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1766]},
-			}},
-			{EffectID::shipLargeLaserCapABC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1767]},
-			}},
-			{EffectID::shipLargeLaserDamageBonusABC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1768]},
-			}},
-			{EffectID::shipHybridRangeBonusCBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1769]},
-			}},
-			{EffectID::shipHybridDamageBonusCBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1770]},
-			}},
-			{EffectID::shipLargeHybridTrackingBonusGBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1771]},
-			}},
-			{EffectID::shipHybridDamageBonusGBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1772]},
-			}},
-			{EffectID::shipProjectileRofBonusMBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1773]},
-			}},
-			{EffectID::shipProjectileFalloffBonusMBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1774]},
-			}},
-			{EffectID::armorAllRepairSystemsAmountBonusPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1775]},{modifiers[1776]},
-			}},
-			{EffectID::eliteBonusViolatorsRepairSystemsArmorDamageAmount2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1777]},
-			}},
-			{EffectID::shipBonusRepairSystemsBonusATC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1778]},
-			}},
-			{EffectID::shipBonusRepairSystemsArmorRepairAmountGB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1779]},
-			}},
-			{EffectID::damageCloudChanceReductionFixed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1780]},
-			}},
-			{EffectID::deepCoreMiningSkillBoostDamageCloudChanceReductionMul, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1781]},
-			}},
-			{EffectID::shipHeavyMissileAOECloudSizeCBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1782]},
-			}},
-			{EffectID::shipHeavyAssaultMissileAOECloudSizeCBC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1783]},
-			}},
-			{EffectID::shipHybridTrackingGBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1784]},
-			}},
-			{EffectID::shipEnergyTrackingABC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1785]},
-			}},
-			{EffectID::shipBonusMETOptimalAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1786]},
-			}},
-			{EffectID::shipMissileEMDamageCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1787]},
-			}},
-			{EffectID::shipMissileThermDamageCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1788]},
-			}},
-			{EffectID::shipMissileExpDamageCC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1789]},
-			}},
-			{EffectID::shipMissileKinDamageCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1790]},
-			}},
-			{EffectID::shipHeavyAssaultMissileAOECloudSizeCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1791]},
-			}},
-			{EffectID::shipHeavyMissileAOECloudSizeCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1792]},
-			}},
-			{EffectID::shipBonusDroneTrackingGC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1793]},
-			}},
-			{EffectID::shipBonusDroneMWDboostGC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1794]},
-			}},
-			{EffectID::baseMaxScanDeviationModifierModuleOnline2None, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1795]},
-			}},
-			{EffectID::systemScanDurationModuleModifier, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1796]},
-			}},
-			{EffectID::baseSensorStrengthModifierModule, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1797]},
-			}},
-			{EffectID::shipMissileHeavyAssaultVelocityABC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1798]},
-			}},
-			{EffectID::shipMissileHeavyVelocityABC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1799]},
-			}},
-			{EffectID::shipLaserCap1ABC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1800]},
-			}},
-			{EffectID::shipMissileVelocityCD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1801]},
-			}},
-			{EffectID::shipBonusDroneDamageMultiplierAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1802]},
-			}},
-			{EffectID::shipBonusDroneArmorHitPointsAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1803]},
-			}},
-			{EffectID::shipBonusDroneShieldHitPointsAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1804]},
-			}},
-			{EffectID::shipBonusDroneStructureHitPointsAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1805]},
-			}},
-			{EffectID::shipBonusEnergyNeutRangeAB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1806]},
-			}},
-			{EffectID::shipBonusEnergyVampireRangeAB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1807]},
-			}},
-			{EffectID::shipLargeHybridTurretRofGB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1808]},
-			}},
-			{EffectID::shipBonusDroneTrackingGB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1809]},
-			}},
-			{EffectID::shipBonusDroneOptimalRangeGB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1810]},
-			}},
-			{EffectID::shipBonusMissileAoeVelocityMB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1811]},
-			}},
-			{EffectID::shipBonusAoeVelocityCruiseMissilesMB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1812]},
-			}},
-			{EffectID::shipBonusLargeEnergyTurretTrackingAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1813]},
-			}},
-			{EffectID::hackingSkillVirusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1814]},
-			}},
-			{EffectID::dataMiningSkillLevelVirusCoherenceBonusModifier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1815]},
-			}},
-			{EffectID::archaeologySkillVirusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1816]},
-			}},
-			{EffectID::shipTorpedoAOECloudSize1CB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1817]},
-			}},
-			{EffectID::shipCruiseMissileAOECloudSize1CB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1818]},
-			}},
-			{EffectID::shipCruiseMissileROFCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1819]},
-			}},
-			{EffectID::shipTorpedoROFCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1820]},
-			}},
-			{EffectID::minigameVirusStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1821]},{modifiers[1822]},
-			}},
-			{EffectID::shieldOperationRechargeratebonusPostPercentOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[161]},
-			}},
-			{EffectID::shipBonusAgilityCI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1823]},
-			}},
-			{EffectID::shipBonusAgilityMI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1824]},
-			}},
-			{EffectID::shipBonusAgilityGI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1825]},
-			}},
-			{EffectID::shipBonusAgilityAI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1826]},
-			}},
-			{EffectID::shipBonusOreCapacityGI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1827]},
-			}},
-			{EffectID::shipBonusAmmoBayMI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1828]},
-			}},
-			{EffectID::shipBonusPICommoditiesHoldGI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1829]},
-			}},
-			{EffectID::shipBonusMineralBayGI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1830]},
-			}},
-			{EffectID::setBonusChristmasBonusVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1831]},
-			}},
-			{EffectID::setBonusChristmasAgilityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1832]},
-			}},
-			{EffectID::setBonusChristmasShieldCapacityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1833]},
-			}},
-			{EffectID::setBonusChristmasArmorHPBonus2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1834]},
-			}},
-			{EffectID::shipSPTOptimalBonusMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1835]},
-			}},
-			{EffectID::shipBonusProjectileDamageMBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1836]},
-			}},
-			{EffectID::eliteBonusCommandShipHAMRoFCS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1837]},
-			}},
-			{EffectID::eliteBonusCommandShipHMRoFCS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1838]},
-			}},
-			{EffectID::eliteBonusCommandShipsHeavyAssaultMissileExplosionVelocityCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1839]},
-			}},
-			{EffectID::eliteBonusCommandShipsHeavyAssaultMissileExplosionRadiusCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1840]},
-			}},
-			{EffectID::eliteBonusCommandShipsHeavyMissileExplosionRadiusCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1841]},
-			}},
-			{EffectID::eliteBonusCommandShipMediumHybridDamageCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1842]},
-			}},
-			{EffectID::eliteBonusCommandShipMediumHybridTrackingCS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1843]},
-			}},
-			{EffectID::eliteBonusCommandShipHeavyDroneTrackingCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1844]},
-			}},
-			{EffectID::eliteBonusCommandShipHeavyDroneVelocityCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1845]},
-			}},
-			{EffectID::eliteBonusCommandShipMediumHybridRoFCS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1846]},
-			}},
-			{EffectID::eliteBonusCommandShipHeavyAssaultMissileDamageCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1847]},{modifiers[1848]},{modifiers[1849]},{modifiers[1850]},
-			}},
-			{EffectID::eliteBonusCommandShipHeavyMissileDamageCS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1851]},{modifiers[1852]},{modifiers[1853]},{modifiers[1854]},
-			}},
-			{EffectID::skillJumpCloneCooldownReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1855]},
-			}},
-			{EffectID::shipBonusHMLKineticDamageAC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1856]},
-			}},
-			{EffectID::shipBonusHMLEMDamageAC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1857]},
-			}},
-			{EffectID::shipBonusHMLThermDamageAC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1858]},
-			}},
-			{EffectID::shipBonusHMLExploDamageAC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1859]},
-			}},
-			{EffectID::shipBonusHMLVelocityEliteBonusHeavyGunship1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1860]},
-			}},
-			{EffectID::shipBonusHAMVelocityEliteBonusHeavyGunship1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1861]},
-			}},
-			{EffectID::shipBonusArmorRepAmountGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1862]},
-			}},
-			{EffectID::shipBonusHeavyDroneSpeedGC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1863]},
-			}},
-			{EffectID::shipBonusHeavyDRoneTrackingGC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1864]},
-			}},
-			{EffectID::shipBonusSentryDroneOptimalRangeEliteBonusHeavyGunship2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1865]},
-			}},
-			{EffectID::shipBonusSentryDroneTrackingEliteBonusHeavyGunship2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1866]},
-			}},
-			{EffectID::shipBonusShieldBoostAmountMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1867]},
-			}},
-			{EffectID::roleBonusMarauderMJDRReactivationDelayBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1868]},
-			}},
-			{EffectID::subSystemBonusAmarrDefensiveInformationWarfare, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1869]},{modifiers[1870]},{modifiers[1871]},{modifiers[1872]},{modifiers[1873]},
-			}},
-			{EffectID::subSystemBonusAmarrDefensiveSkirmishWarfare, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1874]},{modifiers[1875]},{modifiers[1876]},{modifiers[1877]},{modifiers[1878]},
-			}},
-			{EffectID::subSystemBonusCaldariOffensiveCommandBursts, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1879]},{modifiers[1880]},{modifiers[1881]},{modifiers[1882]},{modifiers[1883]},{modifiers[1884]},{modifiers[1885]},{modifiers[1886]},{modifiers[1887]},{modifiers[1888]},{modifiers[1889]},{modifiers[1890]},{modifiers[1891]},{modifiers[1892]},{modifiers[1893]},
-			}},
-			{EffectID::subSystemBonusCaldariDefensiveSkirmishWarfare, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1894]},{modifiers[1895]},{modifiers[1896]},{modifiers[1897]},{modifiers[1898]},
-			}},
-			{EffectID::subSystemBonusGallenteDefensiveSkirmishWarfare, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1899]},{modifiers[1900]},{modifiers[1901]},{modifiers[1902]},{modifiers[1903]},
-			}},
-			{EffectID::subSystemBonusGallenteOffensiveCommandBursts, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1904]},{modifiers[1905]},{modifiers[1906]},{modifiers[1907]},{modifiers[1908]},{modifiers[1909]},{modifiers[1910]},{modifiers[1911]},{modifiers[1912]},{modifiers[1913]},{modifiers[1914]},{modifiers[1915]},{modifiers[1916]},{modifiers[1917]},{modifiers[1918]},
-			}},
-			{EffectID::subSystemBonusMinmatarDefensiveSiegeWarfare, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1919]},{modifiers[1920]},{modifiers[1921]},{modifiers[1922]},{modifiers[1923]},
-			}},
-			{EffectID::subSystemBonusMinmatarOffensiveCommandBursts, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1924]},{modifiers[1925]},{modifiers[1926]},{modifiers[1927]},{modifiers[1928]},{modifiers[1929]},{modifiers[1930]},{modifiers[1931]},{modifiers[1932]},{modifiers[1933]},{modifiers[1934]},{modifiers[1935]},{modifiers[1936]},{modifiers[1937]},{modifiers[1938]},
-			}},
-			{EffectID::commandShipSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1939]},
-			}},
-			{EffectID::eliteBonusCommandShipArmoredCS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1940]},{modifiers[1941]},{modifiers[1942]},{modifiers[1943]},{modifiers[1944]},
-			}},
-			{EffectID::eliteBonusCommandShipSiegeCS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1945]},{modifiers[1946]},{modifiers[1947]},{modifiers[1948]},{modifiers[1949]},
-			}},
-			{EffectID::eliteBonusCommandShipSkirmishCS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1950]},{modifiers[1951]},{modifiers[1952]},{modifiers[1953]},{modifiers[1954]},
-			}},
-			{EffectID::eliteBonusCommandShipInformationCS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1955]},{modifiers[1956]},{modifiers[1957]},{modifiers[1958]},{modifiers[1959]},
-			}},
-			{EffectID::capacitorEmissionSystemskill, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1960]},
-			}},
-			{EffectID::shipBonusLargeEnergyTurretMaxRangeAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1961]},
-			}},
-			{EffectID::shipBonusHTFalloffGB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1962]},
-			}},
-			{EffectID::piCustomsOfficeTaxReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1963]},
-			}},
-			{EffectID::piTaxReductionModifierSkillModifier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1964]},
-			}},
-			{EffectID::shipBonusRHMLROF2CB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1965]},
-			}},
-			{EffectID::shipBonusRHMLROFCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1966]},
-			}},
-			{EffectID::shipBonusRHMLROFMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1967]},
-			}},
-			{EffectID::shipBonusCruiseROFMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1968]},
-			}},
-			{EffectID::shipBonusTorpedoROFMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1969]},
-			}},
-			{EffectID::shipBonusCruiseMissileEMDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1970]},
-			}},
-			{EffectID::shipBonusCruiseMissileThermDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1971]},
-			}},
-			{EffectID::shipBonusCruiseMissileKineticDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1972]},
-			}},
-			{EffectID::shipBonusCruiseMissileExploDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1973]},
-			}},
-			{EffectID::shipBonusTorpedoMissileExploDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1974]},
-			}},
-			{EffectID::shipBonusTorpedoMissileEMDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1975]},
-			}},
-			{EffectID::shipBonusTorpedoMissileThermDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1976]},
-			}},
-			{EffectID::shipBonusTorpedoMissileKineticDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1977]},
-			}},
-			{EffectID::shipBonusHeavyMissileEMDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1978]},
-			}},
-			{EffectID::shipBonusHeavyMissileThermDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1979]},
-			}},
-			{EffectID::shipBonusHeavyMissileKineticDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1980]},
-			}},
-			{EffectID::shipBonusHeavyMissileExploDmgMB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1981]},
-			}},
-			{EffectID::shipBonusMissileVelocityCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1982]},
-			}},
-			{EffectID::covertOpsCloakCPUPercentRoleBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1983]},
-			}},
-			{EffectID::shipArmorResistanceAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[531]},{modifiers[532]},{modifiers[533]},{modifiers[534]},
-			}},
-			{EffectID::interceptor2ShieldResist, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1984]},{modifiers[1985]},{modifiers[1986]},{modifiers[1987]},
-			}},
-			{EffectID::interceptor2ProjectileDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1988]},
-			}},
-			{EffectID::shipBonusSmallMissileExplosionRadiusCD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1989]},{modifiers[1990]},
-			}},
-			{EffectID::shipBonusMissileVelocityAD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1991]},
-			}},
-			{EffectID::eliteBonusInterdictorsArmorResist1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1992]},{modifiers[1993]},{modifiers[1994]},{modifiers[1995]},
-			}},
-			{EffectID::setWarpSpeedMultiplier, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1996]},
-			}},
-			{EffectID::implantSetWarpSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1997]},
-			}},
-			{EffectID::shipBonusMETOptimalRangePirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1998]},
-			}},
-			{EffectID::shipHybridOptimalGD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[1999]},
-			}},
-			{EffectID::eliteBonusInterdictorsMWDSigRadius2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2000]},
-			}},
-			{EffectID::shipSHTOptimalBonusGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2001]},
-			}},
-			{EffectID::shipBonusRemoteRepairAmountPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2002]},
-			}},
-			{EffectID::shipBonusLETOptimalRangePirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2003]},
-			}},
-			{EffectID::eliteBonusMaraudersHeavyMissileDamageExpRole1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2004]},
-			}},
-			{EffectID::eliteBonusMaraudersHeavyMissileDamageKinRole1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2005]},
-			}},
-			{EffectID::eliteBonusMaraudersHeavyMissileDamageEMRole1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2006]},
-			}},
-			{EffectID::eliteBonusMaraudersHeavyMissileDamageThermRole1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2007]},
-			}},
-			{EffectID::shipScanProbeStrengthBonusPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2008]},
-			}},
-			{EffectID::shipBonusRemoteRepairRangePirateFaction2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2009]},{modifiers[2010]},
-			}},
-			{EffectID::overloadSelfTrackingModuleBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[2011]},{modifiers[2012]},{modifiers[2013]},
-			}},
-			{EffectID::overloadSelfSensorModuleBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[2014]},{modifiers[2015]},{modifiers[2016]},{modifiers[2017]},{modifiers[2018]},{modifiers[2019]},
-			}},
-			{EffectID::overloadSelfPainterBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[2020]},
-			}},
-			{EffectID::repairDroneHullBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2021]},
-			}},
-			{EffectID::shipMissileRoFMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2022]},
-			}},
-			{EffectID::shipBonusSPTFalloffMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2023]},
-			}},
-			{EffectID::miningAmountBonusBonusActivation, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[2024]},
-			}},
-			{EffectID::ewSkillTrackingDisruptionRangeDisruptionBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2025]},{modifiers[2026]},
-			}},
-			{EffectID::shipBonusEwWeaponDisruptionStrengthRookie, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2027]},{modifiers[2028]},{modifiers[2029]},{modifiers[2030]},{modifiers[2031]},{modifiers[2032]},{modifiers[2033]},
-			}},
-			{EffectID::shipBonusAfterburnerSpeedFactor2CB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2034]},
-			}},
-			{EffectID::shipBonusSentryDroneDamageMultiplierPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2035]},
-			}},
-			{EffectID::shipBonusHeavyDroneDamageMultiplierPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2036]},
-			}},
-			{EffectID::shipBonusSentryDroneHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2037]},
-			}},
-			{EffectID::shipBonusSentryDroneArmorHpPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2038]},
-			}},
-			{EffectID::shipBonusSentryDroneShieldHpPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2039]},
-			}},
-			{EffectID::shipBonusHeavyDroneShieldHpPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2040]},
-			}},
-			{EffectID::shipBonusHeavyDroneArmorHpPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2041]},
-			}},
-			{EffectID::shipBonusHeavyDroneHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2042]},
-			}},
-			{EffectID::shipBonusKineticMissileDamageGB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2043]},
-			}},
-			{EffectID::shipBonusThermalMissileDamageGB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2044]},
-			}},
-			{EffectID::shipBonusAfterburnerSpeedFactorCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2045]},
-			}},
-			{EffectID::shipBonusKineticMissileDamageGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2046]},
-			}},
-			{EffectID::shipBonusThermalMissileDamageGF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2047]},
-			}},
-			{EffectID::shipBonusLightDroneDamageMultiplierPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2048]},
-			}},
-			{EffectID::shipBonusLightDroneHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2049]},
-			}},
-			{EffectID::shipBonusLightDroneArmorHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2050]},
-			}},
-			{EffectID::shipBonusLightDroneShieldHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2051]},
-			}},
-			{EffectID::shipBonusAfterburnerSpeedFactorCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2052]},
-			}},
-			{EffectID::shipBonusMediumDroneDamageMultiplierPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2053]},
-			}},
-			{EffectID::shipBonusMediumDroneHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2054]},
-			}},
-			{EffectID::shipBonusMediumDroneArmorHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2055]},
-			}},
-			{EffectID::shipBonusMediumDroneShieldHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2056]},
-			}},
-			{EffectID::shipBonusKineticMissileDamageGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2057]},
-			}},
-			{EffectID::shipBonusThermalMissileDamageGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2058]},
-			}},
-			{EffectID::shipBonusTDOptimalBonusAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2059]},
-			}},
-			{EffectID::shipBonusMiningDurationORE3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2060]},
-			}},
-			{EffectID::shipBonusMiningIceHarvestingRangeORE2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2061]},{modifiers[2062]},
-			}},
-			{EffectID::eliteBargeShieldResistance1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2063]},{modifiers[2064]},{modifiers[2065]},{modifiers[2066]},
-			}},
-			{EffectID::eliteBargeBonusMiningDurationBarge2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2067]},
-			}},
-			{EffectID::expeditionFrigateSkillLevelPostMulEliteBonusExpedition1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2068]},
-			}},
-			{EffectID::expeditionFrigateSkillLevelPostMulEliteBonusExpedition2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2069]},
-			}},
-			{EffectID::eliteBonusExpeditionMining1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2070]},
-			}},
-			{EffectID::eliteBonusExpeditionSigRadius2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2071]},
-			}},
-			{EffectID::shipBonusNosferatuOverride, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2072]},
-			}},
-			{EffectID::shipMissileEMDamageCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2073]},
-			}},
-			{EffectID::shipMissileKinDamageCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2074]},
-			}},
-			{EffectID::shipMissileThermDamageCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2075]},
-			}},
-			{EffectID::shipMissileExploDamageCB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2076]},
-			}},
-			{EffectID::shipBonusWarpScrambleMaxRangeGB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2077]},
-			}},
-			{EffectID::shipBonusMissileExplosionDelayPirateFaction2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2078]},
-			}},
-			{EffectID::drawbackCargoCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2079]},
-			}},
-			{EffectID::eliteIndustrialWarpSpeedBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2080]},
-			}},
-			{EffectID::shipBonusShieldBoostCI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2081]},
-			}},
-			{EffectID::shipBonusShieldBoostMI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2082]},
-			}},
-			{EffectID::shipBonusArmorRepairAI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2083]},
-			}},
-			{EffectID::shipBonusArmorRepairGI2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2084]},
-			}},
-			{EffectID::eliteIndustrialFleetCapacity1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2085]},
-			}},
-			{EffectID::eliteIndustrialShieldResists2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2086]},{modifiers[2087]},{modifiers[2088]},{modifiers[2089]},
-			}},
-			{EffectID::eliteIndustrialArmorResists2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2090]},{modifiers[2091]},{modifiers[2092]},{modifiers[2093]},
-			}},
-			{EffectID::eliteIndustrialABHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2094]},
-			}},
-			{EffectID::eliteIndustrialMWDHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2095]},
-			}},
-			{EffectID::eliteIndustrialArmorHardenerHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2096]},
-			}},
-			{EffectID::eliteIndustrialReactiveArmorHardenerHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2097]},
-			}},
-			{EffectID::eliteIndustrialShieldHardenerHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2098]},
-			}},
-			{EffectID::eliteIndustrialShieldBoosterHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2099]},{modifiers[2100]},
-			}},
-			{EffectID::eliteIndustrialArmorRepairHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2101]},{modifiers[2102]},
-			}},
-			{EffectID::warpSpeedAddition, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2103]},
-			}},
-			{EffectID::roleBonusBulkheadCPU, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2104]},
-			}},
-			{EffectID::advancedIndustryManufacturingTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2105]},
-			}},
-			{EffectID::advancedIndustryCopyTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2106]},
-			}},
-			{EffectID::advancedIndustryInventionTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2107]},
-			}},
-			{EffectID::advancedIndustrySkillBoostAdvancedIndustrySkillIndustryJobTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2108]},
-			}},
-			{EffectID::advancedIndustryManufactureTimeResearchTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2109]},
-			}},
-			{EffectID::advancedIndustryMaterialResearchTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2110]},
-			}},
-			{EffectID::onlineJumpDriveConsumptionAmountBonusPercentage, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[1000]},
-			}},
-			{EffectID::warpScrambleBlockMWDWithNPCEffect, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[8]},{modifiers[2111]},{modifiers[2112]},
-			}},
-			{EffectID::shipBonusSmallMissileExplosionRadiusCF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2113]},{modifiers[2114]},
-			}},
-			{EffectID::shipRocketRoFBonusAF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2115]},
-			}},
-			{EffectID::eliteBonusInterdictorsSHTRoF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2116]},
-			}},
-			{EffectID::shipMissileLauncherRoFAD1Fixed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2117]},
-			}},
-			{EffectID::cloakingPrototype, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[214]},
-			}},
-			{EffectID::drawbackWarpSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2118]},
-			}},
-			{EffectID::shipMETDamageBonusAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2119]},
-			}},
-			{EffectID::eliteBonusHeavyInterdictorsMETOptimal, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2120]},
-			}},
-			{EffectID::shipHybridTrackingGC, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2121]},
-			}},
-			{EffectID::eliteBonusHeavyInterdictorsHybridOptimal1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2122]},
-			}},
-			{EffectID::resistanceKillerShieldAll, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2123]},{modifiers[2124]},{modifiers[2125]},{modifiers[2126]},
-			}},
-			{EffectID::resistanceKillerArmorAll, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2127]},{modifiers[2128]},{modifiers[2129]},{modifiers[2130]},
-			}},
-			{EffectID::resistanceKillerHullAll, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2131]},{modifiers[2132]},{modifiers[2133]},{modifiers[2134]},
-			}},
-			{EffectID::resistanceKillerShieldArmorAll, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2123]},{modifiers[2124]},{modifiers[2125]},{modifiers[2126]},{modifiers[2127]},{modifiers[2128]},{modifiers[2129]},{modifiers[2130]},
-			}},
-			{EffectID::freighterO1SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2135]},
-			}},
-			{EffectID::freighterO2SkillLevel, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2136]},
-			}},
-			{EffectID::freighterSMACapacityBonusO1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2137]},
-			}},
-			{EffectID::freighterAgilityBonus2O2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2138]},
-			}},
-			{EffectID::tacticalDestroyerAmarrSkillLevel1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2139]},
-			}},
-			{EffectID::tacticalDestroyerAmarrSkillLevel2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2140]},
-			}},
-			{EffectID::tacticalDestroyerAmarrSkillLevel3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2141]},
-			}},
-			{EffectID::shipSETDamageAmarrTacticalDestroyer1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2142]},
-			}},
-			{EffectID::shipSETCapNeedAmarrTacticalDestroyer2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2143]},
-			}},
-			{EffectID::shipHeatDamageAmarrTacticalDestroyer3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2144]},
-			}},
-			{EffectID::probeLauncherCPUPercentRoleBonusT3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2145]},
-			}},
-			{EffectID::shipModeMaxTargetRangePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2146]},
-			}},
-			{EffectID::shipModeSETOptimalRangePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2147]},
-			}},
-			{EffectID::shipModeScanStrengthPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2148]},{modifiers[2149]},{modifiers[2150]},{modifiers[2151]},
-			}},
-			{EffectID::modeSigRadiusPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2152]},
-			}},
-			{EffectID::modeArmorResonancePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2153]},{modifiers[2154]},{modifiers[2155]},{modifiers[2156]},
-			}},
-			{EffectID::modeAgilityPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2157]},
-			}},
-			{EffectID::modeVelocityPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2158]},
-			}},
-			{EffectID::shipBonusEnergyNeutOptimalRS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2159]},
-			}},
-			{EffectID::shipBonusEnergyNosOptimalRS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2160]},
-			}},
-			{EffectID::reconShipSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2161]},
-			}},
-			{EffectID::eliteReconBonusMHTOptimalRange1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2162]},
-			}},
-			{EffectID::eliteReconBonusMPTdamage1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2163]},
-			}},
-			{EffectID::remoteCapacitorTransmitterPowerNeedBonusEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2164]},
-			}},
-			{EffectID::tacticalDestroyerMinmatarSkillLevel1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2165]},
-			}},
-			{EffectID::tacticalDestroyerMinmatarSkillLevel2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2166]},
-			}},
-			{EffectID::tacticalDestroyerMinmatarSkillLevel3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2167]},
-			}},
-			{EffectID::shipHeatDamageMinmatarTacticalDestroyer3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2168]},
-			}},
-			{EffectID::shipSPTDamageMinmatarTacticalDestroyer1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2169]},
-			}},
-			{EffectID::shipSPTOptimalMinmatarTacticalDestroyer2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2170]},
-			}},
-			{EffectID::shipModeSPTTrackingPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2171]},
-			}},
-			{EffectID::modeMWDSigRadiusPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2172]},
-			}},
-			{EffectID::modeShieldResonancePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2173]},{modifiers[2174]},{modifiers[2175]},{modifiers[2176]},
-			}},
-			{EffectID::subsystemBonusCaldariDefensiveShieldRechargeRate, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2177]},
-			}},
-			{EffectID::gallenteCruiserSkillLevelPreMulShipBonusGC3Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2178]},
-			}},
-			{EffectID::shipBonusSentryDamageMultiplierGC3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2179]},
-			}},
-			{EffectID::shipBonusSentryHPGC3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2180]},
-			}},
-			{EffectID::shipBonusSentryArmorHPGC3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2181]},
-			}},
-			{EffectID::shipBonusSentryShieldHPGC3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2182]},
-			}},
-			{EffectID::shipBonusLightDroneDamageMultiplierGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2183]},
-			}},
-			{EffectID::shipBonusMediumDroneDamageMultiplierGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2184]},
-			}},
-			{EffectID::shipBonusHeavyDroneDamageMultiplierGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2185]},
-			}},
-			{EffectID::shipBonusHeavyDroneHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2186]},
-			}},
-			{EffectID::shipBonusHeavyDroneArmorHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2187]},
-			}},
-			{EffectID::shipBonusHeavyDroneShieldHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2188]},
-			}},
-			{EffectID::shipBonusMediumDroneShieldHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2189]},
-			}},
-			{EffectID::shipBonusMediumDroneArmorHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2190]},
-			}},
-			{EffectID::shipBonusMediumDroneHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2191]},
-			}},
-			{EffectID::shipBonusLightDroneHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2192]},
-			}},
-			{EffectID::shipBonusLightDroneArmorHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2193]},
-			}},
-			{EffectID::shipBonusLightDroneShieldHPGC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2194]},
-			}},
-			{EffectID::entosisLink, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::shipModeMissileVelocityPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2195]},
-			}},
-			{EffectID::shipHeatDamageCaldariTacticalDestroyer3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2196]},
-			}},
-			{EffectID::tacticalDestroyerCaldariSkillLevel1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2197]},
-			}},
-			{EffectID::tacticalDestroyerCaldariSkillLevel2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2198]},
-			}},
-			{EffectID::tacticalDestroyerCaldariSkillLevel3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2199]},
-			}},
-			{EffectID::shipSmallMissileDmgPirateFaction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2200]},{modifiers[2201]},{modifiers[2202]},{modifiers[2203]},{modifiers[2204]},{modifiers[2205]},{modifiers[2206]},{modifiers[2207]},
-			}},
-			{EffectID::shipMissileRoFCaldariTacticalDestroyer1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2208]},
-			}},
-			{EffectID::shipBonusHeavyAssaultMissileAllDamageMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2209]},{modifiers[2210]},{modifiers[2211]},{modifiers[2212]},
-			}},
-			{EffectID::shipBonusHeavyMissileAllDamageMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2213]},{modifiers[2214]},{modifiers[2215]},{modifiers[2216]},
-			}},
-			{EffectID::shipBonusLightMissileAllDamageMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2217]},{modifiers[2218]},{modifiers[2219]},{modifiers[2220]},
-			}},
-			{EffectID::shipMissileReloadTimeCaldariTacticalDestroyer2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2221]},
-			}},
-			{EffectID::entosisDurationMultiply, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2222]},
-			}},
-			{EffectID::missileVelocityBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2223]},
-			}},
-			{EffectID::missileExplosionDelayBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2224]},
-			}},
-			{EffectID::missileAOECloudSizeBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2225]},
-			}},
-			{EffectID::missileAOEVelocityBonusOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2226]},
-			}},
-			{EffectID::scriptMissileGuidanceComputerAOECloudSizeBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2227]},
-			}},
-			{EffectID::scriptMissileGuidanceComputerAOEVelocityBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2228]},
-			}},
-			{EffectID::scriptMissileGuidanceComputerMissileVelocityBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2229]},
-			}},
-			{EffectID::scriptMissileGuidanceComputerExplosionDelayBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2230]},
-			}},
-			{EffectID::missileGuidanceComputerBonus4, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[2223]},{modifiers[2224]},{modifiers[2225]},{modifiers[2226]},
-			}},
-			{EffectID::overloadSelfMissileGuidanceBonus5, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[2231]},{modifiers[2232]},{modifiers[2233]},{modifiers[2234]},{modifiers[2235]},
-			}},
-			{EffectID::tacticalDestroyerGallenteSkillLevel1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2236]},
-			}},
-			{EffectID::tacticalDestroyerGallenteSkillLevel2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2237]},
-			}},
-			{EffectID::tacticalDestroyerGallenteSkillLevel3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2238]},
-			}},
-			{EffectID::shipHeatDamageGallenteTacticalDestroyer3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2239]},
-			}},
-			{EffectID::shipSHTRoFGallenteTacticalDestroyer1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2240]},
-			}},
-			{EffectID::shipSHTTrackingGallenteTacticalDestroyer2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2241]},
-			}},
-			{EffectID::modeHullResonancePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2242]},{modifiers[2243]},{modifiers[2244]},{modifiers[2245]},
-			}},
-			{EffectID::shipModeSHTOptimalRangePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2246]},
-			}},
-			{EffectID::modeMWDCapPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2247]},
-			}},
-			{EffectID::modeMWDBoostPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2248]},
-			}},
-			{EffectID::modeArmorRepDurationPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2249]},
-			}},
-			{EffectID::passiveSpeedLimit, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2250]},
-			}},
-			{EffectID::shipBonusWDFGnullPenalties, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2251]},{modifiers[2252]},{modifiers[2253]},
-			}},
-			{EffectID::entosisCPUPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2254]},
-			}},
-			{EffectID::entosisCPUAddition, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2255]},
-			}},
-			{EffectID::battlecruiserMETRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2256]},{modifiers[2257]},
-			}},
-			{EffectID::battlecruiserMHTRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2258]},{modifiers[2259]},
-			}},
-			{EffectID::battlecruiserMPTRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2260]},{modifiers[2261]},
-			}},
-			{EffectID::battlecruiserMissileRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2262]},
-			}},
-			{EffectID::battlecruiserDroneSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2263]},
-			}},
-			{EffectID::shipHybridDmg1CBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2264]},
-			}},
-			{EffectID::shipBonusProjectileTrackingMBC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2265]},
-			}},
-			{EffectID::shipModuleRemoteCapacitorTransmitter, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[2266]},
-			}},
-			{EffectID::shipModuleRemoteHullRepairer, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[2267]},
-			}},
-			{EffectID::shipModuleRemoteShieldBooster, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[3]},
-			}},
-			{EffectID::energyNeutralizerFalloff, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[2268]},
-			}},
-			{EffectID::shipModuleRemoteArmorRepairer, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[206]},
-			}},
-			{EffectID::expeditionFrigateShieldResistance1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2269]},{modifiers[2270]},{modifiers[2271]},{modifiers[2272]},
-			}},
-			{EffectID::expeditionFrigateBonusIceHarvestingCycleTime2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2273]},
-			}},
-			{EffectID::energyNosferatuFalloff, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[2268]},
-			}},
-			{EffectID::doomsdaySlash, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::microJumpPortalDrive, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::commandDestroyerSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2274]},
-			}},
-			{EffectID::commandDestroyerSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2275]},
-			}},
-			{EffectID::commandDestroyerSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2276]},
-			}},
-			{EffectID::roleBonusCDLinksPGReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2277]},
-			}},
-			{EffectID::structureEnergyNeutralizerFalloff, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::structureWarpScrambleBlockMWDWithNPCEffect, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[8]},{modifiers[2111]},{modifiers[2112]},
-			}},
-			{EffectID::structureTargetMaxTargetRangeAndScanResolutionBonusAssistance, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[2278]},{modifiers[2279]},
-			}},
-			{EffectID::structureTargetGunneryMaxRangeFalloffTrackingSpeedBonusAssistance, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[2280]},{modifiers[2281]},{modifiers[2282]},
-			}},
-			{EffectID::structureMissileGuidanceComputerBonus4, MetaInfo::Effect::Category::active, false, true, {
-				{modifiers[2223]},{modifiers[2224]},{modifiers[2225]},{modifiers[2226]},
-			}},
-			{EffectID::shipBonusEnergyNeutOptimalRS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2283]},
-			}},
-			{EffectID::shipBonusEnergyNeutFalloffRS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2284]},
-			}},
-			{EffectID::shipBonusEnergyNeutFalloffRS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2285]},
-			}},
-			{EffectID::shipBonusEnergyNosOptimalRS1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2286]},
-			}},
-			{EffectID::shipBonusEnergyNosFalloffRS2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2287]},
-			}},
-			{EffectID::shipBonusEnergyNosFalloffRS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2288]},
-			}},
-			{EffectID::miningFrigateBonusIceHarvestingCycleTime2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2289]},
-			}},
-			{EffectID::shipBonusEnergyNeutFalloffAD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2290]},
-			}},
-			{EffectID::shipBonusEnergyNeutOptimalAD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2291]},
-			}},
-			{EffectID::shipBonusEnergyNosOptimalAD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2292]},
-			}},
-			{EffectID::shipBonusEnergyNosFalloffAD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2293]},
-			}},
-			{EffectID::shipBonusEnergyNeutOptimalAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2294]},
-			}},
-			{EffectID::shipBonusEnergyNeutFalloffAB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2295]},
-			}},
-			{EffectID::shipBonusEnergyNosOptimalAB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2296]},
-			}},
-			{EffectID::shipBonusEnergyNosFalloffAB2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2297]},
-			}},
-			{EffectID::shipBonusEnergyNeutOptimalEAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2298]},
-			}},
-			{EffectID::shipBonusEnergyNeutFalloffEAF3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2299]},
-			}},
-			{EffectID::shipBonusEnergyNosOptimalEAF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2300]},
-			}},
-			{EffectID::shipBonusEnergyNosFalloffEAF3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2301]},
-			}},
-			{EffectID::electronicAttackShipsSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2302]},
-			}},
-			{EffectID::shipBonusEnergyNeutOptimalAF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2303]},
-			}},
-			{EffectID::shipBonusEnergyNeutFalloffAF3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2304]},
-			}},
-			{EffectID::shipBonusEnergyNosOptimalAF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2305]},
-			}},
-			{EffectID::shipBonusEnergyNosFalloffAF3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2306]},
-			}},
-			{EffectID::amarrCruiserSkillLevelPreMulShipBonusAC3Ship, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2307]},
-			}},
-			{EffectID::shipBonusEnergyNeutOptimalAC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2308]},
-			}},
-			{EffectID::shipBonusEnergyNeutFalloffAC3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2309]},
-			}},
-			{EffectID::shipBonusEnergyNosOptimalAC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2310]},
-			}},
-			{EffectID::shipBonusNosOptimalFalloffAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2311]},{modifiers[2312]},
-			}},
-			{EffectID::shipBonusEnergyNosFalloffAC3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2313]},
-			}},
-			{EffectID::serviceSlot, MetaInfo::Effect::Category::generic, false, false, {
-				
-			}},
-			{EffectID::shipBonusThermMissileDmgMD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2314]},
-			}},
-			{EffectID::shipBonusEMMissileDmgMD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2315]},
-			}},
-			{EffectID::shipBonusKineticMissileDmgMD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2316]},
-			}},
-			{EffectID::shipBonusExplosiveMissileDmgMD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2317]},
-			}},
-			{EffectID::eliteBonusCommandDestroyerSkirmish1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2318]},{modifiers[2319]},{modifiers[2320]},{modifiers[2321]},{modifiers[2322]},
-			}},
-			{EffectID::eliteBonusCommandDestroyerShield1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2323]},{modifiers[2324]},{modifiers[2325]},{modifiers[2326]},{modifiers[2327]},
-			}},
-			{EffectID::eliteBonusCommandDestroyerMJFGspool2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2328]},
-			}},
-			{EffectID::shipBonusEMShieldResistanceMD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2329]},
-			}},
-			{EffectID::shipBonusKineticShieldResistanceMD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2330]},
-			}},
-			{EffectID::shipBonusThermalShieldResistanceMD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2331]},
-			}},
-			{EffectID::shipBonusExplosiveShieldResistanceMD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2332]},
-			}},
-			{EffectID::scriptscanGravimetricStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2333]},
-			}},
-			{EffectID::scriptscanLadarStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2334]},
-			}},
-			{EffectID::scriptscanMagnetometricStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2335]},
-			}},
-			{EffectID::scriptscanRadarStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2336]},
-			}},
-			{EffectID::shipBonusThermalMissileDamageCD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2337]},
-			}},
-			{EffectID::shipBonusEMMissileDamageCD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2338]},
-			}},
-			{EffectID::shipBonusKineticMissileDamageCD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2339]},
-			}},
-			{EffectID::shipBonusExplosiveMissileDamageCD1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2340]},
-			}},
-			{EffectID::shipBonusShieldEMResistanceCD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2341]},
-			}},
-			{EffectID::shipBonusShieldThermalResistanceCD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2342]},
-			}},
-			{EffectID::shipBonusShieldKineticResistanceCD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2343]},
-			}},
-			{EffectID::shipBonusShieldExplosiveResistanceCD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2344]},
-			}},
-			{EffectID::eliteBonusCommandDestroyerInfo1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2345]},{modifiers[2346]},{modifiers[2347]},{modifiers[2348]},{modifiers[2349]},
-			}},
-			{EffectID::shipBonusKineticArmorResistanceAD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2350]},
-			}},
-			{EffectID::shipBonusThermalArmorResistanceAD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2351]},
-			}},
-			{EffectID::shipBonusEMArmorResistanceAD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2352]},
-			}},
-			{EffectID::shipBonusExplosiveArmorResistanceAD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2353]},
-			}},
-			{EffectID::eliteBonusCommandDestroyerArmored1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2354]},{modifiers[2355]},{modifiers[2356]},{modifiers[2357]},{modifiers[2358]},
-			}},
-			{EffectID::shipBonusKineticArmorResistanceGD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2359]},
-			}},
-			{EffectID::shipBonusEMArmorResistanceGD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2360]},
-			}},
-			{EffectID::shipBonusThermalArmorResistanceGD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2361]},
-			}},
-			{EffectID::shipBonusExplosiveArmorResistanceGD2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2362]},
-			}},
-			{EffectID::setFixedResonance, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[2363]},{modifiers[2364]},{modifiers[2365]},{modifiers[2366]},{modifiers[2367]},{modifiers[2368]},{modifiers[2369]},{modifiers[2370]},{modifiers[2371]},{modifiers[2372]},{modifiers[2373]},{modifiers[2374]},
-			}},
-			{EffectID::shipSmallMissileKinDmgCF3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2375]},{modifiers[2376]},
-			}},
-			{EffectID::shipMissileKinDamageCC3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2377]},
-			}},
-			{EffectID::roleBonusWDRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2378]},{modifiers[2379]},
-			}},
-			{EffectID::roleBonusWDCapCPU, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2380]},{modifiers[2381]},
-			}},
-			{EffectID::shipBonusEwWeaponDisruptionStrengthAF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2382]},{modifiers[2383]},{modifiers[2384]},{modifiers[2385]},{modifiers[2386]},{modifiers[2387]},{modifiers[2388]},
-			}},
-			{EffectID::roleBonusECMCapCPU, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2389]},{modifiers[2390]},
-			}},
-			{EffectID::roleBonusECMRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2391]},{modifiers[2392]},
-			}},
-			{EffectID::shipBonusJustScramblerRangeGF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2393]},
-			}},
-			{EffectID::roleBonusJustScramblerStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2394]},
-			}},
-			{EffectID::shipBonusAoeVelocityRocketsMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2395]},
-			}},
-			{EffectID::shipRocketEMThermKinDmgMF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2396]},{modifiers[2397]},{modifiers[2398]},
-			}},
-			{EffectID::shipRocketExpDmgMF3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2399]},
-			}},
-			{EffectID::roleBonusStasisRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2400]},
-			}},
-			{EffectID::shieldTransporterFalloffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2401]},{modifiers[2402]},
-			}},
-			{EffectID::shipShieldTransferFalloffMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2403]},
-			}},
-			{EffectID::shipShieldTransferFalloffCC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2404]},
-			}},
-			{EffectID::shipRemoteArmorFalloffGC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2405]},
-			}},
-			{EffectID::shipRemoteArmorFalloffAC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2406]},
-			}},
-			{EffectID::armorRepairProjectorFalloffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2407]},{modifiers[2408]},
-			}},
-			{EffectID::droneHullRepairBonusEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2409]},
-			}},
-			{EffectID::logiFrigSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2410]},
-			}},
-			{EffectID::logiFrigSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2411]},
-			}},
-			{EffectID::eliteBonusLogiFrigArmorRepSpeedCap1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2412]},{modifiers[2413]},
-			}},
-			{EffectID::eliteBonusLogiFrigShieldRepSpeedCap1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2414]},{modifiers[2415]},
-			}},
-			{EffectID::eliteBonusLogiFrigArmorHP2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2416]},
-			}},
-			{EffectID::eliteBonusLogiFrigShieldHP2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2417]},
-			}},
-			{EffectID::eliteBonusLogiFrigSignature2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2418]},
-			}},
-			{EffectID::overloadSelfMissileGuidanceModuleBonus, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[2232]},{modifiers[2233]},{modifiers[2234]},{modifiers[2235]},
-			}},
-			{EffectID::ignoreCloakVelocityPenalty, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2419]},
-			}},
-			{EffectID::ewSkillGuidanceDisruptionBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2420]},{modifiers[2421]},{modifiers[2422]},{modifiers[2423]},
-			}},
-			{EffectID::shipBonusEwWeaponDisruptionStrengthAC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2424]},{modifiers[2425]},{modifiers[2426]},{modifiers[2427]},{modifiers[2428]},{modifiers[2429]},{modifiers[2430]},
-			}},
-			{EffectID::skillStructureMissileDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2431]},{modifiers[2432]},{modifiers[2433]},{modifiers[2434]},{modifiers[2435]},{modifiers[2436]},{modifiers[2437]},{modifiers[2438]},{modifiers[2439]},{modifiers[2440]},{modifiers[2441]},{modifiers[2442]},
-			}},
-			{EffectID::skillStructureElectronicSystemsCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2443]},{modifiers[2444]},{modifiers[2445]},
-			}},
-			{EffectID::skillStructureEngineeringSystemsCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2446]},{modifiers[2447]},
-			}},
-			{EffectID::structureRigAoeVelocityBonusSingleTargetMissiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2448]},{modifiers[2449]},
-			}},
-			{EffectID::structureRigVelocityBonusSingleTargetMissiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2450]},{modifiers[2451]},
-			}},
-			{EffectID::structureRigNeutralizerMaxRangeFalloffEffectiveness, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2452]},{modifiers[2453]},
-			}},
-			{EffectID::structureRigNeutralizerCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2454]},
-			}},
-			{EffectID::structureRigEWMaxRangeFalloff, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2455]},{modifiers[2456]},{modifiers[2457]},{modifiers[2458]},{modifiers[2459]},{modifiers[2460]},
-			}},
-			{EffectID::structureRigEWCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2461]},{modifiers[2462]},
-			}},
-			{EffectID::structureRigMaxTargets, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2463]},
-			}},
-			{EffectID::structureRigSensorResolution, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2464]},
-			}},
-			{EffectID::structureRigExplosionRadiusBonusAoEMissiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2465]},
-			}},
-			{EffectID::structureRigVelocityBonusAoeMissiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2466]},
-			}},
-			{EffectID::structureRigPDBmaxRange, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2467]},
-			}},
-			{EffectID::structureRigPDBCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2468]},
-			}},
-			{EffectID::structureRigFighterHP, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2469]},{modifiers[2470]},{modifiers[2471]},{modifiers[2472]},{modifiers[2473]},{modifiers[2474]},
-			}},
-			{EffectID::structureRigFighterMaxVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2475]},{modifiers[2476]},
-			}},
-			{EffectID::structureRigDoomsdayDamageLoss, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2477]},
-			}},
-			{EffectID::remoteSensorDampFalloff, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::shipModuleGuidanceDisruptor, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::shipModuleTrackingDisruptor, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::remoteTargetPaintFalloff, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::remoteWebifierFalloff, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::remoteSensorBoostFalloff, MetaInfo::Effect::Category::target, false, true, {
-				
-			}},
-			{EffectID::shipModuleRemoteTrackingComputer, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[2280]},{modifiers[2281]},{modifiers[2282]},
-			}},
-			{EffectID::fighterAbilityMissiles, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::fighterAbilityEnergyNeutralizer, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::fighterAbilityStasisWebifier, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::fighterAbilityWarpDisruption, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::fighterAbilityECM, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::fighterAbilityEvasiveManeuvers, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::fighterAbilityAfterburner, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::fighterAbilityMicroWarpDrive, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::fighterAbilityMicroJumpDrive, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::pointDefense, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::tractorBeamShip, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::structureBumpingModule, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::lightningWeapon, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::structureMissileGuidanceEnhancer, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2478]},{modifiers[2479]},{modifiers[2480]},{modifiers[2481]},{modifiers[2482]},{modifiers[2483]},{modifiers[2484]},{modifiers[2485]},
-			}},
-			{EffectID::structureBallisticControlSystem, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2486]},{modifiers[2487]},{modifiers[2488]},{modifiers[2489]},{modifiers[2490]},{modifiers[2491]},{modifiers[2492]},{modifiers[2493]},{modifiers[2494]},{modifiers[2495]},
-			}},
-			{EffectID::structureMissileGuidanceComputerBonus5, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[2496]},{modifiers[2497]},{modifiers[2498]},{modifiers[2499]},
-			}},
-			{EffectID::structureScanResolutionActivePercentage, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[232]},
-			}},
-			{EffectID::fighterAbilityTackle, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::fighterAbilityAttackM, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::remoteECMFalloff, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::doomsdayBeamDOT, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::doomsdayConeDOT, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::doomsdayHOG, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::structureRigDoomsdayTargetAmountBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2500]},
-			}},
-			{EffectID::doomsdayAOEWeb, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::doomsdayAOENeut, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::doomsdayAOEPaint, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::doomsdayAOETrack, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::doomsdayAOEGuide, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::doomsdayAOEDamp, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::doomsdayAOEBubble, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::emergencyHullEnergizer, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::fighterAbilityLaunchBomb, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::modifyEnergyWarfareResistance, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2501]},
-			}},
-			{EffectID::scriptSensorBoosterSensorStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2502]},{modifiers[2503]},{modifiers[2504]},{modifiers[2505]},
-			}},
-			{EffectID::skillMultiplierShipBonusDreadnoughtAmarr, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2506]},{modifiers[2507]},{modifiers[2508]},
-			}},
-			{EffectID::skillMultiplierShipBonusDreadnoughtCaldari, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2509]},{modifiers[2510]},{modifiers[2511]},
-			}},
-			{EffectID::skillMultiplierShipBonusDreadnoughtGallente, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2512]},{modifiers[2513]},{modifiers[2514]},
-			}},
-			{EffectID::skillMultiplierShipBonusDreadnoughtMinmatar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2515]},{modifiers[2516]},{modifiers[2517]},
-			}},
-			{EffectID::shipBonusDreadnoughtA1DamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2518]},
-			}},
-			{EffectID::shipBonusDreadnoughtA2ArmorResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2519]},{modifiers[2520]},{modifiers[2521]},{modifiers[2522]},
-			}},
-			{EffectID::shipBonusDreadnoughtA3CapNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2523]},
-			}},
-			{EffectID::shipBonusDreadnoughtC1DamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2524]},{modifiers[2525]},{modifiers[2526]},{modifiers[2527]},{modifiers[2528]},{modifiers[2529]},{modifiers[2530]},{modifiers[2531]},{modifiers[2532]},{modifiers[2533]},{modifiers[2534]},{modifiers[2535]},
-			}},
-			{EffectID::shipBonusDreadnoughtC2ShieldResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2536]},{modifiers[2537]},{modifiers[2538]},{modifiers[2539]},
-			}},
-			{EffectID::shipBonusDreadnoughtG1DamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2540]},
-			}},
-			{EffectID::shipBonusDreadnoughtG2ROFBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2541]},
-			}},
-			{EffectID::shipBonusDreadnoughtG3RepairTime, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2542]},
-			}},
-			{EffectID::shipBonusDreadnoughtM1DamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2543]},
-			}},
-			{EffectID::shipBonusDreadnoughtM2ROFBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2544]},
-			}},
-			{EffectID::shipBonusDreadnoughtM3RepairTime, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2545]},
-			}},
-			{EffectID::doomsdayAOEECM, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::skillMultiplierShipBonusForceAuxiliaryAmarr, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2546]},{modifiers[2547]},{modifiers[2548]},{modifiers[2549]},
-			}},
-			{EffectID::skillMultiplierShipBonusForceAuxiliaryCaldari, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2550]},{modifiers[2551]},{modifiers[2552]},{modifiers[2553]},
-			}},
-			{EffectID::skillMultiplierShipBonusForceAuxiliaryGallente, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2554]},{modifiers[2555]},{modifiers[2556]},{modifiers[2557]},
-			}},
-			{EffectID::skillMultiplierShipBonusForceAuxiliaryMinmatar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2558]},{modifiers[2559]},{modifiers[2560]},{modifiers[2561]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryA1RemoteRepairAndCapAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2562]},{modifiers[2563]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryA2ArmorResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2564]},{modifiers[2565]},{modifiers[2566]},{modifiers[2567]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryA3CapCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2568]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryA4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2569]},{modifiers[2570]},{modifiers[2571]},{modifiers[2572]},{modifiers[2573]},{modifiers[2574]},{modifiers[2575]},{modifiers[2576]},{modifiers[2577]},{modifiers[2578]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryM4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2579]},{modifiers[2580]},{modifiers[2581]},{modifiers[2582]},{modifiers[2583]},{modifiers[2584]},{modifiers[2585]},{modifiers[2586]},{modifiers[2587]},{modifiers[2588]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryG4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2589]},{modifiers[2590]},{modifiers[2591]},{modifiers[2592]},{modifiers[2593]},{modifiers[2594]},{modifiers[2595]},{modifiers[2596]},{modifiers[2597]},{modifiers[2598]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryC4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2599]},{modifiers[2600]},{modifiers[2601]},{modifiers[2602]},{modifiers[2603]},{modifiers[2604]},{modifiers[2605]},{modifiers[2606]},{modifiers[2607]},{modifiers[2608]},
-			}},
-			{EffectID::shipBonusRole1CommandBurstCPUBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2609]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryC1RemoteBoostAndCapAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2610]},{modifiers[2611]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryC2ShieldResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2612]},{modifiers[2613]},{modifiers[2614]},{modifiers[2615]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryC3CapCapacity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2616]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryG1RemoteCycleTime, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2617]},{modifiers[2618]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryG2LocalRepairAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2619]},{modifiers[2620]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryG3CapBoosterStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2621]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryM1RemoteDuration, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2622]},{modifiers[2623]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryM2LocalBoostAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2624]},{modifiers[2625]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryM3CapBoosterStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2626]},
-			}},
-			{EffectID::fighterAbilityKamikaze, MetaInfo::Effect::Category::target, false, false, {
-				
-			}},
-			{EffectID::moduleBonusDroneNavigationComputer, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2627]},{modifiers[2628]},
-			}},
-			{EffectID::moduleBonusDroneDamageAmplifier, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2629]},{modifiers[2630]},{modifiers[2631]},{modifiers[2632]},
-			}},
-			{EffectID::moduleBonusOmnidirectionalTrackingLink, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[2633]},{modifiers[2634]},{modifiers[2635]},{modifiers[2636]},{modifiers[2637]},{modifiers[2638]},{modifiers[2639]},{modifiers[2640]},{modifiers[2641]},{modifiers[2642]},{modifiers[2643]},{modifiers[2644]},{modifiers[2645]},
-			}},
-			{EffectID::moduleBonusOmnidirectionalTrackingLinkOverload, MetaInfo::Effect::Category::overloaded, false, false, {
-				{modifiers[2011]},{modifiers[2012]},{modifiers[2013]},{modifiers[2232]},{modifiers[2233]},
-			}},
-			{EffectID::moduleBonusOmnidirectionalTrackingEnhancer, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2633]},{modifiers[2634]},{modifiers[2635]},{modifiers[2636]},{modifiers[2637]},{modifiers[2638]},{modifiers[2639]},{modifiers[2640]},{modifiers[2641]},{modifiers[2642]},{modifiers[2643]},{modifiers[2644]},{modifiers[2645]},
-			}},
-			{EffectID::skillBonusFighters, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2646]},{modifiers[2647]},{modifiers[2648]},
-			}},
-			{EffectID::skillBonusLightFighters, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2649]},
-			}},
-			{EffectID::skillBonusSupportFightersShield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2650]},
-			}},
-			{EffectID::skillBonusHeavyFighters, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2651]},{modifiers[2652]},{modifiers[2653]},
-			}},
-			{EffectID::citadelRigBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2654]},{modifiers[2655]},{modifiers[2656]},{modifiers[2657]},{modifiers[2658]},{modifiers[2659]},{modifiers[2660]},{modifiers[2661]},{modifiers[2662]},{modifiers[2663]},
-			}},
-			{EffectID::moduleBonusFighterSupportUnit, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[2664]},{modifiers[2665]},{modifiers[2666]},{modifiers[2667]},{modifiers[2668]},{modifiers[2669]},
-			}},
-			{EffectID::moduleBonusNetworkedSensorArray, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[232]},{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},{modifiers[1423]},{modifiers[1424]},{modifiers[2670]},{modifiers[2671]},{modifiers[2672]},{modifiers[2673]},{modifiers[2674]},{modifiers[2675]},{modifiers[2676]},{modifiers[2677]},{modifiers[2678]},{modifiers[2679]},{modifiers[2680]},
-			}},
-			{EffectID::citadelServiceFuelBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2681]},{modifiers[2682]},
-			}},
-			{EffectID::skillMultiplierFighterHangarSize, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2683]},
-			}},
-			{EffectID::skillBonusFighterHangarManagement, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2684]},
-			}},
-			{EffectID::skillBonusCapitalAutocannonSpecialization, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2685]},
-			}},
-			{EffectID::skillBonusCapitalArtillerySpecialization, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2686]},
-			}},
-			{EffectID::skillBonusCapitalBlasterSpecialization, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2687]},
-			}},
-			{EffectID::skillBonusCapitalRailgunSpecialization, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2688]},
-			}},
-			{EffectID::skillBonusCapitalPulseLaserSpecialization, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2689]},
-			}},
-			{EffectID::skillBonusCapitalBeamLaserSpecialization, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2690]},
-			}},
-			{EffectID::skillBonusXLCruiseMissileSpecialization, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2691]},
-			}},
-			{EffectID::skillBonusXLTorpedoSpecialization, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2692]},
-			}},
-			{EffectID::shipBonusRole2LogisticDroneRepAmountBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2693]},{modifiers[2694]},{modifiers[2695]},
-			}},
-			{EffectID::moduleBonusTriageModule, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[33]},{modifiers[616]},{modifiers[617]},{modifiers[1422]},{modifiers[1423]},{modifiers[1424]},{modifiers[1425]},{modifiers[1426]},{modifiers[1427]},{modifiers[1428]},{modifiers[1429]},{modifiers[1430]},{modifiers[2670]},{modifiers[2671]},{modifiers[2672]},{modifiers[2673]},{modifiers[2674]},{modifiers[2675]},{modifiers[2676]},{modifiers[2696]},{modifiers[2697]},{modifiers[2698]},{modifiers[2699]},{modifiers[2700]},{modifiers[2701]},{modifiers[2702]},{modifiers[2703]},{modifiers[2704]},{modifiers[2705]},{modifiers[2706]},{modifiers[2707]},{modifiers[2708]},{modifiers[2709]},{modifiers[2710]},{modifiers[2711]},{modifiers[2712]},{modifiers[2713]},{modifiers[2714]},{modifiers[2715]},{modifiers[2716]},{modifiers[2717]},{modifiers[2718]},{modifiers[2719]},
-			}},
-			{EffectID::moduleBonusSiegeModule, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[616]},{modifiers[617]},{modifiers[1422]},{modifiers[1423]},{modifiers[1424]},{modifiers[1425]},{modifiers[1426]},{modifiers[1427]},{modifiers[1428]},{modifiers[1429]},{modifiers[2716]},{modifiers[2717]},{modifiers[2718]},{modifiers[2719]},{modifiers[2720]},{modifiers[2721]},{modifiers[2722]},{modifiers[2723]},{modifiers[2724]},{modifiers[2725]},{modifiers[2726]},{modifiers[2727]},{modifiers[2728]},{modifiers[2729]},{modifiers[2730]},{modifiers[2731]},{modifiers[2732]},{modifiers[2733]},{modifiers[2734]},{modifiers[2735]},{modifiers[2736]},{modifiers[2737]},{modifiers[2738]},{modifiers[2739]},
-			}},
-			{EffectID::skillMultiplierShipBonusCarrierAmarr, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2740]},{modifiers[2741]},{modifiers[2742]},{modifiers[2743]},
-			}},
-			{EffectID::skillMultiplierShipBonusCarrierCaldari, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2744]},{modifiers[2745]},{modifiers[2746]},{modifiers[2747]},
-			}},
-			{EffectID::skillMultiplierShipBonusCarrierGallente, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2748]},{modifiers[2749]},{modifiers[2750]},{modifiers[2751]},
-			}},
-			{EffectID::skillMultiplierShipBonusCarrierMinmatar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2752]},{modifiers[2753]},{modifiers[2754]},{modifiers[2755]},
-			}},
-			{EffectID::skillMultiplierShipBonusSupercarrierAmarr, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2756]},{modifiers[2757]},{modifiers[2758]},{modifiers[2759]},{modifiers[2760]},
-			}},
-			{EffectID::skillMultiplierShipBonusSupercarrierCaldari, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2761]},{modifiers[2762]},{modifiers[2763]},{modifiers[2764]},{modifiers[2765]},
-			}},
-			{EffectID::skillMultiplierShipBonusSupercarrierGallente, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2766]},{modifiers[2767]},{modifiers[2768]},{modifiers[2769]},{modifiers[2770]},
-			}},
-			{EffectID::skillMultiplierShipBonusSupercarrierMinmatar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2771]},{modifiers[2772]},{modifiers[2773]},{modifiers[2774]},{modifiers[2775]},
-			}},
-			{EffectID::shipBonusSupercarrierA3WarpStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2776]},
-			}},
-			{EffectID::shipBonusSupercarrierC3WarpStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2777]},
-			}},
-			{EffectID::shipBonusSupercarrierG3WarpStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2778]},
-			}},
-			{EffectID::shipBonusSupercarrierM3WarpStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2779]},
-			}},
-			{EffectID::shipBonusCarrierA4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2780]},{modifiers[2781]},{modifiers[2782]},{modifiers[2783]},{modifiers[2784]},{modifiers[2785]},{modifiers[2786]},{modifiers[2787]},{modifiers[2788]},{modifiers[2789]},
-			}},
-			{EffectID::shipBonusCarrierC4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2790]},{modifiers[2791]},{modifiers[2792]},{modifiers[2793]},{modifiers[2794]},{modifiers[2795]},{modifiers[2796]},{modifiers[2797]},{modifiers[2798]},{modifiers[2799]},
-			}},
-			{EffectID::shipBonusCarrierG4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2800]},{modifiers[2801]},{modifiers[2802]},{modifiers[2803]},{modifiers[2804]},{modifiers[2805]},{modifiers[2806]},{modifiers[2807]},{modifiers[2808]},{modifiers[2809]},
-			}},
-			{EffectID::shipBonusCarrierM4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2810]},{modifiers[2811]},{modifiers[2812]},{modifiers[2813]},{modifiers[2814]},{modifiers[2815]},{modifiers[2816]},{modifiers[2817]},{modifiers[2818]},{modifiers[2819]},
-			}},
-			{EffectID::shipBonusCarrierA1ArmorResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2820]},{modifiers[2821]},{modifiers[2822]},{modifiers[2823]},
-			}},
-			{EffectID::shipBonusCarrierC1ShieldResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2824]},{modifiers[2825]},{modifiers[2826]},{modifiers[2827]},
-			}},
-			{EffectID::shipBonusCarrierG1FighterDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2828]},{modifiers[2829]},{modifiers[2830]},
-			}},
-			{EffectID::shipBonusCarrierM1FighterDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2831]},{modifiers[2832]},{modifiers[2833]},
-			}},
-			{EffectID::shipBonusSupercarrierA1FighterDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2834]},{modifiers[2835]},{modifiers[2836]},
-			}},
-			{EffectID::shipBonusSupercarrierC1FighterDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2837]},{modifiers[2838]},{modifiers[2839]},
-			}},
-			{EffectID::shipBonusSupercarrierG1FighterDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2840]},{modifiers[2841]},{modifiers[2842]},
-			}},
-			{EffectID::shipBonusSupercarrierM1FighterDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2843]},{modifiers[2844]},{modifiers[2845]},
-			}},
-			{EffectID::shipBonusSupercarrierA5WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2846]},{modifiers[2847]},{modifiers[2848]},{modifiers[2849]},{modifiers[2850]},{modifiers[2851]},{modifiers[2852]},{modifiers[2853]},{modifiers[2854]},{modifiers[2855]},
-			}},
-			{EffectID::shipBonusSupercarrierC5WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2856]},{modifiers[2857]},{modifiers[2858]},{modifiers[2859]},{modifiers[2860]},{modifiers[2861]},{modifiers[2862]},{modifiers[2863]},{modifiers[2864]},{modifiers[2865]},
-			}},
-			{EffectID::shipBonusSupercarrierG5WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2866]},{modifiers[2867]},{modifiers[2868]},{modifiers[2869]},{modifiers[2870]},{modifiers[2871]},{modifiers[2872]},{modifiers[2873]},{modifiers[2874]},{modifiers[2875]},
-			}},
-			{EffectID::shipBonusSupercarrierM5WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2876]},{modifiers[2877]},{modifiers[2878]},{modifiers[2879]},{modifiers[2880]},{modifiers[2881]},{modifiers[2882]},{modifiers[2883]},{modifiers[2884]},{modifiers[2885]},
-			}},
-			{EffectID::shipBonusSupercarrierC2AfterburnerBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2886]},
-			}},
-			{EffectID::shipBonusSupercarrierA2FighterApplicationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2887]},{modifiers[2888]},
-			}},
-			{EffectID::shipBonusSupercarrierRole1NumWarfareLinks, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2889]},{modifiers[2890]},
-			}},
-			{EffectID::shipBonusSupercarrierRole2ArmorShieldModuleBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2891]},{modifiers[2892]},
-			}},
-			{EffectID::shipBonusSupercarrierA4BurstProjectorBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2893]},
-			}},
-			{EffectID::shipBonusSupercarrierC4BurstProjectorBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2894]},
-			}},
-			{EffectID::shipBonusSupercarrierG4BurstProjectorBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2895]},
-			}},
-			{EffectID::shipBonusSupercarrierM4BurstProjectorBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2896]},
-			}},
-			{EffectID::shipBonusCarrierRole1NumWarfareLinks, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2889]},{modifiers[2890]},
-			}},
-			{EffectID::shipBonusDreadnoughtC3ReloadBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2897]},
-			}},
-			{EffectID::shipBonusSupercarrierA2ArmorResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2898]},{modifiers[2899]},{modifiers[2900]},{modifiers[2901]},
-			}},
-			{EffectID::shipBonusSupercarrierC2ShieldResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2902]},{modifiers[2903]},{modifiers[2904]},{modifiers[2905]},
-			}},
-			{EffectID::shipBonusSupercarrierG2FighterHitpoints, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2906]},
-			}},
-			{EffectID::shipBonusSupercarrierM2FighterVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2907]},
-			}},
-			{EffectID::shipBonusCarrierA2SupportFighterBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2908]},{modifiers[2909]},
-			}},
-			{EffectID::shipBonusCarrierC2SupportFighterBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2910]},{modifiers[2911]},
-			}},
-			{EffectID::shipBonusCarrierG2SupportFighterBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2912]},{modifiers[2913]},
-			}},
-			{EffectID::shipBonusCarrierM2SupportFighterBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2914]},{modifiers[2915]},
-			}},
-			{EffectID::scriptResistanceBonusBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2916]},{modifiers[2917]},{modifiers[2918]},{modifiers[2919]},
-			}},
-			{EffectID::skillMultiplierShipBonusTitanAmarr, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2920]},{modifiers[2921]},{modifiers[2922]},{modifiers[2923]},
-			}},
-			{EffectID::skillMultiplierShipBonusTitanCaldari, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2924]},{modifiers[2925]},{modifiers[2926]},{modifiers[2927]},{modifiers[2928]},
-			}},
-			{EffectID::skillMultiplierShipBonusTitanGallente, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2929]},{modifiers[2930]},{modifiers[2931]},{modifiers[2932]},
-			}},
-			{EffectID::skillMultiplierShipBonusTitanMinmatar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2933]},{modifiers[2934]},{modifiers[2935]},{modifiers[2936]},
-			}},
-			{EffectID::shipBonusTitanA1DamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2937]},
-			}},
-			{EffectID::shipBonusTitanC1KinDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2938]},{modifiers[2939]},{modifiers[2940]},
-			}},
-			{EffectID::shipBonusTitanG1DamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2941]},
-			}},
-			{EffectID::shipBonusTitanM1DamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2942]},
-			}},
-			{EffectID::shipBonusTitanC2ROFBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2943]},{modifiers[2944]},{modifiers[2945]},
-			}},
-			{EffectID::shipBonusSupercarrierA4FighterApplicationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2946]},{modifiers[2947]},
-			}},
-			{EffectID::shipBonusRole1NumWarfareLinks, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2889]},{modifiers[2890]},
-			}},
-			{EffectID::shipBonusRole2ArmorPlatesShieldExtendersBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2891]},{modifiers[2892]},
-			}},
-			{EffectID::skillBonusDoomsdayRapidFiring, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2948]},
-			}},
-			{EffectID::shipBonusTitanA3WarpStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2949]},
-			}},
-			{EffectID::shipBonusTitanC3WarpStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2950]},
-			}},
-			{EffectID::shipBonusTitanG3WarpStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2951]},
-			}},
-			{EffectID::shipBonusTitanM3WarpStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2952]},
-			}},
-			{EffectID::shipModuleAncillaryRemoteArmorRepairer, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[206]},
-			}},
-			{EffectID::shipModuleAncillaryRemoteShieldBooster, MetaInfo::Effect::Category::target, false, true, {
-				{modifiers[3]},
-			}},
-			{EffectID::shipBonusTitanA2CapNeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2953]},
-			}},
-			{EffectID::shipBonusTitanG2ROFBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2954]},
-			}},
-			{EffectID::shipBonusTitanM2ROFBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2955]},
-			}},
-			{EffectID::shipBonusRole3XLTorpdeoVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2956]},
-			}},
-			{EffectID::shipBonusTitanC5AllDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2957]},{modifiers[2958]},{modifiers[2959]},{modifiers[2960]},{modifiers[2961]},{modifiers[2962]},{modifiers[2963]},{modifiers[2964]},{modifiers[2965]},
-			}},
-			{EffectID::moduleBonusBastionModule, MetaInfo::Effect::Category::active, true, false, {
-				{modifiers[431]},{modifiers[616]},{modifiers[617]},{modifiers[639]},{modifiers[640]},{modifiers[641]},{modifiers[642]},{modifiers[660]},{modifiers[661]},{modifiers[662]},{modifiers[663]},{modifiers[664]},{modifiers[665]},{modifiers[666]},{modifiers[667]},{modifiers[668]},{modifiers[669]},{modifiers[670]},{modifiers[671]},{modifiers[1423]},{modifiers[1424]},{modifiers[1426]},{modifiers[1427]},{modifiers[1428]},{modifiers[1429]},{modifiers[1775]},{modifiers[2720]},{modifiers[2966]},{modifiers[2967]},{modifiers[2968]},{modifiers[2969]},{modifiers[2970]},{modifiers[2971]},{modifiers[2972]},{modifiers[2973]},{modifiers[2974]},{modifiers[2975]},{modifiers[2976]},{modifiers[2977]},
-			}},
-			{EffectID::higgsWarpBubbleImmuneRemoval, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2978]},
-			}},
-			{EffectID::shipBonusCarrierM3FighterVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2979]},
-			}},
-			{EffectID::shipBonusCarrierG3FighterHitpoints, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2980]},
-			}},
-			{EffectID::skillBonusDroneInterfacing, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[216]},{modifiers[615]},{modifiers[2646]},{modifiers[2647]},{modifiers[2648]},
-			}},
-			{EffectID::skillBonusDroneSharpshooting, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[578]},{modifiers[2981]},{modifiers[2982]},{modifiers[2983]},
-			}},
-			{EffectID::skillBonusDroneDurability, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[581]},{modifiers[2984]},{modifiers[2985]},{modifiers[2986]},
-			}},
-			{EffectID::skillMultiplierMaxVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2987]},
-			}},
-			{EffectID::skillBonusDroneNavigation, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2988]},{modifiers[2989]},
-			}},
-			{EffectID::skillMultiplierShieldBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2990]},
-			}},
-			{EffectID::moduleBonusCapitalDroneDurabilityEnhancer, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[579]},{modifiers[580]},{modifiers[581]},{modifiers[738]},{modifiers[2471]},
-			}},
-			{EffectID::moduleBonusCapitalDroneScopeChip, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[578]},{modifiers[738]},{modifiers[2981]},{modifiers[2982]},{modifiers[2983]},
-			}},
-			{EffectID::moduleBonusCapitalDroneSpeedAugmentor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[577]},{modifiers[738]},{modifiers[2475]},
-			}},
-			{EffectID::structureCombatRigSecurityModification, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2991]},{modifiers[2992]},{modifiers[2993]},{modifiers[2994]},{modifiers[2995]},{modifiers[2996]},{modifiers[2997]},{modifiers[2998]},{modifiers[2999]},{modifiers[3000]},
-			}},
-			{EffectID::structureReprocessingRigSecurityModification, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3001]},
-			}},
-			{EffectID::structureRigAsteroidOreYield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3002]},
-			}},
-			{EffectID::structureRigMoonOreYield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3003]},
-			}},
-			{EffectID::structureRigCalAmarrIceYield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3004]},
-			}},
-			{EffectID::structureRigGalMinIceYield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3005]},
-			}},
-			{EffectID::structureRigIceYield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3006]},
-			}},
-			{EffectID::skillStructureDoomsdayDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3007]},
-			}},
-			{EffectID::shipBonusRole3NumWarfareLinks, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3008]},{modifiers[3009]},
-			}},
-			{EffectID::structureModuleEffectStasisWebifier, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::structureModuleEffectTargetPainter, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::structureModuleEffectRemoteSensorDampener, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::structureModuleEffectECM, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::structureModuleEffectWeaponDisruption, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::npcEntityRemoteArmorRepairer, MetaInfo::Effect::Category::target, false, true, {
-				
-			}},
-			{EffectID::npcEntityRemoteShieldBooster, MetaInfo::Effect::Category::target, false, true, {
-				
-			}},
-			{EffectID::npcEntityRemoteHullRepairer, MetaInfo::Effect::Category::target, false, true, {
-				
-			}},
-			{EffectID::remoteWebifierEntity, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::entityEnergyNeutralizerFalloff, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::remoteTargetPaintEntity, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::remoteSensorDampEntity, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::npcEntityWeaponDisruptor, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::entityECMFalloff, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::starbaseEnergyNeutralizerFalloff, MetaInfo::Effect::Category::target, true, false, {
-				
-			}},
-			{EffectID::rigDrawbackReductionArmor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3010]},{modifiers[3011]},
-			}},
-			{EffectID::rigDrawbackReductionAstronautics, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3012]},{modifiers[3013]},
-			}},
-			{EffectID::rigDrawbackReductionDrones, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3014]},
-			}},
-			{EffectID::rigDrawbackReductionElectronic, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3015]},{modifiers[3016]},{modifiers[3017]},
-			}},
-			{EffectID::rigDrawbackReductionProjectile, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3018]},
-			}},
-			{EffectID::rigDrawbackReductionEnergyWeapon, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3019]},
-			}},
-			{EffectID::rigDrawbackReductionHybrid, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3020]},
-			}},
-			{EffectID::rigDrawbackReductionLauncher, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3021]},
-			}},
-			{EffectID::rigDrawbackReductionShield, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3022]},
-			}},
-			{EffectID::setBonusAsklepian, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3023]},
-			}},
-			{EffectID::armorRepairAmountBonusSubcap, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3024]},
-			}},
-			{EffectID::shipBonusRole1CapitalHybridDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3025]},
-			}},
-			{EffectID::shipBonusDreadnoughtM1WebStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3026]},
-			}},
-			{EffectID::shipBonusRole3CapitalHybridDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3027]},
-			}},
-			{EffectID::shipBonusTitanM1WebStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3028]},
-			}},
-			{EffectID::shipBonusSupercarrierM1BurstProjectorWebBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3029]},
-			}},
-			{EffectID::ECMBurstJammer, MetaInfo::Effect::Category::active, true, false, {
-				
-			}},
-			{EffectID::ECMBurstJammerQA, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::pacifierDebuffQA, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::roleBonusIceOreMiningDurationCap, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3030]},{modifiers[3031]},{modifiers[3032]},{modifiers[3033]},
-			}},
-			{EffectID::logisticSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3034]},
-			}},
-			{EffectID::moduleBonusIndustrialInvulnerability, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::shipBonusDroneRepairMC1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3035]},{modifiers[3036]},{modifiers[3037]},
-			}},
-			{EffectID::eliteBonusLogisticRemoteArmorRepairOptimalFalloff1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3038]},{modifiers[3039]},
-			}},
-			{EffectID::roleBonusRemoteArmorRepairOptimalFalloff, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3040]},{modifiers[3041]},
-			}},
-			{EffectID::shipBonusCloakCpuMC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3042]},
-			}},
-			{EffectID::eliteBonusLogisticRemoteArmorRepairDuration3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3043]},
-			}},
-			{EffectID::shipBonusSETFalloffAF2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3044]},
-			}},
-			{EffectID::shipBonusCloakCpuMF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3045]},
-			}},
-			{EffectID::eliteBonusCoverOpsNOSNeutFalloff1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3046]},{modifiers[3047]},
-			}},
-			{EffectID::moduleBonusMicrowarpdrive, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[380]},{modifiers[570]},{modifiers[3048]},
-			}},
-			{EffectID::moduleBonusAfterburner, MetaInfo::Effect::Category::active, false, false, {
-				{modifiers[570]},{modifiers[3048]},
-			}},
-			{EffectID::moduleBonusWarfareLinkArmor, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::moduleBonusWarfareLinkShield, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::moduleBonusWarfareLinkSkirmish, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::moduleBonusWarfareLinkInfo, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::moduleBonusWarfareLinkMining, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::chargeBonusWarfareCharge, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3049]},{modifiers[3050]},{modifiers[3051]},{modifiers[3052]},{modifiers[3053]},{modifiers[3054]},{modifiers[3055]},{modifiers[3056]},
-			}},
-			{EffectID::industrialCommandShipSkillLevelMultiplierICS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3057]},
-			}},
-			{EffectID::industrialCommandShipSkillLevelMultiplierICS4, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3058]},
-			}},
-			{EffectID::moduleTitanEffectGenerator, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-			{EffectID::engComplexServiceFuelBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3059]},{modifiers[3060]},
-			}},
-			{EffectID::miningDroneSpecBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3061]},{modifiers[3062]},
-			}},
-			{EffectID::iceHarvestingDroneOperationDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3063]},
-			}},
-			{EffectID::iceHarvestingDroneSpecBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3064]},{modifiers[3065]},
-			}},
-			{EffectID::spatialPhenomenaGenerationDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3066]},
-			}},
-			{EffectID::commandProcessorEffect, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[455]},{modifiers[649]},
-			}},
-			{EffectID::areaOfEffectSkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3067]},
-			}},
-			{EffectID::commandBurstAoEBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3068]},
-			}},
-			{EffectID::armoredCommandDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3069]},
-			}},
-			{EffectID::shieldCommandDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3070]},
-			}},
-			{EffectID::informationCommandDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3071]},
-			}},
-			{EffectID::skirmishCommandDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3072]},
-			}},
-			{EffectID::miningForemanDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3073]},
-			}},
-			{EffectID::commandBurstStrengthSkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3074]},
-			}},
-			{EffectID::armoredCommandStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3075]},{modifiers[3076]},{modifiers[3077]},{modifiers[3078]},
-			}},
-			{EffectID::shieldCommandStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3079]},{modifiers[3080]},{modifiers[3081]},{modifiers[3082]},
-			}},
-			{EffectID::informationCommandStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3083]},{modifiers[3084]},{modifiers[3085]},{modifiers[3086]},
-			}},
-			{EffectID::skirmishCommandStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3087]},{modifiers[3088]},{modifiers[3089]},{modifiers[3090]},
-			}},
-			{EffectID::miningForemanStrengthBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3091]},{modifiers[3092]},{modifiers[3093]},{modifiers[3094]},
-			}},
-			{EffectID::reloadTimeSkillBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3095]},
-			}},
-			{EffectID::commandBurstReloadTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3096]},
-			}},
-			{EffectID::commandBurstAoERoleBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3097]},
-			}},
-			{EffectID::industrialCommandShipSkillLevelMultiplierICS5, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3098]},
-			}},
-			{EffectID::shieldCommandBurstBonusICS3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3099]},{modifiers[3100]},{modifiers[3101]},{modifiers[3102]},{modifiers[3103]},
-			}},
-			{EffectID::shipBonusDroneHPDamageMiningICS4, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3104]},{modifiers[3105]},{modifiers[3106]},{modifiers[3107]},{modifiers[3108]},
-			}},
-			{EffectID::shipBonusDroneIceHarvestingICS5, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3109]},
-			}},
-			{EffectID::industrialBonusDroneDamage, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3110]},
-			}},
-			{EffectID::shipBonusDroneIceHarvestingRole, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3111]},
-			}},
-			{EffectID::oreCapitalShipSkillMultiplier5, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3112]},
-			}},
-			{EffectID::shipBonusDroneHPDamageMiningORECapital4, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[933]},{modifiers[934]},{modifiers[935]},{modifiers[936]},{modifiers[3113]},
-			}},
-			{EffectID::miningForemanBurstBonusORECapital2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3114]},{modifiers[3115]},{modifiers[3116]},{modifiers[3117]},{modifiers[3118]},
-			}},
-			{EffectID::shieldCommandBurstBonusORECapital3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3119]},{modifiers[3120]},{modifiers[3121]},{modifiers[3122]},{modifiers[3123]},
-			}},
-			{EffectID::shipBonusDroneIceHarvestingORECapital5, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3124]},
-			}},
-			{EffectID::shipModeSHTDamagePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3125]},
-			}},
-			{EffectID::shipModeSPTDamagePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3126]},
-			}},
-			{EffectID::shipModeSETDamagePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3127]},
-			}},
-			{EffectID::shipModeSmallMissileDamagePostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3128]},{modifiers[3129]},{modifiers[3130]},{modifiers[3131]},{modifiers[3132]},{modifiers[3133]},{modifiers[3134]},{modifiers[3135]},
-			}},
-			{EffectID::modeDampTDResistsPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3136]},{modifiers[3137]},
-			}},
-			{EffectID::modeMWDandABBoostPostDiv, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3138]},{modifiers[3139]},
-			}},
-			{EffectID::rigEquipmentManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3140]},
-			}},
-			{EffectID::rigEquipmentManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3141]},
-			}},
-			{EffectID::invulnerabilityCoreDurationBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3142]},{modifiers[3143]},
-			}},
-			{EffectID::rigAmmoManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3144]},
-			}},
-			{EffectID::rigAmmoManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3145]},
-			}},
-			{EffectID::rigDroneManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3146]},
-			}},
-			{EffectID::rigDroneManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3147]},
-			}},
-			{EffectID::rigSmallshipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3148]},
-			}},
-			{EffectID::rigSmallshipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3149]},
-			}},
-			{EffectID::rigMediumshipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3150]},
-			}},
-			{EffectID::rigMediumshipsManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3151]},
-			}},
-			{EffectID::rigLargeshipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3152]},
-			}},
-			{EffectID::rigLargeshipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3153]},
-			}},
-			{EffectID::rigAdvSmshipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3154]},
-			}},
-			{EffectID::rigAdvSmshipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3155]},
-			}},
-			{EffectID::rigAdvMedShipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3156]},
-			}},
-			{EffectID::rigAdvMedShipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3157]},
-			}},
-			{EffectID::rigAdvLarShipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3158]},
-			}},
-			{EffectID::rigAdvLarShipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3159]},
-			}},
-			{EffectID::rigAdvComponentManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3160]},
-			}},
-			{EffectID::rigAdvComponentManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3161]},
-			}},
-			{EffectID::rigBasCapCompManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3162]},
-			}},
-			{EffectID::rigBasCapCompManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3163]},
-			}},
-			{EffectID::rigStructureManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3164]},
-			}},
-			{EffectID::rigStructureManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3165]},
-			}},
-			{EffectID::rigInventionCostBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3166]},
-			}},
-			{EffectID::rigInventionTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3167]},
-			}},
-			{EffectID::rigMEResearchCostBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3168]},
-			}},
-			{EffectID::rigMEResearchTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3169]},
-			}},
-			{EffectID::rigTEResearchCostBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3170]},
-			}},
-			{EffectID::rigTEResearchTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3171]},
-			}},
-			{EffectID::rigCopyCostBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3172]},
-			}},
-			{EffectID::rigCopyTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3173]},
-			}},
-			{EffectID::rigCapShipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3174]},
-			}},
-			{EffectID::rigCapShipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3175]},
-			}},
-			{EffectID::rigAllShipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3176]},
-			}},
-			{EffectID::rigAllShipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3177]},
-			}},
-			{EffectID::structureEngineeringRigSecurityModification, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3178]},{modifiers[3179]},{modifiers[3180]},{modifiers[3181]},
-			}},
-			{EffectID::skillMultiplierMissileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3182]},
-			}},
-			{EffectID::skillMultiplierDefenderMissileVelocity, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3183]},
-			}},
-			{EffectID::shipBonusCommandDestroyerRole1DefenderBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3184]},
-			}},
-			{EffectID::shipModuleFocusedWarpScramblingScript, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[8]},{modifiers[2111]},{modifiers[2112]},{modifiers[3185]},{modifiers[3186]},
-			}},
-			{EffectID::shipModuleFocusedWarpDisruptionScript, MetaInfo::Effect::Category::target, true, false, {
-				{modifiers[8]},{modifiers[2112]},{modifiers[3186]},
-			}},
-			{EffectID::chargeRateStructureModulesMultiply, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3187]},
-			}},
-			{EffectID::shipBonusRole3CapitalEnergyDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3188]},
-			}},
-			{EffectID::shipBonusTitanM1WebRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3189]},
-			}},
-			{EffectID::shipBonusTitanA1EnergyWarfareAmountBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3190]},{modifiers[3191]},
-			}},
-			{EffectID::shipBonusDreadnoughtA1EnergyWarfareAmountBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3192]},{modifiers[3193]},
-			}},
-			{EffectID::shipBonusDreadnoughtM1WebRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3194]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryA1NosferatuRangeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3195]},{modifiers[3196]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryA1NosferatuDrainAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3197]},
-			}},
-			{EffectID::shipBonusRole4NosferatuCPUBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3198]},
-			}},
-			{EffectID::shipBonusRole5RemoteArmorRepairPowergridBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3199]},
-			}},
-			{EffectID::shipBonusRole5CapitalRemoteArmorRepairPowergridBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3200]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryM1RemoteArmorRepairDuration, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2623]},
-			}},
-			{EffectID::eliteBonusCoverOpsWarpVelocity1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3201]},
-			}},
-			{EffectID::shipBonusSmallMissileFlightTimeCF1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3202]},{modifiers[3203]},
-			}},
-			{EffectID::shipBonusSPTRoFMF, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3204]},
-			}},
-			{EffectID::roleBonusConcordSecGain, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3205]},
-			}},
-			{EffectID::concordIntermediateSecStatus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3206]},
-			}},
-			{EffectID::concordAssignTankBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3207]},
-			}},
-			{EffectID::concordSecStatusTankBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3208]},{modifiers[3209]},
-			}},
-			{EffectID::eliteReconStasisWebBonus1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3210]},
-			}},
-			{EffectID::eliteBonusReconWarpVelocity3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3211]},
-			}},
-			{EffectID::shipBonusMedMissileFlightTimeCC2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3212]},{modifiers[3213]},
-			}},
-			{EffectID::blackOpsSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3214]},
-			}},
-			{EffectID::blackOpsSkillMultiplier4, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3215]},
-			}},
-			{EffectID::eliteBonusBlackOpsWarpVelocity1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3216]},
-			}},
-			{EffectID::eliteBonusBlackOpsScramblerRange4, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3217]},
-			}},
-			{EffectID::eliteBonusBlackOpsWebRange3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3218]},
-			}},
-			{EffectID::shipBonusLauncherRoF2CB, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[555]},{modifiers[556]},{modifiers[1965]},
-			}},
-			{EffectID::shipBonusLargeMissileFlightTimeCB1, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3219]},{modifiers[3220]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryM2LocalRepairAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3221]},{modifiers[3222]},
-			}},
-			{EffectID::rigThukkerBasCapCompManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3223]},
-			}},
-			{EffectID::rigAdvCapComponentManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3224]},
-			}},
-			{EffectID::rigAdvCapComponentManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3225]},
-			}},
-			{EffectID::rigThukkerAdvCapCompManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3226]},
-			}},
-			{EffectID::reactionTimeBonusPostPercentManufactureTimeMultiplierChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3227]},
-			}},
-			{EffectID::reactionSkillBoostManufacturingTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3228]},
-			}},
-			{EffectID::massReactionSkillLevelModAddReactionSlotLimitChar, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3229]},
-			}},
-			{EffectID::subsystemEnergyNeutFittingReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3230]},{modifiers[3231]},{modifiers[3232]},{modifiers[3233]},
-			}},
-			{EffectID::subsystemMETFittingReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3234]},{modifiers[3235]},
-			}},
-			{EffectID::subsystemMHTFittingReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3236]},{modifiers[3237]},
-			}},
-			{EffectID::subsystemMPTFittingReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3238]},{modifiers[3239]},
-			}},
-			{EffectID::subsystemMRARFittingReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3240]},
-			}},
-			{EffectID::subsystemMRSBFittingReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3241]},
-			}},
-			{EffectID::subsystemMMissileFittingReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3242]},{modifiers[3243]},{modifiers[3244]},{modifiers[3245]},{modifiers[3246]},{modifiers[3247]},
-			}},
-			{EffectID::shipModuleNonRepeatingShieldHardener, MetaInfo::Effect::Category::active, true, false, {
-				{modifiers[590]},{modifiers[591]},{modifiers[592]},{modifiers[593]},
-			}},
-			{EffectID::shipModuleNonRepeatingArmorHardener, MetaInfo::Effect::Category::active, true, false, {
-				{modifiers[586]},{modifiers[587]},{modifiers[588]},{modifiers[589]},
-			}},
-			{EffectID::strategicCruiserMinmatarSkillLevel2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3248]},
-			}},
-			{EffectID::strategicCruiserAmarrSkillLevel2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3249]},
-			}},
-			{EffectID::strategicCruiserCaldariSkillLevel2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3250]},
-			}},
-			{EffectID::strategicCruiserGallenteSkillLevel2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3251]},
-			}},
-			{EffectID::shipBonusStrategicCruiserCaldariNaniteRepairTime2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3252]},
-			}},
-			{EffectID::shipBonusStrategicCruiserAmarrNaniteRepairTime2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3253]},
-			}},
-			{EffectID::shipBonusStrategicCruiserGallenteNaniteRepairTime2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3254]},
-			}},
-			{EffectID::shipBonusStrategicCruiserMinmatarNaniteRepairTime2, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3255]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrDefensive3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3256]},
-			}},
-			{EffectID::subsystemSkillLevelAmarrEngineering3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3257]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariEngineering3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3258]},
-			}},
-			{EffectID::subsystemSkillLevelCaldariDefensive3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3259]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteEngineering3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3260]},
-			}},
-			{EffectID::subsystemSkillLevelGallenteDefensive3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3261]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarEngineering3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3262]},
-			}},
-			{EffectID::subsystemSkillLevelMinmatarDefensive3, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3263]},
-			}},
-			{EffectID::structureHPBonusAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3264]},
-			}},
-			{EffectID::subSystemBonusAmarrDefensive2ScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3265]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensive1HMLHAMVelo, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3266]},{modifiers[3267]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensive3MissileExpVelo, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3268]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensive2DroneVeloTracking, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3269]},{modifiers[3270]},
-			}},
-			{EffectID::subsystemBonusAmarrPropulsionWarpCapacitor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3271]},
-			}},
-			{EffectID::subsystemBonusMinmatarPropulsionWarpCapacitor, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3272]},
-			}},
-			{EffectID::subsystemBonusCaldariPropulsion2PropModHeatBenefit, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3273]},{modifiers[3274]},
-			}},
-			{EffectID::subsystemBonusGallentePropulsion2PropModHeatBenefit, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3275]},{modifiers[3276]},
-			}},
-			{EffectID::subsystemBonusAmarrCore2EnergyResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3277]},
-			}},
-			{EffectID::subsystemBonusMinmatarCore2EnergyResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3278]},
-			}},
-			{EffectID::subsystemBonusGallenteCore2EnergyResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3279]},
-			}},
-			{EffectID::subsystemBonusCaldariCore2EnergyResistance, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3280]},
-			}},
-			{EffectID::shipMaxLockedTargetsBonusAddPassive, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[33]},
-			}},
-			{EffectID::subsystemBonusAmarrCore3EnergyWarHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3281]},{modifiers[3282]},
-			}},
-			{EffectID::subsystemBonusMinmatarCore3StasisWebHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3283]},
-			}},
-			{EffectID::subsystemBonusGallenteCore3WarpScramHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3284]},
-			}},
-			{EffectID::subsystemBonusCaldariCore3ECMHeatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3285]},
-			}},
-			{EffectID::subsystemBonusAmarrDefensive2HardenerHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3286]},{modifiers[3287]},
-			}},
-			{EffectID::subsystemBonusGallenteDefensive2HardenerHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3288]},{modifiers[3289]},
-			}},
-			{EffectID::subsystemBonusCaldariDefensive2HardenerHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3290]},
-			}},
-			{EffectID::subsystemBonusMinmatarDefensive2HardenerHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3291]},{modifiers[3292]},{modifiers[3293]},
-			}},
-			{EffectID::subsystemBonusAmarrDefensive3ArmorRepHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3294]},{modifiers[3295]},
-			}},
-			{EffectID::subsystemBonusGallenteDefensive3ArmorRepHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3296]},{modifiers[3297]},
-			}},
-			{EffectID::subsystemBonusCaldariDefensive3ShieldBoostHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3298]},{modifiers[3299]},
-			}},
-			{EffectID::subsystemBonusMinmatarDefensive3LocalRepHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3300]},{modifiers[3301]},{modifiers[3302]},{modifiers[3303]},
-			}},
-			{EffectID::subSystemBonusCaldariDefensive2ScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3304]},
-			}},
-			{EffectID::subSystemBonusGallenteDefensive2ScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3305]},
-			}},
-			{EffectID::subSystemBonusMinmatarDefensive2ScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3306]},
-			}},
-			{EffectID::mediumRemoteRepFittingAdjustment, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3307]},{modifiers[3308]},
-			}},
-			{EffectID::subsystemBonusCommandBurstFittingReduction, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3309]},{modifiers[3310]},
-			}},
-			{EffectID::subsystemRemoteShieldBoostFalloffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3311]},{modifiers[3312]},
-			}},
-			{EffectID::subsystemRemoteArmorRepairerOptimalBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3313]},{modifiers[3314]},
-			}},
-			{EffectID::subsystemRemoteArmorRepairerFalloffBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3315]},{modifiers[3316]},
-			}},
-			{EffectID::subsystemBonusAmarrOffensive3RemoteArmorRepairHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3317]},
-			}},
-			{EffectID::subsystemBonusGallenteOffensive3RemoteArmorRepairHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3318]},
-			}},
-			{EffectID::subsystemBonusCaldariOffensive3RemoteShieldBoosterHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3319]},
-			}},
-			{EffectID::subsystemBonusMinmatarOffensive3RemoteRepHeat, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3320]},{modifiers[3321]},
-			}},
-			{EffectID::subsystemBonusAmarrPropulsion2WarpSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3322]},
-			}},
-			{EffectID::subsystemBonusMinmatarPropulsion2WarpSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3323]},
-			}},
-			{EffectID::subsystemBonusGallentePropulsionWarpSpeed, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3324]},
-			}},
-			{EffectID::surveyProbeExplosionDelayOnline, MetaInfo::Effect::Category::passive, false, false, {
-				{modifiers[3325]},
-			}},
-			{EffectID::rigReactionHybTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3326]},
-			}},
-			{EffectID::rigReactionHybMatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3327]},
-			}},
-			{EffectID::rigReactionCompTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3328]},
-			}},
-			{EffectID::rigReactionCompMatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3329]},
-			}},
-			{EffectID::rigReactionBioTimeBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3330]},
-			}},
-			{EffectID::rigReactionBioMatBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3331]},
-			}},
-			{EffectID::structureReactionRigSecurityModification, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3332]},{modifiers[3333]},
-			}},
-			{EffectID::rigMoonSpewVolBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3334]},
-			}},
-			{EffectID::rigMoonSpewRadBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3335]},
-			}},
-			{EffectID::rigMoonFractureDelay, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3336]},
-			}},
-			{EffectID::rigMoonAsteroidDecayBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3337]},
-			}},
-			{EffectID::shipBonusTitanG1KinThermDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3338]},{modifiers[3339]},{modifiers[3340]},{modifiers[3341]},{modifiers[3342]},{modifiers[3343]},
-			}},
-			{EffectID::shipBonusTitanG2AllDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3344]},{modifiers[3345]},{modifiers[3346]},{modifiers[3347]},{modifiers[3348]},{modifiers[3349]},{modifiers[3350]},{modifiers[3351]},{modifiers[3352]},
-			}},
-			{EffectID::shipBonusTitanC1ShieldResists, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3353]},{modifiers[3354]},{modifiers[3355]},{modifiers[3356]},
-			}},
-			{EffectID::shipBonusRole4FighterDamageAndHitpoints, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3357]},{modifiers[3358]},{modifiers[3359]},{modifiers[3360]},
-			}},
-			{EffectID::shipBonusDreadnoughtG1KinThermDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3361]},{modifiers[3362]},{modifiers[3363]},{modifiers[3364]},{modifiers[3365]},{modifiers[3366]},
-			}},
-			{EffectID::shipBonusForceAuxiliaryG1RemoteShieldBoostAmount, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3367]},
-			}},
-			{EffectID::shipBonusRole2LogisticDroneRepAmountAndHitpointBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[2693]},{modifiers[2694]},{modifiers[2695]},{modifiers[3368]},{modifiers[3369]},{modifiers[3370]},
-			}},
-			{EffectID::refineryServiceFuelBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3371]},{modifiers[3372]},
-			}},
-			{EffectID::refineryRefiningYieldBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3373]},{modifiers[3374]},{modifiers[3375]},
-			}},
-			{EffectID::asteroidDecayTimeDisplayUpdate, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3376]},
-			}},
-			{EffectID::characterDamageMissiles, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3377]},{modifiers[3378]},{modifiers[3379]},{modifiers[3380]},
-			}},
-			{EffectID::naniteRepairPasteArmorDamageBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3381]},
-			}},
-			{EffectID::tacticalMode, MetaInfo::Effect::Category::generic, false, false, {
-				
-			}},
-			{EffectID::fueledArmorRepairBonus, MetaInfo::Effect::Category::generic, false, false, {
-				{modifiers[3382]},{modifiers[3383]},
-			}},
-			{EffectID::gangBoost, MetaInfo::Effect::Category::active, false, false, {
-				
-			}},
-		};
+		namespace Effects {
+			using namespace MetaInfo;
+			constexpr auto shieldBoosting = MakeEffect(EffectID::shieldBoosting, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier1));
+			constexpr auto missileLaunching = MakeEffect(EffectID::missileLaunching, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto targetAttack = MakeEffect(EffectID::targetAttack, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto loPower = MakeEffect(EffectID::loPower, MetaInfo::Effect::Category::generic, false, false, _modifiers());
+			constexpr auto hiPower = MakeEffect(EffectID::hiPower, MetaInfo::Effect::Category::generic, false, false, _modifiers());
+			constexpr auto medPower = MakeEffect(EffectID::medPower, MetaInfo::Effect::Category::generic, false, false, _modifiers());
+			constexpr auto online = MakeEffect(EffectID::online, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2, &Modifiers::modifier3));
+			constexpr auto mining = MakeEffect(EffectID::mining, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto shieldTransfer = MakeEffect(EffectID::shieldTransfer, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier4));
+			constexpr auto shieldCapacityBonusOnline = MakeEffect(EffectID::shieldCapacityBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier5));
+			constexpr auto capacitorCapacityBonus = MakeEffect(EffectID::capacitorCapacityBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier6));
+			constexpr auto structureRepair = MakeEffect(EffectID::structureRepair, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier7));
+			constexpr auto armorRepair = MakeEffect(EffectID::armorRepair, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier8));
+			constexpr auto projectileFired = MakeEffect(EffectID::projectileFired, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto empWave = MakeEffect(EffectID::empWave, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto warpScramble = MakeEffect(EffectID::warpScramble, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier9));
+			constexpr auto launcherFitted = MakeEffect(EffectID::launcherFitted, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier10));
+			constexpr auto turretFitted = MakeEffect(EffectID::turretFitted, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier11));
+			constexpr auto shipScan = MakeEffect(EffectID::shipScan, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto cargoScan = MakeEffect(EffectID::cargoScan, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto powerBooster = MakeEffect(EffectID::powerBooster, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto modifyShieldRechargeRate = MakeEffect(EffectID::modifyShieldRechargeRate, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier12));
+			constexpr auto modifyPowerRechargeRate = MakeEffect(EffectID::modifyPowerRechargeRate, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier13));
+			constexpr auto targetPassively = MakeEffect(EffectID::targetPassively, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto targetHostiles = MakeEffect(EffectID::targetHostiles, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto powerOutputMultiply = MakeEffect(EffectID::powerOutputMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier14));
+			constexpr auto shieldCapacityMultiply = MakeEffect(EffectID::shieldCapacityMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier15));
+			constexpr auto capacitorCapacityMultiply = MakeEffect(EffectID::capacitorCapacityMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier16));
+			constexpr auto cargoCapacityMultiply = MakeEffect(EffectID::cargoCapacityMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier17));
+			constexpr auto structureHPMultiply = MakeEffect(EffectID::structureHPMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier18));
+			constexpr auto agilityBonus = MakeEffect(EffectID::agilityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier19));
+			constexpr auto armorHPMultiply = MakeEffect(EffectID::armorHPMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier20));
+			constexpr auto miningLaser = MakeEffect(EffectID::miningLaser, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto surveyScan = MakeEffect(EffectID::surveyScan, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto corporationMemberLimitBonus = MakeEffect(EffectID::corporationMemberLimitBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier21));
+			constexpr auto projectileWeaponSpeedMultiply = MakeEffect(EffectID::projectileWeaponSpeedMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier22));
+			constexpr auto energyWeaponDamageMultiply = MakeEffect(EffectID::energyWeaponDamageMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier23));
+			constexpr auto projectileWeaponDamageMultiply = MakeEffect(EffectID::projectileWeaponDamageMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier24));
+			constexpr auto hybridWeaponDamageMultiply = MakeEffect(EffectID::hybridWeaponDamageMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier25));
+			constexpr auto energyWeaponSpeedMultiply = MakeEffect(EffectID::energyWeaponSpeedMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier26));
+			constexpr auto hybridWeaponSpeedMultiply = MakeEffect(EffectID::hybridWeaponSpeedMultiply, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier27));
+			constexpr auto useMissiles = MakeEffect(EffectID::useMissiles, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto mineLaying = MakeEffect(EffectID::mineLaying, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto defenderMissileLaunching = MakeEffect(EffectID::defenderMissileLaunching, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto fofMissileLaunching = MakeEffect(EffectID::fofMissileLaunching, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto shieldResonanceMultiplyOnline = MakeEffect(EffectID::shieldResonanceMultiplyOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier28, &Modifiers::modifier29, &Modifiers::modifier30, &Modifiers::modifier31));
+			constexpr auto electronicAttributeModifyOnline = MakeEffect(EffectID::electronicAttributeModifyOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier32, &Modifiers::modifier33, &Modifiers::modifier34));
+			constexpr auto torpedoLaunching = MakeEffect(EffectID::torpedoLaunching, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto skillEffect = MakeEffect(EffectID::skillEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier35, &Modifiers::modifier36));
+			constexpr auto damageMultiplierSkillBonus = MakeEffect(EffectID::damageMultiplierSkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier37));
+			constexpr auto skillBoostDamageMultiplierBonus = MakeEffect(EffectID::skillBoostDamageMultiplierBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier37));
+			constexpr auto largeHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeHybridTurret = MakeEffect(EffectID::largeHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeHybridTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier38));
+			constexpr auto mediumEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumEnergyTurret = MakeEffect(EffectID::mediumEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumEnergyTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier39));
+			constexpr auto mediumHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumHybridTurret = MakeEffect(EffectID::mediumHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumHybridTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier40));
+			constexpr auto mediumProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumProjectileTurret = MakeEffect(EffectID::mediumProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringMediumProjectileTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier41));
+			constexpr auto largeEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeEnergyTurret = MakeEffect(EffectID::largeEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeEnergyTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier42));
+			constexpr auto rapidFiringSkillBoostRofBonus = MakeEffect(EffectID::rapidFiringSkillBoostRofBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier43));
+			constexpr auto sharpshooterSkillBoostRangeSkillBonus = MakeEffect(EffectID::sharpshooterSkillBoostRangeSkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier44));
+			constexpr auto smallEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallEnergyTurret = MakeEffect(EffectID::smallEnergyTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallEnergyTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier45));
+			constexpr auto smallHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallHybridTurret = MakeEffect(EffectID::smallHybridTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallHybridTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier46));
+			constexpr auto smallProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallProjectileTurret = MakeEffect(EffectID::smallProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringSmallProjectileTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier47));
+			constexpr auto caldariCruiserSkillBoostCcTRangeBonus = MakeEffect(EffectID::caldariCruiserSkillBoostCcTRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier48));
+			constexpr auto caldariFrigateSkillBoostCfTRangeBonus = MakeEffect(EffectID::caldariFrigateSkillBoostCfTRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier49));
+			constexpr auto signatureAnalysisSkillBoostScanspeedBonus = MakeEffect(EffectID::signatureAnalysisSkillBoostScanspeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier50));
+			constexpr auto signatureAnalysisScanspeedBonusPostPercentScanSpeedLocationShip = MakeEffect(EffectID::signatureAnalysisScanspeedBonusPostPercentScanSpeedLocationShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier51));
+			constexpr auto longRangeTargetingSkillBoostMaxTargetRangeBonus = MakeEffect(EffectID::longRangeTargetingSkillBoostMaxTargetRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier52));
+			constexpr auto propulsionJammingSkillBoostDurationBonus = MakeEffect(EffectID::propulsionJammingSkillBoostDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier53));
+			constexpr auto sensorUpgradesSkillBoostCpuNeedBonus = MakeEffect(EffectID::sensorUpgradesSkillBoostCpuNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier54));
+			constexpr auto sensorUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringSensorUpgrades = MakeEffect(EffectID::sensorUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringSensorUpgrades, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier55));
+			constexpr auto targetingSkillBoostMaxTargetBonus = MakeEffect(EffectID::targetingSkillBoostMaxTargetBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier56));
+			constexpr auto targetingMaxTargetBonusModAddMaxLockedTargetsLocationChar = MakeEffect(EffectID::targetingMaxTargetBonusModAddMaxLockedTargetsLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier57));
+			constexpr auto electronicWarfareSkillBoostDurationBonus = MakeEffect(EffectID::electronicWarfareSkillBoostDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier58));
+			constexpr auto engineeringSkillBoostPowerOutputBonus = MakeEffect(EffectID::engineeringSkillBoostPowerOutputBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier59));
+			constexpr auto energyManagementSkillBoostCapRechargeBonus = MakeEffect(EffectID::energyManagementSkillBoostCapRechargeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier60));
+			constexpr auto navigationSkillBoostVelocityBonus = MakeEffect(EffectID::navigationSkillBoostVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier61));
+			constexpr auto navigationVelocityBonusPostPercentMaxVelocityLocationShip = MakeEffect(EffectID::navigationVelocityBonusPostPercentMaxVelocityLocationShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier62));
+			constexpr auto accerationControlSkillBoostCapNeedBonus = MakeEffect(EffectID::accerationControlSkillBoostCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier63));
+			constexpr auto accerationControlCapNeedBonusPostPercentCapacitorNeedLocationShipGroupAfterburner = MakeEffect(EffectID::accerationControlCapNeedBonusPostPercentCapacitorNeedLocationShipGroupAfterburner, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier64));
+			constexpr auto accerationControlSkillBoostSpeedFBonus = MakeEffect(EffectID::accerationControlSkillBoostSpeedFBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier65));
+			constexpr auto afterburnerDurationBonusPostPercentDurationLocationShipModulesRequiringAfterburner = MakeEffect(EffectID::afterburnerDurationBonusPostPercentDurationLocationShipModulesRequiringAfterburner, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier66));
+			constexpr auto evasiveManuveringSkillBoostAgilityBonus = MakeEffect(EffectID::evasiveManuveringSkillBoostAgilityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier67));
+			constexpr auto warpdriveoperationSkillBoostWarpCapacitorNeedBonus = MakeEffect(EffectID::warpdriveoperationSkillBoostWarpCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier68));
+			constexpr auto warpdriveoperationWarpCapacitorNeedBonusPostPercentWarpCapacitorNeedLocationShip = MakeEffect(EffectID::warpdriveoperationWarpCapacitorNeedBonusPostPercentWarpCapacitorNeedLocationShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier69));
+			constexpr auto corporationManagementSkillBoostCorporationMemberBonus = MakeEffect(EffectID::corporationManagementSkillBoostCorporationMemberBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier70));
+			constexpr auto accerationControlSpeedFBonusPostPercentSpeedFactorLocationShipGroupAfterburner = MakeEffect(EffectID::accerationControlSpeedFBonusPostPercentSpeedFactorLocationShipGroupAfterburner, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier71));
+			constexpr auto highSpeedManuveringSkillBoostCapacitorNeedMultiplier = MakeEffect(EffectID::highSpeedManuveringSkillBoostCapacitorNeedMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier72));
+			constexpr auto highSpeedManuveringCapacitorNeedMultiplierPostPercentCapacitorNeedLocationShipModulesRequiringHighSpeedManuvering = MakeEffect(EffectID::highSpeedManuveringCapacitorNeedMultiplierPostPercentCapacitorNeedLocationShipModulesRequiringHighSpeedManuvering, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier73));
+			constexpr auto sensorUpgradesSkillBoostPowerNeedBonus = MakeEffect(EffectID::sensorUpgradesSkillBoostPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier74));
+			constexpr auto hullUpgradesSkillBoostHullHpBonus = MakeEffect(EffectID::hullUpgradesSkillBoostHullHpBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier75));
+			constexpr auto shadowBarrageDmgMultiplierWithDamageMultiplierPostPercentBarrageDmgMutator = MakeEffect(EffectID::shadowBarrageDmgMultiplierWithDamageMultiplierPostPercentBarrageDmgMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier76, &Modifiers::modifier77));
+			constexpr auto shadowBarrageFalloffWithFalloffPostPercentBarrageFalloffMutator = MakeEffect(EffectID::shadowBarrageFalloffWithFalloffPostPercentBarrageFalloffMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier78, &Modifiers::modifier79));
+			constexpr auto barrage = MakeEffect(EffectID::barrage, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto amarrCruiserSkillBoostPowerOutputBonus = MakeEffect(EffectID::amarrCruiserSkillBoostPowerOutputBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier80));
+			constexpr auto hullUpgradesSkillBoostArmorHpBonus = MakeEffect(EffectID::hullUpgradesSkillBoostArmorHpBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier81));
+			constexpr auto hullUpgradesArmorHpBonusPostPercentHpLocationShip = MakeEffect(EffectID::hullUpgradesArmorHpBonusPostPercentHpLocationShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier82));
+			constexpr auto repairSystemsDurationBonusPostPercentDurationLocationShipModulesRequiringRepairSystems = MakeEffect(EffectID::repairSystemsDurationBonusPostPercentDurationLocationShipModulesRequiringRepairSystems, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier83));
+			constexpr auto shieldUpgradesPowerNeedBonusPostPercentPowerLocationShipModulesRequiringShieldUpgrades = MakeEffect(EffectID::shieldUpgradesPowerNeedBonusPostPercentPowerLocationShipModulesRequiringShieldUpgrades, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier84));
+			constexpr auto tacticalshieldManipulationSkillBoostUniformityBonus = MakeEffect(EffectID::tacticalshieldManipulationSkillBoostUniformityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier85));
+			constexpr auto shieldEmmisionSystemsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringShieldEmmisionSystems = MakeEffect(EffectID::shieldEmmisionSystemsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringShieldEmmisionSystems, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier86));
+			constexpr auto shieldManagementSkillBoostShieldCapacityBonus = MakeEffect(EffectID::shieldManagementSkillBoostShieldCapacityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier87));
+			constexpr auto shieldoperationSkillBoostRechargeratebonus = MakeEffect(EffectID::shieldoperationSkillBoostRechargeratebonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier88));
+			constexpr auto controlledBurstsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringGunnery = MakeEffect(EffectID::controlledBurstsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier89));
+			constexpr auto motionPredictionTrackingSpeedMultiplierPostPercentTrackingSpeedLocationShipModulesRequiringGunnery = MakeEffect(EffectID::motionPredictionTrackingSpeedMultiplierPostPercentTrackingSpeedLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier90));
+			constexpr auto sharpshooterRangeSkillBonusPostPercentMaxRangeLocationShipModulesRequiringGunnery = MakeEffect(EffectID::sharpshooterRangeSkillBonusPostPercentMaxRangeLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier91));
+			constexpr auto skillBoostFalloffBonus = MakeEffect(EffectID::skillBoostFalloffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier92));
+			constexpr auto surgicalStrikeFalloffBonusPostPercentFalloffLocationShipModulesRequiringGunnery = MakeEffect(EffectID::surgicalStrikeFalloffBonusPostPercentFalloffLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier93));
+			constexpr auto empathyCharismaBonusModAddCharismaLocationChar = MakeEffect(EffectID::empathyCharismaBonusModAddCharismaLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier94));
+			constexpr auto instantRecallMemoryBonusModAddMemoryLocationChar = MakeEffect(EffectID::instantRecallMemoryBonusModAddMemoryLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier95));
+			constexpr auto analyticalMindIntelligenceBonusModAddIntelligenceLocationChar = MakeEffect(EffectID::analyticalMindIntelligenceBonusModAddIntelligenceLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier96));
+			constexpr auto ironWillWillpowerBonusModAddWillpowerLocationChar = MakeEffect(EffectID::ironWillWillpowerBonusModAddWillpowerLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier97));
+			constexpr auto spatialAwarenessPerceptionBonusModAddPerceptionLocationChar = MakeEffect(EffectID::spatialAwarenessPerceptionBonusModAddPerceptionLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier98));
+			constexpr auto dronesSkillBoostMaxActiveDroneBonus = MakeEffect(EffectID::dronesSkillBoostMaxActiveDroneBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier99));
+			constexpr auto dronesMaxActiveDroneBonusModAddMaxActiveLocationChar = MakeEffect(EffectID::dronesMaxActiveDroneBonusModAddMaxActiveLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier100));
+			constexpr auto amarrTechSkillBoostAmarrTechMutator = MakeEffect(EffectID::amarrTechSkillBoostAmarrTechMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier101));
+			constexpr auto amarrTechAmarrTechMutatorPostPercentAmarrTechTimePercentLocationChar = MakeEffect(EffectID::amarrTechAmarrTechMutatorPostPercentAmarrTechTimePercentLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier102));
+			constexpr auto caldariTechSkillBoostCaldariTechMutator = MakeEffect(EffectID::caldariTechSkillBoostCaldariTechMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier103));
+			constexpr auto caldariTechCaldariTechMutatorPostPercentCaldariTechTimePercentLocationChar = MakeEffect(EffectID::caldariTechCaldariTechMutatorPostPercentCaldariTechTimePercentLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier104));
+			constexpr auto gallenteTechSkillBoostGallenteTechMutator = MakeEffect(EffectID::gallenteTechSkillBoostGallenteTechMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier105));
+			constexpr auto gallenteTechGallenteTechMutatorPostPercentGallenteTechTimePercentLocationChar = MakeEffect(EffectID::gallenteTechGallenteTechMutatorPostPercentGallenteTechTimePercentLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier106));
+			constexpr auto refineryEfficiencySkillBoostRefiningYieldMutator = MakeEffect(EffectID::refineryEfficiencySkillBoostRefiningYieldMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier107));
+			constexpr auto cSOTrainingSkillBoostResearchGangSizeBonus = MakeEffect(EffectID::cSOTrainingSkillBoostResearchGangSizeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier108));
+			constexpr auto cSOTrainingResearchGangSizeBonusModAddMaxResearchGangSizeShip = MakeEffect(EffectID::cSOTrainingResearchGangSizeBonusModAddMaxResearchGangSizeShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier109));
+			constexpr auto battleshipConstructionSkillBoostBattleshipConstructionTimeBonus = MakeEffect(EffectID::battleshipConstructionSkillBoostBattleshipConstructionTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier110));
+			constexpr auto battleshipConstructionBattleshipConstructionTimeBonusPostPercentBattleshipConstructionTimeChar = MakeEffect(EffectID::battleshipConstructionBattleshipConstructionTimeBonusPostPercentBattleshipConstructionTimeChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier111));
+			constexpr auto cruiserConstructionSkillBoostCruiserConstructionTimeBonus = MakeEffect(EffectID::cruiserConstructionSkillBoostCruiserConstructionTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier112));
+			constexpr auto cruiserConstructionCruiserConstructionTimeBonusPostPercentCruiserConstructionTimeChar = MakeEffect(EffectID::cruiserConstructionCruiserConstructionTimeBonusPostPercentCruiserConstructionTimeChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier113));
+			constexpr auto frigateConstructionSkillBoostFrigateConstructionTimeBonus = MakeEffect(EffectID::frigateConstructionSkillBoostFrigateConstructionTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier114));
+			constexpr auto frigateConstructionFrigateConstructionTimeBonusPostPercentFrigateConstructionTimeChar = MakeEffect(EffectID::frigateConstructionFrigateConstructionTimeBonusPostPercentFrigateConstructionTimeChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier115));
+			constexpr auto industrialConstructionSkillBoostIndustrialConstructionTimeBonus = MakeEffect(EffectID::industrialConstructionSkillBoostIndustrialConstructionTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier116));
+			constexpr auto industrialConstructionIndustrialConstructionTimeBonusPostPercentIndustrialConstructionTimeChar = MakeEffect(EffectID::industrialConstructionIndustrialConstructionTimeBonusPostPercentIndustrialConstructionTimeChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier117));
+			constexpr auto connectionsSkillBoostConnectionBonusMutator = MakeEffect(EffectID::connectionsSkillBoostConnectionBonusMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier118));
+			constexpr auto criminalConnectionsSkillBoostCriminalConnectionsMutator = MakeEffect(EffectID::criminalConnectionsSkillBoostCriminalConnectionsMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier119));
+			constexpr auto diplomacySkillBoostDiplomacyMutator = MakeEffect(EffectID::diplomacySkillBoostDiplomacyMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier120));
+			constexpr auto diplomacyDiplomacyMutatorModAddDiplomacyBonusChar = MakeEffect(EffectID::diplomacyDiplomacyMutatorModAddDiplomacyBonusChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier121));
+			constexpr auto fasttalkSkillBoostFastTalkMutator = MakeEffect(EffectID::fasttalkSkillBoostFastTalkMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier122));
+			constexpr auto fasttalkFastTalkMutatorPostPercentFastTalkPercentageChar = MakeEffect(EffectID::fasttalkFastTalkMutatorPostPercentFastTalkPercentageChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier123));
+			constexpr auto gallenteFrigateSkillBoostCpuOutputBonus = MakeEffect(EffectID::gallenteFrigateSkillBoostCpuOutputBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier124));
+			constexpr auto astrogeologySkillBoostMiningAmountBonus = MakeEffect(EffectID::astrogeologySkillBoostMiningAmountBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier125));
+			constexpr auto astrogeologyMiningAmountBonusPostPercentMiningAmountLocationShipModulesRequiringMining = MakeEffect(EffectID::astrogeologyMiningAmountBonusPostPercentMiningAmountLocationShipModulesRequiringMining, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier126));
+			constexpr auto mechanicHullHpBonusPostPercentHpShip = MakeEffect(EffectID::mechanicHullHpBonusPostPercentHpShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier127));
+			constexpr auto navigationVelocityBonusPostPercentMaxVelocityShip = MakeEffect(EffectID::navigationVelocityBonusPostPercentMaxVelocityShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier62));
+			constexpr auto evasiveManeuveringAgilityBonusPostPercentAgilityShip = MakeEffect(EffectID::evasiveManeuveringAgilityBonusPostPercentAgilityShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier128));
+			constexpr auto energyGridUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringEnergyGridUpgrades = MakeEffect(EffectID::energyGridUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringEnergyGridUpgrades, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier129));
+			constexpr auto electronicsCpuOutputBonusPostPercentCpuOutputLocationShipGroupComputer = MakeEffect(EffectID::electronicsCpuOutputBonusPostPercentCpuOutputLocationShipGroupComputer, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier130));
+			constexpr auto connectionsConnectionBonusMutatorModAddConnectionsBonusChar = MakeEffect(EffectID::connectionsConnectionBonusMutatorModAddConnectionsBonusChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier131));
+			constexpr auto criminalConnectionsCriminalConnectionsMutatorModAddCriminalConnectionsBonusChar = MakeEffect(EffectID::criminalConnectionsCriminalConnectionsMutatorModAddCriminalConnectionsBonusChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier132));
+			constexpr auto negotiationSkillBoostNegotiationBonus = MakeEffect(EffectID::negotiationSkillBoostNegotiationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier133));
+			constexpr auto negotiationNegotiationBonusPostPercentNegotiationPercentageChar = MakeEffect(EffectID::negotiationNegotiationBonusPostPercentNegotiationPercentageChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier134));
+			constexpr auto socialSkillBoostSocialMutator = MakeEffect(EffectID::socialSkillBoostSocialMutator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier135));
+			constexpr auto socialSocialMutatorPostPercentSocialBonusChar = MakeEffect(EffectID::socialSocialMutatorPostPercentSocialBonusChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier136));
+			constexpr auto largeProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeProjectileTurret = MakeEffect(EffectID::largeProjectileTurretDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringLargeProjectileTurret, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier137));
+			constexpr auto industrySkillBoostManufacturingTimeBonus = MakeEffect(EffectID::industrySkillBoostManufacturingTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier138));
+			constexpr auto gunnerySkillBoostTurretSpeeBonus = MakeEffect(EffectID::gunnerySkillBoostTurretSpeeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier139));
+			constexpr auto gunneryTurretSpeeBonusPostPercentSpeedLocationShipModulesRequiringGunnery = MakeEffect(EffectID::gunneryTurretSpeeBonusPostPercentSpeedLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier140));
+			constexpr auto tradeSkillBoostTradePremiumBonus = MakeEffect(EffectID::tradeSkillBoostTradePremiumBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier141));
+			constexpr auto tradeTradePremiumBonusPostPercentTradePremiumChar = MakeEffect(EffectID::tradeTradePremiumBonusPostPercentTradePremiumChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier142));
+			constexpr auto smugglingSkillBoostSmugglingChanceBonus = MakeEffect(EffectID::smugglingSkillBoostSmugglingChanceBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier143));
+			constexpr auto industryManufacturingTimeBonusPostPercentManufactureTimeMultiplierChar = MakeEffect(EffectID::industryManufacturingTimeBonusPostPercentManufactureTimeMultiplierChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier144));
+			constexpr auto scienceSkillBoostCopySpeedBonus = MakeEffect(EffectID::scienceSkillBoostCopySpeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier145));
+			constexpr auto scienceCopySpeedBonusPostPercentCopySpeedPercentChar = MakeEffect(EffectID::scienceCopySpeedBonusPostPercentCopySpeedPercentChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier146));
+			constexpr auto researchSkillBoostBlueprintmanufactureTimeBonus = MakeEffect(EffectID::researchSkillBoostBlueprintmanufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier147));
+			constexpr auto researchBlueprintmanufactureTimeBonusPostPercentProductionTimeResearchSpeedChar = MakeEffect(EffectID::researchBlueprintmanufactureTimeBonusPostPercentProductionTimeResearchSpeedChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier148));
+			constexpr auto refineryEfficiencyRefiningYieldMutatorPostPercentRefiningYieldPercentageChar = MakeEffect(EffectID::refineryEfficiencyRefiningYieldMutatorPostPercentRefiningYieldPercentageChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier149));
+			constexpr auto missileLauncherOperationSpeedBonusPostPercentSpeedLocationShipModulesRequiringMissileLauncherOperation = MakeEffect(EffectID::missileLauncherOperationSpeedBonusPostPercentSpeedLocationShipModulesRequiringMissileLauncherOperation, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier150));
+			constexpr auto energyManagementCapacitorBonusPostPercentCapacityLocationShipGroupCapacitor = MakeEffect(EffectID::energyManagementCapacitorBonusPostPercentCapacityLocationShipGroupCapacitor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier151));
+			constexpr auto shieldManagementShieldCapacityBonusPostPercentCapacityLocationShipGroupShield = MakeEffect(EffectID::shieldManagementShieldCapacityBonusPostPercentCapacityLocationShipGroupShield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier152));
+			constexpr auto scoutDroneOperationSkillBoostDroneRangeBonus = MakeEffect(EffectID::scoutDroneOperationSkillBoostDroneRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier153));
+			constexpr auto minmatarFrigateSkillLevelPreMulShipBonusMFShip = MakeEffect(EffectID::minmatarFrigateSkillLevelPreMulShipBonusMFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier154));
+			constexpr auto shipTargetRangeBonusMF = MakeEffect(EffectID::shipTargetRangeBonusMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier155));
+			constexpr auto caldariFrigateSkillLevelPreMulShipBonusCFShip = MakeEffect(EffectID::caldariFrigateSkillLevelPreMulShipBonusCFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier156));
+			constexpr auto shipShieldCapBonusCF = MakeEffect(EffectID::shipShieldCapBonusCF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier157));
+			constexpr auto gallenteFrigateSkillLevelPreMulShipBonusGFShip = MakeEffect(EffectID::gallenteFrigateSkillLevelPreMulShipBonusGFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier158));
+			constexpr auto amarrFrigateSkillLevelPreMulShipBonusAFShip = MakeEffect(EffectID::amarrFrigateSkillLevelPreMulShipBonusAFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier159));
+			constexpr auto metallurgySkillBoostMineralNeedResearchBonus = MakeEffect(EffectID::metallurgySkillBoostMineralNeedResearchBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier160));
+			constexpr auto energysystemsoperationCapRechargeBonusPostPercentRechargeRateLocationShipGroupCapacitor = MakeEffect(EffectID::energysystemsoperationCapRechargeBonusPostPercentRechargeRateLocationShipGroupCapacitor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier161));
+			constexpr auto shieldOperationRechargeratebonusPostPercentRechargeRateLocationShipGroupShield = MakeEffect(EffectID::shieldOperationRechargeratebonusPostPercentRechargeRateLocationShipGroupShield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier162));
+			constexpr auto engineeringPowerEngineeringOutputBonusPostPercentPowerOutputLocationShipGroupPowerCore = MakeEffect(EffectID::engineeringPowerEngineeringOutputBonusPostPercentPowerOutputLocationShipGroupPowerCore, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier163));
+			constexpr auto warpDriveOperationWarpCapacitorNeedBonusPostPercentWarpCapacitorNeedLocationShipGroupPropulsion = MakeEffect(EffectID::warpDriveOperationWarpCapacitorNeedBonusPostPercentWarpCapacitorNeedLocationShipGroupPropulsion, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier69));
+			constexpr auto inventionSkillBoostInventionBonus = MakeEffect(EffectID::inventionSkillBoostInventionBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier164));
+			constexpr auto amarrCruiserSkillLevelPreMulShipBonusACShip = MakeEffect(EffectID::amarrCruiserSkillLevelPreMulShipBonusACShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier165));
+			constexpr auto scoutDroneOperationDroneRangeBonusModAddDroneControlDistanceChar = MakeEffect(EffectID::scoutDroneOperationDroneRangeBonusModAddDroneControlDistanceChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier166));
+			constexpr auto fuelConservationCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringAfterburner = MakeEffect(EffectID::fuelConservationCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringAfterburner, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier167));
+			constexpr auto longRangeTargetingMaxTargetRangeBonusPostPercentMaxTargetRangeLocationShipGroupElectronic = MakeEffect(EffectID::longRangeTargetingMaxTargetRangeBonusPostPercentMaxTargetRangeLocationShipGroupElectronic, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier168));
+			constexpr auto shipPDmgBonusMF = MakeEffect(EffectID::shipPDmgBonusMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier169));
+			constexpr auto amarrFrigateSkillLevelPreMulShipBonus2AFShip = MakeEffect(EffectID::amarrFrigateSkillLevelPreMulShipBonus2AFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier170));
+			constexpr auto shipEnergyTCapNeedBonusAF = MakeEffect(EffectID::shipEnergyTCapNeedBonusAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier171));
+			constexpr auto shipSHTDmgBonusGF = MakeEffect(EffectID::shipSHTDmgBonusGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier172));
+			constexpr auto shipSETDmgBonusAF = MakeEffect(EffectID::shipSETDmgBonusAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier173));
+			constexpr auto shipTCapNeedBonusAC = MakeEffect(EffectID::shipTCapNeedBonusAC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier174));
+			constexpr auto gallenteCruiserSkillLevelPreMulShipBonusGCShip = MakeEffect(EffectID::gallenteCruiserSkillLevelPreMulShipBonusGCShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier175));
+			constexpr auto caldariCruiserSkillLevelPreMulShipBonusCCShip = MakeEffect(EffectID::caldariCruiserSkillLevelPreMulShipBonusCCShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier176));
+			constexpr auto shipHRangeBonusCC = MakeEffect(EffectID::shipHRangeBonusCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier177));
+			constexpr auto minmatarCruiserSkillLevelPreMulShipBonusMCShip = MakeEffect(EffectID::minmatarCruiserSkillLevelPreMulShipBonusMCShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier178));
+			constexpr auto minmatarIndustrialSkillLevelPreMulShipBonusMIShip = MakeEffect(EffectID::minmatarIndustrialSkillLevelPreMulShipBonusMIShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier179));
+			constexpr auto shipVelocityBonusMI = MakeEffect(EffectID::shipVelocityBonusMI, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier180));
+			constexpr auto shipCargoBonusAI = MakeEffect(EffectID::shipCargoBonusAI, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier181));
+			constexpr auto caldariIndustrialSkillLevelPreMulShipBonusCIShip = MakeEffect(EffectID::caldariIndustrialSkillLevelPreMulShipBonusCIShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier182));
+			constexpr auto gallenteIndustrialSkillLevelPreMulShipBonusGIShip = MakeEffect(EffectID::gallenteIndustrialSkillLevelPreMulShipBonusGIShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier183));
+			constexpr auto cpuMultiplierPostMulCpuOutputShip = MakeEffect(EffectID::cpuMultiplierPostMulCpuOutputShip, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier184));
+			constexpr auto amarrBattleshipSkillLevelPostMulShipBonusABShip = MakeEffect(EffectID::amarrBattleshipSkillLevelPostMulShipBonusABShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier185));
+			constexpr auto caldariBattleshipSkillLevelPreMulShipBonusCBShip = MakeEffect(EffectID::caldariBattleshipSkillLevelPreMulShipBonusCBShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier186));
+			constexpr auto shipCapNeedBonusAB = MakeEffect(EffectID::shipCapNeedBonusAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier187));
+			constexpr auto minmatarBattleshipSkillLevelPreMulShipBonusMBShip = MakeEffect(EffectID::minmatarBattleshipSkillLevelPreMulShipBonusMBShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier188));
+			constexpr auto shipPTDmgBonusMB = MakeEffect(EffectID::shipPTDmgBonusMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier189));
+			constexpr auto shipHTDmgBonusGB = MakeEffect(EffectID::shipHTDmgBonusGB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier190));
+			constexpr auto shipHTTrackingBonusGB = MakeEffect(EffectID::shipHTTrackingBonusGB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier191));
+			constexpr auto caldariBattleshipSkillLevelPreMulShipBonus2CBShip = MakeEffect(EffectID::caldariBattleshipSkillLevelPreMulShipBonus2CBShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier192));
+			constexpr auto metallurgyMineralNeedResearchBonusPostPercentMineralNeedResearchSpeedChar = MakeEffect(EffectID::metallurgyMineralNeedResearchBonusPostPercentMineralNeedResearchSpeedChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier193));
+			constexpr auto shipHTDmgBonusfixedGC = MakeEffect(EffectID::shipHTDmgBonusfixedGC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier194));
+			constexpr auto laboratoryOperationSkillLevelModAddMaxLaborotorySlotsChar = MakeEffect(EffectID::laboratoryOperationSkillLevelModAddMaxLaborotorySlotsChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier195));
+			constexpr auto massProductionSkillLevelModAddManufactureSlotLimitChar = MakeEffect(EffectID::massProductionSkillLevelModAddManufactureSlotLimitChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier196));
+			constexpr auto missileLaunchingForEntity = MakeEffect(EffectID::missileLaunchingForEntity, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto reverseEngineeringInventionBonusModAddReverseEngineeringChanceLocationChar = MakeEffect(EffectID::reverseEngineeringInventionBonusModAddReverseEngineeringChanceLocationChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier197));
+			constexpr auto weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringGunnery = MakeEffect(EffectID::weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier198));
+			constexpr auto rapidFiringRofBonusPostPercentSpeedLocationShipModulesRequiringGunnery = MakeEffect(EffectID::rapidFiringRofBonusPostPercentSpeedLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier199));
+			constexpr auto amarrIndustrialSkillLevelPreMulShipBonusAI2Ship = MakeEffect(EffectID::amarrIndustrialSkillLevelPreMulShipBonusAI2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier200));
+			constexpr auto surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringGunnery = MakeEffect(EffectID::surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipModulesRequiringGunnery, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier201));
+			constexpr auto decreaseTargetSpeed = MakeEffect(EffectID::decreaseTargetSpeed, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier202));
+			constexpr auto surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupEnergyWeapon = MakeEffect(EffectID::surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupEnergyWeapon, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier203));
+			constexpr auto surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupProjectileWeapon = MakeEffect(EffectID::surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupProjectileWeapon, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier204));
+			constexpr auto surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupHybridWeapon = MakeEffect(EffectID::surgicalStrikeDamageMultiplierBonusPostPercentDamageMultiplierLocationShipGroupHybridWeapon, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier205));
+			constexpr auto energyPulseWeaponsDurationBonusPostPercentDurationLocationShipModulesRequiringEnergyPulseWeapons = MakeEffect(EffectID::energyPulseWeaponsDurationBonusPostPercentDurationLocationShipModulesRequiringEnergyPulseWeapons, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier206));
+			constexpr auto targetArmorRepair = MakeEffect(EffectID::targetArmorRepair, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier207));
+			constexpr auto ammoInfluenceRange = MakeEffect(EffectID::ammoInfluenceRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier208));
+			constexpr auto ammoSpeedMultiplier = MakeEffect(EffectID::ammoSpeedMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier209));
+			constexpr auto ammoFallofMultiplier = MakeEffect(EffectID::ammoFallofMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier210));
+			constexpr auto ammoTrackingMultiplier = MakeEffect(EffectID::ammoTrackingMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier211));
+			constexpr auto shipPTurretSpeedBonusMC = MakeEffect(EffectID::shipPTurretSpeedBonusMC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier212));
+			constexpr auto shipPTspeedBonusMB2 = MakeEffect(EffectID::shipPTspeedBonusMB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier213));
+			constexpr auto minmatarBattleshipSkillLevelPreMulShipBonusMB2Ship = MakeEffect(EffectID::minmatarBattleshipSkillLevelPreMulShipBonusMB2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier214));
+			constexpr auto cloaking = MakeEffect(EffectID::cloaking, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier215));
+			constexpr auto gallenteBattleshipSkillLevelPreMulShipBonusGBShip = MakeEffect(EffectID::gallenteBattleshipSkillLevelPreMulShipBonusGBShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier216));
+			constexpr auto miningDroneOperationMiningAmountBonusPostPercentMiningDroneAmountPercentChar = MakeEffect(EffectID::miningDroneOperationMiningAmountBonusPostPercentMiningDroneAmountPercentChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier217));
+			constexpr auto powerIncrease = MakeEffect(EffectID::powerIncrease, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier218));
+			constexpr auto shipSpecialityMining = MakeEffect(EffectID::shipSpecialityMining, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier219));
+			constexpr auto anchorDrop = MakeEffect(EffectID::anchorDrop, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto anchorLift = MakeEffect(EffectID::anchorLift, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto cloakingSkillBoostCloakVelocityBonus = MakeEffect(EffectID::cloakingSkillBoostCloakVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier220));
+			constexpr auto agilityMultiplierEffect = MakeEffect(EffectID::agilityMultiplierEffect, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier221));
+			constexpr auto missileEMDmgBonus = MakeEffect(EffectID::missileEMDmgBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier222));
+			constexpr auto missileExplosiveDmgBonus = MakeEffect(EffectID::missileExplosiveDmgBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier223));
+			constexpr auto missileThermalDmgBonus = MakeEffect(EffectID::missileThermalDmgBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier224));
+			constexpr auto heavyMissilesSkillBoostMaxflightTimeBonus = MakeEffect(EffectID::heavyMissilesSkillBoostMaxflightTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier225));
+			constexpr auto missileKineticDmgBonus2 = MakeEffect(EffectID::missileKineticDmgBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier226));
+			constexpr auto antiWarpScramblingPassive = MakeEffect(EffectID::antiWarpScramblingPassive, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier227));
+			constexpr auto weaponUpgradesSkillBoostCpu = MakeEffect(EffectID::weaponUpgradesSkillBoostCpu, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier228));
+			constexpr auto weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringEnergyPulseWeapons = MakeEffect(EffectID::weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringEnergyPulseWeapons, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier229));
+			constexpr auto weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringMissileLauncherOperation = MakeEffect(EffectID::weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringMissileLauncherOperation, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier230));
+			constexpr auto gallenteBattleshipSkillLevelPreMulShipBonusGB2Ship = MakeEffect(EffectID::gallenteBattleshipSkillLevelPreMulShipBonusGB2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier231));
+			constexpr auto signatureAnalysisSkillLevelPreMulScanResolutionBonusSelf = MakeEffect(EffectID::signatureAnalysisSkillLevelPreMulScanResolutionBonusSelf, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier232));
+			constexpr auto signatureAnalysisScanResolutionBonusPostPercentScanResolutionShip = MakeEffect(EffectID::signatureAnalysisScanResolutionBonusPostPercentScanResolutionShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier233));
+			constexpr auto interceptorsSkillLevelPreMulEliteBonusInterceptorShip = MakeEffect(EffectID::interceptorsSkillLevelPreMulEliteBonusInterceptorShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier234));
+			constexpr auto covertOpsSkillLevelPreMulEliteBonusCoverOpsShip = MakeEffect(EffectID::covertOpsSkillLevelPreMulEliteBonusCoverOpsShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier235));
+			constexpr auto covertOpsWarpResistance = MakeEffect(EffectID::covertOpsWarpResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier236));
+			constexpr auto bomberRocketRangeBonus = MakeEffect(EffectID::bomberRocketRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier237));
+			constexpr auto bomberLightsRangeBonus = MakeEffect(EffectID::bomberLightsRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier238));
+			constexpr auto interceptorSignatoreRadiusBonus = MakeEffect(EffectID::interceptorSignatoreRadiusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier239));
+			constexpr auto speedBoostFactorCalculator = MakeEffect(EffectID::speedBoostFactorCalculator, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier240, &Modifiers::modifier241));
+			constexpr auto speedBoostFactorCalculator2 = MakeEffect(EffectID::speedBoostFactorCalculator2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier242));
+			constexpr auto stealthActive = MakeEffect(EffectID::stealthActive, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier243));
+			constexpr auto shipBonusCargo2GI = MakeEffect(EffectID::shipBonusCargo2GI, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier244));
+			constexpr auto shipBonusCargoCI = MakeEffect(EffectID::shipBonusCargoCI, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier245));
+			constexpr auto shipBonusCargoMI = MakeEffect(EffectID::shipBonusCargoMI, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier246));
+			constexpr auto shipBonusVelocityGI = MakeEffect(EffectID::shipBonusVelocityGI, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier247));
+			constexpr auto shipBonusVelocityCI = MakeEffect(EffectID::shipBonusVelocityCI, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier248));
+			constexpr auto shipVelocityBonusAI = MakeEffect(EffectID::shipVelocityBonusAI, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier249));
+			constexpr auto amarrBattleshipSkillLevelPreMulShipBonusAB2Ship = MakeEffect(EffectID::amarrBattleshipSkillLevelPreMulShipBonusAB2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier250));
+			constexpr auto shipBonusCapCapAB = MakeEffect(EffectID::shipBonusCapCapAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier251));
+			constexpr auto surveyScanspeedBonusPostPercentDurationLocationShipModulesRequiringElectronics = MakeEffect(EffectID::surveyScanspeedBonusPostPercentDurationLocationShipModulesRequiringElectronics, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier252));
+			constexpr auto gallenteFrigateSkillLevelPreMulShipBonusGF2Ship = MakeEffect(EffectID::gallenteFrigateSkillLevelPreMulShipBonusGF2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier253));
+			constexpr auto shipHybridDamageBonusCF = MakeEffect(EffectID::shipHybridDamageBonusCF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier254));
+			constexpr auto shipETDamageAF = MakeEffect(EffectID::shipETDamageAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier173));
+			constexpr auto shipBonusSmallMissileRoFCF2 = MakeEffect(EffectID::shipBonusSmallMissileRoFCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier255, &Modifiers::modifier256));
+			constexpr auto caldariFrigateSkillLevelPreMulShipBonusCF2Ship = MakeEffect(EffectID::caldariFrigateSkillLevelPreMulShipBonusCF2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier257));
+			constexpr auto minmatarFrigateSkillLevelPreMulShipBonusMF2Ship = MakeEffect(EffectID::minmatarFrigateSkillLevelPreMulShipBonusMF2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier258));
+			constexpr auto missileDMGBonus = MakeEffect(EffectID::missileDMGBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier259));
+			constexpr auto hypereuclideanNavigationCloakVelocityBonusModAddSpeedFactorLocationShipModulesRequiringCloaking = MakeEffect(EffectID::hypereuclideanNavigationCloakVelocityBonusModAddSpeedFactorLocationShipModulesRequiringCloaking, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier260));
+			constexpr auto missileBombardmentMaxFlightTimeBonusPostPercentExplosionDelayOwnerCharModulesRequiringMissileLauncherOperation = MakeEffect(EffectID::missileBombardmentMaxFlightTimeBonusPostPercentExplosionDelayOwnerCharModulesRequiringMissileLauncherOperation, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier261));
+			constexpr auto escortHullUpgradeCpuBonus = MakeEffect(EffectID::escortHullUpgradeCpuBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier262));
+			constexpr auto escortShieldUpgradeCpuBonus = MakeEffect(EffectID::escortShieldUpgradeCpuBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier263));
+			constexpr auto caldariBattleshipSkillLevelPreMulShipBonusCB3Ship = MakeEffect(EffectID::caldariBattleshipSkillLevelPreMulShipBonusCB3Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier264));
+			constexpr auto ammoInfluenceCapNeed = MakeEffect(EffectID::ammoInfluenceCapNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier265));
+			constexpr auto ammoInfluenceCapRecharge = MakeEffect(EffectID::ammoInfluenceCapRecharge, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier13));
+			constexpr auto freightSkillBoostCargoCapacityBonus = MakeEffect(EffectID::freightSkillBoostCargoCapacityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier266));
+			constexpr auto skillFreightBonus = MakeEffect(EffectID::skillFreightBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier267));
+			constexpr auto ammoInfluenceShipVelocity = MakeEffect(EffectID::ammoInfluenceShipVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier215));
+			constexpr auto cloakingTargetingDelayBonusPostPercentCloakingTargetingDelayBonusForShipModulesRequiringCloaking = MakeEffect(EffectID::cloakingTargetingDelayBonusPostPercentCloakingTargetingDelayBonusForShipModulesRequiringCloaking, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier268));
+			constexpr auto cloakingSkillBoostCloakingTargetingDelayBonus = MakeEffect(EffectID::cloakingSkillBoostCloakingTargetingDelayBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier269));
+			constexpr auto cloakingScanResolutionMultiplier = MakeEffect(EffectID::cloakingScanResolutionMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier270));
+			constexpr auto warpSkillSpeed = MakeEffect(EffectID::warpSkillSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier271));
+			constexpr auto bountyHuntingSkillBoostBountySkillBonus = MakeEffect(EffectID::bountyHuntingSkillBoostBountySkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier272));
+			constexpr auto bountyhunterskill = MakeEffect(EffectID::bountyhunterskill, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier273));
+			constexpr auto shipProjectileOptimalBonuseMF2 = MakeEffect(EffectID::shipProjectileOptimalBonuseMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier274));
+			constexpr auto shipHybridRangeBonusCF2 = MakeEffect(EffectID::shipHybridRangeBonusCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier275));
+			constexpr auto shipETspeedBonusAB2 = MakeEffect(EffectID::shipETspeedBonusAB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier276));
+			constexpr auto missileLauncherSpeedMultiplier = MakeEffect(EffectID::missileLauncherSpeedMultiplier, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier277));
+			constexpr auto shipCruiseMissileVelocityBonusCB3 = MakeEffect(EffectID::shipCruiseMissileVelocityBonusCB3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier278));
+			constexpr auto shipTorpedosVelocityBonusCB3 = MakeEffect(EffectID::shipTorpedosVelocityBonusCB3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier279));
+			constexpr auto covertOpsCpuBonus1 = MakeEffect(EffectID::covertOpsCpuBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier280));
+			constexpr auto shipMissileKineticDamageCF = MakeEffect(EffectID::shipMissileKineticDamageCF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier281));
+			constexpr auto shipMissileKineticDamageCC = MakeEffect(EffectID::shipMissileKineticDamageCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier282));
+			constexpr auto shipDroneScoutThermalDamageGF2 = MakeEffect(EffectID::shipDroneScoutThermalDamageGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier283));
+			constexpr auto onlineForStructures = MakeEffect(EffectID::onlineForStructures, MetaInfo::Effect::Category::passive, false, false, _modifiers());
+			constexpr auto ammoInfluenceSignatureRadius = MakeEffect(EffectID::ammoInfluenceSignatureRadius, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier284));
+			constexpr auto ammoInfluenceShieldCapacity = MakeEffect(EffectID::ammoInfluenceShieldCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier15));
+			constexpr auto shipLaserRofAC2 = MakeEffect(EffectID::shipLaserRofAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier285));
+			constexpr auto shipArmorHpAC2 = MakeEffect(EffectID::shipArmorHpAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier286));
+			constexpr auto shipMissileLauncherRofCC2 = MakeEffect(EffectID::shipMissileLauncherRofCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier287));
+			constexpr auto shipDronesMaxGC2 = MakeEffect(EffectID::shipDronesMaxGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier288));
+			constexpr auto shipHybridTrackingGC2 = MakeEffect(EffectID::shipHybridTrackingGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier289));
+			constexpr auto amarrCruiserSkillLevelPreMulShipBonusAC2Ship = MakeEffect(EffectID::amarrCruiserSkillLevelPreMulShipBonusAC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier290));
+			constexpr auto caldariCruiserSkillLevelPreMulShipBonusCC2Ship = MakeEffect(EffectID::caldariCruiserSkillLevelPreMulShipBonusCC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier291));
+			constexpr auto gallenteCruiserSkillLevelPreMulShipBonusGC2Ship = MakeEffect(EffectID::gallenteCruiserSkillLevelPreMulShipBonusGC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier292));
+			constexpr auto minmatarCruiserSkillLevelPreMulShipBonusMC2Ship = MakeEffect(EffectID::minmatarCruiserSkillLevelPreMulShipBonusMC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier293));
+			constexpr auto shipArmorEmResistanceAC2 = MakeEffect(EffectID::shipArmorEmResistanceAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier294));
+			constexpr auto shipArmorExplosiveResistanceAC2 = MakeEffect(EffectID::shipArmorExplosiveResistanceAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier295));
+			constexpr auto shipArmorKineticResistanceAC2 = MakeEffect(EffectID::shipArmorKineticResistanceAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier296));
+			constexpr auto shipArmorThermalResistanceAC2 = MakeEffect(EffectID::shipArmorThermalResistanceAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier297));
+			constexpr auto shipProjectileDmgMC2 = MakeEffect(EffectID::shipProjectileDmgMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier298));
+			constexpr auto cloakingWarpSafe = MakeEffect(EffectID::cloakingWarpSafe, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier215));
+			constexpr auto gunshipSkillMultiplier1 = MakeEffect(EffectID::gunshipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier299));
+			constexpr auto gunshipSkillMultiplier2 = MakeEffect(EffectID::gunshipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier300));
+			constexpr auto eliteBonusGunshipHybridOptimal1 = MakeEffect(EffectID::eliteBonusGunshipHybridOptimal1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier301));
+			constexpr auto eliteBonusGunshipProjectileOptimal1 = MakeEffect(EffectID::eliteBonusGunshipProjectileOptimal1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier302));
+			constexpr auto eliteBonusGunshipLaserOptimal1 = MakeEffect(EffectID::eliteBonusGunshipLaserOptimal1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier303));
+			constexpr auto eliteBonusGunshipHybridTracking2 = MakeEffect(EffectID::eliteBonusGunshipHybridTracking2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier304));
+			constexpr auto eliteBonusGunshipProjectileFalloff2 = MakeEffect(EffectID::eliteBonusGunshipProjectileFalloff2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier305));
+			constexpr auto eliteBonusGunshipShieldBoost2 = MakeEffect(EffectID::eliteBonusGunshipShieldBoost2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier306));
+			constexpr auto eliteBonusGunshipCapRecharge2 = MakeEffect(EffectID::eliteBonusGunshipCapRecharge2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier307));
+			constexpr auto eliteBonusGunshipDroneCapacity2 = MakeEffect(EffectID::eliteBonusGunshipDroneCapacity2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier308));
+			constexpr auto selfT2SmallLaserPulseDamageBonus = MakeEffect(EffectID::selfT2SmallLaserPulseDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier309));
+			constexpr auto selfT2SmallLaserBeamDamageBonus = MakeEffect(EffectID::selfT2SmallLaserBeamDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier310));
+			constexpr auto selfT2SmallHybridBlasterDamageBonus = MakeEffect(EffectID::selfT2SmallHybridBlasterDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier311));
+			constexpr auto selfT2SmallHybridRailDamageBonus = MakeEffect(EffectID::selfT2SmallHybridRailDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier312));
+			constexpr auto selfT2SmallProjectileACDamageBonus = MakeEffect(EffectID::selfT2SmallProjectileACDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier313));
+			constexpr auto selfT2SmallProjectileArtyDamageBonus = MakeEffect(EffectID::selfT2SmallProjectileArtyDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier314));
+			constexpr auto selfT2MediumLaserPulseDamageBonus = MakeEffect(EffectID::selfT2MediumLaserPulseDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier315));
+			constexpr auto selfT2MediumLaserBeamDamageBonus = MakeEffect(EffectID::selfT2MediumLaserBeamDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier316));
+			constexpr auto selfT2MediumHybridBlasterDamageBonus = MakeEffect(EffectID::selfT2MediumHybridBlasterDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier317));
+			constexpr auto selfT2MediumHybridRailDamageBonus = MakeEffect(EffectID::selfT2MediumHybridRailDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier318));
+			constexpr auto selfT2MediumProjectileACDamageBonus = MakeEffect(EffectID::selfT2MediumProjectileACDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier319));
+			constexpr auto selfT2MediumProjectileArtyDamageBonus = MakeEffect(EffectID::selfT2MediumProjectileArtyDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier320));
+			constexpr auto selfT2LargeLaserPulseDamageBonus = MakeEffect(EffectID::selfT2LargeLaserPulseDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier321));
+			constexpr auto selfT2LargeLaserBeamDamageBonus = MakeEffect(EffectID::selfT2LargeLaserBeamDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier322));
+			constexpr auto selfT2LargeHybridBlasterDamageBonus = MakeEffect(EffectID::selfT2LargeHybridBlasterDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier323));
+			constexpr auto selfT2LargeHybridRailDamageBonus = MakeEffect(EffectID::selfT2LargeHybridRailDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier324));
+			constexpr auto selfT2LargeProjectileACDamageBonus = MakeEffect(EffectID::selfT2LargeProjectileACDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier325));
+			constexpr auto selfT2LargeProjectileArtyDamageBonus = MakeEffect(EffectID::selfT2LargeProjectileArtyDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier326));
+			constexpr auto eliteBonusGunshipHybridDmg2 = MakeEffect(EffectID::eliteBonusGunshipHybridDmg2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier327));
+			constexpr auto anchorDropForStructures = MakeEffect(EffectID::anchorDropForStructures, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto anchorLiftForStructures = MakeEffect(EffectID::anchorLiftForStructures, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto shipMissileHeavyVelocityBonusCC2 = MakeEffect(EffectID::shipMissileHeavyVelocityBonusCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier328));
+			constexpr auto shipMissileLightVelocityBonusCC2 = MakeEffect(EffectID::shipMissileLightVelocityBonusCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier329));
+			constexpr auto remoteArmorSystemsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringRemoteArmorSystems = MakeEffect(EffectID::remoteArmorSystemsCapNeedBonusPostPercentCapacitorNeedLocationShipModulesRequiringRemoteArmorSystems, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier330));
+			constexpr auto eliteBonusLogisticRemoteArmorRepairCapNeed1 = MakeEffect(EffectID::eliteBonusLogisticRemoteArmorRepairCapNeed1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier331));
+			constexpr auto eliteBonusLogisticRemoteArmorRepairCapNeed2 = MakeEffect(EffectID::eliteBonusLogisticRemoteArmorRepairCapNeed2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier332));
+			constexpr auto eliteBonusLogisticShieldTransferCapNeed2 = MakeEffect(EffectID::eliteBonusLogisticShieldTransferCapNeed2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier333));
+			constexpr auto eliteBonusLogisticShieldTransferCapNeed1 = MakeEffect(EffectID::eliteBonusLogisticShieldTransferCapNeed1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier334));
+			constexpr auto shipRemoteArmorRangeGC1 = MakeEffect(EffectID::shipRemoteArmorRangeGC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier335));
+			constexpr auto shipRemoteArmorRangeAC2 = MakeEffect(EffectID::shipRemoteArmorRangeAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier336));
+			constexpr auto shipShieldTransferRangeCC1 = MakeEffect(EffectID::shipShieldTransferRangeCC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier337));
+			constexpr auto shipShieldTransferRangeMC2 = MakeEffect(EffectID::shipShieldTransferRangeMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier338));
+			constexpr auto logisticSkillMultiplier1 = MakeEffect(EffectID::logisticSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier339));
+			constexpr auto logisticSkillMultiplier2 = MakeEffect(EffectID::logisticSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier340));
+			constexpr auto eliteBonusHeavyGunshipHybridOptimal1 = MakeEffect(EffectID::eliteBonusHeavyGunshipHybridOptimal1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier341));
+			constexpr auto eliteBonusHeavyGunshipProjectileOptimal1 = MakeEffect(EffectID::eliteBonusHeavyGunshipProjectileOptimal1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier342));
+			constexpr auto eliteBonusHeavyGunshipLaserOptimal1 = MakeEffect(EffectID::eliteBonusHeavyGunshipLaserOptimal1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier343));
+			constexpr auto eliteBonusHeavyGunshipProjectileFallOff1 = MakeEffect(EffectID::eliteBonusHeavyGunshipProjectileFallOff1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier344));
+			constexpr auto eliteBonusHeavyGunshipHybridDmg2 = MakeEffect(EffectID::eliteBonusHeavyGunshipHybridDmg2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier345));
+			constexpr auto eliteBonusHeavyGunshipLaserDmg2 = MakeEffect(EffectID::eliteBonusHeavyGunshipLaserDmg2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier346));
+			constexpr auto eliteBonusHeavyGunshipProjectileTracking2 = MakeEffect(EffectID::eliteBonusHeavyGunshipProjectileTracking2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier347));
+			constexpr auto warshipSkillMultiplier2 = MakeEffect(EffectID::warshipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier348));
+			constexpr auto warshipSkillMultiplier1 = MakeEffect(EffectID::warshipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier349));
+			constexpr auto eliteBonusHeavyGunshipHybridFallOff1 = MakeEffect(EffectID::eliteBonusHeavyGunshipHybridFallOff1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier350));
+			constexpr auto eliteBonusHeavyGunshipHeavyMissileFlightTime1 = MakeEffect(EffectID::eliteBonusHeavyGunshipHeavyMissileFlightTime1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier351));
+			constexpr auto eliteBonusHeavyGunshipLightMissileFlightTime1 = MakeEffect(EffectID::eliteBonusHeavyGunshipLightMissileFlightTime1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier352));
+			constexpr auto eliteBonusHeavyGunshipDroneControlRange1 = MakeEffect(EffectID::eliteBonusHeavyGunshipDroneControlRange1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier353));
+			constexpr auto projectileFiredForEntities = MakeEffect(EffectID::projectileFiredForEntities, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto eliteBonusHeavyGunshipProjectileDmg2 = MakeEffect(EffectID::eliteBonusHeavyGunshipProjectileDmg2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier354));
+			constexpr auto shipProjectileTrackingMF2 = MakeEffect(EffectID::shipProjectileTrackingMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier355));
+			constexpr auto controlTowerAmarrLaserDMGBonus = MakeEffect(EffectID::controlTowerAmarrLaserDMGBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier356));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusBC1Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusBC1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier357));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusBC2Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusBC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier358));
+			constexpr auto structureUnanchorForced = MakeEffect(EffectID::structureUnanchorForced, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto controlTowerAmarrLaserOptimalBonus = MakeEffect(EffectID::controlTowerAmarrLaserOptimalBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier359));
+			constexpr auto controlTowerSiloCapacityBonus = MakeEffect(EffectID::controlTowerSiloCapacityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier360));
+			constexpr auto controlTowerMinmatarProjectileOptimalBonus = MakeEffect(EffectID::controlTowerMinmatarProjectileOptimalBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier361));
+			constexpr auto controlTowerMinmatarProjectileFallOffBonus = MakeEffect(EffectID::controlTowerMinmatarProjectileFallOffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier362));
+			constexpr auto controlTowerMinmatarProjectileRofBonus = MakeEffect(EffectID::controlTowerMinmatarProjectileRofBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier363));
+			constexpr auto destroyerSkillLevelPreMulShipBonusDF2Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusDF2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier364));
+			constexpr auto destroyerSkillLevelPreMulShipBonusDF1Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusDF1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier365));
+			constexpr auto controlTowerGallenteHybridDamageBonus = MakeEffect(EffectID::controlTowerGallenteHybridDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier366));
+			constexpr auto controlTowerTrackingArrayHybridOptimalBonus = MakeEffect(EffectID::controlTowerTrackingArrayHybridOptimalBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier367));
+			constexpr auto controlTowerTrackingArrayLaserOptimalBonus = MakeEffect(EffectID::controlTowerTrackingArrayLaserOptimalBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier368));
+			constexpr auto controlTowerTrackingArrayProjectileOptimalBonus = MakeEffect(EffectID::controlTowerTrackingArrayProjectileOptimalBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier369));
+			constexpr auto controlTowerTrackingArrayProjectileTrackingBonus = MakeEffect(EffectID::controlTowerTrackingArrayProjectileTrackingBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier370));
+			constexpr auto controlTowerTrackingArrayHybridTrackingBonus = MakeEffect(EffectID::controlTowerTrackingArrayHybridTrackingBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier371));
+			constexpr auto controlTowerTrackingArrayLaserTrackingBonus = MakeEffect(EffectID::controlTowerTrackingArrayLaserTrackingBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier372));
+			constexpr auto massFactor = MakeEffect(EffectID::massFactor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier373));
+			constexpr auto ammoInfluenceEntityFlyRange = MakeEffect(EffectID::ammoInfluenceEntityFlyRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier374));
+			constexpr auto accerationControlSkillAbMwdSpeedBoost = MakeEffect(EffectID::accerationControlSkillAbMwdSpeedBoost, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier71, &Modifiers::modifier375));
+			constexpr auto eliteBonusGunshipLaserDamage2 = MakeEffect(EffectID::eliteBonusGunshipLaserDamage2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier376));
+			constexpr auto eliteBonusLogisticEnergyTransferCapNeed1 = MakeEffect(EffectID::eliteBonusLogisticEnergyTransferCapNeed1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier377));
+			constexpr auto shipEnergyTransferRange1 = MakeEffect(EffectID::shipEnergyTransferRange1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier378));
+			constexpr auto eliteBonusLogisticEnergyTransferCapNeed2 = MakeEffect(EffectID::eliteBonusLogisticEnergyTransferCapNeed2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier379));
+			constexpr auto shipEnergyTransferRange2 = MakeEffect(EffectID::shipEnergyTransferRange2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier380));
+			constexpr auto structureStealthEmitterArraySigDecrease = MakeEffect(EffectID::structureStealthEmitterArraySigDecrease, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier381));
+			constexpr auto miningBargeSkillLevelPostMulShipBonusORE2Ship = MakeEffect(EffectID::miningBargeSkillLevelPostMulShipBonusORE2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier382));
+			constexpr auto iceHarvestCycleTimeModulesRequiringIceHarvesting = MakeEffect(EffectID::iceHarvestCycleTimeModulesRequiringIceHarvesting, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier383));
+			constexpr auto iceHarvestCycleTimeBonus = MakeEffect(EffectID::iceHarvestCycleTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier384));
+			constexpr auto controlTowerCaldariEwTargetSwitchDelayBonus = MakeEffect(EffectID::controlTowerCaldariEwTargetSwitchDelayBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier385));
+			constexpr auto targetAttackForStructures = MakeEffect(EffectID::targetAttackForStructures, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto miningInfoMultiplier = MakeEffect(EffectID::miningInfoMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier386));
+			constexpr auto controlTowerCaldariMissileVelocityBonus = MakeEffect(EffectID::controlTowerCaldariMissileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier387));
+			constexpr auto controlTowerCaldariMissileRofBonus = MakeEffect(EffectID::controlTowerCaldariMissileRofBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier388));
+			constexpr auto crystalMiningamountInfo2 = MakeEffect(EffectID::crystalMiningamountInfo2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier389));
+			constexpr auto shipEnergyDrainAmountAF1 = MakeEffect(EffectID::shipEnergyDrainAmountAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier390));
+			constexpr auto shipBonusPirateSmallHybridDmg = MakeEffect(EffectID::shipBonusPirateSmallHybridDmg, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier391));
+			constexpr auto shipEnergyVampireTransferAmountBonusAB = MakeEffect(EffectID::shipEnergyVampireTransferAmountBonusAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier392));
+			constexpr auto shipEnergyVampireTransferAmountBonusAc = MakeEffect(EffectID::shipEnergyVampireTransferAmountBonusAc, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier393));
+			constexpr auto shipStasisWebRangeBonusMB = MakeEffect(EffectID::shipStasisWebRangeBonusMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier394));
+			constexpr auto shipStasisWebRangeBonusMC2 = MakeEffect(EffectID::shipStasisWebRangeBonusMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier395));
+			constexpr auto shipProjectileTrackingGF = MakeEffect(EffectID::shipProjectileTrackingGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier396));
+			constexpr auto shipMissileVelocityPirateFactionFrigate = MakeEffect(EffectID::shipMissileVelocityPirateFactionFrigate, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier397));
+			constexpr auto shipProjectileRofPirateCruiser = MakeEffect(EffectID::shipProjectileRofPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier398));
+			constexpr auto shipHybridDmgPirateCruiser = MakeEffect(EffectID::shipHybridDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier399));
+			constexpr auto shipMissileVelocityPirateFactionLight = MakeEffect(EffectID::shipMissileVelocityPirateFactionLight, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier400));
+			constexpr auto shipProjectileRofPirateBattleship = MakeEffect(EffectID::shipProjectileRofPirateBattleship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier401));
+			constexpr auto shipHybridDmgPirateBattleship = MakeEffect(EffectID::shipHybridDmgPirateBattleship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier402));
+			constexpr auto smugglingModifier = MakeEffect(EffectID::smugglingModifier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier403));
+			constexpr auto setBonusBloodraider = MakeEffect(EffectID::setBonusBloodraider, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier404));
+			constexpr auto setBonusBloodraiderNosferatu = MakeEffect(EffectID::setBonusBloodraiderNosferatu, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier405));
+			constexpr auto blackMarketTradingSkillBoostContrabandDetectionChanceBonus = MakeEffect(EffectID::blackMarketTradingSkillBoostContrabandDetectionChanceBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier406));
+			constexpr auto skillBoostContrabandDetectionChanceBonusEffect = MakeEffect(EffectID::skillBoostContrabandDetectionChanceBonusEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier407));
+			constexpr auto setBonusSerpentis = MakeEffect(EffectID::setBonusSerpentis, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier408));
+			constexpr auto setBonusSerpentis2 = MakeEffect(EffectID::setBonusSerpentis2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier409));
+			constexpr auto interceptor2HybridTracking = MakeEffect(EffectID::interceptor2HybridTracking, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier410));
+			constexpr auto interceptor2LaserTracking = MakeEffect(EffectID::interceptor2LaserTracking, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier411));
+			constexpr auto interceptors2SkillLevelPreMulEliteBonusInterceptorShip = MakeEffect(EffectID::interceptors2SkillLevelPreMulEliteBonusInterceptorShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier412));
+			constexpr auto structuralAnalysisEffect = MakeEffect(EffectID::structuralAnalysisEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier413));
+			constexpr auto eliteIndustrial1SkillLevelPreMulEliteBonusEliteIndustrialShip = MakeEffect(EffectID::eliteIndustrial1SkillLevelPreMulEliteBonusEliteIndustrialShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier414));
+			constexpr auto eliteIndustrial2SkillLevelPreMulEliteBonusEliteIndustrialShip = MakeEffect(EffectID::eliteIndustrial2SkillLevelPreMulEliteBonusEliteIndustrialShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier415));
+			constexpr auto amarrIndustrialSkillLevelPreMulShipBonusAI22Ship = MakeEffect(EffectID::amarrIndustrialSkillLevelPreMulShipBonusAI22Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier416));
+			constexpr auto caldariIndustrialSkillLevelPreMulShipBonusCI2Ship = MakeEffect(EffectID::caldariIndustrialSkillLevelPreMulShipBonusCI2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier417));
+			constexpr auto gallenteIndustrialSkillLevelPreMulShipBonusGI2Ship = MakeEffect(EffectID::gallenteIndustrialSkillLevelPreMulShipBonusGI2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier418));
+			constexpr auto minmatarIndustrialSkillLevelPreMulShipBonusMI2Ship = MakeEffect(EffectID::minmatarIndustrialSkillLevelPreMulShipBonusMI2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier419));
+			constexpr auto ewSkillScanStrengthBonus = MakeEffect(EffectID::ewSkillScanStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier420, &Modifiers::modifier421, &Modifiers::modifier422, &Modifiers::modifier423));
+			constexpr auto ewSkillScanStrengthBonusSkillLevel = MakeEffect(EffectID::ewSkillScanStrengthBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier424));
+			constexpr auto propulsionSkillPropulsionStrengthBonusSkillLevel = MakeEffect(EffectID::propulsionSkillPropulsionStrengthBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier425));
+			constexpr auto ewSkillRsdCapNeedBonusSkillLevel = MakeEffect(EffectID::ewSkillRsdCapNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier426));
+			constexpr auto ewSkillTdCapNeedBonusSkillLevel = MakeEffect(EffectID::ewSkillTdCapNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier427));
+			constexpr auto ewSkillTpCapNeedBonusSkillLevel = MakeEffect(EffectID::ewSkillTpCapNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier428));
+			constexpr auto ewSkillEwCapNeedSkillLevel = MakeEffect(EffectID::ewSkillEwCapNeedSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier429));
+			constexpr auto ewSkillTargetPaintingStrengthBonusSkillLevel = MakeEffect(EffectID::ewSkillTargetPaintingStrengthBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier430));
+			constexpr auto leadershipCpuBonus = MakeEffect(EffectID::leadershipCpuBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier431));
+			constexpr auto shieldBoostAmplifierPassive = MakeEffect(EffectID::shieldBoostAmplifierPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier432));
+			constexpr auto setBonusGuristas = MakeEffect(EffectID::setBonusGuristas, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier433));
+			constexpr auto covertOpsSkillLevelPreMulEliteBonusCoverOpsShip2 = MakeEffect(EffectID::covertOpsSkillLevelPreMulEliteBonusCoverOpsShip2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier434));
+			constexpr auto systemScanDurationSkillAstrometrics = MakeEffect(EffectID::systemScanDurationSkillAstrometrics, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier435));
+			constexpr auto propulsionSkillCapNeedBonusSkillLevel = MakeEffect(EffectID::propulsionSkillCapNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier436));
+			constexpr auto shipBonusHybridOptimalCB = MakeEffect(EffectID::shipBonusHybridOptimalCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier437));
+			constexpr auto caldariShipEwStrengthCB = MakeEffect(EffectID::caldariShipEwStrengthCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier438, &Modifiers::modifier439, &Modifiers::modifier440, &Modifiers::modifier441));
+			constexpr auto caldariShipEwOptimalRangeCB3 = MakeEffect(EffectID::caldariShipEwOptimalRangeCB3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier442));
+			constexpr auto caldariShipEwOptimalRangeCC2 = MakeEffect(EffectID::caldariShipEwOptimalRangeCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier443));
+			constexpr auto caldariShipEwCapacitorNeedCC = MakeEffect(EffectID::caldariShipEwCapacitorNeedCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier444));
+			constexpr auto ewSkillRsdMaxRangeBonus = MakeEffect(EffectID::ewSkillRsdMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier445));
+			constexpr auto ewSkillTpMaxRangeBonus = MakeEffect(EffectID::ewSkillTpMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier446));
+			constexpr auto ewSkillTdMaxRangeBonus = MakeEffect(EffectID::ewSkillTdMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier447));
+			constexpr auto ewSkillRsdFallOffBonus = MakeEffect(EffectID::ewSkillRsdFallOffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier448));
+			constexpr auto ewSkillTpFallOffBonus = MakeEffect(EffectID::ewSkillTpFallOffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier449));
+			constexpr auto ewSkillTdFallOffBonus = MakeEffect(EffectID::ewSkillTdFallOffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier450));
+			constexpr auto ewSkillEwMaxRangeBonus = MakeEffect(EffectID::ewSkillEwMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier451));
+			constexpr auto ewSkillEwFallOffBonus = MakeEffect(EffectID::ewSkillEwFallOffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier452));
+			constexpr auto missileSkillAoeVelocityBonusSkillLevel = MakeEffect(EffectID::missileSkillAoeVelocityBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier453));
+			constexpr auto missileSkillAoeCloudSizeBonus = MakeEffect(EffectID::missileSkillAoeCloudSizeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier454));
+			constexpr auto missileSkillAoeCloudSizeBonusSkillLevel = MakeEffect(EffectID::missileSkillAoeCloudSizeBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier455));
+			constexpr auto contrabandMasking = MakeEffect(EffectID::contrabandMasking, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier243, &Modifiers::modifier407));
+			constexpr auto flagshipmultiRelayEffect = MakeEffect(EffectID::flagshipmultiRelayEffect, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier456));
+			constexpr auto shieldOperationSkillBoostCapacitorNeedBonusSkillLevel = MakeEffect(EffectID::shieldOperationSkillBoostCapacitorNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier457));
+			constexpr auto shieldOperationSkillBoostCapacitorNeedBonus = MakeEffect(EffectID::shieldOperationSkillBoostCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier458));
+			constexpr auto ewTargetPaint = MakeEffect(EffectID::ewTargetPaint, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier459));
+			constexpr auto ewSkillTargetPaintingStrengthBonus = MakeEffect(EffectID::ewSkillTargetPaintingStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier460));
+			constexpr auto minmatarShipEwTargetPainterMF2 = MakeEffect(EffectID::minmatarShipEwTargetPainterMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier461));
+			constexpr auto angelsetbonus = MakeEffect(EffectID::angelsetbonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier462));
+			constexpr auto setBonusSansha = MakeEffect(EffectID::setBonusSansha, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier463));
+			constexpr auto jumpDriveSkillsRangeBonus = MakeEffect(EffectID::jumpDriveSkillsRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier464));
+			constexpr auto jumpDriveSkillsRangeBonusSkillLevel = MakeEffect(EffectID::jumpDriveSkillsRangeBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier465));
+			constexpr auto capitalTurretSkillLaserDamage = MakeEffect(EffectID::capitalTurretSkillLaserDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier466));
+			constexpr auto capitalTurretSkillProjectileDamage = MakeEffect(EffectID::capitalTurretSkillProjectileDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier467));
+			constexpr auto capitalTurretSkillHybridDamage = MakeEffect(EffectID::capitalTurretSkillHybridDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier468));
+			constexpr auto capitalLauncherSkillCitadelKineticDamage = MakeEffect(EffectID::capitalLauncherSkillCitadelKineticDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier469));
+			constexpr auto missileSkillAoeVelocityBonus = MakeEffect(EffectID::missileSkillAoeVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier470));
+			constexpr auto capitalLauncherSkillCitadelEmDamage = MakeEffect(EffectID::capitalLauncherSkillCitadelEmDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier471));
+			constexpr auto capitalLauncherSkillCitadelExplosiveDamage = MakeEffect(EffectID::capitalLauncherSkillCitadelExplosiveDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier472));
+			constexpr auto capitalLauncherSkillCitadelThermalDamage = MakeEffect(EffectID::capitalLauncherSkillCitadelThermalDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier473));
+			constexpr auto missileSkillWarheadUpgradesEmDamageBonus = MakeEffect(EffectID::missileSkillWarheadUpgradesEmDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier474));
+			constexpr auto missileSkillWarheadUpgradesExplosiveDamageBonus = MakeEffect(EffectID::missileSkillWarheadUpgradesExplosiveDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier475));
+			constexpr auto missileSkillWarheadUpgradesKineticDamageBonus = MakeEffect(EffectID::missileSkillWarheadUpgradesKineticDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier476));
+			constexpr auto skillAdvancedSpaceshipAgilityBonus = MakeEffect(EffectID::skillAdvancedSpaceshipAgilityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier477));
+			constexpr auto shipAdvancedSpaceshipCommandAgilityBonus = MakeEffect(EffectID::shipAdvancedSpaceshipCommandAgilityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier478));
+			constexpr auto skillCapitalShipsAdvancedAgility = MakeEffect(EffectID::skillCapitalShipsAdvancedAgility, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier479));
+			constexpr auto shipCapitalAgilityBonus = MakeEffect(EffectID::shipCapitalAgilityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier480));
+			constexpr auto capitalShieldOperationSkillCapacitorNeedBonus = MakeEffect(EffectID::capitalShieldOperationSkillCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier481));
+			constexpr auto capitalRepairSystemsSkillDurationBonus = MakeEffect(EffectID::capitalRepairSystemsSkillDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier482));
+			constexpr auto skillAdvancedWeaponUpgradesPowerNeedBonus = MakeEffect(EffectID::skillAdvancedWeaponUpgradesPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier483, &Modifiers::modifier484));
+			constexpr auto armoredCommandMindlink = MakeEffect(EffectID::armoredCommandMindlink, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier485, &Modifiers::modifier486, &Modifiers::modifier487, &Modifiers::modifier488, &Modifiers::modifier489));
+			constexpr auto skirmishCommandMindlink = MakeEffect(EffectID::skirmishCommandMindlink, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier490, &Modifiers::modifier491, &Modifiers::modifier492, &Modifiers::modifier493, &Modifiers::modifier494));
+			constexpr auto shieldCommandMindlink = MakeEffect(EffectID::shieldCommandMindlink, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier495, &Modifiers::modifier496, &Modifiers::modifier497, &Modifiers::modifier498, &Modifiers::modifier499));
+			constexpr auto informationCommandMindlink = MakeEffect(EffectID::informationCommandMindlink, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier500, &Modifiers::modifier501, &Modifiers::modifier502, &Modifiers::modifier503, &Modifiers::modifier504));
+			constexpr auto skillSiegeModuleConsumptionQuantityBonus = MakeEffect(EffectID::skillSiegeModuleConsumptionQuantityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier505));
+			constexpr auto skillCynosuralSiegeConsumQuantityBonusSkillLevel = MakeEffect(EffectID::skillCynosuralSiegeConsumQuantityBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier506));
+			constexpr auto missileSkillWarheadUpgradesThermalDamageBonus = MakeEffect(EffectID::missileSkillWarheadUpgradesThermalDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier507));
+			constexpr auto freighterA1SkillLevel = MakeEffect(EffectID::freighterA1SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier508));
+			constexpr auto freighterA2SkillLevel = MakeEffect(EffectID::freighterA2SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier509));
+			constexpr auto freighterC1SkillLevel = MakeEffect(EffectID::freighterC1SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier510));
+			constexpr auto freighterC2SkillLevel = MakeEffect(EffectID::freighterC2SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier511));
+			constexpr auto freighterG1SkillLevel = MakeEffect(EffectID::freighterG1SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier512));
+			constexpr auto freighterG2SkillLevel = MakeEffect(EffectID::freighterG2SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier513));
+			constexpr auto freighterM1SkillLevel = MakeEffect(EffectID::freighterM1SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier514));
+			constexpr auto freighterM2SkillLevel = MakeEffect(EffectID::freighterM2SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier515));
+			constexpr auto freighterCargoBonusA2 = MakeEffect(EffectID::freighterCargoBonusA2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier516));
+			constexpr auto freighterCargoBonusC2 = MakeEffect(EffectID::freighterCargoBonusC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier517));
+			constexpr auto freighterCargoBonusG2 = MakeEffect(EffectID::freighterCargoBonusG2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier518));
+			constexpr auto freighterCargoBonusM2 = MakeEffect(EffectID::freighterCargoBonusM2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier519));
+			constexpr auto freighterMaxVelocityBonusA1 = MakeEffect(EffectID::freighterMaxVelocityBonusA1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier520));
+			constexpr auto freighterMaxVelocityBonusC1 = MakeEffect(EffectID::freighterMaxVelocityBonusC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier521));
+			constexpr auto freighterMaxVelocityBonusG1 = MakeEffect(EffectID::freighterMaxVelocityBonusG1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier522));
+			constexpr auto freighterMaxVelocityBonusM1 = MakeEffect(EffectID::freighterMaxVelocityBonusM1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier523));
+			constexpr auto shieldBoostAmplifier = MakeEffect(EffectID::shieldBoostAmplifier, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier432, &Modifiers::modifier524));
+			constexpr auto jumpDriveSkillsCapacitorNeedBonus = MakeEffect(EffectID::jumpDriveSkillsCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier525));
+			constexpr auto jumpDriveSkillsCapacitorNeedBonusSkillLevel = MakeEffect(EffectID::jumpDriveSkillsCapacitorNeedBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier526));
+			constexpr auto droneDmgBonus = MakeEffect(EffectID::droneDmgBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier527));
+			constexpr auto doHacking = MakeEffect(EffectID::doHacking, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto missileSkillRapidLauncherRoF = MakeEffect(EffectID::missileSkillRapidLauncherRoF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier528));
+			constexpr auto missileSkillMissileProjectileVelocityBonus = MakeEffect(EffectID::missileSkillMissileProjectileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier529));
+			constexpr auto missileSkillMissileProjectileVelocityBonusSkillLevel = MakeEffect(EffectID::missileSkillMissileProjectileVelocityBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier530));
+			constexpr auto shipFalloffBonusGF = MakeEffect(EffectID::shipFalloffBonusGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier531));
+			constexpr auto shipArmorEMResistanceAF1 = MakeEffect(EffectID::shipArmorEMResistanceAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier532));
+			constexpr auto shipArmorTHResistanceAF1 = MakeEffect(EffectID::shipArmorTHResistanceAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier533));
+			constexpr auto shipArmorKNResistanceAF1 = MakeEffect(EffectID::shipArmorKNResistanceAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier534));
+			constexpr auto shipArmorEXResistanceAF1 = MakeEffect(EffectID::shipArmorEXResistanceAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier535));
+			constexpr auto shipShieldEMResistanceCC2 = MakeEffect(EffectID::shipShieldEMResistanceCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier536));
+			constexpr auto shipShieldThermalResistanceCC2 = MakeEffect(EffectID::shipShieldThermalResistanceCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier537));
+			constexpr auto shipShieldKineticResistanceCC2 = MakeEffect(EffectID::shipShieldKineticResistanceCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier538));
+			constexpr auto shipShieldExplosiveResistanceCC2 = MakeEffect(EffectID::shipShieldExplosiveResistanceCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier539));
+			constexpr auto shipShieldEMResistanceCF2 = MakeEffect(EffectID::shipShieldEMResistanceCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier540));
+			constexpr auto shipShieldThermalResistanceCF2 = MakeEffect(EffectID::shipShieldThermalResistanceCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier541));
+			constexpr auto shipShieldKineticResistanceCF2 = MakeEffect(EffectID::shipShieldKineticResistanceCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier542));
+			constexpr auto shipShieldExplosiveResistanceCF2 = MakeEffect(EffectID::shipShieldExplosiveResistanceCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier543));
+			constexpr auto eliteBargeSkillMultiplier1 = MakeEffect(EffectID::eliteBargeSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier544));
+			constexpr auto eliteBargeSkillMultiplier2 = MakeEffect(EffectID::eliteBargeSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier545));
+			constexpr auto miningForemanMindlink = MakeEffect(EffectID::miningForemanMindlink, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier546, &Modifiers::modifier547, &Modifiers::modifier548, &Modifiers::modifier549, &Modifiers::modifier550));
+			constexpr auto miningBargeSkillLevelPostMulShipBonusORE3Ship = MakeEffect(EffectID::miningBargeSkillLevelPostMulShipBonusORE3Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier551));
+			constexpr auto selfRof = MakeEffect(EffectID::selfRof, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier552));
+			constexpr auto shipMissileEMDamageCF2 = MakeEffect(EffectID::shipMissileEMDamageCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier553));
+			constexpr auto shipMissileThermalDamageCF2 = MakeEffect(EffectID::shipMissileThermalDamageCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier554));
+			constexpr auto shipMissileExplosiveDamageCF2 = MakeEffect(EffectID::shipMissileExplosiveDamageCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier555));
+			constexpr auto miningYieldMultiplyPercent = MakeEffect(EffectID::miningYieldMultiplyPercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier126));
+			constexpr auto shipCruiseLauncherROFBonus2CB = MakeEffect(EffectID::shipCruiseLauncherROFBonus2CB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier556));
+			constexpr auto shipSiegeLauncherROFBonus2CB = MakeEffect(EffectID::shipSiegeLauncherROFBonus2CB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier557));
+			constexpr auto miningUpgradeCPUReductionBonus = MakeEffect(EffectID::miningUpgradeCPUReductionBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier558));
+			constexpr auto eliteBargeBonusIceHarvestingCycleTimeBarge3 = MakeEffect(EffectID::eliteBargeBonusIceHarvestingCycleTimeBarge3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier559));
+			constexpr auto shieldCompensationSkillBoostHardeningBonus = MakeEffect(EffectID::shieldCompensationSkillBoostHardeningBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier560));
+			constexpr auto reconShipSkillMultiplier1 = MakeEffect(EffectID::reconShipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier561));
+			constexpr auto reconShipSkillMultiplier2 = MakeEffect(EffectID::reconShipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier562));
+			constexpr auto eliteBonusVampireDrainAmount2 = MakeEffect(EffectID::eliteBonusVampireDrainAmount2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier563));
+			constexpr auto eliteReconBonusGravimetricStrength2 = MakeEffect(EffectID::eliteReconBonusGravimetricStrength2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier564));
+			constexpr auto eliteReconBonusMagnetometricStrength2 = MakeEffect(EffectID::eliteReconBonusMagnetometricStrength2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier565));
+			constexpr auto eliteReconBonusRadarStrength2 = MakeEffect(EffectID::eliteReconBonusRadarStrength2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier566));
+			constexpr auto eliteReconBonusLadarStrength2 = MakeEffect(EffectID::eliteReconBonusLadarStrength2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier567));
+			constexpr auto eliteReconStasisWebBonus2 = MakeEffect(EffectID::eliteReconStasisWebBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier568));
+			constexpr auto eliteReconScramblerRangeBonus2 = MakeEffect(EffectID::eliteReconScramblerRangeBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier569));
+			constexpr auto ammoEMResistOther = MakeEffect(EffectID::ammoEMResistOther, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier570));
+			constexpr auto armorReinforcerMassAdd = MakeEffect(EffectID::armorReinforcerMassAdd, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier571));
+			constexpr auto signatureRadiusBonus = MakeEffect(EffectID::signatureRadiusBonus, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier572));
+			constexpr auto shipBonusShieldTransferCapneed1 = MakeEffect(EffectID::shipBonusShieldTransferCapneed1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier573));
+			constexpr auto shipBonusRemoteArmorRepairCapNeedGC1 = MakeEffect(EffectID::shipBonusRemoteArmorRepairCapNeedGC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier574));
+			constexpr auto caldariShipEwCapacitorNeedCF2 = MakeEffect(EffectID::caldariShipEwCapacitorNeedCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier575));
+			constexpr auto droneRangeBonusAdd = MakeEffect(EffectID::droneRangeBonusAdd, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier166));
+			constexpr auto cynosuralDurationBonus = MakeEffect(EffectID::cynosuralDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier576));
+			constexpr auto propulsionDroneJammingStrength = MakeEffect(EffectID::propulsionDroneJammingStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier577));
+			constexpr auto droneMaxVelocityBonus = MakeEffect(EffectID::droneMaxVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier578));
+			constexpr auto droneMaxRangeBonus = MakeEffect(EffectID::droneMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier579));
+			constexpr auto droneDurabilityShieldCapBonus = MakeEffect(EffectID::droneDurabilityShieldCapBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier580));
+			constexpr auto droneDurabilityArmorHPBonus = MakeEffect(EffectID::droneDurabilityArmorHPBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier581));
+			constexpr auto droneDurabilityHPBonus = MakeEffect(EffectID::droneDurabilityHPBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier582));
+			constexpr auto damageRepairedSkillBonus = MakeEffect(EffectID::damageRepairedSkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier583));
+			constexpr auto repairDroneShieldBonusBonus = MakeEffect(EffectID::repairDroneShieldBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier584));
+			constexpr auto repairDroneArmorDamageAmountBonus = MakeEffect(EffectID::repairDroneArmorDamageAmountBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier585));
+			constexpr auto addToSignatureRadius2 = MakeEffect(EffectID::addToSignatureRadius2, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier586));
+			constexpr auto modifyArmorResonancePostPercent = MakeEffect(EffectID::modifyArmorResonancePostPercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier587, &Modifiers::modifier588, &Modifiers::modifier589, &Modifiers::modifier590));
+			constexpr auto modifyShieldResonancePostPercent = MakeEffect(EffectID::modifyShieldResonancePostPercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier591, &Modifiers::modifier592, &Modifiers::modifier593, &Modifiers::modifier594));
+			constexpr auto emShieldCompensationHardeningBonusGroupShieldAmp = MakeEffect(EffectID::emShieldCompensationHardeningBonusGroupShieldAmp, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier595));
+			constexpr auto explosiveShieldCompensationHardeningBonusGroupShieldAmp = MakeEffect(EffectID::explosiveShieldCompensationHardeningBonusGroupShieldAmp, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier596));
+			constexpr auto kineticShieldCompensationHardeningBonusGroupShieldAmp = MakeEffect(EffectID::kineticShieldCompensationHardeningBonusGroupShieldAmp, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier597));
+			constexpr auto thermalShieldCompensationHardeningBonusGroupShieldAmp = MakeEffect(EffectID::thermalShieldCompensationHardeningBonusGroupShieldAmp, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier598));
+			constexpr auto emArmorCompensationHardeningBonusGroupArmorCoating = MakeEffect(EffectID::emArmorCompensationHardeningBonusGroupArmorCoating, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier599));
+			constexpr auto explosiveArmorCompensationHardeningBonusGroupArmorCoating = MakeEffect(EffectID::explosiveArmorCompensationHardeningBonusGroupArmorCoating, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier600));
+			constexpr auto kineticArmorCompensationHardeningBonusGroupArmorCoating = MakeEffect(EffectID::kineticArmorCompensationHardeningBonusGroupArmorCoating, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier601));
+			constexpr auto thermicArmorCompensationHardeningBonusGroupArmorCoating = MakeEffect(EffectID::thermicArmorCompensationHardeningBonusGroupArmorCoating, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier602));
+			constexpr auto emArmorCompensationHardeningBonusGroupEnergized = MakeEffect(EffectID::emArmorCompensationHardeningBonusGroupEnergized, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier603));
+			constexpr auto explosiveArmorCompensationHardeningBonusGroupEnergized = MakeEffect(EffectID::explosiveArmorCompensationHardeningBonusGroupEnergized, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier604));
+			constexpr auto kineticArmorCompensationHardeningBonusGroupEnergized = MakeEffect(EffectID::kineticArmorCompensationHardeningBonusGroupEnergized, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier605));
+			constexpr auto thermicArmorCompensationHardeningBonusGroupEnergized = MakeEffect(EffectID::thermicArmorCompensationHardeningBonusGroupEnergized, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier606));
+			constexpr auto smallHybridMaxRangeBonus = MakeEffect(EffectID::smallHybridMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier607));
+			constexpr auto smallEnergyMaxRangeBonus = MakeEffect(EffectID::smallEnergyMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier608));
+			constexpr auto smallProjectileMaxRangeBonus = MakeEffect(EffectID::smallProjectileMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier609));
+			constexpr auto energyTransferArrayMaxRangeBonus = MakeEffect(EffectID::energyTransferArrayMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier610));
+			constexpr auto shieldTransporterMaxRangeBonus = MakeEffect(EffectID::shieldTransporterMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier611, &Modifiers::modifier612));
+			constexpr auto armorRepairProjectorMaxRangeBonus = MakeEffect(EffectID::armorRepairProjectorMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier613, &Modifiers::modifier614));
+			constexpr auto minmatarShipEwTargetPainterMC2 = MakeEffect(EffectID::minmatarShipEwTargetPainterMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier615));
+			constexpr auto droneDamageBonusRequringDrones = MakeEffect(EffectID::droneDamageBonusRequringDrones, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier616));
+			constexpr auto jumpPortalGeneration = MakeEffect(EffectID::jumpPortalGeneration, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier617, &Modifiers::modifier618));
+			constexpr auto eliteBonusCommandShipProjectileDamageCS1 = MakeEffect(EffectID::eliteBonusCommandShipProjectileDamageCS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier619));
+			constexpr auto eliteBonusCommandShipProjectileFalloffCS2 = MakeEffect(EffectID::eliteBonusCommandShipProjectileFalloffCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier620));
+			constexpr auto eliteBonusCommandShipLaserDamageCS1 = MakeEffect(EffectID::eliteBonusCommandShipLaserDamageCS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier621));
+			constexpr auto eliteBonusCommandShipLaserROFCS2 = MakeEffect(EffectID::eliteBonusCommandShipLaserROFCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier622));
+			constexpr auto eliteBonusCommandShipHybridFalloffCS2 = MakeEffect(EffectID::eliteBonusCommandShipHybridFalloffCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier623));
+			constexpr auto eliteBonusCommandShipHybridOptimalCS1 = MakeEffect(EffectID::eliteBonusCommandShipHybridOptimalCS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier624));
+			constexpr auto shipBonusDroneHitpointsGC2 = MakeEffect(EffectID::shipBonusDroneHitpointsGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier625, &Modifiers::modifier626, &Modifiers::modifier627));
+			constexpr auto shipBonusDroneHitpointsFixedAC2 = MakeEffect(EffectID::shipBonusDroneHitpointsFixedAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier628, &Modifiers::modifier629, &Modifiers::modifier630));
+			constexpr auto shipBonusDroneHitpointsGB2 = MakeEffect(EffectID::shipBonusDroneHitpointsGB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier631, &Modifiers::modifier632, &Modifiers::modifier633));
+			constexpr auto shipBonusDroneDamageMultiplierGB2 = MakeEffect(EffectID::shipBonusDroneDamageMultiplierGB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier634));
+			constexpr auto shipBonusDroneDamageMultiplierGC2 = MakeEffect(EffectID::shipBonusDroneDamageMultiplierGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier635));
+			constexpr auto shipBonusDroneDamageMultiplierAC2 = MakeEffect(EffectID::shipBonusDroneDamageMultiplierAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier636));
+			constexpr auto eliteBonusInterdictorsMissileKineticDamage1 = MakeEffect(EffectID::eliteBonusInterdictorsMissileKineticDamage1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier637));
+			constexpr auto eliteBonusInterdictorsProjectileFalloff1 = MakeEffect(EffectID::eliteBonusInterdictorsProjectileFalloff1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier638));
+			constexpr auto shipBonusPirateFrigateProjDamage = MakeEffect(EffectID::shipBonusPirateFrigateProjDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier639));
+			constexpr auto scanStrengthBonusPercentActivate = MakeEffect(EffectID::scanStrengthBonusPercentActivate, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier640, &Modifiers::modifier641, &Modifiers::modifier642, &Modifiers::modifier643));
+			constexpr auto scanStrengthBonusPercentOnline = MakeEffect(EffectID::scanStrengthBonusPercentOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier640, &Modifiers::modifier641, &Modifiers::modifier642, &Modifiers::modifier643));
+			constexpr auto scanStrengthTargetPercentBonus = MakeEffect(EffectID::scanStrengthTargetPercentBonus, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier644, &Modifiers::modifier645, &Modifiers::modifier646, &Modifiers::modifier647));
+			constexpr auto shipBonusDroneMiningAmountAC2 = MakeEffect(EffectID::shipBonusDroneMiningAmountAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier648));
+			constexpr auto shipBonusDroneMiningAmountGC2 = MakeEffect(EffectID::shipBonusDroneMiningAmountGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier649));
+			constexpr auto commandshipMultiRelayEffect = MakeEffect(EffectID::commandshipMultiRelayEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier456, &Modifiers::modifier650));
+			constexpr auto covertOpsAndReconOpsCloakModuleDelayBonus = MakeEffect(EffectID::covertOpsAndReconOpsCloakModuleDelayBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier651));
+			constexpr auto covertOpsStealthBomberTargettingDelayBonus = MakeEffect(EffectID::covertOpsStealthBomberTargettingDelayBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier652));
+			constexpr auto tractorBeamCan = MakeEffect(EffectID::tractorBeamCan, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto modifyArmorResonancePassivePostPercentPassive = MakeEffect(EffectID::modifyArmorResonancePassivePostPercentPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier653, &Modifiers::modifier654, &Modifiers::modifier655, &Modifiers::modifier656));
+			constexpr auto modifyShieldResonancePassivePostPercentPassive = MakeEffect(EffectID::modifyShieldResonancePassivePostPercentPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier657, &Modifiers::modifier658, &Modifiers::modifier659, &Modifiers::modifier660));
+			constexpr auto scanStrengthBonusPercentPassive = MakeEffect(EffectID::scanStrengthBonusPercentPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier640, &Modifiers::modifier641, &Modifiers::modifier642, &Modifiers::modifier643));
+			constexpr auto damageControl = MakeEffect(EffectID::damageControl, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier661, &Modifiers::modifier662, &Modifiers::modifier663, &Modifiers::modifier664, &Modifiers::modifier665, &Modifiers::modifier666, &Modifiers::modifier667, &Modifiers::modifier668, &Modifiers::modifier669, &Modifiers::modifier670, &Modifiers::modifier671, &Modifiers::modifier672));
+			constexpr auto eliteReconBonusEnergyNeutAmount2 = MakeEffect(EffectID::eliteReconBonusEnergyNeutAmount2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier673));
+			constexpr auto skillADDmaxJumpClones = MakeEffect(EffectID::skillADDmaxJumpClones, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier674));
+			constexpr auto disallowOffensiveActChar = MakeEffect(EffectID::disallowOffensiveActChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier675));
+			constexpr auto capitalRemoteArmorRepairerCapNeedBonusSkill = MakeEffect(EffectID::capitalRemoteArmorRepairerCapNeedBonusSkill, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier676));
+			constexpr auto capitalRemoteShieldTransferCapNeedBonusSkill = MakeEffect(EffectID::capitalRemoteShieldTransferCapNeedBonusSkill, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier677));
+			constexpr auto capitalRemoteEnergyTransferCapNeedBonusSkill = MakeEffect(EffectID::capitalRemoteEnergyTransferCapNeedBonusSkill, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier678));
+			constexpr auto skillSuperWeaponDmgBonus = MakeEffect(EffectID::skillSuperWeaponDmgBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier679, &Modifiers::modifier680, &Modifiers::modifier681, &Modifiers::modifier682));
+			constexpr auto cloneVatMaxJumpCloneBonusSkillLevel = MakeEffect(EffectID::cloneVatMaxJumpCloneBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier683));
+			constexpr auto snowBallLaunching = MakeEffect(EffectID::snowBallLaunching, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto implantVelocityBonus = MakeEffect(EffectID::implantVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier684));
+			constexpr auto skillInterdictorEliteBonus1SkillLevel = MakeEffect(EffectID::skillInterdictorEliteBonus1SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier685));
+			constexpr auto skillInterdictorEliteBonus2SkillLevel = MakeEffect(EffectID::skillInterdictorEliteBonus2SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier686));
+			constexpr auto energyManagementSkillBoostCapacitorCapacityBonus = MakeEffect(EffectID::energyManagementSkillBoostCapacitorCapacityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier687));
+			constexpr auto energyManagementCapacitorBonusPostPercentCapacityLocationShipGroupCapacitorCapacityBonus = MakeEffect(EffectID::energyManagementCapacitorBonusPostPercentCapacityLocationShipGroupCapacitorCapacityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier688));
+			constexpr auto minerCpuUsageMultiplyPercent2 = MakeEffect(EffectID::minerCpuUsageMultiplyPercent2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier689));
+			constexpr auto iceMinerCpuUsagePercent = MakeEffect(EffectID::iceMinerCpuUsagePercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier690));
+			constexpr auto commandShipSkillMultiplier1 = MakeEffect(EffectID::commandShipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier691));
+			constexpr auto commandShipSkillMultiplier2 = MakeEffect(EffectID::commandShipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier692));
+			constexpr auto miningUpgradeCPUPenaltyReductionModulesRequiringMiningUpgradePercent = MakeEffect(EffectID::miningUpgradeCPUPenaltyReductionModulesRequiringMiningUpgradePercent, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier693));
+			constexpr auto shipBonusArmorResistAB = MakeEffect(EffectID::shipBonusArmorResistAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier694, &Modifiers::modifier695, &Modifiers::modifier696, &Modifiers::modifier697));
+			constexpr auto iceHarvestCycleTimeModulesRequiringIceHarvestingOnline = MakeEffect(EffectID::iceHarvestCycleTimeModulesRequiringIceHarvestingOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier383));
+			constexpr auto warpScrambleForStructure = MakeEffect(EffectID::warpScrambleForStructure, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier9));
+			constexpr auto implantArmorHpBonus2 = MakeEffect(EffectID::implantArmorHpBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier698));
+			constexpr auto implantVelocityBonus2 = MakeEffect(EffectID::implantVelocityBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier699));
+			constexpr auto shipBonusRemoteTrackingComputerFalloffMC = MakeEffect(EffectID::shipBonusRemoteTrackingComputerFalloffMC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier700));
+			constexpr auto shipBonusRemoteTrackingComputerFalloffGC2 = MakeEffect(EffectID::shipBonusRemoteTrackingComputerFalloffGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier701));
+			constexpr auto ewSkillEcmBurstRangeBonus = MakeEffect(EffectID::ewSkillEcmBurstRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier702));
+			constexpr auto ewSkillEcmBurstCapNeedBonus = MakeEffect(EffectID::ewSkillEcmBurstCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier703));
+			constexpr auto shipHTTrackingBonusGB2 = MakeEffect(EffectID::shipHTTrackingBonusGB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier704));
+			constexpr auto shipBonusHybridTrackingGF2 = MakeEffect(EffectID::shipBonusHybridTrackingGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier705));
+			constexpr auto eliteBonusAssaultShipMissileVelocity1 = MakeEffect(EffectID::eliteBonusAssaultShipMissileVelocity1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier706));
+			constexpr auto neurotoxinRecoverySkillBoostChanceBonus = MakeEffect(EffectID::neurotoxinRecoverySkillBoostChanceBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier707));
+			constexpr auto modifyBoosterEffectChanceWithBoosterChanceBonusPostPercent = MakeEffect(EffectID::modifyBoosterEffectChanceWithBoosterChanceBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier708, &Modifiers::modifier709, &Modifiers::modifier710, &Modifiers::modifier711, &Modifiers::modifier712));
+			constexpr auto naniteControlSkillBoostBoosterAttributeModifier = MakeEffect(EffectID::naniteControlSkillBoostBoosterAttributeModifier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier713));
+			constexpr auto shipBonusEmShieldResistanceCB2 = MakeEffect(EffectID::shipBonusEmShieldResistanceCB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier714));
+			constexpr auto shipBonusExplosiveShieldResistanceCB2 = MakeEffect(EffectID::shipBonusExplosiveShieldResistanceCB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier715));
+			constexpr auto shipBonusKineticShieldResistanceCB2 = MakeEffect(EffectID::shipBonusKineticShieldResistanceCB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier716));
+			constexpr auto shipBonusThermicShieldResistanceCB2 = MakeEffect(EffectID::shipBonusThermicShieldResistanceCB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier717));
+			constexpr auto eliteBonusGunshipProjectileDamage1 = MakeEffect(EffectID::eliteBonusGunshipProjectileDamage1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier718));
+			constexpr auto eliteBonusGunshipProjectileDamage2 = MakeEffect(EffectID::eliteBonusGunshipProjectileDamage2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier719));
+			constexpr auto increaseSignatureRadiusOnline = MakeEffect(EffectID::increaseSignatureRadiusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier381));
+			constexpr auto scanResolutionMultiplierOnline = MakeEffect(EffectID::scanResolutionMultiplierOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier270));
+			constexpr auto maxTargetRangeBonus = MakeEffect(EffectID::maxTargetRangeBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier168));
+			constexpr auto eliteBonusHeavyGunshipHeavyMissileLaunhcerRof2 = MakeEffect(EffectID::eliteBonusHeavyGunshipHeavyMissileLaunhcerRof2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier720));
+			constexpr auto eliteBonusHeavyGunshipHeavyAssaultMissileLaunhcerRof2 = MakeEffect(EffectID::eliteBonusHeavyGunshipHeavyAssaultMissileLaunhcerRof2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier721));
+			constexpr auto eliteBonusHeavyGunshipAssaultMissileLaunhcerRof2 = MakeEffect(EffectID::eliteBonusHeavyGunshipAssaultMissileLaunhcerRof2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier722));
+			constexpr auto scanStrengthBonusSkillLevelIncrease = MakeEffect(EffectID::scanStrengthBonusSkillLevelIncrease, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier723));
+			constexpr auto rigSlot = MakeEffect(EffectID::rigSlot, MetaInfo::Effect::Category::generic, false, false, _modifiers());
+			constexpr auto sensorBoosterActivePercentage = MakeEffect(EffectID::sensorBoosterActivePercentage, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier168, &Modifiers::modifier233, &Modifiers::modifier640, &Modifiers::modifier641, &Modifiers::modifier642, &Modifiers::modifier643));
+			constexpr auto capNeedBonusEffectLasers = MakeEffect(EffectID::capNeedBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier724));
+			constexpr auto capNeedBonusEffectHybrids = MakeEffect(EffectID::capNeedBonusEffectHybrids, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier725));
+			constexpr auto cpuNeedBonusEffectLasers = MakeEffect(EffectID::cpuNeedBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier726));
+			constexpr auto cpuNeedBonusEffectHybrid = MakeEffect(EffectID::cpuNeedBonusEffectHybrid, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier727));
+			constexpr auto cpuNeedBonusEffectProjectile = MakeEffect(EffectID::cpuNeedBonusEffectProjectile, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier728));
+			constexpr auto falloffBonusEffectLasers = MakeEffect(EffectID::falloffBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier729));
+			constexpr auto falloffBonusEffectHybrids = MakeEffect(EffectID::falloffBonusEffectHybrids, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier730));
+			constexpr auto falloffBonusEffectProjectiles = MakeEffect(EffectID::falloffBonusEffectProjectiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier731));
+			constexpr auto maxRangeBonusEffectLasers = MakeEffect(EffectID::maxRangeBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier732));
+			constexpr auto maxRangeBonusEffectHybrids = MakeEffect(EffectID::maxRangeBonusEffectHybrids, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier733));
+			constexpr auto maxRangeBonusEffectProjectiles = MakeEffect(EffectID::maxRangeBonusEffectProjectiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier734));
+			constexpr auto drawbackPowerNeedLasers = MakeEffect(EffectID::drawbackPowerNeedLasers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier735));
+			constexpr auto drawbackPowerNeedHybrids = MakeEffect(EffectID::drawbackPowerNeedHybrids, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier736));
+			constexpr auto drawbackPowerNeedProjectiles = MakeEffect(EffectID::drawbackPowerNeedProjectiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier737));
+			constexpr auto drawbackArmorHP = MakeEffect(EffectID::drawbackArmorHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier738));
+			constexpr auto drawbackCPUOutput = MakeEffect(EffectID::drawbackCPUOutput, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier739));
+			constexpr auto drawbackCPUNeedLaunchers = MakeEffect(EffectID::drawbackCPUNeedLaunchers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier740));
+			constexpr auto drawbackSigRad = MakeEffect(EffectID::drawbackSigRad, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier741));
+			constexpr auto drawbackMaxVelocity = MakeEffect(EffectID::drawbackMaxVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier742));
+			constexpr auto drawbackShieldCapacity = MakeEffect(EffectID::drawbackShieldCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier743));
+			constexpr auto rigDrawbackSkillEffect = MakeEffect(EffectID::rigDrawbackSkillEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier744));
+			constexpr auto miningClouds = MakeEffect(EffectID::miningClouds, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto gasCloudHarvestingMaxGroupSkillLevel = MakeEffect(EffectID::gasCloudHarvestingMaxGroupSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier745));
+			constexpr auto shipECMScanStrengthBonusCF = MakeEffect(EffectID::shipECMScanStrengthBonusCF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier746, &Modifiers::modifier747, &Modifiers::modifier748, &Modifiers::modifier749));
+			constexpr auto boosterArmorHpPenalty = MakeEffect(EffectID::boosterArmorHpPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier750));
+			constexpr auto boosterArmorRepairAmountPenalty = MakeEffect(EffectID::boosterArmorRepairAmountPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier751));
+			constexpr auto boosterShieldCapacityPenalty = MakeEffect(EffectID::boosterShieldCapacityPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier752));
+			constexpr auto boosterTurretOptimalRangePenalty = MakeEffect(EffectID::boosterTurretOptimalRangePenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier753));
+			constexpr auto boosterTurretFalloffPenalty = MakeEffect(EffectID::boosterTurretFalloffPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier754));
+			constexpr auto boosterCapacitorCapacityPenalty = MakeEffect(EffectID::boosterCapacitorCapacityPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier755));
+			constexpr auto boosterMaxVelocityPenalty = MakeEffect(EffectID::boosterMaxVelocityPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier756));
+			constexpr auto boosterTurretTrackingPenalty = MakeEffect(EffectID::boosterTurretTrackingPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier757));
+			constexpr auto boosterMissileVelocityPenalty = MakeEffect(EffectID::boosterMissileVelocityPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier758));
+			constexpr auto boosterMissileExplosionVelocityPenalty = MakeEffect(EffectID::boosterMissileExplosionVelocityPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier759));
+			constexpr auto shipBonusECMStrengthBonusCC = MakeEffect(EffectID::shipBonusECMStrengthBonusCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier760, &Modifiers::modifier761, &Modifiers::modifier762, &Modifiers::modifier763));
+			constexpr auto salvaging = MakeEffect(EffectID::salvaging, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto boosterModifyBoosterArmorPenalties = MakeEffect(EffectID::boosterModifyBoosterArmorPenalties, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier764, &Modifiers::modifier765));
+			constexpr auto boosterModifyBoosterShieldPenalty = MakeEffect(EffectID::boosterModifyBoosterShieldPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier766, &Modifiers::modifier767));
+			constexpr auto boosterModifyBoosterMaxVelocityAndCapacitorPenalty = MakeEffect(EffectID::boosterModifyBoosterMaxVelocityAndCapacitorPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier768, &Modifiers::modifier769));
+			constexpr auto boosterModifyBoosterMissilePenalty = MakeEffect(EffectID::boosterModifyBoosterMissilePenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier770, &Modifiers::modifier771, &Modifiers::modifier772));
+			constexpr auto boosterModifyBoosterTurretPenalty = MakeEffect(EffectID::boosterModifyBoosterTurretPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier773, &Modifiers::modifier774, &Modifiers::modifier775));
+			constexpr auto boosterMissileExplosionCloudPenaltyFixed = MakeEffect(EffectID::boosterMissileExplosionCloudPenaltyFixed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier776));
+			constexpr auto modifyArmorResonancePostPercentPassive = MakeEffect(EffectID::modifyArmorResonancePostPercentPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier587, &Modifiers::modifier588, &Modifiers::modifier589, &Modifiers::modifier590));
+			constexpr auto salvagingAccessDifficultyBonusEffectPassive = MakeEffect(EffectID::salvagingAccessDifficultyBonusEffectPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier777));
+			constexpr auto modifyShieldResonancePostPercentPassive = MakeEffect(EffectID::modifyShieldResonancePostPercentPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier591, &Modifiers::modifier592, &Modifiers::modifier593, &Modifiers::modifier594));
+			constexpr auto massReductionBonusPassive = MakeEffect(EffectID::massReductionBonusPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier778));
+			constexpr auto projectileWeaponSpeedMultiplyPassive = MakeEffect(EffectID::projectileWeaponSpeedMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier22));
+			constexpr auto projectileWeaponDamageMultiplyPassive = MakeEffect(EffectID::projectileWeaponDamageMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier24));
+			constexpr auto missileLauncherSpeedMultiplierPassive = MakeEffect(EffectID::missileLauncherSpeedMultiplierPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier277));
+			constexpr auto energyWeaponSpeedMultiplyPassive = MakeEffect(EffectID::energyWeaponSpeedMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier26));
+			constexpr auto hybridWeaponDamageMultiplyPassive = MakeEffect(EffectID::hybridWeaponDamageMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier25));
+			constexpr auto energyWeaponDamageMultiplyPassive = MakeEffect(EffectID::energyWeaponDamageMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier23));
+			constexpr auto hybridWeaponSpeedMultiplyPassive = MakeEffect(EffectID::hybridWeaponSpeedMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier27));
+			constexpr auto shipBonusLargeEnergyWeaponDamageAB2 = MakeEffect(EffectID::shipBonusLargeEnergyWeaponDamageAB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier779));
+			constexpr auto shipMissileAssaultMissileVelocityBonusCC2 = MakeEffect(EffectID::shipMissileAssaultMissileVelocityBonusCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier780));
+			constexpr auto eliteBonusHeavyGunshipAssaultMissileFlightTime1 = MakeEffect(EffectID::eliteBonusHeavyGunshipAssaultMissileFlightTime1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier781));
+			constexpr auto caldariShipECMBurstOptimalRangeCB3 = MakeEffect(EffectID::caldariShipECMBurstOptimalRangeCB3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier782));
+			constexpr auto maxScanDeviationSelfSkillModifier = MakeEffect(EffectID::maxScanDeviationSelfSkillModifier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier783));
+			constexpr auto armorHPBonusAdd = MakeEffect(EffectID::armorHPBonusAdd, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier784));
+			constexpr auto skillBoostTrackingSpeedBonus = MakeEffect(EffectID::skillBoostTrackingSpeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier785));
+			constexpr auto trackingSpeedBonusPassiveRequiringGunneryTrackingSpeedBonus = MakeEffect(EffectID::trackingSpeedBonusPassiveRequiringGunneryTrackingSpeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier786));
+			constexpr auto accessDifficultyBonusModifierRequiringArchaelogy = MakeEffect(EffectID::accessDifficultyBonusModifierRequiringArchaelogy, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier787));
+			constexpr auto accessDifficultyBonusModifierRequiringHacking = MakeEffect(EffectID::accessDifficultyBonusModifierRequiringHacking, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier788));
+			constexpr auto durationBonusForGroupAfterburner = MakeEffect(EffectID::durationBonusForGroupAfterburner, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier789));
+			constexpr auto missileDMGBonusPassive = MakeEffect(EffectID::missileDMGBonusPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier259));
+			constexpr auto maxTargetingRangeBonusPremulPassive = MakeEffect(EffectID::maxTargetingRangeBonusPremulPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier32));
+			constexpr auto cloakingTargetingDelayBonusLRSMCloakingPassive = MakeEffect(EffectID::cloakingTargetingDelayBonusLRSMCloakingPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier790));
+			constexpr auto cynosuralGeneration = MakeEffect(EffectID::cynosuralGeneration, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier617, &Modifiers::modifier618, &Modifiers::modifier791));
+			constexpr auto cloneJumpAccepting = MakeEffect(EffectID::cloneJumpAccepting, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier617, &Modifiers::modifier618, &Modifiers::modifier791));
+			constexpr auto velocityBonusOnline = MakeEffect(EffectID::velocityBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier684));
+			constexpr auto biologyTimeBonusFixed = MakeEffect(EffectID::biologyTimeBonusFixed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier792));
+			constexpr auto sentryDroneDamageBonus = MakeEffect(EffectID::sentryDroneDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier793));
+			constexpr auto armorDamageAmountBonusCapitalArmorRepairers = MakeEffect(EffectID::armorDamageAmountBonusCapitalArmorRepairers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier794));
+			constexpr auto missileVelocityBonusDefender = MakeEffect(EffectID::missileVelocityBonusDefender, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier795));
+			constexpr auto missileEMDmgBonusCruise3 = MakeEffect(EffectID::missileEMDmgBonusCruise3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier796));
+			constexpr auto missileExplosiveDmgBonusCruise3 = MakeEffect(EffectID::missileExplosiveDmgBonusCruise3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier797));
+			constexpr auto missileKineticDmgBonusCruise3 = MakeEffect(EffectID::missileKineticDmgBonusCruise3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier798));
+			constexpr auto missileThermalDmgBonusCruise3 = MakeEffect(EffectID::missileThermalDmgBonusCruise3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier799));
+			constexpr auto gasHarvestingCycleTimeModulesRequiringGasCloudHarvesting = MakeEffect(EffectID::gasHarvestingCycleTimeModulesRequiringGasCloudHarvesting, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier800));
+			constexpr auto setMaxLockedTargets = MakeEffect(EffectID::setMaxLockedTargets, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier801));
+			constexpr auto missileEMDmgBonusRocket = MakeEffect(EffectID::missileEMDmgBonusRocket, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier802));
+			constexpr auto missileExplosiveDmgBonusRocket = MakeEffect(EffectID::missileExplosiveDmgBonusRocket, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier803));
+			constexpr auto missileKineticDmgBonusRocket = MakeEffect(EffectID::missileKineticDmgBonusRocket, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier804));
+			constexpr auto missileThermalDmgBonusRocket = MakeEffect(EffectID::missileThermalDmgBonusRocket, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier805));
+			constexpr auto missileEMDmgBonusStandard = MakeEffect(EffectID::missileEMDmgBonusStandard, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier806));
+			constexpr auto missileExplosiveDmgBonusStandard = MakeEffect(EffectID::missileExplosiveDmgBonusStandard, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier807));
+			constexpr auto missileKineticDmgBonusStandard = MakeEffect(EffectID::missileKineticDmgBonusStandard, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier808));
+			constexpr auto missileThermalDmgBonusStandard = MakeEffect(EffectID::missileThermalDmgBonusStandard, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier809));
+			constexpr auto missileEMDmgBonusHeavy = MakeEffect(EffectID::missileEMDmgBonusHeavy, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier810));
+			constexpr auto missileExplosiveDmgBonusHeavy = MakeEffect(EffectID::missileExplosiveDmgBonusHeavy, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier811));
+			constexpr auto missileKineticDmgBonusHeavy = MakeEffect(EffectID::missileKineticDmgBonusHeavy, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier812));
+			constexpr auto missileThermalDmgBonusHeavy = MakeEffect(EffectID::missileThermalDmgBonusHeavy, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier813));
+			constexpr auto missileEMDmgBonusHAM = MakeEffect(EffectID::missileEMDmgBonusHAM, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier814));
+			constexpr auto missileExplosiveDmgBonusHAM = MakeEffect(EffectID::missileExplosiveDmgBonusHAM, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier815));
+			constexpr auto missileKineticDmgBonusHAM = MakeEffect(EffectID::missileKineticDmgBonusHAM, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier816));
+			constexpr auto missileThermalDmgBonusHAM = MakeEffect(EffectID::missileThermalDmgBonusHAM, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier817));
+			constexpr auto missileEMDmgBonusTorpedo = MakeEffect(EffectID::missileEMDmgBonusTorpedo, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier818));
+			constexpr auto missileExplosiveDmgBonusTorpedo = MakeEffect(EffectID::missileExplosiveDmgBonusTorpedo, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier819));
+			constexpr auto missileKineticDmgBonusTorpedo = MakeEffect(EffectID::missileKineticDmgBonusTorpedo, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier820));
+			constexpr auto missileThermalDmgBonusTorpedo = MakeEffect(EffectID::missileThermalDmgBonusTorpedo, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier821));
+			constexpr auto dataminerModuleDurationReduction = MakeEffect(EffectID::dataminerModuleDurationReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier822));
+			constexpr auto posStructureControlAmountBonus = MakeEffect(EffectID::posStructureControlAmountBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier823));
+			constexpr auto skillTriageModuleConsumptionQuantityBonus = MakeEffect(EffectID::skillTriageModuleConsumptionQuantityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier824));
+			constexpr auto bombLaunching = MakeEffect(EffectID::bombLaunching, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto skillRemoteECMDurationBonusSkillLevel = MakeEffect(EffectID::skillRemoteECMDurationBonusSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier825));
+			constexpr auto tskillRemoteHullRepairSystemsCapNeedBonus = MakeEffect(EffectID::tskillRemoteHullRepairSystemsCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier826));
+			constexpr auto skillCapitalRemoteHullRepairSystemsCapNeedBonus = MakeEffect(EffectID::skillCapitalRemoteHullRepairSystemsCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier827));
+			constexpr auto skillRemoteECMDurationBonus = MakeEffect(EffectID::skillRemoteECMDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier828, &Modifiers::modifier829, &Modifiers::modifier830, &Modifiers::modifier831, &Modifiers::modifier832));
+			constexpr auto overloadRofBonus = MakeEffect(EffectID::overloadRofBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier833));
+			constexpr auto overloadSelfDurationBonus = MakeEffect(EffectID::overloadSelfDurationBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier834));
+			constexpr auto eliteBonusCoverOpsBombExplosiveDmg1 = MakeEffect(EffectID::eliteBonusCoverOpsBombExplosiveDmg1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier835));
+			constexpr auto overloadSelfDamageBonus = MakeEffect(EffectID::overloadSelfDamageBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier836));
+			constexpr auto eliteBonusCoverOpsBombKineticDmg1 = MakeEffect(EffectID::eliteBonusCoverOpsBombKineticDmg1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier837));
+			constexpr auto eliteBonusCoverOpsBombThermalDmg1 = MakeEffect(EffectID::eliteBonusCoverOpsBombThermalDmg1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier838));
+			constexpr auto eliteBonusCoverOpsBombEmDmg1 = MakeEffect(EffectID::eliteBonusCoverOpsBombEmDmg1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier839));
+			constexpr auto overloadSelfEmHardeningBonus = MakeEffect(EffectID::overloadSelfEmHardeningBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier840));
+			constexpr auto overloadSelfThermalHardeningBonus = MakeEffect(EffectID::overloadSelfThermalHardeningBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier841));
+			constexpr auto overloadSelfExplosiveHardeningBonus = MakeEffect(EffectID::overloadSelfExplosiveHardeningBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier842));
+			constexpr auto overloadSelfKineticHardeningBonus = MakeEffect(EffectID::overloadSelfKineticHardeningBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier843));
+			constexpr auto overloadSelfHardeningInvulnerabilityBonus = MakeEffect(EffectID::overloadSelfHardeningInvulnerabilityBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier840, &Modifiers::modifier841, &Modifiers::modifier842, &Modifiers::modifier843));
+			constexpr auto skillBombDeploymentModuleReactivationDelayBonus = MakeEffect(EffectID::skillBombDeploymentModuleReactivationDelayBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier844));
+			constexpr auto modifyMaxVelocityOfShipPassive = MakeEffect(EffectID::modifyMaxVelocityOfShipPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier215));
+			constexpr auto structureHPMultiplyPassive = MakeEffect(EffectID::structureHPMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier18));
+			constexpr auto heatDamageBonus = MakeEffect(EffectID::heatDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier845));
+			constexpr auto controlTowerGenericHullResistanceBonus = MakeEffect(EffectID::controlTowerGenericHullResistanceBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier846, &Modifiers::modifier847, &Modifiers::modifier848, &Modifiers::modifier849, &Modifiers::modifier850, &Modifiers::modifier851, &Modifiers::modifier852, &Modifiers::modifier853, &Modifiers::modifier854, &Modifiers::modifier855, &Modifiers::modifier856, &Modifiers::modifier857, &Modifiers::modifier858, &Modifiers::modifier859, &Modifiers::modifier860, &Modifiers::modifier861, &Modifiers::modifier862, &Modifiers::modifier863, &Modifiers::modifier864, &Modifiers::modifier865, &Modifiers::modifier866, &Modifiers::modifier867, &Modifiers::modifier868, &Modifiers::modifier869, &Modifiers::modifier870, &Modifiers::modifier871, &Modifiers::modifier872, &Modifiers::modifier873, &Modifiers::modifier874, &Modifiers::modifier875, &Modifiers::modifier876, &Modifiers::modifier877, &Modifiers::modifier878, &Modifiers::modifier879, &Modifiers::modifier880, &Modifiers::modifier881, &Modifiers::modifier882, &Modifiers::modifier883, &Modifiers::modifier884, &Modifiers::modifier885, &Modifiers::modifier886, &Modifiers::modifier887, &Modifiers::modifier888, &Modifiers::modifier889, &Modifiers::modifier890, &Modifiers::modifier891, &Modifiers::modifier892, &Modifiers::modifier893));
+			constexpr auto shieldTransportCpuNeedBonusEffect = MakeEffect(EffectID::shieldTransportCpuNeedBonusEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier894));
+			constexpr auto droneArmorDamageBonusEffect = MakeEffect(EffectID::droneArmorDamageBonusEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier895));
+			constexpr auto droneShieldBonusBonusEffect = MakeEffect(EffectID::droneShieldBonusBonusEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier896));
+			constexpr auto overloadSelfRangeBonus = MakeEffect(EffectID::overloadSelfRangeBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier897));
+			constexpr auto overloadSelfSpeedBonus = MakeEffect(EffectID::overloadSelfSpeedBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier898));
+			constexpr auto overloadSelfECMStrenghtBonus = MakeEffect(EffectID::overloadSelfECMStrenghtBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier899, &Modifiers::modifier900, &Modifiers::modifier901, &Modifiers::modifier902));
+			constexpr auto overloadSelfECCMStrenghtBonus = MakeEffect(EffectID::overloadSelfECCMStrenghtBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier903, &Modifiers::modifier904, &Modifiers::modifier905, &Modifiers::modifier906));
+			constexpr auto thermodynamicsSkillLevel = MakeEffect(EffectID::thermodynamicsSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier907));
+			constexpr auto thermodynamicsSkillDamageBonus = MakeEffect(EffectID::thermodynamicsSkillDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier908));
+			constexpr auto overloadSelfArmorDamageAmountDurationBonus = MakeEffect(EffectID::overloadSelfArmorDamageAmountDurationBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier834, &Modifiers::modifier909));
+			constexpr auto overloadSelfShieldBonusDurationBonus = MakeEffect(EffectID::overloadSelfShieldBonusDurationBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier834, &Modifiers::modifier910));
+			constexpr auto missileSkillFoFAoeCloudSizeBonus = MakeEffect(EffectID::missileSkillFoFAoeCloudSizeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier911));
+			constexpr auto shipRocketExplosiveDmgAF = MakeEffect(EffectID::shipRocketExplosiveDmgAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier912));
+			constexpr auto shipRocketKineticDmgAF = MakeEffect(EffectID::shipRocketKineticDmgAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier913));
+			constexpr auto shipRocketThermalDmgAF = MakeEffect(EffectID::shipRocketThermalDmgAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier914));
+			constexpr auto shipRocketEmDmgAF = MakeEffect(EffectID::shipRocketEmDmgAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier915));
+			constexpr auto eliteBonusGunshipArmorEmResistance1 = MakeEffect(EffectID::eliteBonusGunshipArmorEmResistance1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier916));
+			constexpr auto eliteBonusGunshipArmorThermalResistance1 = MakeEffect(EffectID::eliteBonusGunshipArmorThermalResistance1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier917));
+			constexpr auto eliteBonusGunshipArmorKineticResistance1 = MakeEffect(EffectID::eliteBonusGunshipArmorKineticResistance1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier918));
+			constexpr auto eliteBonusGunshipArmorExplosiveResistance1 = MakeEffect(EffectID::eliteBonusGunshipArmorExplosiveResistance1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier919));
+			constexpr auto shipCapRecharge2AF = MakeEffect(EffectID::shipCapRecharge2AF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier920));
+			constexpr auto tacticalShieldManipulationBonus2 = MakeEffect(EffectID::tacticalShieldManipulationBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier921));
+			constexpr auto shipCommandBonusEffectiveMultiplierOreCapital2 = MakeEffect(EffectID::shipCommandBonusEffectiveMultiplierOreCapital2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier922));
+			constexpr auto oreCapitalShipSkillMultiplier1 = MakeEffect(EffectID::oreCapitalShipSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier923));
+			constexpr auto oreCapitalShipSkillMultiplier2 = MakeEffect(EffectID::oreCapitalShipSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier924));
+			constexpr auto skillIndustrialReconfigurationConsumptionQuantityBonus = MakeEffect(EffectID::skillIndustrialReconfigurationConsumptionQuantityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier925));
+			constexpr auto shipConsumptionQuantityBonusIndustrialReconfigurationORECapital1 = MakeEffect(EffectID::shipConsumptionQuantityBonusIndustrialReconfigurationORECapital1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier926));
+			constexpr auto miningDirectorBonusCommandBonusEffective = MakeEffect(EffectID::miningDirectorBonusCommandBonusEffective, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier927));
+			constexpr auto shipEnergyNeutralizerTransferAmountBonusAB = MakeEffect(EffectID::shipEnergyNeutralizerTransferAmountBonusAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier928));
+			constexpr auto shipEnergyNeutralizerTransferAmountBonusAC = MakeEffect(EffectID::shipEnergyNeutralizerTransferAmountBonusAC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier929));
+			constexpr auto shipEnergyNeutralizerTransferAmountBonusAF = MakeEffect(EffectID::shipEnergyNeutralizerTransferAmountBonusAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier930));
+			constexpr auto oreCapitalShipShieldTransferRange = MakeEffect(EffectID::oreCapitalShipShieldTransferRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier931));
+			constexpr auto oreCapitalShipSkillMultiplier3 = MakeEffect(EffectID::oreCapitalShipSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier932));
+			constexpr auto cloneVatMaxJumpCloneBonusSkillNew = MakeEffect(EffectID::cloneVatMaxJumpCloneBonusSkillNew, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier933));
+			constexpr auto shipBonusORECapShipDroneDmgBonus = MakeEffect(EffectID::shipBonusORECapShipDroneDmgBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier934));
+			constexpr auto shipBonusORECapShipDroneArmorHPAndShieldHPAndHpBonus = MakeEffect(EffectID::shipBonusORECapShipDroneArmorHPAndShieldHPAndHpBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier935, &Modifiers::modifier936, &Modifiers::modifier937));
+			constexpr auto oreCapitalShipSkillMultiplier4 = MakeEffect(EffectID::oreCapitalShipSkillMultiplier4, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier938));
+			constexpr auto eliteBonusCommandShipArmorHP1 = MakeEffect(EffectID::eliteBonusCommandShipArmorHP1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier939));
+			constexpr auto shipArmorEmResistanceMC2 = MakeEffect(EffectID::shipArmorEmResistanceMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier940));
+			constexpr auto shipArmorExplosiveResistanceMC2 = MakeEffect(EffectID::shipArmorExplosiveResistanceMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier941));
+			constexpr auto shipArmorKineticResistanceMC2 = MakeEffect(EffectID::shipArmorKineticResistanceMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier942));
+			constexpr auto shipArmorThermalResistanceMC2 = MakeEffect(EffectID::shipArmorThermalResistanceMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier943));
+			constexpr auto eliteBonusHeavyInterdictorsProjectileFalloff1 = MakeEffect(EffectID::eliteBonusHeavyInterdictorsProjectileFalloff1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier944));
+			constexpr auto heavyInterdictorsSkillMultiplier1 = MakeEffect(EffectID::heavyInterdictorsSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier945));
+			constexpr auto heavyInterdictorsSkillMultiplier2 = MakeEffect(EffectID::heavyInterdictorsSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier946));
+			constexpr auto eliteBonusHeavyInterdictorHeavyMissileVelocityBonus1 = MakeEffect(EffectID::eliteBonusHeavyInterdictorHeavyMissileVelocityBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier947));
+			constexpr auto eliteBonusHeavyInterdictorHeavyAssaultMissileVelocityBonus = MakeEffect(EffectID::eliteBonusHeavyInterdictorHeavyAssaultMissileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier948));
+			constexpr auto eliteBonusHeavyInterdictorLightMissileVelocityBonus = MakeEffect(EffectID::eliteBonusHeavyInterdictorLightMissileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier949));
+			constexpr auto electronicAttackShipsSkillMultiplier1 = MakeEffect(EffectID::electronicAttackShipsSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier950));
+			constexpr auto electronicAttackShipsSkillMultiplier2 = MakeEffect(EffectID::electronicAttackShipsSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier951));
+			constexpr auto shipRemoteSensorDampenerCapNeedGF = MakeEffect(EffectID::shipRemoteSensorDampenerCapNeedGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier952));
+			constexpr auto eliteBonusElectronicAttackShipWarpScramblerMaxRange1 = MakeEffect(EffectID::eliteBonusElectronicAttackShipWarpScramblerMaxRange1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier953));
+			constexpr auto eliteBonusElectronicAttackShipECMOptimalRange1 = MakeEffect(EffectID::eliteBonusElectronicAttackShipECMOptimalRange1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier954));
+			constexpr auto eliteBonusElectronicAttackShipStasisWebMaxRange1 = MakeEffect(EffectID::eliteBonusElectronicAttackShipStasisWebMaxRange1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier955));
+			constexpr auto eliteBonusElectronicAttackShipWarpScramblerCapNeed2 = MakeEffect(EffectID::eliteBonusElectronicAttackShipWarpScramblerCapNeed2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier956));
+			constexpr auto eliteBonusElectronicAttackShipSignatureRadius2 = MakeEffect(EffectID::eliteBonusElectronicAttackShipSignatureRadius2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier957));
+			constexpr auto implantHardwiringABcapacitorNeed = MakeEffect(EffectID::implantHardwiringABcapacitorNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier167));
+			constexpr auto warpDisruptSphere = MakeEffect(EffectID::warpDisruptSphere, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto eliteBonusBlackOpsLargeEnergyTurretTracking1 = MakeEffect(EffectID::eliteBonusBlackOpsLargeEnergyTurretTracking1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier958));
+			constexpr auto eliteBonusBlackOpsCloakVelocity2 = MakeEffect(EffectID::eliteBonusBlackOpsCloakVelocity2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier959));
+			constexpr auto blackOpsSkillMultiplier1 = MakeEffect(EffectID::blackOpsSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier960));
+			constexpr auto blackOpsSkillMultiplier2 = MakeEffect(EffectID::blackOpsSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier961));
+			constexpr auto eliteBonusBlackOpsMaxVelocity1 = MakeEffect(EffectID::eliteBonusBlackOpsMaxVelocity1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier962));
+			constexpr auto violatorsSkillMultiplier1 = MakeEffect(EffectID::violatorsSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier963));
+			constexpr auto violatorsSkillMultiplier2 = MakeEffect(EffectID::violatorsSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier964));
+			constexpr auto eliteBonusViolatorsLargeEnergyTurretDamageRole1 = MakeEffect(EffectID::eliteBonusViolatorsLargeEnergyTurretDamageRole1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier965));
+			constexpr auto eliteBonusViolatorsLargeHybridTurretDamageRole1 = MakeEffect(EffectID::eliteBonusViolatorsLargeHybridTurretDamageRole1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier966));
+			constexpr auto eliteBonusViolatorsLargeProjectileTurretDamageRole1 = MakeEffect(EffectID::eliteBonusViolatorsLargeProjectileTurretDamageRole1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier967));
+			constexpr auto eliteBonusViolatorsLargeHybridTurretTracking1 = MakeEffect(EffectID::eliteBonusViolatorsLargeHybridTurretTracking1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier968));
+			constexpr auto eliteBonusViolatorsLargeProjectileTurretTracking1 = MakeEffect(EffectID::eliteBonusViolatorsLargeProjectileTurretTracking1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier969));
+			constexpr auto eliteBonusViolatorsTractorBeamMaxRangeRole2 = MakeEffect(EffectID::eliteBonusViolatorsTractorBeamMaxRangeRole2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier970));
+			constexpr auto eliteBonusViolatorsEwTargetPainting1 = MakeEffect(EffectID::eliteBonusViolatorsEwTargetPainting1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier971));
+			constexpr auto shipBonusPTFalloffMB1 = MakeEffect(EffectID::shipBonusPTFalloffMB1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier972));
+			constexpr auto eliteBonusElectronicAttackShipRechargeRate2 = MakeEffect(EffectID::eliteBonusElectronicAttackShipRechargeRate2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier973));
+			constexpr auto eliteBonusElectronicAttackShipCapacitorCapacity2 = MakeEffect(EffectID::eliteBonusElectronicAttackShipCapacitorCapacity2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier974));
+			constexpr auto eliteBonusHeavyInterdictorsWarpDisruptFieldGeneratorWarpScrambleRange2 = MakeEffect(EffectID::eliteBonusHeavyInterdictorsWarpDisruptFieldGeneratorWarpScrambleRange2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier975));
+			constexpr auto eliteBonusViolatorsTractorBeamMaxTractorVelocityRole3 = MakeEffect(EffectID::eliteBonusViolatorsTractorBeamMaxTractorVelocityRole3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier976));
+			constexpr auto shipLaserDamagePirateBattleship = MakeEffect(EffectID::shipLaserDamagePirateBattleship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier977));
+			constexpr auto shipTrackingBonusAB = MakeEffect(EffectID::shipTrackingBonusAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier978));
+			constexpr auto shipBonusMediumEnergyTurretDamagePirateFaction = MakeEffect(EffectID::shipBonusMediumEnergyTurretDamagePirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier979));
+			constexpr auto shipBonusMediumEnergyTurretTrackingAC2 = MakeEffect(EffectID::shipBonusMediumEnergyTurretTrackingAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier980));
+			constexpr auto shipBonusSmallEnergyTurretDamagePirateFaction = MakeEffect(EffectID::shipBonusSmallEnergyTurretDamagePirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier981));
+			constexpr auto shipBonusSmallEnergyTurretTracking2AF = MakeEffect(EffectID::shipBonusSmallEnergyTurretTracking2AF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier982));
+			constexpr auto rorqualCargoScanRangeBonus = MakeEffect(EffectID::rorqualCargoScanRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier983));
+			constexpr auto rorqualSurveyScannerRangeBonus = MakeEffect(EffectID::rorqualSurveyScannerRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier984));
+			constexpr auto shipCapPropulsionJamming = MakeEffect(EffectID::shipCapPropulsionJamming, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier985));
+			constexpr auto setBonusThukker = MakeEffect(EffectID::setBonusThukker, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier986));
+			constexpr auto setBonusSisters = MakeEffect(EffectID::setBonusSisters, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier987));
+			constexpr auto setBonusSyndicate = MakeEffect(EffectID::setBonusSyndicate, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier988));
+			constexpr auto miningLaserMaxRangeMultBonus = MakeEffect(EffectID::miningLaserMaxRangeMultBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier989));
+			constexpr auto setBonusMordus = MakeEffect(EffectID::setBonusMordus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier990));
+			constexpr auto interceptor2WarpScrambleRange = MakeEffect(EffectID::interceptor2WarpScrambleRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier991));
+			constexpr auto weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringBombLauncher = MakeEffect(EffectID::weaponUpgradesCpuNeedBonusPostPercentCpuLocationShipModulesRequiringBombLauncher, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier992));
+			constexpr auto skillAdvancedWeaponUpgradesPowerNeedBonusBombLaunchers = MakeEffect(EffectID::skillAdvancedWeaponUpgradesPowerNeedBonusBombLaunchers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier993));
+			constexpr auto skillNaniteOperationRepairCost = MakeEffect(EffectID::skillNaniteOperationRepairCost, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier994));
+			constexpr auto skillNaniteOperationRepairCostLevel = MakeEffect(EffectID::skillNaniteOperationRepairCostLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier995));
+			constexpr auto skillNaniteInterfacingRepairTimeLevel = MakeEffect(EffectID::skillNaniteInterfacingRepairTimeLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier996));
+			constexpr auto cynosuralTheoryConsumptionBonus = MakeEffect(EffectID::cynosuralTheoryConsumptionBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier997));
+			constexpr auto skillConsumptionQuantityBonusPercentageSkillLevel = MakeEffect(EffectID::skillConsumptionQuantityBonusPercentageSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier998));
+			constexpr auto drawbackCapacitorRecharge = MakeEffect(EffectID::drawbackCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier999));
+			constexpr auto eliteBonusBlackOpsAgiliy1 = MakeEffect(EffectID::eliteBonusBlackOpsAgiliy1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1000));
+			constexpr auto skillJumpDriveConsumptionAmountBonusPercentage = MakeEffect(EffectID::skillJumpDriveConsumptionAmountBonusPercentage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1001));
+			constexpr auto gunneryMaxRangeBonus = MakeEffect(EffectID::gunneryMaxRangeBonus, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier1002));
+			constexpr auto ewSkillTrackingDisruptionTrackingSpeedBonus = MakeEffect(EffectID::ewSkillTrackingDisruptionTrackingSpeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1003));
+			constexpr auto eliteBonusLogisticsTrackingLinkMaxRangeBonus1 = MakeEffect(EffectID::eliteBonusLogisticsTrackingLinkMaxRangeBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1004));
+			constexpr auto eliteBonusLogisticsTrackingLinkMaxRangeBonus2 = MakeEffect(EffectID::eliteBonusLogisticsTrackingLinkMaxRangeBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1005));
+			constexpr auto eliteBonusLogisticsTrackingLinkTrackingSpeedBonus2 = MakeEffect(EffectID::eliteBonusLogisticsTrackingLinkTrackingSpeedBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1006));
+			constexpr auto eliteBonusLogisticsTrackingLinkTrackingSpeedBonus1 = MakeEffect(EffectID::eliteBonusLogisticsTrackingLinkTrackingSpeedBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1007));
+			constexpr auto ewSkillSignalSuppressionScanResolutionBonus = MakeEffect(EffectID::ewSkillSignalSuppressionScanResolutionBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1008));
+			constexpr auto shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusGC2 = MakeEffect(EffectID::shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1009));
+			constexpr auto shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusGF2 = MakeEffect(EffectID::shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1010));
+			constexpr auto shipBonusEwRemoteSensorDampenerScanResolutionBonusGF2 = MakeEffect(EffectID::shipBonusEwRemoteSensorDampenerScanResolutionBonusGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1011));
+			constexpr auto shipBonusEwRemoteSensorDampenerScanResolutionBonusGC2 = MakeEffect(EffectID::shipBonusEwRemoteSensorDampenerScanResolutionBonusGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1012));
+			constexpr auto ewSkillSignalSuppressionMaxTargetRangeBonus = MakeEffect(EffectID::ewSkillSignalSuppressionMaxTargetRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1013));
+			constexpr auto eliteBonusJumpFreighterHullHP1 = MakeEffect(EffectID::eliteBonusJumpFreighterHullHP1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1014));
+			constexpr auto eliteBonusJumpFreighterJumpDriveConsumptionAmount2 = MakeEffect(EffectID::eliteBonusJumpFreighterJumpDriveConsumptionAmount2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1015));
+			constexpr auto jumpFreightersSkillMultiplier1 = MakeEffect(EffectID::jumpFreightersSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1016));
+			constexpr auto jumpFreightersSkillMultiplier2 = MakeEffect(EffectID::jumpFreightersSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1017));
+			constexpr auto scriptSensorBoosterScanResolutionBonusBonus = MakeEffect(EffectID::scriptSensorBoosterScanResolutionBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1018));
+			constexpr auto scriptSensorBoosterMaxTargetRangeBonusBonus = MakeEffect(EffectID::scriptSensorBoosterMaxTargetRangeBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1019));
+			constexpr auto scriptTrackingComputerTrackingSpeedBonusBonus = MakeEffect(EffectID::scriptTrackingComputerTrackingSpeedBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1020));
+			constexpr auto scriptTrackingComputerMaxRangeBonusBonus = MakeEffect(EffectID::scriptTrackingComputerMaxRangeBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1021));
+			constexpr auto scriptWarpDisruptionFieldGeneratorSetDisallowInEmpireSpace = MakeEffect(EffectID::scriptWarpDisruptionFieldGeneratorSetDisallowInEmpireSpace, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1022));
+			constexpr auto scriptDurationBonus = MakeEffect(EffectID::scriptDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1023));
+			constexpr auto scriptWarpDisruptionFieldGeneratorSetScriptCapacitorNeedHidden = MakeEffect(EffectID::scriptWarpDisruptionFieldGeneratorSetScriptCapacitorNeedHidden, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1024));
+			constexpr auto scriptSignatureRadiusBonusBonus = MakeEffect(EffectID::scriptSignatureRadiusBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1025));
+			constexpr auto scriptMassBonusPercentageBonus = MakeEffect(EffectID::scriptMassBonusPercentageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1026));
+			constexpr auto scriptSpeedBoostFactorBonusBonus = MakeEffect(EffectID::scriptSpeedBoostFactorBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1027));
+			constexpr auto scriptSpeedFactorBonusBonus = MakeEffect(EffectID::scriptSpeedFactorBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1028));
+			constexpr auto scriptWarpScrambleRangeBonus = MakeEffect(EffectID::scriptWarpScrambleRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1029));
+			constexpr auto eliteBonusViolatorsLargeEnergyTurretDamage1 = MakeEffect(EffectID::eliteBonusViolatorsLargeEnergyTurretDamage1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1030));
+			constexpr auto ewGroupRsdMaxRangeBonus = MakeEffect(EffectID::ewGroupRsdMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1031));
+			constexpr auto ewGroupTpMaxRangeBonus = MakeEffect(EffectID::ewGroupTpMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1032));
+			constexpr auto ewGroupTdMaxRangeBonus = MakeEffect(EffectID::ewGroupTdMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1033));
+			constexpr auto ewGroupEcmBurstMaxRangeBonus = MakeEffect(EffectID::ewGroupEcmBurstMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1034));
+			constexpr auto gunneryMaxRangeBonusOnline = MakeEffect(EffectID::gunneryMaxRangeBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1002));
+			constexpr auto gunneryTrackingSpeedBonusOnline = MakeEffect(EffectID::gunneryTrackingSpeedBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier786));
+			constexpr auto shipScanResolutionBonusOnline = MakeEffect(EffectID::shipScanResolutionBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier233));
+			constexpr auto shipMaxTargetRangeBonusOnline = MakeEffect(EffectID::shipMaxTargetRangeBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier168));
+			constexpr auto shipMaxLockedTargetsBonusAddOnline = MakeEffect(EffectID::shipMaxLockedTargetsBonusAddOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier34));
+			constexpr auto miningLaserRangeBonus = MakeEffect(EffectID::miningLaserRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1035));
+			constexpr auto frequencyMiningLaserMaxRangeBonus = MakeEffect(EffectID::frequencyMiningLaserMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1036));
+			constexpr auto stripMinerMaxRangeBonus = MakeEffect(EffectID::stripMinerMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1037));
+			constexpr auto gasHarvesterMaxRangeBonus = MakeEffect(EffectID::gasHarvesterMaxRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1038));
+			constexpr auto setBonusOre = MakeEffect(EffectID::setBonusOre, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1039));
+			constexpr auto jumpPortalGenerationBO = MakeEffect(EffectID::jumpPortalGenerationBO, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier617, &Modifiers::modifier618));
+			constexpr auto shipBonusLargeEnergyTurretMaxRangeAB2 = MakeEffect(EffectID::shipBonusLargeEnergyTurretMaxRangeAB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1040));
+			constexpr auto eliteBonusJumpFreighterShieldHP1 = MakeEffect(EffectID::eliteBonusJumpFreighterShieldHP1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1041));
+			constexpr auto eliteBonusJumpFreighterArmorHP1 = MakeEffect(EffectID::eliteBonusJumpFreighterArmorHP1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1042));
+			constexpr auto freighterAgilityBonusC1 = MakeEffect(EffectID::freighterAgilityBonusC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1043));
+			constexpr auto freighterAgilityBonusM1 = MakeEffect(EffectID::freighterAgilityBonusM1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1044));
+			constexpr auto freighterAgilityBonusG1 = MakeEffect(EffectID::freighterAgilityBonusG1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1045));
+			constexpr auto freighterAgilityBonusA1 = MakeEffect(EffectID::freighterAgilityBonusA1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1046));
+			constexpr auto scriptTrackingComputerFalloffBonusBonus = MakeEffect(EffectID::scriptTrackingComputerFalloffBonusBonus, MetaInfo::Effect::Category::generic, true, true, _modifiers(&Modifiers::modifier1047));
+			constexpr auto shipMissileLauncherSpeedBonusMC2 = MakeEffect(EffectID::shipMissileLauncherSpeedBonusMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1048, &Modifiers::modifier1049, &Modifiers::modifier1050));
+			constexpr auto shipHybridTurretROFBonusGC2 = MakeEffect(EffectID::shipHybridTurretROFBonusGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1051));
+			constexpr auto shipBonusProjectileTrackingMC2 = MakeEffect(EffectID::shipBonusProjectileTrackingMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1052));
+			constexpr auto skillNaniteInterfacingRepairTime2 = MakeEffect(EffectID::skillNaniteInterfacingRepairTime2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1053));
+			constexpr auto agilityMultiplierEffectPassive = MakeEffect(EffectID::agilityMultiplierEffectPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier221));
+			constexpr auto velocityBonusPassive = MakeEffect(EffectID::velocityBonusPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier684));
+			constexpr auto zColinOrcaTractorRangeBonus = MakeEffect(EffectID::zColinOrcaTractorRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1054));
+			constexpr auto zColinOrcaTractorVelocityBonus = MakeEffect(EffectID::zColinOrcaTractorVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1055));
+			constexpr auto industrialCommandShipSkillLevelMultiplierICS1 = MakeEffect(EffectID::industrialCommandShipSkillLevelMultiplierICS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1056));
+			constexpr auto cargoAndOreHoldCapacityBonusICS1 = MakeEffect(EffectID::cargoAndOreHoldCapacityBonusICS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1057, &Modifiers::modifier1058));
+			constexpr auto industrialCommandShipSkillLevelMultiplierICS2 = MakeEffect(EffectID::industrialCommandShipSkillLevelMultiplierICS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1059));
+			constexpr auto miningForemanBurstBonusICS2 = MakeEffect(EffectID::miningForemanBurstBonusICS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1060, &Modifiers::modifier1061, &Modifiers::modifier1062, &Modifiers::modifier1063, &Modifiers::modifier1064));
+			constexpr auto zColinOrcaSurveyScannerBonus = MakeEffect(EffectID::zColinOrcaSurveyScannerBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1065));
+			constexpr auto eliteIndustrialExtenderSkillBonus = MakeEffect(EffectID::eliteIndustrialExtenderSkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1066));
+			constexpr auto zColinSkillTransportCovertCloakMod = MakeEffect(EffectID::zColinSkillTransportCovertCloakMod, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1067));
+			constexpr auto covertOpsStealthBomberSiegeMissileLauncerPowerNeedBonus = MakeEffect(EffectID::covertOpsStealthBomberSiegeMissileLauncerPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1068));
+			constexpr auto interceptorMWDSignatureRadiusBonus = MakeEffect(EffectID::interceptorMWDSignatureRadiusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1069));
+			constexpr auto eliteBonusCommandShipsHeavyMissileExplosionVelocityCS2 = MakeEffect(EffectID::eliteBonusCommandShipsHeavyMissileExplosionVelocityCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1070));
+			constexpr auto armorHPBonusAddPassive = MakeEffect(EffectID::armorHPBonusAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier784));
+			constexpr auto subSystem = MakeEffect(EffectID::subSystem, MetaInfo::Effect::Category::generic, false, false, _modifiers());
+			constexpr auto hardPointModifierEffect = MakeEffect(EffectID::hardPointModifierEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1071, &Modifiers::modifier1072));
+			constexpr auto slotModifier = MakeEffect(EffectID::slotModifier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1073, &Modifiers::modifier1074, &Modifiers::modifier1075));
+			constexpr auto powerOutputAddPassive = MakeEffect(EffectID::powerOutputAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1076));
+			constexpr auto cpuOutputAddCpuOutputPassive = MakeEffect(EffectID::cpuOutputAddCpuOutputPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1077));
+			constexpr auto maxVelocityAddPassive = MakeEffect(EffectID::maxVelocityAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1078));
+			constexpr auto modifyHullResonancePostPercent = MakeEffect(EffectID::modifyHullResonancePostPercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1079, &Modifiers::modifier1080, &Modifiers::modifier1081, &Modifiers::modifier1082));
+			constexpr auto probeLaunching = MakeEffect(EffectID::probeLaunching, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto droneBandwidthAddPassive = MakeEffect(EffectID::droneBandwidthAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1083));
+			constexpr auto droneCapacityAdddroneCapacityPassive = MakeEffect(EffectID::droneCapacityAdddroneCapacityPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1084));
+			constexpr auto scanStrengthAddPassive = MakeEffect(EffectID::scanStrengthAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1085, &Modifiers::modifier1086, &Modifiers::modifier1087, &Modifiers::modifier1088));
+			constexpr auto maxTargetRangeAddPassive = MakeEffect(EffectID::maxTargetRangeAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1089));
+			constexpr auto signatureRadiusAddPassive = MakeEffect(EffectID::signatureRadiusAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1090));
+			constexpr auto scanResolutionAddPassive = MakeEffect(EffectID::scanResolutionAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1091));
+			constexpr auto capacityAddPassive = MakeEffect(EffectID::capacityAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1092));
+			constexpr auto capacitorCapacityAddPassive = MakeEffect(EffectID::capacitorCapacityAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1093));
+			constexpr auto shieldCapacityAddPassive = MakeEffect(EffectID::shieldCapacityAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1094));
+			constexpr auto subsystemSkillLevelAmarrDefensive = MakeEffect(EffectID::subsystemSkillLevelAmarrDefensive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1095));
+			constexpr auto subsystemSkillLevelCaldariDefensive = MakeEffect(EffectID::subsystemSkillLevelCaldariDefensive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1096));
+			constexpr auto subsystemSkillLevelGallenteDefensive = MakeEffect(EffectID::subsystemSkillLevelGallenteDefensive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1097));
+			constexpr auto subsystemSkillLevelMinmatarDefensive = MakeEffect(EffectID::subsystemSkillLevelMinmatarDefensive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1098));
+			constexpr auto subsystemSkillLevelMinmatarElectronic = MakeEffect(EffectID::subsystemSkillLevelMinmatarElectronic, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1099));
+			constexpr auto subsystemSkillLevelGallenteElectronic = MakeEffect(EffectID::subsystemSkillLevelGallenteElectronic, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1100));
+			constexpr auto subsystemSkillLevelCaldariElectronic = MakeEffect(EffectID::subsystemSkillLevelCaldariElectronic, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1101));
+			constexpr auto subsystemSkillLevelAmarrElectronic = MakeEffect(EffectID::subsystemSkillLevelAmarrElectronic, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1102));
+			constexpr auto subsystemSkillLevelAmarrEngineering = MakeEffect(EffectID::subsystemSkillLevelAmarrEngineering, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1103));
+			constexpr auto subsystemSkillLevelCaldariEngineering = MakeEffect(EffectID::subsystemSkillLevelCaldariEngineering, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1104));
+			constexpr auto subsystemSkillLevelGallenteEngineering = MakeEffect(EffectID::subsystemSkillLevelGallenteEngineering, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1105));
+			constexpr auto subsystemSkillLevelMinmatarEngineering = MakeEffect(EffectID::subsystemSkillLevelMinmatarEngineering, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1106));
+			constexpr auto subsystemSkillLevelMinmatarOffensive = MakeEffect(EffectID::subsystemSkillLevelMinmatarOffensive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1107));
+			constexpr auto subsystemSkillLevelGallenteOffensive = MakeEffect(EffectID::subsystemSkillLevelGallenteOffensive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1108));
+			constexpr auto subsystemSkillLevelCaldariOffensive = MakeEffect(EffectID::subsystemSkillLevelCaldariOffensive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1109));
+			constexpr auto subsystemSkillLevelAmarrOffensive = MakeEffect(EffectID::subsystemSkillLevelAmarrOffensive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1110));
+			constexpr auto subsystemSkillLevelAmarrPropulsion = MakeEffect(EffectID::subsystemSkillLevelAmarrPropulsion, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1111));
+			constexpr auto subsystemSkillLevelCaldariPropulsion = MakeEffect(EffectID::subsystemSkillLevelCaldariPropulsion, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1112));
+			constexpr auto subsystemSkillLevelGallentePropulsion = MakeEffect(EffectID::subsystemSkillLevelGallentePropulsion, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1113));
+			constexpr auto subsystemSkillLevelMinmatarPropulsion = MakeEffect(EffectID::subsystemSkillLevelMinmatarPropulsion, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1114));
+			constexpr auto rechargeRateAddPassive = MakeEffect(EffectID::rechargeRateAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1115));
+			constexpr auto shieldRechargeRateAddPassive = MakeEffect(EffectID::shieldRechargeRateAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1116));
+			constexpr auto subsystemBonusAmarrPropulsionMaxVelocity = MakeEffect(EffectID::subsystemBonusAmarrPropulsionMaxVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1117));
+			constexpr auto subsystemBonusCaldariPropulsionMaxVelocity = MakeEffect(EffectID::subsystemBonusCaldariPropulsionMaxVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1118));
+			constexpr auto subsystemBonusMinmatarPropulsionMaxVelocity = MakeEffect(EffectID::subsystemBonusMinmatarPropulsionMaxVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1119));
+			constexpr auto subsystemBonusMinmatarPropulsionAfterburnerSpeedFactor = MakeEffect(EffectID::subsystemBonusMinmatarPropulsionAfterburnerSpeedFactor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1120));
+			constexpr auto subsystemBonusCaldariPropulsionAfterburnerSpeedFactor = MakeEffect(EffectID::subsystemBonusCaldariPropulsionAfterburnerSpeedFactor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1121));
+			constexpr auto subsystemBonusAmarrPropulsionAfterburnerSpeedFactor = MakeEffect(EffectID::subsystemBonusAmarrPropulsionAfterburnerSpeedFactor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1122));
+			constexpr auto subsystemBonusAmarrPropulsion2Agility = MakeEffect(EffectID::subsystemBonusAmarrPropulsion2Agility, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1123));
+			constexpr auto subsystemBonusCaldariPropulsion2Agility = MakeEffect(EffectID::subsystemBonusCaldariPropulsion2Agility, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1124));
+			constexpr auto subsystemBonusGallentePropulsion2Agility = MakeEffect(EffectID::subsystemBonusGallentePropulsion2Agility, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1125));
+			constexpr auto subsystemBonusMinmatarPropulsion2Agility = MakeEffect(EffectID::subsystemBonusMinmatarPropulsion2Agility, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1126));
+			constexpr auto subsystemBonusMinmatarPropulsion2MWDPenalty = MakeEffect(EffectID::subsystemBonusMinmatarPropulsion2MWDPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1127));
+			constexpr auto subsystemBonusGallentePropulsionMWDPenalty = MakeEffect(EffectID::subsystemBonusGallentePropulsionMWDPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1128));
+			constexpr auto subsystemBonusAmarrPropulsion2MWDPenalty = MakeEffect(EffectID::subsystemBonusAmarrPropulsion2MWDPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1129));
+			constexpr auto subsystemBonusGallentePropulsionABMWDCapNeed = MakeEffect(EffectID::subsystemBonusGallentePropulsionABMWDCapNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1130));
+			constexpr auto subsystemBonusGallenteElectronicCPU = MakeEffect(EffectID::subsystemBonusGallenteElectronicCPU, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1131));
+			constexpr auto subsystemBonusCaldariElectronicCPU = MakeEffect(EffectID::subsystemBonusCaldariElectronicCPU, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1132));
+			constexpr auto subsystemBonusMinmatarCoreScanStrengthLADAR = MakeEffect(EffectID::subsystemBonusMinmatarCoreScanStrengthLADAR, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1133));
+			constexpr auto subsystemBonusGallenteCoreScanStrengthMagnetometric = MakeEffect(EffectID::subsystemBonusGallenteCoreScanStrengthMagnetometric, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1134));
+			constexpr auto subsystemBonusCaldariCoreScanStrengthGravimetric = MakeEffect(EffectID::subsystemBonusCaldariCoreScanStrengthGravimetric, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1135));
+			constexpr auto subsystemBonusAmarrCoreScanStrengthRADAR = MakeEffect(EffectID::subsystemBonusAmarrCoreScanStrengthRADAR, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1136));
+			constexpr auto subsystemBonusAmarrDefensiveArmorResistance = MakeEffect(EffectID::subsystemBonusAmarrDefensiveArmorResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1137, &Modifiers::modifier1138, &Modifiers::modifier1139, &Modifiers::modifier1140));
+			constexpr auto subsystemBonusGallenteDefensiveArmorResistance = MakeEffect(EffectID::subsystemBonusGallenteDefensiveArmorResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1141, &Modifiers::modifier1142, &Modifiers::modifier1143, &Modifiers::modifier1144));
+			constexpr auto subsystemBonusMinmatarDefensiveArmorResistance = MakeEffect(EffectID::subsystemBonusMinmatarDefensiveArmorResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1145, &Modifiers::modifier1146, &Modifiers::modifier1147, &Modifiers::modifier1148));
+			constexpr auto subsystemBonusMinmatarDefensiveShieldResistance = MakeEffect(EffectID::subsystemBonusMinmatarDefensiveShieldResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1149, &Modifiers::modifier1150, &Modifiers::modifier1151, &Modifiers::modifier1152));
+			constexpr auto subsystemBonusCaldariDefensiveShieldResistance = MakeEffect(EffectID::subsystemBonusCaldariDefensiveShieldResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1153, &Modifiers::modifier1154, &Modifiers::modifier1155, &Modifiers::modifier1156));
+			constexpr auto subsystemBonusAmarrDefensiveArmorRepairAmount = MakeEffect(EffectID::subsystemBonusAmarrDefensiveArmorRepairAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1157));
+			constexpr auto subsystemBonusGallenteDefensiveArmorRepairAmount = MakeEffect(EffectID::subsystemBonusGallenteDefensiveArmorRepairAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1158));
+			constexpr auto subsystemBonusMinmatarDefensiveShieldArmorRepairAmount = MakeEffect(EffectID::subsystemBonusMinmatarDefensiveShieldArmorRepairAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1159, &Modifiers::modifier1160));
+			constexpr auto subsystemBonusCaldariDefensiveShieldBoostAmount = MakeEffect(EffectID::subsystemBonusCaldariDefensiveShieldBoostAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1161));
+			constexpr auto subsystemBonusCaldariDefensiveShieldHP = MakeEffect(EffectID::subsystemBonusCaldariDefensiveShieldHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1162));
+			constexpr auto subsystemBonusMinmatarDefensiveShieldArmorHP = MakeEffect(EffectID::subsystemBonusMinmatarDefensiveShieldArmorHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1163, &Modifiers::modifier1164));
+			constexpr auto subsystemBonusGallenteDefensiveArmorHP = MakeEffect(EffectID::subsystemBonusGallenteDefensiveArmorHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1165));
+			constexpr auto subsystemBonusAmarrDefensiveArmorHP = MakeEffect(EffectID::subsystemBonusAmarrDefensiveArmorHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1166));
+			constexpr auto subsystemBonusAmarrOffensiveEnergyWeaponDamageMultiplier = MakeEffect(EffectID::subsystemBonusAmarrOffensiveEnergyWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1167));
+			constexpr auto subsystemBonusCaldariOffensiveHybridWeaponMaxRange = MakeEffect(EffectID::subsystemBonusCaldariOffensiveHybridWeaponMaxRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1168));
+			constexpr auto subsystemBonusGallenteOffensiveHybridWeaponFalloff = MakeEffect(EffectID::subsystemBonusGallenteOffensiveHybridWeaponFalloff, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1169));
+			constexpr auto subsystemBonusGallenteOffensiveHybridWeaponDamageMultiplier = MakeEffect(EffectID::subsystemBonusGallenteOffensiveHybridWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1170));
+			constexpr auto subsystemBonusMinmatarOffensiveProjectileWeaponROF = MakeEffect(EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1171));
+			constexpr auto subsystemBonusMinmatarOffensiveProjectileWeaponFalloff = MakeEffect(EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponFalloff, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1172));
+			constexpr auto subsystemBonusMinmatarOffensiveProjectileWeaponMaxRange = MakeEffect(EffectID::subsystemBonusMinmatarOffensiveProjectileWeaponMaxRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1173));
+			constexpr auto subsystemBonusCaldariOffensiveHeavyMissileLauncherROF = MakeEffect(EffectID::subsystemBonusCaldariOffensiveHeavyMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1174));
+			constexpr auto subsystemBonusCaldariOffensiveHeavyAssaultMissileLauncherROF = MakeEffect(EffectID::subsystemBonusCaldariOffensiveHeavyAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1175));
+			constexpr auto subsystemBonusCaldariOffensive1LauncherROF = MakeEffect(EffectID::subsystemBonusCaldariOffensive1LauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1174, &Modifiers::modifier1175, &Modifiers::modifier1176));
+			constexpr auto subsystemBonusAmarrEngineeringHeatDamageReduction = MakeEffect(EffectID::subsystemBonusAmarrEngineeringHeatDamageReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1177));
+			constexpr auto subsystemBonusCaldariEngineeringHeatDamageReduction = MakeEffect(EffectID::subsystemBonusCaldariEngineeringHeatDamageReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1178));
+			constexpr auto subsystemBonusGallenteEngineeringHeatDamageReduction = MakeEffect(EffectID::subsystemBonusGallenteEngineeringHeatDamageReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1179));
+			constexpr auto subsystemBonusMinmatarEngineeringHeatDamageReduction = MakeEffect(EffectID::subsystemBonusMinmatarEngineeringHeatDamageReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1180));
+			constexpr auto subsystemBonusMinmatarEngineeringCapacitorCapacity = MakeEffect(EffectID::subsystemBonusMinmatarEngineeringCapacitorCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1181));
+			constexpr auto subsystemBonusCaldariCoreCapacitorCapacity = MakeEffect(EffectID::subsystemBonusCaldariCoreCapacitorCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1182));
+			constexpr auto subsystemBonusAmarrCoreCapacitorCapacity = MakeEffect(EffectID::subsystemBonusAmarrCoreCapacitorCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1183));
+			constexpr auto massAddPassive = MakeEffect(EffectID::massAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1184));
+			constexpr auto baseMaxScanDeviationModifierRequiringAstrometrics = MakeEffect(EffectID::baseMaxScanDeviationModifierRequiringAstrometrics, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1185));
+			constexpr auto baseSensorStrengthModifierRequiringAstrometrics = MakeEffect(EffectID::baseSensorStrengthModifierRequiringAstrometrics, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1186));
+			constexpr auto shipBonusScanProbeStrengthCF = MakeEffect(EffectID::shipBonusScanProbeStrengthCF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1187));
+			constexpr auto shipBonusScanProbeStrengthMF = MakeEffect(EffectID::shipBonusScanProbeStrengthMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1188));
+			constexpr auto shipBonusScanProbeStrengthGF = MakeEffect(EffectID::shipBonusScanProbeStrengthGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1189));
+			constexpr auto eliteBonusCoverOpsScanProbeStrength2 = MakeEffect(EffectID::eliteBonusCoverOpsScanProbeStrength2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1190));
+			constexpr auto subsystemBonusAmarrOffensiveEnergyWeaponCapacitorNeed = MakeEffect(EffectID::subsystemBonusAmarrOffensiveEnergyWeaponCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1191));
+			constexpr auto shipBonusStrategicCruiserAmarrHeatDamage = MakeEffect(EffectID::shipBonusStrategicCruiserAmarrHeatDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1192));
+			constexpr auto shipBonusStrategicCruiserCaldariHeatDamage = MakeEffect(EffectID::shipBonusStrategicCruiserCaldariHeatDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1193));
+			constexpr auto shipBonusStrategicCruiserGallenteHeatDamage = MakeEffect(EffectID::shipBonusStrategicCruiserGallenteHeatDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1194));
+			constexpr auto shipBonusStrategicCruiserMinmatarHeatDamage = MakeEffect(EffectID::shipBonusStrategicCruiserMinmatarHeatDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1195));
+			constexpr auto strategicCruiserAmarrSkillLevel1 = MakeEffect(EffectID::strategicCruiserAmarrSkillLevel1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1196));
+			constexpr auto strategicCruiserCaldariSkillLevel1 = MakeEffect(EffectID::strategicCruiserCaldariSkillLevel1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1197));
+			constexpr auto strategicCruiserGallenteSkillLevel1 = MakeEffect(EffectID::strategicCruiserGallenteSkillLevel1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1198));
+			constexpr auto strategicCruiserMinmatarSkillLevel1 = MakeEffect(EffectID::strategicCruiserMinmatarSkillLevel1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1199));
+			constexpr auto subsystemSkillLevelAmarrDefensive2 = MakeEffect(EffectID::subsystemSkillLevelAmarrDefensive2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1200));
+			constexpr auto subsystemSkillLevelCaldariDefensive2 = MakeEffect(EffectID::subsystemSkillLevelCaldariDefensive2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1201));
+			constexpr auto subsystemSkillLevelGallenteDefensive2 = MakeEffect(EffectID::subsystemSkillLevelGallenteDefensive2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1202));
+			constexpr auto subsystemSkillLevelMinmatarDefensive2 = MakeEffect(EffectID::subsystemSkillLevelMinmatarDefensive2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1203));
+			constexpr auto subsystemSkillLevelMinmatarElectronic2 = MakeEffect(EffectID::subsystemSkillLevelMinmatarElectronic2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1204));
+			constexpr auto subsystemSkillLevelGallenteElectronic2 = MakeEffect(EffectID::subsystemSkillLevelGallenteElectronic2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1205));
+			constexpr auto subsystemSkillLevelCaldariElectronic2 = MakeEffect(EffectID::subsystemSkillLevelCaldariElectronic2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1206));
+			constexpr auto subsystemSkillLevelAmarrElectronic2 = MakeEffect(EffectID::subsystemSkillLevelAmarrElectronic2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1207));
+			constexpr auto subsystemSkillLevelAmarrEngineering2 = MakeEffect(EffectID::subsystemSkillLevelAmarrEngineering2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1208));
+			constexpr auto subsystemSkillLevelCaldariEngineering2 = MakeEffect(EffectID::subsystemSkillLevelCaldariEngineering2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1209));
+			constexpr auto subsystemSkillLevelGallenteEngineering2 = MakeEffect(EffectID::subsystemSkillLevelGallenteEngineering2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1210));
+			constexpr auto subsystemSkillLevelMinmatarEngineering2 = MakeEffect(EffectID::subsystemSkillLevelMinmatarEngineering2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1211));
+			constexpr auto subsystemSkillLevelMinmatarOffensive2 = MakeEffect(EffectID::subsystemSkillLevelMinmatarOffensive2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1212));
+			constexpr auto subsystemSkillLevelGallenteOffensive2 = MakeEffect(EffectID::subsystemSkillLevelGallenteOffensive2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1213));
+			constexpr auto subsystemSkillLevelCaldariOffensive2 = MakeEffect(EffectID::subsystemSkillLevelCaldariOffensive2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1214));
+			constexpr auto subsystemSkillLevelAmarrOffensive2 = MakeEffect(EffectID::subsystemSkillLevelAmarrOffensive2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1215));
+			constexpr auto subsystemSkillLevelAmarrPropulsion2 = MakeEffect(EffectID::subsystemSkillLevelAmarrPropulsion2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1216));
+			constexpr auto subsystemSkillLevelCaldariPropulsion2 = MakeEffect(EffectID::subsystemSkillLevelCaldariPropulsion2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1217));
+			constexpr auto subsystemSkillLevelGallentePropulsion2 = MakeEffect(EffectID::subsystemSkillLevelGallentePropulsion2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1218));
+			constexpr auto subsystemSkillLevelMinmatarPropulsion2 = MakeEffect(EffectID::subsystemSkillLevelMinmatarPropulsion2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1219));
+			constexpr auto subsystemBonusAmarrOffensive2EnergyWeaponCapacitorNeed = MakeEffect(EffectID::subsystemBonusAmarrOffensive2EnergyWeaponCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1220));
+			constexpr auto subsystemBonusAmarrCore2EnergyVampireAmount = MakeEffect(EffectID::subsystemBonusAmarrCore2EnergyVampireAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1221));
+			constexpr auto subsystemBonusAmarrCore2EnergyDestabilizerAmount = MakeEffect(EffectID::subsystemBonusAmarrCore2EnergyDestabilizerAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1222));
+			constexpr auto modifyArmorResonancePassivePreAssignment = MakeEffect(EffectID::modifyArmorResonancePassivePreAssignment, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1223, &Modifiers::modifier1224, &Modifiers::modifier1225, &Modifiers::modifier1226));
+			constexpr auto modifyShieldResonancePassivePreAssignment = MakeEffect(EffectID::modifyShieldResonancePassivePreAssignment, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1227, &Modifiers::modifier1228, &Modifiers::modifier1229, &Modifiers::modifier1230));
+			constexpr auto subsystemBonusCaldariOffensive2MissileLauncherKineticDamage = MakeEffect(EffectID::subsystemBonusCaldariOffensive2MissileLauncherKineticDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1231, &Modifiers::modifier1232, &Modifiers::modifier1233));
+			constexpr auto subsystemBonusGallenteOffensiveDroneDamageHP = MakeEffect(EffectID::subsystemBonusGallenteOffensiveDroneDamageHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1234, &Modifiers::modifier1235, &Modifiers::modifier1236, &Modifiers::modifier1237));
+			constexpr auto subsystemBonusMinmatarOffensive2ProjectileWeaponDamageMultiplier = MakeEffect(EffectID::subsystemBonusMinmatarOffensive2ProjectileWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1238));
+			constexpr auto subsystemBonusMinmatarOffensive2ProjectileWeaponROF = MakeEffect(EffectID::subsystemBonusMinmatarOffensive2ProjectileWeaponROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1239));
+			constexpr auto subsystemBonusMinmatarOffensive2MissileLauncherROF = MakeEffect(EffectID::subsystemBonusMinmatarOffensive2MissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1240, &Modifiers::modifier1241, &Modifiers::modifier1242));
+			constexpr auto subsystemBonusMinmatarOffensiveAssaultMissileLauncherROF = MakeEffect(EffectID::subsystemBonusMinmatarOffensiveAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1243));
+			constexpr auto subsystemBonusMinmatarOffensiveHeavyMissileLauncherROF = MakeEffect(EffectID::subsystemBonusMinmatarOffensiveHeavyMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1244));
+			constexpr auto subsystemBonusMinmatarOffensiveHeavyAssaultMissileLauncherROF = MakeEffect(EffectID::subsystemBonusMinmatarOffensiveHeavyAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1245));
+			constexpr auto subsystemBonusAmarrEngineeringPowerOutput = MakeEffect(EffectID::subsystemBonusAmarrEngineeringPowerOutput, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1246));
+			constexpr auto subsystemBonusCaldariEngineeringPowerOutput = MakeEffect(EffectID::subsystemBonusCaldariEngineeringPowerOutput, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1247));
+			constexpr auto subsystemBonusGallenteEngineeringPowerOutput = MakeEffect(EffectID::subsystemBonusGallenteEngineeringPowerOutput, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1248));
+			constexpr auto subsystemBonusMinmatarEngineeringPowerOutput = MakeEffect(EffectID::subsystemBonusMinmatarEngineeringPowerOutput, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1249));
+			constexpr auto subsystemBonusMinmatarCoreCapacitorRecharge = MakeEffect(EffectID::subsystemBonusMinmatarCoreCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1250));
+			constexpr auto subsystemBonusGallenteCoreCapacitorRecharge = MakeEffect(EffectID::subsystemBonusGallenteCoreCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1251));
+			constexpr auto subsystemBonusCaldariEngineeringCapacitorRecharge = MakeEffect(EffectID::subsystemBonusCaldariEngineeringCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1252));
+			constexpr auto subsystemBonusAmarrEngineeringCapacitorRecharge = MakeEffect(EffectID::subsystemBonusAmarrEngineeringCapacitorRecharge, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1253));
+			constexpr auto subsystemBonusAmarrCore3ScanResolution = MakeEffect(EffectID::subsystemBonusAmarrCore3ScanResolution, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1254));
+			constexpr auto subsystemBonusMinmatarCore3ScanResolution = MakeEffect(EffectID::subsystemBonusMinmatarCore3ScanResolution, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1255));
+			constexpr auto subsystemBonusCaldariCore2MaxTargetingRange = MakeEffect(EffectID::subsystemBonusCaldariCore2MaxTargetingRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1256));
+			constexpr auto subsystemBonusGallenteCore2MaxTargetingRange = MakeEffect(EffectID::subsystemBonusGallenteCore2MaxTargetingRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1257));
+			constexpr auto subsystemBonusGallenteCore2WarpScrambleRange = MakeEffect(EffectID::subsystemBonusGallenteCore2WarpScrambleRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1258));
+			constexpr auto subsystemBonusMinmatarCore2StasisWebifierRange = MakeEffect(EffectID::subsystemBonusMinmatarCore2StasisWebifierRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1259));
+			constexpr auto subsystemBonusCaldariPropulsion2WarpSpeed = MakeEffect(EffectID::subsystemBonusCaldariPropulsion2WarpSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1260));
+			constexpr auto subsystemBonusGallentePropulsionWarpCapacitor = MakeEffect(EffectID::subsystemBonusGallentePropulsionWarpCapacitor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1261));
+			constexpr auto subsystemBonusGallentePropulsion2WarpSpeed = MakeEffect(EffectID::subsystemBonusGallentePropulsion2WarpSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1262));
+			constexpr auto modifyShipAgilityPassivePreAssignment = MakeEffect(EffectID::modifyShipAgilityPassivePreAssignment, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1263));
+			constexpr auto subsystemBonusGallenteOffensive2HybridWeaponDamageMultiplier = MakeEffect(EffectID::subsystemBonusGallenteOffensive2HybridWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1264));
+			constexpr auto subsystemBonusCaldariOffensive2HybridWeaponDamageMultiplier = MakeEffect(EffectID::subsystemBonusCaldariOffensive2HybridWeaponDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1265));
+			constexpr auto subsystemBonusAmarrOffensive2RemoteArmorRepairCapUse = MakeEffect(EffectID::subsystemBonusAmarrOffensive2RemoteArmorRepairCapUse, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1266));
+			constexpr auto subsystemBonusGallenteOffensive2RemoteArmorRepairCapUse = MakeEffect(EffectID::subsystemBonusGallenteOffensive2RemoteArmorRepairCapUse, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1267));
+			constexpr auto subsystemBonusMinmatarOffensive2RemoteRepCapUse = MakeEffect(EffectID::subsystemBonusMinmatarOffensive2RemoteRepCapUse, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1268, &Modifiers::modifier1269));
+			constexpr auto subsystemBonusCaldariOffensive2RemoteShieldBoosterCapUse = MakeEffect(EffectID::subsystemBonusCaldariOffensive2RemoteShieldBoosterCapUse, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1270));
+			constexpr auto subsystemBonusGallenteEngineeringDroneHP = MakeEffect(EffectID::subsystemBonusGallenteEngineeringDroneHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1271, &Modifiers::modifier1272, &Modifiers::modifier1273));
+			constexpr auto subsystemBonusGallenteEngineering2DroneMWD = MakeEffect(EffectID::subsystemBonusGallenteEngineering2DroneMWD, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1274));
+			constexpr auto subsystemBonusCaldariCore2ECMStrengthRange = MakeEffect(EffectID::subsystemBonusCaldariCore2ECMStrengthRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1275, &Modifiers::modifier1276, &Modifiers::modifier1277, &Modifiers::modifier1278, &Modifiers::modifier1279));
+			constexpr auto subsystemBonusAmarrOffensiveDroneDamageMultiplier = MakeEffect(EffectID::subsystemBonusAmarrOffensiveDroneDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1280));
+			constexpr auto subsystemBonusAmarrOffensive3DroneDamageHP = MakeEffect(EffectID::subsystemBonusAmarrOffensive3DroneDamageHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1281, &Modifiers::modifier1282, &Modifiers::modifier1283, &Modifiers::modifier1284));
+			constexpr auto subsystemBonusGallenteOffensive3DroneDamageMultiplier = MakeEffect(EffectID::subsystemBonusGallenteOffensive3DroneDamageMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1285));
+			constexpr auto subsystemBonusAmarrOffensive3EnergyWeaponMaxRange = MakeEffect(EffectID::subsystemBonusAmarrOffensive3EnergyWeaponMaxRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1286));
+			constexpr auto subsystemBonusCaldariOffensive3HMLHAMVelocity = MakeEffect(EffectID::subsystemBonusCaldariOffensive3HMLHAMVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1287, &Modifiers::modifier1288));
+			constexpr auto subsystemBonusCaldariOffensive3HeavyMissileVelocity = MakeEffect(EffectID::subsystemBonusCaldariOffensive3HeavyMissileVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1288));
+			constexpr auto subsystemBonusCaldariOffensive3EwStrengthGrav = MakeEffect(EffectID::subsystemBonusCaldariOffensive3EwStrengthGrav, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1289));
+			constexpr auto subsystemBonusCaldariOffensive3EwStrengthLadar = MakeEffect(EffectID::subsystemBonusCaldariOffensive3EwStrengthLadar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1290));
+			constexpr auto subsystemBonusCaldariOffensive3EwStrengthMagn = MakeEffect(EffectID::subsystemBonusCaldariOffensive3EwStrengthMagn, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1291));
+			constexpr auto subsystemBonusCaldariOffensive3EwStrengthRadar = MakeEffect(EffectID::subsystemBonusCaldariOffensive3EwStrengthRadar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1292));
+			constexpr auto subsystemSkillLevelAmarrOffensive3 = MakeEffect(EffectID::subsystemSkillLevelAmarrOffensive3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1293));
+			constexpr auto subsystemSkillLevelCaldariOffensive3 = MakeEffect(EffectID::subsystemSkillLevelCaldariOffensive3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1294));
+			constexpr auto subsystemSkillLevelGallenteOffensive3 = MakeEffect(EffectID::subsystemSkillLevelGallenteOffensive3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1295));
+			constexpr auto subsystemBonusMinmatarCore2MaxTargetingRange = MakeEffect(EffectID::subsystemBonusMinmatarCore2MaxTargetingRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1296));
+			constexpr auto subsystemBonusAmarrCore2MaxTargetingRange = MakeEffect(EffectID::subsystemBonusAmarrCore2MaxTargetingRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1297));
+			constexpr auto subsystemBonusMinmatarDefensiveSignatureRadius = MakeEffect(EffectID::subsystemBonusMinmatarDefensiveSignatureRadius, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1298));
+			constexpr auto subsystemBonusGallenteOffensive3TurretTracking = MakeEffect(EffectID::subsystemBonusGallenteOffensive3TurretTracking, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1299));
+			constexpr auto subsystemSkillLevelMinmatarOffensive3 = MakeEffect(EffectID::subsystemSkillLevelMinmatarOffensive3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1300));
+			constexpr auto subsystemBonusMinmatarOffensive3TurretTracking = MakeEffect(EffectID::subsystemBonusMinmatarOffensive3TurretTracking, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1301));
+			constexpr auto caldariCruiserSkillLevelPreMulShipBonusCC3Ship = MakeEffect(EffectID::caldariCruiserSkillLevelPreMulShipBonusCC3Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1302));
+			constexpr auto ecmRangeBonusModuleEffect = MakeEffect(EffectID::ecmRangeBonusModuleEffect, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1303));
+			constexpr auto subsystemBonusAmarrOffensiveHeavyMissileLauncherROF = MakeEffect(EffectID::subsystemBonusAmarrOffensiveHeavyMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1304));
+			constexpr auto subsystemBonusAmarrOffensiveMissileLauncherROF = MakeEffect(EffectID::subsystemBonusAmarrOffensiveMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1304, &Modifiers::modifier1305, &Modifiers::modifier1306));
+			constexpr auto subsystemBonusAmarrOffensiveHeavyAssaultMissileLauncherROF = MakeEffect(EffectID::subsystemBonusAmarrOffensiveHeavyAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1306));
+			constexpr auto subsystemBonusAmarrOffensive2MissileDamage = MakeEffect(EffectID::subsystemBonusAmarrOffensive2MissileDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1307, &Modifiers::modifier1308, &Modifiers::modifier1309, &Modifiers::modifier1310, &Modifiers::modifier1311, &Modifiers::modifier1312, &Modifiers::modifier1313, &Modifiers::modifier1314, &Modifiers::modifier1315, &Modifiers::modifier1316, &Modifiers::modifier1317, &Modifiers::modifier1318));
+			constexpr auto subsystemBonusAmarrOffensive2HAMThermalDamage = MakeEffect(EffectID::subsystemBonusAmarrOffensive2HAMThermalDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1319));
+			constexpr auto subsystemBonusAmarrOffensive2HAMKineticDamage = MakeEffect(EffectID::subsystemBonusAmarrOffensive2HAMKineticDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1320));
+			constexpr auto subsystemBonusAmarrOffensive2HAMExplosiveDamage = MakeEffect(EffectID::subsystemBonusAmarrOffensive2HAMExplosiveDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1321));
+			constexpr auto shipBonusMediumHybridDmgCC2 = MakeEffect(EffectID::shipBonusMediumHybridDmgCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1322));
+			constexpr auto subsystemBonusWarpBubbleImmune = MakeEffect(EffectID::subsystemBonusWarpBubbleImmune, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1323));
+			constexpr auto caldariShipEwFalloffRangeCC2 = MakeEffect(EffectID::caldariShipEwFalloffRangeCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1324));
+			constexpr auto caldariShipEwFalloffRangeCB3 = MakeEffect(EffectID::caldariShipEwFalloffRangeCB3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1325));
+			constexpr auto subSystemBonusAmarrOffensiveCommandBursts = MakeEffect(EffectID::subSystemBonusAmarrOffensiveCommandBursts, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1326, &Modifiers::modifier1327, &Modifiers::modifier1328, &Modifiers::modifier1329, &Modifiers::modifier1330, &Modifiers::modifier1331, &Modifiers::modifier1332, &Modifiers::modifier1333, &Modifiers::modifier1334, &Modifiers::modifier1335, &Modifiers::modifier1336, &Modifiers::modifier1337, &Modifiers::modifier1338, &Modifiers::modifier1339, &Modifiers::modifier1340));
+			constexpr auto subSystemBonusCaldariDefensiveSiegeWarfare = MakeEffect(EffectID::subSystemBonusCaldariDefensiveSiegeWarfare, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1341, &Modifiers::modifier1342, &Modifiers::modifier1343, &Modifiers::modifier1344, &Modifiers::modifier1345));
+			constexpr auto subSystemBonusGallenteDefensiveInformationWarfare = MakeEffect(EffectID::subSystemBonusGallenteDefensiveInformationWarfare, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1346, &Modifiers::modifier1347, &Modifiers::modifier1348, &Modifiers::modifier1349, &Modifiers::modifier1350));
+			constexpr auto subSystemBonusMinmatarDefensiveSkirmishWarfare = MakeEffect(EffectID::subSystemBonusMinmatarDefensiveSkirmishWarfare, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1351, &Modifiers::modifier1352, &Modifiers::modifier1353, &Modifiers::modifier1354, &Modifiers::modifier1355));
+			constexpr auto shipBonusTorpedoVelocityGF2 = MakeEffect(EffectID::shipBonusTorpedoVelocityGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1356));
+			constexpr auto shipBonusTorpedoVelocityMF2 = MakeEffect(EffectID::shipBonusTorpedoVelocityMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1357));
+			constexpr auto shipBonusTorpedoVelocity2AF = MakeEffect(EffectID::shipBonusTorpedoVelocity2AF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1358));
+			constexpr auto shipBonusTorpedoVelocityCF2 = MakeEffect(EffectID::shipBonusTorpedoVelocityCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1359));
+			constexpr auto eliteReconBonusHeavyMissileVelocity = MakeEffect(EffectID::eliteReconBonusHeavyMissileVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1360));
+			constexpr auto eliteReconBonusHeavyAssaultMissileVelocity = MakeEffect(EffectID::eliteReconBonusHeavyAssaultMissileVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1361));
+			constexpr auto subSystemBonusAmarrElectronicScanProbeStrength = MakeEffect(EffectID::subSystemBonusAmarrElectronicScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1362));
+			constexpr auto subSystemBonusCaldariElectronicScanProbeStrength = MakeEffect(EffectID::subSystemBonusCaldariElectronicScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1363));
+			constexpr auto subSystemBonusGallenteElectronicScanProbeStrength = MakeEffect(EffectID::subSystemBonusGallenteElectronicScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1364));
+			constexpr auto subSystemBonusMinmatarElectronicScanProbeStrength = MakeEffect(EffectID::subSystemBonusMinmatarElectronicScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1365));
+			constexpr auto shipBonusEliteCover2TorpedoThermalDamage = MakeEffect(EffectID::shipBonusEliteCover2TorpedoThermalDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1366));
+			constexpr auto shipBonusEliteCover2TorpedoEMDamage = MakeEffect(EffectID::shipBonusEliteCover2TorpedoEMDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1367));
+			constexpr auto shipBonusEliteCover2TorpedoExplosiveDamage = MakeEffect(EffectID::shipBonusEliteCover2TorpedoExplosiveDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1368));
+			constexpr auto shipBonusEliteCover2TorpedoKineticDamage = MakeEffect(EffectID::shipBonusEliteCover2TorpedoKineticDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1369));
+			constexpr auto shipBonusGFTorpedoExplosionVelocity = MakeEffect(EffectID::shipBonusGFTorpedoExplosionVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1370));
+			constexpr auto shipBonusMF1TorpedoExplosionVelocity = MakeEffect(EffectID::shipBonusMF1TorpedoExplosionVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1371));
+			constexpr auto shipBonusCF1TorpedoExplosionVelocity = MakeEffect(EffectID::shipBonusCF1TorpedoExplosionVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1372));
+			constexpr auto shipBonusAF1TorpedoExplosionVelocity = MakeEffect(EffectID::shipBonusAF1TorpedoExplosionVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1373));
+			constexpr auto subSystemBonusAmarrElectronic2TractorBeamVelocity = MakeEffect(EffectID::subSystemBonusAmarrElectronic2TractorBeamVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1374));
+			constexpr auto subSystemBonusCaldariElectronic2TractorBeamVelocity = MakeEffect(EffectID::subSystemBonusCaldariElectronic2TractorBeamVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1375));
+			constexpr auto subSystemBonusGallenteElectronic2TractorBeamVelocity = MakeEffect(EffectID::subSystemBonusGallenteElectronic2TractorBeamVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1376));
+			constexpr auto subSystemBonusMinmatarElectronic2TractorBeamVelocity = MakeEffect(EffectID::subSystemBonusMinmatarElectronic2TractorBeamVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1377));
+			constexpr auto subSystemBonusMinmatarElectronic2TractorBeamRange = MakeEffect(EffectID::subSystemBonusMinmatarElectronic2TractorBeamRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1378));
+			constexpr auto subSystemBonusGallenteElectronic2TractorBeamRange = MakeEffect(EffectID::subSystemBonusGallenteElectronic2TractorBeamRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1379));
+			constexpr auto subSystemBonusCaldariElectronic2TractorBeamRange = MakeEffect(EffectID::subSystemBonusCaldariElectronic2TractorBeamRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1380));
+			constexpr auto subSystemBonusAmarrElectronic2TractorBeamRange = MakeEffect(EffectID::subSystemBonusAmarrElectronic2TractorBeamRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1381));
+			constexpr auto signatureRadiusPreAssignment = MakeEffect(EffectID::signatureRadiusPreAssignment, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1382));
+			constexpr auto subsystemBonusScanProbeLauncherCPU = MakeEffect(EffectID::subsystemBonusScanProbeLauncherCPU, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1383));
+			constexpr auto subsystemBonusJumpHarmonics = MakeEffect(EffectID::subsystemBonusJumpHarmonics, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1384));
+			constexpr auto shipBonusGF1TorpedoFlightTime = MakeEffect(EffectID::shipBonusGF1TorpedoFlightTime, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1385));
+			constexpr auto shipBonusMF1TorpedoFlightTime = MakeEffect(EffectID::shipBonusMF1TorpedoFlightTime, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1386));
+			constexpr auto shipBonusCF1TorpedoFlightTime = MakeEffect(EffectID::shipBonusCF1TorpedoFlightTime, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1387));
+			constexpr auto shipBonusAF1TorpedoFlightTime = MakeEffect(EffectID::shipBonusAF1TorpedoFlightTime, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1388));
+			constexpr auto scanRadarStrengthModifierEffect = MakeEffect(EffectID::scanRadarStrengthModifierEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1389));
+			constexpr auto scanLadarStrengthModifierEffect = MakeEffect(EffectID::scanLadarStrengthModifierEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1390));
+			constexpr auto scanGravimetricStrengthModifierEffect = MakeEffect(EffectID::scanGravimetricStrengthModifierEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1391));
+			constexpr auto scanMagnetometricStrengthModifierEffect = MakeEffect(EffectID::scanMagnetometricStrengthModifierEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1392));
+			constexpr auto federationsetbonus3 = MakeEffect(EffectID::federationsetbonus3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1393));
+			constexpr auto imperialsetbonus3 = MakeEffect(EffectID::imperialsetbonus3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1394));
+			constexpr auto republicsetbonus3 = MakeEffect(EffectID::republicsetbonus3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1395));
+			constexpr auto caldarisetbonus3 = MakeEffect(EffectID::caldarisetbonus3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1396));
+			constexpr auto imperialsetLGbonus = MakeEffect(EffectID::imperialsetLGbonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1397));
+			constexpr auto federationsetLGbonus = MakeEffect(EffectID::federationsetLGbonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1398));
+			constexpr auto caldarisetLGbonus = MakeEffect(EffectID::caldarisetLGbonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1399));
+			constexpr auto republicsetLGbonus = MakeEffect(EffectID::republicsetLGbonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1400));
+			constexpr auto shipBonusStasisMF2 = MakeEffect(EffectID::shipBonusStasisMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1401));
+			constexpr auto shipProjectileDmgMC = MakeEffect(EffectID::shipProjectileDmgMC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1402));
+			constexpr auto shipVelocityBonusATC1 = MakeEffect(EffectID::shipVelocityBonusATC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1403));
+			constexpr auto shipMTMaxRangeBonusATC = MakeEffect(EffectID::shipMTMaxRangeBonusATC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1404));
+			constexpr auto shipMTFalloffBonusATC = MakeEffect(EffectID::shipMTFalloffBonusATC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1405));
+			constexpr auto shipMTFalloffBonusATF = MakeEffect(EffectID::shipMTFalloffBonusATF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1406));
+			constexpr auto shipMTMaxRangeBonusATF = MakeEffect(EffectID::shipMTMaxRangeBonusATF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1407));
+			constexpr auto shipBonusAfterburnerCapNeedATF = MakeEffect(EffectID::shipBonusAfterburnerCapNeedATF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1408));
+			constexpr auto shipBonusSurveyProbeExplosionDelaySkillSurveyCovertOps3 = MakeEffect(EffectID::shipBonusSurveyProbeExplosionDelaySkillSurveyCovertOps3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1409));
+			constexpr auto covertOpsSkillLevelPreMulEliteBonusCoverOpsShip3 = MakeEffect(EffectID::covertOpsSkillLevelPreMulEliteBonusCoverOpsShip3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1410));
+			constexpr auto shipETOptimalRange2AF = MakeEffect(EffectID::shipETOptimalRange2AF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1411));
+			constexpr auto shipPTurretFalloffBonusGB = MakeEffect(EffectID::shipPTurretFalloffBonusGB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1412));
+			constexpr auto shipBonusStasisWebSpeedFactorMB = MakeEffect(EffectID::shipBonusStasisWebSpeedFactorMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1413));
+			constexpr auto superWeaponAmarr = MakeEffect(EffectID::superWeaponAmarr, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto superWeaponCaldari = MakeEffect(EffectID::superWeaponCaldari, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto superWeaponGallente = MakeEffect(EffectID::superWeaponGallente, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto superWeaponMinmatar = MakeEffect(EffectID::superWeaponMinmatar, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto shipStasisWebStrengthBonusMC2 = MakeEffect(EffectID::shipStasisWebStrengthBonusMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1414));
+			constexpr auto shipPTurretFalloffBonusGC = MakeEffect(EffectID::shipPTurretFalloffBonusGC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1415));
+			constexpr auto shipStasisWebStrengthBonusMF2 = MakeEffect(EffectID::shipStasisWebStrengthBonusMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1416));
+			constexpr auto shipFalloffBonusMF = MakeEffect(EffectID::shipFalloffBonusMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1417));
+			constexpr auto shipHTurretFalloffBonusGC = MakeEffect(EffectID::shipHTurretFalloffBonusGC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1418));
+			constexpr auto gunneryFalloffBonusOnline = MakeEffect(EffectID::gunneryFalloffBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier93));
+			constexpr auto tcapitalLauncherSkillCruiseCitadelEmDamage1 = MakeEffect(EffectID::tcapitalLauncherSkillCruiseCitadelEmDamage1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1419));
+			constexpr auto capitalLauncherSkillCruiseCitadelExplosiveDamage1 = MakeEffect(EffectID::capitalLauncherSkillCruiseCitadelExplosiveDamage1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1420));
+			constexpr auto capitalLauncherSkillCruiseCitadelKineticDamage1 = MakeEffect(EffectID::capitalLauncherSkillCruiseCitadelKineticDamage1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1421));
+			constexpr auto capitalLauncherSkillCruiseCitadelThermalDamage1 = MakeEffect(EffectID::capitalLauncherSkillCruiseCitadelThermalDamage1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1422));
+			constexpr auto gunneryMaxRangeFalloffTrackingSpeedBonus = MakeEffect(EffectID::gunneryMaxRangeFalloffTrackingSpeedBonus, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier93, &Modifiers::modifier786, &Modifiers::modifier1002));
+			constexpr auto industrialCoreEffect2 = MakeEffect(EffectID::industrialCoreEffect2, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier617, &Modifiers::modifier618, &Modifiers::modifier1423, &Modifiers::modifier1424, &Modifiers::modifier1425, &Modifiers::modifier1426, &Modifiers::modifier1427, &Modifiers::modifier1428, &Modifiers::modifier1429, &Modifiers::modifier1430, &Modifiers::modifier1431, &Modifiers::modifier1432, &Modifiers::modifier1433, &Modifiers::modifier1434, &Modifiers::modifier1435, &Modifiers::modifier1436, &Modifiers::modifier1437, &Modifiers::modifier1438, &Modifiers::modifier1439, &Modifiers::modifier1440, &Modifiers::modifier1441, &Modifiers::modifier1442, &Modifiers::modifier1443, &Modifiers::modifier1444, &Modifiers::modifier1445, &Modifiers::modifier1446, &Modifiers::modifier1447, &Modifiers::modifier1448, &Modifiers::modifier1449));
+			constexpr auto eliteBonusLogisticsTrackingLinkFalloffBonus1 = MakeEffect(EffectID::eliteBonusLogisticsTrackingLinkFalloffBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1450));
+			constexpr auto eliteBonusLogisticsTrackingLinkFalloffBonus2 = MakeEffect(EffectID::eliteBonusLogisticsTrackingLinkFalloffBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1451));
+			constexpr auto droneRigStasisWebSpeedFactorBonus = MakeEffect(EffectID::droneRigStasisWebSpeedFactorBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1452));
+			constexpr auto amarrFrigateSkillLevelPreMulShipBonus3AFShip = MakeEffect(EffectID::amarrFrigateSkillLevelPreMulShipBonus3AFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1453));
+			constexpr auto caldariFrigateSkillLevelPreMulShipBonus3CFShip = MakeEffect(EffectID::caldariFrigateSkillLevelPreMulShipBonus3CFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1454));
+			constexpr auto gallenteFrigateSkillLevelPreMulShipBonus3GFShip = MakeEffect(EffectID::gallenteFrigateSkillLevelPreMulShipBonus3GFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1455));
+			constexpr auto minmatarFrigateSkillLevelPreMulShipBonus3MFShip = MakeEffect(EffectID::minmatarFrigateSkillLevelPreMulShipBonus3MFShip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1456));
+			constexpr auto shipBonusDroneDamageGF2 = MakeEffect(EffectID::shipBonusDroneDamageGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1457));
+			constexpr auto shipBonusWarpScramblerMaxRangeGF2 = MakeEffect(EffectID::shipBonusWarpScramblerMaxRangeGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1458));
+			constexpr auto shipBonusHeatDamageATF1 = MakeEffect(EffectID::shipBonusHeatDamageATF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1459));
+			constexpr auto shipBonusSmallHybridMaxRangeATF2 = MakeEffect(EffectID::shipBonusSmallHybridMaxRangeATF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1460));
+			constexpr auto shipBonusSmallHybridTrackingSpeedATF2 = MakeEffect(EffectID::shipBonusSmallHybridTrackingSpeedATF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1461));
+			constexpr auto shipBonusHybridTrackingATC2 = MakeEffect(EffectID::shipBonusHybridTrackingATC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1462));
+			constexpr auto shipBonusHybridFalloffATC2 = MakeEffect(EffectID::shipBonusHybridFalloffATC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1463));
+			constexpr auto shipBonusWarpScramblerMaxRangeGC2 = MakeEffect(EffectID::shipBonusWarpScramblerMaxRangeGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1464));
+			constexpr auto eliteBonusMaraudersCruiseAndTorpedoDamageRole1 = MakeEffect(EffectID::eliteBonusMaraudersCruiseAndTorpedoDamageRole1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1465, &Modifiers::modifier1466, &Modifiers::modifier1467, &Modifiers::modifier1468, &Modifiers::modifier1469, &Modifiers::modifier1470, &Modifiers::modifier1471, &Modifiers::modifier1472));
+			constexpr auto shipBonusAoeVelocityCruiseAndTorpedoCB2 = MakeEffect(EffectID::shipBonusAoeVelocityCruiseAndTorpedoCB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1473, &Modifiers::modifier1474));
+			constexpr auto shipCruiseAndTorpedoVelocityBonusCB3 = MakeEffect(EffectID::shipCruiseAndTorpedoVelocityBonusCB3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier278, &Modifiers::modifier279));
+			constexpr auto shipArmorEMAndExpAndkinAndThmResistanceAC2 = MakeEffect(EffectID::shipArmorEMAndExpAndkinAndThmResistanceAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier294, &Modifiers::modifier295, &Modifiers::modifier296, &Modifiers::modifier297));
+			constexpr auto shipHeavyAssaultMissileEMAndExpAndKinAndThmDmgAC1 = MakeEffect(EffectID::shipHeavyAssaultMissileEMAndExpAndKinAndThmDmgAC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1475, &Modifiers::modifier1476, &Modifiers::modifier1477, &Modifiers::modifier1478));
+			constexpr auto eliteBonusHeavyGunshipHeavyAndHeavyAssaultAndAssaultMissileLauncherROF = MakeEffect(EffectID::eliteBonusHeavyGunshipHeavyAndHeavyAssaultAndAssaultMissileLauncherROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier720, &Modifiers::modifier721, &Modifiers::modifier722));
+			constexpr auto eliteBonusBlackOpsECMGravAndLadarAndMagnetometricAndRadarStrength1 = MakeEffect(EffectID::eliteBonusBlackOpsECMGravAndLadarAndMagnetometricAndRadarStrength1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1479, &Modifiers::modifier1480, &Modifiers::modifier1481, &Modifiers::modifier1482));
+			constexpr auto shipCruiseAndSiegeLauncherROFBonus2CB = MakeEffect(EffectID::shipCruiseAndSiegeLauncherROFBonus2CB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier556, &Modifiers::modifier557));
+			constexpr auto oreIndustrialSkillLevelPostMulShipBonusOreIndustrial1Ship = MakeEffect(EffectID::oreIndustrialSkillLevelPostMulShipBonusOreIndustrial1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1483));
+			constexpr auto oreIndustrialSkillLevelPostMulShipBonusOreIndustrial2Ship = MakeEffect(EffectID::oreIndustrialSkillLevelPostMulShipBonusOreIndustrial2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1484));
+			constexpr auto shipBonusNoctisSalvageCycle = MakeEffect(EffectID::shipBonusNoctisSalvageCycle, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1485));
+			constexpr auto shipBonusNoctisTractorCycle = MakeEffect(EffectID::shipBonusNoctisTractorCycle, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1486));
+			constexpr auto shipBonusNoctisTractorVelocity = MakeEffect(EffectID::shipBonusNoctisTractorVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1487));
+			constexpr auto shipBonusNoctisTractorRange = MakeEffect(EffectID::shipBonusNoctisTractorRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1488));
+			constexpr auto subsystemBonusCaldariPropulsionWarpCapacitor = MakeEffect(EffectID::subsystemBonusCaldariPropulsionWarpCapacitor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1489));
+			constexpr auto hackOrbital = MakeEffect(EffectID::hackOrbital, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto shipEnergyNeutralizerTransferAmountBonusAF2 = MakeEffect(EffectID::shipEnergyNeutralizerTransferAmountBonusAF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1490));
+			constexpr auto shipBonusSmallEnergyWeaponOptimalRangeATF2 = MakeEffect(EffectID::shipBonusSmallEnergyWeaponOptimalRangeATF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1491));
+			constexpr auto shipBonusSmallEnergyTurretDamageATF1 = MakeEffect(EffectID::shipBonusSmallEnergyTurretDamageATF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1492));
+			constexpr auto shipBonusMissileLauncherHeavyROFATC1 = MakeEffect(EffectID::shipBonusMissileLauncherHeavyROFATC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1493));
+			constexpr auto shipBonusMissileLauncherAssaultROFATC1 = MakeEffect(EffectID::shipBonusMissileLauncherAssaultROFATC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1494));
+			constexpr auto shipBonusMissileLauncherHeavyAssaultROFATC1 = MakeEffect(EffectID::shipBonusMissileLauncherHeavyAssaultROFATC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1495));
+			constexpr auto eliteBonusBlackOpsECMBurstGravAndLadarAndMagnetoAndRadar = MakeEffect(EffectID::eliteBonusBlackOpsECMBurstGravAndLadarAndMagnetoAndRadar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1496, &Modifiers::modifier1497, &Modifiers::modifier1498, &Modifiers::modifier1499));
+			constexpr auto salvagingAccessDifficultyBonusMultiplier = MakeEffect(EffectID::salvagingAccessDifficultyBonusMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1500));
+			constexpr auto hackingAccessDifficultyBonusMultiplier = MakeEffect(EffectID::hackingAccessDifficultyBonusMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1501));
+			constexpr auto archaeologyAccessDifficultyBonusMultiplier = MakeEffect(EffectID::archaeologyAccessDifficultyBonusMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1502));
+			constexpr auto dataMiningSkillBoostAccessDifficultyBonusAbsolutePercent = MakeEffect(EffectID::dataMiningSkillBoostAccessDifficultyBonusAbsolutePercent, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1503));
+			constexpr auto ecmGravimetricStrengthBonusPercent = MakeEffect(EffectID::ecmGravimetricStrengthBonusPercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1504));
+			constexpr auto ecmLadarStrengthBonusPercent = MakeEffect(EffectID::ecmLadarStrengthBonusPercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1505));
+			constexpr auto ecmMagnetometricStrengthBonusPercent = MakeEffect(EffectID::ecmMagnetometricStrengthBonusPercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1506));
+			constexpr auto ecmRadarStrengthBonusPercent = MakeEffect(EffectID::ecmRadarStrengthBonusPercent, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1507));
+			constexpr auto skillConsumptionQuantityBonusPercentSkillLevel = MakeEffect(EffectID::skillConsumptionQuantityBonusPercentSkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1508));
+			constexpr auto jumpPortalConsumptionBonusPercentSkill = MakeEffect(EffectID::jumpPortalConsumptionBonusPercentSkill, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1509));
+			constexpr auto salvagerModuleDurationReduction = MakeEffect(EffectID::salvagerModuleDurationReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1510));
+			constexpr auto bcLargeEnergyTurretPowerNeedBonus = MakeEffect(EffectID::bcLargeEnergyTurretPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1511));
+			constexpr auto bcLargeHybridTurretPowerNeedBonus = MakeEffect(EffectID::bcLargeHybridTurretPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1512));
+			constexpr auto bcLargeProjectileTurretPowerNeedBonus = MakeEffect(EffectID::bcLargeProjectileTurretPowerNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1513));
+			constexpr auto bcLargeEnergyTurretCPUNeedBonus = MakeEffect(EffectID::bcLargeEnergyTurretCPUNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1514));
+			constexpr auto bcLargeHybridTurretCPUNeedBonus = MakeEffect(EffectID::bcLargeHybridTurretCPUNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1515));
+			constexpr auto bcLargeProjectileTurretCPUNeedBonus = MakeEffect(EffectID::bcLargeProjectileTurretCPUNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1516));
+			constexpr auto bcLargeEnergyTurretCapacitorNeedBonus = MakeEffect(EffectID::bcLargeEnergyTurretCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1517));
+			constexpr auto bcLargeHybridTurretCapacitorNeedBonus = MakeEffect(EffectID::bcLargeHybridTurretCapacitorNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1518));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusBC3Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusBC3Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1519));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusBC4Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusBC4Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1520));
+			constexpr auto setBonusChristmasPowergrid = MakeEffect(EffectID::setBonusChristmasPowergrid, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1521));
+			constexpr auto setBonusChristmasCapacitorCapacity = MakeEffect(EffectID::setBonusChristmasCapacitorCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1522));
+			constexpr auto setBonusChristmasCPUOutput = MakeEffect(EffectID::setBonusChristmasCPUOutput, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1523));
+			constexpr auto setBonusChristmasCapacitorRecharge2 = MakeEffect(EffectID::setBonusChristmasCapacitorRecharge2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1524));
+			constexpr auto maxRangeHiddenPreAssignmentWarpScrambleRange = MakeEffect(EffectID::maxRangeHiddenPreAssignmentWarpScrambleRange, MetaInfo::Effect::Category::generic, true, true, _modifiers(&Modifiers::modifier1525));
+			constexpr auto shipBonusDroneHitpointsGF2 = MakeEffect(EffectID::shipBonusDroneHitpointsGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1526));
+			constexpr auto shipBonusDroneArmorHitpointsGF2 = MakeEffect(EffectID::shipBonusDroneArmorHitpointsGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1527));
+			constexpr auto shipBonusDroneShieldHitpointsGF2 = MakeEffect(EffectID::shipBonusDroneShieldHitpointsGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1528));
+			constexpr auto shipSETTrackingBonusAF = MakeEffect(EffectID::shipSETTrackingBonusAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1529));
+			constexpr auto shipMissileSpeedBonusAF = MakeEffect(EffectID::shipMissileSpeedBonusAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1530));
+			constexpr auto MWDSignatureRadiusRoleBonus = MakeEffect(EffectID::MWDSignatureRadiusRoleBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1531));
+			constexpr auto modifyShieldArmorHullResonancePostPercent = MakeEffect(EffectID::modifyShieldArmorHullResonancePostPercent, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier587, &Modifiers::modifier588, &Modifiers::modifier589, &Modifiers::modifier590, &Modifiers::modifier591, &Modifiers::modifier592, &Modifiers::modifier593, &Modifiers::modifier594, &Modifiers::modifier1079, &Modifiers::modifier1080, &Modifiers::modifier1081, &Modifiers::modifier1082));
+			constexpr auto setWeaponSpeedToValue = MakeEffect(EffectID::setWeaponSpeedToValue, MetaInfo::Effect::Category::generic, true, true, _modifiers(&Modifiers::modifier1532));
+			constexpr auto modifyShieldRechargeRatePassive = MakeEffect(EffectID::modifyShieldRechargeRatePassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier12));
+			constexpr auto damageMultiplierMultiplierActivation = MakeEffect(EffectID::damageMultiplierMultiplierActivation, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier1533));
+			constexpr auto missileDamageMultiplier = MakeEffect(EffectID::missileDamageMultiplier, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1534));
+			constexpr auto setMassAndAgilityAndSpeed = MakeEffect(EffectID::setMassAndAgilityAndSpeed, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier1535, &Modifiers::modifier1536, &Modifiers::modifier1537));
+			constexpr auto microJumpDrive = MakeEffect(EffectID::microJumpDrive, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto skillMJDdurationBonus = MakeEffect(EffectID::skillMJDdurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1538));
+			constexpr auto adaptiveArmorHardener = MakeEffect(EffectID::adaptiveArmorHardener, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier1539, &Modifiers::modifier1540, &Modifiers::modifier1541, &Modifiers::modifier1542));
+			constexpr auto scriptConsumptionQuantityBonus = MakeEffect(EffectID::scriptConsumptionQuantityBonus, MetaInfo::Effect::Category::generic, true, true, _modifiers(&Modifiers::modifier1543));
+			constexpr auto shipSETDmgBonus2AF = MakeEffect(EffectID::shipSETDmgBonus2AF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1544));
+			constexpr auto shipArmorRepairingGF2 = MakeEffect(EffectID::shipArmorRepairingGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1545));
+			constexpr auto fueledShieldBoosting = MakeEffect(EffectID::fueledShieldBoosting, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier1));
+			constexpr auto shipHybridDamageBonusCF2 = MakeEffect(EffectID::shipHybridDamageBonusCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1546));
+			constexpr auto targetBreaker = MakeEffect(EffectID::targetBreaker, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto skillTargetBreakerDurationBonus2 = MakeEffect(EffectID::skillTargetBreakerDurationBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1547));
+			constexpr auto skillTargetBreakerCapNeedBonus2 = MakeEffect(EffectID::skillTargetBreakerCapNeedBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1548));
+			constexpr auto shipBonusShieldBoosterMB1a = MakeEffect(EffectID::shipBonusShieldBoosterMB1a, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1549));
+			constexpr auto shieldBoostAmplifierPassiveBooster = MakeEffect(EffectID::shieldBoostAmplifierPassiveBooster, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier432, &Modifiers::modifier524));
+			constexpr auto shieldBoosterDurationBonusShieldSkills = MakeEffect(EffectID::shieldBoosterDurationBonusShieldSkills, MetaInfo::Effect::Category::generic, true, true, _modifiers(&Modifiers::modifier1550, &Modifiers::modifier1551));
+			constexpr auto boosterShieldBoostAmountPenaltyShieldSkills = MakeEffect(EffectID::boosterShieldBoostAmountPenaltyShieldSkills, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1552, &Modifiers::modifier1553));
+			constexpr auto eliteBonusAssaultShipLightMissileROF = MakeEffect(EffectID::eliteBonusAssaultShipLightMissileROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1554));
+			constexpr auto eliteBonusAssaultShipRocketROF = MakeEffect(EffectID::eliteBonusAssaultShipRocketROF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1555));
+			constexpr auto eliteBonusMarauderShieldBonus2a = MakeEffect(EffectID::eliteBonusMarauderShieldBonus2a, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1556));
+			constexpr auto shipBonusMissileKineticlATF2 = MakeEffect(EffectID::shipBonusMissileKineticlATF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1557));
+			constexpr auto skillReactiveArmorHardenerDurationBonus = MakeEffect(EffectID::skillReactiveArmorHardenerDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1558, &Modifiers::modifier1559));
+			constexpr auto skillWarAllyCostModifier = MakeEffect(EffectID::skillWarAllyCostModifier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1560));
+			constexpr auto relationsAllyCostSkillBoost = MakeEffect(EffectID::relationsAllyCostSkillBoost, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1561));
+			constexpr auto missileSkillAoeCloudSizeBonusAllIncludingCapitals = MakeEffect(EffectID::missileSkillAoeCloudSizeBonusAllIncludingCapitals, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier454));
+			constexpr auto shipEnergyTCapNeedBonusRookie = MakeEffect(EffectID::shipEnergyTCapNeedBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1562));
+			constexpr auto shipSETDmgBonusRookie = MakeEffect(EffectID::shipSETDmgBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1563));
+			constexpr auto shipArmorEMResistanceRookie = MakeEffect(EffectID::shipArmorEMResistanceRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1564));
+			constexpr auto shipArmorEXResistanceRookie = MakeEffect(EffectID::shipArmorEXResistanceRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1565));
+			constexpr auto shipArmorKNResistanceRookie = MakeEffect(EffectID::shipArmorKNResistanceRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1566));
+			constexpr auto shipArmorTHResistanceRookie = MakeEffect(EffectID::shipArmorTHResistanceRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1567));
+			constexpr auto shipHybridRangeBonusRookie = MakeEffect(EffectID::shipHybridRangeBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1568));
+			constexpr auto shipMissileKineticDamageRookie = MakeEffect(EffectID::shipMissileKineticDamageRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1569));
+			constexpr auto shipShieldEMResistanceRookie = MakeEffect(EffectID::shipShieldEMResistanceRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1570));
+			constexpr auto shipShieldExplosiveResistanceRookie = MakeEffect(EffectID::shipShieldExplosiveResistanceRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1571));
+			constexpr auto shipShieldKineticResistanceRookie = MakeEffect(EffectID::shipShieldKineticResistanceRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1572));
+			constexpr auto shipShieldThermalResistanceRookie = MakeEffect(EffectID::shipShieldThermalResistanceRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1573));
+			constexpr auto shipSHTDmgBonusRookie = MakeEffect(EffectID::shipSHTDmgBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1574));
+			constexpr auto shipBonusDroneDamageMultiplierRookie = MakeEffect(EffectID::shipBonusDroneDamageMultiplierRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1575));
+			constexpr auto shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusRookie = MakeEffect(EffectID::shipBonusEwRemoteSensorDampenerMaxTargetRangeBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1576));
+			constexpr auto shipBonusEwRemoteSensorDampenerScanResolutionBonusRookie = MakeEffect(EffectID::shipBonusEwRemoteSensorDampenerScanResolutionBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1577));
+			constexpr auto shipArmorRepairingRookie = MakeEffect(EffectID::shipArmorRepairingRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1578));
+			constexpr auto shipVelocityBonusRookie = MakeEffect(EffectID::shipVelocityBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1579));
+			constexpr auto minmatarShipEwTargetPainterRookie = MakeEffect(EffectID::minmatarShipEwTargetPainterRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1580));
+			constexpr auto shipSPTDmgBonusRookie = MakeEffect(EffectID::shipSPTDmgBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1581));
+			constexpr auto shipShieldBoostRookie = MakeEffect(EffectID::shipShieldBoostRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1582));
+			constexpr auto shipECMScanStrengthBonusRookie = MakeEffect(EffectID::shipECMScanStrengthBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1583, &Modifiers::modifier1584, &Modifiers::modifier1585, &Modifiers::modifier1586));
+			constexpr auto shipBonusDroneMiningAmountRole = MakeEffect(EffectID::shipBonusDroneMiningAmountRole, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1587));
+			constexpr auto shipBonusMiningDroneAmountPercentRookie = MakeEffect(EffectID::shipBonusMiningDroneAmountPercentRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1588));
+			constexpr auto shipBonusDroneHitpointsRookie = MakeEffect(EffectID::shipBonusDroneHitpointsRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1589, &Modifiers::modifier1590, &Modifiers::modifier1591));
+			constexpr auto shipBonusSalvageCycleAF = MakeEffect(EffectID::shipBonusSalvageCycleAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1592));
+			constexpr auto shipBonusSalvageCycleCF = MakeEffect(EffectID::shipBonusSalvageCycleCF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1593));
+			constexpr auto shipBonusSalvageCycleGF = MakeEffect(EffectID::shipBonusSalvageCycleGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1594));
+			constexpr auto shipBonusSalvageCycleMF = MakeEffect(EffectID::shipBonusSalvageCycleMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1595));
+			constexpr auto baseDefenderAllyCostCharAssignment = MakeEffect(EffectID::baseDefenderAllyCostCharAssignment, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1596));
+			constexpr auto iceHarvesterDurationMultiplier = MakeEffect(EffectID::iceHarvesterDurationMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1597));
+			constexpr auto iceHarvesterCapacitorNeedMultiplier = MakeEffect(EffectID::iceHarvesterCapacitorNeedMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1598));
+			constexpr auto miningYieldMultiplyPassive = MakeEffect(EffectID::miningYieldMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1599));
+			constexpr auto shipBonusIceHarvesterDurationORE3 = MakeEffect(EffectID::shipBonusIceHarvesterDurationORE3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1600));
+			constexpr auto shipBonusTargetPainterOptimalMF1 = MakeEffect(EffectID::shipBonusTargetPainterOptimalMF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1601));
+			constexpr auto shipBonusOreHoldORE2 = MakeEffect(EffectID::shipBonusOreHoldORE2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1602));
+			constexpr auto shipBonusShieldCapacityORE2 = MakeEffect(EffectID::shipBonusShieldCapacityORE2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1603));
+			constexpr auto mercoxitCrystalBonus = MakeEffect(EffectID::mercoxitCrystalBonus, MetaInfo::Effect::Category::generic, true, true, _modifiers(&Modifiers::modifier1604));
+			constexpr auto shipMissileKineticDamageCF2 = MakeEffect(EffectID::shipMissileKineticDamageCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1605));
+			constexpr auto shipMissileVelocityCF = MakeEffect(EffectID::shipMissileVelocityCF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1606));
+			constexpr auto maxTargetingRangeBonusPostPercentPassive = MakeEffect(EffectID::maxTargetingRangeBonusPostPercentPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier168));
+			constexpr auto shipBonusDroneHitpointsGF = MakeEffect(EffectID::shipBonusDroneHitpointsGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1607, &Modifiers::modifier1608, &Modifiers::modifier1609));
+			constexpr auto shipShieldBoostMF = MakeEffect(EffectID::shipShieldBoostMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1610));
+			constexpr auto shipBonusShieldTransferCapNeedCF = MakeEffect(EffectID::shipBonusShieldTransferCapNeedCF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1611));
+			constexpr auto shipBonusShieldTransferBoostAmountCF2 = MakeEffect(EffectID::shipBonusShieldTransferBoostAmountCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1612));
+			constexpr auto shipBonusShieldTransferCapNeedMF = MakeEffect(EffectID::shipBonusShieldTransferCapNeedMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1613));
+			constexpr auto shipBonusShieldTransferBoostAmountMF2 = MakeEffect(EffectID::shipBonusShieldTransferBoostAmountMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1614));
+			constexpr auto shipBonusRemoteArmorRepairCapNeedGF = MakeEffect(EffectID::shipBonusRemoteArmorRepairCapNeedGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1615));
+			constexpr auto shipBonusRemoteArmorRepairAmountGF2 = MakeEffect(EffectID::shipBonusRemoteArmorRepairAmountGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1616));
+			constexpr auto shipBonusRemoteArmorRepairCapNeedAF = MakeEffect(EffectID::shipBonusRemoteArmorRepairCapNeedAF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1617));
+			constexpr auto shipBonusRemoteArmorRepairAmount2AF = MakeEffect(EffectID::shipBonusRemoteArmorRepairAmount2AF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1618));
+			constexpr auto shipBonusDroneTrackingGF = MakeEffect(EffectID::shipBonusDroneTrackingGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1619));
+			constexpr auto shipBonusScanProbeStrength2AF = MakeEffect(EffectID::shipBonusScanProbeStrength2AF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1620));
+			constexpr auto energyTransferArrayTransferAmountBonus = MakeEffect(EffectID::energyTransferArrayTransferAmountBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1621));
+			constexpr auto shipBonusShieldTransferCapneedMC1 = MakeEffect(EffectID::shipBonusShieldTransferCapneedMC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1622));
+			constexpr auto shipBonusRemoteArmorRepairCapNeedAC1 = MakeEffect(EffectID::shipBonusRemoteArmorRepairCapNeedAC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1623));
+			constexpr auto shipBonusRemoteArmorRepairAmountAC2 = MakeEffect(EffectID::shipBonusRemoteArmorRepairAmountAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1624));
+			constexpr auto shipBonusRemoteArmorRepairAmountGC2 = MakeEffect(EffectID::shipBonusRemoteArmorRepairAmountGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1625));
+			constexpr auto shipBonusShieldTransferBoostAmountCC2 = MakeEffect(EffectID::shipBonusShieldTransferBoostAmountCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1626));
+			constexpr auto shipBonusShieldTransferBoostAmountMC2 = MakeEffect(EffectID::shipBonusShieldTransferBoostAmountMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1627));
+			constexpr auto shipBonusEwRemoteSensorDampenerOptimalBonusGC1 = MakeEffect(EffectID::shipBonusEwRemoteSensorDampenerOptimalBonusGC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1628));
+			constexpr auto minmatarShipEwTargetPainterMC1 = MakeEffect(EffectID::minmatarShipEwTargetPainterMC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1629));
+			constexpr auto shipMissileRofCC = MakeEffect(EffectID::shipMissileRofCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1630, &Modifiers::modifier1631, &Modifiers::modifier1632));
+			constexpr auto shipPTurretFalloffBonusMC2 = MakeEffect(EffectID::shipPTurretFalloffBonusMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1633));
+			constexpr auto shipHTDamageBonusCC = MakeEffect(EffectID::shipHTDamageBonusCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1634));
+			constexpr auto shipMETCDamageBonusAC = MakeEffect(EffectID::shipMETCDamageBonusAC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1635));
+			constexpr auto miningFrigateSkillLevelPostMulShipBonusORE1frig = MakeEffect(EffectID::miningFrigateSkillLevelPostMulShipBonusORE1frig, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1636));
+			constexpr auto miningFrigateSkillLevelPostMulShipBonusORE2frig = MakeEffect(EffectID::miningFrigateSkillLevelPostMulShipBonusORE2frig, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1637));
+			constexpr auto shipMiningBonusOREfrig1 = MakeEffect(EffectID::shipMiningBonusOREfrig1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1638));
+			constexpr auto GCHYieldMultiplyPassive = MakeEffect(EffectID::GCHYieldMultiplyPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1639));
+			constexpr auto shipMissileVelocityPirateFactionRocket = MakeEffect(EffectID::shipMissileVelocityPirateFactionRocket, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1640));
+			constexpr auto shipGCHYieldBonusOREfrig2 = MakeEffect(EffectID::shipGCHYieldBonusOREfrig2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1641));
+			constexpr auto skillReactiveArmorHardenerCapNeedBonus = MakeEffect(EffectID::skillReactiveArmorHardenerCapNeedBonus, MetaInfo::Effect::Category::generic, true, true, _modifiers(&Modifiers::modifier1642, &Modifiers::modifier1643));
+			constexpr auto salvageDroneEffect = MakeEffect(EffectID::salvageDroneEffect, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto shipBonusDroneMWDboostrole = MakeEffect(EffectID::shipBonusDroneMWDboostrole, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1644));
+			constexpr auto droneSalvageBonus = MakeEffect(EffectID::droneSalvageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1645));
+			constexpr auto droneSalvageSkillBonus = MakeEffect(EffectID::droneSalvageSkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1646));
+			constexpr auto sensorIntegritySkillLevelPreMulSensorStrengthBonusSelf = MakeEffect(EffectID::sensorIntegritySkillLevelPreMulSensorStrengthBonusSelf, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1647));
+			constexpr auto sensorCompensationSensorStrengthBonusGravimetric = MakeEffect(EffectID::sensorCompensationSensorStrengthBonusGravimetric, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1648));
+			constexpr auto sensorCompensationSensorStrengthBonusLadar = MakeEffect(EffectID::sensorCompensationSensorStrengthBonusLadar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1649));
+			constexpr auto sensorCompensationSensorStrengthBonusMagnetometric = MakeEffect(EffectID::sensorCompensationSensorStrengthBonusMagnetometric, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1650));
+			constexpr auto sensorCompensationSensorStrengthBonusRadar = MakeEffect(EffectID::sensorCompensationSensorStrengthBonusRadar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1651));
+			constexpr auto shipEnergyVampireAmountBonusFixedAF2 = MakeEffect(EffectID::shipEnergyVampireAmountBonusFixedAF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1652));
+			constexpr auto shipBonusEwRemoteSensorDampenerFalloffBonusGC1 = MakeEffect(EffectID::shipBonusEwRemoteSensorDampenerFalloffBonusGC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1653));
+			constexpr auto trackingSpeedBonusEffectHybrids = MakeEffect(EffectID::trackingSpeedBonusEffectHybrids, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1654));
+			constexpr auto trackingSpeedBonusEffectLasers = MakeEffect(EffectID::trackingSpeedBonusEffectLasers, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1655));
+			constexpr auto trackingSpeedBonusEffectProjectiles = MakeEffect(EffectID::trackingSpeedBonusEffectProjectiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1656));
+			constexpr auto spaceAnchorEffect = MakeEffect(EffectID::spaceAnchorEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1657));
+			constexpr auto armorUpgradesSkillBoostMassPenaltyReduction = MakeEffect(EffectID::armorUpgradesSkillBoostMassPenaltyReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1658));
+			constexpr auto armorUpgradesMassPenaltyReductionBonus = MakeEffect(EffectID::armorUpgradesMassPenaltyReductionBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1659));
+			constexpr auto shipSETTrackingBonusRookie = MakeEffect(EffectID::shipSETTrackingBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1660));
+			constexpr auto shipSETOptimalBonusRookie = MakeEffect(EffectID::shipSETOptimalBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1661));
+			constexpr auto shipNOSTransferAmountBonusRookie = MakeEffect(EffectID::shipNOSTransferAmountBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1662));
+			constexpr auto shipNeutDestabilizationAmountBonusRookie = MakeEffect(EffectID::shipNeutDestabilizationAmountBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1663));
+			constexpr auto shipWebVelocityBonusRookie = MakeEffect(EffectID::shipWebVelocityBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1664));
+			constexpr auto shipDroneMWDSpeedBonusRookie = MakeEffect(EffectID::shipDroneMWDSpeedBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1665));
+			constexpr auto shipRocketMaxVelocityBonusRookie = MakeEffect(EffectID::shipRocketMaxVelocityBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1666));
+			constexpr auto shipLightMissileMaxVelocityBonusRookie = MakeEffect(EffectID::shipLightMissileMaxVelocityBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1667));
+			constexpr auto shipSHTTrackingSpeedBonusRookie = MakeEffect(EffectID::shipSHTTrackingSpeedBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1668));
+			constexpr auto shipSHTFalloffBonusRookie = MakeEffect(EffectID::shipSHTFalloffBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1669));
+			constexpr auto shipSPTTrackingSpeedBonusRookie = MakeEffect(EffectID::shipSPTTrackingSpeedBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1670));
+			constexpr auto shipSPTFalloffBonusRookie = MakeEffect(EffectID::shipSPTFalloffBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1671));
+			constexpr auto shipSPTOptimalRangeBonusRookie = MakeEffect(EffectID::shipSPTOptimalRangeBonusRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1672));
+			constexpr auto shipProjectileDmgPirateCruiser = MakeEffect(EffectID::shipProjectileDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1673));
+			constexpr auto shipHeavyAssaultMissileEMDmgPirateCruiser = MakeEffect(EffectID::shipHeavyAssaultMissileEMDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1674));
+			constexpr auto shipHeavyAssaultMissileKinDmgPirateCruiser = MakeEffect(EffectID::shipHeavyAssaultMissileKinDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1675));
+			constexpr auto shipHeavyAssaultMissileThermDmgPirateCruiser = MakeEffect(EffectID::shipHeavyAssaultMissileThermDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1676));
+			constexpr auto shipHeavyAssaultMissileExpDmgPirateCruiser = MakeEffect(EffectID::shipHeavyAssaultMissileExpDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1677));
+			constexpr auto shipHeavyMissileEMDmgPirateCruiser = MakeEffect(EffectID::shipHeavyMissileEMDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1678));
+			constexpr auto shipHeavyMissileExpDmgPirateCruiser = MakeEffect(EffectID::shipHeavyMissileExpDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1679));
+			constexpr auto shipHeavyMissileKinDmgPirateCruiser = MakeEffect(EffectID::shipHeavyMissileKinDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1680));
+			constexpr auto shipHeavyMissileThermDmgPirateCruiser = MakeEffect(EffectID::shipHeavyMissileThermDmgPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1681));
+			constexpr auto shipScanProbeStrengthBonusPirateCruiser = MakeEffect(EffectID::shipScanProbeStrengthBonusPirateCruiser, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1682));
+			constexpr auto modifyActiveShieldResonancePostPercent = MakeEffect(EffectID::modifyActiveShieldResonancePostPercent, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier591, &Modifiers::modifier592, &Modifiers::modifier593, &Modifiers::modifier594));
+			constexpr auto modifyActiveArmorResonancePostPercent = MakeEffect(EffectID::modifyActiveArmorResonancePostPercent, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier587, &Modifiers::modifier588, &Modifiers::modifier589, &Modifiers::modifier590));
+			constexpr auto shipSmallMissileExpDmgCF2 = MakeEffect(EffectID::shipSmallMissileExpDmgCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1683, &Modifiers::modifier1684));
+			constexpr auto shipSmallMissileKinDmgCF2 = MakeEffect(EffectID::shipSmallMissileKinDmgCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1685, &Modifiers::modifier1686));
+			constexpr auto shipSmallMissileThermDmgCF2 = MakeEffect(EffectID::shipSmallMissileThermDmgCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1687, &Modifiers::modifier1688));
+			constexpr auto shipSmallMissileEMDmgCF2 = MakeEffect(EffectID::shipSmallMissileEMDmgCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1689, &Modifiers::modifier1690));
+			constexpr auto reconShipCloakCpuBonus1 = MakeEffect(EffectID::reconShipCloakCpuBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1691));
+			constexpr auto covertOpsCloakCpuPercentBonus1 = MakeEffect(EffectID::covertOpsCloakCpuPercentBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1692));
+			constexpr auto covertCloakCPUAddition = MakeEffect(EffectID::covertCloakCPUAddition, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1693));
+			constexpr auto covertOpsCloakCpuPenalty = MakeEffect(EffectID::covertOpsCloakCpuPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1694));
+			constexpr auto covertCynoCpuPenalty = MakeEffect(EffectID::covertCynoCpuPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1695));
+			constexpr auto warfareLinkCPUAddition = MakeEffect(EffectID::warfareLinkCPUAddition, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1696));
+			constexpr auto warfareLinkCpuPenalty = MakeEffect(EffectID::warfareLinkCpuPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1697));
+			constexpr auto blockadeRunnerCloakCpuPercentBonus = MakeEffect(EffectID::blockadeRunnerCloakCpuPercentBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1698));
+			constexpr auto drawbackRepairSystemsPGNeed = MakeEffect(EffectID::drawbackRepairSystemsPGNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1699));
+			constexpr auto drawbackCapRepPGNeed = MakeEffect(EffectID::drawbackCapRepPGNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1700));
+			constexpr auto fueledArmorRepair = MakeEffect(EffectID::fueledArmorRepair, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier8));
+			constexpr auto destroyerSkillLevelPreMulShipBonusAD1Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusAD1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1701));
+			constexpr auto destroyerSkillLevelPreMulShipBonusAD2Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusAD2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1702));
+			constexpr auto destroyerSkillLevelPreMulShipBonusCD1Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusCD1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1703));
+			constexpr auto destroyerSkillLevelPreMulShipBonusCD2Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusCD2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1704));
+			constexpr auto destroyerSkillLevelPreMulShipBonusGD1Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusGD1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1705));
+			constexpr auto destroyerSkillLevelPreMulShipBonusGD2Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusGD2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1706));
+			constexpr auto destroyerSkillLevelPreMulShipBonusMD1Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusMD1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1707));
+			constexpr auto destroyerSkillLevelPreMulShipBonusMD2Ship = MakeEffect(EffectID::destroyerSkillLevelPreMulShipBonusMD2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1708));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusABC1Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusABC1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1709));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusABC2Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusABC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1710));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusCBC1Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusCBC1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1711));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusCBC2Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusCBC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1712));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusGBC1Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusGBC1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1713));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusGBC2Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusGBC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1714));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusMBC1Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusMBC1Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1715));
+			constexpr auto battlecruiserSkillLevelPreMulShipBonusMBC2Ship = MakeEffect(EffectID::battlecruiserSkillLevelPreMulShipBonusMBC2Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1716));
+			constexpr auto shipLaserCapNeed2AD1 = MakeEffect(EffectID::shipLaserCapNeed2AD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1717));
+			constexpr auto shipLaserTracking2AD2 = MakeEffect(EffectID::shipLaserTracking2AD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1718));
+			constexpr auto shipBonusDroneDamageMultiplierAD1 = MakeEffect(EffectID::shipBonusDroneDamageMultiplierAD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1719));
+			constexpr auto shipBonusDroneHitpointsAD1 = MakeEffect(EffectID::shipBonusDroneHitpointsAD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1720, &Modifiers::modifier1721, &Modifiers::modifier1722));
+			constexpr auto shipHybridRange1CD1 = MakeEffect(EffectID::shipHybridRange1CD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1723));
+			constexpr auto shipHybridTrackingCD2 = MakeEffect(EffectID::shipHybridTrackingCD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1724));
+			constexpr auto shipBonusFrigateSizedMissileKineticDamageCD1 = MakeEffect(EffectID::shipBonusFrigateSizedMissileKineticDamageCD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1725));
+			constexpr auto shipRocketKineticDmgCD1 = MakeEffect(EffectID::shipRocketKineticDmgCD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1726));
+			constexpr auto shipBonusAoeVelocityRocketsCD2 = MakeEffect(EffectID::shipBonusAoeVelocityRocketsCD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1727));
+			constexpr auto shipBonusAoeVelocityStandardMissilesCD2 = MakeEffect(EffectID::shipBonusAoeVelocityStandardMissilesCD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1728));
+			constexpr auto shipHybridFallOff1GD1 = MakeEffect(EffectID::shipHybridFallOff1GD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1729));
+			constexpr auto shipHybridTracking1GD2 = MakeEffect(EffectID::shipHybridTracking1GD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1730));
+			constexpr auto shipBonusDroneDamageMultiplierGD1 = MakeEffect(EffectID::shipBonusDroneDamageMultiplierGD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1731));
+			constexpr auto shipBonusDroneHitpointsGD1 = MakeEffect(EffectID::shipBonusDroneHitpointsGD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1732, &Modifiers::modifier1733, &Modifiers::modifier1734));
+			constexpr auto shipProjectileDamageMD1 = MakeEffect(EffectID::shipProjectileDamageMD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1735));
+			constexpr auto shipProjectileTracking1MD2 = MakeEffect(EffectID::shipProjectileTracking1MD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1736));
+			constexpr auto shipBonusFrigateSizedLightMissileExplosiveDamageMD1 = MakeEffect(EffectID::shipBonusFrigateSizedLightMissileExplosiveDamageMD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1737));
+			constexpr auto shipRocketExplosiveDmgMD1 = MakeEffect(EffectID::shipRocketExplosiveDmgMD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1738));
+			constexpr auto shipBonusMWDSignatureRadiusMD2 = MakeEffect(EffectID::shipBonusMWDSignatureRadiusMD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1739));
+			constexpr auto shipArmorEMResistance1ABC1 = MakeEffect(EffectID::shipArmorEMResistance1ABC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1740));
+			constexpr auto shipArmorExplosiveResistance1ABC1 = MakeEffect(EffectID::shipArmorExplosiveResistance1ABC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1741));
+			constexpr auto shipArmorKineticResistance1ABC1 = MakeEffect(EffectID::shipArmorKineticResistance1ABC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1742));
+			constexpr auto shipArmorThermResistance1ABC1 = MakeEffect(EffectID::shipArmorThermResistance1ABC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1743));
+			constexpr auto shipBonusDroneDamageMultiplierABC2 = MakeEffect(EffectID::shipBonusDroneDamageMultiplierABC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1744));
+			constexpr auto shipBonusDroneHitpointsABC2 = MakeEffect(EffectID::shipBonusDroneHitpointsABC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1745, &Modifiers::modifier1746, &Modifiers::modifier1747));
+			constexpr auto shipLaserCapABC1 = MakeEffect(EffectID::shipLaserCapABC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1748));
+			constexpr auto shipLaserDamageBonusABC2 = MakeEffect(EffectID::shipLaserDamageBonusABC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1749));
+			constexpr auto shipHybridOptimal1CBC1 = MakeEffect(EffectID::shipHybridOptimal1CBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1750));
+			constexpr auto shipShieldEmResistance1CBC2 = MakeEffect(EffectID::shipShieldEmResistance1CBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1751));
+			constexpr auto shipShieldExplosiveResistance1CBC2 = MakeEffect(EffectID::shipShieldExplosiveResistance1CBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1752));
+			constexpr auto shipShieldKineticResistance1CBC2 = MakeEffect(EffectID::shipShieldKineticResistance1CBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1753));
+			constexpr auto shipShieldThermalResistance1CBC2 = MakeEffect(EffectID::shipShieldThermalResistance1CBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1754));
+			constexpr auto shipBonusHeavyAssaultMissileKineticDamageCBC1 = MakeEffect(EffectID::shipBonusHeavyAssaultMissileKineticDamageCBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1755));
+			constexpr auto shipBonusHeavyMissileKineticDamageCBC1 = MakeEffect(EffectID::shipBonusHeavyMissileKineticDamageCBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1756));
+			constexpr auto shipHybridDmg1GBC1 = MakeEffect(EffectID::shipHybridDmg1GBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1757));
+			constexpr auto shipArmorRepairing1GBC2 = MakeEffect(EffectID::shipArmorRepairing1GBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1758));
+			constexpr auto shipBonusDroneDamageMultiplierGBC1 = MakeEffect(EffectID::shipBonusDroneDamageMultiplierGBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1759));
+			constexpr auto shipBonusDroneHitpointsGBC1 = MakeEffect(EffectID::shipBonusDroneHitpointsGBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1760, &Modifiers::modifier1761, &Modifiers::modifier1762));
+			constexpr auto shipBonusHeavyMissileLauncherRofMBC2 = MakeEffect(EffectID::shipBonusHeavyMissileLauncherRofMBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1763));
+			constexpr auto shipBonusHeavyAssaultMissileLauncherRofMBC2 = MakeEffect(EffectID::shipBonusHeavyAssaultMissileLauncherRofMBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1764));
+			constexpr auto shipShieldBoost1MBC1 = MakeEffect(EffectID::shipShieldBoost1MBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1765));
+			constexpr auto shipBonusProjectileDamageMBC1 = MakeEffect(EffectID::shipBonusProjectileDamageMBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1766));
+			constexpr auto shipProjectileRof1MBC2 = MakeEffect(EffectID::shipProjectileRof1MBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1767));
+			constexpr auto shipLargeLaserCapABC1 = MakeEffect(EffectID::shipLargeLaserCapABC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1768));
+			constexpr auto shipLargeLaserDamageBonusABC2 = MakeEffect(EffectID::shipLargeLaserDamageBonusABC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1769));
+			constexpr auto shipHybridRangeBonusCBC1 = MakeEffect(EffectID::shipHybridRangeBonusCBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1770));
+			constexpr auto shipHybridDamageBonusCBC2 = MakeEffect(EffectID::shipHybridDamageBonusCBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1771));
+			constexpr auto shipLargeHybridTrackingBonusGBC1 = MakeEffect(EffectID::shipLargeHybridTrackingBonusGBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1772));
+			constexpr auto shipHybridDamageBonusGBC2 = MakeEffect(EffectID::shipHybridDamageBonusGBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1773));
+			constexpr auto shipProjectileRofBonusMBC1 = MakeEffect(EffectID::shipProjectileRofBonusMBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1774));
+			constexpr auto shipProjectileFalloffBonusMBC2 = MakeEffect(EffectID::shipProjectileFalloffBonusMBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1775));
+			constexpr auto armorAllRepairSystemsAmountBonusPassive = MakeEffect(EffectID::armorAllRepairSystemsAmountBonusPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1776, &Modifiers::modifier1777));
+			constexpr auto eliteBonusViolatorsRepairSystemsArmorDamageAmount2 = MakeEffect(EffectID::eliteBonusViolatorsRepairSystemsArmorDamageAmount2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1778));
+			constexpr auto shipBonusRepairSystemsBonusATC2 = MakeEffect(EffectID::shipBonusRepairSystemsBonusATC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1779));
+			constexpr auto shipBonusRepairSystemsArmorRepairAmountGB2 = MakeEffect(EffectID::shipBonusRepairSystemsArmorRepairAmountGB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1780));
+			constexpr auto damageCloudChanceReductionFixed = MakeEffect(EffectID::damageCloudChanceReductionFixed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1781));
+			constexpr auto deepCoreMiningSkillBoostDamageCloudChanceReductionMul = MakeEffect(EffectID::deepCoreMiningSkillBoostDamageCloudChanceReductionMul, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1782));
+			constexpr auto shipHeavyMissileAOECloudSizeCBC1 = MakeEffect(EffectID::shipHeavyMissileAOECloudSizeCBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1783));
+			constexpr auto shipHeavyAssaultMissileAOECloudSizeCBC1 = MakeEffect(EffectID::shipHeavyAssaultMissileAOECloudSizeCBC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1784));
+			constexpr auto shipHybridTrackingGBC2 = MakeEffect(EffectID::shipHybridTrackingGBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1785));
+			constexpr auto shipEnergyTrackingABC1 = MakeEffect(EffectID::shipEnergyTrackingABC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1786));
+			constexpr auto shipBonusMETOptimalAC2 = MakeEffect(EffectID::shipBonusMETOptimalAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1787));
+			constexpr auto shipMissileEMDamageCC = MakeEffect(EffectID::shipMissileEMDamageCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1788));
+			constexpr auto shipMissileThermDamageCC = MakeEffect(EffectID::shipMissileThermDamageCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1789));
+			constexpr auto shipMissileExpDamageCC = MakeEffect(EffectID::shipMissileExpDamageCC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1790));
+			constexpr auto shipMissileKinDamageCC2 = MakeEffect(EffectID::shipMissileKinDamageCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1791));
+			constexpr auto shipHeavyAssaultMissileAOECloudSizeCC2 = MakeEffect(EffectID::shipHeavyAssaultMissileAOECloudSizeCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1792));
+			constexpr auto shipHeavyMissileAOECloudSizeCC2 = MakeEffect(EffectID::shipHeavyMissileAOECloudSizeCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1793));
+			constexpr auto shipBonusDroneTrackingGC = MakeEffect(EffectID::shipBonusDroneTrackingGC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1794));
+			constexpr auto shipBonusDroneMWDboostGC = MakeEffect(EffectID::shipBonusDroneMWDboostGC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1795));
+			constexpr auto baseMaxScanDeviationModifierModuleOnline2None = MakeEffect(EffectID::baseMaxScanDeviationModifierModuleOnline2None, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1796));
+			constexpr auto systemScanDurationModuleModifier = MakeEffect(EffectID::systemScanDurationModuleModifier, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1797));
+			constexpr auto baseSensorStrengthModifierModule = MakeEffect(EffectID::baseSensorStrengthModifierModule, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1798));
+			constexpr auto shipMissileHeavyAssaultVelocityABC2 = MakeEffect(EffectID::shipMissileHeavyAssaultVelocityABC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1799));
+			constexpr auto shipMissileHeavyVelocityABC2 = MakeEffect(EffectID::shipMissileHeavyVelocityABC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1800));
+			constexpr auto shipLaserCap1ABC2 = MakeEffect(EffectID::shipLaserCap1ABC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1801));
+			constexpr auto shipMissileVelocityCD1 = MakeEffect(EffectID::shipMissileVelocityCD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1802));
+			constexpr auto shipBonusDroneDamageMultiplierAB = MakeEffect(EffectID::shipBonusDroneDamageMultiplierAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1803));
+			constexpr auto shipBonusDroneArmorHitPointsAB = MakeEffect(EffectID::shipBonusDroneArmorHitPointsAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1804));
+			constexpr auto shipBonusDroneShieldHitPointsAB = MakeEffect(EffectID::shipBonusDroneShieldHitPointsAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1805));
+			constexpr auto shipBonusDroneStructureHitPointsAB = MakeEffect(EffectID::shipBonusDroneStructureHitPointsAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1806));
+			constexpr auto shipBonusEnergyNeutRangeAB2 = MakeEffect(EffectID::shipBonusEnergyNeutRangeAB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1807));
+			constexpr auto shipBonusEnergyVampireRangeAB2 = MakeEffect(EffectID::shipBonusEnergyVampireRangeAB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1808));
+			constexpr auto shipLargeHybridTurretRofGB = MakeEffect(EffectID::shipLargeHybridTurretRofGB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1809));
+			constexpr auto shipBonusDroneTrackingGB = MakeEffect(EffectID::shipBonusDroneTrackingGB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1810));
+			constexpr auto shipBonusDroneOptimalRangeGB = MakeEffect(EffectID::shipBonusDroneOptimalRangeGB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1811));
+			constexpr auto shipBonusMissileAoeVelocityMB2 = MakeEffect(EffectID::shipBonusMissileAoeVelocityMB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1812));
+			constexpr auto shipBonusAoeVelocityCruiseMissilesMB2 = MakeEffect(EffectID::shipBonusAoeVelocityCruiseMissilesMB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1813));
+			constexpr auto shipBonusLargeEnergyTurretTrackingAB = MakeEffect(EffectID::shipBonusLargeEnergyTurretTrackingAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1814));
+			constexpr auto hackingSkillVirusBonus = MakeEffect(EffectID::hackingSkillVirusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1815));
+			constexpr auto dataMiningSkillLevelVirusCoherenceBonusModifier2 = MakeEffect(EffectID::dataMiningSkillLevelVirusCoherenceBonusModifier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1816));
+			constexpr auto archaeologySkillVirusBonus = MakeEffect(EffectID::archaeologySkillVirusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1817));
+			constexpr auto shipTorpedoAOECloudSize1CB = MakeEffect(EffectID::shipTorpedoAOECloudSize1CB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1818));
+			constexpr auto shipCruiseMissileAOECloudSize1CB = MakeEffect(EffectID::shipCruiseMissileAOECloudSize1CB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1819));
+			constexpr auto shipCruiseMissileROFCB = MakeEffect(EffectID::shipCruiseMissileROFCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1820));
+			constexpr auto shipTorpedoROFCB = MakeEffect(EffectID::shipTorpedoROFCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1821));
+			constexpr auto minigameVirusStrengthBonus = MakeEffect(EffectID::minigameVirusStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1822, &Modifiers::modifier1823));
+			constexpr auto shieldOperationRechargeratebonusPostPercentOnline = MakeEffect(EffectID::shieldOperationRechargeratebonusPostPercentOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier162));
+			constexpr auto shipBonusAgilityCI2 = MakeEffect(EffectID::shipBonusAgilityCI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1824));
+			constexpr auto shipBonusAgilityMI2 = MakeEffect(EffectID::shipBonusAgilityMI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1825));
+			constexpr auto shipBonusAgilityGI2 = MakeEffect(EffectID::shipBonusAgilityGI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1826));
+			constexpr auto shipBonusAgilityAI2 = MakeEffect(EffectID::shipBonusAgilityAI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1827));
+			constexpr auto shipBonusOreCapacityGI2 = MakeEffect(EffectID::shipBonusOreCapacityGI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1828));
+			constexpr auto shipBonusAmmoBayMI2 = MakeEffect(EffectID::shipBonusAmmoBayMI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1829));
+			constexpr auto shipBonusPICommoditiesHoldGI2 = MakeEffect(EffectID::shipBonusPICommoditiesHoldGI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1830));
+			constexpr auto shipBonusMineralBayGI2 = MakeEffect(EffectID::shipBonusMineralBayGI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1831));
+			constexpr auto setBonusChristmasBonusVelocity = MakeEffect(EffectID::setBonusChristmasBonusVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1832));
+			constexpr auto setBonusChristmasAgilityBonus = MakeEffect(EffectID::setBonusChristmasAgilityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1833));
+			constexpr auto setBonusChristmasShieldCapacityBonus = MakeEffect(EffectID::setBonusChristmasShieldCapacityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1834));
+			constexpr auto setBonusChristmasArmorHPBonus2 = MakeEffect(EffectID::setBonusChristmasArmorHPBonus2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1835));
+			constexpr auto shipSPTOptimalBonusMF = MakeEffect(EffectID::shipSPTOptimalBonusMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1836));
+			constexpr auto shipBonusProjectileDamageMBC2 = MakeEffect(EffectID::shipBonusProjectileDamageMBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1837));
+			constexpr auto eliteBonusCommandShipHAMRoFCS1 = MakeEffect(EffectID::eliteBonusCommandShipHAMRoFCS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1838));
+			constexpr auto eliteBonusCommandShipHMRoFCS1 = MakeEffect(EffectID::eliteBonusCommandShipHMRoFCS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1839));
+			constexpr auto eliteBonusCommandShipsHeavyAssaultMissileExplosionVelocityCS2 = MakeEffect(EffectID::eliteBonusCommandShipsHeavyAssaultMissileExplosionVelocityCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1840));
+			constexpr auto eliteBonusCommandShipsHeavyAssaultMissileExplosionRadiusCS2 = MakeEffect(EffectID::eliteBonusCommandShipsHeavyAssaultMissileExplosionRadiusCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1841));
+			constexpr auto eliteBonusCommandShipsHeavyMissileExplosionRadiusCS2 = MakeEffect(EffectID::eliteBonusCommandShipsHeavyMissileExplosionRadiusCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1842));
+			constexpr auto eliteBonusCommandShipMediumHybridDamageCS2 = MakeEffect(EffectID::eliteBonusCommandShipMediumHybridDamageCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1843));
+			constexpr auto eliteBonusCommandShipMediumHybridTrackingCS1 = MakeEffect(EffectID::eliteBonusCommandShipMediumHybridTrackingCS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1844));
+			constexpr auto eliteBonusCommandShipHeavyDroneTrackingCS2 = MakeEffect(EffectID::eliteBonusCommandShipHeavyDroneTrackingCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1845));
+			constexpr auto eliteBonusCommandShipHeavyDroneVelocityCS2 = MakeEffect(EffectID::eliteBonusCommandShipHeavyDroneVelocityCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1846));
+			constexpr auto eliteBonusCommandShipMediumHybridRoFCS1 = MakeEffect(EffectID::eliteBonusCommandShipMediumHybridRoFCS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1847));
+			constexpr auto eliteBonusCommandShipHeavyAssaultMissileDamageCS2 = MakeEffect(EffectID::eliteBonusCommandShipHeavyAssaultMissileDamageCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1848, &Modifiers::modifier1849, &Modifiers::modifier1850, &Modifiers::modifier1851));
+			constexpr auto eliteBonusCommandShipHeavyMissileDamageCS2 = MakeEffect(EffectID::eliteBonusCommandShipHeavyMissileDamageCS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1852, &Modifiers::modifier1853, &Modifiers::modifier1854, &Modifiers::modifier1855));
+			constexpr auto skillJumpCloneCooldownReduction = MakeEffect(EffectID::skillJumpCloneCooldownReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1856));
+			constexpr auto shipBonusHMLKineticDamageAC = MakeEffect(EffectID::shipBonusHMLKineticDamageAC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1857));
+			constexpr auto shipBonusHMLEMDamageAC = MakeEffect(EffectID::shipBonusHMLEMDamageAC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1858));
+			constexpr auto shipBonusHMLThermDamageAC = MakeEffect(EffectID::shipBonusHMLThermDamageAC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1859));
+			constexpr auto shipBonusHMLExploDamageAC = MakeEffect(EffectID::shipBonusHMLExploDamageAC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1860));
+			constexpr auto shipBonusHMLVelocityEliteBonusHeavyGunship1 = MakeEffect(EffectID::shipBonusHMLVelocityEliteBonusHeavyGunship1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1861));
+			constexpr auto shipBonusHAMVelocityEliteBonusHeavyGunship1 = MakeEffect(EffectID::shipBonusHAMVelocityEliteBonusHeavyGunship1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1862));
+			constexpr auto shipBonusArmorRepAmountGC2 = MakeEffect(EffectID::shipBonusArmorRepAmountGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1863));
+			constexpr auto shipBonusHeavyDroneSpeedGC = MakeEffect(EffectID::shipBonusHeavyDroneSpeedGC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1864));
+			constexpr auto shipBonusHeavyDRoneTrackingGC = MakeEffect(EffectID::shipBonusHeavyDRoneTrackingGC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1865));
+			constexpr auto shipBonusSentryDroneOptimalRangeEliteBonusHeavyGunship2 = MakeEffect(EffectID::shipBonusSentryDroneOptimalRangeEliteBonusHeavyGunship2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1866));
+			constexpr auto shipBonusSentryDroneTrackingEliteBonusHeavyGunship2 = MakeEffect(EffectID::shipBonusSentryDroneTrackingEliteBonusHeavyGunship2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1867));
+			constexpr auto shipBonusShieldBoostAmountMC2 = MakeEffect(EffectID::shipBonusShieldBoostAmountMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1868));
+			constexpr auto roleBonusMarauderMJDRReactivationDelayBonus = MakeEffect(EffectID::roleBonusMarauderMJDRReactivationDelayBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1869));
+			constexpr auto subSystemBonusAmarrDefensiveInformationWarfare = MakeEffect(EffectID::subSystemBonusAmarrDefensiveInformationWarfare, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1870, &Modifiers::modifier1871, &Modifiers::modifier1872, &Modifiers::modifier1873, &Modifiers::modifier1874));
+			constexpr auto subSystemBonusAmarrDefensiveSkirmishWarfare = MakeEffect(EffectID::subSystemBonusAmarrDefensiveSkirmishWarfare, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1875, &Modifiers::modifier1876, &Modifiers::modifier1877, &Modifiers::modifier1878, &Modifiers::modifier1879));
+			constexpr auto subSystemBonusCaldariOffensiveCommandBursts = MakeEffect(EffectID::subSystemBonusCaldariOffensiveCommandBursts, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1880, &Modifiers::modifier1881, &Modifiers::modifier1882, &Modifiers::modifier1883, &Modifiers::modifier1884, &Modifiers::modifier1885, &Modifiers::modifier1886, &Modifiers::modifier1887, &Modifiers::modifier1888, &Modifiers::modifier1889, &Modifiers::modifier1890, &Modifiers::modifier1891, &Modifiers::modifier1892, &Modifiers::modifier1893, &Modifiers::modifier1894));
+			constexpr auto subSystemBonusCaldariDefensiveSkirmishWarfare = MakeEffect(EffectID::subSystemBonusCaldariDefensiveSkirmishWarfare, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1895, &Modifiers::modifier1896, &Modifiers::modifier1897, &Modifiers::modifier1898, &Modifiers::modifier1899));
+			constexpr auto subSystemBonusGallenteDefensiveSkirmishWarfare = MakeEffect(EffectID::subSystemBonusGallenteDefensiveSkirmishWarfare, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1900, &Modifiers::modifier1901, &Modifiers::modifier1902, &Modifiers::modifier1903, &Modifiers::modifier1904));
+			constexpr auto subSystemBonusGallenteOffensiveCommandBursts = MakeEffect(EffectID::subSystemBonusGallenteOffensiveCommandBursts, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1905, &Modifiers::modifier1906, &Modifiers::modifier1907, &Modifiers::modifier1908, &Modifiers::modifier1909, &Modifiers::modifier1910, &Modifiers::modifier1911, &Modifiers::modifier1912, &Modifiers::modifier1913, &Modifiers::modifier1914, &Modifiers::modifier1915, &Modifiers::modifier1916, &Modifiers::modifier1917, &Modifiers::modifier1918, &Modifiers::modifier1919));
+			constexpr auto subSystemBonusMinmatarDefensiveSiegeWarfare = MakeEffect(EffectID::subSystemBonusMinmatarDefensiveSiegeWarfare, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1920, &Modifiers::modifier1921, &Modifiers::modifier1922, &Modifiers::modifier1923, &Modifiers::modifier1924));
+			constexpr auto subSystemBonusMinmatarOffensiveCommandBursts = MakeEffect(EffectID::subSystemBonusMinmatarOffensiveCommandBursts, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1925, &Modifiers::modifier1926, &Modifiers::modifier1927, &Modifiers::modifier1928, &Modifiers::modifier1929, &Modifiers::modifier1930, &Modifiers::modifier1931, &Modifiers::modifier1932, &Modifiers::modifier1933, &Modifiers::modifier1934, &Modifiers::modifier1935, &Modifiers::modifier1936, &Modifiers::modifier1937, &Modifiers::modifier1938, &Modifiers::modifier1939));
+			constexpr auto commandShipSkillMultiplier3 = MakeEffect(EffectID::commandShipSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1940));
+			constexpr auto eliteBonusCommandShipArmoredCS3 = MakeEffect(EffectID::eliteBonusCommandShipArmoredCS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1941, &Modifiers::modifier1942, &Modifiers::modifier1943, &Modifiers::modifier1944, &Modifiers::modifier1945));
+			constexpr auto eliteBonusCommandShipSiegeCS3 = MakeEffect(EffectID::eliteBonusCommandShipSiegeCS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1946, &Modifiers::modifier1947, &Modifiers::modifier1948, &Modifiers::modifier1949, &Modifiers::modifier1950));
+			constexpr auto eliteBonusCommandShipSkirmishCS3 = MakeEffect(EffectID::eliteBonusCommandShipSkirmishCS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1951, &Modifiers::modifier1952, &Modifiers::modifier1953, &Modifiers::modifier1954, &Modifiers::modifier1955));
+			constexpr auto eliteBonusCommandShipInformationCS3 = MakeEffect(EffectID::eliteBonusCommandShipInformationCS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1956, &Modifiers::modifier1957, &Modifiers::modifier1958, &Modifiers::modifier1959, &Modifiers::modifier1960));
+			constexpr auto capacitorEmissionSystemskill = MakeEffect(EffectID::capacitorEmissionSystemskill, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1961));
+			constexpr auto shipBonusLargeEnergyTurretMaxRangeAB = MakeEffect(EffectID::shipBonusLargeEnergyTurretMaxRangeAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1962));
+			constexpr auto shipBonusHTFalloffGB2 = MakeEffect(EffectID::shipBonusHTFalloffGB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1963));
+			constexpr auto piCustomsOfficeTaxReduction = MakeEffect(EffectID::piCustomsOfficeTaxReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1964));
+			constexpr auto piTaxReductionModifierSkillModifier = MakeEffect(EffectID::piTaxReductionModifierSkillModifier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1965));
+			constexpr auto shipBonusRHMLROF2CB = MakeEffect(EffectID::shipBonusRHMLROF2CB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1966));
+			constexpr auto shipBonusRHMLROFCB = MakeEffect(EffectID::shipBonusRHMLROFCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1967));
+			constexpr auto shipBonusRHMLROFMB = MakeEffect(EffectID::shipBonusRHMLROFMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1968));
+			constexpr auto shipBonusCruiseROFMB = MakeEffect(EffectID::shipBonusCruiseROFMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1969));
+			constexpr auto shipBonusTorpedoROFMB = MakeEffect(EffectID::shipBonusTorpedoROFMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1970));
+			constexpr auto shipBonusCruiseMissileEMDmgMB = MakeEffect(EffectID::shipBonusCruiseMissileEMDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1971));
+			constexpr auto shipBonusCruiseMissileThermDmgMB = MakeEffect(EffectID::shipBonusCruiseMissileThermDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1972));
+			constexpr auto shipBonusCruiseMissileKineticDmgMB = MakeEffect(EffectID::shipBonusCruiseMissileKineticDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1973));
+			constexpr auto shipBonusCruiseMissileExploDmgMB = MakeEffect(EffectID::shipBonusCruiseMissileExploDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1974));
+			constexpr auto shipBonusTorpedoMissileExploDmgMB = MakeEffect(EffectID::shipBonusTorpedoMissileExploDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1975));
+			constexpr auto shipBonusTorpedoMissileEMDmgMB = MakeEffect(EffectID::shipBonusTorpedoMissileEMDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1976));
+			constexpr auto shipBonusTorpedoMissileThermDmgMB = MakeEffect(EffectID::shipBonusTorpedoMissileThermDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1977));
+			constexpr auto shipBonusTorpedoMissileKineticDmgMB = MakeEffect(EffectID::shipBonusTorpedoMissileKineticDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1978));
+			constexpr auto shipBonusHeavyMissileEMDmgMB = MakeEffect(EffectID::shipBonusHeavyMissileEMDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1979));
+			constexpr auto shipBonusHeavyMissileThermDmgMB = MakeEffect(EffectID::shipBonusHeavyMissileThermDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1980));
+			constexpr auto shipBonusHeavyMissileKineticDmgMB = MakeEffect(EffectID::shipBonusHeavyMissileKineticDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1981));
+			constexpr auto shipBonusHeavyMissileExploDmgMB = MakeEffect(EffectID::shipBonusHeavyMissileExploDmgMB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1982));
+			constexpr auto shipBonusMissileVelocityCC2 = MakeEffect(EffectID::shipBonusMissileVelocityCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1983));
+			constexpr auto covertOpsCloakCPUPercentRoleBonus = MakeEffect(EffectID::covertOpsCloakCPUPercentRoleBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1984));
+			constexpr auto shipArmorResistanceAF1 = MakeEffect(EffectID::shipArmorResistanceAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier532, &Modifiers::modifier533, &Modifiers::modifier534, &Modifiers::modifier535));
+			constexpr auto interceptor2ShieldResist = MakeEffect(EffectID::interceptor2ShieldResist, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1985, &Modifiers::modifier1986, &Modifiers::modifier1987, &Modifiers::modifier1988));
+			constexpr auto interceptor2ProjectileDamage = MakeEffect(EffectID::interceptor2ProjectileDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1989));
+			constexpr auto shipBonusSmallMissileExplosionRadiusCD2 = MakeEffect(EffectID::shipBonusSmallMissileExplosionRadiusCD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1990, &Modifiers::modifier1991));
+			constexpr auto shipBonusMissileVelocityAD2 = MakeEffect(EffectID::shipBonusMissileVelocityAD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1992));
+			constexpr auto eliteBonusInterdictorsArmorResist1 = MakeEffect(EffectID::eliteBonusInterdictorsArmorResist1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1993, &Modifiers::modifier1994, &Modifiers::modifier1995, &Modifiers::modifier1996));
+			constexpr auto setWarpSpeedMultiplier = MakeEffect(EffectID::setWarpSpeedMultiplier, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1997));
+			constexpr auto implantSetWarpSpeed = MakeEffect(EffectID::implantSetWarpSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1998));
+			constexpr auto shipBonusMETOptimalRangePirateFaction = MakeEffect(EffectID::shipBonusMETOptimalRangePirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier1999));
+			constexpr auto shipHybridOptimalGD1 = MakeEffect(EffectID::shipHybridOptimalGD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2000));
+			constexpr auto eliteBonusInterdictorsMWDSigRadius2 = MakeEffect(EffectID::eliteBonusInterdictorsMWDSigRadius2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2001));
+			constexpr auto shipSHTOptimalBonusGF = MakeEffect(EffectID::shipSHTOptimalBonusGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2002));
+			constexpr auto shipBonusRemoteRepairAmountPirateFaction = MakeEffect(EffectID::shipBonusRemoteRepairAmountPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2003));
+			constexpr auto shipBonusLETOptimalRangePirateFaction = MakeEffect(EffectID::shipBonusLETOptimalRangePirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2004));
+			constexpr auto eliteBonusMaraudersHeavyMissileDamageExpRole1 = MakeEffect(EffectID::eliteBonusMaraudersHeavyMissileDamageExpRole1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2005));
+			constexpr auto eliteBonusMaraudersHeavyMissileDamageKinRole1 = MakeEffect(EffectID::eliteBonusMaraudersHeavyMissileDamageKinRole1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2006));
+			constexpr auto eliteBonusMaraudersHeavyMissileDamageEMRole1 = MakeEffect(EffectID::eliteBonusMaraudersHeavyMissileDamageEMRole1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2007));
+			constexpr auto eliteBonusMaraudersHeavyMissileDamageThermRole1 = MakeEffect(EffectID::eliteBonusMaraudersHeavyMissileDamageThermRole1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2008));
+			constexpr auto shipScanProbeStrengthBonusPirateFaction = MakeEffect(EffectID::shipScanProbeStrengthBonusPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2009));
+			constexpr auto shipBonusRemoteRepairRangePirateFaction2 = MakeEffect(EffectID::shipBonusRemoteRepairRangePirateFaction2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2010, &Modifiers::modifier2011));
+			constexpr auto overloadSelfTrackingModuleBonus = MakeEffect(EffectID::overloadSelfTrackingModuleBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier2012, &Modifiers::modifier2013, &Modifiers::modifier2014));
+			constexpr auto overloadSelfSensorModuleBonus = MakeEffect(EffectID::overloadSelfSensorModuleBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier2015, &Modifiers::modifier2016, &Modifiers::modifier2017, &Modifiers::modifier2018, &Modifiers::modifier2019, &Modifiers::modifier2020));
+			constexpr auto overloadSelfPainterBonus = MakeEffect(EffectID::overloadSelfPainterBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier2021));
+			constexpr auto repairDroneHullBonusBonus = MakeEffect(EffectID::repairDroneHullBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2022));
+			constexpr auto shipMissileRoFMF2 = MakeEffect(EffectID::shipMissileRoFMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2023));
+			constexpr auto shipBonusSPTFalloffMF2 = MakeEffect(EffectID::shipBonusSPTFalloffMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2024));
+			constexpr auto miningAmountBonusBonusActivation = MakeEffect(EffectID::miningAmountBonusBonusActivation, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier2025));
+			constexpr auto ewSkillTrackingDisruptionRangeDisruptionBonus = MakeEffect(EffectID::ewSkillTrackingDisruptionRangeDisruptionBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2026, &Modifiers::modifier2027));
+			constexpr auto shipBonusEwWeaponDisruptionStrengthRookie = MakeEffect(EffectID::shipBonusEwWeaponDisruptionStrengthRookie, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2028, &Modifiers::modifier2029, &Modifiers::modifier2030, &Modifiers::modifier2031, &Modifiers::modifier2032, &Modifiers::modifier2033, &Modifiers::modifier2034));
+			constexpr auto shipBonusAfterburnerSpeedFactor2CB = MakeEffect(EffectID::shipBonusAfterburnerSpeedFactor2CB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2035));
+			constexpr auto shipBonusSentryDroneDamageMultiplierPirateFaction = MakeEffect(EffectID::shipBonusSentryDroneDamageMultiplierPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2036));
+			constexpr auto shipBonusHeavyDroneDamageMultiplierPirateFaction = MakeEffect(EffectID::shipBonusHeavyDroneDamageMultiplierPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2037));
+			constexpr auto shipBonusSentryDroneHPPirateFaction = MakeEffect(EffectID::shipBonusSentryDroneHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2038));
+			constexpr auto shipBonusSentryDroneArmorHpPirateFaction = MakeEffect(EffectID::shipBonusSentryDroneArmorHpPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2039));
+			constexpr auto shipBonusSentryDroneShieldHpPirateFaction = MakeEffect(EffectID::shipBonusSentryDroneShieldHpPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2040));
+			constexpr auto shipBonusHeavyDroneShieldHpPirateFaction = MakeEffect(EffectID::shipBonusHeavyDroneShieldHpPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2041));
+			constexpr auto shipBonusHeavyDroneArmorHpPirateFaction = MakeEffect(EffectID::shipBonusHeavyDroneArmorHpPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2042));
+			constexpr auto shipBonusHeavyDroneHPPirateFaction = MakeEffect(EffectID::shipBonusHeavyDroneHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2043));
+			constexpr auto shipBonusKineticMissileDamageGB2 = MakeEffect(EffectID::shipBonusKineticMissileDamageGB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2044));
+			constexpr auto shipBonusThermalMissileDamageGB2 = MakeEffect(EffectID::shipBonusThermalMissileDamageGB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2045));
+			constexpr auto shipBonusAfterburnerSpeedFactorCF2 = MakeEffect(EffectID::shipBonusAfterburnerSpeedFactorCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2046));
+			constexpr auto shipBonusKineticMissileDamageGF = MakeEffect(EffectID::shipBonusKineticMissileDamageGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2047));
+			constexpr auto shipBonusThermalMissileDamageGF = MakeEffect(EffectID::shipBonusThermalMissileDamageGF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2048));
+			constexpr auto shipBonusLightDroneDamageMultiplierPirateFaction = MakeEffect(EffectID::shipBonusLightDroneDamageMultiplierPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2049));
+			constexpr auto shipBonusLightDroneHPPirateFaction = MakeEffect(EffectID::shipBonusLightDroneHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2050));
+			constexpr auto shipBonusLightDroneArmorHPPirateFaction = MakeEffect(EffectID::shipBonusLightDroneArmorHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2051));
+			constexpr auto shipBonusLightDroneShieldHPPirateFaction = MakeEffect(EffectID::shipBonusLightDroneShieldHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2052));
+			constexpr auto shipBonusAfterburnerSpeedFactorCC2 = MakeEffect(EffectID::shipBonusAfterburnerSpeedFactorCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2053));
+			constexpr auto shipBonusMediumDroneDamageMultiplierPirateFaction = MakeEffect(EffectID::shipBonusMediumDroneDamageMultiplierPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2054));
+			constexpr auto shipBonusMediumDroneHPPirateFaction = MakeEffect(EffectID::shipBonusMediumDroneHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2055));
+			constexpr auto shipBonusMediumDroneArmorHPPirateFaction = MakeEffect(EffectID::shipBonusMediumDroneArmorHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2056));
+			constexpr auto shipBonusMediumDroneShieldHPPirateFaction = MakeEffect(EffectID::shipBonusMediumDroneShieldHPPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2057));
+			constexpr auto shipBonusKineticMissileDamageGC2 = MakeEffect(EffectID::shipBonusKineticMissileDamageGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2058));
+			constexpr auto shipBonusThermalMissileDamageGC2 = MakeEffect(EffectID::shipBonusThermalMissileDamageGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2059));
+			constexpr auto shipBonusTDOptimalBonusAF1 = MakeEffect(EffectID::shipBonusTDOptimalBonusAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2060));
+			constexpr auto shipBonusMiningDurationORE3 = MakeEffect(EffectID::shipBonusMiningDurationORE3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2061));
+			constexpr auto shipBonusMiningIceHarvestingRangeORE2 = MakeEffect(EffectID::shipBonusMiningIceHarvestingRangeORE2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2062, &Modifiers::modifier2063));
+			constexpr auto eliteBargeShieldResistance1 = MakeEffect(EffectID::eliteBargeShieldResistance1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2064, &Modifiers::modifier2065, &Modifiers::modifier2066, &Modifiers::modifier2067));
+			constexpr auto eliteBargeBonusMiningDurationBarge2 = MakeEffect(EffectID::eliteBargeBonusMiningDurationBarge2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2068));
+			constexpr auto expeditionFrigateSkillLevelPostMulEliteBonusExpedition1 = MakeEffect(EffectID::expeditionFrigateSkillLevelPostMulEliteBonusExpedition1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2069));
+			constexpr auto expeditionFrigateSkillLevelPostMulEliteBonusExpedition2 = MakeEffect(EffectID::expeditionFrigateSkillLevelPostMulEliteBonusExpedition2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2070));
+			constexpr auto eliteBonusExpeditionMining1 = MakeEffect(EffectID::eliteBonusExpeditionMining1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2071));
+			constexpr auto eliteBonusExpeditionSigRadius2 = MakeEffect(EffectID::eliteBonusExpeditionSigRadius2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2072));
+			constexpr auto shipBonusNosferatuOverride = MakeEffect(EffectID::shipBonusNosferatuOverride, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2073));
+			constexpr auto shipMissileEMDamageCB = MakeEffect(EffectID::shipMissileEMDamageCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2074));
+			constexpr auto shipMissileKinDamageCB = MakeEffect(EffectID::shipMissileKinDamageCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2075));
+			constexpr auto shipMissileThermDamageCB = MakeEffect(EffectID::shipMissileThermDamageCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2076));
+			constexpr auto shipMissileExploDamageCB = MakeEffect(EffectID::shipMissileExploDamageCB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2077));
+			constexpr auto shipBonusWarpScrambleMaxRangeGB = MakeEffect(EffectID::shipBonusWarpScrambleMaxRangeGB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2078));
+			constexpr auto shipBonusMissileExplosionDelayPirateFaction2 = MakeEffect(EffectID::shipBonusMissileExplosionDelayPirateFaction2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2079));
+			constexpr auto drawbackCargoCapacity = MakeEffect(EffectID::drawbackCargoCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2080));
+			constexpr auto eliteIndustrialWarpSpeedBonus1 = MakeEffect(EffectID::eliteIndustrialWarpSpeedBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2081));
+			constexpr auto shipBonusShieldBoostCI2 = MakeEffect(EffectID::shipBonusShieldBoostCI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2082));
+			constexpr auto shipBonusShieldBoostMI2 = MakeEffect(EffectID::shipBonusShieldBoostMI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2083));
+			constexpr auto shipBonusArmorRepairAI2 = MakeEffect(EffectID::shipBonusArmorRepairAI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2084));
+			constexpr auto shipBonusArmorRepairGI2 = MakeEffect(EffectID::shipBonusArmorRepairGI2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2085));
+			constexpr auto eliteIndustrialFleetCapacity1 = MakeEffect(EffectID::eliteIndustrialFleetCapacity1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2086));
+			constexpr auto eliteIndustrialShieldResists2 = MakeEffect(EffectID::eliteIndustrialShieldResists2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2087, &Modifiers::modifier2088, &Modifiers::modifier2089, &Modifiers::modifier2090));
+			constexpr auto eliteIndustrialArmorResists2 = MakeEffect(EffectID::eliteIndustrialArmorResists2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2091, &Modifiers::modifier2092, &Modifiers::modifier2093, &Modifiers::modifier2094));
+			constexpr auto eliteIndustrialABHeatBonus = MakeEffect(EffectID::eliteIndustrialABHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2095));
+			constexpr auto eliteIndustrialMWDHeatBonus = MakeEffect(EffectID::eliteIndustrialMWDHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2096));
+			constexpr auto eliteIndustrialArmorHardenerHeatBonus = MakeEffect(EffectID::eliteIndustrialArmorHardenerHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2097));
+			constexpr auto eliteIndustrialReactiveArmorHardenerHeatBonus = MakeEffect(EffectID::eliteIndustrialReactiveArmorHardenerHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2098));
+			constexpr auto eliteIndustrialShieldHardenerHeatBonus = MakeEffect(EffectID::eliteIndustrialShieldHardenerHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2099));
+			constexpr auto eliteIndustrialShieldBoosterHeatBonus = MakeEffect(EffectID::eliteIndustrialShieldBoosterHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2100, &Modifiers::modifier2101));
+			constexpr auto eliteIndustrialArmorRepairHeatBonus = MakeEffect(EffectID::eliteIndustrialArmorRepairHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2102, &Modifiers::modifier2103));
+			constexpr auto warpSpeedAddition = MakeEffect(EffectID::warpSpeedAddition, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2104));
+			constexpr auto roleBonusBulkheadCPU = MakeEffect(EffectID::roleBonusBulkheadCPU, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2105));
+			constexpr auto advancedIndustryManufacturingTimeBonusPostPercent = MakeEffect(EffectID::advancedIndustryManufacturingTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2106));
+			constexpr auto advancedIndustryCopyTimeBonusPostPercent = MakeEffect(EffectID::advancedIndustryCopyTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2107));
+			constexpr auto advancedIndustryInventionTimeBonusPostPercent = MakeEffect(EffectID::advancedIndustryInventionTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2108));
+			constexpr auto advancedIndustrySkillBoostAdvancedIndustrySkillIndustryJobTimeBonus = MakeEffect(EffectID::advancedIndustrySkillBoostAdvancedIndustrySkillIndustryJobTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2109));
+			constexpr auto advancedIndustryManufactureTimeResearchTimeBonusPostPercent = MakeEffect(EffectID::advancedIndustryManufactureTimeResearchTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2110));
+			constexpr auto advancedIndustryMaterialResearchTimeBonusPostPercent = MakeEffect(EffectID::advancedIndustryMaterialResearchTimeBonusPostPercent, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2111));
+			constexpr auto onlineJumpDriveConsumptionAmountBonusPercentage = MakeEffect(EffectID::onlineJumpDriveConsumptionAmountBonusPercentage, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier1001));
+			constexpr auto warpScrambleBlockMWDWithNPCEffect = MakeEffect(EffectID::warpScrambleBlockMWDWithNPCEffect, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier9, &Modifiers::modifier2112, &Modifiers::modifier2113));
+			constexpr auto shipBonusSmallMissileExplosionRadiusCF2 = MakeEffect(EffectID::shipBonusSmallMissileExplosionRadiusCF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2114, &Modifiers::modifier2115));
+			constexpr auto shipRocketRoFBonusAF2 = MakeEffect(EffectID::shipRocketRoFBonusAF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2116));
+			constexpr auto eliteBonusInterdictorsSHTRoF1 = MakeEffect(EffectID::eliteBonusInterdictorsSHTRoF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2117));
+			constexpr auto shipMissileLauncherRoFAD1Fixed = MakeEffect(EffectID::shipMissileLauncherRoFAD1Fixed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2118));
+			constexpr auto cloakingPrototype = MakeEffect(EffectID::cloakingPrototype, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier215));
+			constexpr auto drawbackWarpSpeed = MakeEffect(EffectID::drawbackWarpSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2119));
+			constexpr auto shipMETDamageBonusAC2 = MakeEffect(EffectID::shipMETDamageBonusAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2120));
+			constexpr auto eliteBonusHeavyInterdictorsMETOptimal = MakeEffect(EffectID::eliteBonusHeavyInterdictorsMETOptimal, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2121));
+			constexpr auto shipHybridTrackingGC = MakeEffect(EffectID::shipHybridTrackingGC, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2122));
+			constexpr auto eliteBonusHeavyInterdictorsHybridOptimal1 = MakeEffect(EffectID::eliteBonusHeavyInterdictorsHybridOptimal1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2123));
+			constexpr auto resistanceKillerShieldAll = MakeEffect(EffectID::resistanceKillerShieldAll, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2124, &Modifiers::modifier2125, &Modifiers::modifier2126, &Modifiers::modifier2127));
+			constexpr auto resistanceKillerArmorAll = MakeEffect(EffectID::resistanceKillerArmorAll, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2128, &Modifiers::modifier2129, &Modifiers::modifier2130, &Modifiers::modifier2131));
+			constexpr auto resistanceKillerHullAll = MakeEffect(EffectID::resistanceKillerHullAll, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2132, &Modifiers::modifier2133, &Modifiers::modifier2134, &Modifiers::modifier2135));
+			constexpr auto resistanceKillerShieldArmorAll = MakeEffect(EffectID::resistanceKillerShieldArmorAll, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2124, &Modifiers::modifier2125, &Modifiers::modifier2126, &Modifiers::modifier2127, &Modifiers::modifier2128, &Modifiers::modifier2129, &Modifiers::modifier2130, &Modifiers::modifier2131));
+			constexpr auto freighterO1SkillLevel = MakeEffect(EffectID::freighterO1SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2136));
+			constexpr auto freighterO2SkillLevel = MakeEffect(EffectID::freighterO2SkillLevel, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2137));
+			constexpr auto freighterSMACapacityBonusO1 = MakeEffect(EffectID::freighterSMACapacityBonusO1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2138));
+			constexpr auto freighterAgilityBonus2O2 = MakeEffect(EffectID::freighterAgilityBonus2O2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2139));
+			constexpr auto tacticalDestroyerAmarrSkillLevel1 = MakeEffect(EffectID::tacticalDestroyerAmarrSkillLevel1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2140));
+			constexpr auto tacticalDestroyerAmarrSkillLevel2 = MakeEffect(EffectID::tacticalDestroyerAmarrSkillLevel2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2141));
+			constexpr auto tacticalDestroyerAmarrSkillLevel3 = MakeEffect(EffectID::tacticalDestroyerAmarrSkillLevel3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2142));
+			constexpr auto shipSETDamageAmarrTacticalDestroyer1 = MakeEffect(EffectID::shipSETDamageAmarrTacticalDestroyer1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2143));
+			constexpr auto shipSETCapNeedAmarrTacticalDestroyer2 = MakeEffect(EffectID::shipSETCapNeedAmarrTacticalDestroyer2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2144));
+			constexpr auto shipHeatDamageAmarrTacticalDestroyer3 = MakeEffect(EffectID::shipHeatDamageAmarrTacticalDestroyer3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2145));
+			constexpr auto probeLauncherCPUPercentRoleBonusT3 = MakeEffect(EffectID::probeLauncherCPUPercentRoleBonusT3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2146));
+			constexpr auto shipModeMaxTargetRangePostDiv = MakeEffect(EffectID::shipModeMaxTargetRangePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2147));
+			constexpr auto shipModeSETOptimalRangePostDiv = MakeEffect(EffectID::shipModeSETOptimalRangePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2148));
+			constexpr auto shipModeScanStrengthPostDiv = MakeEffect(EffectID::shipModeScanStrengthPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2149, &Modifiers::modifier2150, &Modifiers::modifier2151, &Modifiers::modifier2152));
+			constexpr auto modeSigRadiusPostDiv = MakeEffect(EffectID::modeSigRadiusPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2153));
+			constexpr auto modeArmorResonancePostDiv = MakeEffect(EffectID::modeArmorResonancePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2154, &Modifiers::modifier2155, &Modifiers::modifier2156, &Modifiers::modifier2157));
+			constexpr auto modeAgilityPostDiv = MakeEffect(EffectID::modeAgilityPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2158));
+			constexpr auto modeVelocityPostDiv = MakeEffect(EffectID::modeVelocityPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2159));
+			constexpr auto shipBonusEnergyNeutOptimalRS3 = MakeEffect(EffectID::shipBonusEnergyNeutOptimalRS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2160));
+			constexpr auto shipBonusEnergyNosOptimalRS3 = MakeEffect(EffectID::shipBonusEnergyNosOptimalRS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2161));
+			constexpr auto reconShipSkillMultiplier3 = MakeEffect(EffectID::reconShipSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2162));
+			constexpr auto eliteReconBonusMHTOptimalRange1 = MakeEffect(EffectID::eliteReconBonusMHTOptimalRange1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2163));
+			constexpr auto eliteReconBonusMPTdamage1 = MakeEffect(EffectID::eliteReconBonusMPTdamage1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2164));
+			constexpr auto remoteCapacitorTransmitterPowerNeedBonusEffect = MakeEffect(EffectID::remoteCapacitorTransmitterPowerNeedBonusEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2165));
+			constexpr auto tacticalDestroyerMinmatarSkillLevel1 = MakeEffect(EffectID::tacticalDestroyerMinmatarSkillLevel1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2166));
+			constexpr auto tacticalDestroyerMinmatarSkillLevel2 = MakeEffect(EffectID::tacticalDestroyerMinmatarSkillLevel2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2167));
+			constexpr auto tacticalDestroyerMinmatarSkillLevel3 = MakeEffect(EffectID::tacticalDestroyerMinmatarSkillLevel3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2168));
+			constexpr auto shipHeatDamageMinmatarTacticalDestroyer3 = MakeEffect(EffectID::shipHeatDamageMinmatarTacticalDestroyer3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2169));
+			constexpr auto shipSPTDamageMinmatarTacticalDestroyer1 = MakeEffect(EffectID::shipSPTDamageMinmatarTacticalDestroyer1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2170));
+			constexpr auto shipSPTOptimalMinmatarTacticalDestroyer2 = MakeEffect(EffectID::shipSPTOptimalMinmatarTacticalDestroyer2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2171));
+			constexpr auto shipModeSPTTrackingPostDiv = MakeEffect(EffectID::shipModeSPTTrackingPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2172));
+			constexpr auto modeMWDSigRadiusPostDiv = MakeEffect(EffectID::modeMWDSigRadiusPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2173));
+			constexpr auto modeShieldResonancePostDiv = MakeEffect(EffectID::modeShieldResonancePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2174, &Modifiers::modifier2175, &Modifiers::modifier2176, &Modifiers::modifier2177));
+			constexpr auto subsystemBonusCaldariDefensiveShieldRechargeRate = MakeEffect(EffectID::subsystemBonusCaldariDefensiveShieldRechargeRate, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2178));
+			constexpr auto gallenteCruiserSkillLevelPreMulShipBonusGC3Ship = MakeEffect(EffectID::gallenteCruiserSkillLevelPreMulShipBonusGC3Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2179));
+			constexpr auto shipBonusSentryDamageMultiplierGC3 = MakeEffect(EffectID::shipBonusSentryDamageMultiplierGC3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2180));
+			constexpr auto shipBonusSentryHPGC3 = MakeEffect(EffectID::shipBonusSentryHPGC3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2181));
+			constexpr auto shipBonusSentryArmorHPGC3 = MakeEffect(EffectID::shipBonusSentryArmorHPGC3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2182));
+			constexpr auto shipBonusSentryShieldHPGC3 = MakeEffect(EffectID::shipBonusSentryShieldHPGC3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2183));
+			constexpr auto shipBonusLightDroneDamageMultiplierGC2 = MakeEffect(EffectID::shipBonusLightDroneDamageMultiplierGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2184));
+			constexpr auto shipBonusMediumDroneDamageMultiplierGC2 = MakeEffect(EffectID::shipBonusMediumDroneDamageMultiplierGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2185));
+			constexpr auto shipBonusHeavyDroneDamageMultiplierGC2 = MakeEffect(EffectID::shipBonusHeavyDroneDamageMultiplierGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2186));
+			constexpr auto shipBonusHeavyDroneHPGC2 = MakeEffect(EffectID::shipBonusHeavyDroneHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2187));
+			constexpr auto shipBonusHeavyDroneArmorHPGC2 = MakeEffect(EffectID::shipBonusHeavyDroneArmorHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2188));
+			constexpr auto shipBonusHeavyDroneShieldHPGC2 = MakeEffect(EffectID::shipBonusHeavyDroneShieldHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2189));
+			constexpr auto shipBonusMediumDroneShieldHPGC2 = MakeEffect(EffectID::shipBonusMediumDroneShieldHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2190));
+			constexpr auto shipBonusMediumDroneArmorHPGC2 = MakeEffect(EffectID::shipBonusMediumDroneArmorHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2191));
+			constexpr auto shipBonusMediumDroneHPGC2 = MakeEffect(EffectID::shipBonusMediumDroneHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2192));
+			constexpr auto shipBonusLightDroneHPGC2 = MakeEffect(EffectID::shipBonusLightDroneHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2193));
+			constexpr auto shipBonusLightDroneArmorHPGC2 = MakeEffect(EffectID::shipBonusLightDroneArmorHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2194));
+			constexpr auto shipBonusLightDroneShieldHPGC2 = MakeEffect(EffectID::shipBonusLightDroneShieldHPGC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2195));
+			constexpr auto entosisLink = MakeEffect(EffectID::entosisLink, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto shipModeMissileVelocityPostDiv = MakeEffect(EffectID::shipModeMissileVelocityPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2196));
+			constexpr auto shipHeatDamageCaldariTacticalDestroyer3 = MakeEffect(EffectID::shipHeatDamageCaldariTacticalDestroyer3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2197));
+			constexpr auto tacticalDestroyerCaldariSkillLevel1 = MakeEffect(EffectID::tacticalDestroyerCaldariSkillLevel1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2198));
+			constexpr auto tacticalDestroyerCaldariSkillLevel2 = MakeEffect(EffectID::tacticalDestroyerCaldariSkillLevel2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2199));
+			constexpr auto tacticalDestroyerCaldariSkillLevel3 = MakeEffect(EffectID::tacticalDestroyerCaldariSkillLevel3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2200));
+			constexpr auto shipSmallMissileDmgPirateFaction = MakeEffect(EffectID::shipSmallMissileDmgPirateFaction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2201, &Modifiers::modifier2202, &Modifiers::modifier2203, &Modifiers::modifier2204, &Modifiers::modifier2205, &Modifiers::modifier2206, &Modifiers::modifier2207, &Modifiers::modifier2208));
+			constexpr auto shipMissileRoFCaldariTacticalDestroyer1 = MakeEffect(EffectID::shipMissileRoFCaldariTacticalDestroyer1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2209));
+			constexpr auto shipBonusHeavyAssaultMissileAllDamageMC2 = MakeEffect(EffectID::shipBonusHeavyAssaultMissileAllDamageMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2210, &Modifiers::modifier2211, &Modifiers::modifier2212, &Modifiers::modifier2213));
+			constexpr auto shipBonusHeavyMissileAllDamageMC2 = MakeEffect(EffectID::shipBonusHeavyMissileAllDamageMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2214, &Modifiers::modifier2215, &Modifiers::modifier2216, &Modifiers::modifier2217));
+			constexpr auto shipBonusLightMissileAllDamageMC2 = MakeEffect(EffectID::shipBonusLightMissileAllDamageMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2218, &Modifiers::modifier2219, &Modifiers::modifier2220, &Modifiers::modifier2221));
+			constexpr auto shipMissileReloadTimeCaldariTacticalDestroyer2 = MakeEffect(EffectID::shipMissileReloadTimeCaldariTacticalDestroyer2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2222));
+			constexpr auto entosisDurationMultiply = MakeEffect(EffectID::entosisDurationMultiply, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2223));
+			constexpr auto missileVelocityBonusOnline = MakeEffect(EffectID::missileVelocityBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2224));
+			constexpr auto missileExplosionDelayBonusOnline = MakeEffect(EffectID::missileExplosionDelayBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2225));
+			constexpr auto missileAOECloudSizeBonusOnline = MakeEffect(EffectID::missileAOECloudSizeBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2226));
+			constexpr auto missileAOEVelocityBonusOnline = MakeEffect(EffectID::missileAOEVelocityBonusOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2227));
+			constexpr auto scriptMissileGuidanceComputerAOECloudSizeBonusBonus = MakeEffect(EffectID::scriptMissileGuidanceComputerAOECloudSizeBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2228));
+			constexpr auto scriptMissileGuidanceComputerAOEVelocityBonusBonus = MakeEffect(EffectID::scriptMissileGuidanceComputerAOEVelocityBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2229));
+			constexpr auto scriptMissileGuidanceComputerMissileVelocityBonusBonus = MakeEffect(EffectID::scriptMissileGuidanceComputerMissileVelocityBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2230));
+			constexpr auto scriptMissileGuidanceComputerExplosionDelayBonusBonus = MakeEffect(EffectID::scriptMissileGuidanceComputerExplosionDelayBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2231));
+			constexpr auto missileGuidanceComputerBonus4 = MakeEffect(EffectID::missileGuidanceComputerBonus4, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier2224, &Modifiers::modifier2225, &Modifiers::modifier2226, &Modifiers::modifier2227));
+			constexpr auto overloadSelfMissileGuidanceBonus5 = MakeEffect(EffectID::overloadSelfMissileGuidanceBonus5, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier2232, &Modifiers::modifier2233, &Modifiers::modifier2234, &Modifiers::modifier2235, &Modifiers::modifier2236));
+			constexpr auto tacticalDestroyerGallenteSkillLevel1 = MakeEffect(EffectID::tacticalDestroyerGallenteSkillLevel1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2237));
+			constexpr auto tacticalDestroyerGallenteSkillLevel2 = MakeEffect(EffectID::tacticalDestroyerGallenteSkillLevel2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2238));
+			constexpr auto tacticalDestroyerGallenteSkillLevel3 = MakeEffect(EffectID::tacticalDestroyerGallenteSkillLevel3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2239));
+			constexpr auto shipHeatDamageGallenteTacticalDestroyer3 = MakeEffect(EffectID::shipHeatDamageGallenteTacticalDestroyer3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2240));
+			constexpr auto shipSHTRoFGallenteTacticalDestroyer1 = MakeEffect(EffectID::shipSHTRoFGallenteTacticalDestroyer1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2241));
+			constexpr auto shipSHTTrackingGallenteTacticalDestroyer2 = MakeEffect(EffectID::shipSHTTrackingGallenteTacticalDestroyer2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2242));
+			constexpr auto modeHullResonancePostDiv = MakeEffect(EffectID::modeHullResonancePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2243, &Modifiers::modifier2244, &Modifiers::modifier2245, &Modifiers::modifier2246));
+			constexpr auto shipModeSHTOptimalRangePostDiv = MakeEffect(EffectID::shipModeSHTOptimalRangePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2247));
+			constexpr auto modeMWDCapPostDiv = MakeEffect(EffectID::modeMWDCapPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2248));
+			constexpr auto modeMWDBoostPostDiv = MakeEffect(EffectID::modeMWDBoostPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2249));
+			constexpr auto modeArmorRepDurationPostDiv = MakeEffect(EffectID::modeArmorRepDurationPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2250));
+			constexpr auto passiveSpeedLimit = MakeEffect(EffectID::passiveSpeedLimit, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2251));
+			constexpr auto shipBonusWDFGnullPenalties = MakeEffect(EffectID::shipBonusWDFGnullPenalties, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2252, &Modifiers::modifier2253, &Modifiers::modifier2254));
+			constexpr auto entosisCPUPenalty = MakeEffect(EffectID::entosisCPUPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2255));
+			constexpr auto entosisCPUAddition = MakeEffect(EffectID::entosisCPUAddition, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2256));
+			constexpr auto battlecruiserMETRange = MakeEffect(EffectID::battlecruiserMETRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2257, &Modifiers::modifier2258));
+			constexpr auto battlecruiserMHTRange = MakeEffect(EffectID::battlecruiserMHTRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2259, &Modifiers::modifier2260));
+			constexpr auto battlecruiserMPTRange = MakeEffect(EffectID::battlecruiserMPTRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2261, &Modifiers::modifier2262));
+			constexpr auto battlecruiserMissileRange = MakeEffect(EffectID::battlecruiserMissileRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2263));
+			constexpr auto battlecruiserDroneSpeed = MakeEffect(EffectID::battlecruiserDroneSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2264));
+			constexpr auto shipHybridDmg1CBC2 = MakeEffect(EffectID::shipHybridDmg1CBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2265));
+			constexpr auto shipBonusProjectileTrackingMBC2 = MakeEffect(EffectID::shipBonusProjectileTrackingMBC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2266));
+			constexpr auto shipModuleRemoteCapacitorTransmitter = MakeEffect(EffectID::shipModuleRemoteCapacitorTransmitter, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier2267));
+			constexpr auto shipModuleRemoteHullRepairer = MakeEffect(EffectID::shipModuleRemoteHullRepairer, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier2268));
+			constexpr auto shipModuleRemoteShieldBooster = MakeEffect(EffectID::shipModuleRemoteShieldBooster, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier4));
+			constexpr auto energyNeutralizerFalloff = MakeEffect(EffectID::energyNeutralizerFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier2269));
+			constexpr auto shipModuleRemoteArmorRepairer = MakeEffect(EffectID::shipModuleRemoteArmorRepairer, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier207));
+			constexpr auto expeditionFrigateShieldResistance1 = MakeEffect(EffectID::expeditionFrigateShieldResistance1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2270, &Modifiers::modifier2271, &Modifiers::modifier2272, &Modifiers::modifier2273));
+			constexpr auto expeditionFrigateBonusIceHarvestingCycleTime2 = MakeEffect(EffectID::expeditionFrigateBonusIceHarvestingCycleTime2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2274));
+			constexpr auto energyNosferatuFalloff = MakeEffect(EffectID::energyNosferatuFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier2269));
+			constexpr auto doomsdaySlash = MakeEffect(EffectID::doomsdaySlash, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto microJumpPortalDrive = MakeEffect(EffectID::microJumpPortalDrive, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto commandDestroyerSkillMultiplier1 = MakeEffect(EffectID::commandDestroyerSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2275));
+			constexpr auto commandDestroyerSkillMultiplier2 = MakeEffect(EffectID::commandDestroyerSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2276));
+			constexpr auto commandDestroyerSkillMultiplier3 = MakeEffect(EffectID::commandDestroyerSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2277));
+			constexpr auto roleBonusCDLinksPGReduction = MakeEffect(EffectID::roleBonusCDLinksPGReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2278));
+			constexpr auto structureEnergyNeutralizerFalloff = MakeEffect(EffectID::structureEnergyNeutralizerFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto structureWarpScrambleBlockMWDWithNPCEffect = MakeEffect(EffectID::structureWarpScrambleBlockMWDWithNPCEffect, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier9, &Modifiers::modifier2112, &Modifiers::modifier2113));
+			constexpr auto structureTargetMaxTargetRangeAndScanResolutionBonusAssistance = MakeEffect(EffectID::structureTargetMaxTargetRangeAndScanResolutionBonusAssistance, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier2279, &Modifiers::modifier2280));
+			constexpr auto structureTargetGunneryMaxRangeFalloffTrackingSpeedBonusAssistance = MakeEffect(EffectID::structureTargetGunneryMaxRangeFalloffTrackingSpeedBonusAssistance, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier2281, &Modifiers::modifier2282, &Modifiers::modifier2283));
+			constexpr auto structureMissileGuidanceComputerBonus4 = MakeEffect(EffectID::structureMissileGuidanceComputerBonus4, MetaInfo::Effect::Category::active, false, true, _modifiers(&Modifiers::modifier2224, &Modifiers::modifier2225, &Modifiers::modifier2226, &Modifiers::modifier2227));
+			constexpr auto shipBonusEnergyNeutOptimalRS1 = MakeEffect(EffectID::shipBonusEnergyNeutOptimalRS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2284));
+			constexpr auto shipBonusEnergyNeutFalloffRS2 = MakeEffect(EffectID::shipBonusEnergyNeutFalloffRS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2285));
+			constexpr auto shipBonusEnergyNeutFalloffRS3 = MakeEffect(EffectID::shipBonusEnergyNeutFalloffRS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2286));
+			constexpr auto shipBonusEnergyNosOptimalRS1 = MakeEffect(EffectID::shipBonusEnergyNosOptimalRS1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2287));
+			constexpr auto shipBonusEnergyNosFalloffRS2 = MakeEffect(EffectID::shipBonusEnergyNosFalloffRS2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2288));
+			constexpr auto shipBonusEnergyNosFalloffRS3 = MakeEffect(EffectID::shipBonusEnergyNosFalloffRS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2289));
+			constexpr auto miningFrigateBonusIceHarvestingCycleTime2 = MakeEffect(EffectID::miningFrigateBonusIceHarvestingCycleTime2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2290));
+			constexpr auto shipBonusEnergyNeutFalloffAD1 = MakeEffect(EffectID::shipBonusEnergyNeutFalloffAD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2291));
+			constexpr auto shipBonusEnergyNeutOptimalAD2 = MakeEffect(EffectID::shipBonusEnergyNeutOptimalAD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2292));
+			constexpr auto shipBonusEnergyNosOptimalAD2 = MakeEffect(EffectID::shipBonusEnergyNosOptimalAD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2293));
+			constexpr auto shipBonusEnergyNosFalloffAD1 = MakeEffect(EffectID::shipBonusEnergyNosFalloffAD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2294));
+			constexpr auto shipBonusEnergyNeutOptimalAB = MakeEffect(EffectID::shipBonusEnergyNeutOptimalAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2295));
+			constexpr auto shipBonusEnergyNeutFalloffAB2 = MakeEffect(EffectID::shipBonusEnergyNeutFalloffAB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2296));
+			constexpr auto shipBonusEnergyNosOptimalAB = MakeEffect(EffectID::shipBonusEnergyNosOptimalAB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2297));
+			constexpr auto shipBonusEnergyNosFalloffAB2 = MakeEffect(EffectID::shipBonusEnergyNosFalloffAB2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2298));
+			constexpr auto shipBonusEnergyNeutOptimalEAF1 = MakeEffect(EffectID::shipBonusEnergyNeutOptimalEAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2299));
+			constexpr auto shipBonusEnergyNeutFalloffEAF3 = MakeEffect(EffectID::shipBonusEnergyNeutFalloffEAF3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2300));
+			constexpr auto shipBonusEnergyNosOptimalEAF1 = MakeEffect(EffectID::shipBonusEnergyNosOptimalEAF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2301));
+			constexpr auto shipBonusEnergyNosFalloffEAF3 = MakeEffect(EffectID::shipBonusEnergyNosFalloffEAF3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2302));
+			constexpr auto electronicAttackShipsSkillMultiplier3 = MakeEffect(EffectID::electronicAttackShipsSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2303));
+			constexpr auto shipBonusEnergyNeutOptimalAF2 = MakeEffect(EffectID::shipBonusEnergyNeutOptimalAF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2304));
+			constexpr auto shipBonusEnergyNeutFalloffAF3 = MakeEffect(EffectID::shipBonusEnergyNeutFalloffAF3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2305));
+			constexpr auto shipBonusEnergyNosOptimalAF2 = MakeEffect(EffectID::shipBonusEnergyNosOptimalAF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2306));
+			constexpr auto shipBonusEnergyNosFalloffAF3 = MakeEffect(EffectID::shipBonusEnergyNosFalloffAF3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2307));
+			constexpr auto amarrCruiserSkillLevelPreMulShipBonusAC3Ship = MakeEffect(EffectID::amarrCruiserSkillLevelPreMulShipBonusAC3Ship, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2308));
+			constexpr auto shipBonusEnergyNeutOptimalAC1 = MakeEffect(EffectID::shipBonusEnergyNeutOptimalAC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2309));
+			constexpr auto shipBonusEnergyNeutFalloffAC3 = MakeEffect(EffectID::shipBonusEnergyNeutFalloffAC3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2310));
+			constexpr auto shipBonusEnergyNosOptimalAC1 = MakeEffect(EffectID::shipBonusEnergyNosOptimalAC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2311));
+			constexpr auto shipBonusNosOptimalFalloffAC2 = MakeEffect(EffectID::shipBonusNosOptimalFalloffAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2312, &Modifiers::modifier2313));
+			constexpr auto shipBonusEnergyNosFalloffAC3 = MakeEffect(EffectID::shipBonusEnergyNosFalloffAC3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2314));
+			constexpr auto serviceSlot = MakeEffect(EffectID::serviceSlot, MetaInfo::Effect::Category::generic, false, false, _modifiers());
+			constexpr auto shipBonusThermMissileDmgMD1 = MakeEffect(EffectID::shipBonusThermMissileDmgMD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2315));
+			constexpr auto shipBonusEMMissileDmgMD1 = MakeEffect(EffectID::shipBonusEMMissileDmgMD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2316));
+			constexpr auto shipBonusKineticMissileDmgMD1 = MakeEffect(EffectID::shipBonusKineticMissileDmgMD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2317));
+			constexpr auto shipBonusExplosiveMissileDmgMD1 = MakeEffect(EffectID::shipBonusExplosiveMissileDmgMD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2318));
+			constexpr auto eliteBonusCommandDestroyerSkirmish1 = MakeEffect(EffectID::eliteBonusCommandDestroyerSkirmish1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2319, &Modifiers::modifier2320, &Modifiers::modifier2321, &Modifiers::modifier2322, &Modifiers::modifier2323));
+			constexpr auto eliteBonusCommandDestroyerShield1 = MakeEffect(EffectID::eliteBonusCommandDestroyerShield1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2324, &Modifiers::modifier2325, &Modifiers::modifier2326, &Modifiers::modifier2327, &Modifiers::modifier2328));
+			constexpr auto eliteBonusCommandDestroyerMJFGspool2 = MakeEffect(EffectID::eliteBonusCommandDestroyerMJFGspool2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2329));
+			constexpr auto shipBonusEMShieldResistanceMD2 = MakeEffect(EffectID::shipBonusEMShieldResistanceMD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2330));
+			constexpr auto shipBonusKineticShieldResistanceMD2 = MakeEffect(EffectID::shipBonusKineticShieldResistanceMD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2331));
+			constexpr auto shipBonusThermalShieldResistanceMD2 = MakeEffect(EffectID::shipBonusThermalShieldResistanceMD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2332));
+			constexpr auto shipBonusExplosiveShieldResistanceMD2 = MakeEffect(EffectID::shipBonusExplosiveShieldResistanceMD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2333));
+			constexpr auto scriptscanGravimetricStrengthBonusBonus = MakeEffect(EffectID::scriptscanGravimetricStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2334));
+			constexpr auto scriptscanLadarStrengthBonusBonus = MakeEffect(EffectID::scriptscanLadarStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2335));
+			constexpr auto scriptscanMagnetometricStrengthBonusBonus = MakeEffect(EffectID::scriptscanMagnetometricStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2336));
+			constexpr auto scriptscanRadarStrengthBonusBonus = MakeEffect(EffectID::scriptscanRadarStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2337));
+			constexpr auto shipBonusThermalMissileDamageCD1 = MakeEffect(EffectID::shipBonusThermalMissileDamageCD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2338));
+			constexpr auto shipBonusEMMissileDamageCD1 = MakeEffect(EffectID::shipBonusEMMissileDamageCD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2339));
+			constexpr auto shipBonusKineticMissileDamageCD1 = MakeEffect(EffectID::shipBonusKineticMissileDamageCD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2340));
+			constexpr auto shipBonusExplosiveMissileDamageCD1 = MakeEffect(EffectID::shipBonusExplosiveMissileDamageCD1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2341));
+			constexpr auto shipBonusShieldEMResistanceCD2 = MakeEffect(EffectID::shipBonusShieldEMResistanceCD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2342));
+			constexpr auto shipBonusShieldThermalResistanceCD2 = MakeEffect(EffectID::shipBonusShieldThermalResistanceCD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2343));
+			constexpr auto shipBonusShieldKineticResistanceCD2 = MakeEffect(EffectID::shipBonusShieldKineticResistanceCD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2344));
+			constexpr auto shipBonusShieldExplosiveResistanceCD2 = MakeEffect(EffectID::shipBonusShieldExplosiveResistanceCD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2345));
+			constexpr auto eliteBonusCommandDestroyerInfo1 = MakeEffect(EffectID::eliteBonusCommandDestroyerInfo1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2346, &Modifiers::modifier2347, &Modifiers::modifier2348, &Modifiers::modifier2349, &Modifiers::modifier2350));
+			constexpr auto shipBonusKineticArmorResistanceAD2 = MakeEffect(EffectID::shipBonusKineticArmorResistanceAD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2351));
+			constexpr auto shipBonusThermalArmorResistanceAD2 = MakeEffect(EffectID::shipBonusThermalArmorResistanceAD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2352));
+			constexpr auto shipBonusEMArmorResistanceAD2 = MakeEffect(EffectID::shipBonusEMArmorResistanceAD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2353));
+			constexpr auto shipBonusExplosiveArmorResistanceAD2 = MakeEffect(EffectID::shipBonusExplosiveArmorResistanceAD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2354));
+			constexpr auto eliteBonusCommandDestroyerArmored1 = MakeEffect(EffectID::eliteBonusCommandDestroyerArmored1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2355, &Modifiers::modifier2356, &Modifiers::modifier2357, &Modifiers::modifier2358, &Modifiers::modifier2359));
+			constexpr auto shipBonusKineticArmorResistanceGD2 = MakeEffect(EffectID::shipBonusKineticArmorResistanceGD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2360));
+			constexpr auto shipBonusEMArmorResistanceGD2 = MakeEffect(EffectID::shipBonusEMArmorResistanceGD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2361));
+			constexpr auto shipBonusThermalArmorResistanceGD2 = MakeEffect(EffectID::shipBonusThermalArmorResistanceGD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2362));
+			constexpr auto shipBonusExplosiveArmorResistanceGD2 = MakeEffect(EffectID::shipBonusExplosiveArmorResistanceGD2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2363));
+			constexpr auto setFixedResonance = MakeEffect(EffectID::setFixedResonance, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier2364, &Modifiers::modifier2365, &Modifiers::modifier2366, &Modifiers::modifier2367, &Modifiers::modifier2368, &Modifiers::modifier2369, &Modifiers::modifier2370, &Modifiers::modifier2371, &Modifiers::modifier2372, &Modifiers::modifier2373, &Modifiers::modifier2374, &Modifiers::modifier2375));
+			constexpr auto shipSmallMissileKinDmgCF3 = MakeEffect(EffectID::shipSmallMissileKinDmgCF3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2376, &Modifiers::modifier2377));
+			constexpr auto shipMissileKinDamageCC3 = MakeEffect(EffectID::shipMissileKinDamageCC3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2378));
+			constexpr auto roleBonusWDRange = MakeEffect(EffectID::roleBonusWDRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2379, &Modifiers::modifier2380));
+			constexpr auto roleBonusWDCapCPU = MakeEffect(EffectID::roleBonusWDCapCPU, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2381, &Modifiers::modifier2382));
+			constexpr auto shipBonusEwWeaponDisruptionStrengthAF2 = MakeEffect(EffectID::shipBonusEwWeaponDisruptionStrengthAF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2383, &Modifiers::modifier2384, &Modifiers::modifier2385, &Modifiers::modifier2386, &Modifiers::modifier2387, &Modifiers::modifier2388, &Modifiers::modifier2389));
+			constexpr auto roleBonusECMCapCPU = MakeEffect(EffectID::roleBonusECMCapCPU, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2390, &Modifiers::modifier2391));
+			constexpr auto roleBonusECMRange = MakeEffect(EffectID::roleBonusECMRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2392, &Modifiers::modifier2393));
+			constexpr auto shipBonusJustScramblerRangeGF2 = MakeEffect(EffectID::shipBonusJustScramblerRangeGF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2394));
+			constexpr auto roleBonusJustScramblerStrength = MakeEffect(EffectID::roleBonusJustScramblerStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2395));
+			constexpr auto shipBonusAoeVelocityRocketsMF = MakeEffect(EffectID::shipBonusAoeVelocityRocketsMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2396));
+			constexpr auto shipRocketEMThermKinDmgMF2 = MakeEffect(EffectID::shipRocketEMThermKinDmgMF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2397, &Modifiers::modifier2398, &Modifiers::modifier2399));
+			constexpr auto shipRocketExpDmgMF3 = MakeEffect(EffectID::shipRocketExpDmgMF3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2400));
+			constexpr auto roleBonusStasisRange = MakeEffect(EffectID::roleBonusStasisRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2401));
+			constexpr auto shieldTransporterFalloffBonus = MakeEffect(EffectID::shieldTransporterFalloffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2402, &Modifiers::modifier2403));
+			constexpr auto shipShieldTransferFalloffMC2 = MakeEffect(EffectID::shipShieldTransferFalloffMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2404));
+			constexpr auto shipShieldTransferFalloffCC1 = MakeEffect(EffectID::shipShieldTransferFalloffCC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2405));
+			constexpr auto shipRemoteArmorFalloffGC1 = MakeEffect(EffectID::shipRemoteArmorFalloffGC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2406));
+			constexpr auto shipRemoteArmorFalloffAC2 = MakeEffect(EffectID::shipRemoteArmorFalloffAC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2407));
+			constexpr auto armorRepairProjectorFalloffBonus = MakeEffect(EffectID::armorRepairProjectorFalloffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2408, &Modifiers::modifier2409));
+			constexpr auto droneHullRepairBonusEffect = MakeEffect(EffectID::droneHullRepairBonusEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2410));
+			constexpr auto logiFrigSkillMultiplier1 = MakeEffect(EffectID::logiFrigSkillMultiplier1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2411));
+			constexpr auto logiFrigSkillMultiplier2 = MakeEffect(EffectID::logiFrigSkillMultiplier2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2412));
+			constexpr auto eliteBonusLogiFrigArmorRepSpeedCap1 = MakeEffect(EffectID::eliteBonusLogiFrigArmorRepSpeedCap1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2413, &Modifiers::modifier2414));
+			constexpr auto eliteBonusLogiFrigShieldRepSpeedCap1 = MakeEffect(EffectID::eliteBonusLogiFrigShieldRepSpeedCap1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2415, &Modifiers::modifier2416));
+			constexpr auto eliteBonusLogiFrigArmorHP2 = MakeEffect(EffectID::eliteBonusLogiFrigArmorHP2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2417));
+			constexpr auto eliteBonusLogiFrigShieldHP2 = MakeEffect(EffectID::eliteBonusLogiFrigShieldHP2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2418));
+			constexpr auto eliteBonusLogiFrigSignature2 = MakeEffect(EffectID::eliteBonusLogiFrigSignature2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2419));
+			constexpr auto overloadSelfMissileGuidanceModuleBonus = MakeEffect(EffectID::overloadSelfMissileGuidanceModuleBonus, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier2233, &Modifiers::modifier2234, &Modifiers::modifier2235, &Modifiers::modifier2236));
+			constexpr auto ignoreCloakVelocityPenalty = MakeEffect(EffectID::ignoreCloakVelocityPenalty, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2420));
+			constexpr auto ewSkillGuidanceDisruptionBonus = MakeEffect(EffectID::ewSkillGuidanceDisruptionBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2421, &Modifiers::modifier2422, &Modifiers::modifier2423, &Modifiers::modifier2424));
+			constexpr auto shipBonusEwWeaponDisruptionStrengthAC1 = MakeEffect(EffectID::shipBonusEwWeaponDisruptionStrengthAC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2425, &Modifiers::modifier2426, &Modifiers::modifier2427, &Modifiers::modifier2428, &Modifiers::modifier2429, &Modifiers::modifier2430, &Modifiers::modifier2431));
+			constexpr auto skillStructureMissileDamageBonus = MakeEffect(EffectID::skillStructureMissileDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2432, &Modifiers::modifier2433, &Modifiers::modifier2434, &Modifiers::modifier2435, &Modifiers::modifier2436, &Modifiers::modifier2437, &Modifiers::modifier2438, &Modifiers::modifier2439, &Modifiers::modifier2440, &Modifiers::modifier2441, &Modifiers::modifier2442, &Modifiers::modifier2443));
+			constexpr auto skillStructureElectronicSystemsCapNeedBonus = MakeEffect(EffectID::skillStructureElectronicSystemsCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2444, &Modifiers::modifier2445, &Modifiers::modifier2446));
+			constexpr auto skillStructureEngineeringSystemsCapNeedBonus = MakeEffect(EffectID::skillStructureEngineeringSystemsCapNeedBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2447, &Modifiers::modifier2448));
+			constexpr auto structureRigAoeVelocityBonusSingleTargetMissiles = MakeEffect(EffectID::structureRigAoeVelocityBonusSingleTargetMissiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2449, &Modifiers::modifier2450));
+			constexpr auto structureRigVelocityBonusSingleTargetMissiles = MakeEffect(EffectID::structureRigVelocityBonusSingleTargetMissiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2451, &Modifiers::modifier2452));
+			constexpr auto structureRigNeutralizerMaxRangeFalloffEffectiveness = MakeEffect(EffectID::structureRigNeutralizerMaxRangeFalloffEffectiveness, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2453, &Modifiers::modifier2454));
+			constexpr auto structureRigNeutralizerCapacitorNeed = MakeEffect(EffectID::structureRigNeutralizerCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2455));
+			constexpr auto structureRigEWMaxRangeFalloff = MakeEffect(EffectID::structureRigEWMaxRangeFalloff, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2456, &Modifiers::modifier2457, &Modifiers::modifier2458, &Modifiers::modifier2459, &Modifiers::modifier2460, &Modifiers::modifier2461));
+			constexpr auto structureRigEWCapacitorNeed = MakeEffect(EffectID::structureRigEWCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2462, &Modifiers::modifier2463));
+			constexpr auto structureRigMaxTargets = MakeEffect(EffectID::structureRigMaxTargets, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2464));
+			constexpr auto structureRigSensorResolution = MakeEffect(EffectID::structureRigSensorResolution, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2465));
+			constexpr auto structureRigExplosionRadiusBonusAoEMissiles = MakeEffect(EffectID::structureRigExplosionRadiusBonusAoEMissiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2466));
+			constexpr auto structureRigVelocityBonusAoeMissiles = MakeEffect(EffectID::structureRigVelocityBonusAoeMissiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2467));
+			constexpr auto structureRigPDBmaxRange = MakeEffect(EffectID::structureRigPDBmaxRange, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2468));
+			constexpr auto structureRigPDBCapacitorNeed = MakeEffect(EffectID::structureRigPDBCapacitorNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2469));
+			constexpr auto structureRigFighterHP = MakeEffect(EffectID::structureRigFighterHP, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2470, &Modifiers::modifier2471, &Modifiers::modifier2472, &Modifiers::modifier2473, &Modifiers::modifier2474, &Modifiers::modifier2475));
+			constexpr auto structureRigFighterMaxVelocity = MakeEffect(EffectID::structureRigFighterMaxVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2476, &Modifiers::modifier2477));
+			constexpr auto structureRigDoomsdayDamageLoss = MakeEffect(EffectID::structureRigDoomsdayDamageLoss, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2478));
+			constexpr auto remoteSensorDampFalloff = MakeEffect(EffectID::remoteSensorDampFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto shipModuleGuidanceDisruptor = MakeEffect(EffectID::shipModuleGuidanceDisruptor, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto shipModuleTrackingDisruptor = MakeEffect(EffectID::shipModuleTrackingDisruptor, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto remoteTargetPaintFalloff = MakeEffect(EffectID::remoteTargetPaintFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto remoteWebifierFalloff = MakeEffect(EffectID::remoteWebifierFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto remoteSensorBoostFalloff = MakeEffect(EffectID::remoteSensorBoostFalloff, MetaInfo::Effect::Category::target, false, true, _modifiers());
+			constexpr auto shipModuleRemoteTrackingComputer = MakeEffect(EffectID::shipModuleRemoteTrackingComputer, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier2281, &Modifiers::modifier2282, &Modifiers::modifier2283));
+			constexpr auto fighterAbilityMissiles = MakeEffect(EffectID::fighterAbilityMissiles, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto fighterAbilityEnergyNeutralizer = MakeEffect(EffectID::fighterAbilityEnergyNeutralizer, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto fighterAbilityStasisWebifier = MakeEffect(EffectID::fighterAbilityStasisWebifier, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto fighterAbilityWarpDisruption = MakeEffect(EffectID::fighterAbilityWarpDisruption, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto fighterAbilityECM = MakeEffect(EffectID::fighterAbilityECM, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto fighterAbilityEvasiveManeuvers = MakeEffect(EffectID::fighterAbilityEvasiveManeuvers, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto fighterAbilityAfterburner = MakeEffect(EffectID::fighterAbilityAfterburner, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto fighterAbilityMicroWarpDrive = MakeEffect(EffectID::fighterAbilityMicroWarpDrive, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto fighterAbilityMicroJumpDrive = MakeEffect(EffectID::fighterAbilityMicroJumpDrive, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto pointDefense = MakeEffect(EffectID::pointDefense, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto tractorBeamShip = MakeEffect(EffectID::tractorBeamShip, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto structureBumpingModule = MakeEffect(EffectID::structureBumpingModule, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto lightningWeapon = MakeEffect(EffectID::lightningWeapon, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto structureMissileGuidanceEnhancer = MakeEffect(EffectID::structureMissileGuidanceEnhancer, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2479, &Modifiers::modifier2480, &Modifiers::modifier2481, &Modifiers::modifier2482, &Modifiers::modifier2483, &Modifiers::modifier2484, &Modifiers::modifier2485, &Modifiers::modifier2486));
+			constexpr auto structureBallisticControlSystem = MakeEffect(EffectID::structureBallisticControlSystem, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2487, &Modifiers::modifier2488, &Modifiers::modifier2489, &Modifiers::modifier2490, &Modifiers::modifier2491, &Modifiers::modifier2492, &Modifiers::modifier2493, &Modifiers::modifier2494, &Modifiers::modifier2495, &Modifiers::modifier2496));
+			constexpr auto structureMissileGuidanceComputerBonus5 = MakeEffect(EffectID::structureMissileGuidanceComputerBonus5, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier2497, &Modifiers::modifier2498, &Modifiers::modifier2499, &Modifiers::modifier2500));
+			constexpr auto structureScanResolutionActivePercentage = MakeEffect(EffectID::structureScanResolutionActivePercentage, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier233));
+			constexpr auto fighterAbilityTackle = MakeEffect(EffectID::fighterAbilityTackle, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto fighterAbilityAttackM = MakeEffect(EffectID::fighterAbilityAttackM, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto remoteECMFalloff = MakeEffect(EffectID::remoteECMFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto doomsdayBeamDOT = MakeEffect(EffectID::doomsdayBeamDOT, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto doomsdayConeDOT = MakeEffect(EffectID::doomsdayConeDOT, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto doomsdayHOG = MakeEffect(EffectID::doomsdayHOG, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto structureRigDoomsdayTargetAmountBonus = MakeEffect(EffectID::structureRigDoomsdayTargetAmountBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2501));
+			constexpr auto doomsdayAOEWeb = MakeEffect(EffectID::doomsdayAOEWeb, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto doomsdayAOENeut = MakeEffect(EffectID::doomsdayAOENeut, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto doomsdayAOEPaint = MakeEffect(EffectID::doomsdayAOEPaint, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto doomsdayAOETrack = MakeEffect(EffectID::doomsdayAOETrack, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto doomsdayAOEGuide = MakeEffect(EffectID::doomsdayAOEGuide, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto doomsdayAOEDamp = MakeEffect(EffectID::doomsdayAOEDamp, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto doomsdayAOEBubble = MakeEffect(EffectID::doomsdayAOEBubble, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto emergencyHullEnergizer = MakeEffect(EffectID::emergencyHullEnergizer, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto fighterAbilityLaunchBomb = MakeEffect(EffectID::fighterAbilityLaunchBomb, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto modifyEnergyWarfareResistance = MakeEffect(EffectID::modifyEnergyWarfareResistance, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2502));
+			constexpr auto scriptSensorBoosterSensorStrengthBonusBonus = MakeEffect(EffectID::scriptSensorBoosterSensorStrengthBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2503, &Modifiers::modifier2504, &Modifiers::modifier2505, &Modifiers::modifier2506));
+			constexpr auto skillMultiplierShipBonusDreadnoughtAmarr = MakeEffect(EffectID::skillMultiplierShipBonusDreadnoughtAmarr, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2507, &Modifiers::modifier2508, &Modifiers::modifier2509));
+			constexpr auto skillMultiplierShipBonusDreadnoughtCaldari = MakeEffect(EffectID::skillMultiplierShipBonusDreadnoughtCaldari, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2510, &Modifiers::modifier2511, &Modifiers::modifier2512));
+			constexpr auto skillMultiplierShipBonusDreadnoughtGallente = MakeEffect(EffectID::skillMultiplierShipBonusDreadnoughtGallente, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2513, &Modifiers::modifier2514, &Modifiers::modifier2515));
+			constexpr auto skillMultiplierShipBonusDreadnoughtMinmatar = MakeEffect(EffectID::skillMultiplierShipBonusDreadnoughtMinmatar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2516, &Modifiers::modifier2517, &Modifiers::modifier2518));
+			constexpr auto shipBonusDreadnoughtA1DamageBonus = MakeEffect(EffectID::shipBonusDreadnoughtA1DamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2519));
+			constexpr auto shipBonusDreadnoughtA2ArmorResists = MakeEffect(EffectID::shipBonusDreadnoughtA2ArmorResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2520, &Modifiers::modifier2521, &Modifiers::modifier2522, &Modifiers::modifier2523));
+			constexpr auto shipBonusDreadnoughtA3CapNeed = MakeEffect(EffectID::shipBonusDreadnoughtA3CapNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2524));
+			constexpr auto shipBonusDreadnoughtC1DamageBonus = MakeEffect(EffectID::shipBonusDreadnoughtC1DamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2525, &Modifiers::modifier2526, &Modifiers::modifier2527, &Modifiers::modifier2528, &Modifiers::modifier2529, &Modifiers::modifier2530, &Modifiers::modifier2531, &Modifiers::modifier2532, &Modifiers::modifier2533, &Modifiers::modifier2534, &Modifiers::modifier2535, &Modifiers::modifier2536));
+			constexpr auto shipBonusDreadnoughtC2ShieldResists = MakeEffect(EffectID::shipBonusDreadnoughtC2ShieldResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2537, &Modifiers::modifier2538, &Modifiers::modifier2539, &Modifiers::modifier2540));
+			constexpr auto shipBonusDreadnoughtG1DamageBonus = MakeEffect(EffectID::shipBonusDreadnoughtG1DamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2541));
+			constexpr auto shipBonusDreadnoughtG2ROFBonus = MakeEffect(EffectID::shipBonusDreadnoughtG2ROFBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2542));
+			constexpr auto shipBonusDreadnoughtG3RepairTime = MakeEffect(EffectID::shipBonusDreadnoughtG3RepairTime, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2543));
+			constexpr auto shipBonusDreadnoughtM1DamageBonus = MakeEffect(EffectID::shipBonusDreadnoughtM1DamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2544));
+			constexpr auto shipBonusDreadnoughtM2ROFBonus = MakeEffect(EffectID::shipBonusDreadnoughtM2ROFBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2545));
+			constexpr auto shipBonusDreadnoughtM3RepairTime = MakeEffect(EffectID::shipBonusDreadnoughtM3RepairTime, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2546));
+			constexpr auto doomsdayAOEECM = MakeEffect(EffectID::doomsdayAOEECM, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto skillMultiplierShipBonusForceAuxiliaryAmarr = MakeEffect(EffectID::skillMultiplierShipBonusForceAuxiliaryAmarr, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2547, &Modifiers::modifier2548, &Modifiers::modifier2549, &Modifiers::modifier2550));
+			constexpr auto skillMultiplierShipBonusForceAuxiliaryCaldari = MakeEffect(EffectID::skillMultiplierShipBonusForceAuxiliaryCaldari, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2551, &Modifiers::modifier2552, &Modifiers::modifier2553, &Modifiers::modifier2554));
+			constexpr auto skillMultiplierShipBonusForceAuxiliaryGallente = MakeEffect(EffectID::skillMultiplierShipBonusForceAuxiliaryGallente, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2555, &Modifiers::modifier2556, &Modifiers::modifier2557, &Modifiers::modifier2558));
+			constexpr auto skillMultiplierShipBonusForceAuxiliaryMinmatar = MakeEffect(EffectID::skillMultiplierShipBonusForceAuxiliaryMinmatar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2559, &Modifiers::modifier2560, &Modifiers::modifier2561, &Modifiers::modifier2562));
+			constexpr auto shipBonusForceAuxiliaryA1RemoteRepairAndCapAmount = MakeEffect(EffectID::shipBonusForceAuxiliaryA1RemoteRepairAndCapAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2563, &Modifiers::modifier2564));
+			constexpr auto shipBonusForceAuxiliaryA2ArmorResists = MakeEffect(EffectID::shipBonusForceAuxiliaryA2ArmorResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2565, &Modifiers::modifier2566, &Modifiers::modifier2567, &Modifiers::modifier2568));
+			constexpr auto shipBonusForceAuxiliaryA3CapCapacity = MakeEffect(EffectID::shipBonusForceAuxiliaryA3CapCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2569));
+			constexpr auto shipBonusForceAuxiliaryA4WarfareLinksBonus = MakeEffect(EffectID::shipBonusForceAuxiliaryA4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2570, &Modifiers::modifier2571, &Modifiers::modifier2572, &Modifiers::modifier2573, &Modifiers::modifier2574, &Modifiers::modifier2575, &Modifiers::modifier2576, &Modifiers::modifier2577, &Modifiers::modifier2578, &Modifiers::modifier2579));
+			constexpr auto shipBonusForceAuxiliaryM4WarfareLinksBonus = MakeEffect(EffectID::shipBonusForceAuxiliaryM4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2580, &Modifiers::modifier2581, &Modifiers::modifier2582, &Modifiers::modifier2583, &Modifiers::modifier2584, &Modifiers::modifier2585, &Modifiers::modifier2586, &Modifiers::modifier2587, &Modifiers::modifier2588, &Modifiers::modifier2589));
+			constexpr auto shipBonusForceAuxiliaryG4WarfareLinksBonus = MakeEffect(EffectID::shipBonusForceAuxiliaryG4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2590, &Modifiers::modifier2591, &Modifiers::modifier2592, &Modifiers::modifier2593, &Modifiers::modifier2594, &Modifiers::modifier2595, &Modifiers::modifier2596, &Modifiers::modifier2597, &Modifiers::modifier2598, &Modifiers::modifier2599));
+			constexpr auto shipBonusForceAuxiliaryC4WarfareLinksBonus = MakeEffect(EffectID::shipBonusForceAuxiliaryC4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2600, &Modifiers::modifier2601, &Modifiers::modifier2602, &Modifiers::modifier2603, &Modifiers::modifier2604, &Modifiers::modifier2605, &Modifiers::modifier2606, &Modifiers::modifier2607, &Modifiers::modifier2608, &Modifiers::modifier2609));
+			constexpr auto shipBonusRole1CommandBurstCPUBonus = MakeEffect(EffectID::shipBonusRole1CommandBurstCPUBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2610));
+			constexpr auto shipBonusForceAuxiliaryC1RemoteBoostAndCapAmount = MakeEffect(EffectID::shipBonusForceAuxiliaryC1RemoteBoostAndCapAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2611, &Modifiers::modifier2612));
+			constexpr auto shipBonusForceAuxiliaryC2ShieldResists = MakeEffect(EffectID::shipBonusForceAuxiliaryC2ShieldResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2613, &Modifiers::modifier2614, &Modifiers::modifier2615, &Modifiers::modifier2616));
+			constexpr auto shipBonusForceAuxiliaryC3CapCapacity = MakeEffect(EffectID::shipBonusForceAuxiliaryC3CapCapacity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2617));
+			constexpr auto shipBonusForceAuxiliaryG1RemoteCycleTime = MakeEffect(EffectID::shipBonusForceAuxiliaryG1RemoteCycleTime, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2618, &Modifiers::modifier2619));
+			constexpr auto shipBonusForceAuxiliaryG2LocalRepairAmount = MakeEffect(EffectID::shipBonusForceAuxiliaryG2LocalRepairAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2620, &Modifiers::modifier2621));
+			constexpr auto shipBonusForceAuxiliaryG3CapBoosterStrength = MakeEffect(EffectID::shipBonusForceAuxiliaryG3CapBoosterStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2622));
+			constexpr auto shipBonusForceAuxiliaryM1RemoteDuration = MakeEffect(EffectID::shipBonusForceAuxiliaryM1RemoteDuration, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2623, &Modifiers::modifier2624));
+			constexpr auto shipBonusForceAuxiliaryM2LocalBoostAmount = MakeEffect(EffectID::shipBonusForceAuxiliaryM2LocalBoostAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2625, &Modifiers::modifier2626));
+			constexpr auto shipBonusForceAuxiliaryM3CapBoosterStrength = MakeEffect(EffectID::shipBonusForceAuxiliaryM3CapBoosterStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2627));
+			constexpr auto fighterAbilityKamikaze = MakeEffect(EffectID::fighterAbilityKamikaze, MetaInfo::Effect::Category::target, false, false, _modifiers());
+			constexpr auto moduleBonusDroneNavigationComputer = MakeEffect(EffectID::moduleBonusDroneNavigationComputer, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2628, &Modifiers::modifier2629));
+			constexpr auto moduleBonusDroneDamageAmplifier = MakeEffect(EffectID::moduleBonusDroneDamageAmplifier, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2630, &Modifiers::modifier2631, &Modifiers::modifier2632, &Modifiers::modifier2633));
+			constexpr auto moduleBonusOmnidirectionalTrackingLink = MakeEffect(EffectID::moduleBonusOmnidirectionalTrackingLink, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier2634, &Modifiers::modifier2635, &Modifiers::modifier2636, &Modifiers::modifier2637, &Modifiers::modifier2638, &Modifiers::modifier2639, &Modifiers::modifier2640, &Modifiers::modifier2641, &Modifiers::modifier2642, &Modifiers::modifier2643, &Modifiers::modifier2644, &Modifiers::modifier2645, &Modifiers::modifier2646));
+			constexpr auto moduleBonusOmnidirectionalTrackingLinkOverload = MakeEffect(EffectID::moduleBonusOmnidirectionalTrackingLinkOverload, MetaInfo::Effect::Category::overloaded, false, false, _modifiers(&Modifiers::modifier2012, &Modifiers::modifier2013, &Modifiers::modifier2014, &Modifiers::modifier2233, &Modifiers::modifier2234));
+			constexpr auto moduleBonusOmnidirectionalTrackingEnhancer = MakeEffect(EffectID::moduleBonusOmnidirectionalTrackingEnhancer, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2634, &Modifiers::modifier2635, &Modifiers::modifier2636, &Modifiers::modifier2637, &Modifiers::modifier2638, &Modifiers::modifier2639, &Modifiers::modifier2640, &Modifiers::modifier2641, &Modifiers::modifier2642, &Modifiers::modifier2643, &Modifiers::modifier2644, &Modifiers::modifier2645, &Modifiers::modifier2646));
+			constexpr auto skillBonusFighters = MakeEffect(EffectID::skillBonusFighters, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2647, &Modifiers::modifier2648, &Modifiers::modifier2649));
+			constexpr auto skillBonusLightFighters = MakeEffect(EffectID::skillBonusLightFighters, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2650));
+			constexpr auto skillBonusSupportFightersShield = MakeEffect(EffectID::skillBonusSupportFightersShield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2651));
+			constexpr auto skillBonusHeavyFighters = MakeEffect(EffectID::skillBonusHeavyFighters, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2652, &Modifiers::modifier2653, &Modifiers::modifier2654));
+			constexpr auto citadelRigBonus = MakeEffect(EffectID::citadelRigBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2655, &Modifiers::modifier2656, &Modifiers::modifier2657, &Modifiers::modifier2658, &Modifiers::modifier2659, &Modifiers::modifier2660, &Modifiers::modifier2661, &Modifiers::modifier2662, &Modifiers::modifier2663, &Modifiers::modifier2664));
+			constexpr auto moduleBonusFighterSupportUnit = MakeEffect(EffectID::moduleBonusFighterSupportUnit, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier2665, &Modifiers::modifier2666, &Modifiers::modifier2667, &Modifiers::modifier2668, &Modifiers::modifier2669, &Modifiers::modifier2670));
+			constexpr auto moduleBonusNetworkedSensorArray = MakeEffect(EffectID::moduleBonusNetworkedSensorArray, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier233, &Modifiers::modifier640, &Modifiers::modifier641, &Modifiers::modifier642, &Modifiers::modifier643, &Modifiers::modifier1424, &Modifiers::modifier1425, &Modifiers::modifier2671, &Modifiers::modifier2672, &Modifiers::modifier2673, &Modifiers::modifier2674, &Modifiers::modifier2675, &Modifiers::modifier2676, &Modifiers::modifier2677, &Modifiers::modifier2678, &Modifiers::modifier2679, &Modifiers::modifier2680, &Modifiers::modifier2681));
+			constexpr auto citadelServiceFuelBonus = MakeEffect(EffectID::citadelServiceFuelBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2682, &Modifiers::modifier2683));
+			constexpr auto skillMultiplierFighterHangarSize = MakeEffect(EffectID::skillMultiplierFighterHangarSize, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2684));
+			constexpr auto skillBonusFighterHangarManagement = MakeEffect(EffectID::skillBonusFighterHangarManagement, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2685));
+			constexpr auto skillBonusCapitalAutocannonSpecialization = MakeEffect(EffectID::skillBonusCapitalAutocannonSpecialization, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2686));
+			constexpr auto skillBonusCapitalArtillerySpecialization = MakeEffect(EffectID::skillBonusCapitalArtillerySpecialization, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2687));
+			constexpr auto skillBonusCapitalBlasterSpecialization = MakeEffect(EffectID::skillBonusCapitalBlasterSpecialization, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2688));
+			constexpr auto skillBonusCapitalRailgunSpecialization = MakeEffect(EffectID::skillBonusCapitalRailgunSpecialization, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2689));
+			constexpr auto skillBonusCapitalPulseLaserSpecialization = MakeEffect(EffectID::skillBonusCapitalPulseLaserSpecialization, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2690));
+			constexpr auto skillBonusCapitalBeamLaserSpecialization = MakeEffect(EffectID::skillBonusCapitalBeamLaserSpecialization, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2691));
+			constexpr auto skillBonusXLCruiseMissileSpecialization = MakeEffect(EffectID::skillBonusXLCruiseMissileSpecialization, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2692));
+			constexpr auto skillBonusXLTorpedoSpecialization = MakeEffect(EffectID::skillBonusXLTorpedoSpecialization, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2693));
+			constexpr auto shipBonusRole2LogisticDroneRepAmountBonus = MakeEffect(EffectID::shipBonusRole2LogisticDroneRepAmountBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2694, &Modifiers::modifier2695, &Modifiers::modifier2696));
+			constexpr auto moduleBonusTriageModule = MakeEffect(EffectID::moduleBonusTriageModule, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier34, &Modifiers::modifier617, &Modifiers::modifier618, &Modifiers::modifier1423, &Modifiers::modifier1424, &Modifiers::modifier1425, &Modifiers::modifier1426, &Modifiers::modifier1427, &Modifiers::modifier1428, &Modifiers::modifier1429, &Modifiers::modifier1430, &Modifiers::modifier1431, &Modifiers::modifier2671, &Modifiers::modifier2672, &Modifiers::modifier2673, &Modifiers::modifier2674, &Modifiers::modifier2675, &Modifiers::modifier2676, &Modifiers::modifier2677, &Modifiers::modifier2697, &Modifiers::modifier2698, &Modifiers::modifier2699, &Modifiers::modifier2700, &Modifiers::modifier2701, &Modifiers::modifier2702, &Modifiers::modifier2703, &Modifiers::modifier2704, &Modifiers::modifier2705, &Modifiers::modifier2706, &Modifiers::modifier2707, &Modifiers::modifier2708, &Modifiers::modifier2709, &Modifiers::modifier2710, &Modifiers::modifier2711, &Modifiers::modifier2712, &Modifiers::modifier2713, &Modifiers::modifier2714, &Modifiers::modifier2715, &Modifiers::modifier2716, &Modifiers::modifier2717, &Modifiers::modifier2718, &Modifiers::modifier2719, &Modifiers::modifier2720));
+			constexpr auto moduleBonusSiegeModule = MakeEffect(EffectID::moduleBonusSiegeModule, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier617, &Modifiers::modifier618, &Modifiers::modifier1423, &Modifiers::modifier1424, &Modifiers::modifier1425, &Modifiers::modifier1426, &Modifiers::modifier1427, &Modifiers::modifier1428, &Modifiers::modifier1429, &Modifiers::modifier1430, &Modifiers::modifier2717, &Modifiers::modifier2718, &Modifiers::modifier2719, &Modifiers::modifier2720, &Modifiers::modifier2721, &Modifiers::modifier2722, &Modifiers::modifier2723, &Modifiers::modifier2724, &Modifiers::modifier2725, &Modifiers::modifier2726, &Modifiers::modifier2727, &Modifiers::modifier2728, &Modifiers::modifier2729, &Modifiers::modifier2730, &Modifiers::modifier2731, &Modifiers::modifier2732, &Modifiers::modifier2733, &Modifiers::modifier2734, &Modifiers::modifier2735, &Modifiers::modifier2736, &Modifiers::modifier2737, &Modifiers::modifier2738, &Modifiers::modifier2739, &Modifiers::modifier2740));
+			constexpr auto skillMultiplierShipBonusCarrierAmarr = MakeEffect(EffectID::skillMultiplierShipBonusCarrierAmarr, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2741, &Modifiers::modifier2742, &Modifiers::modifier2743, &Modifiers::modifier2744));
+			constexpr auto skillMultiplierShipBonusCarrierCaldari = MakeEffect(EffectID::skillMultiplierShipBonusCarrierCaldari, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2745, &Modifiers::modifier2746, &Modifiers::modifier2747, &Modifiers::modifier2748));
+			constexpr auto skillMultiplierShipBonusCarrierGallente = MakeEffect(EffectID::skillMultiplierShipBonusCarrierGallente, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2749, &Modifiers::modifier2750, &Modifiers::modifier2751, &Modifiers::modifier2752));
+			constexpr auto skillMultiplierShipBonusCarrierMinmatar = MakeEffect(EffectID::skillMultiplierShipBonusCarrierMinmatar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2753, &Modifiers::modifier2754, &Modifiers::modifier2755, &Modifiers::modifier2756));
+			constexpr auto skillMultiplierShipBonusSupercarrierAmarr = MakeEffect(EffectID::skillMultiplierShipBonusSupercarrierAmarr, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2757, &Modifiers::modifier2758, &Modifiers::modifier2759, &Modifiers::modifier2760, &Modifiers::modifier2761));
+			constexpr auto skillMultiplierShipBonusSupercarrierCaldari = MakeEffect(EffectID::skillMultiplierShipBonusSupercarrierCaldari, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2762, &Modifiers::modifier2763, &Modifiers::modifier2764, &Modifiers::modifier2765, &Modifiers::modifier2766));
+			constexpr auto skillMultiplierShipBonusSupercarrierGallente = MakeEffect(EffectID::skillMultiplierShipBonusSupercarrierGallente, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2767, &Modifiers::modifier2768, &Modifiers::modifier2769, &Modifiers::modifier2770, &Modifiers::modifier2771));
+			constexpr auto skillMultiplierShipBonusSupercarrierMinmatar = MakeEffect(EffectID::skillMultiplierShipBonusSupercarrierMinmatar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2772, &Modifiers::modifier2773, &Modifiers::modifier2774, &Modifiers::modifier2775, &Modifiers::modifier2776));
+			constexpr auto shipBonusSupercarrierA3WarpStrength = MakeEffect(EffectID::shipBonusSupercarrierA3WarpStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2777));
+			constexpr auto shipBonusSupercarrierC3WarpStrength = MakeEffect(EffectID::shipBonusSupercarrierC3WarpStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2778));
+			constexpr auto shipBonusSupercarrierG3WarpStrength = MakeEffect(EffectID::shipBonusSupercarrierG3WarpStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2779));
+			constexpr auto shipBonusSupercarrierM3WarpStrength = MakeEffect(EffectID::shipBonusSupercarrierM3WarpStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2780));
+			constexpr auto shipBonusCarrierA4WarfareLinksBonus = MakeEffect(EffectID::shipBonusCarrierA4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2781, &Modifiers::modifier2782, &Modifiers::modifier2783, &Modifiers::modifier2784, &Modifiers::modifier2785, &Modifiers::modifier2786, &Modifiers::modifier2787, &Modifiers::modifier2788, &Modifiers::modifier2789, &Modifiers::modifier2790));
+			constexpr auto shipBonusCarrierC4WarfareLinksBonus = MakeEffect(EffectID::shipBonusCarrierC4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2791, &Modifiers::modifier2792, &Modifiers::modifier2793, &Modifiers::modifier2794, &Modifiers::modifier2795, &Modifiers::modifier2796, &Modifiers::modifier2797, &Modifiers::modifier2798, &Modifiers::modifier2799, &Modifiers::modifier2800));
+			constexpr auto shipBonusCarrierG4WarfareLinksBonus = MakeEffect(EffectID::shipBonusCarrierG4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2801, &Modifiers::modifier2802, &Modifiers::modifier2803, &Modifiers::modifier2804, &Modifiers::modifier2805, &Modifiers::modifier2806, &Modifiers::modifier2807, &Modifiers::modifier2808, &Modifiers::modifier2809, &Modifiers::modifier2810));
+			constexpr auto shipBonusCarrierM4WarfareLinksBonus = MakeEffect(EffectID::shipBonusCarrierM4WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2811, &Modifiers::modifier2812, &Modifiers::modifier2813, &Modifiers::modifier2814, &Modifiers::modifier2815, &Modifiers::modifier2816, &Modifiers::modifier2817, &Modifiers::modifier2818, &Modifiers::modifier2819, &Modifiers::modifier2820));
+			constexpr auto shipBonusCarrierA1ArmorResists = MakeEffect(EffectID::shipBonusCarrierA1ArmorResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2821, &Modifiers::modifier2822, &Modifiers::modifier2823, &Modifiers::modifier2824));
+			constexpr auto shipBonusCarrierC1ShieldResists = MakeEffect(EffectID::shipBonusCarrierC1ShieldResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2825, &Modifiers::modifier2826, &Modifiers::modifier2827, &Modifiers::modifier2828));
+			constexpr auto shipBonusCarrierG1FighterDamage = MakeEffect(EffectID::shipBonusCarrierG1FighterDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2829, &Modifiers::modifier2830, &Modifiers::modifier2831));
+			constexpr auto shipBonusCarrierM1FighterDamage = MakeEffect(EffectID::shipBonusCarrierM1FighterDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2832, &Modifiers::modifier2833, &Modifiers::modifier2834));
+			constexpr auto shipBonusSupercarrierA1FighterDamage = MakeEffect(EffectID::shipBonusSupercarrierA1FighterDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2835, &Modifiers::modifier2836, &Modifiers::modifier2837));
+			constexpr auto shipBonusSupercarrierC1FighterDamage = MakeEffect(EffectID::shipBonusSupercarrierC1FighterDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2838, &Modifiers::modifier2839, &Modifiers::modifier2840));
+			constexpr auto shipBonusSupercarrierG1FighterDamage = MakeEffect(EffectID::shipBonusSupercarrierG1FighterDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2841, &Modifiers::modifier2842, &Modifiers::modifier2843));
+			constexpr auto shipBonusSupercarrierM1FighterDamage = MakeEffect(EffectID::shipBonusSupercarrierM1FighterDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2844, &Modifiers::modifier2845, &Modifiers::modifier2846));
+			constexpr auto shipBonusSupercarrierA5WarfareLinksBonus = MakeEffect(EffectID::shipBonusSupercarrierA5WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2847, &Modifiers::modifier2848, &Modifiers::modifier2849, &Modifiers::modifier2850, &Modifiers::modifier2851, &Modifiers::modifier2852, &Modifiers::modifier2853, &Modifiers::modifier2854, &Modifiers::modifier2855, &Modifiers::modifier2856));
+			constexpr auto shipBonusSupercarrierC5WarfareLinksBonus = MakeEffect(EffectID::shipBonusSupercarrierC5WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2857, &Modifiers::modifier2858, &Modifiers::modifier2859, &Modifiers::modifier2860, &Modifiers::modifier2861, &Modifiers::modifier2862, &Modifiers::modifier2863, &Modifiers::modifier2864, &Modifiers::modifier2865, &Modifiers::modifier2866));
+			constexpr auto shipBonusSupercarrierG5WarfareLinksBonus = MakeEffect(EffectID::shipBonusSupercarrierG5WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2867, &Modifiers::modifier2868, &Modifiers::modifier2869, &Modifiers::modifier2870, &Modifiers::modifier2871, &Modifiers::modifier2872, &Modifiers::modifier2873, &Modifiers::modifier2874, &Modifiers::modifier2875, &Modifiers::modifier2876));
+			constexpr auto shipBonusSupercarrierM5WarfareLinksBonus = MakeEffect(EffectID::shipBonusSupercarrierM5WarfareLinksBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2877, &Modifiers::modifier2878, &Modifiers::modifier2879, &Modifiers::modifier2880, &Modifiers::modifier2881, &Modifiers::modifier2882, &Modifiers::modifier2883, &Modifiers::modifier2884, &Modifiers::modifier2885, &Modifiers::modifier2886));
+			constexpr auto shipBonusSupercarrierC2AfterburnerBonus = MakeEffect(EffectID::shipBonusSupercarrierC2AfterburnerBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2887));
+			constexpr auto shipBonusSupercarrierA2FighterApplicationBonus = MakeEffect(EffectID::shipBonusSupercarrierA2FighterApplicationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2888, &Modifiers::modifier2889));
+			constexpr auto shipBonusSupercarrierRole1NumWarfareLinks = MakeEffect(EffectID::shipBonusSupercarrierRole1NumWarfareLinks, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2890, &Modifiers::modifier2891));
+			constexpr auto shipBonusSupercarrierRole2ArmorShieldModuleBonus = MakeEffect(EffectID::shipBonusSupercarrierRole2ArmorShieldModuleBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2892, &Modifiers::modifier2893));
+			constexpr auto shipBonusSupercarrierA4BurstProjectorBonus = MakeEffect(EffectID::shipBonusSupercarrierA4BurstProjectorBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2894));
+			constexpr auto shipBonusSupercarrierC4BurstProjectorBonus = MakeEffect(EffectID::shipBonusSupercarrierC4BurstProjectorBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2895));
+			constexpr auto shipBonusSupercarrierG4BurstProjectorBonus = MakeEffect(EffectID::shipBonusSupercarrierG4BurstProjectorBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2896));
+			constexpr auto shipBonusSupercarrierM4BurstProjectorBonus = MakeEffect(EffectID::shipBonusSupercarrierM4BurstProjectorBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2897));
+			constexpr auto shipBonusCarrierRole1NumWarfareLinks = MakeEffect(EffectID::shipBonusCarrierRole1NumWarfareLinks, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2890, &Modifiers::modifier2891));
+			constexpr auto shipBonusDreadnoughtC3ReloadBonus = MakeEffect(EffectID::shipBonusDreadnoughtC3ReloadBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2898));
+			constexpr auto shipBonusSupercarrierA2ArmorResists = MakeEffect(EffectID::shipBonusSupercarrierA2ArmorResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2899, &Modifiers::modifier2900, &Modifiers::modifier2901, &Modifiers::modifier2902));
+			constexpr auto shipBonusSupercarrierC2ShieldResists = MakeEffect(EffectID::shipBonusSupercarrierC2ShieldResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2903, &Modifiers::modifier2904, &Modifiers::modifier2905, &Modifiers::modifier2906));
+			constexpr auto shipBonusSupercarrierG2FighterHitpoints = MakeEffect(EffectID::shipBonusSupercarrierG2FighterHitpoints, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2907));
+			constexpr auto shipBonusSupercarrierM2FighterVelocity = MakeEffect(EffectID::shipBonusSupercarrierM2FighterVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2908));
+			constexpr auto shipBonusCarrierA2SupportFighterBonus = MakeEffect(EffectID::shipBonusCarrierA2SupportFighterBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2909, &Modifiers::modifier2910));
+			constexpr auto shipBonusCarrierC2SupportFighterBonus = MakeEffect(EffectID::shipBonusCarrierC2SupportFighterBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2911, &Modifiers::modifier2912));
+			constexpr auto shipBonusCarrierG2SupportFighterBonus = MakeEffect(EffectID::shipBonusCarrierG2SupportFighterBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2913, &Modifiers::modifier2914));
+			constexpr auto shipBonusCarrierM2SupportFighterBonus = MakeEffect(EffectID::shipBonusCarrierM2SupportFighterBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2915, &Modifiers::modifier2916));
+			constexpr auto scriptResistanceBonusBonus = MakeEffect(EffectID::scriptResistanceBonusBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2917, &Modifiers::modifier2918, &Modifiers::modifier2919, &Modifiers::modifier2920));
+			constexpr auto skillMultiplierShipBonusTitanAmarr = MakeEffect(EffectID::skillMultiplierShipBonusTitanAmarr, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2921, &Modifiers::modifier2922, &Modifiers::modifier2923, &Modifiers::modifier2924));
+			constexpr auto skillMultiplierShipBonusTitanCaldari = MakeEffect(EffectID::skillMultiplierShipBonusTitanCaldari, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2925, &Modifiers::modifier2926, &Modifiers::modifier2927, &Modifiers::modifier2928, &Modifiers::modifier2929));
+			constexpr auto skillMultiplierShipBonusTitanGallente = MakeEffect(EffectID::skillMultiplierShipBonusTitanGallente, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2930, &Modifiers::modifier2931, &Modifiers::modifier2932, &Modifiers::modifier2933));
+			constexpr auto skillMultiplierShipBonusTitanMinmatar = MakeEffect(EffectID::skillMultiplierShipBonusTitanMinmatar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2934, &Modifiers::modifier2935, &Modifiers::modifier2936, &Modifiers::modifier2937));
+			constexpr auto shipBonusTitanA1DamageBonus = MakeEffect(EffectID::shipBonusTitanA1DamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2938));
+			constexpr auto shipBonusTitanC1KinDamageBonus = MakeEffect(EffectID::shipBonusTitanC1KinDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2939, &Modifiers::modifier2940, &Modifiers::modifier2941));
+			constexpr auto shipBonusTitanG1DamageBonus = MakeEffect(EffectID::shipBonusTitanG1DamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2942));
+			constexpr auto shipBonusTitanM1DamageBonus = MakeEffect(EffectID::shipBonusTitanM1DamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2943));
+			constexpr auto shipBonusTitanC2ROFBonus = MakeEffect(EffectID::shipBonusTitanC2ROFBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2944, &Modifiers::modifier2945, &Modifiers::modifier2946));
+			constexpr auto shipBonusSupercarrierA4FighterApplicationBonus = MakeEffect(EffectID::shipBonusSupercarrierA4FighterApplicationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2947, &Modifiers::modifier2948));
+			constexpr auto shipBonusRole1NumWarfareLinks = MakeEffect(EffectID::shipBonusRole1NumWarfareLinks, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2890, &Modifiers::modifier2891));
+			constexpr auto shipBonusRole2ArmorPlatesShieldExtendersBonus = MakeEffect(EffectID::shipBonusRole2ArmorPlatesShieldExtendersBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2892, &Modifiers::modifier2893));
+			constexpr auto skillBonusDoomsdayRapidFiring = MakeEffect(EffectID::skillBonusDoomsdayRapidFiring, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2949));
+			constexpr auto shipBonusTitanA3WarpStrength = MakeEffect(EffectID::shipBonusTitanA3WarpStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2950));
+			constexpr auto shipBonusTitanC3WarpStrength = MakeEffect(EffectID::shipBonusTitanC3WarpStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2951));
+			constexpr auto shipBonusTitanG3WarpStrength = MakeEffect(EffectID::shipBonusTitanG3WarpStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2952));
+			constexpr auto shipBonusTitanM3WarpStrength = MakeEffect(EffectID::shipBonusTitanM3WarpStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2953));
+			constexpr auto shipModuleAncillaryRemoteArmorRepairer = MakeEffect(EffectID::shipModuleAncillaryRemoteArmorRepairer, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier207));
+			constexpr auto shipModuleAncillaryRemoteShieldBooster = MakeEffect(EffectID::shipModuleAncillaryRemoteShieldBooster, MetaInfo::Effect::Category::target, false, true, _modifiers(&Modifiers::modifier4));
+			constexpr auto shipBonusTitanA2CapNeed = MakeEffect(EffectID::shipBonusTitanA2CapNeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2954));
+			constexpr auto shipBonusTitanG2ROFBonus = MakeEffect(EffectID::shipBonusTitanG2ROFBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2955));
+			constexpr auto shipBonusTitanM2ROFBonus = MakeEffect(EffectID::shipBonusTitanM2ROFBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2956));
+			constexpr auto shipBonusRole3XLTorpdeoVelocityBonus = MakeEffect(EffectID::shipBonusRole3XLTorpdeoVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2957));
+			constexpr auto shipBonusTitanC5AllDamageBonus = MakeEffect(EffectID::shipBonusTitanC5AllDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2958, &Modifiers::modifier2959, &Modifiers::modifier2960, &Modifiers::modifier2961, &Modifiers::modifier2962, &Modifiers::modifier2963, &Modifiers::modifier2964, &Modifiers::modifier2965, &Modifiers::modifier2966));
+			constexpr auto moduleBonusBastionModule = MakeEffect(EffectID::moduleBonusBastionModule, MetaInfo::Effect::Category::active, true, false, _modifiers(&Modifiers::modifier432, &Modifiers::modifier617, &Modifiers::modifier618, &Modifiers::modifier640, &Modifiers::modifier641, &Modifiers::modifier642, &Modifiers::modifier643, &Modifiers::modifier661, &Modifiers::modifier662, &Modifiers::modifier663, &Modifiers::modifier664, &Modifiers::modifier665, &Modifiers::modifier666, &Modifiers::modifier667, &Modifiers::modifier668, &Modifiers::modifier669, &Modifiers::modifier670, &Modifiers::modifier671, &Modifiers::modifier672, &Modifiers::modifier1424, &Modifiers::modifier1425, &Modifiers::modifier1427, &Modifiers::modifier1428, &Modifiers::modifier1429, &Modifiers::modifier1430, &Modifiers::modifier1776, &Modifiers::modifier2721, &Modifiers::modifier2967, &Modifiers::modifier2968, &Modifiers::modifier2969, &Modifiers::modifier2970, &Modifiers::modifier2971, &Modifiers::modifier2972, &Modifiers::modifier2973, &Modifiers::modifier2974, &Modifiers::modifier2975, &Modifiers::modifier2976, &Modifiers::modifier2977, &Modifiers::modifier2978));
+			constexpr auto higgsWarpBubbleImmuneRemoval = MakeEffect(EffectID::higgsWarpBubbleImmuneRemoval, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2979));
+			constexpr auto shipBonusCarrierM3FighterVelocity = MakeEffect(EffectID::shipBonusCarrierM3FighterVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2980));
+			constexpr auto shipBonusCarrierG3FighterHitpoints = MakeEffect(EffectID::shipBonusCarrierG3FighterHitpoints, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2981));
+			constexpr auto skillBonusDroneInterfacing = MakeEffect(EffectID::skillBonusDroneInterfacing, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier217, &Modifiers::modifier616, &Modifiers::modifier2647, &Modifiers::modifier2648, &Modifiers::modifier2649));
+			constexpr auto skillBonusDroneSharpshooting = MakeEffect(EffectID::skillBonusDroneSharpshooting, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier579, &Modifiers::modifier2982, &Modifiers::modifier2983, &Modifiers::modifier2984));
+			constexpr auto skillBonusDroneDurability = MakeEffect(EffectID::skillBonusDroneDurability, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier582, &Modifiers::modifier2985, &Modifiers::modifier2986, &Modifiers::modifier2987));
+			constexpr auto skillMultiplierMaxVelocityBonus = MakeEffect(EffectID::skillMultiplierMaxVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2988));
+			constexpr auto skillBonusDroneNavigation = MakeEffect(EffectID::skillBonusDroneNavigation, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2989, &Modifiers::modifier2990));
+			constexpr auto skillMultiplierShieldBonus = MakeEffect(EffectID::skillMultiplierShieldBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2991));
+			constexpr auto moduleBonusCapitalDroneDurabilityEnhancer = MakeEffect(EffectID::moduleBonusCapitalDroneDurabilityEnhancer, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier580, &Modifiers::modifier581, &Modifiers::modifier582, &Modifiers::modifier739, &Modifiers::modifier2472));
+			constexpr auto moduleBonusCapitalDroneScopeChip = MakeEffect(EffectID::moduleBonusCapitalDroneScopeChip, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier579, &Modifiers::modifier739, &Modifiers::modifier2982, &Modifiers::modifier2983, &Modifiers::modifier2984));
+			constexpr auto moduleBonusCapitalDroneSpeedAugmentor = MakeEffect(EffectID::moduleBonusCapitalDroneSpeedAugmentor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier578, &Modifiers::modifier739, &Modifiers::modifier2476));
+			constexpr auto structureCombatRigSecurityModification = MakeEffect(EffectID::structureCombatRigSecurityModification, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2992, &Modifiers::modifier2993, &Modifiers::modifier2994, &Modifiers::modifier2995, &Modifiers::modifier2996, &Modifiers::modifier2997, &Modifiers::modifier2998, &Modifiers::modifier2999, &Modifiers::modifier3000, &Modifiers::modifier3001));
+			constexpr auto structureReprocessingRigSecurityModification = MakeEffect(EffectID::structureReprocessingRigSecurityModification, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3002));
+			constexpr auto structureRigAsteroidOreYield = MakeEffect(EffectID::structureRigAsteroidOreYield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3003));
+			constexpr auto structureRigMoonOreYield = MakeEffect(EffectID::structureRigMoonOreYield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3004));
+			constexpr auto structureRigCalAmarrIceYield = MakeEffect(EffectID::structureRigCalAmarrIceYield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3005));
+			constexpr auto structureRigGalMinIceYield = MakeEffect(EffectID::structureRigGalMinIceYield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3006));
+			constexpr auto structureRigIceYield = MakeEffect(EffectID::structureRigIceYield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3007));
+			constexpr auto skillStructureDoomsdayDurationBonus = MakeEffect(EffectID::skillStructureDoomsdayDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3008));
+			constexpr auto shipBonusRole3NumWarfareLinks = MakeEffect(EffectID::shipBonusRole3NumWarfareLinks, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3009, &Modifiers::modifier3010));
+			constexpr auto structureModuleEffectStasisWebifier = MakeEffect(EffectID::structureModuleEffectStasisWebifier, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto structureModuleEffectTargetPainter = MakeEffect(EffectID::structureModuleEffectTargetPainter, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto structureModuleEffectRemoteSensorDampener = MakeEffect(EffectID::structureModuleEffectRemoteSensorDampener, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto structureModuleEffectECM = MakeEffect(EffectID::structureModuleEffectECM, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto structureModuleEffectWeaponDisruption = MakeEffect(EffectID::structureModuleEffectWeaponDisruption, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto npcEntityRemoteArmorRepairer = MakeEffect(EffectID::npcEntityRemoteArmorRepairer, MetaInfo::Effect::Category::target, false, true, _modifiers());
+			constexpr auto npcEntityRemoteShieldBooster = MakeEffect(EffectID::npcEntityRemoteShieldBooster, MetaInfo::Effect::Category::target, false, true, _modifiers());
+			constexpr auto npcEntityRemoteHullRepairer = MakeEffect(EffectID::npcEntityRemoteHullRepairer, MetaInfo::Effect::Category::target, false, true, _modifiers());
+			constexpr auto remoteWebifierEntity = MakeEffect(EffectID::remoteWebifierEntity, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto entityEnergyNeutralizerFalloff = MakeEffect(EffectID::entityEnergyNeutralizerFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto remoteTargetPaintEntity = MakeEffect(EffectID::remoteTargetPaintEntity, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto remoteSensorDampEntity = MakeEffect(EffectID::remoteSensorDampEntity, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto npcEntityWeaponDisruptor = MakeEffect(EffectID::npcEntityWeaponDisruptor, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto entityECMFalloff = MakeEffect(EffectID::entityECMFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto starbaseEnergyNeutralizerFalloff = MakeEffect(EffectID::starbaseEnergyNeutralizerFalloff, MetaInfo::Effect::Category::target, true, false, _modifiers());
+			constexpr auto rigDrawbackReductionArmor = MakeEffect(EffectID::rigDrawbackReductionArmor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3011, &Modifiers::modifier3012));
+			constexpr auto rigDrawbackReductionAstronautics = MakeEffect(EffectID::rigDrawbackReductionAstronautics, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3013, &Modifiers::modifier3014));
+			constexpr auto rigDrawbackReductionDrones = MakeEffect(EffectID::rigDrawbackReductionDrones, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3015));
+			constexpr auto rigDrawbackReductionElectronic = MakeEffect(EffectID::rigDrawbackReductionElectronic, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3016, &Modifiers::modifier3017, &Modifiers::modifier3018));
+			constexpr auto rigDrawbackReductionProjectile = MakeEffect(EffectID::rigDrawbackReductionProjectile, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3019));
+			constexpr auto rigDrawbackReductionEnergyWeapon = MakeEffect(EffectID::rigDrawbackReductionEnergyWeapon, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3020));
+			constexpr auto rigDrawbackReductionHybrid = MakeEffect(EffectID::rigDrawbackReductionHybrid, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3021));
+			constexpr auto rigDrawbackReductionLauncher = MakeEffect(EffectID::rigDrawbackReductionLauncher, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3022));
+			constexpr auto rigDrawbackReductionShield = MakeEffect(EffectID::rigDrawbackReductionShield, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3023));
+			constexpr auto setBonusAsklepian = MakeEffect(EffectID::setBonusAsklepian, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3024));
+			constexpr auto armorRepairAmountBonusSubcap = MakeEffect(EffectID::armorRepairAmountBonusSubcap, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3025));
+			constexpr auto shipBonusRole1CapitalHybridDamageBonus = MakeEffect(EffectID::shipBonusRole1CapitalHybridDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3026));
+			constexpr auto shipBonusDreadnoughtM1WebStrengthBonus = MakeEffect(EffectID::shipBonusDreadnoughtM1WebStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3027));
+			constexpr auto shipBonusRole3CapitalHybridDamageBonus = MakeEffect(EffectID::shipBonusRole3CapitalHybridDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3028));
+			constexpr auto shipBonusTitanM1WebStrengthBonus = MakeEffect(EffectID::shipBonusTitanM1WebStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3029));
+			constexpr auto shipBonusSupercarrierM1BurstProjectorWebBonus = MakeEffect(EffectID::shipBonusSupercarrierM1BurstProjectorWebBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3030));
+			constexpr auto ECMBurstJammer = MakeEffect(EffectID::ECMBurstJammer, MetaInfo::Effect::Category::active, true, false, _modifiers());
+			constexpr auto ECMBurstJammerQA = MakeEffect(EffectID::ECMBurstJammerQA, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto pacifierDebuffQA = MakeEffect(EffectID::pacifierDebuffQA, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto roleBonusIceOreMiningDurationCap = MakeEffect(EffectID::roleBonusIceOreMiningDurationCap, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3031, &Modifiers::modifier3032, &Modifiers::modifier3033, &Modifiers::modifier3034));
+			constexpr auto logisticSkillMultiplier3 = MakeEffect(EffectID::logisticSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3035));
+			constexpr auto moduleBonusIndustrialInvulnerability = MakeEffect(EffectID::moduleBonusIndustrialInvulnerability, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto shipBonusDroneRepairMC1 = MakeEffect(EffectID::shipBonusDroneRepairMC1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3036, &Modifiers::modifier3037, &Modifiers::modifier3038));
+			constexpr auto eliteBonusLogisticRemoteArmorRepairOptimalFalloff1 = MakeEffect(EffectID::eliteBonusLogisticRemoteArmorRepairOptimalFalloff1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3039, &Modifiers::modifier3040));
+			constexpr auto roleBonusRemoteArmorRepairOptimalFalloff = MakeEffect(EffectID::roleBonusRemoteArmorRepairOptimalFalloff, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3041, &Modifiers::modifier3042));
+			constexpr auto shipBonusCloakCpuMC2 = MakeEffect(EffectID::shipBonusCloakCpuMC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3043));
+			constexpr auto eliteBonusLogisticRemoteArmorRepairDuration3 = MakeEffect(EffectID::eliteBonusLogisticRemoteArmorRepairDuration3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3044));
+			constexpr auto shipBonusSETFalloffAF2 = MakeEffect(EffectID::shipBonusSETFalloffAF2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3045));
+			constexpr auto shipBonusCloakCpuMF1 = MakeEffect(EffectID::shipBonusCloakCpuMF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3046));
+			constexpr auto eliteBonusCoverOpsNOSNeutFalloff1 = MakeEffect(EffectID::eliteBonusCoverOpsNOSNeutFalloff1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3047, &Modifiers::modifier3048));
+			constexpr auto moduleBonusMicrowarpdrive = MakeEffect(EffectID::moduleBonusMicrowarpdrive, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier381, &Modifiers::modifier571, &Modifiers::modifier3049));
+			constexpr auto moduleBonusAfterburner = MakeEffect(EffectID::moduleBonusAfterburner, MetaInfo::Effect::Category::active, false, false, _modifiers(&Modifiers::modifier571, &Modifiers::modifier3049));
+			constexpr auto moduleBonusWarfareLinkArmor = MakeEffect(EffectID::moduleBonusWarfareLinkArmor, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto moduleBonusWarfareLinkShield = MakeEffect(EffectID::moduleBonusWarfareLinkShield, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto moduleBonusWarfareLinkSkirmish = MakeEffect(EffectID::moduleBonusWarfareLinkSkirmish, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto moduleBonusWarfareLinkInfo = MakeEffect(EffectID::moduleBonusWarfareLinkInfo, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto moduleBonusWarfareLinkMining = MakeEffect(EffectID::moduleBonusWarfareLinkMining, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto chargeBonusWarfareCharge = MakeEffect(EffectID::chargeBonusWarfareCharge, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3050, &Modifiers::modifier3051, &Modifiers::modifier3052, &Modifiers::modifier3053, &Modifiers::modifier3054, &Modifiers::modifier3055, &Modifiers::modifier3056, &Modifiers::modifier3057));
+			constexpr auto industrialCommandShipSkillLevelMultiplierICS3 = MakeEffect(EffectID::industrialCommandShipSkillLevelMultiplierICS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3058));
+			constexpr auto industrialCommandShipSkillLevelMultiplierICS4 = MakeEffect(EffectID::industrialCommandShipSkillLevelMultiplierICS4, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3059));
+			constexpr auto moduleTitanEffectGenerator = MakeEffect(EffectID::moduleTitanEffectGenerator, MetaInfo::Effect::Category::active, false, false, _modifiers());
+			constexpr auto engComplexServiceFuelBonus = MakeEffect(EffectID::engComplexServiceFuelBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3060, &Modifiers::modifier3061));
+			constexpr auto miningDroneSpecBonus = MakeEffect(EffectID::miningDroneSpecBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3062, &Modifiers::modifier3063));
+			constexpr auto iceHarvestingDroneOperationDurationBonus = MakeEffect(EffectID::iceHarvestingDroneOperationDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3064));
+			constexpr auto iceHarvestingDroneSpecBonus = MakeEffect(EffectID::iceHarvestingDroneSpecBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3065, &Modifiers::modifier3066));
+			constexpr auto spatialPhenomenaGenerationDurationBonus = MakeEffect(EffectID::spatialPhenomenaGenerationDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3067));
+			constexpr auto commandProcessorEffect = MakeEffect(EffectID::commandProcessorEffect, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier456, &Modifiers::modifier650));
+			constexpr auto areaOfEffectSkillBonus = MakeEffect(EffectID::areaOfEffectSkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3068));
+			constexpr auto commandBurstAoEBonus = MakeEffect(EffectID::commandBurstAoEBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3069));
+			constexpr auto armoredCommandDurationBonus = MakeEffect(EffectID::armoredCommandDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3070));
+			constexpr auto shieldCommandDurationBonus = MakeEffect(EffectID::shieldCommandDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3071));
+			constexpr auto informationCommandDurationBonus = MakeEffect(EffectID::informationCommandDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3072));
+			constexpr auto skirmishCommandDurationBonus = MakeEffect(EffectID::skirmishCommandDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3073));
+			constexpr auto miningForemanDurationBonus = MakeEffect(EffectID::miningForemanDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3074));
+			constexpr auto commandBurstStrengthSkillBonus = MakeEffect(EffectID::commandBurstStrengthSkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3075));
+			constexpr auto armoredCommandStrengthBonus = MakeEffect(EffectID::armoredCommandStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3076, &Modifiers::modifier3077, &Modifiers::modifier3078, &Modifiers::modifier3079));
+			constexpr auto shieldCommandStrengthBonus = MakeEffect(EffectID::shieldCommandStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3080, &Modifiers::modifier3081, &Modifiers::modifier3082, &Modifiers::modifier3083));
+			constexpr auto informationCommandStrengthBonus = MakeEffect(EffectID::informationCommandStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3084, &Modifiers::modifier3085, &Modifiers::modifier3086, &Modifiers::modifier3087));
+			constexpr auto skirmishCommandStrengthBonus = MakeEffect(EffectID::skirmishCommandStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3088, &Modifiers::modifier3089, &Modifiers::modifier3090, &Modifiers::modifier3091));
+			constexpr auto miningForemanStrengthBonus = MakeEffect(EffectID::miningForemanStrengthBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3092, &Modifiers::modifier3093, &Modifiers::modifier3094, &Modifiers::modifier3095));
+			constexpr auto reloadTimeSkillBonus = MakeEffect(EffectID::reloadTimeSkillBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3096));
+			constexpr auto commandBurstReloadTimeBonus = MakeEffect(EffectID::commandBurstReloadTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3097));
+			constexpr auto commandBurstAoERoleBonus = MakeEffect(EffectID::commandBurstAoERoleBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3098));
+			constexpr auto industrialCommandShipSkillLevelMultiplierICS5 = MakeEffect(EffectID::industrialCommandShipSkillLevelMultiplierICS5, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3099));
+			constexpr auto shieldCommandBurstBonusICS3 = MakeEffect(EffectID::shieldCommandBurstBonusICS3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3100, &Modifiers::modifier3101, &Modifiers::modifier3102, &Modifiers::modifier3103, &Modifiers::modifier3104));
+			constexpr auto shipBonusDroneHPDamageMiningICS4 = MakeEffect(EffectID::shipBonusDroneHPDamageMiningICS4, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3105, &Modifiers::modifier3106, &Modifiers::modifier3107, &Modifiers::modifier3108, &Modifiers::modifier3109));
+			constexpr auto shipBonusDroneIceHarvestingICS5 = MakeEffect(EffectID::shipBonusDroneIceHarvestingICS5, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3110));
+			constexpr auto industrialBonusDroneDamage = MakeEffect(EffectID::industrialBonusDroneDamage, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3111));
+			constexpr auto shipBonusDroneIceHarvestingRole = MakeEffect(EffectID::shipBonusDroneIceHarvestingRole, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3112));
+			constexpr auto oreCapitalShipSkillMultiplier5 = MakeEffect(EffectID::oreCapitalShipSkillMultiplier5, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3113));
+			constexpr auto shipBonusDroneHPDamageMiningORECapital4 = MakeEffect(EffectID::shipBonusDroneHPDamageMiningORECapital4, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier934, &Modifiers::modifier935, &Modifiers::modifier936, &Modifiers::modifier937, &Modifiers::modifier3114));
+			constexpr auto miningForemanBurstBonusORECapital2 = MakeEffect(EffectID::miningForemanBurstBonusORECapital2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3115, &Modifiers::modifier3116, &Modifiers::modifier3117, &Modifiers::modifier3118, &Modifiers::modifier3119));
+			constexpr auto shieldCommandBurstBonusORECapital3 = MakeEffect(EffectID::shieldCommandBurstBonusORECapital3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3120, &Modifiers::modifier3121, &Modifiers::modifier3122, &Modifiers::modifier3123, &Modifiers::modifier3124));
+			constexpr auto shipBonusDroneIceHarvestingORECapital5 = MakeEffect(EffectID::shipBonusDroneIceHarvestingORECapital5, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3125));
+			constexpr auto shipModeSHTDamagePostDiv = MakeEffect(EffectID::shipModeSHTDamagePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3126));
+			constexpr auto shipModeSPTDamagePostDiv = MakeEffect(EffectID::shipModeSPTDamagePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3127));
+			constexpr auto shipModeSETDamagePostDiv = MakeEffect(EffectID::shipModeSETDamagePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3128));
+			constexpr auto shipModeSmallMissileDamagePostDiv = MakeEffect(EffectID::shipModeSmallMissileDamagePostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3129, &Modifiers::modifier3130, &Modifiers::modifier3131, &Modifiers::modifier3132, &Modifiers::modifier3133, &Modifiers::modifier3134, &Modifiers::modifier3135, &Modifiers::modifier3136));
+			constexpr auto modeDampTDResistsPostDiv = MakeEffect(EffectID::modeDampTDResistsPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3137, &Modifiers::modifier3138));
+			constexpr auto modeMWDandABBoostPostDiv = MakeEffect(EffectID::modeMWDandABBoostPostDiv, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3139, &Modifiers::modifier3140));
+			constexpr auto rigEquipmentManufactureMaterialBonus = MakeEffect(EffectID::rigEquipmentManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3141));
+			constexpr auto rigEquipmentManufactureTimeBonus = MakeEffect(EffectID::rigEquipmentManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3142));
+			constexpr auto invulnerabilityCoreDurationBonus = MakeEffect(EffectID::invulnerabilityCoreDurationBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3143, &Modifiers::modifier3144));
+			constexpr auto rigAmmoManufactureMaterialBonus = MakeEffect(EffectID::rigAmmoManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3145));
+			constexpr auto rigAmmoManufactureTimeBonus = MakeEffect(EffectID::rigAmmoManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3146));
+			constexpr auto rigDroneManufactureMaterialBonus = MakeEffect(EffectID::rigDroneManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3147));
+			constexpr auto rigDroneManufactureTimeBonus = MakeEffect(EffectID::rigDroneManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3148));
+			constexpr auto rigSmallshipManufactureMaterialBonus = MakeEffect(EffectID::rigSmallshipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3149));
+			constexpr auto rigSmallshipManufactureTimeBonus = MakeEffect(EffectID::rigSmallshipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3150));
+			constexpr auto rigMediumshipManufactureMaterialBonus = MakeEffect(EffectID::rigMediumshipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3151));
+			constexpr auto rigMediumshipsManufactureTimeBonus = MakeEffect(EffectID::rigMediumshipsManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3152));
+			constexpr auto rigLargeshipManufactureMaterialBonus = MakeEffect(EffectID::rigLargeshipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3153));
+			constexpr auto rigLargeshipManufactureTimeBonus = MakeEffect(EffectID::rigLargeshipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3154));
+			constexpr auto rigAdvSmshipManufactureMaterialBonus = MakeEffect(EffectID::rigAdvSmshipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3155));
+			constexpr auto rigAdvSmshipManufactureTimeBonus = MakeEffect(EffectID::rigAdvSmshipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3156));
+			constexpr auto rigAdvMedShipManufactureMaterialBonus = MakeEffect(EffectID::rigAdvMedShipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3157));
+			constexpr auto rigAdvMedShipManufactureTimeBonus = MakeEffect(EffectID::rigAdvMedShipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3158));
+			constexpr auto rigAdvLarShipManufactureMaterialBonus = MakeEffect(EffectID::rigAdvLarShipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3159));
+			constexpr auto rigAdvLarShipManufactureTimeBonus = MakeEffect(EffectID::rigAdvLarShipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3160));
+			constexpr auto rigAdvComponentManufactureMaterialBonus = MakeEffect(EffectID::rigAdvComponentManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3161));
+			constexpr auto rigAdvComponentManufactureTimeBonus = MakeEffect(EffectID::rigAdvComponentManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3162));
+			constexpr auto rigBasCapCompManufactureMaterialBonus = MakeEffect(EffectID::rigBasCapCompManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3163));
+			constexpr auto rigBasCapCompManufactureTimeBonus = MakeEffect(EffectID::rigBasCapCompManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3164));
+			constexpr auto rigStructureManufactureMaterialBonus = MakeEffect(EffectID::rigStructureManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3165));
+			constexpr auto rigStructureManufactureTimeBonus = MakeEffect(EffectID::rigStructureManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3166));
+			constexpr auto rigInventionCostBonus = MakeEffect(EffectID::rigInventionCostBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3167));
+			constexpr auto rigInventionTimeBonus = MakeEffect(EffectID::rigInventionTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3168));
+			constexpr auto rigMEResearchCostBonus = MakeEffect(EffectID::rigMEResearchCostBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3169));
+			constexpr auto rigMEResearchTimeBonus = MakeEffect(EffectID::rigMEResearchTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3170));
+			constexpr auto rigTEResearchCostBonus = MakeEffect(EffectID::rigTEResearchCostBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3171));
+			constexpr auto rigTEResearchTimeBonus = MakeEffect(EffectID::rigTEResearchTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3172));
+			constexpr auto rigCopyCostBonus = MakeEffect(EffectID::rigCopyCostBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3173));
+			constexpr auto rigCopyTimeBonus = MakeEffect(EffectID::rigCopyTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3174));
+			constexpr auto rigCapShipManufactureMaterialBonus = MakeEffect(EffectID::rigCapShipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3175));
+			constexpr auto rigCapShipManufactureTimeBonus = MakeEffect(EffectID::rigCapShipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3176));
+			constexpr auto rigAllShipManufactureMaterialBonus = MakeEffect(EffectID::rigAllShipManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3177));
+			constexpr auto rigAllShipManufactureTimeBonus = MakeEffect(EffectID::rigAllShipManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3178));
+			constexpr auto structureEngineeringRigSecurityModification = MakeEffect(EffectID::structureEngineeringRigSecurityModification, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3179, &Modifiers::modifier3180, &Modifiers::modifier3181, &Modifiers::modifier3182));
+			constexpr auto skillMultiplierMissileVelocityBonus = MakeEffect(EffectID::skillMultiplierMissileVelocityBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3183));
+			constexpr auto skillMultiplierDefenderMissileVelocity = MakeEffect(EffectID::skillMultiplierDefenderMissileVelocity, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3184));
+			constexpr auto shipBonusCommandDestroyerRole1DefenderBonus = MakeEffect(EffectID::shipBonusCommandDestroyerRole1DefenderBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3185));
+			constexpr auto shipModuleFocusedWarpScramblingScript = MakeEffect(EffectID::shipModuleFocusedWarpScramblingScript, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier9, &Modifiers::modifier2112, &Modifiers::modifier2113, &Modifiers::modifier3186, &Modifiers::modifier3187));
+			constexpr auto shipModuleFocusedWarpDisruptionScript = MakeEffect(EffectID::shipModuleFocusedWarpDisruptionScript, MetaInfo::Effect::Category::target, true, false, _modifiers(&Modifiers::modifier9, &Modifiers::modifier2113, &Modifiers::modifier3187));
+			constexpr auto chargeRateStructureModulesMultiply = MakeEffect(EffectID::chargeRateStructureModulesMultiply, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3188));
+			constexpr auto shipBonusRole3CapitalEnergyDamageBonus = MakeEffect(EffectID::shipBonusRole3CapitalEnergyDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3189));
+			constexpr auto shipBonusTitanM1WebRangeBonus = MakeEffect(EffectID::shipBonusTitanM1WebRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3190));
+			constexpr auto shipBonusTitanA1EnergyWarfareAmountBonus = MakeEffect(EffectID::shipBonusTitanA1EnergyWarfareAmountBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3191, &Modifiers::modifier3192));
+			constexpr auto shipBonusDreadnoughtA1EnergyWarfareAmountBonus = MakeEffect(EffectID::shipBonusDreadnoughtA1EnergyWarfareAmountBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3193, &Modifiers::modifier3194));
+			constexpr auto shipBonusDreadnoughtM1WebRangeBonus = MakeEffect(EffectID::shipBonusDreadnoughtM1WebRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3195));
+			constexpr auto shipBonusForceAuxiliaryA1NosferatuRangeBonus = MakeEffect(EffectID::shipBonusForceAuxiliaryA1NosferatuRangeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3196, &Modifiers::modifier3197));
+			constexpr auto shipBonusForceAuxiliaryA1NosferatuDrainAmount = MakeEffect(EffectID::shipBonusForceAuxiliaryA1NosferatuDrainAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3198));
+			constexpr auto shipBonusRole4NosferatuCPUBonus = MakeEffect(EffectID::shipBonusRole4NosferatuCPUBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3199));
+			constexpr auto shipBonusRole5RemoteArmorRepairPowergridBonus = MakeEffect(EffectID::shipBonusRole5RemoteArmorRepairPowergridBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3200));
+			constexpr auto shipBonusRole5CapitalRemoteArmorRepairPowergridBonus = MakeEffect(EffectID::shipBonusRole5CapitalRemoteArmorRepairPowergridBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3201));
+			constexpr auto shipBonusForceAuxiliaryM1RemoteArmorRepairDuration = MakeEffect(EffectID::shipBonusForceAuxiliaryM1RemoteArmorRepairDuration, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2624));
+			constexpr auto eliteBonusCoverOpsWarpVelocity1 = MakeEffect(EffectID::eliteBonusCoverOpsWarpVelocity1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3202));
+			constexpr auto shipBonusSmallMissileFlightTimeCF1 = MakeEffect(EffectID::shipBonusSmallMissileFlightTimeCF1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3203, &Modifiers::modifier3204));
+			constexpr auto shipBonusSPTRoFMF = MakeEffect(EffectID::shipBonusSPTRoFMF, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3205));
+			constexpr auto roleBonusConcordSecGain = MakeEffect(EffectID::roleBonusConcordSecGain, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3206));
+			constexpr auto concordIntermediateSecStatus = MakeEffect(EffectID::concordIntermediateSecStatus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3207));
+			constexpr auto concordAssignTankBonus = MakeEffect(EffectID::concordAssignTankBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3208));
+			constexpr auto concordSecStatusTankBonus = MakeEffect(EffectID::concordSecStatusTankBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3209, &Modifiers::modifier3210));
+			constexpr auto eliteReconStasisWebBonus1 = MakeEffect(EffectID::eliteReconStasisWebBonus1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3211));
+			constexpr auto eliteBonusReconWarpVelocity3 = MakeEffect(EffectID::eliteBonusReconWarpVelocity3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3212));
+			constexpr auto shipBonusMedMissileFlightTimeCC2 = MakeEffect(EffectID::shipBonusMedMissileFlightTimeCC2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3213, &Modifiers::modifier3214));
+			constexpr auto blackOpsSkillMultiplier3 = MakeEffect(EffectID::blackOpsSkillMultiplier3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3215));
+			constexpr auto blackOpsSkillMultiplier4 = MakeEffect(EffectID::blackOpsSkillMultiplier4, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3216));
+			constexpr auto eliteBonusBlackOpsWarpVelocity1 = MakeEffect(EffectID::eliteBonusBlackOpsWarpVelocity1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3217));
+			constexpr auto eliteBonusBlackOpsScramblerRange4 = MakeEffect(EffectID::eliteBonusBlackOpsScramblerRange4, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3218));
+			constexpr auto eliteBonusBlackOpsWebRange3 = MakeEffect(EffectID::eliteBonusBlackOpsWebRange3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3219));
+			constexpr auto shipBonusLauncherRoF2CB = MakeEffect(EffectID::shipBonusLauncherRoF2CB, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier556, &Modifiers::modifier557, &Modifiers::modifier1966));
+			constexpr auto shipBonusLargeMissileFlightTimeCB1 = MakeEffect(EffectID::shipBonusLargeMissileFlightTimeCB1, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3220, &Modifiers::modifier3221));
+			constexpr auto shipBonusForceAuxiliaryM2LocalRepairAmount = MakeEffect(EffectID::shipBonusForceAuxiliaryM2LocalRepairAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3222, &Modifiers::modifier3223));
+			constexpr auto rigThukkerBasCapCompManufactureMaterialBonus = MakeEffect(EffectID::rigThukkerBasCapCompManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3224));
+			constexpr auto rigAdvCapComponentManufactureMaterialBonus = MakeEffect(EffectID::rigAdvCapComponentManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3225));
+			constexpr auto rigAdvCapComponentManufactureTimeBonus = MakeEffect(EffectID::rigAdvCapComponentManufactureTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3226));
+			constexpr auto rigThukkerAdvCapCompManufactureMaterialBonus = MakeEffect(EffectID::rigThukkerAdvCapCompManufactureMaterialBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3227));
+			constexpr auto reactionTimeBonusPostPercentManufactureTimeMultiplierChar = MakeEffect(EffectID::reactionTimeBonusPostPercentManufactureTimeMultiplierChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3228));
+			constexpr auto reactionSkillBoostManufacturingTimeBonus = MakeEffect(EffectID::reactionSkillBoostManufacturingTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3229));
+			constexpr auto massReactionSkillLevelModAddReactionSlotLimitChar = MakeEffect(EffectID::massReactionSkillLevelModAddReactionSlotLimitChar, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3230));
+			constexpr auto subsystemEnergyNeutFittingReduction = MakeEffect(EffectID::subsystemEnergyNeutFittingReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3231, &Modifiers::modifier3232, &Modifiers::modifier3233, &Modifiers::modifier3234));
+			constexpr auto subsystemMETFittingReduction = MakeEffect(EffectID::subsystemMETFittingReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3235, &Modifiers::modifier3236));
+			constexpr auto subsystemMHTFittingReduction = MakeEffect(EffectID::subsystemMHTFittingReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3237, &Modifiers::modifier3238));
+			constexpr auto subsystemMPTFittingReduction = MakeEffect(EffectID::subsystemMPTFittingReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3239, &Modifiers::modifier3240));
+			constexpr auto subsystemMRARFittingReduction = MakeEffect(EffectID::subsystemMRARFittingReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3241));
+			constexpr auto subsystemMRSBFittingReduction = MakeEffect(EffectID::subsystemMRSBFittingReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3242));
+			constexpr auto subsystemMMissileFittingReduction = MakeEffect(EffectID::subsystemMMissileFittingReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3243, &Modifiers::modifier3244, &Modifiers::modifier3245, &Modifiers::modifier3246, &Modifiers::modifier3247, &Modifiers::modifier3248));
+			constexpr auto shipModuleNonRepeatingShieldHardener = MakeEffect(EffectID::shipModuleNonRepeatingShieldHardener, MetaInfo::Effect::Category::active, true, false, _modifiers(&Modifiers::modifier591, &Modifiers::modifier592, &Modifiers::modifier593, &Modifiers::modifier594));
+			constexpr auto shipModuleNonRepeatingArmorHardener = MakeEffect(EffectID::shipModuleNonRepeatingArmorHardener, MetaInfo::Effect::Category::active, true, false, _modifiers(&Modifiers::modifier587, &Modifiers::modifier588, &Modifiers::modifier589, &Modifiers::modifier590));
+			constexpr auto strategicCruiserMinmatarSkillLevel2 = MakeEffect(EffectID::strategicCruiserMinmatarSkillLevel2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3249));
+			constexpr auto strategicCruiserAmarrSkillLevel2 = MakeEffect(EffectID::strategicCruiserAmarrSkillLevel2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3250));
+			constexpr auto strategicCruiserCaldariSkillLevel2 = MakeEffect(EffectID::strategicCruiserCaldariSkillLevel2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3251));
+			constexpr auto strategicCruiserGallenteSkillLevel2 = MakeEffect(EffectID::strategicCruiserGallenteSkillLevel2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3252));
+			constexpr auto shipBonusStrategicCruiserCaldariNaniteRepairTime2 = MakeEffect(EffectID::shipBonusStrategicCruiserCaldariNaniteRepairTime2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3253));
+			constexpr auto shipBonusStrategicCruiserAmarrNaniteRepairTime2 = MakeEffect(EffectID::shipBonusStrategicCruiserAmarrNaniteRepairTime2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3254));
+			constexpr auto shipBonusStrategicCruiserGallenteNaniteRepairTime2 = MakeEffect(EffectID::shipBonusStrategicCruiserGallenteNaniteRepairTime2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3255));
+			constexpr auto shipBonusStrategicCruiserMinmatarNaniteRepairTime2 = MakeEffect(EffectID::shipBonusStrategicCruiserMinmatarNaniteRepairTime2, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3256));
+			constexpr auto subsystemSkillLevelAmarrDefensive3 = MakeEffect(EffectID::subsystemSkillLevelAmarrDefensive3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3257));
+			constexpr auto subsystemSkillLevelAmarrEngineering3 = MakeEffect(EffectID::subsystemSkillLevelAmarrEngineering3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3258));
+			constexpr auto subsystemSkillLevelCaldariEngineering3 = MakeEffect(EffectID::subsystemSkillLevelCaldariEngineering3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3259));
+			constexpr auto subsystemSkillLevelCaldariDefensive3 = MakeEffect(EffectID::subsystemSkillLevelCaldariDefensive3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3260));
+			constexpr auto subsystemSkillLevelGallenteEngineering3 = MakeEffect(EffectID::subsystemSkillLevelGallenteEngineering3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3261));
+			constexpr auto subsystemSkillLevelGallenteDefensive3 = MakeEffect(EffectID::subsystemSkillLevelGallenteDefensive3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3262));
+			constexpr auto subsystemSkillLevelMinmatarEngineering3 = MakeEffect(EffectID::subsystemSkillLevelMinmatarEngineering3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3263));
+			constexpr auto subsystemSkillLevelMinmatarDefensive3 = MakeEffect(EffectID::subsystemSkillLevelMinmatarDefensive3, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3264));
+			constexpr auto structureHPBonusAddPassive = MakeEffect(EffectID::structureHPBonusAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3265));
+			constexpr auto subSystemBonusAmarrDefensive2ScanProbeStrength = MakeEffect(EffectID::subSystemBonusAmarrDefensive2ScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3266));
+			constexpr auto subsystemBonusMinmatarOffensive1HMLHAMVelo = MakeEffect(EffectID::subsystemBonusMinmatarOffensive1HMLHAMVelo, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3267, &Modifiers::modifier3268));
+			constexpr auto subsystemBonusMinmatarOffensive3MissileExpVelo = MakeEffect(EffectID::subsystemBonusMinmatarOffensive3MissileExpVelo, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3269));
+			constexpr auto subsystemBonusGallenteOffensive2DroneVeloTracking = MakeEffect(EffectID::subsystemBonusGallenteOffensive2DroneVeloTracking, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3270, &Modifiers::modifier3271));
+			constexpr auto subsystemBonusAmarrPropulsionWarpCapacitor = MakeEffect(EffectID::subsystemBonusAmarrPropulsionWarpCapacitor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3272));
+			constexpr auto subsystemBonusMinmatarPropulsionWarpCapacitor = MakeEffect(EffectID::subsystemBonusMinmatarPropulsionWarpCapacitor, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3273));
+			constexpr auto subsystemBonusCaldariPropulsion2PropModHeatBenefit = MakeEffect(EffectID::subsystemBonusCaldariPropulsion2PropModHeatBenefit, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3274, &Modifiers::modifier3275));
+			constexpr auto subsystemBonusGallentePropulsion2PropModHeatBenefit = MakeEffect(EffectID::subsystemBonusGallentePropulsion2PropModHeatBenefit, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3276, &Modifiers::modifier3277));
+			constexpr auto subsystemBonusAmarrCore2EnergyResistance = MakeEffect(EffectID::subsystemBonusAmarrCore2EnergyResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3278));
+			constexpr auto subsystemBonusMinmatarCore2EnergyResistance = MakeEffect(EffectID::subsystemBonusMinmatarCore2EnergyResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3279));
+			constexpr auto subsystemBonusGallenteCore2EnergyResistance = MakeEffect(EffectID::subsystemBonusGallenteCore2EnergyResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3280));
+			constexpr auto subsystemBonusCaldariCore2EnergyResistance = MakeEffect(EffectID::subsystemBonusCaldariCore2EnergyResistance, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3281));
+			constexpr auto shipMaxLockedTargetsBonusAddPassive = MakeEffect(EffectID::shipMaxLockedTargetsBonusAddPassive, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier34));
+			constexpr auto subsystemBonusAmarrCore3EnergyWarHeatBonus = MakeEffect(EffectID::subsystemBonusAmarrCore3EnergyWarHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3282, &Modifiers::modifier3283));
+			constexpr auto subsystemBonusMinmatarCore3StasisWebHeatBonus = MakeEffect(EffectID::subsystemBonusMinmatarCore3StasisWebHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3284));
+			constexpr auto subsystemBonusGallenteCore3WarpScramHeatBonus = MakeEffect(EffectID::subsystemBonusGallenteCore3WarpScramHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3285));
+			constexpr auto subsystemBonusCaldariCore3ECMHeatBonus = MakeEffect(EffectID::subsystemBonusCaldariCore3ECMHeatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3286));
+			constexpr auto subsystemBonusAmarrDefensive2HardenerHeat = MakeEffect(EffectID::subsystemBonusAmarrDefensive2HardenerHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3287, &Modifiers::modifier3288));
+			constexpr auto subsystemBonusGallenteDefensive2HardenerHeat = MakeEffect(EffectID::subsystemBonusGallenteDefensive2HardenerHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3289, &Modifiers::modifier3290));
+			constexpr auto subsystemBonusCaldariDefensive2HardenerHeat = MakeEffect(EffectID::subsystemBonusCaldariDefensive2HardenerHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3291));
+			constexpr auto subsystemBonusMinmatarDefensive2HardenerHeat = MakeEffect(EffectID::subsystemBonusMinmatarDefensive2HardenerHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3292, &Modifiers::modifier3293, &Modifiers::modifier3294));
+			constexpr auto subsystemBonusAmarrDefensive3ArmorRepHeat = MakeEffect(EffectID::subsystemBonusAmarrDefensive3ArmorRepHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3295, &Modifiers::modifier3296));
+			constexpr auto subsystemBonusGallenteDefensive3ArmorRepHeat = MakeEffect(EffectID::subsystemBonusGallenteDefensive3ArmorRepHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3297, &Modifiers::modifier3298));
+			constexpr auto subsystemBonusCaldariDefensive3ShieldBoostHeat = MakeEffect(EffectID::subsystemBonusCaldariDefensive3ShieldBoostHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3299, &Modifiers::modifier3300));
+			constexpr auto subsystemBonusMinmatarDefensive3LocalRepHeat = MakeEffect(EffectID::subsystemBonusMinmatarDefensive3LocalRepHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3301, &Modifiers::modifier3302, &Modifiers::modifier3303, &Modifiers::modifier3304));
+			constexpr auto subSystemBonusCaldariDefensive2ScanProbeStrength = MakeEffect(EffectID::subSystemBonusCaldariDefensive2ScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3305));
+			constexpr auto subSystemBonusGallenteDefensive2ScanProbeStrength = MakeEffect(EffectID::subSystemBonusGallenteDefensive2ScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3306));
+			constexpr auto subSystemBonusMinmatarDefensive2ScanProbeStrength = MakeEffect(EffectID::subSystemBonusMinmatarDefensive2ScanProbeStrength, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3307));
+			constexpr auto mediumRemoteRepFittingAdjustment = MakeEffect(EffectID::mediumRemoteRepFittingAdjustment, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3308, &Modifiers::modifier3309));
+			constexpr auto subsystemBonusCommandBurstFittingReduction = MakeEffect(EffectID::subsystemBonusCommandBurstFittingReduction, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3310, &Modifiers::modifier3311));
+			constexpr auto subsystemRemoteShieldBoostFalloffBonus = MakeEffect(EffectID::subsystemRemoteShieldBoostFalloffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3312, &Modifiers::modifier3313));
+			constexpr auto subsystemRemoteArmorRepairerOptimalBonus = MakeEffect(EffectID::subsystemRemoteArmorRepairerOptimalBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3314, &Modifiers::modifier3315));
+			constexpr auto subsystemRemoteArmorRepairerFalloffBonus = MakeEffect(EffectID::subsystemRemoteArmorRepairerFalloffBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3316, &Modifiers::modifier3317));
+			constexpr auto subsystemBonusAmarrOffensive3RemoteArmorRepairHeat = MakeEffect(EffectID::subsystemBonusAmarrOffensive3RemoteArmorRepairHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3318));
+			constexpr auto subsystemBonusGallenteOffensive3RemoteArmorRepairHeat = MakeEffect(EffectID::subsystemBonusGallenteOffensive3RemoteArmorRepairHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3319));
+			constexpr auto subsystemBonusCaldariOffensive3RemoteShieldBoosterHeat = MakeEffect(EffectID::subsystemBonusCaldariOffensive3RemoteShieldBoosterHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3320));
+			constexpr auto subsystemBonusMinmatarOffensive3RemoteRepHeat = MakeEffect(EffectID::subsystemBonusMinmatarOffensive3RemoteRepHeat, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3321, &Modifiers::modifier3322));
+			constexpr auto subsystemBonusAmarrPropulsion2WarpSpeed = MakeEffect(EffectID::subsystemBonusAmarrPropulsion2WarpSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3323));
+			constexpr auto subsystemBonusMinmatarPropulsion2WarpSpeed = MakeEffect(EffectID::subsystemBonusMinmatarPropulsion2WarpSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3324));
+			constexpr auto subsystemBonusGallentePropulsionWarpSpeed = MakeEffect(EffectID::subsystemBonusGallentePropulsionWarpSpeed, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3325));
+			constexpr auto surveyProbeExplosionDelayOnline = MakeEffect(EffectID::surveyProbeExplosionDelayOnline, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3326));
+			constexpr auto rigReactionHybTimeBonus = MakeEffect(EffectID::rigReactionHybTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3327));
+			constexpr auto rigReactionHybMatBonus = MakeEffect(EffectID::rigReactionHybMatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3328));
+			constexpr auto rigReactionCompTimeBonus = MakeEffect(EffectID::rigReactionCompTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3329));
+			constexpr auto rigReactionCompMatBonus = MakeEffect(EffectID::rigReactionCompMatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3330));
+			constexpr auto rigReactionBioTimeBonus = MakeEffect(EffectID::rigReactionBioTimeBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3331));
+			constexpr auto rigReactionBioMatBonus = MakeEffect(EffectID::rigReactionBioMatBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3332));
+			constexpr auto structureReactionRigSecurityModification = MakeEffect(EffectID::structureReactionRigSecurityModification, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3333, &Modifiers::modifier3334));
+			constexpr auto rigMoonSpewVolBonus = MakeEffect(EffectID::rigMoonSpewVolBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3335));
+			constexpr auto rigMoonSpewRadBonus = MakeEffect(EffectID::rigMoonSpewRadBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3336));
+			constexpr auto rigMoonFractureDelay = MakeEffect(EffectID::rigMoonFractureDelay, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3337));
+			constexpr auto rigMoonAsteroidDecayBonus = MakeEffect(EffectID::rigMoonAsteroidDecayBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3338));
+			constexpr auto shipBonusTitanG1KinThermDamageBonus = MakeEffect(EffectID::shipBonusTitanG1KinThermDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3339, &Modifiers::modifier3340, &Modifiers::modifier3341, &Modifiers::modifier3342, &Modifiers::modifier3343, &Modifiers::modifier3344));
+			constexpr auto shipBonusTitanG2AllDamageBonus = MakeEffect(EffectID::shipBonusTitanG2AllDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3345, &Modifiers::modifier3346, &Modifiers::modifier3347, &Modifiers::modifier3348, &Modifiers::modifier3349, &Modifiers::modifier3350, &Modifiers::modifier3351, &Modifiers::modifier3352, &Modifiers::modifier3353));
+			constexpr auto shipBonusTitanC1ShieldResists = MakeEffect(EffectID::shipBonusTitanC1ShieldResists, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3354, &Modifiers::modifier3355, &Modifiers::modifier3356, &Modifiers::modifier3357));
+			constexpr auto shipBonusRole4FighterDamageAndHitpoints = MakeEffect(EffectID::shipBonusRole4FighterDamageAndHitpoints, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3358, &Modifiers::modifier3359, &Modifiers::modifier3360, &Modifiers::modifier3361));
+			constexpr auto shipBonusDreadnoughtG1KinThermDamageBonus = MakeEffect(EffectID::shipBonusDreadnoughtG1KinThermDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3362, &Modifiers::modifier3363, &Modifiers::modifier3364, &Modifiers::modifier3365, &Modifiers::modifier3366, &Modifiers::modifier3367));
+			constexpr auto shipBonusForceAuxiliaryG1RemoteShieldBoostAmount = MakeEffect(EffectID::shipBonusForceAuxiliaryG1RemoteShieldBoostAmount, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3368));
+			constexpr auto shipBonusRole2LogisticDroneRepAmountAndHitpointBonus = MakeEffect(EffectID::shipBonusRole2LogisticDroneRepAmountAndHitpointBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier2694, &Modifiers::modifier2695, &Modifiers::modifier2696, &Modifiers::modifier3369, &Modifiers::modifier3370, &Modifiers::modifier3371));
+			constexpr auto refineryServiceFuelBonus = MakeEffect(EffectID::refineryServiceFuelBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3372, &Modifiers::modifier3373));
+			constexpr auto refineryRefiningYieldBonus = MakeEffect(EffectID::refineryRefiningYieldBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3374, &Modifiers::modifier3375, &Modifiers::modifier3376));
+			constexpr auto asteroidDecayTimeDisplayUpdate = MakeEffect(EffectID::asteroidDecayTimeDisplayUpdate, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3377));
+			constexpr auto characterDamageMissiles = MakeEffect(EffectID::characterDamageMissiles, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3378, &Modifiers::modifier3379, &Modifiers::modifier3380, &Modifiers::modifier3381));
+			constexpr auto naniteRepairPasteArmorDamageBonus = MakeEffect(EffectID::naniteRepairPasteArmorDamageBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3382));
+			constexpr auto tacticalMode = MakeEffect(EffectID::tacticalMode, MetaInfo::Effect::Category::generic, false, false, _modifiers());
+			constexpr auto fueledArmorRepairBonus = MakeEffect(EffectID::fueledArmorRepairBonus, MetaInfo::Effect::Category::generic, false, false, _modifiers(&Modifiers::modifier3383, &Modifiers::modifier3384));
+			constexpr auto gangBoost = MakeEffect(EffectID::gangBoost, MetaInfo::Effect::Category::active, false, false, _modifiers());
+		}
 	}
 }

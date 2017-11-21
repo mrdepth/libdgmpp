@@ -18,6 +18,7 @@
 #include <type_traits>
 #include <sstream>
 #include <queue>
+#include <chrono>
 
 using namespace dgmpp;
 
@@ -376,6 +377,301 @@ private:
 	Rep rep_;
 };
 
+namespace dgmpp3 {
+	using Float = double;
+	using TypeID = dgmpp::TypeID;
+	using GroupID = dgmpp::GroupID;
+	using CategoryID = dgmpp::CategoryID;
+	using AttributeID = dgmpp::AttributeID;
+	using EffectID = dgmpp::EffectID;
+	using ModifierID = int;
+	using SchematicID = int;
+	using GigaJoule = Float;
+	using Percent = Float;
+	
+	template <typename... Args>
+	struct array_type {};
+	
+	template <typename T, typename... Args>
+	struct array_type<T, Args...> {
+		using type = T;
+	};
+	
+	template <>
+	struct array_type<> {
+		using type = void;
+	};
+	
+	template <typename T, typename... Args>
+	constexpr std::array<T, sizeof...(Args)> make_array(Args... args) {
+		return { args... };
+	}
+	
+	//  template <typename T>
+	//std::array<T, 0> make_array() {
+	//      return {};
+	//}
+	
+	namespace MetaInfo {
+		
+		
+		struct Attribute {
+			AttributeID attributeID;
+			AttributeID maxAttributeID;
+			Float       defaultValue;
+			bool        isStackable;
+			bool        highIsGood;
+			
+			Attribute(const Attribute& other) = delete;
+			Attribute(Attribute&& other) = delete;
+			Attribute& operator= (const Attribute& other) = delete;
+			Attribute& operator= (Attribute&& other) = delete;
+			~Attribute() = default;
+			
+		};
+		
+		struct Modifier {
+			enum class ModifierType {
+				item,
+				location,
+				locationGroup,
+				locationRequiredSkill,
+				ownerRequiredSkill,
+				locationRequiredDomainSkill,
+			};
+			
+			enum class Association {
+				preAssignment,
+				modAdd,
+				modSub,
+				preDiv,
+				preMul,
+				postPercent,
+				postDiv,
+				postMul,
+				postAssignment,
+				skillTime,
+				addRate,
+				subRate
+			};
+			
+			enum class Domain {
+				self,
+				character,
+				ship,
+				gang,
+				area,
+				target,
+				other,
+				structure
+			};
+			
+			union Requirement {
+				TypeID  typeID;
+				GroupID groupID;
+				Domain  domain;
+				constexpr Requirement(TypeID typeID) : typeID(typeID) {}
+				constexpr Requirement(GroupID groupID) : groupID(groupID) {}
+				constexpr Requirement(Domain domain) : domain(domain) {}
+			};
+			
+			ModifierType    type;
+			Association     association;
+			Domain          domain;
+			
+			AttributeID     modifiedAttributeID;
+			AttributeID     modifyingAttributeID;
+			
+			Requirement     require;
+			
+			constexpr Modifier(ModifierType type,
+							   Association association,
+							   Domain domain,
+							   AttributeID modifiedAttributeID,
+							   AttributeID modifyingAttributeID)
+			: type(type), association(association), domain(domain), modifiedAttributeID(modifiedAttributeID), modifyingAttributeID(modifyingAttributeID), require(TypeID::none) {}
+			
+			constexpr Modifier(ModifierType type,
+							   Association association,
+							   Domain domain,
+							   AttributeID modifiedAttributeID,
+							   AttributeID modifyingAttributeID,
+							   TypeID require)
+			: type(type), association(association), domain(domain), modifiedAttributeID(modifiedAttributeID), modifyingAttributeID(modifyingAttributeID), require(require) {}
+			
+			constexpr Modifier(ModifierType type,
+							   Association association,
+							   Domain domain,
+							   AttributeID modifiedAttributeID,
+							   AttributeID modifyingAttributeID,
+							   GroupID require)
+			: type(type), association(association), domain(domain), modifiedAttributeID(modifiedAttributeID), modifyingAttributeID(modifyingAttributeID), require(require) {}
+			
+			constexpr Modifier(ModifierType type,
+							   Association association,
+							   Domain domain,
+							   AttributeID modifiedAttributeID,
+							   AttributeID modifyingAttributeID,
+							   Domain require)
+			: type(type), association(association), domain(domain), modifiedAttributeID(modifiedAttributeID), modifyingAttributeID(modifyingAttributeID), require(require) {}
+			
+			Modifier(const Modifier& other) = delete;
+			Modifier(Modifier&& other) = delete;
+			Modifier& operator= (const Modifier& other) = delete;
+			Modifier& operator= (Modifier&& other) = delete;
+			~Modifier() = default;
+		};
+		
+		struct Effect {
+			enum class Category {
+				generic,
+				active,
+				target,
+				passive,
+				overloaded,
+				dungeon,
+				system
+			};
+			
+			EffectID    effectID;
+			Category    category;
+			bool        isAssistance;
+			bool        isOffensive;
+			virtual dgmpp2::slice<const Modifier* const*> modifiers() const = 0;
+			//std::initializer_list<const ref<const Modifier>> modifiers;
+			
+			constexpr Effect(EffectID effectID, Category category, bool isAssistance, bool isOffensive)
+			: effectID(effectID), category(category), isAssistance(isAssistance), isOffensive(isOffensive) {};
+			
+			Effect(const Effect& other) = delete;
+			Effect& operator= (const Effect& other) = delete;
+			Effect& operator= (Effect&& other) = delete;
+			~Effect() = default;
+		protected:
+			Effect(Effect&& other) = default;
+			
+		};
+		
+		template<typename Modifiers>
+		struct EffectImpl : public Effect {
+			
+			constexpr EffectImpl(EffectID effectID, Category category, bool isAssistance, bool isOffensive, const Modifiers& modifiers)
+			: Effect(effectID, category, isAssistance, isOffensive), modifiers_(modifiers) {};
+			
+			
+			virtual dgmpp2::slice<const Modifier* const*> modifiers() const override {
+				return { nullptr, nullptr };
+			}
+		private:
+			Modifiers modifiers_;
+		};
+		
+		template<typename Modifiers>
+		constexpr EffectImpl<Modifiers> MakeEffect(EffectID effectID, Effect::Category category, bool isAssistance, bool isOffensive, const Modifiers& modifiers) {
+			return { effectID, category, isAssistance, isOffensive, modifiers };
+		}
+		
+		struct Type {
+			TypeID      typeID;
+			GroupID     groupID;
+			CategoryID  categoryID;
+			
+			virtual dgmpp2::slice<const std::pair<const Attribute*, Float>*> attributes() const = 0;
+			virtual dgmpp2::slice<const Effect* const*> effects() const = 0;
+			virtual dgmpp2::slice<const TypeID*> requiredSkills() const = 0;
+			
+			//          std::initializer_list<std::pair<const Attribute&, Float>>   attributes;
+			//          std::initializer_list<ref<const Effect>>                    effects;
+			//          std::initializer_list<const TypeID>                           requiredSkills;
+			
+			constexpr Type(TypeID typeID, GroupID groupID, CategoryID categoryID)
+			: typeID(typeID), groupID(groupID), categoryID(categoryID) {}
+			
+			
+			Type(const Type& other) = delete;
+			Type& operator= (const Type& other) = delete;
+			Type& operator= (Type&& other) = delete;
+			~Type() = default;
+			
+			bool requireSkill(TypeID skillID) const {
+				return false;
+				//return std::find(requiredSkills.begin(), requiredSkills.end(), skillID) != requiredSkills.end();
+			}
+		protected:
+			Type(Type&& other) = default;
+		};
+		
+		template <size_t A, size_t E, size_t S>
+		struct TypeImpl : public Type {
+			using Attributes = std::array<std::pair<const Attribute*, Float>, A>;
+			using Effects = std::array<const Effect*, E>;
+			using RequiredSkills = std::array<TypeID, S>;
+			
+			constexpr TypeImpl(TypeID typeID, GroupID groupID, CategoryID categoryID, const Attributes& attributes, const Effects& effects, const RequiredSkills& requiredSkills)
+			: Type(typeID, groupID, categoryID), attributes_(attributes), effects_(effects), requiredSkills_(requiredSkills) {}
+			
+			virtual dgmpp2::slice<const std::pair<const Attribute*, Float>*> attributes() const override {
+				return { nullptr, nullptr };
+			}
+			
+			virtual dgmpp2::slice<const Effect* const*> effects() const override {
+				return { nullptr, nullptr };
+			}
+			
+			virtual dgmpp2::slice<const TypeID*> requiredSkills() const override {
+				return { nullptr, nullptr };
+			}
+			
+			
+		private:
+			Attributes attributes_;
+			Effects effects_;
+			RequiredSkills requiredSkills_;
+		};
+		
+		template <size_t A, size_t E, size_t S>
+		constexpr TypeImpl<A, E, S> MakeType(TypeID typeID, GroupID groupID, CategoryID categoryID,
+											 const std::array<std::pair<const Attribute*, Float>, A>& attributes,
+											 const std::array<const Effect*, E>& effects,
+											 const std::array<TypeID, S>& requiredSkills) {
+			return { typeID, groupID, categoryID, attributes, effects, requiredSkills };
+		}
+		
+	}
+}
+
+
+namespace dgmpp3 {
+	namespace SDE {
+		namespace Attributes {
+			constexpr MetaInfo::Attribute isOnline = { AttributeID::isOnline, AttributeID::none, 0, true, true };
+			constexpr MetaInfo::Attribute damage = { AttributeID::damage, AttributeID::none, 0, true, true };
+			
+			constexpr const MetaInfo::Attribute* attributes[] = { &isOnline, &damage };
+		}
+		namespace Modifiers {
+			constexpr MetaInfo::Modifier modifier1 = { MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::addRate, MetaInfo::Modifier::Domain::ship, AttributeID::shieldCharge, AttributeID::shieldBonus };
+		}
+		namespace Effects {
+			constexpr auto shieldBoosting = MetaInfo::MakeEffect ( EffectID::shieldBoosting, MetaInfo::Effect::Category::active, false, false, make_array<const MetaInfo::Modifier*>() );
+		}
+		
+		template <typename... Args>
+		constexpr auto attributes_(Args&&... args) {
+			return make_array<std::pair<const MetaInfo::Attribute*, Float>, Args...>(std::forward<Args>(args)...);
+		}
+		
+		namespace Types {
+			constexpr auto dominix = MetaInfo::MakeType(TypeID::dominix, GroupID::battleship, CategoryID::ship,
+														attributes_(std::make_pair(&Attributes::isOnline, 1.0)),
+														make_array<const MetaInfo::Effect*>(&Effects::shieldBoosting),
+														make_array<TypeID>(TypeID::gallenteBattleship));
+			
+			constexpr const MetaInfo::Type* types[] = { &dominix };
+		}
+	}
+}
+
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
 		
@@ -409,17 +705,19 @@ int main(int argc, const char * argv[]) {
 		
 //		print(range.first, range.second);
 
+		auto t0 = std::chrono::high_resolution_clock::now();
 		{
 		
 			auto gang = dgmpp2::Gang::Create();
 			auto pilot = gang->add(dgmpp2::Character::Create());
 			pilot->setSkillLevels(5);
 			auto ship = pilot->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-			auto module = ship->add(dgmpp2::Module::Create(TypeID::_50MNMicrowarpdriveII));
+			auto module = ship->add(dgmpp2::Module::Create(TypeID::_500MNMicrowarpdriveII));
 			
 			module->state(dgmpp2::Module::State::overloaded);
-			std::cout << ship->capacitor().stableLevel() << std::endl;// << v2 << std::endl;
+			std::cout << (*ship)[AttributeID::maxVelocity]->value() << std::endl;// << v2 << std::endl;
 		}
+		auto t1 = std::chrono::high_resolution_clock::now();
 		{
 			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 			auto pilot = engine->getGang()->addPilot();
@@ -427,10 +725,14 @@ int main(int argc, const char * argv[]) {
 			auto ship = pilot->setShip(dgmpp::TypeID::dominix);
 //			ship->addModule(dgmpp::TypeID::armorEMHardenerII);
 //			ship->addModule(dgmpp::TypeID::armorEMHardenerI);
-			auto module = ship->addModule(dgmpp::TypeID::_50MNMicrowarpdriveII);
+			auto module = ship->addModule(dgmpp::TypeID::_500MNMicrowarpdriveII);
 			module->setState(dgmpp::Module::State::overloaded);
-			std::cout << ship->getCapStableLevel() << std::endl;
+			std::cout << ship->getVelocity() << std::endl;
 		}
+		auto t2 = std::chrono::high_resolution_clock::now();
+		auto dt0 = t1-t0;
+		auto dt1 = t2-t1;
+		std::cout << dt0.count() << " " << dt1.count() << std::endl << (double)dt1.count() / (double)dt0.count() << std::endl;
 //		578=2
 //		37=218
 //
@@ -566,15 +868,12 @@ int main(int argc, const char * argv[]) {
 		//NSString* morosDNA = @"19724:4292;1::";
 		NSString* dramielDNA = @"17932:34595;1:12084;1::";
 		
-		CFTimeInterval t0 = CACurrentMediaTime();
 		auto garmur = addShip(engine, garmurDNA);
 		auto ishkur = addShip(engine, ishkurDNA);
 		auto vigilant = addShip(engine, vigilantDNA);
 		auto dramiel = addShip(engine, dramielDNA);
 //		auto magus1 = addShip(engine, magusDNA, 1);
 //		auto magus5 = addShip(engine, magusDNA, 5);
-		CFTimeInterval t1 = CACurrentMediaTime();
-		NSLog(@"load %f", t1 - t0);
 		
 		
 /*		Tank tankOff = vigilant->getTank();
@@ -616,8 +915,6 @@ int main(int argc, const char * argv[]) {
 				simulator.timeToKill();
 				x += dx;
 			}
-			CFTimeInterval t1 = CACurrentMediaTime();
-			NSLog(@"%f", t1 - t0);
 		}
 	}
     return 0;

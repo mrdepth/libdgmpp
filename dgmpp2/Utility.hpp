@@ -41,7 +41,34 @@ namespace dgmpp2 {
 		const Percent shieldPeakRecharge = 0.5; //sqrt(0.25)
 		const std::chrono::milliseconds capacitorSimulationMaxTime = std::chrono::hours(6);
 	}
-
+	
+	template<typename T>
+	struct unique_ptr_key {
+		unique_ptr_key(T* t): key(t) {}
+		~unique_ptr_key() {
+			key.release();
+		}
+		std::unique_ptr<T> key;
+		operator std::unique_ptr<T>& () {
+			return key;
+		}
+	};
+	
+	template <typename T>
+	unique_ptr_key<T> make_unique_ptr_key(T* t) {
+		return {t};
+	}
+	
+	template <typename T>
+	T* remove_unique_ptr(const std::unique_ptr<T>& ptr) {
+		return ptr.get();
+	}
+	
+	template<typename T>
+	T remove_unique_ptr(const T& t) {
+		return t;
+	}
+	
 	template <typename... Args>
 	struct KeyComparator {
 		using Key = std::tuple<Args...>;
@@ -52,7 +79,7 @@ namespace dgmpp2 {
 		
 		template <typename... Args2, size_t... Is>
 		std::tuple<Args2...> get(const Key& lhs, std::index_sequence<Is...>) const {
-			return std::make_tuple(std::get<Is>(lhs)...);
+			return std::make_tuple(remove_unique_ptr(std::get<Is>(lhs))...);
 		}
 		
 		template <typename... Args2>
@@ -157,6 +184,9 @@ namespace dgmpp2 {
 		template <typename I>
 		slice(I&& from, I&& to) : from_(std::forward<I>(from)), to_(std::forward<I>(to)) {}
 		
+		template <typename I>
+		slice(std::pair<I, I>&& p) : from_(std::forward<I>(p.first)), to_(std::forward<I>(p.second)) {}
+		
 		Iter begin() {
 			return from_;
 		}
@@ -244,4 +274,5 @@ namespace dgmpp2 {
 		auto c = period.count();
 		return rate<Rep, Period> (c > 0 ? value / c : 0);
 	}
+	
 };

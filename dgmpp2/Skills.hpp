@@ -3,496 +3,496 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		constexpr std::initializer_list<ref<const MetaInfo::Type>> skills {
-			{types[569]}, //advancedPlanetology
-			{types[571]}, //planetology
-			{types[644]}, //interplanetaryConsolidation
-			{types[645]}, //commandCenterUpgrades
-			{types[1047]}, //OREIndustrial
-			{types[1149]}, //gunnery
-			{types[1150]}, //smallHybridTurret
-			{types[1151]}, //smallProjectileTurret
-			{types[1152]}, //smallEnergyTurret
-			{types[1153]}, //mediumHybridTurret
-			{types[1154]}, //mediumProjectileTurret
-			{types[1155]}, //mediumEnergyTurret
-			{types[1156]}, //largeHybridTurret
-			{types[1157]}, //largeProjectileTurret
-			{types[1158]}, //largeEnergyTurret
-			{types[1159]}, //rapidFiring
-			{types[1160]}, //sharpshooter
-			{types[1161]}, //motionPrediction
-			{types[1162]}, //surgicalStrike
-			{types[1163]}, //controlledBursts
-			{types[1164]}, //trajectoryAnalysis
-			{types[1165]}, //weaponUpgrades
-			{types[1166]}, //missileLauncherOperation
-			{types[1167]}, //rockets
-			{types[1168]}, //lightMissiles
-			{types[1169]}, //autoTargetingMissiles
-			{types[1170]}, //defenderMissiles
-			{types[1171]}, //heavyMissiles
-			{types[1172]}, //torpedoes
-			{types[1173]}, //cruiseMissiles
-			{types[1174]}, //spaceshipCommand
-			{types[1175]}, //gallenteFrigate
-			{types[1176]}, //minmatarFrigate
-			{types[1177]}, //caldariFrigate
-			{types[1178]}, //amarrFrigate
-			{types[1179]}, //gallenteCruiser
-			{types[1180]}, //minmatarCruiser
-			{types[1181]}, //caldariCruiser
-			{types[1182]}, //amarrCruiser
-			{types[1183]}, //gallenteBattleship
-			{types[1184]}, //minmatarBattleship
-			{types[1185]}, //caldariBattleship
-			{types[1186]}, //amarrBattleship
-			{types[1187]}, //gallenteIndustrial
-			{types[1188]}, //minmatarIndustrial
-			{types[1189]}, //caldariIndustrial
-			{types[1190]}, //amarrIndustrial
-			{types[1191]}, //gallenteTitan
-			{types[1192]}, //minmatarTitan
-			{types[1193]}, //caldariTitan
-			{types[1194]}, //amarrTitan
-			{types[1195]}, //leadership
-			{types[1196]}, //skirmishCommand
-			{types[1197]}, //shieldCommand
-			{types[1198]}, //shieldCommandSpecialist
-			{types[1199]}, //informationCommandSpecialist
-			{types[1200]}, //commandBurstSpecialist
-			{types[1201]}, //social
-			{types[1202]}, //negotiation
-			{types[1203]}, //diplomacy
-			{types[1204]}, //fastTalk
-			{types[1205]}, //connections
-			{types[1206]}, //criminalConnections
-			{types[1207]}, //DEDConnections
-			{types[1208]}, //corporationManagement
-			{types[1209]}, //stationManagement
-			{types[1210]}, //starbaseManagement
-			{types[1211]}, //factoryManagement
-			{types[1212]}, //refineryManagement
-			{types[1213]}, //diplomaticRelations
-			{types[1214]}, //CFOTraining
-			{types[1215]}, //chiefScienceOfficer
-			{types[1216]}, //publicRelations
-			{types[1217]}, //intelligenceAnalyst
-			{types[1218]}, //starbaseDefenseManagement
-			{types[1225]}, //industry
-			{types[1226]}, //amarrTech
-			{types[1227]}, //caldariTech
-			{types[1228]}, //gallenteTech
-			{types[1229]}, //minmatarTech
-			{types[1230]}, //reprocessing
-			{types[1231]}, //mining
-			{types[1232]}, //massProduction
-			{types[1233]}, //advancedIndustry
-			{types[1234]}, //reprocessingEfficiency
-			{types[1235]}, //mobileRefineryOperation
-			{types[1236]}, //mobileFactoryOperation
-			{types[1237]}, //mechanics
-			{types[1238]}, //repairSystems
-			{types[1239]}, //hullUpgrades
-			{types[1240]}, //advancedSmallShipConstruction
-			{types[1241]}, //advancedIndustrialShipConstruction
-			{types[1242]}, //advancedMediumShipConstruction
-			{types[1243]}, //advancedLargeShipConstruction
-			{types[1244]}, //outpostConstruction
-			{types[1245]}, //science
-			{types[1246]}, //research
-			{types[1248]}, //biology
-			{types[1249]}, //laboratoryOperation
-			{types[1250]}, //sleeperEncryptionMethods
-			{types[1251]}, //metallurgy
-			{types[1252]}, //astrogeology
-			{types[1253]}, //cybernetics
-			{types[1254]}, //astrometrics
-			{types[1255]}, //powerGridManagement
-			{types[1258]}, //shieldOperation
-			{types[1259]}, //capacitorSystemsOperation
-			{types[1260]}, //capacitorManagement
-			{types[1261]}, //shieldManagement
-			{types[1262]}, //tacticalShieldManipulation
-			{types[1263]}, //energyPulseWeapons
-			{types[1264]}, //shieldEmissionSystems
-			{types[1265]}, //capacitorEmissionSystems
-			{types[1266]}, //energyGridUpgrades
-			{types[1267]}, //shieldUpgrades
-			{types[1268]}, //CPUManagement
-			{types[1269]}, //electronicWarfare
-			{types[1270]}, //longRangeTargeting
-			{types[1271]}, //targetManagement
-			{types[1272]}, //advancedTargetManagement
-			{types[1273]}, //signatureAnalysis
-			{types[1274]}, //electronicsUpgrades
-			{types[1275]}, //sensorLinking
-			{types[1276]}, //weaponDisruption
-			{types[1277]}, //propulsionJamming
-			{types[1278]}, //drones
-			{types[1279]}, //droneAvionics
-			{types[1280]}, //miningDroneOperation
-			{types[1281]}, //repairDroneOperation
-			{types[1282]}, //salvageDroneOperation
-			{types[1283]}, //heavyDroneOperation
-			{types[1284]}, //droneInterfacing
-			{types[1285]}, //trade
-			{types[1286]}, //retail
-			{types[1287]}, //blackMarketTrading
-			{types[1288]}, //brokerRelations
-			{types[1289]}, //visibility
-			{types[1290]}, //smuggling
-			{types[1291]}, //navigation
-			{types[1292]}, //afterburner
-			{types[1293]}, //fuelConservation
-			{types[1294]}, //accelerationControl
-			{types[1295]}, //evasiveManeuvering
-			{types[1296]}, //highSpeedManeuvering
-			{types[1297]}, //warpDriveOperation
-			{types[1298]}, //jumpDriveOperation
-			{types[1335]}, //survey
-			{types[1402]}, //megacorpManagement
-			{types[1403]}, //empireControl
-			{types[1409]}, //joveFrigate
-			{types[1411]}, //joveCruiser
-			{types[1446]}, //miningConnections
-			{types[1447]}, //distributionConnections
-			{types[1448]}, //securityConnections
-			{types[1570]}, //microJumpDriveOperation
-			{types[1583]}, //targetBreakerAmplification
-			{types[2242]}, //polaris
-			{types[2281]}, //concord
-			{types[2314]}, //test
-			{types[2324]}, //joveIndustrial
-			{types[2325]}, //joveBattleship
-			{types[2326]}, //smallRailgunSpecialization
-			{types[2327]}, //smallBeamLaserSpecialization
-			{types[2328]}, //smallAutocannonSpecialization
-			{types[2355]}, //advancedEnergyGridUpgrades
-			{types[2356]}, //advancedShieldUpgrades
-			{types[2357]}, //advancedWeaponUpgrades
-			{types[2358]}, //advancedSensorUpgrades
-			{types[2430]}, //deepCoreMining
-			{types[2433]}, //highEnergyPhysics
-			{types[2434]}, //plasmaPhysics
-			{types[2435]}, //naniteEngineering
-			{types[2436]}, //hydromagneticPhysics
-			{types[2437]}, //amarrStarshipEngineering
-			{types[2438]}, //minmatarStarshipEngineering
-			{types[2439]}, //gravitonPhysics
-			{types[2440]}, //laserPhysics
-			{types[2441]}, //electromagneticPhysics
-			{types[2442]}, //rocketScience
-			{types[2443]}, //gallenteStarshipEngineering
-			{types[2444]}, //nuclearPhysics
-			{types[2445]}, //mechanicalEngineering
-			{types[2446]}, //electronicEngineering
-			{types[2447]}, //caldariStarshipEngineering
-			{types[2448]}, //quantumPhysics
-			{types[2479]}, //astronauticEngineering
-			{types[2496]}, //molecularEngineering
-			{types[2527]}, //thermalShieldCompensation
-			{types[2529]}, //armoredCommandSpecialist
-			{types[2530]}, //skirmishCommandSpecialist
-			{types[2531]}, //wingCommand
-			{types[2534]}, //cloaking
-			{types[2535]}, //anchoring
-			{types[2586]}, //hypernetScience
-			{types[2630]}, //interceptors
-			{types[2631]}, //covertOps
-			{types[2632]}, //assaultFrigates
-			{types[2633]}, //logisticsCruisers
-			{types[2634]}, //destroyers
-			{types[2635]}, //interdictors
-			{types[2636]}, //battlecruisers
-			{types[2640]}, //researchProjectManagement
-			{types[2641]}, //arkonorProcessing
-			{types[2642]}, //bistotProcessing
-			{types[2643]}, //crokiteProcessing
-			{types[2644]}, //darkOchreProcessing
-			{types[2645]}, //gneissProcessing
-			{types[2646]}, //hedbergiteProcessing
-			{types[2647]}, //hemorphiteProcessing
-			{types[2648]}, //jaspetProcessing
-			{types[2649]}, //kerniteProcessing
-			{types[2650]}, //mercoxitProcessing
-			{types[2651]}, //omberProcessing
-			{types[2652]}, //plagioclaseProcessing
-			{types[2653]}, //pyroxeresProcessing
-			{types[2654]}, //scorditeProcessing
-			{types[2655]}, //spodumainProcessing
-			{types[2656]}, //veldsparProcessing
-			{types[2657]}, //scrapmetalProcessing
-			{types[2658]}, //smallArtillerySpecialization
-			{types[2659]}, //mediumArtillerySpecialization
-			{types[2660]}, //largeArtillerySpecialization
-			{types[2661]}, //mediumBeamLaserSpecialization
-			{types[2662]}, //largeBeamLaserSpecialization
-			{types[2663]}, //mediumRailgunSpecialization
-			{types[2664]}, //largeRailgunSpecialization
-			{types[2665]}, //mediumAutocannonSpecialization
-			{types[2666]}, //largeAutocannonSpecialization
-			{types[2667]}, //smallBlasterSpecialization
-			{types[2668]}, //mediumBlasterSpecialization
-			{types[2669]}, //largeBlasterSpecialization
-			{types[2670]}, //smallPulseLaserSpecialization
-			{types[2671]}, //mediumPulseLaserSpecialization
-			{types[2672]}, //largePulseLaserSpecialization
-			{types[2684]}, //sovereignty
-			{types[2699]}, //droneNavigation
-			{types[2710]}, //EMShieldCompensation
-			{types[2711]}, //kineticShieldCompensation
-			{types[2712]}, //explosiveShieldCompensation
-			{types[2713]}, //hypereuclideanNavigation
-			{types[2733]}, //missileBombardment
-			{types[2734]}, //missileProjection
-			{types[2766]}, //amarrDroneSpecialization
-			{types[2767]}, //minmatarDroneSpecialization
-			{types[2768]}, //gallenteDroneSpecialization
-			{types[2769]}, //caldariDroneSpecialization
-			{types[2867]}, //generalFreight
-			{types[2876]}, //starshipFreight
-			{types[2877]}, //mineralFreight
-			{types[2878]}, //munitionsFreight
-			{types[2879]}, //droneFreight
-			{types[2880]}, //rawMaterialFreight
-			{types[2881]}, //consumableFreight
-			{types[2882]}, //hazardousMaterialFreight
-			{types[2946]}, //archaeology
-			{types[2947]}, //remoteSensing
-			{types[4075]}, //remoteArmorRepairSystems
-			{types[4151]}, //iceHarvesting
-			{types[4285]}, //heavyAssaultCruisers
-			{types[4287]}, //procurement
-			{types[4288]}, //daytrading
-			{types[4289]}, //wholesale
-			{types[4290]}, //marginTrading
-			{types[4291]}, //marketing
-			{types[4298]}, //accounting
-			{types[4680]}, //miningBarge
-			{types[4698]}, //iceProcessing
-			{types[4718]}, //tycoon
-			{types[5122]}, //omnipotent
-			{types[5181]}, //transportShips
-			{types[5190]}, //longDistanceJamming
-			{types[5191]}, //frequencyModulation
-			{types[5192]}, //signalDispersion
-			{types[5193]}, //signalSuppression
-			{types[5194]}, //weaponDestabilization
-			{types[5200]}, //targetPainting
-			{types[5201]}, //signatureFocusing
-			{types[5288]}, //stealthBombersFakeSkill
-			{types[5314]}, //rocketSpecialization
-			{types[5315]}, //lightMissileSpecialization
-			{types[5316]}, //heavyMissileSpecialization
-			{types[5317]}, //cruiseMissileSpecialization
-			{types[5318]}, //torpedoSpecialization
-			{types[5347]}, //guidedMissilePrecision
-			{types[5348]}, //targetNavigationPrediction
-			{types[5349]}, //warheadUpgrades
-			{types[5350]}, //capitalEnergyTurret
-			{types[5352]}, //advancedSpaceshipCommand
-			{types[5388]}, //talocanTechnology
-			{types[5406]}, //armoredCommand
-			{types[5407]}, //informationCommand
-			{types[5423]}, //amarrFreighter
-			{types[5424]}, //amarrDreadnought
-			{types[5425]}, //caldariFreighter
-			{types[5426]}, //gallenteFreighter
-			{types[5427]}, //minmatarFreighter
-			{types[5428]}, //caldariDreadnought
-			{types[5429]}, //gallenteDreadnought
-			{types[5430]}, //minmatarDreadnought
-			{types[5431]}, //capitalShips
-			{types[5650]}, //shieldCompensation
-			{types[5656]}, //rapidLaunch
-			{types[5891]}, //cynosuralFieldTheory
-			{types[5894]}, //jumpFuelConservation
-			{types[5895]}, //jumpDriveCalibration
-			{types[5918]}, //capitalHybridTurret
-			{types[5919]}, //capitalProjectileTurret
-			{types[5920]}, //XLTorpedoes
-			{types[5926]}, //hacking
-			{types[5950]}, //sleeperTechnology
-			{types[5951]}, //caldariEncryptionMethods
-			{types[5952]}, //minmatarEncryptionMethods
-			{types[5956]}, //capitalShieldOperation
-			{types[5957]}, //capitalRepairSystems
-			{types[6035]}, //tacticalWeaponReconfiguration
-			{types[6113]}, //TESTDroneSkill
-			{types[6140]}, //capitalShipConstruction
-			{types[6179]}, //miningForeman
-			{types[6181]}, //miningDroneSpecialization
-			{types[6186]}, //exhumers
-			{types[6187]}, //miningDirector
-			{types[6203]}, //miningUpgrades
-			{types[6228]}, //reconShips
-			{types[6244]}, //EMArmorCompensation
-			{types[6245]}, //explosiveArmorCompensation
-			{types[6246]}, //kineticArmorCompensation
-			{types[6247]}, //thermalArmorCompensation
-			{types[6341]}, //fighters
-			{types[6350]}, //amarrEncryptionMethods
-			{types[6367]}, //gallenteEncryptionMethods
-			{types[6368]}, //takmahlTechnology
-			{types[6369]}, //yanJungTechnology
-			{types[6470]}, //advancedDroneAvionics
-			{types[6472]}, //sentryDroneInterfacing
-			{types[6474]}, //propulsionJammingDroneInterfacing
-			{types[6478]}, //droneSharpshooting
-			{types[6480]}, //droneDurability
-			{types[6614]}, //commandShips
-			{types[6621]}, //lightDroneOperation
-			{types[6622]}, //infomorphPsychology
-			{types[6635]}, //supplyChainManagement
-			{types[6636]}, //scientificNetworking
-			{types[6649]}, //amarrCarrier
-			{types[6650]}, //caldariCarrier
-			{types[6651]}, //gallenteCarrier
-			{types[6652]}, //minmatarCarrier
-			{types[6726]}, //jumpPortalGeneration
-			{types[6727]}, //doomsdayOperation
-			{types[6730]}, //capitalRemoteArmorRepairSystems
-			{types[6732]}, //capitalShieldEmissionSystems
-			{types[6733]}, //capitalCapacitorEmissionSystems
-			{types[6745]}, //cloningFacilityOperation
-			{types[6747]}, //fighterHangarManagement
-			{types[6750]}, //advancedLaboratoryOperation
-			{types[6751]}, //advancedMassProduction
-			{types[6809]}, //fleetCommand
-			{types[6812]}, //corporationContracting
-			{types[6813]}, //contracting
-			{types[6877]}, //neurotoxinRecovery
-			{types[6878]}, //neurotoxinControl
-			{types[6881]}, //gasCloudHarvesting
-			{types[6945]}, //heavyAssaultMissileSpecialization
-			{types[6946]}, //heavyAssaultMissiles
-			{types[6948]}, //astrometricRangefinding
-			{types[6952]}, //astrometricPinpointing
-			{types[6953]}, //astrometricAcquisition
-			{types[6965]}, //salvaging
-			{types[7076]}, //drugManufacturing
-			{types[7081]}, //juryRigging
-			{types[7082]}, //armorRigging
-			{types[7083]}, //astronauticsRigging
-			{types[7084]}, //dronesRigging
-			{types[7085]}, //electronicSuperiorityRigging
-			{types[7086]}, //projectileWeaponRigging
-			{types[7087]}, //energyWeaponRigging
-			{types[7088]}, //hybridWeaponRigging
-			{types[7089]}, //launcherRigging
-			{types[7090]}, //shieldRigging
-			{types[7652]}, //remoteHullRepairSystems
-			{types[7654]}, //tacticalLogisticsReconfiguration
-			{types[7655]}, //burstProjectorOperation
-			{types[7666]}, //capitalRemoteHullRepairSystems
-			{types[7668]}, //bombDeployment
-			{types[7670]}, //thermodynamics
-			{types[7690]}, //taxEvasion
-			{types[7740]}, //oreCompression
-			{types[7741]}, //capitalIndustrialShips
-			{types[7780]}, //industrialReconfiguration
-			{types[7781]}, //tournamentObservation
-			{types[7783]}, //heavyInterdictionCruisers
-			{types[7785]}, //electronicAttackShips
-			{types[7786]}, //imperialNavySecurityClearance
-			{types[7790]}, //blackOps
-			{types[7794]}, //marauders
-			{types[7891]}, //naniteOperation
-			{types[7892]}, //naniteInterfacing
-			{types[7917]}, //jumpFreighters
-			{types[8024]}, //industrialCommandShips
-			{types[8208]}, //defensiveSubsystemTechnology
-			{types[8209]}, //coreSubsystemTechnology
-			{types[8210]}, //electronicSubsystemTechnology
-			{types[8211]}, //offensiveSubsystemTechnology
-			{types[8231]}, //amarrDefensiveSystems
-			{types[8232]}, //amarrElectronicSystems
-			{types[8233]}, //amarrOffensiveSystems
-			{types[8234]}, //amarrPropulsionSystems
-			{types[8235]}, //amarrCoreSystems
-			{types[8236]}, //gallenteDefensiveSystems
-			{types[8237]}, //gallenteElectronicSystems
-			{types[8238]}, //caldariElectronicSystems
-			{types[8239]}, //minmatarElectronicSystems
-			{types[8240]}, //caldariDefensiveSystems
-			{types[8241]}, //minmatarDefensiveSystems
-			{types[8242]}, //gallenteCoreSystems
-			{types[8243]}, //minmatarCoreSystems
-			{types[8244]}, //caldariCoreSystems
-			{types[8245]}, //caldariOffensiveSystems
-			{types[8246]}, //gallenteOffensiveSystems
-			{types[8247]}, //minmatarOffensiveSystems
-			{types[8248]}, //caldariPropulsionSystems
-			{types[8249]}, //gallentePropulsionSystems
-			{types[8250]}, //minmatarPropulsionSystems
-			{types[8251]}, //amarrStrategicCruiser
-			{types[8252]}, //caldariStrategicCruiser
-			{types[8253]}, //gallenteStrategicCruiser
-			{types[8254]}, //minmatarStrategicCruiser
-			{types[8275]}, //propulsionSubsystemTechnology
-			{types[8901]}, //heavyFighters
-			{types[8931]}, //XLCruiseMissiles
-			{types[8950]}, //resistancePhasing
-			{types[8972]}, //tacticalStrike
-			{types[8986]}, //miningFrigate
-			{types[9014]}, //magnetometricSensorCompensation
-			{types[9015]}, //gravimetricSensorCompensation
-			{types[9016]}, //ladarSensorCompensation
-			{types[9017]}, //radarSensorCompensation
-			{types[9024]}, //armorLayering
-			{types[9029]}, //amarrDestroyer
-			{types[9030]}, //caldariDestroyer
-			{types[9031]}, //gallenteDestroyer
-			{types[9032]}, //minmatarDestroyer
-			{types[9033]}, //amarrBattlecruiser
-			{types[9034]}, //caldariBattlecruiser
-			{types[9035]}, //gallenteBattlecruiser
-			{types[9036]}, //minmatarBattlecruiser
-			{types[9110]}, //infomorphSynchronizing
-			{types[9116]}, //advancedInfomorphPsychology
-			{types[9137]}, //customsCodeExpertise
-			{types[9219]}, //mediumDroneOperation
-			{types[9247]}, //expeditionFrigates
-			{types[9385]}, //OREFreighter
-			{types[9394]}, //amarrTacticalDestroyer
-			{types[9423]}, //minmatarTacticalDestroyer
-			{types[9476]}, //caldariTacticalDestroyer
-			{types[9478]}, //gallenteTacticalDestroyer
-			{types[9777]}, //commandDestroyers
-			{types[9788]}, //structureMissileSystems
-			{types[9789]}, //structureDoomsdayOperation
-			{types[9790]}, //structureElectronicSystems
-			{types[9791]}, //structureEngineeringSystems
-			{types[9817]}, //logisticsFrigates
-			{types[9841]}, //amarrForceAuxiliary
-			{types[9842]}, //caldariForceAuxiliary
-			{types[9843]}, //gallenteForceAuxiliary
-			{types[9844]}, //minmatarForceAuxiliary
-			{types[9868]}, //lightFighters
-			{types[9869]}, //supportFighters
-			{types[10084]}, //capitalAutocannonSpecialization
-			{types[10085]}, //capitalArtillerySpecialization
-			{types[10086]}, //capitalBlasterSpecialization
-			{types[10087]}, //capitalRailgunSpecialization
-			{types[10088]}, //capitalPulseLaserSpecialization
-			{types[10089]}, //capitalBeamLaserSpecialization
-			{types[10090]}, //XLTorpedoSpecialization
-			{types[10091]}, //XLCruiseMissileSpecialization
-			{types[10186]}, //doomsdayRapidFiring
-			{types[10289]}, //iceHarvestingDroneOperation
-			{types[10290]}, //iceHarvestingDroneSpecialization
-			{types[10313]}, //spatialPhenomenaGeneration
-			{types[10367]}, //invulnerabilityCoreOperation
-			{types[10492]}, //reactions
-			{types[10493]}, //massReactions
-			{types[10494]}, //advancedMassReactions
-			{types[10495]}, //remoteReactions
-			{types[10510]}, //ubiquitousMoonOreProcessing
-			{types[10511]}, //commonMoonOreProcessing
-			{types[10512]}, //uncommonMoonOreProcessing
-			{types[10513]}, //rareMoonOreProcessing
-			{types[10514]}, //exceptionalMoonOreProcessing
+		constexpr const MetaInfo::Type* skills[] = {
+			&Types::advancedPlanetology,
+			&Types::planetology,
+			&Types::interplanetaryConsolidation,
+			&Types::commandCenterUpgrades,
+			&Types::OREIndustrial,
+			&Types::gunnery,
+			&Types::smallHybridTurret,
+			&Types::smallProjectileTurret,
+			&Types::smallEnergyTurret,
+			&Types::mediumHybridTurret,
+			&Types::mediumProjectileTurret,
+			&Types::mediumEnergyTurret,
+			&Types::largeHybridTurret,
+			&Types::largeProjectileTurret,
+			&Types::largeEnergyTurret,
+			&Types::rapidFiring,
+			&Types::sharpshooter,
+			&Types::motionPrediction,
+			&Types::surgicalStrike,
+			&Types::controlledBursts,
+			&Types::trajectoryAnalysis,
+			&Types::weaponUpgrades,
+			&Types::missileLauncherOperation,
+			&Types::rockets,
+			&Types::lightMissiles,
+			&Types::autoTargetingMissiles,
+			&Types::defenderMissiles,
+			&Types::heavyMissiles,
+			&Types::torpedoes,
+			&Types::cruiseMissiles,
+			&Types::spaceshipCommand,
+			&Types::gallenteFrigate,
+			&Types::minmatarFrigate,
+			&Types::caldariFrigate,
+			&Types::amarrFrigate,
+			&Types::gallenteCruiser,
+			&Types::minmatarCruiser,
+			&Types::caldariCruiser,
+			&Types::amarrCruiser,
+			&Types::gallenteBattleship,
+			&Types::minmatarBattleship,
+			&Types::caldariBattleship,
+			&Types::amarrBattleship,
+			&Types::gallenteIndustrial,
+			&Types::minmatarIndustrial,
+			&Types::caldariIndustrial,
+			&Types::amarrIndustrial,
+			&Types::gallenteTitan,
+			&Types::minmatarTitan,
+			&Types::caldariTitan,
+			&Types::amarrTitan,
+			&Types::leadership,
+			&Types::skirmishCommand,
+			&Types::shieldCommand,
+			&Types::shieldCommandSpecialist,
+			&Types::informationCommandSpecialist,
+			&Types::commandBurstSpecialist,
+			&Types::social,
+			&Types::negotiation,
+			&Types::diplomacy,
+			&Types::fastTalk,
+			&Types::connections,
+			&Types::criminalConnections,
+			&Types::DEDConnections,
+			&Types::corporationManagement,
+			&Types::stationManagement,
+			&Types::starbaseManagement,
+			&Types::factoryManagement,
+			&Types::refineryManagement,
+			&Types::diplomaticRelations,
+			&Types::CFOTraining,
+			&Types::chiefScienceOfficer,
+			&Types::publicRelations,
+			&Types::intelligenceAnalyst,
+			&Types::starbaseDefenseManagement,
+			&Types::industry,
+			&Types::amarrTech,
+			&Types::caldariTech,
+			&Types::gallenteTech,
+			&Types::minmatarTech,
+			&Types::reprocessing,
+			&Types::mining,
+			&Types::massProduction,
+			&Types::advancedIndustry,
+			&Types::reprocessingEfficiency,
+			&Types::mobileRefineryOperation,
+			&Types::mobileFactoryOperation,
+			&Types::mechanics,
+			&Types::repairSystems,
+			&Types::hullUpgrades,
+			&Types::advancedSmallShipConstruction,
+			&Types::advancedIndustrialShipConstruction,
+			&Types::advancedMediumShipConstruction,
+			&Types::advancedLargeShipConstruction,
+			&Types::outpostConstruction,
+			&Types::science,
+			&Types::research,
+			&Types::biology,
+			&Types::laboratoryOperation,
+			&Types::sleeperEncryptionMethods,
+			&Types::metallurgy,
+			&Types::astrogeology,
+			&Types::cybernetics,
+			&Types::astrometrics,
+			&Types::powerGridManagement,
+			&Types::shieldOperation,
+			&Types::capacitorSystemsOperation,
+			&Types::capacitorManagement,
+			&Types::shieldManagement,
+			&Types::tacticalShieldManipulation,
+			&Types::energyPulseWeapons,
+			&Types::shieldEmissionSystems,
+			&Types::capacitorEmissionSystems,
+			&Types::energyGridUpgrades,
+			&Types::shieldUpgrades,
+			&Types::CPUManagement,
+			&Types::electronicWarfare,
+			&Types::longRangeTargeting,
+			&Types::targetManagement,
+			&Types::advancedTargetManagement,
+			&Types::signatureAnalysis,
+			&Types::electronicsUpgrades,
+			&Types::sensorLinking,
+			&Types::weaponDisruption,
+			&Types::propulsionJamming,
+			&Types::drones,
+			&Types::droneAvionics,
+			&Types::miningDroneOperation,
+			&Types::repairDroneOperation,
+			&Types::salvageDroneOperation,
+			&Types::heavyDroneOperation,
+			&Types::droneInterfacing,
+			&Types::trade,
+			&Types::retail,
+			&Types::blackMarketTrading,
+			&Types::brokerRelations,
+			&Types::visibility,
+			&Types::smuggling,
+			&Types::navigation,
+			&Types::afterburner,
+			&Types::fuelConservation,
+			&Types::accelerationControl,
+			&Types::evasiveManeuvering,
+			&Types::highSpeedManeuvering,
+			&Types::warpDriveOperation,
+			&Types::jumpDriveOperation,
+			&Types::survey,
+			&Types::megacorpManagement,
+			&Types::empireControl,
+			&Types::joveFrigate,
+			&Types::joveCruiser,
+			&Types::miningConnections,
+			&Types::distributionConnections,
+			&Types::securityConnections,
+			&Types::microJumpDriveOperation,
+			&Types::targetBreakerAmplification,
+			&Types::polaris,
+			&Types::concord,
+			&Types::test,
+			&Types::joveIndustrial,
+			&Types::joveBattleship,
+			&Types::smallRailgunSpecialization,
+			&Types::smallBeamLaserSpecialization,
+			&Types::smallAutocannonSpecialization,
+			&Types::advancedEnergyGridUpgrades,
+			&Types::advancedShieldUpgrades,
+			&Types::advancedWeaponUpgrades,
+			&Types::advancedSensorUpgrades,
+			&Types::deepCoreMining,
+			&Types::highEnergyPhysics,
+			&Types::plasmaPhysics,
+			&Types::naniteEngineering,
+			&Types::hydromagneticPhysics,
+			&Types::amarrStarshipEngineering,
+			&Types::minmatarStarshipEngineering,
+			&Types::gravitonPhysics,
+			&Types::laserPhysics,
+			&Types::electromagneticPhysics,
+			&Types::rocketScience,
+			&Types::gallenteStarshipEngineering,
+			&Types::nuclearPhysics,
+			&Types::mechanicalEngineering,
+			&Types::electronicEngineering,
+			&Types::caldariStarshipEngineering,
+			&Types::quantumPhysics,
+			&Types::astronauticEngineering,
+			&Types::molecularEngineering,
+			&Types::thermalShieldCompensation,
+			&Types::armoredCommandSpecialist,
+			&Types::skirmishCommandSpecialist,
+			&Types::wingCommand,
+			&Types::cloaking,
+			&Types::anchoring,
+			&Types::hypernetScience,
+			&Types::interceptors,
+			&Types::covertOps,
+			&Types::assaultFrigates,
+			&Types::logisticsCruisers,
+			&Types::destroyers,
+			&Types::interdictors,
+			&Types::battlecruisers,
+			&Types::researchProjectManagement,
+			&Types::arkonorProcessing,
+			&Types::bistotProcessing,
+			&Types::crokiteProcessing,
+			&Types::darkOchreProcessing,
+			&Types::gneissProcessing,
+			&Types::hedbergiteProcessing,
+			&Types::hemorphiteProcessing,
+			&Types::jaspetProcessing,
+			&Types::kerniteProcessing,
+			&Types::mercoxitProcessing,
+			&Types::omberProcessing,
+			&Types::plagioclaseProcessing,
+			&Types::pyroxeresProcessing,
+			&Types::scorditeProcessing,
+			&Types::spodumainProcessing,
+			&Types::veldsparProcessing,
+			&Types::scrapmetalProcessing,
+			&Types::smallArtillerySpecialization,
+			&Types::mediumArtillerySpecialization,
+			&Types::largeArtillerySpecialization,
+			&Types::mediumBeamLaserSpecialization,
+			&Types::largeBeamLaserSpecialization,
+			&Types::mediumRailgunSpecialization,
+			&Types::largeRailgunSpecialization,
+			&Types::mediumAutocannonSpecialization,
+			&Types::largeAutocannonSpecialization,
+			&Types::smallBlasterSpecialization,
+			&Types::mediumBlasterSpecialization,
+			&Types::largeBlasterSpecialization,
+			&Types::smallPulseLaserSpecialization,
+			&Types::mediumPulseLaserSpecialization,
+			&Types::largePulseLaserSpecialization,
+			&Types::sovereignty,
+			&Types::droneNavigation,
+			&Types::EMShieldCompensation,
+			&Types::kineticShieldCompensation,
+			&Types::explosiveShieldCompensation,
+			&Types::hypereuclideanNavigation,
+			&Types::missileBombardment,
+			&Types::missileProjection,
+			&Types::amarrDroneSpecialization,
+			&Types::minmatarDroneSpecialization,
+			&Types::gallenteDroneSpecialization,
+			&Types::caldariDroneSpecialization,
+			&Types::generalFreight,
+			&Types::starshipFreight,
+			&Types::mineralFreight,
+			&Types::munitionsFreight,
+			&Types::droneFreight,
+			&Types::rawMaterialFreight,
+			&Types::consumableFreight,
+			&Types::hazardousMaterialFreight,
+			&Types::archaeology,
+			&Types::remoteSensing,
+			&Types::remoteArmorRepairSystems,
+			&Types::iceHarvesting,
+			&Types::heavyAssaultCruisers,
+			&Types::procurement,
+			&Types::daytrading,
+			&Types::wholesale,
+			&Types::marginTrading,
+			&Types::marketing,
+			&Types::accounting,
+			&Types::miningBarge,
+			&Types::iceProcessing,
+			&Types::tycoon,
+			&Types::omnipotent,
+			&Types::transportShips,
+			&Types::longDistanceJamming,
+			&Types::frequencyModulation,
+			&Types::signalDispersion,
+			&Types::signalSuppression,
+			&Types::weaponDestabilization,
+			&Types::targetPainting,
+			&Types::signatureFocusing,
+			&Types::stealthBombersFakeSkill,
+			&Types::rocketSpecialization,
+			&Types::lightMissileSpecialization,
+			&Types::heavyMissileSpecialization,
+			&Types::cruiseMissileSpecialization,
+			&Types::torpedoSpecialization,
+			&Types::guidedMissilePrecision,
+			&Types::targetNavigationPrediction,
+			&Types::warheadUpgrades,
+			&Types::capitalEnergyTurret,
+			&Types::advancedSpaceshipCommand,
+			&Types::talocanTechnology,
+			&Types::armoredCommand,
+			&Types::informationCommand,
+			&Types::amarrFreighter,
+			&Types::amarrDreadnought,
+			&Types::caldariFreighter,
+			&Types::gallenteFreighter,
+			&Types::minmatarFreighter,
+			&Types::caldariDreadnought,
+			&Types::gallenteDreadnought,
+			&Types::minmatarDreadnought,
+			&Types::capitalShips,
+			&Types::shieldCompensation,
+			&Types::rapidLaunch,
+			&Types::cynosuralFieldTheory,
+			&Types::jumpFuelConservation,
+			&Types::jumpDriveCalibration,
+			&Types::capitalHybridTurret,
+			&Types::capitalProjectileTurret,
+			&Types::XLTorpedoes,
+			&Types::hacking,
+			&Types::sleeperTechnology,
+			&Types::caldariEncryptionMethods,
+			&Types::minmatarEncryptionMethods,
+			&Types::capitalShieldOperation,
+			&Types::capitalRepairSystems,
+			&Types::tacticalWeaponReconfiguration,
+			&Types::TESTDroneSkill,
+			&Types::capitalShipConstruction,
+			&Types::miningForeman,
+			&Types::miningDroneSpecialization,
+			&Types::exhumers,
+			&Types::miningDirector,
+			&Types::miningUpgrades,
+			&Types::reconShips,
+			&Types::EMArmorCompensation,
+			&Types::explosiveArmorCompensation,
+			&Types::kineticArmorCompensation,
+			&Types::thermalArmorCompensation,
+			&Types::fighters,
+			&Types::amarrEncryptionMethods,
+			&Types::gallenteEncryptionMethods,
+			&Types::takmahlTechnology,
+			&Types::yanJungTechnology,
+			&Types::advancedDroneAvionics,
+			&Types::sentryDroneInterfacing,
+			&Types::propulsionJammingDroneInterfacing,
+			&Types::droneSharpshooting,
+			&Types::droneDurability,
+			&Types::commandShips,
+			&Types::lightDroneOperation,
+			&Types::infomorphPsychology,
+			&Types::supplyChainManagement,
+			&Types::scientificNetworking,
+			&Types::amarrCarrier,
+			&Types::caldariCarrier,
+			&Types::gallenteCarrier,
+			&Types::minmatarCarrier,
+			&Types::jumpPortalGeneration,
+			&Types::doomsdayOperation,
+			&Types::capitalRemoteArmorRepairSystems,
+			&Types::capitalShieldEmissionSystems,
+			&Types::capitalCapacitorEmissionSystems,
+			&Types::cloningFacilityOperation,
+			&Types::fighterHangarManagement,
+			&Types::advancedLaboratoryOperation,
+			&Types::advancedMassProduction,
+			&Types::fleetCommand,
+			&Types::corporationContracting,
+			&Types::contracting,
+			&Types::neurotoxinRecovery,
+			&Types::neurotoxinControl,
+			&Types::gasCloudHarvesting,
+			&Types::heavyAssaultMissileSpecialization,
+			&Types::heavyAssaultMissiles,
+			&Types::astrometricRangefinding,
+			&Types::astrometricPinpointing,
+			&Types::astrometricAcquisition,
+			&Types::salvaging,
+			&Types::drugManufacturing,
+			&Types::juryRigging,
+			&Types::armorRigging,
+			&Types::astronauticsRigging,
+			&Types::dronesRigging,
+			&Types::electronicSuperiorityRigging,
+			&Types::projectileWeaponRigging,
+			&Types::energyWeaponRigging,
+			&Types::hybridWeaponRigging,
+			&Types::launcherRigging,
+			&Types::shieldRigging,
+			&Types::remoteHullRepairSystems,
+			&Types::tacticalLogisticsReconfiguration,
+			&Types::burstProjectorOperation,
+			&Types::capitalRemoteHullRepairSystems,
+			&Types::bombDeployment,
+			&Types::thermodynamics,
+			&Types::taxEvasion,
+			&Types::oreCompression,
+			&Types::capitalIndustrialShips,
+			&Types::industrialReconfiguration,
+			&Types::tournamentObservation,
+			&Types::heavyInterdictionCruisers,
+			&Types::electronicAttackShips,
+			&Types::imperialNavySecurityClearance,
+			&Types::blackOps,
+			&Types::marauders,
+			&Types::naniteOperation,
+			&Types::naniteInterfacing,
+			&Types::jumpFreighters,
+			&Types::industrialCommandShips,
+			&Types::defensiveSubsystemTechnology,
+			&Types::coreSubsystemTechnology,
+			&Types::electronicSubsystemTechnology,
+			&Types::offensiveSubsystemTechnology,
+			&Types::amarrDefensiveSystems,
+			&Types::amarrElectronicSystems,
+			&Types::amarrOffensiveSystems,
+			&Types::amarrPropulsionSystems,
+			&Types::amarrCoreSystems,
+			&Types::gallenteDefensiveSystems,
+			&Types::gallenteElectronicSystems,
+			&Types::caldariElectronicSystems,
+			&Types::minmatarElectronicSystems,
+			&Types::caldariDefensiveSystems,
+			&Types::minmatarDefensiveSystems,
+			&Types::gallenteCoreSystems,
+			&Types::minmatarCoreSystems,
+			&Types::caldariCoreSystems,
+			&Types::caldariOffensiveSystems,
+			&Types::gallenteOffensiveSystems,
+			&Types::minmatarOffensiveSystems,
+			&Types::caldariPropulsionSystems,
+			&Types::gallentePropulsionSystems,
+			&Types::minmatarPropulsionSystems,
+			&Types::amarrStrategicCruiser,
+			&Types::caldariStrategicCruiser,
+			&Types::gallenteStrategicCruiser,
+			&Types::minmatarStrategicCruiser,
+			&Types::propulsionSubsystemTechnology,
+			&Types::heavyFighters,
+			&Types::XLCruiseMissiles,
+			&Types::resistancePhasing,
+			&Types::tacticalStrike,
+			&Types::miningFrigate,
+			&Types::magnetometricSensorCompensation,
+			&Types::gravimetricSensorCompensation,
+			&Types::ladarSensorCompensation,
+			&Types::radarSensorCompensation,
+			&Types::armorLayering,
+			&Types::amarrDestroyer,
+			&Types::caldariDestroyer,
+			&Types::gallenteDestroyer,
+			&Types::minmatarDestroyer,
+			&Types::amarrBattlecruiser,
+			&Types::caldariBattlecruiser,
+			&Types::gallenteBattlecruiser,
+			&Types::minmatarBattlecruiser,
+			&Types::infomorphSynchronizing,
+			&Types::advancedInfomorphPsychology,
+			&Types::customsCodeExpertise,
+			&Types::mediumDroneOperation,
+			&Types::expeditionFrigates,
+			&Types::OREFreighter,
+			&Types::amarrTacticalDestroyer,
+			&Types::minmatarTacticalDestroyer,
+			&Types::caldariTacticalDestroyer,
+			&Types::gallenteTacticalDestroyer,
+			&Types::commandDestroyers,
+			&Types::structureMissileSystems,
+			&Types::structureDoomsdayOperation,
+			&Types::structureElectronicSystems,
+			&Types::structureEngineeringSystems,
+			&Types::logisticsFrigates,
+			&Types::amarrForceAuxiliary,
+			&Types::caldariForceAuxiliary,
+			&Types::gallenteForceAuxiliary,
+			&Types::minmatarForceAuxiliary,
+			&Types::lightFighters,
+			&Types::supportFighters,
+			&Types::capitalAutocannonSpecialization,
+			&Types::capitalArtillerySpecialization,
+			&Types::capitalBlasterSpecialization,
+			&Types::capitalRailgunSpecialization,
+			&Types::capitalPulseLaserSpecialization,
+			&Types::capitalBeamLaserSpecialization,
+			&Types::XLTorpedoSpecialization,
+			&Types::XLCruiseMissileSpecialization,
+			&Types::doomsdayRapidFiring,
+			&Types::iceHarvestingDroneOperation,
+			&Types::iceHarvestingDroneSpecialization,
+			&Types::spatialPhenomenaGeneration,
+			&Types::invulnerabilityCoreOperation,
+			&Types::reactions,
+			&Types::massReactions,
+			&Types::advancedMassReactions,
+			&Types::remoteReactions,
+			&Types::ubiquitousMoonOreProcessing,
+			&Types::commonMoonOreProcessing,
+			&Types::uncommonMoonOreProcessing,
+			&Types::rareMoonOreProcessing,
+			&Types::exceptionalMoonOreProcessing,
 		};
 	}
 }

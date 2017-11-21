@@ -23,18 +23,35 @@ namespace dgmpp2 {
 		}
 	};
 	
+	Type::~Type() {
+		parent(nullptr);
+	}
 	
-	Type::Type (TypeID typeID) : Type (SDE::get(typeID)) {}
+	Type::Type (TypeID typeID) : Type (SDE::get(typeID)) {
+//		children_.reserve(410);
+	}
 
 	Type::Type (const MetaInfo::Type& metaInfo): metaInfo_(metaInfo) {
 		
-		for (const auto& i: metaInfo.attributes)
-			attributes_.emplace(i.first.attributeID, new Attribute(i.first, i.second, *this));
+		for (const auto& i: metaInfo.attributes())
+			attributes_.emplace(i.first->attributeID, new Attribute(*i.first, i.second, *this));
 		
-		effects_.reserve(metaInfo.effects.size());
+		effects_.reserve(metaInfo.effects().size());
 		
-		for (const auto& i: metaInfo.effects)
-			effects_.push_back(std::unique_ptr<Effect>(new Effect(i, *this)));
+		for (const auto& i: metaInfo.effects())
+			effects_.push_back(std::unique_ptr<Effect>(new Effect(*i, *this)));
+	}
+	
+	void Type::parent (Type* parent) {
+		if (parent_)
+			cache().remove(this);
+		
+		if (parent && cache_) {
+			parent->cache().splice(std::move(*cache_));
+			cache_ = nullptr;
+		}
+
+		parent_ = parent;
 	}
 	
 	Attribute::Proxy Type::operator[] (AttributeID attributeID) {
@@ -46,10 +63,6 @@ namespace dgmpp2 {
 			return a->metaInfo().effectID == effectID;
 		});
 		return i != effects_.end() ? i->get() : nullptr;
-//		auto i = std::lower_bound(effects_.begin(), effects_.end(), effectID, [] (const auto& a, auto b) {
-//			return a->metaInfo().effectID < b;
-//		});
-//		return i != effects_.end() && (*i)->metaInfo().effectID == effectID ? i->get() : nullptr;
 	}
 	
 	void Type::setEnabled (bool enabled) {
@@ -63,25 +76,10 @@ namespace dgmpp2 {
 		else
 			deactivateEffects(MetaInfo::Effect::Category::generic);
 
-		for (const auto& child: children_) {
-			if (child->isEnabled() != enabled)
-				child->setEnabled(enabled);
-		}
+		if (enabled)
+			reset();
 	}
 
-	void Type::remove (Type* child) {
-		assert(child->parent() == this);
-		
-		if (child->isEnabled())
-			child->setEnabled(false);
-		
-		child->parent(nullptr);
-		
-		auto i = std::find_if(children_.begin(), children_.end(), [=](const auto& i) { return i.get() == child; });
-		assert(i != children_.end());
-		children_.erase(i);
-	}
-	
 	void Type::addModifier(const Modifier* modifier) {
 		switch (modifier->metaInfo().type) {
 			case MetaInfo::Modifier::ModifierType::item : {
@@ -215,7 +213,7 @@ namespace dgmpp2 {
 			auto subset = decltype(locationRequiredSkillModifiers_)(range.first, range.second);
 //			auto &subset = locationRequiredSkillModifiers_;
 			
-			for (auto skillID: type.metaInfo().requiredSkills) {
+			for (auto skillID: type.metaInfo().requiredSkills()) {
 				auto key = std::make_tuple(attributeID, skillID);
 				auto result = equal_range(subset, key);
 				
@@ -256,11 +254,6 @@ namespace dgmpp2 {
 				activate(i.get());
 			}
 		});
-
-		if (category != MetaInfo::Effect::Category::generic) {
-			for (const auto& child: children_)
-				child->activateEffects(category);
-		}
 	}
 	
 	void Type::deactivateEffects (MetaInfo::Effect::Category category) {
@@ -270,11 +263,6 @@ namespace dgmpp2 {
 				deactivate(i.get());
 			}
 		});
-		
-		if (category != MetaInfo::Effect::Category::generic) {
-			for (const auto& child: children_)
-				child->deactivateEffects(category);
-		}
 	}
 	
 	void Type::activate (Effect* effect) {
@@ -305,9 +293,6 @@ namespace dgmpp2 {
 	}
 	
 	void Type::reset() {
-//		for (const auto& child: children_) {
-//			child->reset();
-//		}
 	}
 	
 	void Type::resetCache() {

@@ -48,11 +48,12 @@ namespace dgmpp2 {
 		
 		if (auto attribute = (*this)[AttributeID::entityMissileTypeID]) {
 			auto typeID = static_cast<TypeID>(attribute->value());
-			auto charge = add(Charge::Create(typeID));
+			charge_ = Charge::Create(typeID);
+			charge_->parent(this);
 			
-			flags_.isAssistance = flags_.isAssistance || charge->isAssistance();
-			flags_.isOffensive = flags_.isOffensive || charge->isOffensive();
-			flags_.dealsDamage = flags_.dealsDamage || charge->dealsDamage();
+			flags_.isAssistance = flags_.isAssistance || charge_->isAssistance();
+			flags_.isOffensive = flags_.isOffensive || charge_->isOffensive();
+			flags_.dealsDamage = flags_.dealsDamage || charge_->dealsDamage();
 		}
 		
 

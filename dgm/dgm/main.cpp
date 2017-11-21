@@ -47,15 +47,17 @@ std::ostream& operator<<(std::ostream& stream, const Name& name) {
 }
 
 void dumpAttributeTypes(SQLiteDatabase& database) {
-	auto result = database.fetch<std::string, Optional<std::string>, double, bool, bool>("select a.attributeName, b.attributeName as maxAttributeName, a.defaultValue, a.stackable, a.highIsGood from dgmAttributeTypes as a left join dgmAttributeTypes as b on a.maxAttributeID = b.attributeID order by a.rowid");
+	auto result = database.fetch<std::string, Optional<std::string>, double, bool, bool>("select a.attributeName, b.attributeName as maxAttributeName, a.defaultValue, a.stackable, a.highIsGood from dgmAttributeTypes as a left join dgmAttributeTypes as b on a.maxAttributeID = b.attributeID group by a.attributeName order by a.rowid");
 	
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"MetaInfo.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr MetaInfo::Attribute attributes[] {" << std::endl;
+	<< "		namespace Attributes {" << std::endl;
+	//<< "		constexpr MetaInfo::Attribute attributes[] {" << std::endl;
 	
+	std::list<std::string> names;
 	
 	while (auto row = result.next()) {
 		auto attributeName = Name(row.get<0>());
@@ -66,18 +68,27 @@ void dumpAttributeTypes(SQLiteDatabase& database) {
 		auto highIsGood = row.get<4>();
 		
 		std::cout << "\t\t\t"
-		<< "{AttributeID::" << attributeName << ", AttributeID::" << maxAttributeName << ", " << defaultValue << ", " << isStackable << ", " << highIsGood << "}," << std::endl;
+		<< "constexpr MetaInfo::Attribute " << attributeName << " = {AttributeID::" << attributeName << ", AttributeID::" << maxAttributeName << ", " << defaultValue << ", " << isStackable << ", " << highIsGood << "};" << std::endl;
+		names.push_back(attributeName.to_str());
 	}
 	
-	std::cout
-	<< "		};" << std::endl
+	std::cout << "\t\t}\n" << std::endl
+//	<< "using namespace Attributes;" << std::endl
+	<< "		constexpr const MetaInfo::Attribute* attributes[] {" << std::endl;
+	
+	std::transform(names.begin(), names.end(), std::ostream_iterator<std::string>(std::cout, ", "), [](const auto& i) {
+		return "&Attributes::" + i;
+	});
+	
+	std::cout << "\t\t};" << std::endl
 	<< "	}" << std::endl
 	<< "}" << std::endl;
 }
 
 auto attribute(const Name& attributeName, double value, int rowID) {
 	std::stringstream str;
-	str << "\t\t\t\t{attributes[" << rowID - 1 << "], " << value << "}, //" << attributeName ;
+//	str << "\t\t\t\t{attributes[" << rowID - 1 << "], " << value << "}, //" << attributeName ;
+	str << "_A(&Attributes::" << attributeName << ", " << value << ")";
 	return str.str();
 }
 
@@ -111,7 +122,8 @@ auto dumpItemEffects(SQLiteDatabase& database, int typeID) {
 		auto rowID = row.get<1>();
 		
 		std::stringstream str;
-		str << "\t\t\t\t{effects[" << rowID - 1 << "]}, //" << effectName ;
+//		str << "\t\t\t\t{effects[" << rowID - 1 << "]}, //" << effectName ;
+		str << "&Effects::" << effectName ;
 
 		effects.push_back(str.str());
 	}
@@ -126,7 +138,7 @@ auto dumpItemRequiredSkills(SQLiteDatabase& database, int typeID) {
 		auto typeName = Name(row.get<0>());
 		
 		std::stringstream str;
-		str << "TypeID::" << typeName << ", " ;
+		str << "TypeID::" << typeName;
 		
 		skills.push_back(str.str());
 	}
@@ -143,10 +155,12 @@ void dumpItems(SQLiteDatabase& database) {
 	<< "#include \"Effects.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr MetaInfo::Type types[] {" << std::endl;
+	<< "		namespace Types {" << std::endl
+	<< "			using namespace MetaInfo;" << std::endl;
+//	<< "		constexpr MetaInfo::Type types[] {" << std::endl;
 
 	std::cout << "\t\t\t"
-	<< "{TypeID::none, GroupID::none, CategoryID::none, {}, {}, {}}," << std::endl;
+	<< "constexpr auto none = MakeType(TypeID::none, GroupID::corporation, CategoryID::owner, _attributes(), _effects(), _typeIDs());" << std::endl;
 
 	
 	auto radiusID = database.fetch<int>("select rowid from dgmAttributeTypes where attributeName == \"radius\"").next().get<0>();
@@ -156,13 +170,17 @@ void dumpItems(SQLiteDatabase& database) {
 	auto raceIDID = database.fetch<int>("select rowid from dgmAttributeTypes where attributeName == \"raceID\"").next().get<0>();
 	
 //	int n = 0;
+	std::list<std::string> names = {"none"};
+	std::set<std::string> unique = {"none"};
+	
+	
 	while (auto row = result.next()) {
 //		if (n++ > 100)
 //			break;
 		
 		auto typeID = row.get<0>();
-		auto typeName = Name(row.get<1>());
-		if (typeName.to_str().length() == 0)
+		auto base = Name(row.get<1>()).to_str();
+		if (base.empty())
 			continue;
 		
 		auto groupName = Name(row.get<2>());
@@ -174,6 +192,13 @@ void dumpItems(SQLiteDatabase& database) {
 		auto raceID = row.get<8>();
 		auto attributes = dumpItemAttributes(database, typeID);
 		
+		auto typeName = base;
+		int i = 1;
+		while (unique.find(typeName) != unique.end()) {
+			typeName = base + "_" + std::to_string(i++);
+		}
+		unique.insert(typeName);
+
 		if (radius && *radius > 0)
 			attributes.push_front(attribute(Name("radius"), *radius, radiusID));
 		if (mass && *mass > 0)
@@ -186,24 +211,51 @@ void dumpItems(SQLiteDatabase& database) {
 			attributes.push_front(attribute(Name("raceID"), *raceID, raceIDID));
 
 		std::cout << "\t\t\t"
-		<< "{TypeID::" << typeName << ", GroupID::" << groupName << ", CategoryID::" << categoryName << ", {" << std::endl;
-
+		<< "constexpr auto " << typeName << " = MakeType(TypeID::" << typeName << ", GroupID::" << groupName << ", CategoryID::" << categoryName;
+		
+		std::cout << ",\n				_attributes(";
+		bool isFirst = true;
 		for (const auto& i: attributes) {
-			std::cout << i << std::endl;
-		}
-		std::cout << "\t\t\t},{" << std::endl;
-		for (const auto& i: dumpItemEffects(database, typeID)) {
-			std::cout << i << std::endl;
-		}
-		std::cout << "\t\t\t},\n\t\t\t{";
-		for (const auto& i: dumpItemRequiredSkills(database, typeID)) {
+			if (!isFirst) {
+				std::cout << ", ";
+			}
+			isFirst = false;
 			std::cout << i;
 		}
-		std::cout << "\n\t\t\t}}," << std::endl;
+		
+		std::cout << "),\n				_effects(";
+		isFirst = true;
+		for (const auto& i: dumpItemEffects(database, typeID)) {
+			if (!isFirst) {
+				std::cout << ", ";
+			}
+			isFirst = false;
+			std::cout << i;
+		}
+		
+		std::cout << "),\n				_typeIDs(";
+		isFirst = true;
+		for (const auto& i: dumpItemRequiredSkills(database, typeID)) {
+			if (!isFirst) {
+				std::cout << ", ";
+			}
+			isFirst = false;
+			std::cout << i;
+		}
+		std::cout << "));" << std::endl;
+		names.push_back(typeName);
 	}
 	
-	std::cout
-	<< "		};" << std::endl
+	std::cout << "\t\t}\n" << std::endl
+//	<< "using namespace Types;" << std::endl
+	<< "		constexpr const MetaInfo::Type* types[] {" << std::endl;
+
+	std::transform(names.begin(), names.end(), std::ostream_iterator<std::string>(std::cout, ", "), [](const auto& i) {
+		return "&Types::" + i;
+	});
+
+	
+	std::cout << "\t\t};" << std::endl
 	<< "	}" << std::endl
 	<< "}" << std::endl;
 }
@@ -216,17 +268,21 @@ void dumpIDs(SQLiteDatabase& database, const std::string& name, const std::strin
 	"\tenum class " << name << ": unsigned short {\n"
 	"\t\tnone = 0";
 
-	std::set<Name> set;
+	std::set<std::string> unique;
 
 	while (auto row =  result.next()) {
 		auto id = row.get<0>();
-		auto name = Name(row.get<1>());
-		if (name.to_str().length() == 0)
+		auto base = Name(row.get<1>()).to_str();
+		if (name.empty())
 			continue;
-		if (set.find(name) == set.end()) {
-			std::cout << ",\n\t\t" << name << " = " << id;
-			set.insert(name);
+		auto name = base;
+		int i = 1;
+		while (unique.find(name) != unique.end()) {
+			name = base + "_" + std::to_string(i++);
 		}
+		
+		std::cout << ",\n\t\t" << name << " = " << id;
+		unique.insert(name);
 	}
 	std::cout << "\n\t};\n" << "}" << std::endl;
 }
@@ -317,28 +373,30 @@ struct Association {
 };
 
 void dumpModifiers(SQLiteDatabase& database) {
-	auto result = database.fetch<int, int, std::string, std::string, int, Optional<std::string>, Optional<std::string>, Optional<int>>("select domain, type, b.attributeName as modified, c.attributeName as modifying, association, d.typeName, e.groupName, a.requiredID from dgmModifiers as a left join dgmAttributeTypes as b on a.modifiedAttributeID=b.attributeID left join dgmAttributeTypes as c on a.modifyingAttributeID=c.attributeID left join invTypes as d on a.requiredID=d.typeID left join invGroups as e on a.requiredID=e.groupID order by modifierID");
+	auto result = database.fetch<int, int, int, std::string, std::string, int, Optional<std::string>, Optional<std::string>, Optional<int>>("select a.modifierID, domain, type, b.attributeName as modified, c.attributeName as modifying, association, d.typeName, e.groupName, a.requiredID from dgmModifiers as a left join dgmAttributeTypes as b on a.modifiedAttributeID=b.attributeID left join dgmAttributeTypes as c on a.modifyingAttributeID=c.attributeID left join invTypes as d on a.requiredID=d.typeID left join invGroups as e on a.requiredID=e.groupID order by modifierID");
 	
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"MetaInfo.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr MetaInfo::Modifier modifiers[] {" << std::endl;
+	<< "		namespace Modifiers {" << std::endl;
+//	<< "		constexpr MetaInfo::Modifier modifiers[] {" << std::endl;
 
 	
 	while (auto row = result.next()) {
-		auto domain = Domain(row.get<0>());
-		auto type = ModifierType(row.get<1>());
-		auto modified = Name(row.get<2>());
-		auto modifying = Name(row.get<3>());
-		auto association = Association(row.get<4>());
-		auto typeName = row.get<5>();
-		auto groupName = row.get<6>();
-		auto requiredID = row.get<7>();
+		auto modifierID = row.get<0>();
+		auto domain = Domain(row.get<1>());
+		auto type = ModifierType(row.get<2>());
+		auto modified = Name(row.get<3>());
+		auto modifying = Name(row.get<4>());
+		auto association = Association(row.get<5>());
+		auto typeName = row.get<6>();
+		auto groupName = row.get<7>();
+		auto requiredID = row.get<8>();
 
 		std::cout << "\t\t\t"
-		<< "{MetaInfo::Modifier::ModifierType::" << type.to_str()
+		<< "constexpr MetaInfo::Modifier modifier" << modifierID << " = {MetaInfo::Modifier::ModifierType::" << type.to_str()
 		<< ", MetaInfo::Modifier::Association::" << association.to_str()
 		<< ", MetaInfo::Modifier::Domain::" << domain.to_str()
 		<< ", AttributeID::" << modified
@@ -358,12 +416,12 @@ void dumpModifiers(SQLiteDatabase& database) {
 			default:
 				break;
 		}
-		std::cout << "}," << std::endl;
+		std::cout << "};" << std::endl;
 
 	}
 	
 	std::cout
-	<< "		};" << std::endl
+	<< "		}" << std::endl
 	<< "	}" << std::endl
 	<< "}" << std::endl;
 }
@@ -402,7 +460,10 @@ void dumpEffects(SQLiteDatabase& database) {
 	<< "#include \"Modifiers.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr MetaInfo::Effect effects[] {" << std::endl;
+	<< "		namespace Effects {" << std::endl
+	<< "			using namespace MetaInfo;" << std::endl;
+//	<< "			using namespace Modifiers;" << std::endl;
+//	<< "		constexpr MetaInfo::Effect effects[] {" << std::endl;
 	
 	
 	while (auto row = result.next()) {
@@ -413,45 +474,58 @@ void dumpEffects(SQLiteDatabase& database) {
 		auto isAssistance = row.get<4>();
 
 		std::cout << "\t\t\t"
-		<< "{EffectID::" << effectName
+		<< "constexpr auto " << effectName << " = MakeEffect(EffectID::" << effectName
 		<< ", MetaInfo::Effect::Category::" << category.to_str()
 		<< ", " << isOffensive
 		<< ", " << isAssistance
-		<< ", {" << std::endl;
+		<< ", _modifiers(";
 		
 		auto result = database.fetch<int>("SELECT modifierID FROM dgmEffectModifiers WHERE effectID == " + std::to_string(effectID) + " ORDER BY modifierID");
-		std::cout << "\t\t\t\t";
+//		std::cout << "\t\t\t\t";
+		bool isFirst = true;
 		while (auto row = result.next()) {
-			std::cout << "{modifiers[" << row.get<0>() - 1 << "]},";
+			if (!isFirst) {
+				std::cout << ", ";
+			}
+			std::cout << "&Modifiers::modifier" << row.get<0>();
+			isFirst = false;
 		}
 		
-		std::cout << std::endl << "\t\t\t}}," << std::endl;
-		
+		std::cout << "));" << std::endl;
 	}
 	
 	std::cout
-	<< "		};" << std::endl
+	<< "		}" << std::endl
 	<< "	}" << std::endl
 	<< "}" << std::endl;
 }
 
 void dumpSkills(SQLiteDatabase& database) {
-	auto result = database.fetch<int, std::string>("SELECT a.rowID, typeName FROM invTypes AS a, invGroups AS b WHERE a.groupID=b.groupID and b.categoryID=16 ORDER BY a.rowID");
+	auto result = database.fetch<std::string>("SELECT typeName FROM invTypes AS a, invGroups AS b WHERE a.groupID=b.groupID and b.categoryID=16 ORDER BY a.rowID");
 	
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"Types.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr std::initializer_list<ref<const MetaInfo::Type>> skills {" << std::endl;
+	<< "		constexpr const MetaInfo::Type* skills[] = {" << std::endl;
 	
-	
+	std::set<std::string> unique;
+
 	while (auto row = result.next()) {
-		auto rowID = row.get<0>();
-		auto typeName = Name(row.get<1>());
-		
+		auto base = Name(row.get<0>()).to_str();
+		if (base.empty())
+			continue;
+
+		auto typeName = base;
+		int i = 1;
+		while (unique.find(typeName) != unique.end()) {
+			typeName = base + "_" + std::to_string(i++);
+		}
+		unique.insert(typeName);
+
 		std::cout << "\t\t\t"
-		<< "{types[" << rowID<< "]}, //" << typeName << std::endl;
+		<< "&Types::" << typeName << "," << std::endl;
 	}
 	
 	std::cout

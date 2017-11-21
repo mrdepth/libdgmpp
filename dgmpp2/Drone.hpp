@@ -58,6 +58,7 @@ namespace dgmpp2 {
 		
 		SquadronTag squadronTag_ = anySquadronTag;
 		Squadron squadron_;
+		std::unique_ptr<Charge> charge_;
 
 		Drone (TypeID typeID);
 		void squadronTag (SquadronTag squadronTag) { squadronTag_ = squadronTag; }

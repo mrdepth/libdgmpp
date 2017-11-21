@@ -127,7 +127,8 @@ namespace dgmpp2 {
 							auto maxGroupActive = static_cast<size_t>(attribute->value());
 							auto groupID = metaInfo().groupID;
 							
-							for (const auto& module: ship->modules()) {
+							for (const auto& i: ship->modules()) {
+								auto module = std::get<std::unique_ptr<Module>>(i).get();
 								if (module == this)
 									continue;
 								
@@ -170,20 +171,14 @@ namespace dgmpp2 {
 		adjustState();
 	}
 	
-	Charge* Module::charge() const {
-		for (const auto& child: children()) {
-			if (auto charge = dynamic_cast<Charge*>(child.get()))
-				return charge;
-		}
-		return nullptr;
-	}
-	
 	void Module::charge (std::unique_ptr<Charge> charge) {
-		if (auto currentCharge = this->charge())
-			Type::remove(currentCharge);
+		if (auto currentCharge = this->charge()) {
+			currentCharge->parent(nullptr);
+			charge_ = nullptr;
+		}
 		if (charge != nullptr) {
 			if (canFit(charge.get()))
-				Type::add(std::move(charge));
+				charge_ = std::move(charge);
 			else
 				throw Ship::CannotFit<Charge>(std::move(charge));
 		}

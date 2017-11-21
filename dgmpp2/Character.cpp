@@ -11,26 +11,26 @@
 namespace dgmpp2 {
 	
 	Character::Character() : Type(TypeID::characterGallente) {
-		for (const auto& metaInfo: SDE::skills) {
-			auto skill = Type::add(Skill::Create(metaInfo.get()));
-			skills_.emplace(metaInfo.get().typeID, skill);
+		for (size_t i = 0; i < SDE::skillsCount; i++) {
+			auto metaInfo = SDE::skills[i];
+//			auto skill = Type::add(Skill::Create(*metaInfo));
+			auto skill = Skill::Create(*metaInfo);
+			skill->parent(this);
+			skills_.emplace(metaInfo->typeID, std::move(skill));
 		}
 	}
 	
 	Ship* Character::setShip(std::unique_ptr<Ship> ship) {
-		auto enabled = isEnabled();
-		if (enabled)
-			setEnabled(false);
 		if (ship_)
-			remove(ship_);
+			ship_->parent(nullptr);
 		
-		if (ship != nullptr)
-			ship_ = Type::add(std::move(ship));
+		if (ship != nullptr) {
+			ship->parent(this);
+			ship_ = std::move(ship);
+		}
 		else
 			ship_ = nullptr;
-		if (enabled)
-			setEnabled(enabled);
-		return ship_;
+		return ship_.get();
 	}
 	
 	Type* Character::domain(MetaInfo::Modifier::Domain domain) {
@@ -38,7 +38,7 @@ namespace dgmpp2 {
 			case MetaInfo::Modifier::Domain::character:
 				return this;
 			case MetaInfo::Modifier::Domain::ship:
-				return ship_;
+				return ship_.get();
 			default:
 				return Type::domain(domain);
 		}

@@ -1602,6 +1602,7 @@ namespace dgmpp {
 		orbitalStrikeDamage = 1845,
 		cargoGroup2 = 1846,
 		_902 = 1847,
+		_902_1 = 1848,
 		resistanceShiftAmount = 1849,
 		sensorStrengthBonus = 1851,
 		canBeJettisoned = 1852,

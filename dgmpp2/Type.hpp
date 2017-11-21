@@ -9,6 +9,7 @@
 #include "MetaInfo.hpp"
 #include "Attribute.hpp"
 #include "Effect.hpp"
+#include <unordered_set>
 
 namespace dgmpp2 {
 	class Effect;
@@ -16,6 +17,7 @@ namespace dgmpp2 {
 	
 	class Type {
 	public:
+		virtual ~Type();
 		Type (const Type& other) = delete;
 		Type (Type&& other) = delete;
 		Type& operator= (const Type& other) = delete;
@@ -53,12 +55,12 @@ namespace dgmpp2 {
 		virtual void setEnabled (bool enabled);
 		
 	protected:
-		using TypesContainer = std::list<std::unique_ptr<Type>>;
+//		using TypesContainer = std::unordered_set<std::unique_ptr<Type>>;
 		
 		Type (TypeID typeID);
 		Type (const MetaInfo::Type& metaInfo);
 
-		template<typename T>
+		/*template<typename T>
 		T* add (std::unique_ptr<T> child) {
 			assert(child != nullptr);
 			assert(child->parent() == nullptr);
@@ -77,8 +79,10 @@ namespace dgmpp2 {
 			}
 			type->parent(this);
 			
-			assert(std::find(children_.begin(), children_.end(), type) == children_.end());
-			children_.push_back(std::move(type));
+//			assert(std::find(children_.begin(), children_.end(), type) == children_.end());
+//			children_.push_back(std::move(type));
+			auto result = children_.insert(std::move(type));
+			assert(result.second == true);
 			
 			if (isEnabled())
 				ptr->setEnabled(true);
@@ -86,8 +90,8 @@ namespace dgmpp2 {
 			return ptr;
 		}
 
-		void remove (Type* child);
-		const TypesContainer& children() const { return children_; }
+		void remove (Type* child);*/
+//		const TypesContainer& children() const { return children_; }
 		
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) ;
 		
@@ -104,7 +108,8 @@ namespace dgmpp2 {
 		const std::vector<std::unique_ptr<Effect>>& effects() const { return effects_; }
 		
 		virtual void reset();
-		
+		void parent (Type* parent);
+
 	private:
 		struct AttributesCache;
 		
@@ -116,7 +121,7 @@ namespace dgmpp2 {
 		Type*									parent_ = nullptr;
 		AttributesMap							attributes_;
 		std::vector<std::unique_ptr<Effect>>	effects_;
-		TypesContainer							children_;
+//		TypesContainer							children_;
 		bool									enabled_ = false;
 		bool									resetFlag_ = false;
 
@@ -128,7 +133,6 @@ namespace dgmpp2 {
 		
 		std::unique_ptr<AttributesCache> cache_;
 		
-		void parent (Type* parent) { parent_ = parent; }
 		
 		void addModifier (const Modifier* modifier);
 		void removeModifier (const Modifier* modifier);
@@ -147,6 +151,14 @@ namespace dgmpp2 {
 		void add(Attribute* attribute) {
 			attributes_.push_back(attribute);
 		}
+		void remove(Type* type) {
+			attributes_.remove_if([=](auto i) {
+				return i->owner().isDescendant(*type);
+			});
+		}
+		void splice(AttributesCache&& other) {
+			attributes_.splice(attributes_.end(), other.attributes_);
+		}
 		
 		void reset() {
 			std::list<Type*> types;
@@ -160,7 +172,8 @@ namespace dgmpp2 {
 			}
 			attributes_.clear();
 			for (auto type: types) {
-				type->reset();
+				if (type->isEnabled())
+					type->reset();
 				type->resetFlag_ = false;
 			}
 		}

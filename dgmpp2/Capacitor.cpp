@@ -52,9 +52,11 @@ namespace dgmpp2 {
 		std::list<Module*> modules;
 		std::list<Drone*> drones;
 		
-		std::copy_if(owner_.modules().begin(), owner_.modules().end(), std::back_inserter(modules), [](auto i) {
-			return i->state() >= Module::State::active;
-		});
+		for (const auto& i: owner_.modules()) {
+			auto m = std::get<std::unique_ptr<Module>>(i).get();
+			if (m->state() >= Module::State::active)
+				modules.push_back(m);
+		}
 
 		std::copy_if(owner_.projectedModules().begin(), owner_.projectedModules().end(), std::back_inserter(modules), [](auto i) {
 			return i->state() >= Module::State::active;
@@ -64,8 +66,8 @@ namespace dgmpp2 {
 			return i->active() && (*i)[EffectID::entityEnergyNeutralizerFalloff] != nullptr;
 		});
 
-		for (const auto& module: owner_.modules()) {
-			if (module->state() < Module::State::active)
+		for (const auto& i: owner_.modules()) {
+			if (std::get<std::unique_ptr<Module>>(i)->state() < Module::State::active)
 				continue;
 		}
 		

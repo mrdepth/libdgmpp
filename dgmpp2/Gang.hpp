@@ -22,13 +22,14 @@ namespace dgmpp2 {
 		Character* add (std::unique_ptr<Character> pilot);
 		
 		void remove (Character* pilot);
-		std::vector<Character*> pilots() const;
+		const std::list<std::unique_ptr<Character>>& pilots() const { return pilots_; }
 		
+		virtual void setEnabled (bool enabled) override;
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		
 	private:
 		Gang() : Type(TypeID::none) {}
-		
+		std::list<std::unique_ptr<Character>> pilots_;
 	};
 }

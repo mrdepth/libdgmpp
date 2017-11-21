@@ -611,6 +611,7 @@ namespace dgmpp {
 		structureEngineeringRigXLShipEfficiency = 1868,
 		structureEngineeringRigXLStructureandComponentEfficiency = 1869,
 		structureEngineeringRigXLLaboratoryOptimization = 1870,
+		engineeringComplex_1 = 1876,
 		technicalDataChips = 1886,
 		structureMoonDrillingServiceModule = 1887,
 		nonRepeatingHardeners = 1894,

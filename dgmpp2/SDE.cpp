@@ -10,10 +10,12 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		template <typename Key, typename Value> Key getKey(const Value& value);
+		const size_t skillsCount = sizeof(skills) / sizeof(decltype(skills[0]));
 		
-		template <typename Key, typename Value, std::size_t N, const Value (&array)[N]>
-		const Value& get(Key key) {
+		template <typename Key, typename Value> Key getKey(Value value);
+		
+		template <typename Key, typename Value, std::size_t N>
+		Value get(Value (&array)[N], Key key) {
 			auto first = array;
 			auto last = array + N;
 			
@@ -52,20 +54,21 @@ namespace dgmpp2 {
 			}*/
 		}
 		
-		template<> AttributeID getKey<AttributeID, MetaInfo::Attribute>(const MetaInfo::Attribute& value) {
-			return value.attributeID;
+		template<> AttributeID getKey<AttributeID, const MetaInfo::Attribute* const>(const MetaInfo::Attribute* const value) {
+			return value->attributeID;
 		}
 
-		template<> TypeID getKey<TypeID, MetaInfo::Type>(const MetaInfo::Type& value) {
-			return value.typeID;
+		template<> TypeID getKey<TypeID, const MetaInfo::Type* const>(const MetaInfo::Type* const value) {
+			return value->typeID;
 		}
 
 		const MetaInfo::Attribute& get(AttributeID attributeID) {
-			return get<AttributeID, MetaInfo::Attribute, sizeof(attributes) / sizeof(decltype(*attributes)), attributes>(attributeID);
+			return *get<AttributeID>(attributes, attributeID);
 		}
 		
 		const MetaInfo::Type& get(TypeID typeID) {
-			return get<TypeID, MetaInfo::Type, sizeof(types) / sizeof(decltype(*types)), types>(typeID);
+			
+			return *get<TypeID>(types, typeID);
 		}
 	}
 }

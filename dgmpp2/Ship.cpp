@@ -17,39 +17,33 @@ namespace dgmpp2 {
 		if (forced || canFit(module.get())) {
 			auto state = module->preferredState();
 			module->state(dgmpp2::Module::State::unknown);
+			if (socket == Module::anySocket)
+				socket = Module::Socket(0);
 			
-			auto modulePtr = Type::add(std::move(module));
+			auto l = modules_.lower_bound(std::make_tuple(module->slot(), socket));
+			auto u = modules_.upper_bound(std::make_tuple(module->slot()));
 			
-			auto v = modules(modulePtr->slot());
-			
-			auto i = std::lower_bound(v.begin(), v.end(), socket, [](auto a, auto b) {
-				return a->socket() < b;
-			});
-			
-			modulePtr->socket(socket);
-			
-			auto last = v.end();
-			if (i < last) {
-				for (auto j = i; j < last && (*j)->socket() == socket; j++) {
-					(*j)->socket(++socket);
-				}
+			for (; l != u && std::get<Module::Socket>(*l) == socket; l++) {
+				socket++;
 			}
-			
-			modules_.insert(i, modulePtr);
+
+			auto ptr = module.get();
+			ptr->socket(socket);
+			modules_.emplace_hint(l, module->slot(), socket, std::move(module));
 			
 			if (state == Module::State::unknown) {
-				if (modulePtr->canBeActive())
-					modulePtr->state(dgmpp2::Module::State::active);
-				else if (modulePtr->canBeOnline())
-					modulePtr->state(dgmpp2::Module::State::online);
+				if (ptr->canBeActive())
+					ptr->state(dgmpp2::Module::State::active);
+				else if (ptr->canBeOnline())
+					ptr->state(dgmpp2::Module::State::online);
 				else
-					modulePtr->state(dgmpp2::Module::State::offline);
+					ptr->state(dgmpp2::Module::State::offline);
 			}
 			else
-				modulePtr->state(state);
+				ptr->state(state);
 			
 			reset();
-			return modulePtr;
+			return ptr;
 		}
 		else
 			throw CannotFit<Module>(std::move(module));
@@ -59,10 +53,9 @@ namespace dgmpp2 {
 		assert(drone != nullptr);
 		
 		if (canFit(drone.get())) {
-			auto dronePtr = Type::add(std::move(drone));
 			
 			if (squadronTag == Drone::anySquadronTag) {
-				auto range = equal_range(drones_, std::make_tuple(dronePtr->metaInfo().typeID));
+				auto range = equal_range(drones_, std::make_tuple(drone->metaInfo().typeID));
 				
 				if (range.first != range.second) {
 					auto squadron = range.first;
@@ -78,7 +71,7 @@ namespace dgmpp2 {
 							size++;
 						}
 						else {
-							if (size < std::get<Drone*>(*squadron)->squadronSize())
+							if (size < std::get<std::unique_ptr<Drone>>(*squadron)->squadronSize())
 								break;
 							else {
 								size = 1;
@@ -88,8 +81,8 @@ namespace dgmpp2 {
 						}
 					}
 					
-					if (size < std::get<Drone*>(*squadron)->squadronSize()) {
-						drone->active(std::get<Drone*>(*squadron)->active());
+					if (size < std::get<std::unique_ptr<Drone>>(*squadron)->squadronSize()) {
+						drone->active(std::get<std::unique_ptr<Drone>>(*squadron)->active());
 					}
 					else
 						squadronTag++;
@@ -100,10 +93,10 @@ namespace dgmpp2 {
 				}
 				
 			}
-			
-			dronePtr->squadronTag(squadronTag);
-			drones_.emplace(dronePtr->metaInfo().typeID, squadronTag, dronePtr);
-			return dronePtr;
+			auto ptr = drone.get();
+			ptr->squadronTag(squadronTag);
+			drones_.emplace(ptr->metaInfo().typeID, squadronTag, std::move(drone));
+			return ptr;
 		}
 		else
 			throw CannotFit<Drone>(std::move(drone));
@@ -111,24 +104,18 @@ namespace dgmpp2 {
 	
 	void Ship::remove (Module* module) {
 		assert(module != nullptr);
-		
-		auto v = modules(module->slot());
-		auto i = std::find(v.begin(), v.end(), module);
-		assert(i != v.end());
+
+		auto i = modules_.find(std::make_tuple(module->slot(), module->socket(), module));
+		assert (i != modules_.end());
 		modules_.erase(i);
-		
-		Type::remove(module);
 		
 	}
 	
 	void Ship::remove (Drone* drone) {
 		assert(drone != nullptr);
-		
 		auto i = drones_.find(std::make_tuple(drone->metaInfo().typeID, drone->squadronTag(), drone));
 		assert(i != drones_.end());
 		drones_.erase(i);
-		
-		Type::remove(drone);
 	}
 	
 	bool Ship::canFit(Module* module) {
@@ -211,8 +198,8 @@ namespace dgmpp2 {
 			case Module::Slot::subsystem: {
 				auto subSystemSlot = static_cast<int>((*module)[AttributeID::subSystemSlot]->value());
 				auto v = modules(Module::Slot::subsystem);
-				auto isFull = std::any_of(v.begin(), v.end(), [=](auto i) {
-					return static_cast<int>((*i)[AttributeID::subSystemSlot]->value()) == subSystemSlot;
+				auto isFull = std::any_of(v.begin(), v.end(), [=](const auto& i) {
+					return static_cast<int>((*std::get<std::unique_ptr<Module>>(i))[AttributeID::subSystemSlot]->value()) == subSystemSlot;
 				});
 				if (isFull)
 					return false;
@@ -232,8 +219,8 @@ namespace dgmpp2 {
 		if (auto attribute = (*this)[AttributeID::maxGroupFitted]) {
 			auto max = static_cast<size_t>(attribute->value());
 			auto groupID = module->metaInfo().groupID;
-			for (auto i: modules_) {
-				if (i->metaInfo().groupID == groupID)
+			for (const auto& i: modules_) {
+				if (std::get<std::unique_ptr<Module>>(i)->metaInfo().groupID == groupID)
 					max--;
 				if (max <= 0)
 					return false;
@@ -243,8 +230,8 @@ namespace dgmpp2 {
 		if (auto attribute = (*this)[AttributeID::maxTypeFitted]) {
 			auto max = static_cast<size_t>(attribute->value());
 			auto typeID = module->metaInfo().typeID;
-			for (auto i: modules_) {
-				if (i->metaInfo().typeID == typeID)
+			for (const auto& i: modules_) {
+				if (std::get<std::unique_ptr<Module>>(i)->metaInfo().typeID == typeID)
 					max--;
 				if (max <= 0)
 					return false;
@@ -265,13 +252,14 @@ namespace dgmpp2 {
 	}
 	
 	slice<Ship::ModulesContainer::const_iterator> Ship::modules (Module::Slot slot) const {
-		auto first = std::lower_bound(modules_.cbegin(), modules_.cend(), slot, [](auto a, auto b) {
-			return a->slot() < b;
-		});
-		auto last = std::upper_bound(modules_.cbegin(), modules_.cend(), slot, [](auto a, auto b) {
-			return a < b->slot();
-		});
-		return {first, last};
+		return equal_range(modules_, std::make_tuple(slot));
+//		auto first = std::lower_bound(modules_.cbegin(), modules_.cend(), slot, [](auto a, auto b) {
+//			return a->slot() < b;
+//		});
+//		auto last = std::upper_bound(modules_.cbegin(), modules_.cend(), slot, [](auto a, auto b) {
+//			return a < b->slot();
+//		});
+//		return {first, last};
 	}
 	
 	Type* Ship::domain (MetaInfo::Modifier::Domain domain) {
@@ -329,7 +317,7 @@ namespace dgmpp2 {
 	}
 	
 	size_t Ship::usedHardpoints (Module::Hardpoint hardpoint) {
-		return std::count_if(modules_.begin(), modules_.end(), [=](auto a) {return a->hardpoint() == hardpoint;});
+		return std::count_if(modules_.begin(), modules_.end(), [=](const auto& a) {return std::get<std::unique_ptr<Module>>(a)->hardpoint() == hardpoint;});
 	}
 	
 	void Ship::reset() {
@@ -345,14 +333,14 @@ namespace dgmpp2 {
 			Module::Slot::starbaseStructure};
 		for (auto slot: slots) {
 			auto n = totalSlots(slot);
-			for (auto module: modules(slot)) {
-				module->setEnabled(n > 0);
+			for (const auto& i: modules(slot)) {
+				std::get<std::unique_ptr<Module>>(i)->setEnabled(n > 0);
 				n--;
 			}
 		}
 		
-		for (auto module: modules()) {
-			module->adjustState();
+		for (const auto& i: modules()) {
+			std::get<std::unique_ptr<Module>>(i)->adjustState();
 		}
 		capacitor_.reset();
 	}

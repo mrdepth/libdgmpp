@@ -9,23 +9,19 @@
 
 namespace dgmpp2 {
 	Character* Gang::add(std::unique_ptr<Character> pilot) {
-		return Type::add(std::move(pilot));
+		assert(pilot != nullptr);
+		auto ptr = pilot.get();
+		pilots_.push_back(std::move(pilot));
+		ptr->parent(this);
+		return ptr;
 	}
 	
 	void Gang::remove(Character* pilot) {
-		Type::remove(pilot);
-	}
-	
-	std::vector<Character*> Gang::pilots() const {
-		const auto& pilots = children();
-		std::vector<Character*> v;
-		v.reserve(pilots.size());
-		for (const auto& i: pilots) {
-			if (auto pilot = dynamic_cast<Character*>(i.get())) {
-				v.push_back(pilot);
-			}
-		}
-		return v;
+		assert(pilot != nullptr);
+		if (pilot->isEnabled())
+			pilot->setEnabled(false);
+		
+		pilots_.remove_if([=](const auto& i) { return i.get() == pilot; });
 	}
 	
 	
@@ -38,4 +34,14 @@ namespace dgmpp2 {
 		}
 	}
 	
+	void Gang::setEnabled (bool enabled) {
+		Type::setEnabled(enabled);
+		for (auto& pilot: pilots_) {
+			if (pilot->isEnabled() != enabled)
+				pilot->setEnabled(enabled);
+		}
+	}
+
 }
+
+

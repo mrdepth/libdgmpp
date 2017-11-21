@@ -17,8 +17,8 @@ namespace dgmpp2 {
 	class Ship: public Type {
 	public:
 //		using Position = std::vector<Module*>::const_iterator;
-		using ModulesContainer = std::vector<Module*>;
-		using DronesContainer = TuplesSet<TypeID, Drone::SquadronTag, Drone*>;
+		using ModulesContainer = TuplesSet<Module::Slot, Module::Socket, std::unique_ptr<Module>>;
+		using DronesContainer = TuplesSet<TypeID, Drone::SquadronTag, std::unique_ptr<Drone>>;
 		
 		template <typename T>
 		struct CannotFit: public std::runtime_error {

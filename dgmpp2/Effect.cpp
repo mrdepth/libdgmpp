@@ -9,8 +9,8 @@
 
 namespace dgmpp2 {
 	Effect::Effect(const MetaInfo::Effect& metaInfo, Type& owner) : metaInfo_(metaInfo) {
-		for (const auto& info: metaInfo_.modifiers) {
-			modifiers_.emplace(modifiers_.end(), info, owner, *this);
+		for (const auto info: metaInfo_.modifiers()) {
+			modifiers_.emplace(modifiers_.end(), *info, owner, *this);
 		}
 	}
 	

@@ -137,24 +137,103 @@ std::shared_ptr<Engine> createEngine() {
 }
 
 - (void)testShips {
+
 	[self measureBlock:^{
+		auto typeIDs = {1912,
+		1914,
+		1916,
+		1918,
+		4005,
+		33623,
+		33625,
+		33627,
+		33629,
+		33631,
+		33633,
+		33635,
+		33637,
+		34118,
+		34151,
+		34213,
+		34215,
+		34217,
+		34225,
+		34227,
+		34229,
+		34237,
+		34239,
+		34247,
+		34249,
+		34251,
+		34441,
+		34457,
+		34459,
+		34461,
+		34463,
+		34465,
+		34467,
+		34469,
+		34471,
+		638,
+		639,
+		640,
+		641,
+		642,
+		643,
+		644,
+		645,
+		11936,
+		11938,
+		13202,
+		17636,
+		17726,
+		17728,
+		17732,
+		17736,
+		17738,
+		17740,
+		17918,
+		17920,
+		24688,
+		24690,
+		24692,
+		24694,
+		26840,
+		26842,
+		32305,
+		32307,
+		32309,
+		32311,
+		33472,
+			33820};
 		
-		auto engine = createEngine();
-		auto gang = engine->getGang();
-		auto pilot = gang->addPilot();
-		pilot->setAllSkillsLevel(5);
 		
-		auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes where groupID in (select groupID from invGroups where categoryID=6)");
-		auto result = engine->getSqlConnector()->exec(stmt);
-		while (result->next()) {
-			TypeID typeID = static_cast<TypeID>(result->getInt(0));
-			auto ship = pilot->setShip(typeID);
-			ship->getCapUsed();
-			ship->getEffectiveSustainableTank();
-			ship->getHitPoints();
-			ship->getWeaponDps();
-			ship->getDrones();
+		{
+//			auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes where groupID in (select groupID from invGroups where categoryID=6) LIMIT 100");
+//			auto result = engine->getSqlConnector()->exec(stmt);
+//			auto engine = createEngine();
+//			for (auto typeID: typeIDs) {
+//				auto gang = engine->getGang();
+//				auto pilot = gang->addPilot();
+//				pilot->setAllSkillsLevel(5);
+//				auto ship = pilot->setShip(static_cast<TypeID>(typeID));
+//				ship->getVelocity();
+//				gang->removePilot(pilot);
+//			}
+//			while (result->next()) {
+//			}
 		}
+		
+		{
+			for (auto typeID: typeIDs) {
+				auto gang = dgmpp2::Gang::Create();
+				auto pilot = gang->add(dgmpp2::Character::Create());
+				pilot->setSkillLevels(5);
+				auto ship = pilot->setShip(dgmpp2::Ship::Create(static_cast<TypeID>(typeID)));
+				(*ship)[dgmpp2::AttributeID::maxVelocity]->value();
+			}
+		}
+
 	}];
 }
 

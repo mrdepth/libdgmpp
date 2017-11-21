@@ -12,7 +12,8 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		extern const std::initializer_list<ref<const MetaInfo::Type>> skills;
+		extern const MetaInfo::Type* const skills[];
+		extern const size_t skillsCount;
 		
 		template<typename T>
 		class NotFound : public std::runtime_error {

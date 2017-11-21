@@ -60,7 +60,7 @@ namespace dgmpp2 {
 		
 		virtual void setEnabled (bool enabled) override;
 		
-		Charge* charge() const;
+		Charge* charge() const { return charge_.get(); }
 		void charge (std::unique_ptr<Charge> charge);
 		bool canFit (Charge* charge);
 		const std::vector<GroupID>& chargeGroups() const { return chargeGroups_; };
@@ -106,6 +106,7 @@ namespace dgmpp2 {
 			bool requireTarget : 1;
 		} flags_;
 		std::vector<GroupID> chargeGroups_;
+		std::unique_ptr<Charge> charge_;
 		
 		Module (TypeID typeID);
 		
