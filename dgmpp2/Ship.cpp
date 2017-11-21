@@ -151,7 +151,7 @@ namespace dgmpp2 {
 		
 		for (auto id: attr) {
 			if (auto attribute = (*module)[id]) {
-				groups.push_back(static_cast<GroupID>(attribute->value()));
+				groups.push_back(static_cast<GroupID>(static_cast<int>(attribute->value())));
 			}
 		}
 		
@@ -181,7 +181,7 @@ namespace dgmpp2 {
 		
 		for (auto id: attr) {
 			if (auto attribute = (*module)[id]) {
-				types.push_back(static_cast<TypeID>(attribute->value()));
+				types.push_back(static_cast<TypeID>(static_cast<int>(attribute->value())));
 			}
 		}
 		

@@ -19,7 +19,7 @@ namespace dgmpp2 {
 		~Effect() = default;
 		
 		const MetaInfo::Effect& metaInfo() const			{ return metaInfo_; }
-		const std::list<const Modifier>& modifiers() const	{ return modifiers_; };
+		const std::list<Modifier>& modifiers() const	{ return modifiers_; };
 		
 		bool active() const { return active_; }
 		
@@ -28,7 +28,7 @@ namespace dgmpp2 {
 		
 		bool active_ = false;
 		const MetaInfo::Effect&		metaInfo_;
-		std::list<const Modifier>	modifiers_;
+		std::list<Modifier>	modifiers_;
 		
 		Effect (const MetaInfo::Effect& metaInfo, Type& owner);
 		void active (bool active) { active_ = active; }

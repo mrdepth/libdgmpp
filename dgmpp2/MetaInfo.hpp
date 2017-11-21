@@ -156,7 +156,7 @@ namespace dgmpp2 {
 			
 			
 			virtual dgmpp2::slice<const Modifier* const*> modifiers() const override {
-				return { modifiers_.begin(), modifiers_.end() };
+				return { modifiers_.data(), modifiers_.data() + modifiers_.size() };
 			}
 		private:
 			Modifiers modifiers_;
@@ -194,15 +194,15 @@ namespace dgmpp2 {
 			: Type(typeID, groupID, categoryID), attributes_(attributes), effects_(effects), requiredSkills_(requiredSkills) {}
 			
 			virtual dgmpp2::slice<const std::pair<const Attribute*, Float>*> attributes() const override {
-				return { attributes_.begin(), attributes_.end() };
+				return { attributes_.data(), attributes_.data() + attributes_.size() };
 			}
 			
 			virtual dgmpp2::slice<const Effect* const*> effects() const override {
-				return { effects_.begin(), effects_.end() };
+				return { effects_.data(), effects_.data() + effects_.size() };
 			}
 			
 			virtual dgmpp2::slice<const TypeID*> requiredSkills() const override {
-				return { requiredSkills_.begin(), requiredSkills_.end() };
+				return { requiredSkills_.data(), requiredSkills_.data() + requiredSkills_.size() };
 			}
 			
 			
@@ -227,24 +227,30 @@ namespace dgmpp2 {
 			return { typeID, groupID, categoryID, attributes, effects, requiredSkills };
 		}
 
+		template<typename T, typename... Args>
+		struct arr {
+			constexpr arr (T (&a)[sizeof...(Args)]) : array(a) {}
+			T array[sizeof...(Args)];
+		};
+
 		template <typename T, typename... Args>
-		constexpr std::array<T, sizeof...(Args)> _array(Args&&... args) {
-			return { std::forward<Args>(args)... };
+		constexpr std::array<T, sizeof...(Args)> _array(Args... args) {
+			return { args... };
 		}
 
 		template <typename... Args>
-		constexpr auto _attributes(Args&&... args) {
-			return _array<std::pair<const MetaInfo::Attribute*, Float>, Args...>(std::forward<Args>(args)...);
+		constexpr auto _attributes(Args... args) {
+			return _array<std::pair<const MetaInfo::Attribute*, Float>, Args...>(args...);
 		}
 
 		template <typename... Args>
-		constexpr auto _effects(Args&&... args) {
-			return _array<const MetaInfo::Effect*>(std::forward<Args>(args)...);
+		constexpr auto _effects(Args... args) {
+			return _array<const MetaInfo::Effect*>(args...);
 		}
 
 		template <typename... Args>
-		constexpr auto _modifiers(Args&&... args) {
-			return _array<const MetaInfo::Modifier*>(std::forward<Args>(args)...);
+		constexpr auto _modifiers(Args... args) {
+			return _array<const MetaInfo::Modifier*>(args...);
 		}
 
 		template <typename... Args>

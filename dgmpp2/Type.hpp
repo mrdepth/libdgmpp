@@ -111,7 +111,7 @@ namespace dgmpp2 {
 		void parent (Type* parent);
 
 	private:
-		struct AttributesCache;
+		class AttributesCache;
 		
 		friend class AttributeProxy;
 		friend class Attribute;

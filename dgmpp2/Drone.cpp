@@ -47,7 +47,7 @@ namespace dgmpp2 {
 		flags_.active = true;
 		
 		if (auto attribute = (*this)[AttributeID::entityMissileTypeID]) {
-			auto typeID = static_cast<TypeID>(attribute->value());
+			auto typeID = static_cast<TypeID>(static_cast<int>(attribute->value()));
 			charge_ = Charge::Create(typeID);
 			charge_->parent(this);
 			
@@ -99,8 +99,10 @@ namespace dgmpp2 {
 	size_t Drone::squadronSize() {
 		if (squadron_ == Squadron::none)
 			return 5;
-		else
-			return static_cast<size_t>((*this)[AttributeID::fighterSquadronMaxSize]->value()) ?: 5;
+		else {
+			auto size = static_cast<size_t>((*this)[AttributeID::fighterSquadronMaxSize]->value());
+			return size > 0 ? size : 5;
+		}
 	}
 	
 	//Calculations

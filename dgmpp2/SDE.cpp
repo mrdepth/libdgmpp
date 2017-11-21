@@ -10,7 +10,8 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		const size_t skillsCount = sizeof(skills) / sizeof(decltype(skills[0]));
+		const MetaInfo::Type* const *skills = skills_array;
+		const size_t skillsCount = sizeof(skills_array) / sizeof(decltype(skills_array[0]));
 		
 		template <typename Key, typename Value> Key getKey(Value value);
 		

@@ -8,6 +8,7 @@
 #pragma once
 #include "Type.hpp"
 #include <queue>
+#include <functional>
 
 namespace dgmpp2 {
 	using namespace std::chrono_literals;

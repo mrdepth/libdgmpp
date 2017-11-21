@@ -62,7 +62,7 @@ namespace dgmpp2 {
 		
 		for (auto attributeID : chargeGroupAttributeIDs) {
 			if (auto groupIDAttribute = (*this)[attributeID]) {
-				GroupID groupID = static_cast<GroupID>(groupIDAttribute->value());
+				GroupID groupID = static_cast<GroupID>(static_cast<int>(groupIDAttribute->value()));
 				if (groupID != GroupID::none) {
 					chargeGroups_.push_back(groupID);
 					if (groupID == GroupID::capacitorBoosterCharge || groupID == GroupID::naniteRepairPaste)

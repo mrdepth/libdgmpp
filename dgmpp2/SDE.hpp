@@ -12,7 +12,7 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		extern const MetaInfo::Type* const skills[];
+		extern const MetaInfo::Type* const *skills;
 		extern const size_t skillsCount;
 		
 		template<typename T>

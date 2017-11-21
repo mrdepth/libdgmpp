@@ -10,7 +10,7 @@
 #include <numeric>
 #include "Type.hpp"
 #include "SDE.hpp"
-
+#include <functional>
 
 #include <iostream>
 
@@ -191,7 +191,7 @@ namespace dgmpp2 {
 					values.clear();
 					std::transform(range.first, i, std::back_inserter(values), extract);
 					
-					decltype(values)::iterator j;
+					decltype(values.begin()) j;
 					if (highIsGood)
 						j = std::partition(values.begin(), values.end(),
 										   std::bind(std::less<>(), _1, 1.0));
