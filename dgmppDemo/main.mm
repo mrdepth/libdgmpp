@@ -672,12 +672,151 @@ namespace dgmpp3 {
 	}
 }
 
+constexpr size_t cstrlen(const char* s) {
+	size_t l = 0;
+	for (; s[l]; l++);
+	return l;
+}
+
+struct cstring {
+	constexpr cstring(const char* s) : ptr(s), size(cstrlen(s)) {};
+	const char* ptr;
+	size_t size;
+};
+
+template<> struct std::hash<cstring> {
+	constexpr size_t operator()(const cstring& s) {
+		size_t v = 0x811c9dc5;
+		for (int i = 0; i < s.size; i++) {
+			v *= 0x01000193;
+			v ^= s.ptr[i];
+		}
+		return v;
+	}
+};
+
+template<typename T>
+constexpr size_t type_id() {
+	return std::hash<cstring>()(cstring(__PRETTY_FUNCTION__));
+}
+
+
+
+template <typename Rep> struct Unit;
+
+template<typename A, typename B, typename Rep = double>
+struct Mul : public Unit<Rep> {};
+
+template<typename A, typename B, typename Rep = double>
+struct Div : public Unit<Rep> {};
+
+/*
+ 
+ (M*S)/(S/M)/M = M*M/S/S/M
+ */
+
+//struct One{};
+
+template<typename T> struct Normalize { using type = T; };
+template<typename A, typename B, typename C> struct Normalize<Mul<A,Mul<B, C>>> { using type = typename Normalize<Mul<Mul<typename Normalize<A>::type, typename Normalize<B>::type>, typename Normalize<C>::type>>::type; };
+template<typename A, typename B, typename C> struct Normalize<Mul<A,Div<B, C>>> { using type = typename Normalize<Div<Mul<typename Normalize<A>::type, typename Normalize<B>::type>, typename Normalize<C>::type>>::type; };
+template<typename A, typename B, typename C> struct Normalize<Div<A,Div<B, C>>> { using type = typename Normalize<Div<Mul<typename Normalize<A>::type, typename Normalize<C>::type>, typename Normalize<B>::type>>::type; };
+template<typename A, typename B, typename C> struct Normalize<Div<A,Mul<B, C>>> { using type = typename Normalize<Div<Div<typename Normalize<A>::type, typename Normalize<B>::type>, typename Normalize<C>::type>>::type; };
+template<typename A, typename B> struct Normalize<Mul<A, B>> { using type = Mul<typename Normalize<A>::type, typename Normalize<B>::type>; };
+template<typename A, typename B> struct Normalize<Div<A, B>> { using type = Div<typename Normalize<A>::type, typename Normalize<B>::type>; };
+
+template<typename A, typename B> struct Shift { using type = Div<A, B>; };
+template<typename A> struct Shift<A, A> { using type = void; };
+template<typename A, typename B> struct Shift<Mul<A, B>, B> { using type = A; };
+template<typename A, typename B> struct Shift<Div<A, B>, A> { using type = Div<void, B>; };
+template<typename A, typename B, typename C> struct Shift<Mul<A, B>, C> { using type = Mul<typename Shift<A, C>::type, B>; };
+template<typename A, typename B, typename C> struct Shift<Div<A, B>, C> { using type = Div<typename Shift<A, C>::type, B>; };
+
+template<typename T> struct Reduce { using type = T; };
+template<typename T> struct Reduce<Div<T, T>> { using type = void; };
+template<typename T> struct Reduce<Div<T, void>> { using type = T; };
+template<typename T> struct Reduce<Mul<T, void>> { using type = T; };
+template<typename T> struct Reduce<Mul<void, T>> { using type = T; };
+template<typename A, typename B> struct Reduce<Div<A, B>> { using type = typename Shift<typename Reduce<A>::type, B>::type ; };
+
+template<typename T>
+using Simplify = typename Normalize<typename Reduce<typename Normalize<T>::type>::type>::type;
+
+template <typename Rep>
+struct Unit {
+	constexpr Unit(const Rep& value) : value(value) {}
+	constexpr Unit() : value(0) {}
+	Rep value;
+	
+	Unit<Rep> operator+ (const Unit<Rep>& other) {
+		return {value + other.value};
+	}
+	
+	Unit<Rep> operator- (const Unit<Rep>& other) {
+		return {value - other.value};
+	}
+
+//	Unit<Rep> operator* (const Unit<Rep>& other) {
+//		return {value * other.value};
+//	}
+//
+//	Unit<Rep> operator/ (const Unit<Rep>& other) {
+//		return {value / other.value};
+//	}
+	
+	template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+	Unit<Rep> operator* (const T& other) {
+		return {value * other};
+	}
+
+	template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+	Unit<Rep> operator/ (const T& other) {
+		return {value / other};
+	}
+};
+
+template<typename A, typename B, typename Rep, typename = std::enable_if_t<std::is_base_of_v<Unit<Rep>, A> && std::is_base_of_v<Unit<Rep>, B>>>
+auto operator* (A a, B b) {
+	return Simplify<Mul<A, B>> ();
+}
+
+
+struct Meter: public Unit<double> {};
+struct Second: public Unit<double> {};
+
+template <typename T, typename Enabled = void> struct Sort {};
+
+template <typename A, typename B> struct Sort<Mul<A, B>, std::enable_if_t<(type_id<A>() < type_id<B>())>> {
+	typedef Mul<A,B> type;
+};
+
+template <typename A, typename B> struct Sort<Mul<A, B>, std::enable_if_t<(type_id<A>() >= type_id<B>())>> {
+	typedef Mul<B,A> type;
+};
+
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
+//		using M = Mul<Meter, Second>;
+//		using T = typename Sort<M>::type;
+//		T t = 0;
 		
-		std::vector<int> i = {4,533,5,3,5,6,5,6,45,3,42,5};
-		std::priority_queue<int> pq (std::priority_queue<int>::value_compare(), std::move(i));
-		pq.pop();
+////		auto m = Meter();
+////		auto s = Second();
+////		using tt = decltype(m * s);
+////		tt t = "234";
+//		
+//		auto h = typeid(void).hash_code() > typeid(Meter).hash_code();
+//		//(M*S)/(S/M)/M
+//		using T = Mul<Second, Div<Div<Mul<Meter, Second>, Div<Second, Meter>>, Meter>>;
+//		using T2 = Div<Mul<Meter, Second>, Mul<Second, Meter>>;
+////		typename Normalize<T1>::type n1 = 0;
+////		typename Normalize<T>::type n2 = 0;
+//		using R = typename Normalize<typename Reduce<typename Normalize<T>::type>::type>::type;
+//		using N = typename Normalize<T>::type;
+//		R n = 0;
+////		using V = Div<Meter, Second>;
+////		using L = Reduce<Mul<V, Second>>::type;
+		
 		
 		auto r = rate<dgmpp2::GigaJoule, std::chrono::hours>(1.0);
 		rate<dgmpp2::GigaJoule> r2 = r;
@@ -712,10 +851,11 @@ int main(int argc, const char * argv[]) {
 			auto pilot = gang->add(dgmpp2::Character::Create());
 			pilot->setSkillLevels(5);
 			auto ship = pilot->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-			auto module = ship->add(dgmpp2::Module::Create(TypeID::_500MNMicrowarpdriveII));
+			auto module = ship->add(dgmpp2::Module::Create(TypeID::heavyNeutronBlasterII));
+			module->charge(dgmpp2::Charge::Create(TypeID::antimatterChargeM));
 			
-			module->state(dgmpp2::Module::State::overloaded);
-			std::cout << (*ship)[AttributeID::maxVelocity]->value() << std::endl;// << v2 << std::endl;
+			std::cout << module->powerGridUse() << std::endl;
+			
 		}
 		auto t1 = std::chrono::high_resolution_clock::now();
 		{
@@ -723,12 +863,12 @@ int main(int argc, const char * argv[]) {
 			auto pilot = engine->getGang()->addPilot();
 			pilot->setAllSkillsLevel(5);
 			auto ship = pilot->setShip(dgmpp::TypeID::dominix);
-//			ship->addModule(dgmpp::TypeID::armorEMHardenerII);
-//			ship->addModule(dgmpp::TypeID::armorEMHardenerI);
-			auto module = ship->addModule(dgmpp::TypeID::_500MNMicrowarpdriveII);
-			module->setState(dgmpp::Module::State::overloaded);
-			std::cout << ship->getVelocity() << std::endl;
+			auto module = ship->addModule(dgmpp::TypeID::heavyNeutronBlasterII);
+			module->setCharge(TypeID::antimatterChargeM);
+
+			std::cout << static_cast<Float>(module->getPowerGridUse()) << std::endl;
 		}
+		return 0;
 		auto t2 = std::chrono::high_resolution_clock::now();
 		auto dt0 = t1-t0;
 		auto dt1 = t2-t1;

@@ -35,13 +35,13 @@ namespace dgmpp2 {
 		return stableLevel_;
 	}
 	
-	rate<GigaJoule, std::chrono::milliseconds> Capacitor::use() {
+	GigaJoulePerSecond Capacitor::use() {
 		if (!flags_.isCalculated_)
 			simulate();
 		return use_;
 	}
 	
-	rate<GigaJoule, std::chrono::milliseconds> Capacitor::recharge() {
+	GigaJoulePerSecond Capacitor::recharge() {
 		if (!flags_.isCalculated_)
 			simulate();
 		return recharge_;

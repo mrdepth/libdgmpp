@@ -8,6 +8,7 @@
 #pragma once
 #include "Type.hpp"
 #include "Charge.hpp"
+#include "DamageVector.hpp"
 
 namespace dgmpp2 {
 	class Drone: public Type {
@@ -31,7 +32,7 @@ namespace dgmpp2 {
 		bool isOffensive() const	{ return flags_.isOffensive; }
 		bool dealsDamage() const	{ return flags_.dealsDamage; }
 
-		Charge* charge() const;
+		Charge* charge() const { return charge_.get(); }
 
 		Squadron squadron() const { return squadron_; }
 		size_t squadronSize();
@@ -42,6 +43,13 @@ namespace dgmpp2 {
 		
 		//Calculations
 		std::chrono::milliseconds cycleTime();
+		DamageVector<HP> volley();
+		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default());
+		Meter optimal();
+		Meter falloff();
+		Points accuracyScore();
+		CubicMeterPerSecond miningYield();
+		MetersPerSecond velocity();
 
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
@@ -62,6 +70,12 @@ namespace dgmpp2 {
 
 		Drone (TypeID typeID);
 		void squadronTag (SquadronTag squadronTag) { squadronTag_ = squadronTag; }
+		
+		DamageVector<HP> droneVolley();
+		DamageVector<HP> fighterAttackMissileVolley();
+		DamageVector<HP> fighterAttackTurretVolley();
+		DamageVector<HP> fighterMissileVolley();
+
 	};
 }
 

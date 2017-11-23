@@ -18,9 +18,9 @@ namespace dgmpp2 {
 	
 	void Gang::remove(Character* pilot) {
 		assert(pilot != nullptr);
-		if (pilot->isEnabled())
-			pilot->setEnabled(false);
-		
+		pilot->parent(nullptr);
+//		if (pilot->isEnabled())
+//			pilot->setEnabled(false);
 		pilots_.remove_if([=](const auto& i) { return i.get() == pilot; });
 	}
 	
@@ -35,11 +35,14 @@ namespace dgmpp2 {
 	}
 	
 	void Gang::setEnabled (bool enabled) {
-		Type::setEnabled(enabled);
-		for (auto& pilot: pilots_) {
-			if (pilot->isEnabled() != enabled)
-				pilot->setEnabled(enabled);
-		}
+		if (isEnabled() == enabled)
+			return Type::setEnabled(enabled);
+		else
+			Type::setEnabled(enabled);
+		
+		std::for_each(pilots_.begin(), pilots_.end(), [enabled](auto& i) {
+			i->setEnabled(enabled);
+		});
 	}
 
 }

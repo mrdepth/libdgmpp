@@ -19,6 +19,7 @@ namespace dgmpp2 {
 		static std::unique_ptr<Character> Create() { return std::unique_ptr<Character>(new Character); }
 		Ship* setShip (std::unique_ptr<Ship> ship);
 		void setSkillLevels (int level);
+		virtual void setEnabled (bool enabled) override;
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		virtual void reset() override;

@@ -10,6 +10,7 @@
 #include "Module.hpp"
 #include "Drone.hpp"
 #include "Capacitor.hpp"
+#include "DamageVector.h"
 
 namespace dgmpp2 {
 	class Module;
@@ -51,7 +52,7 @@ namespace dgmpp2 {
 		Capacitor& capacitor() { return capacitor_; }
 		
 		int rigSize() { return static_cast<int>((*this)[AttributeID::rigSize]->value()); }
-		
+		virtual void setEnabled (bool enabled) override;
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		virtual void reset() override;

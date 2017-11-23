@@ -109,6 +109,7 @@ namespace dgmpp2 {
 		
 		virtual void reset();
 		void parent (Type* parent);
+		void batchUpdates(std::function<void()> updates);
 
 	private:
 		class AttributesCache;
@@ -151,16 +152,23 @@ namespace dgmpp2 {
 		void add(Attribute* attribute) {
 			attributes_.push_back(attribute);
 		}
-		void remove(Type* type) {
-			attributes_.remove_if([=](auto i) {
-				return i->owner().isDescendant(*type);
+		std::unique_ptr<AttributesCache> extract(Type* type) {
+			auto i = std::partition(attributes_.begin(), attributes_.end(), [=](auto i) {
+				return !i->owner().isDescendant(*type);
 			});
+			auto result = std::unique_ptr<AttributesCache>(new AttributesCache);
+			
+			result->attributes_.splice(result->attributes_.begin(), attributes_, i, attributes_.end());
+			return result;
 		}
 		void splice(AttributesCache&& other) {
 			attributes_.splice(attributes_.end(), other.attributes_);
 		}
 		
 		void reset() {
+			if (batchCounter_ > 0)
+				return;
+			
 			std::list<Type*> types;
 			for (auto attribute: attributes_) {
 				attribute->reset();
@@ -178,8 +186,17 @@ namespace dgmpp2 {
 			}
 		}
 		
+		void batchUpdates(std::function<void()> updates) {
+			batchCounter_++;
+			updates();
+			batchCounter_--;
+			if (batchCounter_ == 0)
+				reset();
+		}
+		
 	private:
 		std::list<Attribute*> attributes_;
+		size_t batchCounter_ = 0;
 	};
 	
 }

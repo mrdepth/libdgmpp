@@ -11,6 +11,23 @@ namespace dgmpp2 {
 	
 	const Module::Socket Module::anySocket = -1;
 	
+	void Ship::setEnabled (bool enabled) {
+		if (isEnabled() == enabled)
+			return Type::setEnabled(enabled);
+		else
+			Type::setEnabled(enabled);
+		
+		batchUpdates([&]() {
+			std::for_each(modules_.begin(), modules_.end(), [enabled](auto& i) {
+				std::get<std::unique_ptr<Module>>(i)->setEnabled(enabled);
+			});
+			std::for_each(drones_.begin(), drones_.end(), [enabled](auto& i) {
+				std::get<std::unique_ptr<Drone>>(i)->setEnabled(enabled);
+			});
+		});
+		
+	}
+	
 	Module* Ship::add (std::unique_ptr<Module> module, bool forced, Module::Socket socket) {
 		assert(module != nullptr);
 		
@@ -30,6 +47,7 @@ namespace dgmpp2 {
 			auto ptr = module.get();
 			ptr->socket(socket);
 			modules_.emplace_hint(l, module->slot(), socket, std::move(module));
+			ptr->parent(this);
 			
 			if (state == Module::State::unknown) {
 				if (ptr->canBeActive())
@@ -96,6 +114,7 @@ namespace dgmpp2 {
 			auto ptr = drone.get();
 			ptr->squadronTag(squadronTag);
 			drones_.emplace(ptr->metaInfo().typeID, squadronTag, std::move(drone));
+			ptr->parent(this);
 			return ptr;
 		}
 		else
@@ -107,6 +126,7 @@ namespace dgmpp2 {
 
 		auto i = modules_.find(std::make_tuple(module->slot(), module->socket(), module));
 		assert (i != modules_.end());
+		std::get<std::unique_ptr<Module>>(*i)->parent(nullptr);
 		modules_.erase(i);
 		
 	}
@@ -115,6 +135,7 @@ namespace dgmpp2 {
 		assert(drone != nullptr);
 		auto i = drones_.find(std::make_tuple(drone->metaInfo().typeID, drone->squadronTag(), drone));
 		assert(i != drones_.end());
+		std::get<std::unique_ptr<Drone>>(*i)->parent(nullptr);
 		drones_.erase(i);
 	}
 	
@@ -334,7 +355,7 @@ namespace dgmpp2 {
 		for (auto slot: slots) {
 			auto n = totalSlots(slot);
 			for (const auto& i: modules(slot)) {
-				std::get<std::unique_ptr<Module>>(i)->setEnabled(n > 0);
+				std::get<std::unique_ptr<Module>>(i)->fail(n <= 0);
 				n--;
 			}
 		}

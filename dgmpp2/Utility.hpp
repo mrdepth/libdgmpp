@@ -23,6 +23,7 @@
 #include "GroupID.hpp"
 #include "TypeID.hpp"
 #include "EffectID.hpp"
+#include "Rate.hpp"
 
 namespace dgmpp2 {
 	using Float = double;
@@ -34,7 +35,22 @@ namespace dgmpp2 {
 	using ModifierID = int;
 	using SchematicID = int;
 	using GigaJoule = Float;
+	using Teraflops = Float;
+	using MegaWatts = Float;
+	using CalibrationPoints = Float;
+//	using MeterPerSecond = Float;
+	using CubicMeter = Float;
+	using Meter = Float;
+	using MegabitsPerSecond = Float;
+	using Kilogram = Float;
+	using Points = Float;
+	using HP = Float;
+	using Radians = Float;
 	using Percent = Float;
+	using GigaJoulePerSecond	= rate<GigaJoule, std::chrono::seconds>;
+	using CubicMeterPerSecond	= rate<CubicMeter, std::chrono::seconds>;
+	using RadiansPerSecond		= rate<Radians, std::chrono::seconds>;
+	using MetersPerSecond		= rate<Meter, std::chrono::seconds>;
 	
 	namespace config {
 		const Percent capacitorPeakRecharge = 0.5; //sqrt(0.25)
@@ -207,72 +223,63 @@ namespace dgmpp2 {
 		return slice<Iter>(std::forward<Iter>(from), std::forward<Iter>(to));
 	}
 
-	template<typename Rep, typename Period = std::chrono::seconds>
-	class rate {
-	public:
-		using rep = Rep;
-		using period = Period;
-		
-		rate() {};
-		constexpr explicit rate(const Rep& value) : rep_(value) {}
-		
-		template<typename Period2>
-		constexpr operator rate<Rep, Period2> () {
-			using r = std::ratio_divide<typename Period::period::ratio, typename Period2::period::ratio>;
-			return rate<Rep, Period2>{rep_ * r::den / r::num};
+	
+	
+	struct Tank
+	{
+		union {
+			struct {
+				rate<HP, std::chrono::seconds> passiveShield;
+				rate<HP, std::chrono::seconds> shieldRepair;
+				rate<HP, std::chrono::seconds> armorRepair;
+				rate<HP, std::chrono::seconds> hullRepair;
+			};
+			rate<HP, std::chrono::seconds> layers[4];
 		};
-		
-		Rep count() const {return rep_;}
-		
-		auto operator+ (const rate<Rep, Period>& other) const {
-			return rate<Rep, Period>(rep_ + other.rep_);
-		}
-		
-		auto operator- (const rate<Rep, Period>& other) const {
-			return rate<Rep, Period>(rep_ + other.rep_);
-		}
-		
-		auto operator* (const rate<Rep, Period>& other) const {
-			return rate<Rep, Period>(rep_ * other.rep_);
-		}
-
-		template<typename Period2>
-		Rep operator* (const Period2& p) const {
-			return rep_ * std::chrono::duration_cast<Period>(p).count();
-		}
-
-		auto operator/ (const rate<Rep, Period>& other) const {
-			return rate<Rep, Period>(rep_ / other.rep_);
-		}
-		
-		rate<Rep, Period>& operator+= (const rate<Rep, Period>& other) {
-			rep_ += other.rep_;
-			return *this;
-		}
-		
-		rate<Rep, Period>& operator-= (const rate<Rep, Period>& other) {
-			rep_ -= other.rep_;
-			return *this;
-		}
-		
-		rate<Rep, Period>& operator*= (const rate<Rep, Period>& other) {
-			rep_ *= other.rep_;
-			return *this;
-		}
-		
-		rate<Rep, Period>& operator/= (const rate<Rep, Period>& other) {
-			rep_ /= other.rep_;
-			return *this;
-		}
-		
-	private:
-		Rep rep_ = 0;
 	};
 	
-	template<typename Rep, typename Period>
-	auto make_rate(const Rep& value, const Period& period) {
-		auto c = period.count();
-		return rate<Rep, Period> (c > 0 ? value / c : 0);
-	}
+	struct HitPoints
+	{
+		union {
+			struct {
+				HP shield;
+				HP armor;
+				HP hull;
+			};
+			HP layers[3];
+		};
+	};
 	
+	struct ResistancesLayer
+	{
+		union {
+			struct {
+				Percent em;
+				Percent thermal;
+				Percent kinetic;
+				Percent explosive;
+			};
+			Percent resistances[4];
+		};
+	};
+	
+	struct Resistances
+	{
+		union {
+			struct {
+				ResistancesLayer shield, armor, hull;
+			};
+			ResistancesLayer layers[3];
+		};
+	};
+	
+	struct HostileTarget
+	{
+		rate<Radians, std::chrono::seconds> angularVelocity = rate<Radians, std::chrono::seconds>(0);
+		rate<Meter, std::chrono::seconds> velocity = rate<Meter, std::chrono::seconds>(0);
+		Meter signature = 0;
+		Meter range = 0;
+		static HostileTarget Default() { return HostileTarget(); }
+//		const static HostileTarget defaultTarget;
+	};
 };

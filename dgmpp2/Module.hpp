@@ -8,6 +8,7 @@
 #pragma once
 #include "Type.hpp"
 #include "Charge.hpp"
+#include "DamageVector.hpp"
 
 namespace dgmpp2 {
 	
@@ -47,6 +48,8 @@ namespace dgmpp2 {
 			turret
 		};
 		
+		virtual void setEnabled (bool enabled) override;
+		
 		bool canHaveState (State state);
 		std::vector<State> availableStates();
 		
@@ -58,33 +61,46 @@ namespace dgmpp2 {
 		Hardpoint hardpoint() const {return hardpoint_;}
 		Socket socket() const {return socket_;}
 		
-		virtual void setEnabled (bool enabled) override;
-		
 		Charge* charge() const { return charge_.get(); }
 		void charge (std::unique_ptr<Charge> charge);
 		bool canFit (Charge* charge);
 		const std::vector<GroupID>& chargeGroups() const { return chargeGroups_; };
 		
-		int chargeSize();
+		Charge::Size chargeSize();
 		
 		bool canBeOnline()		const	{ return flags_.canBeOnline; }
 		bool canBeActive()		const;
 		bool canBeOverloaded()	const	{ return flags_.canBeOverloaded; }
 		bool requireTarget()	const;
+		bool fail()				const	{ return flags_.fail; }
 
 		bool factorReload()		const	{ return flags_.factorReload; }
 		void factorReload (bool factorReload) { flags_.factorReload = factorReload; }
 
 		
 		//Calculations
+		
 		std::chrono::milliseconds reloadTime();
 		std::chrono::milliseconds cycleTime();
 		std::chrono::milliseconds rawCycleTime();
 
 		size_t charges();
 		size_t shots();
-		rate<GigaJoule, std::chrono::seconds> capUse();
 		
+		GigaJoulePerSecond capUse();
+		Teraflops cpuUse();
+		MegaWatts powerGridUse();
+		CalibrationPoints calibrationUse();
+		
+		Points accuracyScore();
+		Meter signatureResolution();
+		CubicMeterPerSecond miningYield();
+
+		DamageVector<HP> volley();
+		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default());
+		Meter optimal();
+		Meter falloff();
+
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		
@@ -104,6 +120,7 @@ namespace dgmpp2 {
 			bool forceReload : 1;
 			bool factorReload : 1;
 			bool requireTarget : 1;
+			bool fail : 1;
 		} flags_;
 		std::vector<GroupID> chargeGroups_;
 		std::unique_ptr<Charge> charge_;
@@ -112,5 +129,6 @@ namespace dgmpp2 {
 		
 		void socket (Socket socket) { socket_ = socket; }
 		void adjustState();
+		void fail(bool fail) { flags_.fail = fail; }
 	};
 }

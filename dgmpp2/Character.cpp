@@ -15,21 +15,30 @@ namespace dgmpp2 {
 			auto metaInfo = SDE::skills[i];
 //			auto skill = Type::add(Skill::Create(*metaInfo));
 			auto skill = Skill::Create(*metaInfo);
-			skill->parent(this);
+			auto ptr = skill.get();
 			skills_.emplace(metaInfo->typeID, std::move(skill));
+			ptr->parent(this);
 		}
 	}
 	
 	Ship* Character::setShip(std::unique_ptr<Ship> ship) {
-		if (ship_)
+		auto enabled = isEnabled();
+		if (enabled)
+			setEnabled(false);
+		
+		if (ship_) {
 			ship_->parent(nullptr);
+			ship_ = nullptr;
+		}
 		
 		if (ship != nullptr) {
-			ship->parent(this);
 			ship_ = std::move(ship);
+			ship_->parent(this);
 		}
-		else
-			ship_ = nullptr;
+		
+		if (enabled)
+			setEnabled(true);
+		
 		return ship_.get();
 	}
 	
@@ -52,11 +61,28 @@ namespace dgmpp2 {
 	
 	void Character::setSkillLevels(int level) {
 		if (level >= 0 && level <= 5) {
-			for (const auto& i: skills_) {
-				i.second->level(level);
-			}
+			batchUpdates([&]() {
+				for (const auto& i: skills_) {
+					i.second->level(level);
+				}
+			});
 		}
 		else
 			throw InvalidSkillLevel();
+	}
+	
+	void Character::setEnabled (bool enabled) {
+		if (isEnabled() == enabled)
+			return Type::setEnabled(enabled);
+		else
+			Type::setEnabled(enabled);
+	
+		batchUpdates([=]() {
+			std::for_each(skills_.begin(), skills_.end(), [enabled](auto& i) {
+				i.second->setEnabled(enabled);
+			});
+			if (ship_)
+				ship_->setEnabled(enabled);
+		});
 	}
 }

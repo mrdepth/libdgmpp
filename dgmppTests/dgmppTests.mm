@@ -209,19 +209,21 @@ std::shared_ptr<Engine> createEngine() {
 		
 		
 		{
-//			auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes where groupID in (select groupID from invGroups where categoryID=6) LIMIT 100");
+/*//			auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID FROM invTypes where groupID in (select groupID from invGroups where categoryID=6) LIMIT 100");
 //			auto result = engine->getSqlConnector()->exec(stmt);
-//			auto engine = createEngine();
+//			while (result->next()) {
+//			}*/
+
 //			for (auto typeID: typeIDs) {
+//				auto engine = createEngine();
 //				auto gang = engine->getGang();
 //				auto pilot = gang->addPilot();
 //				pilot->setAllSkillsLevel(5);
 //				auto ship = pilot->setShip(static_cast<TypeID>(typeID));
 //				ship->getVelocity();
-//				gang->removePilot(pilot);
+////				gang->removePilot(pilot);
 //			}
-//			while (result->next()) {
-//			}
+			
 		}
 		
 		{

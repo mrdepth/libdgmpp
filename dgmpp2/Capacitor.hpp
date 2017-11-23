@@ -26,8 +26,8 @@ namespace dgmpp2 {
 		std::chrono::milliseconds lastsTime();
 		bool isStable();
 		Percent stableLevel();
-		rate<GigaJoule, std::chrono::milliseconds> use();
-		rate<GigaJoule, std::chrono::milliseconds> recharge();
+		GigaJoulePerSecond use();
+		GigaJoulePerSecond recharge();
 	private:
 		friend class Ship;
 		Ship& owner_;

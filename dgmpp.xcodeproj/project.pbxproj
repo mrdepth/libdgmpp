@@ -300,6 +300,10 @@
 		12DBEAB31E1D3B9D0088A486 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */; };
 		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
 		12DFCED31CD74242006A19BD /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */; };
+		12E864D91FC5AB4500C9C4BD /* DamageVector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864DA1FC5AB4500C9C4BD /* DamageVector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864DC1FC6C8F200C9C4BD /* Rate.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864DB1FC6C8F200C9C4BD /* Rate.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864DD1FC6C8F200C9C4BD /* Rate.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864DB1FC6C8F200C9C4BD /* Rate.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12EC66511FBECD840083DBB8 /* Capacitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EC664F1FBECD840083DBB8 /* Capacitor.cpp */; };
 		12EC66521FBECD840083DBB8 /* Capacitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EC664F1FBECD840083DBB8 /* Capacitor.cpp */; };
 		12EC66531FBECD840083DBB8 /* Capacitor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12EC66501FBECD840083DBB8 /* Capacitor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -426,6 +430,8 @@
 		12DFCECE1CD74242006A19BD /* dgmppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dgmppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DFCED01CD74242006A19BD /* dgmppTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = dgmppTests.mm; sourceTree = "<group>"; };
 		12DFCED21CD74242006A19BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DamageVector.hpp; sourceTree = "<group>"; };
+		12E864DB1FC6C8F200C9C4BD /* Rate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Rate.hpp; sourceTree = "<group>"; };
 		12EC664F1FBECD840083DBB8 /* Capacitor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Capacitor.cpp; sourceTree = "<group>"; };
 		12EC66501FBECD840083DBB8 /* Capacitor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Capacitor.hpp; sourceTree = "<group>"; };
 		12EFCCDD1C1ACE4E003ECA7F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -525,6 +531,8 @@
 				123BEF141FBDA20F00AC8EB1 /* Modifier.hpp */,
 				12B331011FBD97F80072D4E4 /* Type.cpp */,
 				12B330F51FBD97F80072D4E4 /* Type.hpp */,
+				12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */,
+				12E864DB1FC6C8F200C9C4BD /* Rate.hpp */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -852,6 +860,7 @@
 				12564BEB1B84B07F000F68D8 /* Drone.h in Headers */,
 				121064A71C9312370032B3DB /* Structure.h in Headers */,
 				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
+				12E864D91FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
 				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
 				12424E3B1E36397F0078AB0F /* Cargo.h in Headers */,
 				12B331121FBD990F0072D4E4 /* Utility.hpp in Headers */,
@@ -872,6 +881,7 @@
 				12564BF91B84B07F000F68D8 /* Area.h in Headers */,
 				128656511C57AD440002BA7E /* State.h in Headers */,
 				123BEF0B1FBD9E5F00AC8EB1 /* Modifiers.hpp in Headers */,
+				12E864DC1FC6C8F200C9C4BD /* Rate.hpp in Headers */,
 				123BEF071FBD9E4F00AC8EB1 /* SDE.hpp in Headers */,
 				12564BFA1B84B07F000F68D8 /* Attribute.h in Headers */,
 				12A156921C464FD300C3CF0B /* Spaceport.h in Headers */,
@@ -939,6 +949,7 @@
 				12D9F9CD1CC3A98B00313F8D /* Drone.h in Headers */,
 				12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */,
 				12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */,
+				12E864DA1FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
 				12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */,
 				12424E3C1E36397F0078AB0F /* Cargo.h in Headers */,
 				12B331141FBD990F0072D4E4 /* Utility.hpp in Headers */,
@@ -959,6 +970,7 @@
 				12D9F9DD1CC3A98B00313F8D /* Area.h in Headers */,
 				12D9F9DE1CC3A98B00313F8D /* State.h in Headers */,
 				123BEF101FBD9E6000AC8EB1 /* Modifiers.hpp in Headers */,
+				12E864DD1FC6C8F200C9C4BD /* Rate.hpp in Headers */,
 				123BEF081FBD9E4F00AC8EB1 /* SDE.hpp in Headers */,
 				12D9F9DF1CC3A98B00313F8D /* Attribute.h in Headers */,
 				12D9F9E01CC3A98B00313F8D /* Spaceport.h in Headers */,

@@ -24,7 +24,6 @@ namespace dgmpp2 {
 	};
 	
 	Type::~Type() {
-		parent(nullptr);
 	}
 	
 	Type::Type (TypeID typeID) : Type (SDE::get(typeID)) {
@@ -43,8 +42,11 @@ namespace dgmpp2 {
 	}
 	
 	void Type::parent (Type* parent) {
+		if (isEnabled())
+			setEnabled(false);
+		
 		if (parent_)
-			cache().remove(this);
+			cache_ = cache().extract(this);
 		
 		if (parent && cache_) {
 			parent->cache().splice(std::move(*cache_));
@@ -52,6 +54,13 @@ namespace dgmpp2 {
 		}
 
 		parent_ = parent;
+		
+		if (parent && parent->isEnabled())
+			setEnabled(true);
+	}
+	
+	void Type::batchUpdates(std::function<void()> updates) {
+		cache().batchUpdates(updates);
 	}
 	
 	Attribute::Proxy Type::operator[] (AttributeID attributeID) {
@@ -213,16 +222,16 @@ namespace dgmpp2 {
 			auto subset = decltype(locationRequiredSkillModifiers_)(range.first, range.second);
 //			auto &subset = locationRequiredSkillModifiers_;
 			
+			std::list<const Modifier*> list;
 			for (auto skillID: type.metaInfo().requiredSkills()) {
 				auto key = std::make_tuple(attributeID, skillID);
 				auto result = equal_range(subset, key);
 				
 				if (result.first != result.second) {
-					std::list<const Modifier*> list;
 					std::transform(result.first, result.second, std::back_inserter(list), [](const auto& i) { return std::get<const Modifier*>(i); });
-					return list;
 				}
 			}
+			return list;
 		}
 		return {};
 	}
@@ -248,20 +257,24 @@ namespace dgmpp2 {
 	}
 	
 	void Type::activateEffects (MetaInfo::Effect::Category category) {
-		auto range = std::equal_range(effects_.begin(), effects_.end(), category, EffectComparator());
-		std::for_each(range.first, range.second, [&](const auto& i) {
-			if (!i->active()) {
-				activate(i.get());
-			}
+		batchUpdates([&]() {
+			auto range = std::equal_range(effects_.begin(), effects_.end(), category, EffectComparator());
+			std::for_each(range.first, range.second, [&](const auto& i) {
+				if (!i->active()) {
+					activate(i.get());
+				}
+			});
 		});
 	}
 	
 	void Type::deactivateEffects (MetaInfo::Effect::Category category) {
-		auto range = std::equal_range(effects_.begin(), effects_.end(), category, EffectComparator());
-		std::for_each(range.first, range.second, [&](const auto& i) {
-			if (i->active()) {
-				deactivate(i.get());
-			}
+		batchUpdates([&]() {
+			auto range = std::equal_range(effects_.begin(), effects_.end(), category, EffectComparator());
+			std::for_each(range.first, range.second, [&](const auto& i) {
+				if (i->active()) {
+					deactivate(i.get());
+				}
+			});
 		});
 	}
 	

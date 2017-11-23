@@ -11,9 +11,17 @@
 namespace dgmpp2 {
 	class Charge: public Type {
 	public:
+		enum class Size {
+			none = 0,
+			small = 1,
+			medium = 2,
+			large = 3,
+			xLarge = 4
+		};
+
 		static std::unique_ptr<Charge> Create (TypeID typeID) { return std::unique_ptr<Charge>(new Charge(typeID)); }
 		
-		int chargeSize();
+		Size chargeSize();
 		
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;

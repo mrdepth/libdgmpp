@@ -29,6 +29,8 @@ namespace dgmpp2 {
 			return i->metaInfo().category == MetaInfo::Effect::Category::active;
 		});
 		
+		flags_.fail = false;
+		
 		flags_.forceReload = metaInfo().groupID == GroupID::capacitorBooster;
 		flags_.factorReload = false;
 		
@@ -96,6 +98,16 @@ namespace dgmpp2 {
 		})) {
 			defaultReloadTime_ = std::chrono::seconds(10);
 		}
+	}
+	
+	void Module::setEnabled (bool enabled) {
+		if (isEnabled() == enabled)
+			return Type::setEnabled(enabled);
+		else
+			Type::setEnabled(enabled);
+		if (charge_ != nullptr)
+			charge_->setEnabled(enabled);
+		adjustState();
 	}
 	
 	void Module::state (dgmpp2::Module::State state) {
@@ -166,19 +178,16 @@ namespace dgmpp2 {
 		}
 	}
 	
-	void Module::setEnabled (bool enabled) {
-		Type::setEnabled(enabled);
-		adjustState();
-	}
-	
 	void Module::charge (std::unique_ptr<Charge> charge) {
 		if (auto currentCharge = this->charge()) {
 			currentCharge->parent(nullptr);
 			charge_ = nullptr;
 		}
 		if (charge != nullptr) {
-			if (canFit(charge.get()))
+			if (canFit(charge.get())) {
 				charge_ = std::move(charge);
+				charge_->parent(this);
+			}
 			else
 				throw Ship::CannotFit<Charge>(std::move(charge));
 		}
@@ -190,7 +199,7 @@ namespace dgmpp2 {
 			return false;
 		
 		auto chargeSize = this->chargeSize();
-		if (chargeSize > 0 && chargeSize != charge->chargeSize())
+		if (chargeSize != Charge::Size::none && chargeSize != charge->chargeSize())
 			return false;
 		
 		auto chargeGroup = charge->metaInfo().groupID;
@@ -201,13 +210,13 @@ namespace dgmpp2 {
 		return false;
 	}
 	
-	int Module::chargeSize() {
+	Charge::Size Module::chargeSize() {
 		if (auto attribute = (*this)[AttributeID::chargeSize])
-			return static_cast<int>(attribute->value());
+			return static_cast<Charge::Size>(static_cast<int>(attribute->value()));
 		else
-			return 0;
+			return Charge::Size::none;
 	}
-	
+
 	bool Module::canBeActive() const {
 		if (flags_.canBeActive)
 			return true;
@@ -227,51 +236,51 @@ namespace dgmpp2 {
 	}
 	
 	void Module::adjustState() {
-		if (isEnabled()) {
-			auto availableStates = this->availableStates();
-			auto i = std::lower_bound(availableStates.begin(), availableStates.end(), preferredState_);
-			auto state = i != availableStates.end() ? *i : State::offline;
-			
-			if (state != state_) {
-				if (state < state_) {
-					if (state_ >= State::overloaded	&& state < State::overloaded)
-						deactivateEffects(MetaInfo::Effect::Category::overloaded);
-					
-					if (state_ >= State::active		&& state < State::active) {
-						deactivateEffects(MetaInfo::Effect::Category::active);
-						deactivateEffects(MetaInfo::Effect::Category::target);
+		batchUpdates([&] {
+			if (isEnabled() && !flags_.fail) {
+				auto availableStates = this->availableStates();
+				auto i = std::lower_bound(availableStates.begin(), availableStates.end(), preferredState_);
+				auto state = i != availableStates.end() ? *i : State::offline;
+				
+				if (state != state_) {
+					if (state < state_) {
+						if (state_ >= State::overloaded	&& state < State::overloaded)
+							deactivateEffects(MetaInfo::Effect::Category::overloaded);
+						
+						if (state_ >= State::active		&& state < State::active) {
+							deactivateEffects(MetaInfo::Effect::Category::active);
+							deactivateEffects(MetaInfo::Effect::Category::target);
+						}
+						
+						if (state_ >= State::online		&& state < State::online)
+							deactivateEffects(MetaInfo::Effect::Category::passive);
 					}
-					
-					if (state_ >= State::online		&& state < State::online)
-						deactivateEffects(MetaInfo::Effect::Category::passive);
-				}
-				else if (state > state_) {
-					if (state_ < State::online		&& state >= State::online)
-						activateEffects(MetaInfo::Effect::Category::passive);
-					
-					if (state_ < State::active		&& state >= State::active) {
-						activateEffects(MetaInfo::Effect::Category::active);
-						activateEffects(MetaInfo::Effect::Category::target);
+					else if (state > state_) {
+						if (state_ < State::online		&& state >= State::online)
+							activateEffects(MetaInfo::Effect::Category::passive);
+						
+						if (state_ < State::active		&& state >= State::active) {
+							activateEffects(MetaInfo::Effect::Category::active);
+							activateEffects(MetaInfo::Effect::Category::target);
+						}
+						
+						if (state_ < State::overloaded	&& state >= State::overloaded)
+							activateEffects(MetaInfo::Effect::Category::overloaded);
 					}
-					
-					if (state_ < State::overloaded	&& state >= State::overloaded)
-						activateEffects(MetaInfo::Effect::Category::overloaded);
+					state_ = state;
 				}
-				state_ = state;
 			}
-		}
-		else {
-			if (state_ >= State::overloaded)
-				deactivateEffects(MetaInfo::Effect::Category::overloaded);
-			if (state_ >= State::active) {
-				deactivateEffects(MetaInfo::Effect::Category::active);
-				deactivateEffects(MetaInfo::Effect::Category::target);
+			else {
+				if (state_ >= State::overloaded)
+					deactivateEffects(MetaInfo::Effect::Category::overloaded);
+				if (state_ >= State::active) {
+					deactivateEffects(MetaInfo::Effect::Category::active);
+					deactivateEffects(MetaInfo::Effect::Category::target);
+				}
+				if (state_ >= State::online)
+					deactivateEffects(MetaInfo::Effect::Category::passive);
 			}
-			if (state_ >= State::online)
-				deactivateEffects(MetaInfo::Effect::Category::passive);
-			
-			//			state_ = State::unknown;
-		}
+		});
 	}
 	
 	//Calculations
@@ -359,7 +368,7 @@ namespace dgmpp2 {
 		return 0;
 	}
 	
-	rate<GigaJoule, std::chrono::seconds> Module::capUse() {
+	GigaJoulePerSecond Module::capUse() {
 		if (state() >= State::active) {
 			GigaJoule capNeed = 0.0;
 			if (auto attribute = (*this)[AttributeID::capacitorNeed])
@@ -370,8 +379,202 @@ namespace dgmpp2 {
 				capNeed -= static_cast<GigaJoule>((*this)[AttributeID::capacitorBonus]->value());
 			return make_rate(capNeed, cycleTime());
 		}
-		return rate<GigaJoule, std::chrono::seconds>(0);
+		return GigaJoulePerSecond(0);
 	}
 
+	Teraflops Module::cpuUse() {
+		return (*this)[AttributeID::cpu]->value();
+	}
 	
+	MegaWatts Module::powerGridUse() {
+		return (*this)[AttributeID::power]->value();
+	}
+	
+	CalibrationPoints Module::calibrationUse() {
+		return (*this)[AttributeID::upgradeCost]->value();
+	}
+
+	Points Module::accuracyScore() {
+		if (auto attribute = (*this)[AttributeID::trackingSpeed])
+			return attribute->value();
+		else
+			return 0;
+	}
+	
+	Meter Module::signatureResolution() {
+		if (auto attribute = (*this)[AttributeID::optimalSigRadius])
+			return attribute->value();
+		else
+			return 0;
+	}
+	
+	CubicMeterPerSecond Module::miningYield() {
+		if (state() >= State::active) {
+			CubicMeter volley = 0;
+			if (auto attribute = (*this)[AttributeID::specialtyMiningAmount])
+				volley += attribute->value();
+			if (auto attribute = (*this)[AttributeID::miningAmount])
+				volley += attribute->value();
+			return make_rate(volley, cycleTime());
+		}
+		else
+			return CubicMeterPerSecond(0.0);
+	}
+
+	DamageVector<HP> Module::volley() {
+		if (state() >= State::active) {
+			auto volley = DamageVector<HP>(0);
+			auto& item = charge_ ? *static_cast<Type*> (charge_.get()) : *static_cast<Type*>(this);
+			
+			if (auto attribute = item[AttributeID::emDamage])
+				volley.emAmount += attribute->value();
+			if (auto attribute = item[AttributeID::kineticDamage])
+				volley.kineticAmount += attribute->value();
+			if (auto attribute = item[AttributeID::thermalDamage])
+				volley.thermalAmount += attribute->value();
+			if (auto attribute = item[AttributeID::explosiveDamage])
+				volley.explosiveAmount += attribute->value();
+			
+			if (auto attribute = (*this)[AttributeID::damageMultiplier])
+				volley *= attribute->value();
+			else if (auto attribute = (*this)[AttributeID::missileDamageMultiplier])
+				volley *= attribute->value();
+			
+			return volley;
+		}
+		else
+			return {0};
+	}
+	
+	DamagePerSecond Module::dps(const HostileTarget& target) {
+		auto dps = make_rate(volley(), cycleTime());
+		
+		switch (hardpoint()) {
+			case Module::Hardpoint::turret: {
+				if (target.range > 0 || target.angularVelocity.count() > 0 || target.signature > 0) {
+					
+					Float a = 0;
+					if (target.angularVelocity.count() > 0) {
+						if (auto accuracyScore = this->accuracyScore(); accuracyScore > 0)
+							a = target.angularVelocity * 1s / accuracyScore;
+					}
+
+					if (target.signature > 0) {
+						auto signatureResolution = this->signatureResolution();
+						if (signatureResolution > 0)
+							a *= signatureResolution / target.signature;
+					}
+					
+					Float b = 0;
+					if (target.range > 0) {
+						auto optimal = this->optimal();
+						auto falloff = this->falloff();
+						b = falloff > 0 ? std::max(0.0, (target.range - optimal) / falloff) : 0;
+					}
+					
+					auto blob = a * a + b * b;
+					auto hitChance = std::pow(0.5, blob);
+					auto relativeDPS = hitChance > 0.01
+						? (hitChance - 0.01) * (0.5 + (hitChance + 0.49)) / 2 + 0.01 * 3
+						: hitChance * 3;
+					return dps * relativeDPS;
+
+				}
+				else
+					return dps;
+			}
+			case Module::Hardpoint::launcher: {
+				if (auto charge = this->charge(); optimal() >= target.range) {
+					if (target.velocity.count() > 0) {
+						Float missileEntityVelocityMultiplier = 1;
+						
+						if (auto attribute = (*this)[AttributeID::missileEntityVelocityMultiplier])
+							missileEntityVelocityMultiplier = attribute->value();
+						auto maxVelocity = MetersPerSecond((*charge)[AttributeID::maxVelocity]->value() * missileEntityVelocityMultiplier);
+
+						if (maxVelocity < target.velocity)
+							return DamagePerSecond(0);
+					}
+					
+					Float a = 1;
+					if (target.signature > 0) {
+						auto e = (*charge)[AttributeID::aoeCloudSize]->value();
+						a = e != 0.0 ? target.signature / e : 1;
+					}
+					Float b = 1;
+					if (target.velocity.count() > 0) {
+						auto v = (*charge)[AttributeID::aoeCloudSize]->value();
+						auto drf = (*charge)[AttributeID::aoeDamageReductionFactor]->value();
+						auto drs = (*charge)[AttributeID::aoeDamageReductionSensitivity]->value();
+						if (drf > 0 && drs > 0 && v > 0)
+							b = std::pow(a * v / (target.velocity * 1s), std::log(drf)/std::log(drs));
+					}
+					auto relativeDPS = std::min(1.0, std::min(a, b));
+					return dps * relativeDPS;
+				}
+				else
+					return DamagePerSecond(0);
+			}
+			default:
+				return optimal() >= target.range ? static_cast<DamagePerSecond>(dps) : DamagePerSecond(0);
+		}
+		
+	}
+	
+	Meter Module::optimal() {
+		auto attributes = {
+			AttributeID::maxRange, AttributeID::shieldTransferRange, AttributeID::powerTransferRange, AttributeID::energyNeutralizerRangeOptimal,
+			AttributeID::empFieldRange, AttributeID::ecmBurstRange, AttributeID::warpScrambleRange, AttributeID::cargoScanRange,
+			AttributeID::shipScanRange, AttributeID::surveyScanRange};
+		
+		for (auto attributeID: attributes) {
+			if (auto attribute = (*this)[attributeID])
+				return attribute->value();
+		}
+		
+		if (auto charge = this->charge()) {
+			auto maxVelocity = (*charge)[AttributeID::maxVelocity];
+			auto explosionDelay = (*charge)[AttributeID::explosionDelay];
+			auto mass = (*charge)[AttributeID::mass];
+			auto agility = (*charge)[AttributeID::agility];
+			if (maxVelocity && explosionDelay && mass && agility) {
+				Float missileEntityVelocityMultiplier = 1;
+				Float missileEntityFlightTimeMultiplier = 1;
+				
+				if (auto attribute = (*this)[AttributeID::missileEntityVelocityMultiplier])
+					missileEntityVelocityMultiplier = attribute->value();
+				if (auto attribute = (*this)[AttributeID::missileEntityFlightTimeMultiplier])
+					missileEntityFlightTimeMultiplier = attribute->value();
+
+				if (missileEntityVelocityMultiplier == 0)
+					missileEntityVelocityMultiplier = 1.0;
+				if (missileEntityFlightTimeMultiplier == 0)
+					missileEntityFlightTimeMultiplier = 1.0;
+				
+				rate<Meter, std::chrono::milliseconds> mv = MetersPerSecond(maxVelocity->value() * missileEntityVelocityMultiplier);
+				auto flightTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep> (explosionDelay->value() * missileEntityFlightTimeMultiplier));
+				Kilogram m = mass->value();
+				auto a = agility->value();
+				
+				auto accelerationTime = min(flightTime, std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(m * a / 1'000'000 * 1000)));
+				auto acceleration = mv / 2.0 * accelerationTime;
+				auto fullSpeed = mv * (flightTime - accelerationTime);
+				return acceleration + fullSpeed;
+			}
+		}
+		
+		return 0;
+	}
+	
+	Meter Module::falloff() {
+		if (auto attribute = (*this)[AttributeID::falloff])
+			return attribute->value();
+		else if (auto attribute = (*this)[AttributeID::shipScanFalloff])
+			return attribute->value();
+		else if (auto attribute = (*this)[AttributeID::falloffEffectiveness])
+			return attribute->value();
+		else
+			return 0;
+	}
+
 }
