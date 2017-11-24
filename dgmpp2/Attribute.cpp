@@ -156,21 +156,21 @@ namespace dgmpp2 {
 			};
 			
 			auto add = [](auto a, auto b) {
-				return a + b->get();
+				return a + b->value();
 			};
 			auto sub = [](auto a, auto b) {
-				return a - b->get();
+				return a - b->value();
 			};
 			
 			auto mul = [](auto a, auto b) {
-				return a * b->get();
+				return a * b->value();
 			};
 			
 			
 			std::vector<Float> values;
 			values.reserve(std::distance(end, begin));
 			auto extract = [](auto a) {
-				return a->get();
+				return a->value();
 			};
 			
 			std::function<Float(const std::pair<decltype(begin), decltype(end)>&, Float)> multiply;

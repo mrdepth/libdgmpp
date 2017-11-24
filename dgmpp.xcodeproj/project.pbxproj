@@ -304,6 +304,20 @@
 		12E864DA1FC5AB4500C9C4BD /* DamageVector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12E864DC1FC6C8F200C9C4BD /* Rate.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864DB1FC6C8F200C9C4BD /* Rate.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12E864DD1FC6C8F200C9C4BD /* Rate.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864DB1FC6C8F200C9C4BD /* Rate.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864E71FC8208A00C9C4BD /* Tank.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864E61FC8208A00C9C4BD /* Tank.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864E81FC8208A00C9C4BD /* Tank.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864E61FC8208A00C9C4BD /* Tank.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864EA1FC8454900C9C4BD /* HitPoints.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864E91FC8454900C9C4BD /* HitPoints.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864EB1FC8454900C9C4BD /* HitPoints.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864E91FC8454900C9C4BD /* HitPoints.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864ED1FC8627D00C9C4BD /* Errors.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864EC1FC8627D00C9C4BD /* Errors.hpp */; };
+		12E864EE1FC8627D00C9C4BD /* Errors.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864EC1FC8627D00C9C4BD /* Errors.hpp */; };
+		12E864F11FC864F600C9C4BD /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E864EF1FC864F600C9C4BD /* Implant.cpp */; };
+		12E864F21FC864F600C9C4BD /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E864EF1FC864F600C9C4BD /* Implant.cpp */; };
+		12E864F31FC864F600C9C4BD /* Implant.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864F01FC864F600C9C4BD /* Implant.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864F41FC864F600C9C4BD /* Implant.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864F01FC864F600C9C4BD /* Implant.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864F71FC8650000C9C4BD /* Booster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E864F51FC8650000C9C4BD /* Booster.cpp */; };
+		12E864F81FC8650000C9C4BD /* Booster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E864F51FC8650000C9C4BD /* Booster.cpp */; };
+		12E864F91FC8650000C9C4BD /* Booster.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864F61FC8650000C9C4BD /* Booster.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12E864FA1FC8650000C9C4BD /* Booster.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12E864F61FC8650000C9C4BD /* Booster.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12EC66511FBECD840083DBB8 /* Capacitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EC664F1FBECD840083DBB8 /* Capacitor.cpp */; };
 		12EC66521FBECD840083DBB8 /* Capacitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EC664F1FBECD840083DBB8 /* Capacitor.cpp */; };
 		12EC66531FBECD840083DBB8 /* Capacitor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12EC66501FBECD840083DBB8 /* Capacitor.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -432,6 +446,13 @@
 		12DFCED21CD74242006A19BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DamageVector.hpp; sourceTree = "<group>"; };
 		12E864DB1FC6C8F200C9C4BD /* Rate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Rate.hpp; sourceTree = "<group>"; };
+		12E864E61FC8208A00C9C4BD /* Tank.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tank.hpp; sourceTree = "<group>"; };
+		12E864E91FC8454900C9C4BD /* HitPoints.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HitPoints.hpp; sourceTree = "<group>"; };
+		12E864EC1FC8627D00C9C4BD /* Errors.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Errors.hpp; sourceTree = "<group>"; };
+		12E864EF1FC864F600C9C4BD /* Implant.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Implant.cpp; sourceTree = "<group>"; };
+		12E864F01FC864F600C9C4BD /* Implant.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Implant.hpp; sourceTree = "<group>"; };
+		12E864F51FC8650000C9C4BD /* Booster.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Booster.cpp; sourceTree = "<group>"; };
+		12E864F61FC8650000C9C4BD /* Booster.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Booster.hpp; sourceTree = "<group>"; };
 		12EC664F1FBECD840083DBB8 /* Capacitor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Capacitor.cpp; sourceTree = "<group>"; };
 		12EC66501FBECD840083DBB8 /* Capacitor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Capacitor.hpp; sourceTree = "<group>"; };
 		12EFCCDD1C1ACE4E003ECA7F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -532,6 +553,8 @@
 				12B331011FBD97F80072D4E4 /* Type.cpp */,
 				12B330F51FBD97F80072D4E4 /* Type.hpp */,
 				12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */,
+				12E864E61FC8208A00C9C4BD /* Tank.hpp */,
+				12E864E91FC8454900C9C4BD /* HitPoints.hpp */,
 				12E864DB1FC6C8F200C9C4BD /* Rate.hpp */,
 			);
 			name = Base;
@@ -544,6 +567,10 @@
 				123BEF221FBDA52500AC8EB1 /* Gang.hpp */,
 				123BEF271FBDA58700AC8EB1 /* Character.cpp */,
 				123BEF281FBDA58700AC8EB1 /* Character.hpp */,
+				12E864EF1FC864F600C9C4BD /* Implant.cpp */,
+				12E864F01FC864F600C9C4BD /* Implant.hpp */,
+				12E864F51FC8650000C9C4BD /* Booster.cpp */,
+				12E864F61FC8650000C9C4BD /* Booster.hpp */,
 				123BEF2D1FBDB3AB00AC8EB1 /* Skill.cpp */,
 				123BEF2E1FBDB3AB00AC8EB1 /* Skill.hpp */,
 				123BEF331FBDB40800AC8EB1 /* Ship.cpp */,
@@ -642,6 +669,7 @@
 				12B331051FBD982B0072D4E4 /* SDE */,
 				123BEF201FBDA51000AC8EB1 /* Ship */,
 				12B330F41FBD97F80072D4E4 /* Utility.hpp */,
+				12E864EC1FC8627D00C9C4BD /* Errors.hpp */,
 				12B330F71FBD97F80072D4E4 /* SDE.cpp */,
 				12B330FA1FBD97F80072D4E4 /* SDE.hpp */,
 			);
@@ -833,6 +861,7 @@
 				125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */,
 				123BEF1D1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
 				12B3310C1FBD98F60072D4E4 /* GroupID.hpp in Headers */,
+				12E864ED1FC8627D00C9C4BD /* Errors.hpp in Headers */,
 				1293C42B1C46C10A00B33378 /* Planet.h in Headers */,
 				123BEF2B1FBDA58700AC8EB1 /* Character.hpp in Headers */,
 				123BEF091FBD9E5F00AC8EB1 /* Attributes.hpp in Headers */,
@@ -861,6 +890,7 @@
 				121064A71C9312370032B3DB /* Structure.h in Headers */,
 				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
 				12E864D91FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
+				12E864E71FC8208A00C9C4BD /* Tank.hpp in Headers */,
 				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
 				12424E3B1E36397F0078AB0F /* Cargo.h in Headers */,
 				12B331121FBD990F0072D4E4 /* Utility.hpp in Headers */,
@@ -894,6 +924,7 @@
 				1248DB501F1E3EDC009625EC /* GangBoostEffect.h in Headers */,
 				12A156AA1C4651C000C3CF0B /* Schematic.h in Headers */,
 				1248DB561F1E445C009625EC /* GangBoost.h in Headers */,
+				12E864F91FC8650000C9C4BD /* Booster.hpp in Headers */,
 				12A156861C464FA400C3CF0B /* IndustryFacility.h in Headers */,
 				12564BFC1B84B07F000F68D8 /* Gang.h in Headers */,
 				12A156801C464EE800C3CF0B /* ExtractorControlUnit.h in Headers */,
@@ -901,12 +932,14 @@
 				12564BFD1B84B07F000F68D8 /* Item.h in Headers */,
 				12A156B01C46548D00C3CF0B /* Route.h in Headers */,
 				12A1567A1C464E6400C3CF0B /* CommandCenter.h in Headers */,
+				12E864F31FC864F600C9C4BD /* Implant.hpp in Headers */,
 				12564BFE1B84B07F000F68D8 /* types.h in Headers */,
 				12B3310E1FBD99070072D4E4 /* EffectID.hpp in Headers */,
 				12B3310B1FBD98F60072D4E4 /* CategoryID.hpp in Headers */,
 				12B3310A1FBD98F60072D4E4 /* AttributeID.hpp in Headers */,
 				123BEF251FBDA52500AC8EB1 /* Gang.hpp in Headers */,
 				12AEEFE61C26C54200FB7B1D /* EffectPrototype.h in Headers */,
+				12E864EA1FC8454900C9C4BD /* HitPoints.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -922,6 +955,7 @@
 				12D9F9BD1CC3A98B00313F8D /* ProductionCycle.h in Headers */,
 				123BEF1E1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
 				12B331081FBD98F50072D4E4 /* GroupID.hpp in Headers */,
+				12E864EE1FC8627D00C9C4BD /* Errors.hpp in Headers */,
 				12D9F9BE1CC3A98B00313F8D /* Planet.h in Headers */,
 				123BEF2C1FBDA58700AC8EB1 /* Character.hpp in Headers */,
 				123BEF0E1FBD9E6000AC8EB1 /* Attributes.hpp in Headers */,
@@ -950,6 +984,7 @@
 				12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */,
 				12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */,
 				12E864DA1FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
+				12E864E81FC8208A00C9C4BD /* Tank.hpp in Headers */,
 				12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */,
 				12424E3C1E36397F0078AB0F /* Cargo.h in Headers */,
 				12B331141FBD990F0072D4E4 /* Utility.hpp in Headers */,
@@ -983,6 +1018,7 @@
 				1248DB511F1E3EDC009625EC /* GangBoostEffect.h in Headers */,
 				12D9F9E51CC3A98B00313F8D /* Schematic.h in Headers */,
 				1248DB571F1E445C009625EC /* GangBoost.h in Headers */,
+				12E864FA1FC8650000C9C4BD /* Booster.hpp in Headers */,
 				12D9F9E61CC3A98B00313F8D /* IndustryFacility.h in Headers */,
 				12D9F9E71CC3A98B00313F8D /* Gang.h in Headers */,
 				12D9F9E81CC3A98B00313F8D /* ExtractorControlUnit.h in Headers */,
@@ -990,12 +1026,14 @@
 				12D9F9E91CC3A98B00313F8D /* Item.h in Headers */,
 				12D9F9EA1CC3A98B00313F8D /* Route.h in Headers */,
 				12D9F9EB1CC3A98B00313F8D /* CommandCenter.h in Headers */,
+				12E864F41FC864F600C9C4BD /* Implant.hpp in Headers */,
 				12D9F9EC1CC3A98B00313F8D /* types.h in Headers */,
 				12B331101FBD99080072D4E4 /* EffectID.hpp in Headers */,
 				12B331071FBD98F50072D4E4 /* CategoryID.hpp in Headers */,
 				12B331061FBD98F50072D4E4 /* AttributeID.hpp in Headers */,
 				123BEF261FBDA52500AC8EB1 /* Gang.hpp in Headers */,
 				12D9F9ED1CC3A98B00313F8D /* EffectPrototype.h in Headers */,
+				12E864EB1FC8454900C9C4BD /* HitPoints.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1130,6 +1168,7 @@
 				1248DB541F1E445C009625EC /* GangBoost.cpp in Sources */,
 				1286564F1C57AD440002BA7E /* State.cpp in Sources */,
 				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
+				12E864F71FC8650000C9C4BD /* Booster.cpp in Sources */,
 				123BEF151FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
 				121064A51C9312370032B3DB /* Structure.cpp in Sources */,
 				12564BBE1B84B027000F68D8 /* Ship.cpp in Sources */,
@@ -1159,6 +1198,7 @@
 				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
 				1293C4291C46C10A00B33378 /* Planet.cpp in Sources */,
 				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
+				12E864F11FC864F600C9C4BD /* Implant.cpp in Sources */,
 				12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */,
 				12424E391E36397F0078AB0F /* Cargo.cpp in Sources */,
 				12B331181FBD999F0072D4E4 /* SDE.cpp in Sources */,
@@ -1203,6 +1243,7 @@
 				1248DB551F1E445C009625EC /* GangBoost.cpp in Sources */,
 				12D9F9881CC3A98B00313F8D /* State.cpp in Sources */,
 				12D9F9891CC3A98B00313F8D /* Modifier.cpp in Sources */,
+				12E864F81FC8650000C9C4BD /* Booster.cpp in Sources */,
 				123BEF161FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
 				12D9F98A1CC3A98B00313F8D /* Structure.cpp in Sources */,
 				12D9F98B1CC3A98B00313F8D /* Ship.cpp in Sources */,
@@ -1232,6 +1273,7 @@
 				12D9F99E1CC3A98B00313F8D /* FetchResult.cpp in Sources */,
 				12D9F99F1CC3A98B00313F8D /* Planet.cpp in Sources */,
 				12D9F9A01CC3A98B00313F8D /* FetchRequest.cpp in Sources */,
+				12E864F21FC864F600C9C4BD /* Implant.cpp in Sources */,
 				12D9F9A11CC3A98B00313F8D /* SqliteFetchRequest.cpp in Sources */,
 				12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */,
 				12B331191FBD999F0072D4E4 /* SDE.cpp in Sources */,

@@ -28,8 +28,8 @@ namespace dgmpp2 {
 		const Effect& effect() const { return effect_; }
 		
 		bool match(const Type* type) const;
-		Float get() const;
-		operator Float() const { return get(); }
+		Float value() const;
+		operator Float() const { return value(); }
 		bool needsStackingCheck() const { return needsStackingCheck_; }
 		
 	private:

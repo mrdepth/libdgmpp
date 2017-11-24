@@ -110,6 +110,7 @@ namespace dgmpp2 {
 		virtual void reset();
 		void parent (Type* parent);
 		void batchUpdates(std::function<void()> updates);
+		void resetCache ();
 
 	private:
 		class AttributesCache;
@@ -138,7 +139,6 @@ namespace dgmpp2 {
 		void addModifier (const Modifier* modifier);
 		void removeModifier (const Modifier* modifier);
 		std::vector<Effect*> activeEffects() const;
-		void resetCache ();
 		
 		void activate	(Effect* effect);
 		void deactivate	(Effect* effect);

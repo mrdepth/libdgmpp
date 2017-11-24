@@ -6,6 +6,9 @@
 //
 
 #include "Ship.hpp"
+#include "SDE.hpp"
+#include <numeric>
+#include "Errors.hpp"
 
 namespace dgmpp2 {
 	
@@ -145,32 +148,10 @@ namespace dgmpp2 {
 		if (freeSlots(module->slot()) <= 0 || freeHardpoints(module->hardpoint()) <= 0)
 			return false;
 		
-		auto attr = {
-			AttributeID::canFitShipGroup01,
-			AttributeID::canFitShipGroup02,
-			AttributeID::canFitShipGroup03,
-			AttributeID::canFitShipGroup04,
-			AttributeID::canFitShipGroup05,
-			AttributeID::canFitShipGroup06,
-			AttributeID::canFitShipGroup07,
-			AttributeID::canFitShipGroup08,
-			AttributeID::canFitShipGroup09,
-			AttributeID::canFitShipGroup10,
-			AttributeID::canFitShipGroup11,
-			AttributeID::canFitShipGroup12,
-			AttributeID::canFitShipGroup13,
-			AttributeID::canFitShipGroup14,
-			AttributeID::canFitShipGroup15,
-			AttributeID::canFitShipGroup16,
-			AttributeID::canFitShipGroup17,
-			AttributeID::canFitShipGroup18,
-			AttributeID::canFitShipGroup19,
-			AttributeID::canFitShipGroup20
-		};
 		std::vector<GroupID> groups;
-		groups.reserve(attr.size());
+		groups.reserve(SDE::canFitShipGroupAttributes.size());
 		
-		for (auto id: attr) {
+		for (auto id: SDE::canFitShipGroupAttributes) {
 			if (auto attribute = (*module)[id]) {
 				groups.push_back(static_cast<GroupID>(static_cast<int>(attribute->value())));
 			}
@@ -182,25 +163,12 @@ namespace dgmpp2 {
 			matchGroup = std::any_of(groups.begin(), groups.end(), [=](auto i) {return i == groupID;}) ? 0 : -1;
 		}
 		
-		attr = {
-			AttributeID::fitsToShipType,
-			AttributeID::canFitShipType1,
-			AttributeID::canFitShipType2,
-			AttributeID::canFitShipType3,
-			AttributeID::canFitShipType4,
-			AttributeID::canFitShipType5,
-			AttributeID::canFitShipType6,
-			AttributeID::canFitShipType7,
-			AttributeID::canFitShipType8,
-			AttributeID::canFitShipType9,
-			AttributeID::canFitShipType10,
-		};
 		std::vector<TypeID> types;
-		types.reserve(attr.size());
+		types.reserve(SDE::canFitShipTypeAttributes.size());
 		
 		types.clear();
 		
-		for (auto id: attr) {
+		for (auto id: SDE::canFitShipTypeAttributes) {
 			if (auto attribute = (*module)[id]) {
 				types.push_back(static_cast<TypeID>(static_cast<int>(attribute->value())));
 			}
@@ -292,12 +260,71 @@ namespace dgmpp2 {
 		}
 	}
 	
+	RaceID Ship::raceID() {
+		return static_cast<RaceID>(static_cast<int>((*this)[AttributeID::raceID]->value()));
+	}
+	
 	std::vector<CategoryID> Ship::supportedDroneCategories() {
 		if ((*this)[AttributeID::fighterCapacity])
 			return {CategoryID::fighter};
 		else
 			return {CategoryID::drone};
 	}
+	
+	//Drones
+	size_t Ship::totalDroneSquadron (Drone::Squadron squadron) {
+		switch (squadron) {
+			case Drone::Squadron::heavy:
+				return static_cast<size_t>((*this)[AttributeID::fighterHeavySlots]->value());
+			case Drone::Squadron::light:
+				return static_cast<size_t>((*this)[AttributeID::fighterLightSlots]->value());
+			case Drone::Squadron::support:
+				return static_cast<size_t>((*this)[AttributeID::fighterSupportSlots]->value());
+			default:
+				if (auto character = domain(MetaInfo::Modifier::Domain::character)) {
+					return static_cast<size_t>((*character)[AttributeID::maxActiveDrones]->value());
+				}
+				else
+					return 0;
+		}
+	}
+	
+	size_t Ship::usedDroneSquadron (Drone::Squadron squadron) {
+		if (squadron == Drone::Squadron::none) {
+			return std::accumulate(drones_.begin(), drones_.end(), 0, [](auto sum, const auto& i) {
+				auto& drone = std::get<std::unique_ptr<Drone>>(i);
+				if (drone->active() && drone->squadron() == Drone::Squadron::none)
+					return sum + 1;
+				else
+					return sum;
+			});
+		}
+		else {
+			std::set<std::pair<TypeID, Drone::SquadronTag>> squadrons;
+			for (const auto& i: drones_) {
+				auto& drone = std::get<std::unique_ptr<Drone>>(i);
+				if (drone->active() && drone->squadron() == squadron)
+					squadrons.emplace(drone->metaInfo().typeID, drone->squadronTag());
+			}
+			return squadrons.size();
+		}
+		
+	}
+	
+	size_t Ship::totalFighterLaunchTubes() {
+		return static_cast<size_t>((*this)[AttributeID::fighterTubes]->value());
+	}
+	
+	size_t Ship::usedFighterLaunchTubes() {
+		std::set<std::pair<TypeID, Drone::SquadronTag>> squadrons;
+		for (const auto& i: drones_) {
+			auto& drone = std::get<std::unique_ptr<Drone>>(i);
+			if (drone->active() && drone->squadron() != Drone::Squadron::none)
+				squadrons.emplace(drone->metaInfo().typeID, drone->squadronTag());
+		}
+		return squadrons.size();
+	}
+
 	
 	size_t Ship::totalSlots (Module::Slot slot) {
 		switch (slot) {
@@ -340,6 +367,432 @@ namespace dgmpp2 {
 	size_t Ship::usedHardpoints (Module::Hardpoint hardpoint) {
 		return std::count_if(modules_.begin(), modules_.end(), [=](const auto& a) {return std::get<std::unique_ptr<Module>>(a)->hardpoint() == hardpoint;});
 	}
+	
+	CalibrationPoints Ship::usedCalibration() {
+		auto rigs = modules(Module::Slot::rig);
+		return std::accumulate(rigs.begin(), rigs.end(), CalibrationPoints(0), [](auto sum, const auto& i) {
+			return std::get<std::unique_ptr<Module>>(i)->calibrationUse() + sum;
+		});
+	}
+	
+	CalibrationPoints Ship::totalCalibration() {
+		return (*this)[AttributeID::upgradeCapacity]->value();
+	}
+	
+	GigaJoule Ship::usedPowerGrid() {
+		return (*this)[AttributeID::powerLoad]->value();
+	}
+	
+	GigaJoule Ship::totalPowerGrid() {
+		return (*this)[AttributeID::powerOutput]->value();
+	}
+	
+	Teraflops Ship::usedCPU() {
+		return (*this)[AttributeID::cpuLoad]->value();
+	}
+	
+	Teraflops Ship::totalCPU() {
+		return (*this)[AttributeID::cpuOutput]->value();
+	}
+	
+	MegabitsPerSecond Ship::usedDroneBandwidth() {
+		return std::accumulate(drones_.begin(), drones_.end(), MegabitsPerSecond(0), [](auto sum, const auto& i) {
+			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
+			return drone.active() ? sum + drone[AttributeID::droneBandwidthUsed]->value() : sum;
+		});
+	}
+	
+	MegabitsPerSecond Ship::totalDroneBandwidth() {
+		return (*this)[AttributeID::droneBandwidth]->value();
+	}
+	
+	CubicMeter Ship::usedDroneBay() {
+		return std::accumulate(drones_.begin(), drones_.end(), CubicMeter(0), [](auto sum, const auto& i) {
+			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
+			return drone.squadron() == Drone::Squadron::none ? sum + drone[AttributeID::volume]->value() : sum;
+		});
+	}
+	
+	CubicMeter Ship::totalDroneBay() {
+		return (*this)[AttributeID::droneCapacity]->value();
+	}
+	
+	CubicMeter Ship::usedFighterHangar() {
+		return std::accumulate(drones_.begin(), drones_.end(), CubicMeter(0), [](auto sum, const auto& i) {
+			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
+			return drone.squadron() != Drone::Squadron::none ? sum + drone[AttributeID::volume]->value() : sum;
+		});
+	}
+	
+	CubicMeter Ship::totalFighterHangar() {
+		return (*this)[AttributeID::fighterCapacity]->value();
+	}
+	
+	CubicMeter Ship::cargoCapacity() {
+		return (*this)[AttributeID::capacity]->value();
+	}
+	
+	CubicMeter Ship::oreHoldCapacity() {
+		return (*this)[AttributeID::specialOreHoldCapacity]->value();
+	}
+	
+	//Tank
+	Resistances Ship::resistances() {
+		Resistances resistances;
+		resistances.armor.em		 = 1.0 - (*this)[AttributeID::armorEmDamageResonance]->value();
+		resistances.armor.explosive = 1.0 - (*this)[AttributeID::armorExplosiveDamageResonance]->value();
+		resistances.armor.kinetic   = 1.0 - (*this)[AttributeID::armorKineticDamageResonance]->value();
+		resistances.armor.thermal   = 1.0 - (*this)[AttributeID::armorThermalDamageResonance]->value();
+		
+		resistances.shield.em		  = 1.0 - (*this)[AttributeID::shieldEmDamageResonance]->value();
+		resistances.shield.explosive = 1.0 - (*this)[AttributeID::shieldExplosiveDamageResonance]->value();
+		resistances.shield.kinetic   = 1.0 - (*this)[AttributeID::shieldKineticDamageResonance]->value();
+		resistances.shield.thermal   = 1.0 - (*this)[AttributeID::shieldThermalDamageResonance]->value();
+		
+		resistances.hull.em		= 1.0 - (*this)[AttributeID::emDamageResonance]->value();
+		resistances.hull.explosive = 1.0 - (*this)[AttributeID::explosiveDamageResonance]->value();
+		resistances.hull.kinetic   = 1.0 - (*this)[AttributeID::kineticDamageResonance]->value();
+		resistances.hull.thermal   = 1.0 - (*this)[AttributeID::thermalDamageResonance]->value();
+		return resistances;
+	}
+	
+	Tank Ship::tank() {
+		using namespace std::chrono_literals;
+		
+		auto capacity = (*this)[AttributeID::shieldCapacity] -> value();
+		auto rechargeTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>((*this)[AttributeID::shieldRechargeRate] -> value()));
+		
+		auto shieldRecharge  = 10.0 * config::shieldPeakRecharge * (1 - config::shieldPeakRecharge) * capacity;
+		HP armorRepair = fabs((*this)[AttributeID::armorDamage]->value());
+		HP hullRepair = fabs((*this)[AttributeID::damage]->value());
+		HP shieldRepair = fabs((*this)[AttributeID::shieldCharge]->value());
+
+		return {make_rate(shieldRecharge, rechargeTime),
+			make_rate(shieldRepair, 1s),
+			make_rate(armorRepair, 1s),
+			make_rate(hullRepair, 1s)};
+	}
+	
+	Tank Ship::effectiveTank() {
+		return tank().effective(resistances(), damagePattern_);
+	}
+	
+	Tank Ship::sustainableTank() {
+		if (capacitor().isStable())
+			return tank();
+		else {
+			struct Repairer {
+				enum class Type {
+					Shield,
+					Armor,
+					Hull
+				};
+				Repairer(Module* module, rate<HP, std::chrono::seconds> hpPerSec, rate<GigaJoule, std::chrono::seconds> capPerSec, Float effectivity, Type type)
+				: module(module), hpPerSec(hpPerSec), capPerSec(capPerSec), effectivity(effectivity), type(type) {}
+				
+				Module* module;
+				rate<HP, std::chrono::seconds> hpPerSec;
+				rate<GigaJoule, std::chrono::seconds> capPerSec;
+				Float effectivity;
+				Type type;
+				
+				bool operator< (const Repairer& other) const {
+					return effectivity < other.effectivity;
+				}
+				bool operator> (const Repairer& other) const {
+					return effectivity > other.effectivity;
+				}
+			};
+
+			auto sustainableTank = tank();
+			std::set<Repairer, std::greater<>> repairers;
+			
+			auto me = domain(MetaInfo::Modifier::Domain::character);
+			auto capUse = capacitor().use();
+			auto capRecharge = capacitor().recharge();
+			
+			std::tuple<AttributeID, Repairer::Type, rate<HP, std::chrono::seconds>&> t[] = {
+				{AttributeID::shieldCharge, Repairer::Type::Shield, sustainableTank.shieldRepair},
+				{AttributeID::armorDamage, Repairer::Type::Armor, sustainableTank.armorRepair},
+				{AttributeID::damage, Repairer::Type::Hull, sustainableTank.hullRepair}
+			};
+			
+			for (auto& i: t) {
+				for (auto modifier: modifiers((*this)[std::get<AttributeID>(i)]->metaInfo())) {
+					auto isProjected = me && !modifier->owner().isDescendant(*me);
+					if (auto module = dynamic_cast<Module*>(&modifier->owner()); module && !isProjected) {
+						switch (modifier->metaInfo().association) {
+							case MetaInfo::Modifier::Association::addRate:
+							case MetaInfo::Modifier::Association::subRate: {
+								auto cap = module->capUse();
+								auto hp = make_rate(modifier->value(), 1s);
+								if (cap.count() > 0 && hp.count() > 0) {
+									std::get<2>(i) -= hp;
+									capUse -= cap;
+									repairers.emplace(module, hp, cap, (hp * 1s) / (cap * 1s), std::get<Repairer::Type>(i));
+								}
+								break;
+							}
+							default:
+								break;
+						}
+					}
+				}
+			}
+			
+			for (const auto& repairer: repairers) {
+				if (capUse > capRecharge)
+					break;
+				auto sustainability = std::min(Float(1.0), (capRecharge - capUse) / repairer.capPerSec);
+				auto amount = repairer.hpPerSec * sustainability;
+				switch (repairer.type) {
+					case Repairer::Type::Shield:
+						sustainableTank.shieldRepair += amount;
+						break;
+					case Repairer::Type::Armor:
+						sustainableTank.armorRepair += amount;
+						break;
+					case Repairer::Type::Hull:
+						sustainableTank.hullRepair += amount;
+						break;
+					default:
+						break;
+				}
+				capUse += repairer.capPerSec;
+			}
+			
+			return sustainableTank;
+		}
+	}
+	
+	Tank Ship::effectiveSustainableTank() {
+		return sustainableTank().effective(resistances(), damagePattern_);
+	}
+	
+	HitPoints Ship::hitPoints() {
+		return {
+			(*this)[AttributeID::shieldCapacity]->value(),
+			(*this)[AttributeID::armorHP]->value(),
+			(*this)[AttributeID::hp]->value()
+		};
+	}
+	
+	HitPoints Ship::effectiveHitPoints() {
+		return hitPoints().effective(resistances(), damagePattern_);
+	}
+
+	//DPS
+	DamageVector Ship::turretsVolley() {
+		return std::accumulate(modules_.begin(), modules_.end(), DamageVector(0), [](auto sum, const auto& i) {
+			auto module = std::get<std::unique_ptr<Module>>(i).get();
+			if (module->hardpoint() != Module::Hardpoint::launcher)
+				return sum + module->volley();
+			else
+				return sum;
+		});
+	}
+	
+	DamageVector Ship::launchersVolley() {
+		return std::accumulate(modules_.begin(), modules_.end(), DamageVector(0), [](auto sum, const auto& i) {
+			auto module = std::get<std::unique_ptr<Module>>(i).get();
+			if (module->hardpoint() == Module::Hardpoint::launcher)
+				return sum + module->volley();
+			else
+				return sum;
+		});
+	}
+	
+	DamageVector Ship::dronesVolley() {
+		return std::accumulate(drones_.begin(), drones_.end(), DamageVector(0), [](auto sum, const auto& i) {
+			return sum + std::get<std::unique_ptr<Drone>>(i)->volley();
+		});
+	}
+	
+	DamagePerSecond Ship::turretsDPS (const HostileTarget& target) {
+		return std::accumulate(modules_.begin(), modules_.end(), DamagePerSecond(0), [&target](auto sum, const auto& i) {
+			auto module = std::get<std::unique_ptr<Module>>(i).get();
+			if (module->hardpoint() != Module::Hardpoint::launcher)
+				return sum + module->dps(target);
+			else
+				return sum;
+		});
+	}
+	
+	DamagePerSecond Ship::launchersDPS (const HostileTarget& target) {
+		return std::accumulate(modules_.begin(), modules_.end(), DamagePerSecond(0), [&target](auto sum, const auto& i) {
+			auto module = std::get<std::unique_ptr<Module>>(i).get();
+			if (module->hardpoint() == Module::Hardpoint::launcher)
+				return sum + module->dps(target);
+			else
+				return sum;
+		});
+	}
+	
+	DamagePerSecond Ship::dronesDPS (const HostileTarget& target) {
+		return std::accumulate(drones_.begin(), drones_.end(), DamagePerSecond(0), [&target](auto sum, const auto& i) {
+			return sum + std::get<std::unique_ptr<Drone>>(i)->dps(target);
+		});
+	}
+
+	//Mining
+	
+	CubicMeterPerSecond Ship::minerYield() {
+		return std::accumulate(modules_.begin(), modules_.end(), CubicMeterPerSecond(0), [](auto sum, const auto& i) {
+			return sum + std::get<std::unique_ptr<Module>>(i)->miningYield();
+		});
+	}
+	
+	CubicMeterPerSecond Ship::droneYield() {
+		return std::accumulate(drones_.begin(), drones_.end(), CubicMeterPerSecond(0), [](auto sum, const auto& i) {
+			return sum + std::get<std::unique_ptr<Drone>>(i)->miningYield();
+		});
+	}
+
+	//Mobility
+	std::chrono::milliseconds Ship::alignTime() {
+		return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(-std::log(0.25) * agility() * mass() / 1'000'000.0 * 1000.0));
+	}
+	
+	AstronomicalUnitsPerSecond Ship::getWarpSpeed() {
+		auto base = AstronomicalUnitsPerSecond((*this)[AttributeID::baseWarpSpeed]->value());
+		auto multiplier = (*this)[AttributeID::warpSpeedMultiplier]->value();
+		if (base.count() == 0.0)
+			base = AstronomicalUnitsPerSecond(1);
+		if (multiplier == 0.0)
+			return base;
+		else
+			return base * multiplier;
+	}
+	
+	AstronomicalUnit Ship::maxWarpDistance() {
+		auto capacity = capacitor().capacity();
+		auto warpCapacitorNeed = (*this)[AttributeID::warpCapacitorNeed]->value();
+		return capacity / (mass() * warpCapacitorNeed);
+	}
+	
+	MetersPerSecond Ship::velocity() {
+		return MetersPerSecond((*this)[AttributeID::maxVelocity]->value());
+	}
+	
+	Meter Ship::signatureRadius() {
+		return (*this)[AttributeID::signatureRadius]->value();
+	}
+	
+	Kilogram Ship::mass() {
+		return (*this)[AttributeID::mass]->value();
+	}
+	
+	CubicMeter Ship::volume() {
+		return (*this)[AttributeID::volume]->value();
+	}
+	
+	Multiplier Ship::agility() {
+		return (*this)[AttributeID::agility]->value();
+	}
+	
+	MetersPerSecond Ship::maxVelocityInOrbit(Meter r) {
+		using namespace std::chrono_literals;
+		
+		std::pow(1, 1);
+		auto i = agility();
+		auto m = mass() / 1'000'000.0;
+		auto v = velocity();
+		auto i2 = std::pow(i, 2);
+		auto m2 = std::pow(m, 2);
+		auto r2 = std::pow(r, 2);
+		auto r4 = std::pow(r2, 2);
+		auto v2 = std::pow(v * 1s, 2);
+		return MetersPerSecond(std::sqrt((std::sqrt(4 * i2 * m2 * r2 * v2 + r4) / (2 * i2 * m2)) - r2 / (2 * i2 * m2)));
+
+	}
+	
+	Meter Ship::orbitRadiusWithTransverseVelocity(MetersPerSecond v) {
+		auto i = agility();
+		auto m = mass() / 1'000'000.0;
+		auto vm = velocity();
+		auto v2 = std::pow(v * 1s, 2);
+		double s = std::pow(vm * 1s, 2) - v2;
+		if (s <= 0)
+			return 0;
+		return (i * m * v2) / sqrt(s);
+
+	}
+	
+	Meter Ship::orbitRadiusWithAngularVelocity(RadiansPerSecond v) {
+		auto lv = velocity();
+		Meter r = 0;
+		for (int i = 0; i < 10; i++) {
+			r = lv / v;
+			lv = maxVelocityInOrbit(r);
+			auto av = lv / r;
+			if (fabs((av - v) / v) < 0.001)
+				break;
+		}
+		return r;
+	}
+	
+	//Targeting
+	size_t Ship::maxTargets() {
+		auto maxTargets = static_cast<size_t>((*this)[AttributeID::maxLockedTargets]->value());
+		if (auto character = domain(MetaInfo::Modifier::Domain::character)) {
+			auto maxTargets2 = static_cast<size_t>((*character)[AttributeID::maxLockedTargets]->value());
+			return std::min(maxTargets, maxTargets2);
+		}
+		else
+			return maxTargets;
+	}
+	
+	Meter Ship::maxTargetRange() {
+		return (*this)[AttributeID::maxTargetRange]->value();
+	}
+	
+	Points Ship::scanStrength() {
+		return std::accumulate(SDE::scanStrengthAttributes.begin(), SDE::scanStrengthAttributes.end(), Points(0), [&] (auto strength, auto attributeID) {
+			return std::max(strength, (*this)[attributeID]->value());
+		});
+	}
+	
+	Ship::ScanType Ship::scanType() {
+		auto maxStrength = Points(0);
+		auto scanType = ScanType::multispectral;
+		
+		for (auto attributeID: SDE::scanStrengthAttributes) {
+			auto strength = (*this)[attributeID]->value();
+			if (strength > maxStrength) {
+				maxStrength = strength;
+				switch (attributeID) {
+					case AttributeID::scanRadarStrength:
+						scanType = ScanType::radar;
+						break;
+					case AttributeID::scanLadarStrength:
+						scanType = ScanType::ladar;
+						break;
+					case AttributeID::scanMagnetometricStrength:
+						scanType = ScanType::magnetometric;
+						break;
+					case AttributeID::scanGravimetricStrength:
+						scanType = ScanType::gravimetric;
+						break;
+					default:
+						break;
+				}
+			}
+			else if (strength == maxStrength)
+				scanType = ScanType::multispectral;
+		}
+		return scanType;
+	}
+	
+	Meter Ship::probeSize() {
+		auto strength = scanStrength();
+		return strength > 0 ? signatureRadius() / strength : 0.0;
+	}
+	
+	Millimeter Ship::scanResolution() {
+		return (*this)[AttributeID::scanResolution]->value();
+	}
+
+	
 	
 	void Ship::reset() {
 //		std::cout << "reset" << std::endl;

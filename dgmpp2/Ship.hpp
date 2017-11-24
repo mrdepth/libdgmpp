@@ -10,7 +10,8 @@
 #include "Module.hpp"
 #include "Drone.hpp"
 #include "Capacitor.hpp"
-#include "DamageVector.h"
+#include "Tank.hpp"
+#include "HitPoints.hpp"
 
 namespace dgmpp2 {
 	class Module;
@@ -21,14 +22,26 @@ namespace dgmpp2 {
 		using ModulesContainer = TuplesSet<Module::Slot, Module::Socket, std::unique_ptr<Module>>;
 		using DronesContainer = TuplesSet<TypeID, Drone::SquadronTag, std::unique_ptr<Drone>>;
 		
-		template <typename T>
-		struct CannotFit: public std::runtime_error {
-			CannotFit(std::unique_ptr<T> type): type(std::move(type)), std::runtime_error("Cannot fit") {}
-			std::unique_ptr<T> type;
+		enum class ScanType
+		{
+			radar,
+			ladar,
+			magnetometric,
+			gravimetric,
+			multispectral
 		};
 		
-		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
 		
+		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
+
+		RaceID raceID();
+		std::vector<CategoryID> supportedDroneCategories();
+		int rigSize() { return static_cast<int>((*this)[AttributeID::rigSize]->value()); }
+		
+		void damagePattern (const DamageVector& pattern) { damagePattern_ = pattern; resetCache(); }
+		const DamageVector& damagePattern() const { return damagePattern_; }
+
+		//Fitting
 		Module* add (std::unique_ptr<Module> module, bool forced = false, Module::Socket socket = Module::anySocket);
 		Drone* add (std::unique_ptr<Drone> drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
 		void remove (Module* module);
@@ -39,8 +52,14 @@ namespace dgmpp2 {
 		const ModulesContainer& modules () const {return modules_;}
 		const DronesContainer& drones () const {return drones_;}
 		
-		std::vector<CategoryID> supportedDroneCategories();
+		//Drones
+		size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
+		size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
+		size_t totalFighterLaunchTubes();
+		size_t usedFighterLaunchTubes();
+
 		
+		//Resources
 		size_t totalSlots (Module::Slot slot);
 		size_t freeSlots (Module::Slot slot) {return totalSlots(slot) - usedSlots(slot);}
 		size_t usedSlots (Module::Slot slot) {return modules(slot).size();}
@@ -50,8 +69,65 @@ namespace dgmpp2 {
 		size_t usedHardpoints (Module::Hardpoint hardpoint);
 		
 		Capacitor& capacitor() { return capacitor_; }
+
+		CalibrationPoints	usedCalibration();
+		CalibrationPoints	totalCalibration();
+		GigaJoule			usedPowerGrid();
+		GigaJoule			totalPowerGrid();
+		Teraflops			usedCPU();
+		Teraflops			totalCPU();
+		MegabitsPerSecond	usedDroneBandwidth();
+		MegabitsPerSecond	totalDroneBandwidth();
+		CubicMeter			usedDroneBay();
+		CubicMeter			totalDroneBay();
+		CubicMeter			usedFighterHangar();
+		CubicMeter			totalFighterHangar();
+		CubicMeter			cargoCapacity();
+		CubicMeter			oreHoldCapacity();
+
+		//Tank
+		Resistances resistances();
+		Tank tank();
+		Tank effectiveTank();
+		Tank sustainableTank();
+		Tank effectiveSustainableTank();
 		
-		int rigSize() { return static_cast<int>((*this)[AttributeID::rigSize]->value()); }
+		HitPoints hitPoints();
+		HitPoints effectiveHitPoints();
+		
+		//DPS
+		DamageVector	turretsVolley();
+		DamageVector	launchersVolley();
+		DamageVector	dronesVolley();
+		DamagePerSecond	turretsDPS		(const HostileTarget& target = HostileTarget::Default());
+		DamagePerSecond	launchersDPS	(const HostileTarget& target = HostileTarget::Default());
+		DamagePerSecond dronesDPS		(const HostileTarget& target = HostileTarget::Default());
+
+		//Mining
+		CubicMeterPerSecond minerYield();
+		CubicMeterPerSecond droneYield();
+
+		//Mobility
+		std::chrono::milliseconds alignTime();
+		AstronomicalUnitsPerSecond getWarpSpeed();
+		AstronomicalUnit maxWarpDistance();
+		MetersPerSecond velocity();
+		Meter signatureRadius();
+		Kilogram mass();
+		CubicMeter volume();
+		Multiplier agility();
+		MetersPerSecond maxVelocityInOrbit(Meter r);
+		Meter orbitRadiusWithTransverseVelocity(MetersPerSecond v);
+		Meter orbitRadiusWithAngularVelocity(RadiansPerSecond v);
+
+		//Targeting
+		size_t maxTargets();
+		Meter maxTargetRange();
+		Points scanStrength();
+		ScanType scanType();
+		Meter probeSize();
+		Millimeter scanResolution();
+		
 		virtual void setEnabled (bool enabled) override;
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
@@ -73,6 +149,7 @@ namespace dgmpp2 {
 		std::list<Drone*> projectedDrones_;
 		
 		Capacitor capacitor_;
+		DamageVector damagePattern_ = {0.25};
 
 	};
 }

@@ -41,16 +41,20 @@ namespace dgmpp2 {
 //	using MeterPerSecond = Float;
 	using CubicMeter = Float;
 	using Meter = Float;
+	using Millimeter = Float;
 	using MegabitsPerSecond = Float;
 	using Kilogram = Float;
 	using Points = Float;
 	using HP = Float;
 	using Radians = Float;
+	using AstronomicalUnit = Float;
 	using Percent = Float;
+	using Multiplier = Float;
 	using GigaJoulePerSecond	= rate<GigaJoule, std::chrono::seconds>;
 	using CubicMeterPerSecond	= rate<CubicMeter, std::chrono::seconds>;
 	using RadiansPerSecond		= rate<Radians, std::chrono::seconds>;
 	using MetersPerSecond		= rate<Meter, std::chrono::seconds>;
+	using AstronomicalUnitsPerSecond = rate<Meter, std::chrono::seconds>;
 	
 	namespace config {
 		const Percent capacitorPeakRecharge = 0.5; //sqrt(0.25)
@@ -58,7 +62,16 @@ namespace dgmpp2 {
 		const std::chrono::milliseconds capacitorSimulationMaxTime = std::chrono::hours(6);
 	}
 	
-	template<typename T>
+	enum class RaceID {
+		none = 0,
+		caldari = 1,
+		minmatar = 2,
+		amarr = 4,
+		gallente = 8
+	};
+
+		
+	/*template<typename T>
 	struct unique_ptr_key {
 		unique_ptr_key(T* t): key(t) {}
 		~unique_ptr_key() {
@@ -73,7 +86,7 @@ namespace dgmpp2 {
 	template <typename T>
 	unique_ptr_key<T> make_unique_ptr_key(T* t) {
 		return {t};
-	}
+	}*/
 	
 	template <typename T>
 	T* remove_unique_ptr(const std::unique_ptr<T>& ptr) {
@@ -224,57 +237,28 @@ namespace dgmpp2 {
 	}
 
 	
-	
-	struct Tank
-	{
+	struct Resistances {
+		struct Layer {
+			union {
+				struct {
+					Percent em;
+					Percent thermal;
+					Percent kinetic;
+					Percent explosive;
+				};
+				Percent resistances[4];
+			};
+		};
+
 		union {
 			struct {
-				rate<HP, std::chrono::seconds> passiveShield;
-				rate<HP, std::chrono::seconds> shieldRepair;
-				rate<HP, std::chrono::seconds> armorRepair;
-				rate<HP, std::chrono::seconds> hullRepair;
+				Layer shield, armor, hull;
 			};
-			rate<HP, std::chrono::seconds> layers[4];
+			Layer layers[3];
 		};
 	};
 	
-	struct HitPoints
-	{
-		union {
-			struct {
-				HP shield;
-				HP armor;
-				HP hull;
-			};
-			HP layers[3];
-		};
-	};
-	
-	struct ResistancesLayer
-	{
-		union {
-			struct {
-				Percent em;
-				Percent thermal;
-				Percent kinetic;
-				Percent explosive;
-			};
-			Percent resistances[4];
-		};
-	};
-	
-	struct Resistances
-	{
-		union {
-			struct {
-				ResistancesLayer shield, armor, hull;
-			};
-			ResistancesLayer layers[3];
-		};
-	};
-	
-	struct HostileTarget
-	{
+	struct HostileTarget {
 		rate<Radians, std::chrono::seconds> angularVelocity = rate<Radians, std::chrono::seconds>(0);
 		rate<Meter, std::chrono::seconds> velocity = rate<Meter, std::chrono::seconds>(0);
 		Meter signature = 0;

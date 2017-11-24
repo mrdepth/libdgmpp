@@ -96,7 +96,7 @@ namespace dgmpp2 {
 		Meter signatureResolution();
 		CubicMeterPerSecond miningYield();
 
-		DamageVector<HP> volley();
+		DamageVector volley();
 		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default());
 		Meter optimal();
 		Meter falloff();

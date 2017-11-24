@@ -43,7 +43,7 @@ namespace dgmpp2 {
 		
 		//Calculations
 		std::chrono::milliseconds cycleTime();
-		DamageVector<HP> volley();
+		DamageVector volley();
 		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default());
 		Meter optimal();
 		Meter falloff();
@@ -71,10 +71,11 @@ namespace dgmpp2 {
 		Drone (TypeID typeID);
 		void squadronTag (SquadronTag squadronTag) { squadronTag_ = squadronTag; }
 		
-		DamageVector<HP> droneVolley();
-		DamageVector<HP> fighterAttackMissileVolley();
-		DamageVector<HP> fighterAttackTurretVolley();
-		DamageVector<HP> fighterMissileVolley();
+		DamageVector droneVolley();
+		DamageVector fighterAttackMissileVolley();
+		DamageVector fighterAttackTurretVolley();
+		DamageVector fighterMissileVolley();
+		DamagePerSecond rawDPS();
 
 	};
 }

@@ -190,7 +190,7 @@ namespace dgmpp2 {
 					break;
 				
 				auto s = ((1.0 + (std::sqrt(cap / capacity_) - 1.0) * std::exp((tLast.count() - tNow.count()) / tau)));
-				cap = s * s * capacity_;
+				cap = std::pow(s, 2) * capacity_;
 				
 				if (tNow != tLast) {
 					if (cap < capLowestPre)

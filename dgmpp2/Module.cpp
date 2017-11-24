@@ -7,6 +7,8 @@
 
 #include "Module.hpp"
 #include "Ship.hpp"
+#include "SDE.hpp"
+#include "Errors.hpp"
 
 namespace dgmpp2 {
 	using namespace std::chrono_literals;
@@ -60,9 +62,7 @@ namespace dgmpp2 {
 		else
 			hardpoint_ = Module::Hardpoint::none;
 		
-		auto chargeGroupAttributeIDs = {AttributeID::chargeGroup1, AttributeID::chargeGroup2, AttributeID::chargeGroup3, AttributeID::chargeGroup4, AttributeID::chargeGroup5};
-		
-		for (auto attributeID : chargeGroupAttributeIDs) {
+		for (auto attributeID : SDE::chargeGroupAttributeIDs) {
 			if (auto groupIDAttribute = (*this)[attributeID]) {
 				GroupID groupID = static_cast<GroupID>(static_cast<int>(groupIDAttribute->value()));
 				if (groupID != GroupID::none) {
@@ -189,7 +189,7 @@ namespace dgmpp2 {
 				charge_->parent(this);
 			}
 			else
-				throw Ship::CannotFit<Charge>(std::move(charge));
+				throw CannotFit<Charge>(std::move(charge));
 		}
 	}
 	
@@ -316,22 +316,11 @@ namespace dgmpp2 {
 	}
 	
 	std::chrono::milliseconds Module::rawCycleTime() {
-		if (auto attribute = (*this)[AttributeID::speed])
-			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
-		else if (auto attribute = (*this)[AttributeID::duration])
-			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
-		else if (auto attribute = (*this)[AttributeID::durationSensorDampeningBurstProjector])
-			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
-		else if (auto attribute = (*this)[AttributeID::durationTargetIlluminationBurstProjector])
-			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
-		else if (auto attribute = (*this)[AttributeID::durationECMJammerBurstProjector])
-			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
-		else if (auto attribute = (*this)[AttributeID::durationWeaponDisruptionBurstProjector])
-			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
-		else if (auto attribute = (*this)[AttributeID::missileLaunchDuration])
-			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
-		else
-			return 0ms;
+		for (auto attributeID: SDE::moduleCycleTimeAttributes) {
+			if (auto attribute = (*this)[attributeID]; attribute && attribute->value() > 0)
+				return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		}
+		return 0ms;
 	}
 	
 	size_t Module::charges() {
@@ -421,19 +410,19 @@ namespace dgmpp2 {
 			return CubicMeterPerSecond(0.0);
 	}
 
-	DamageVector<HP> Module::volley() {
+	DamageVector Module::volley() {
 		if (state() >= State::active) {
-			auto volley = DamageVector<HP>(0);
+			auto volley = DamageVector(0);
 			auto& item = charge_ ? *static_cast<Type*> (charge_.get()) : *static_cast<Type*>(this);
 			
 			if (auto attribute = item[AttributeID::emDamage])
-				volley.emAmount += attribute->value();
+				volley.em += attribute->value();
 			if (auto attribute = item[AttributeID::kineticDamage])
-				volley.kineticAmount += attribute->value();
+				volley.kinetic += attribute->value();
 			if (auto attribute = item[AttributeID::thermalDamage])
-				volley.thermalAmount += attribute->value();
+				volley.thermal += attribute->value();
 			if (auto attribute = item[AttributeID::explosiveDamage])
-				volley.explosiveAmount += attribute->value();
+				volley.explosive += attribute->value();
 			
 			if (auto attribute = (*this)[AttributeID::damageMultiplier])
 				volley *= attribute->value();
@@ -472,7 +461,7 @@ namespace dgmpp2 {
 						b = falloff > 0 ? std::max(0.0, (target.range - optimal) / falloff) : 0;
 					}
 					
-					auto blob = a * a + b * b;
+					auto blob = std::pow(a, 2) + std::pow(b, 2);
 					auto hitChance = std::pow(0.5, blob);
 					auto relativeDPS = hitChance > 0.01
 						? (hitChance - 0.01) * (0.5 + (hitChance + 0.49)) / 2 + 0.01 * 3
@@ -522,12 +511,8 @@ namespace dgmpp2 {
 	}
 	
 	Meter Module::optimal() {
-		auto attributes = {
-			AttributeID::maxRange, AttributeID::shieldTransferRange, AttributeID::powerTransferRange, AttributeID::energyNeutralizerRangeOptimal,
-			AttributeID::empFieldRange, AttributeID::ecmBurstRange, AttributeID::warpScrambleRange, AttributeID::cargoScanRange,
-			AttributeID::shipScanRange, AttributeID::surveyScanRange};
 		
-		for (auto attributeID: attributes) {
+		for (auto attributeID: SDE::moduleOptimalAttributes) {
 			if (auto attribute = (*this)[attributeID])
 				return attribute->value();
 		}
@@ -556,7 +541,7 @@ namespace dgmpp2 {
 				Kilogram m = mass->value();
 				auto a = agility->value();
 				
-				auto accelerationTime = min(flightTime, std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(m * a / 1'000'000 * 1000)));
+				auto accelerationTime = min(flightTime, std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(m * a / 1'000'000.0 * 1000.0)));
 				auto acceleration = mv / 2.0 * accelerationTime;
 				auto fullSpeed = mv * (flightTime - accelerationTime);
 				return acceleration + fullSpeed;
@@ -567,14 +552,11 @@ namespace dgmpp2 {
 	}
 	
 	Meter Module::falloff() {
-		if (auto attribute = (*this)[AttributeID::falloff])
-			return attribute->value();
-		else if (auto attribute = (*this)[AttributeID::shipScanFalloff])
-			return attribute->value();
-		else if (auto attribute = (*this)[AttributeID::falloffEffectiveness])
-			return attribute->value();
-		else
-			return 0;
+		for (auto attributeID: SDE::moduleFalloffAttributes) {
+			if (auto attribute = (*this)[attributeID]; attribute && attribute->value() > 0)
+				return attribute->value();
+		}
+		return 0;
 	}
 
 }

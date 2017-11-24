@@ -49,7 +49,7 @@ namespace dgmpp2 {
 		}
 	}
 	
-	Float Modifier::get() const {
+	Float Modifier::value() const {
 		switch (metaInfo_.association) {
 				using namespace std::chrono_literals;
 				

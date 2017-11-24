@@ -33,9 +33,9 @@ namespace dgmpp2 {
 			return rate<Rep, Period>(rep_ + other.rep_);
 		}
 		
-		auto operator* (const rate<Rep, Period>& other) const {
-			return rate<Rep, Period>(rep_ * other.rep_);
-		}
+//		auto operator* (const rate<Rep, Period>& other) const {
+//			return rate<Rep, Period>(rep_ * other.rep_);
+//		}
 		
 		template<typename Period2, typename Rep2>
 		Rep operator* (const std::chrono::duration<Rep2, Period2>& p) const {
@@ -43,7 +43,8 @@ namespace dgmpp2 {
 		}
 		
 		auto operator/ (const rate<Rep, Period>& other) const {
-			return rate<Rep, Period>(rep_ / other.rep_);
+			return rep_ / other.rep_;
+//			return rate<Rep, Period>(rep_ / other.rep_);
 		}
 
 		template<typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
@@ -66,15 +67,15 @@ namespace dgmpp2 {
 			return *this;
 		}
 		
-		rate<Rep, Period>& operator*= (const rate<Rep, Period>& other) {
-			rep_ *= other.rep_;
-			return *this;
-		}
+//		rate<Rep, Period>& operator*= (const rate<Rep, Period>& other) {
+//			rep_ *= other.rep_;
+//			return *this;
+//		}
 		
-		rate<Rep, Period>& operator/= (const rate<Rep, Period>& other) {
-			rep_ /= other.rep_;
-			return *this;
-		}
+//		rate<Rep, Period>& operator/= (const rate<Rep, Period>& other) {
+//			rep_ /= other.rep_;
+//			return *this;
+//		}
 		
 		bool operator> (const rate<Rep, Period>& other) const {
 			return count() > other.count();

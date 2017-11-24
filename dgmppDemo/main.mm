@@ -856,9 +856,23 @@ int main(int argc, const char * argv[]) {
 			
 			std::cout << module->powerGridUse() << std::endl;
 			
+			auto dp = dgmpp2::DamageVector {0.1, 0.3, 0.4, 0.2};
+			auto res = dgmpp2::Resistances {0.3, 0.4, 0.5, 0.6, 0.1, 0.1, 0.1, 0.1, 0.9, 0.9, 0.9, 0.9};
+			auto hp = dgmpp2::HitPoints{100, 100, 100};
+			hp = hp.effective(res, dp);
+			std::copy(&hp.layers[0], &hp.layers[0] + 3, std::ostream_iterator<double>(std::cout, " "));
+			std::cout << std::endl;
+			
 		}
 		auto t1 = std::chrono::high_resolution_clock::now();
 		{
+			auto dp = dgmpp::DamagePattern {0.1, 0.3, 0.4, 0.2};
+			auto res = dgmpp::Resistances {0.3, 0.4, 0.5, 0.6, 0.1, 0.1, 0.1, 0.1, 0.9, 0.9, 0.9, 0.9};
+			auto hp = dgmpp::HitPoints {100, 100, 100};
+			hp = dp.effectiveHitPoints(res, hp);
+			std::copy(&hp.layers[0], &hp.layers[0] + 3, std::ostream_iterator<double>(std::cout, " "));
+			std::cout << std::endl;
+
 			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 			auto pilot = engine->getGang()->addPilot();
 			pilot->setAllSkillsLevel(5);

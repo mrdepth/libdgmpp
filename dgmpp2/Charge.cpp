@@ -6,6 +6,7 @@
 //
 
 #include "Charge.hpp"
+#include "SDE.hpp"
 
 namespace dgmpp2 {
 	
@@ -30,12 +31,7 @@ namespace dgmpp2 {
 			return i->metaInfo().category == MetaInfo::Effect::Category::target && i->metaInfo().isOffensive;
 		});
 
-		auto damageAttributes = {AttributeID::emDamage,
-			AttributeID::explosiveDamage,
-			AttributeID::kineticDamage,
-			AttributeID::thermalDamage};
-		
-		flags_.dealsDamage = std::any_of(damageAttributes.begin(), damageAttributes.end(), [&](auto i) {
+		flags_.dealsDamage = std::any_of(SDE::chargeDamageAttributes.begin(), SDE::chargeDamageAttributes.end(), [&](auto i) {
 			return static_cast<bool>((*this)[i]);
 		});
 	}

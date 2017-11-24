@@ -10,148 +10,146 @@
 
 namespace dgmpp2 {
 	
-	template <typename T>
 	class DamageVector {
 	public:
-		DamageVector (T value = 0)
-		: emAmount(value), thermalAmount(value), kineticAmount(value), explosiveAmount(value) {}
+		DamageVector (HP value = 0)
+		: em(value), thermal(value), kinetic(value), explosive(value) {}
 		
-		template <typename T2>
-		explicit DamageVector (const DamageVector<T2>& other)
-		: emAmount(other.emAmount), thermalAmount(other.thermalAmount), kineticAmount(other.kineticAmount), explosiveAmount(other.explosiveAmount) {}
-		
-		DamageVector (T em, T thermal, T kinetic, T explosive)
-		: emAmount(em), thermalAmount(thermal), kineticAmount(kinetic), explosiveAmount(explosive) {}
+		DamageVector (HP em, HP thermal, HP kinetic, HP explosive)
+		: em(em), thermal(thermal), kinetic(kinetic), explosive(explosive) {}
 		
 		union {
 			struct {
-				T emAmount;
-				T thermalAmount;
-				T kineticAmount;
-				T explosiveAmount;
+				HP em;
+				HP thermal;
+				HP kinetic;
+				HP explosive;
 			};
-			T damageTypes[4];
+			HP damageTypes[4];
 		};
 		
-		DamageVector<T> effectiveDamage (const ResistancesLayer& resistances) const {
-			auto emResonance		= 1.0 - resistances.em;
-			auto thermalResonance	= 1.0 - resistances.thermal;
-			auto kineticResonance	= 1.0 - resistances.kinetic;
-			auto explosiveResonance	= 1.0 - resistances.explosive;
+		DamageVector effective (const Resistances::Layer& resistances) const {
+			const auto emResonance			= 1.0 - resistances.em;
+			const auto thermalResonance		= 1.0 - resistances.thermal;
+			const auto kineticResonance		= 1.0 - resistances.kinetic;
+			const auto explosiveResonance	= 1.0 - resistances.explosive;
 			
 			return {
-				emAmount		* emResonance,
-				thermalAmount	* thermalResonance,
-				kineticAmount	* kineticResonance,
-				explosiveAmount	* explosiveResonance
+				em		* emResonance,
+				thermal	* thermalResonance,
+				kinetic	* kineticResonance,
+				explosive	* explosiveResonance
 			};
 		}
 		
-		DamageVector<T>& operator= (T value) {
-			emAmount = thermalAmount = kineticAmount = explosiveAmount = value / 4;
-		}
-		
-		template <typename T2, typename = std::enable_if_t<std::is_arithmetic_v<T2>>>
-		DamageVector<T> operator/ (T2 value) const {
-			return {emAmount / value, thermalAmount / value, kineticAmount / value, explosiveAmount / value};
-		}
-		
-		template <typename T2, typename = std::enable_if_t<std::is_arithmetic_v<T2>>>
-		DamageVector<T> operator* (T2 value) const {
-			return {emAmount * value, thermalAmount * value, kineticAmount * value, explosiveAmount * value};
-		}
-		
-		DamageVector<T> operator+ (T value) const {
-			return {emAmount + value, thermalAmount + value, kineticAmount + value, explosiveAmount + value};
-		}
-		
-		DamageVector<T> operator- (T value) const {
-			return {emAmount - value, thermalAmount - value, kineticAmount - value, explosiveAmount - value};
-		}
-		
-		DamageVector<T> operator/ (const DamageVector<T>& value) const {
-			return {emAmount / value.emAmount, thermalAmount / value.thermalAmount, kineticAmount / value.kineticAmount, explosiveAmount / value.explosiveAmount};
-		}
-		
-		DamageVector<T> operator* (const DamageVector<T>& value) const {
-			return {emAmount * value.emAmount, thermalAmount * value.thermalAmount, kineticAmount * value.kineticAmount, explosiveAmount * value.explosiveAmount};
-		}
-		
-		DamageVector<T> operator+ (const DamageVector<T>& value) const {
-			return {emAmount + value.emAmount, thermalAmount + value.thermalAmount, kineticAmount + value.kineticAmount, explosiveAmount + value.explosiveAmount};
-		}
-		
-		DamageVector<T> operator- (const DamageVector<T>& value) const {
-			return {emAmount - value.emAmount, thermalAmount - value.thermalAmount, kineticAmount - value.kineticAmount, explosiveAmount - value.explosiveAmount};
-		}
-		
-		template <typename T2, typename = std::enable_if_t<std::is_arithmetic_v<T2>>>
-		DamageVector<T>& operator/= (T2 value) {
-			emAmount /= value;
-			thermalAmount /= value;
-			kineticAmount /= value;
-			explosiveAmount /= value;
+		DamageVector& operator= (HP value) {
+			em = thermal = kinetic = explosive = value / 4;
 			return *this;
 		}
 		
+		DamageVector operator/ (HP value) const {
+			return {em / value, thermal / value, kinetic / value, explosive / value};
+		}
+		
+		DamageVector operator* (HP value) const {
+			return {em * value, thermal * value, kinetic * value, explosive * value};
+		}
+		
+		DamageVector operator+ (HP value) const {
+			return {em + value, thermal + value, kinetic + value, explosive + value};
+		}
+		
+		DamageVector operator- (HP value) const {
+			return {em - value, thermal - value, kinetic - value, explosive - value};
+		}
+		
+		DamageVector operator/ (const DamageVector& value) const {
+			return {em / value.em, thermal / value.thermal, kinetic / value.kinetic, explosive / value.explosive};
+		}
+		
+		DamageVector operator* (const DamageVector& value) const {
+			return {em * value.em, thermal * value.thermal, kinetic * value.kinetic, explosive * value.explosive};
+		}
+		
+		DamageVector operator+ (const DamageVector& value) const {
+			return {em + value.em, thermal + value.thermal, kinetic + value.kinetic, explosive + value.explosive};
+		}
+		
+		DamageVector operator- (const DamageVector& value) const {
+			return {em - value.em, thermal - value.thermal, kinetic - value.kinetic, explosive - value.explosive};
+		}
+		
 		template <typename T2, typename = std::enable_if_t<std::is_arithmetic_v<T2>>>
-		DamageVector<T>& operator*= (T2 value) {
-			emAmount *= value;
-			thermalAmount *= value;
-			kineticAmount *= value;
-			explosiveAmount *= value;
+		DamageVector& operator/= (T2 value) {
+			em /= value;
+			thermal /= value;
+			kinetic /= value;
+			explosive /= value;
 			return *this;
 		}
 		
-		DamageVector<T>& operator+= (T value) {
-			emAmount += value;
-			thermalAmount += value;
-			kineticAmount += value;
-			explosiveAmount += value;
+		DamageVector& operator*= (HP value) {
+			em *= value;
+			thermal *= value;
+			kinetic *= value;
+			explosive *= value;
 			return *this;
 		}
 		
-		DamageVector<T>& operator-= (T value) {
-			emAmount -= value;
-			thermalAmount -= value;
-			kineticAmount -= value;
-			explosiveAmount -= value;
+		DamageVector& operator+= (HP value) {
+			em += value;
+			thermal += value;
+			kinetic += value;
+			explosive += value;
 			return *this;
 		}
 		
-		DamageVector<T>& operator/= (const DamageVector<T>& value) {
+		DamageVector& operator-= (HP value) {
+			em -= value;
+			thermal -= value;
+			kinetic -= value;
+			explosive -= value;
+			return *this;
+		}
+		
+		DamageVector& operator/= (const DamageVector& value) {
 			for (int i = 0; i < 4; i++)
 				damageTypes[i] /= value.damageTypes[i];
 			return *this;
 		}
 		
-		DamageVector<T>& operator*= (const DamageVector<T>& value) {
+		DamageVector& operator*= (const DamageVector& value) {
 			for (int i = 0; i < 4; i++)
 				damageTypes[i] *= value.damageTypes[i];
 			return *this;
 		}
 		
-		DamageVector<T>& operator+= (const DamageVector<T>& value) {
+		DamageVector& operator+= (const DamageVector& value) {
 			for (int i = 0; i < 4; i++)
 				damageTypes[i] += value.damageTypes[i];
 			return *this;
 		}
-		DamageVector<T>& operator-= (const DamageVector<T>& value) {
+		DamageVector& operator-= (const DamageVector& value) {
 			for (int i = 0; i < 4; i++)
 				damageTypes[i] -= value.damageTypes[i];
 			return *this;
 		}
 		
-		T total() const {
-			return emAmount + thermalAmount + kineticAmount + explosiveAmount;
+		HP total() const {
+			return em + thermal + kinetic + explosive;
 		}
 		
-		explicit operator T() const {
+		explicit operator HP() const {
 			return total();
 		}
 		
+		Multiplier effectivity(const Resistances::Layer& resistances) const {
+			return total() / effective(resistances).total();
+		}
+
+		
 	};
 	
-	using DamagePerSecond = rate<DamageVector<HP>, std::chrono::seconds>;
+	using DamagePerSecond = rate<DamageVector, std::chrono::seconds>;
 }
 
