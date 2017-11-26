@@ -148,6 +148,12 @@ namespace dgmpp2 {
 			Effect(Effect&& other) = default;
 		};
 		
+		struct WarfareBuff {
+			WarfareBuffID warfareBuffID;
+			AttributeID modifiedAttributeID;
+			virtual dgmpp2::slice<const Modifier* const*> modifiers() const = 0;
+		};
+		
 		template<typename Modifiers>
 		struct _Effect : public Effect {
 			

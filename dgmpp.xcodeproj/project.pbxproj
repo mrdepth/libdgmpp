@@ -195,6 +195,12 @@
 		12B3311D1FBD99B40072D4E4 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B3311A1FBD99B40072D4E4 /* Attribute.cpp */; };
 		12B3311E1FBD99B40072D4E4 /* Attribute.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B3311B1FBD99B40072D4E4 /* Attribute.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B3311F1FBD99B40072D4E4 /* Attribute.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B3311B1FBD99B40072D4E4 /* Attribute.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B53FFB1FCAD48500631067 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B53FF91FCAD48500631067 /* WarfareBuff.cpp */; };
+		12B53FFC1FCAD48500631067 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B53FF91FCAD48500631067 /* WarfareBuff.cpp */; };
+		12B53FFD1FCAD48500631067 /* WarfareBuff.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */; };
+		12B53FFE1FCAD48500631067 /* WarfareBuff.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */; };
+		12B540001FCB61F400631067 /* WarfareBuffID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B540011FCB61F400631067 /* WarfareBuffID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9841CC3A98B00313F8D /* SqliteFetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */; };
 		12D9F9851CC3A98B00313F8D /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A9EC51147FA61C00B12A7F /* Area.cpp */; };
 		12D9F9861CC3A98B00313F8D /* Cycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFCE1C4A28DD00A1CDA9 /* Cycle.cpp */; };
@@ -438,6 +444,9 @@
 		12B331021FBD97F80072D4E4 /* Skills.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Skills.hpp; sourceTree = "<group>"; };
 		12B3311A1FBD99B40072D4E4 /* Attribute.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Attribute.cpp; sourceTree = "<group>"; };
 		12B3311B1FBD99B40072D4E4 /* Attribute.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Attribute.hpp; sourceTree = "<group>"; };
+		12B53FF91FCAD48500631067 /* WarfareBuff.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WarfareBuff.cpp; sourceTree = "<group>"; };
+		12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WarfareBuff.hpp; sourceTree = "<group>"; };
+		12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WarfareBuffID.hpp; sourceTree = "<group>"; };
 		12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
 		12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -545,17 +554,19 @@
 			children = (
 				12B3311A1FBD99B40072D4E4 /* Attribute.cpp */,
 				12B3311B1FBD99B40072D4E4 /* Attribute.hpp */,
+				12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */,
 				123BEF191FBDA2A900AC8EB1 /* Effect.cpp */,
 				123BEF1A1FBDA2A900AC8EB1 /* Effect.hpp */,
+				12E864E91FC8454900C9C4BD /* HitPoints.hpp */,
 				12B331001FBD97F80072D4E4 /* MetaInfo.hpp */,
 				123BEF131FBDA20F00AC8EB1 /* Modifier.cpp */,
 				123BEF141FBDA20F00AC8EB1 /* Modifier.hpp */,
+				12E864DB1FC6C8F200C9C4BD /* Rate.hpp */,
+				12E864E61FC8208A00C9C4BD /* Tank.hpp */,
 				12B331011FBD97F80072D4E4 /* Type.cpp */,
 				12B330F51FBD97F80072D4E4 /* Type.hpp */,
-				12E864D61FC5AB4500C9C4BD /* DamageVector.hpp */,
-				12E864E61FC8208A00C9C4BD /* Tank.hpp */,
-				12E864E91FC8454900C9C4BD /* HitPoints.hpp */,
-				12E864DB1FC6C8F200C9C4BD /* Rate.hpp */,
+				12B53FF91FCAD48500631067 /* WarfareBuff.cpp */,
+				12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -688,6 +699,7 @@
 				12B330FE1FBD97F80072D4E4 /* Modifiers.hpp */,
 				12B331021FBD97F80072D4E4 /* Skills.hpp */,
 				12B330FC1FBD97F80072D4E4 /* TypeID.hpp */,
+				12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */,
 				12B330FF1FBD97F80072D4E4 /* Types.hpp */,
 			);
 			name = SDE;
@@ -853,11 +865,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12B53FFD1FCAD48500631067 /* WarfareBuff.hpp in Headers */,
 				12AEEFDC1C26B8AA00FB7B1D /* AttributePrototype.h in Headers */,
 				12564BD41B84B07E000F68D8 /* Effect.h in Headers */,
 				123BEF431FBDB59200AC8EB1 /* Charge.hpp in Headers */,
 				12B0A30C1C0EEC8400194715 /* dgmpp.h in Headers */,
 				12564BE11B84B07E000F68D8 /* Modifier.h in Headers */,
+				12B540001FCB61F400631067 /* WarfareBuffID.hpp in Headers */,
 				125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */,
 				123BEF1D1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
 				12B3310C1FBD98F60072D4E4 /* GroupID.hpp in Headers */,
@@ -947,11 +961,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12B53FFE1FCAD48500631067 /* WarfareBuff.hpp in Headers */,
 				12D9F9B91CC3A98B00313F8D /* AttributePrototype.h in Headers */,
 				12D9F9BA1CC3A98B00313F8D /* Effect.h in Headers */,
 				123BEF441FBDB59200AC8EB1 /* Charge.hpp in Headers */,
 				12D9F9BB1CC3A98B00313F8D /* dgmpp.h in Headers */,
 				12D9F9BC1CC3A98B00313F8D /* Modifier.h in Headers */,
+				12B540011FCB61F400631067 /* WarfareBuffID.hpp in Headers */,
 				12D9F9BD1CC3A98B00313F8D /* ProductionCycle.h in Headers */,
 				123BEF1E1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
 				12B331081FBD98F50072D4E4 /* GroupID.hpp in Headers */,
@@ -1169,6 +1185,7 @@
 				1286564F1C57AD440002BA7E /* State.cpp in Sources */,
 				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
 				12E864F71FC8650000C9C4BD /* Booster.cpp in Sources */,
+				12B53FFB1FCAD48500631067 /* WarfareBuff.cpp in Sources */,
 				123BEF151FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
 				121064A51C9312370032B3DB /* Structure.cpp in Sources */,
 				12564BBE1B84B027000F68D8 /* Ship.cpp in Sources */,
@@ -1244,6 +1261,7 @@
 				12D9F9881CC3A98B00313F8D /* State.cpp in Sources */,
 				12D9F9891CC3A98B00313F8D /* Modifier.cpp in Sources */,
 				12E864F81FC8650000C9C4BD /* Booster.cpp in Sources */,
+				12B53FFC1FCAD48500631067 /* WarfareBuff.cpp in Sources */,
 				123BEF161FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
 				12D9F98A1CC3A98B00313F8D /* Structure.cpp in Sources */,
 				12D9F98B1CC3A98B00313F8D /* Ship.cpp in Sources */,

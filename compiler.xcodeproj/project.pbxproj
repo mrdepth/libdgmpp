@@ -233,18 +233,20 @@
 		12DBEA441E1D38070088A486 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/dgmpp/";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/dgmpp/ ${SRCROOT}/dgmpp2/";
 			};
 			name = Debug;
 		};
 		12DBEA451E1D38070088A486 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/dgmpp/";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/dgmpp/ ${SRCROOT}/dgmpp2/";
 			};
 			name = Release;
 		};

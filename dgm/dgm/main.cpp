@@ -562,6 +562,10 @@ int main(int argc, const char * argv[]) {
 			dumpIDs(database, "EffectID", "SELECT effectID, effectName FROM dgmEffects ORDER BY effectID");
 			return 0;
 		}
+		else if (action == "--warfareBuffIDs") {
+			dumpIDs(database, "WarfareBuffID", "select value, typeName || \"Buff\" || substr(attributeName, 12, 1) from invTypes as a, dgmTypeAttributes as b, dgmAttributeTypes as c where a.typeID=b.typeID and b.attributeID == c.attributeID and c.attributeName like \"warfareBuff%ID\" and value > 0 order by value");
+			return 0;
+		}
 		else if (action == "--attributes") {
 			dumpAttributeTypes(database);
 			return 0;

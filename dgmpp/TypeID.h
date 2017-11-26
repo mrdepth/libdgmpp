@@ -9112,7 +9112,7 @@ namespace dgmpp {
 		agencySpeedBoosterI = 46004,
 		agencySpeedBoosterII = 46005,
 		agencySpeedBoosterIII = 46006,
-		valkyrieCerebralAccelerator = 46007,
+		crimsonHarvestCerebralAccelerator = 46008,
 		ubiquitousMoonOreProcessing = 46152,
 		commonMoonOreProcessing = 46153,
 		uncommonMoonOreProcessing = 46154,

@@ -16,7 +16,7 @@ dbpatch: dbpatch.h
 	$(CC) $(CFLAGS) ../dbpatch/dbpatch.cpp -o $(T)/$@ -lsqlite3 -I $(T)/
 
 compiler: tmp EffectID.h AttributeID.h CategoryID.h GroupID.h TypeID.h
-	$(CC) $(CFLAGS) ../Compiler/Compiler.cpp -o $(T)/$@ -lsqlite3 -I "../dgmpp/"
+	$(CC) $(CFLAGS) ../Compiler/Compiler.cpp -o $(T)/$@ -lsqlite3 -I "../dgmpp/" -I "../dgmpp2/"
 
 modifiersdump: tmp
 	$(CC) $(CFLAGS) ../modifiersdump/main.cpp -o $(T)/$@ -lsqlite3

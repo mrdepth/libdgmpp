@@ -14,7 +14,6 @@ namespace dgmpp2 {
 	Character::Character() : Type(TypeID::characterGallente) {
 		for (size_t i = 0; i < SDE::skillsCount; i++) {
 			auto metaInfo = SDE::skills[i];
-//			auto skill = Type::add(Skill::Create(*metaInfo));
 			auto skill = Skill::Create(*metaInfo);
 			auto ptr = skill.get();
 			skills_.emplace(metaInfo->typeID, std::move(skill));
@@ -74,57 +73,52 @@ namespace dgmpp2 {
 	
 	Implant* Character::add(std::unique_ptr<Implant> implant, bool replace) {
 		auto old = implants_.find(implant->slot());
-		if (old != implants_.end() && !replace)
-			throw CannotFit<Implant>(std::move(implant));
-
-		auto enabled = isEnabled();
-		if (enabled)
-			setEnabled(false);
-
 		if (old != implants_.end()) {
-			(*old)->parent(nullptr);
-			implants_.erase(old);
+			if (replace) {
+				(*old)->parent(nullptr);
+				implants_.erase(old);
+			}
+			else
+				throw CannotFit<Implant>(std::move(implant));
 		}
-		
+
 		auto ptr = implant.get();
 		implants_.insert(std::move(implant));
 		ptr->parent(this);
 		
-		if (enabled)
-			setEnabled(true);
 		return ptr;
-
 	}
 	
 	Booster* Character::add(std::unique_ptr<Booster> booster, bool replace) {
 		auto old = boosters_.find(booster->slot());
-		if (old != boosters_.end() && !replace)
-			throw CannotFit<Booster>(std::move(booster));
-		
-		auto enabled = isEnabled();
-		if (enabled)
-			setEnabled(false);
-		
 		if (old != boosters_.end()) {
-			(*old)->parent(nullptr);
-			boosters_.erase(old);
+			if (replace) {
+				(*old)->parent(nullptr);
+				boosters_.erase(old);
+			}
+			else
+				throw CannotFit<Booster>(std::move(booster));
 		}
 		
 		auto ptr = booster.get();
 		boosters_.insert(std::move(booster));
 		ptr->parent(this);
 		
-		if (enabled)
-			setEnabled(true);
 		return ptr;
 	}
 	
 	void Character::remove(Implant* implant) {
-		
+		auto i = implants_.find(implant);
+		assert(i != implants_.end());
+		(*i)->parent(nullptr);
+		implants_.erase(i);
 	}
 	
 	void Character::remove(Booster* booster) {
-		
+		auto i = boosters_.find(booster);
+		assert(i != boosters_.end());
+		(*i)->parent(nullptr);
+		boosters_.erase(i);
 	}
 
 	Implant* Character::implant (Implant::Slot slot) const {
@@ -147,6 +141,12 @@ namespace dgmpp2 {
 		batchUpdates([=]() {
 			std::for_each(skills_.begin(), skills_.end(), [enabled](auto& i) {
 				i.second->setEnabled(enabled);
+			});
+			std::for_each(implants_.begin(), implants_.end(), [enabled](auto& i) {
+				i->setEnabled(enabled);
+			});
+			std::for_each(boosters_.begin(), boosters_.end(), [enabled](auto& i) {
+				i->setEnabled(enabled);
 			});
 			if (ship_)
 				ship_->setEnabled(enabled);

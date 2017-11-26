@@ -23,6 +23,7 @@
 #include "GroupID.hpp"
 #include "TypeID.hpp"
 #include "EffectID.hpp"
+#include "WarfareBuffID.hpp"
 #include "Rate.hpp"
 
 namespace dgmpp2 {
@@ -32,6 +33,7 @@ namespace dgmpp2 {
 	using CategoryID = dgmpp::CategoryID;
 	using AttributeID = dgmpp::AttributeID;
 	using EffectID = dgmpp::EffectID;
+	using WarfareBuffID = dgmpp::WarfareBuffID;
 	using ModifierID = int;
 	using SchematicID = int;
 	using GigaJoule = Float;

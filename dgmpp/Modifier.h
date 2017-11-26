@@ -1,6 +1,5 @@
 #pragma once
 #include "types.h"
-#include "MetaInfo.hpp"
 
 namespace dgmpp {
 	

@@ -15,18 +15,18 @@ namespace dgmpp2 {
 	class Character: public Type {
 	public:
 		struct SlotCompare {
-			template <typename T>
-			bool operator() (const T& a, const T& b) {
+			template <typename A, typename B, typename = decltype(std::declval<A>()->slot()), typename = decltype(std::declval<B>()->slot())>
+			bool operator() (const A& a, const B& b) const {
 				return a->slot() < b->slot();
 			}
 
-			template <typename T, typename K, typename = std::enable_if_t<std::is_scalar_v<K>>>
-			bool operator() (const T& a, K b) {
+			template <typename T, typename K, typename = std::enable_if_t<std::is_same_v<K, decltype(std::declval<T>()->slot())>>>
+			bool operator() (const T& a, K b) const {
 				return a->slot() < b;
 			}
 
-			template <typename T, typename K, typename = std::enable_if_t<std::is_scalar_v<K>>>
-			bool operator() (K a, const T& b) {
+			template <typename T, typename K, typename = std::enable_if_t<std::is_same_v<K, decltype(std::declval<T>()->slot())>>>
+			bool operator() (K a, const T& b) const {
 				return a < b->slot();
 			}
 
