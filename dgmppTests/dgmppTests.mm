@@ -11,9 +11,11 @@
 #include <memory>
 
 using namespace dgmpp;
+using namespace std::chrono_literals;
 
 std::shared_ptr<Engine> createEngine() {
-	return std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+//	return std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+	return std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 }
 
 @interface dgmppTests : XCTestCase {
@@ -49,6 +51,19 @@ std::shared_ptr<Engine> createEngine() {
 	XCTAssertTrue(tank1.armorRepair > tank0.armorRepair);
 	XCTAssertTrue(tank1.shieldRepair > tank0.shieldRepair);
 	XCTAssertTrue(tank1.hullRepair > tank0.hullRepair);
+	
+	auto gang2 = dgmpp2::Gang::Create();
+	auto pilot2 = gang2->add(dgmpp2::Character::Create());
+	pilot2->setSkillLevels(5);
+	auto ship2 = pilot2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+	ship2->add(dgmpp2::Module::Create(TypeID::largeArmorRepairerI));
+	ship2->add(dgmpp2::Module::Create(TypeID::largeShieldBoosterI));
+	ship2->add(dgmpp2::Module::Create(TypeID::largeHullRepairerI));
+	auto tank2 = ship2->tank();
+	
+	XCTAssertTrue(tank1.armorRepair == tank2.armorRepair * 1s);
+	XCTAssertTrue(tank1.shieldRepair == tank2.shieldRepair * 1s);
+	XCTAssertTrue(tank1.hullRepair == tank2.hullRepair * 1s);
 }
 
 - (void) testRemoteRepairers {
@@ -74,6 +89,27 @@ std::shared_ptr<Engine> createEngine() {
 	XCTAssertGreaterThan(tank1.shieldRepair, tank0.shieldRepair);
 	XCTAssertGreaterThan(tank1.hullRepair, tank0.hullRepair);
 	
+	auto gang2 = dgmpp2::Gang::Create();
+	auto pilotA2 = gang2->add(dgmpp2::Character::Create());
+	auto pilotB2 = gang2->add(dgmpp2::Character::Create());
+	pilotA2->setSkillLevels(5);
+	pilotB2->setSkillLevels(5);
+	auto shipA2 = pilotA2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+	auto shipB2 = pilotB2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+	auto repairers2 = {
+		shipA2->add(dgmpp2::Module::Create(TypeID::largeRemoteArmorRepairerI)),
+		shipA2->add(dgmpp2::Module::Create(TypeID::largeRemoteShieldBoosterI)),
+		shipA2->add(dgmpp2::Module::Create(TypeID::largeRemoteHullRepairerI))};
+	
+	for (auto i: repairers2)
+		i->target(shipB2);
+	
+	auto tank2 = shipB2->tank();
+	
+	XCTAssertTrue(tank1.armorRepair == tank2.armorRepair * 1s);
+	XCTAssertTrue(tank1.shieldRepair == tank2.shieldRepair * 1s);
+	XCTAssertTrue(tank1.hullRepair == tank2.hullRepair * 1s);
+
 }
 
 - (void) testAncillaries {
@@ -102,6 +138,20 @@ std::shared_ptr<Engine> createEngine() {
 
 	XCTAssertGreaterThan(capUsed1, capUsed0);
 	XCTAssertGreaterThan(capUsed1, capUsed2);
+	
+	auto gang2 = dgmpp2::Gang::Create();
+	auto pilot2 = gang2->add(dgmpp2::Character::Create());
+	pilot2->setSkillLevels(5);
+	auto ship2 = pilot2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+	auto repairer2 = ship2->add(dgmpp2::Module::Create(TypeID::largeAncillaryArmorRepairer));
+	repairer2->charge(dgmpp2::Charge::Create(TypeID::naniteRepairPaste));
+	auto tank3 = ship2->tank();
+	auto capUsed3 = ship2->capacitor().use();
+	XCTAssertTrue(tank2.armorRepair == tank3.armorRepair * 1s);
+	XCTAssertTrue(tank2.shieldRepair == tank3.shieldRepair * 1s);
+	XCTAssertTrue(tank2.hullRepair == tank3.hullRepair * 1s);
+//	XCTAssertTrue(capUsed2 == capUsed3 * 1s);
+	
 }
 
 - (void) testEnergyDrainers {
@@ -137,7 +187,8 @@ std::shared_ptr<Engine> createEngine() {
 }
 
 - (void)testShips {
-
+	return;
+	
 	[self measureBlock:^{
 		auto typeIDs = {1912,
 		1914,

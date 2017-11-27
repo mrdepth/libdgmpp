@@ -11,6 +11,7 @@
 #include "DamageVector.hpp"
 
 namespace dgmpp2 {
+	class Ship;
 	class Drone: public Type {
 	public:
 		typedef int SquadronTag;
@@ -23,7 +24,7 @@ namespace dgmpp2 {
 			support
 		};
 
-		
+		virtual ~Drone();
 		static std::unique_ptr<Drone> Create (TypeID typeID) { return std::unique_ptr<Drone>(new Drone(typeID)); }
 		
 		void active (bool active);
@@ -38,6 +39,9 @@ namespace dgmpp2 {
 		size_t squadronSize();
 
 		SquadronTag squadronTag() const { return squadronTag_; };
+
+		Ship* target() const { return target_; }
+		void target(Ship* target);
 
 		virtual void setEnabled (bool enabled) override;
 		
@@ -67,7 +71,8 @@ namespace dgmpp2 {
 		SquadronTag squadronTag_ = anySquadronTag;
 		Squadron squadron_;
 		std::unique_ptr<Charge> charge_;
-
+		Ship* target_;
+		
 		Drone (TypeID typeID);
 		void squadronTag (SquadronTag squadronTag) { squadronTag_ = squadronTag; }
 		

@@ -7,10 +7,16 @@
 
 #include "Drone.hpp"
 #include "SDE.hpp"
+#include "Ship.hpp"
 
 namespace dgmpp2 {
 	
 	const Drone::SquadronTag Drone::anySquadronTag = -1;
+	
+	Drone::~Drone() {
+		if (target_)
+			target_->removeProjected(this);
+	}
 	
 	Drone::Drone (TypeID typeID): Type(typeID) {
 		
@@ -48,10 +54,6 @@ namespace dgmpp2 {
 			flags_.isOffensive = flags_.isOffensive || charge_->isOffensive();
 			flags_.dealsDamage = flags_.dealsDamage || charge_->dealsDamage();
 		}
-		
-
-
-		
 	}
 	
 	void Drone::active(bool active) {
@@ -70,6 +72,24 @@ namespace dgmpp2 {
 			if (charge_ != nullptr)
 				charge_->setEnabled(false);
 		}
+	}
+	
+	void Drone::target(Ship* target) {
+		batchUpdates([&]() {
+			batchUpdates([&]() {
+				if (target_) {
+					if (active())
+						deactivateEffects(MetaInfo::Effect::Category::target);
+					target_->removeProjected(this);
+				}
+				target_ = target;
+				if (target) {
+					target_->project(this);
+					if (active())
+						activateEffects(MetaInfo::Effect::Category::target);
+				}
+			});
+		});
 	}
 	
 	void Drone::setEnabled (bool enabled) {
@@ -96,7 +116,7 @@ namespace dgmpp2 {
 	Type* Drone::domain (MetaInfo::Modifier::Domain domain) {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::target :
-				return nullptr;
+				return target_;
 			default:
 				return Type::domain(domain);
 		}

@@ -12,6 +12,7 @@
 
 namespace dgmpp2 {
 	
+	class Ship;
 	class Module: public Type {
 	public:
 		typedef int Socket;
@@ -48,6 +49,7 @@ namespace dgmpp2 {
 			turret
 		};
 		
+		virtual ~Module();
 		virtual void setEnabled (bool enabled) override;
 		
 		bool canHaveState (State state);
@@ -56,6 +58,9 @@ namespace dgmpp2 {
 		State state() const {return state_;}
 		State preferredState() const {return preferredState_;}
 		void state (State state);
+		
+		Ship* target() const { return target_; }
+		void target(Ship* target);
 		
 		Slot slot() const {return slot_;}
 		Hardpoint hardpoint() const {return hardpoint_;}
@@ -124,6 +129,7 @@ namespace dgmpp2 {
 		} flags_;
 		std::vector<GroupID> chargeGroups_;
 		std::unique_ptr<Charge> charge_;
+		Ship* target_ = nullptr;
 		
 		Module (TypeID typeID);
 		

@@ -823,4 +823,21 @@ namespace dgmpp2 {
 		}
 		capacitor_.reset();
 	}
+	
+	void Ship::project(Module* module) {
+		assert(std::find(projectedModules_.begin(), projectedModules_.end(), module) == projectedModules_.end());
+	}
+	
+	void Ship::project(Drone* drone) {
+		assert(std::find(projectedDrones_.begin(), projectedDrones_.end(), drone) == projectedDrones_.end());
+	}
+	
+	void Ship::removeProjected(Module* module) {
+		projectedModules_.remove(module);
+	}
+	
+	void Ship::removeProjected(Drone* drone) {
+		projectedDrones_.remove(drone);
+	}
+
 }

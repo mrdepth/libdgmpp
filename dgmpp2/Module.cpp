@@ -100,6 +100,11 @@ namespace dgmpp2 {
 		}
 	}
 	
+	Module::~Module() {
+		if (target_)
+			target_->removeProjected(this);
+	}
+	
 	void Module::setEnabled (bool enabled) {
 		if (isEnabled() == enabled)
 			return Type::setEnabled(enabled);
@@ -169,10 +174,28 @@ namespace dgmpp2 {
 			return {};
 	}
 	
+	void Module::target(Ship* target) {
+		batchUpdates([&]() {
+			if (target_) {
+				if (state() >= State::active)
+					deactivateEffects(MetaInfo::Effect::Category::target);
+				target_->removeProjected(this);
+			}
+			target_ = target;
+			if (target) {
+				assert(!isDescendant(*target));
+				
+				target_->project(this);
+				if (state() >= State::active)
+					activateEffects(MetaInfo::Effect::Category::target);
+			}
+		});
+	}
+	
 	Type* Module::domain (MetaInfo::Modifier::Domain domain) {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::target :
-				return nullptr;
+				return target_;
 			default:
 				return Type::domain(domain);
 		}
@@ -256,7 +279,8 @@ namespace dgmpp2 {
 						
 						if (state_ >= State::active		&& state < State::active) {
 							deactivateEffects(MetaInfo::Effect::Category::active);
-							deactivateEffects(MetaInfo::Effect::Category::target);
+							if (target())
+								deactivateEffects(MetaInfo::Effect::Category::target);
 						}
 						
 						if (state_ >= State::online		&& state < State::online)
@@ -268,7 +292,8 @@ namespace dgmpp2 {
 						
 						if (state_ < State::active		&& state >= State::active) {
 							activateEffects(MetaInfo::Effect::Category::active);
-							activateEffects(MetaInfo::Effect::Category::target);
+							if (target())
+								activateEffects(MetaInfo::Effect::Category::target);
 						}
 						
 						if (state_ < State::overloaded	&& state >= State::overloaded)
@@ -282,10 +307,12 @@ namespace dgmpp2 {
 					deactivateEffects(MetaInfo::Effect::Category::overloaded);
 				if (state_ >= State::active) {
 					deactivateEffects(MetaInfo::Effect::Category::active);
-					deactivateEffects(MetaInfo::Effect::Category::target);
+					if (target())
+						deactivateEffects(MetaInfo::Effect::Category::target);
 				}
 				if (state_ >= State::online)
 					deactivateEffects(MetaInfo::Effect::Category::passive);
+                state_ = Module::State::offline;
 			}
 		});
 	}

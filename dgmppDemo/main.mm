@@ -852,6 +852,11 @@ int main(int argc, const char * argv[]) {
 			pilot->setSkillLevels(5);
 			auto ship = pilot->setShip(dgmpp2::Ship::Create(TypeID::dominix));
 			
+            auto repairer = ship->add(dgmpp2::Module::Create(TypeID::largeAncillaryArmorRepairer));
+            repairer->charge(dgmpp2::Charge::Create(TypeID::naniteRepairPaste));
+            auto tank = ship->tank();
+
+            
 			std::cout << ship->effectiveHitPoints().total() << std::endl;
 			
 			auto pilot2 = gang->add(dgmpp2::Character::Create());

@@ -135,10 +135,16 @@ namespace dgmpp2 {
 		
 		const std::list<Module*>& projectedModules() const { return projectedModules_; }
 		const std::list<Drone*>& projectedDrones() const { return projectedDrones_; }
+		void project(Module* module);
+		void project(Drone* drone);
+		void removeProjected(Module* module);
+		void removeProjected(Drone* drone);
 
 	private:
 		friend class Character;
 		friend class Capacitor;
+		friend class Module;
+		friend class Drone;
 		
 		Ship (TypeID typeID): Type(typeID), capacitor_(*this) {};
 		
