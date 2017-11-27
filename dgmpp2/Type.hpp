@@ -135,8 +135,7 @@ namespace dgmpp2 {
 		
 		std::unique_ptr<AttributesCache> cache_;
 		
-		
-		void addModifier (const Modifier* modifier);
+		void addModifier	(const Modifier* modifier);
 		void removeModifier (const Modifier* modifier);
 		std::vector<Effect*> activeEffects() const;
 		
@@ -144,6 +143,11 @@ namespace dgmpp2 {
 		void deactivate	(Effect* effect);
 		
 		AttributesCache& cache();
+
+		TuplesSet<WarfareBuffID, const WarfareBuff*> buffs_;
+		
+		void addBuff	(const WarfareBuff* buff);
+		void removeBuff	(const WarfareBuff* buff);
 
 	};
 	

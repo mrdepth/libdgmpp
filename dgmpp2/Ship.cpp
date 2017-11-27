@@ -10,6 +10,8 @@
 #include <numeric>
 #include "Errors.hpp"
 
+#include <iostream>
+
 namespace dgmpp2 {
 	
 	const Module::Socket Module::anySocket = -1;
@@ -50,20 +52,23 @@ namespace dgmpp2 {
 			auto ptr = module.get();
 			ptr->socket(socket);
 			modules_.emplace_hint(l, module->slot(), socket, std::move(module));
-			ptr->parent(this);
 			
-			if (state == Module::State::unknown) {
-				if (ptr->canBeActive())
-					ptr->state(dgmpp2::Module::State::active);
-				else if (ptr->canBeOnline())
-					ptr->state(dgmpp2::Module::State::online);
+			batchUpdates([&]() {
+				ptr->parent(this);
+				
+				if (state == Module::State::unknown) {
+					if (ptr->canBeActive())
+						ptr->state(dgmpp2::Module::State::active);
+					else if (ptr->canBeOnline())
+						ptr->state(dgmpp2::Module::State::online);
+					else
+						ptr->state(dgmpp2::Module::State::offline);
+				}
 				else
-					ptr->state(dgmpp2::Module::State::offline);
-			}
-			else
-				ptr->state(state);
+					ptr->state(state);
+			});
 			
-			reset();
+//			resetCache();
 			return ptr;
 		}
 		else

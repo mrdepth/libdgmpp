@@ -22,22 +22,24 @@ namespace dgmpp2 {
 	}
 	
 	Ship* Character::setShip(std::unique_ptr<Ship> ship) {
-		auto enabled = isEnabled();
-		if (enabled)
-			setEnabled(false);
-		
-		if (ship_) {
-			ship_->parent(nullptr);
-			ship_ = nullptr;
-		}
-		
-		if (ship != nullptr) {
-			ship_ = std::move(ship);
-			ship_->parent(this);
-		}
-		
-		if (enabled)
-			setEnabled(true);
+		batchUpdates([&]() {
+			auto enabled = isEnabled();
+			if (enabled)
+				setEnabled(false);
+			
+			if (ship_) {
+				ship_->parent(nullptr);
+				ship_ = nullptr;
+			}
+			
+			if (ship != nullptr) {
+				ship_ = std::move(ship);
+				ship_->parent(this);
+			}
+			
+			if (enabled)
+				setEnabled(true);
+		});
 		
 		return ship_.get();
 	}

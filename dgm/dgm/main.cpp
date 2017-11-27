@@ -288,89 +288,151 @@ void dumpIDs(SQLiteDatabase& database, const std::string& name, const std::strin
 }
 
 struct Domain {
-	Domain(int i): val(i) {};
-	std::string to_str () {
+	enum Type {
+		self,
+		character,
+		ship,
+		gang,
+		area,
+		target,
+		other,
+		structure
+	};
+	
+	Domain(Type i): val(i) {};
+	std::string to_str () const {
 		switch (val) {
-			case 0:
+			case Type::self:
 				return "self";
-			case 1:
+			case Type::character:
 				return "character";
-			case 2:
+			case Type::ship:
 				return "ship";
-			case 3:
+			case Type::gang:
 				return "gang";
-			case 4:
+			case Type::area:
 				return "area";
-			case 5:
+			case Type::target:
 				return "target";
-			case 6:
+			case Type::other:
 				return "other";
-			case 7:
+			case Type::structure:
 				return  "structure";
 			default:
 				throw 0;
 		}
 	}
-	int val;
+	Type val;
 };
 
 struct ModifierType {
-	ModifierType(int i): val(i) {};
-	std::string to_str () {
+	enum Type {
+		item,
+		location,
+		locationGroup,
+		locationRequiredSkill,
+		ownerRequiredSkill,
+		locationRequiredDomainSkill,
+	};
+	
+	ModifierType(Type i): val(i) {};
+	std::string to_str () const {
 		switch (val) {
-			case 0:
+			case Type::item:
 				return "item";
-			case 1:
+			case Type::location:
 				return "location";
-			case 2:
+			case Type::locationGroup:
 				return "locationGroup";
-			case 3:
+			case Type::locationRequiredSkill:
 				return "locationRequiredSkill";
-			case 4:
+			case Type::ownerRequiredSkill:
 				return "ownerRequiredSkill";
-			case 5:
+			case Type::locationRequiredDomainSkill:
 				return  "locationRequiredDomainSkill";
 			default:
 				throw 0;
 		}
 	}
-	int val;
+	Type val;
 };
 
 struct Association {
-	Association(int i): val(i) {};
-	std::string to_str () {
+	enum Type {
+		preAssignment,
+		modAdd,
+		modSub,
+		preDiv,
+		preMul,
+		postPercent,
+		postDiv,
+		postMul,
+		postAssignment,
+		skillTime,
+		addRate,
+		subRate
+	};
+	
+	Association(Type i): val(i) {};
+	std::string to_str () const {
 		switch (val) {
-			case 0:
+			case Type::preAssignment:
 				return "preAssignment";
-			case 1:
+			case Type::modAdd:
 				return "modAdd";
-			case 2:
+			case Type::modSub:
 				return "modSub";
-			case 3:
+			case Type::preDiv:
 				return "preDiv";
-			case 4:
+			case Type::preMul:
 				return "preMul";
-			case 5:
+			case Type::postPercent:
 				return "postPercent";
-			case 6:
+			case Type::postDiv:
 				return "postDiv";
-			case 7:
+			case Type::postMul:
 				return "postMul";
-			case 8:
+			case Type::postAssignment:
 				return "postAssignment";
-			case 9:
+			case Type::skillTime:
 				return "skillTime";
-			case 10:
+			case Type::addRate:
 				return "addRate";
-			case 11:
+			case Type::subRate:
 				return  "subRate";
 			default:
 				throw 0;
 		}
 	}
-	int val;
+	Type val;
 };
+
+std::string modifier(const ModifierType& type, const Association& association, const Domain& domain, const Name& modified, const Name& modifying, const Optional<std::string>& groupName, const Optional<std::string>& typeName, const Optional<int>& requiredID) {
+	std::stringstream str;
+	str
+	<< "{MetaInfo::Modifier::ModifierType::" << type.to_str()
+	<< ", MetaInfo::Modifier::Association::" << association.to_str()
+	<< ", MetaInfo::Modifier::Domain::" << domain.to_str()
+	<< ", AttributeID::" << modified
+	<< ", AttributeID::" << modifying;
+	
+	switch (type.val) {
+		case 2:
+			str << ", GroupID::" << Name(*groupName);
+			break;
+		case 3:
+		case 4:
+			str << ", TypeID::" << Name(*typeName);
+			break;
+		case 5:
+			str << ", MetaInfo::Modifier::Domain::" << Domain(static_cast<Domain::Type>(*requiredID)).to_str();
+			break;
+		default:
+			break;
+	}
+	str << "}";
+	return str.str();
+}
 
 void dumpModifiers(SQLiteDatabase& database) {
 	auto result = database.fetch<int, int, int, std::string, std::string, int, Optional<std::string>, Optional<std::string>, Optional<int>>("select a.modifierID, domain, type, b.attributeName as modified, c.attributeName as modifying, association, d.typeName, e.groupName, a.requiredID from dgmModifiers as a left join dgmAttributeTypes as b on a.modifiedAttributeID=b.attributeID left join dgmAttributeTypes as c on a.modifyingAttributeID=c.attributeID left join invTypes as d on a.requiredID=d.typeID left join invGroups as e on a.requiredID=e.groupID order by modifierID");
@@ -386,16 +448,19 @@ void dumpModifiers(SQLiteDatabase& database) {
 	
 	while (auto row = result.next()) {
 		auto modifierID = row.get<0>();
-		auto domain = Domain(row.get<1>());
-		auto type = ModifierType(row.get<2>());
+		auto domain = Domain(static_cast<Domain::Type>(row.get<1>()));
+		auto type = ModifierType(static_cast<ModifierType::Type>(row.get<2>()));
 		auto modified = Name(row.get<3>());
 		auto modifying = Name(row.get<4>());
-		auto association = Association(row.get<5>());
+		auto association = Association(static_cast<Association::Type>(row.get<5>()));
 		auto typeName = row.get<6>();
 		auto groupName = row.get<7>();
 		auto requiredID = row.get<8>();
-
+		
 		std::cout << "\t\t\t"
+		<< "constexpr MetaInfo::Modifier modifier" << modifierID << " = " << modifier(type, association, domain, modified, modifying, groupName, typeName, requiredID) << ";" << std::endl;
+
+		/*std::cout << "\t\t\t"
 		<< "constexpr MetaInfo::Modifier modifier" << modifierID << " = {MetaInfo::Modifier::ModifierType::" << type.to_str()
 		<< ", MetaInfo::Modifier::Association::" << association.to_str()
 		<< ", MetaInfo::Modifier::Domain::" << domain.to_str()
@@ -416,7 +481,7 @@ void dumpModifiers(SQLiteDatabase& database) {
 			default:
 				break;
 		}
-		std::cout << "};" << std::endl;
+		std::cout << "};" << std::endl;*/
 
 	}
 	
@@ -534,6 +599,309 @@ void dumpSkills(SQLiteDatabase& database) {
 	<< "}" << std::endl;
 }
 
+void dumpWafrareBuffs(SQLiteDatabase& database) {
+	auto result = database.fetch<std::string, int>("select substr(attributeName, 12, 1), value from dgmAttributeTypes as a, dgmTypeAttributes as b where a.attributeID=b.attributeID and a.attributeName like \"warfareBuff%ID\" and value > 0 order by value");
+	
+	std::cout
+	<< "#pragma once" << std::endl
+	<< "#include \"MetaInfo.hpp\"" << std::endl
+	<< "#include \"Modifiers.hpp\"\n" << std::endl
+	<< "namespace dgmpp2 {" << std::endl
+	<< "	namespace SDE {" << std::endl
+	<< "		namespace WafrareBuffs {" << std::endl
+	<< "			using namespace MetaInfo;" << std::endl;
+
+	
+	std::list<std::string> names;
+
+	while (auto row = result.next()) {
+		auto group = row.get<0>();
+		auto buffID = row.get<1>();
+		
+		std::string id;
+		std::string modifyingAttributeID;
+		std::vector<std::string> modifiers;
+		
+		switch (buffID) {
+		case 10://shieldHarmonizingChargeBuff1 = 10,
+				id = "shieldHarmonizingChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto attributeID: {"shieldEmDamageResonance", "shieldKineticDamageResonance", "shieldThermalDamageResonance", "shieldExplosiveDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 11://activeShieldingChargeBuff1 = 11,
+				id = "activeShieldingChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto attributeID: {"capacitorNeed", "duration"}) {
+					for (auto skillID: {"shieldOperation", "shieldEmissionSystems"}) {
+						modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
+					}
+				}
+				break;
+		case 12://shieldExtensionChargeBuff1 = 12,
+				id = "shieldExtensionChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("shieldCapacity"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 13://armorEnergizingChargeBuff1 = 13,
+				id = "armorEnergizingChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto attributeID: {"armorEmDamageResonance", "armorKineticDamageResonance", "armorThermalDamageResonance", "armorExplosiveDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 14://rapidRepairChargeBuff1 = 14,
+				id = "rapidRepairChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto attributeID: {"capacitorNeed", "duration"}) {
+					for (auto skillID: {"repairSystems", "remoteArmorRepairSystems"}) {
+						modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
+					}
+				}
+				break;
+		case 15://armorReinforcementChargeBuff1 = 15,
+				id = "armorReinforcementChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("armorHP"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 16://sensorOptimizationChargeBuff1 = 16,
+				id = "sensorOptimizationChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("scanResolution"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 17://electronicSuperiorityChargeBuff1 = 17,
+				id = "electronicSuperiorityChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto attributeID: {"maxRange", "falloffEffectiveness"}) {
+					for (auto groupID: {"ECM", "sensorDampener", "weaponDisruptor", "targetPainter"}) {
+						modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), makeOptional<std::string>(groupID), nullopt, nullopt));
+					}
+				}
+				
+				for (auto attributeID: {"scanGravimetricStrengthBonus", "scanLadarStrengthBonus", "scanMagnetometricStrengthBonus", "scanRadarStrengthBonus"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), makeOptional<std::string>("ECM"), nullopt, nullopt));
+				}
+				
+				for (auto attributeID: {"missileVelocityBonus", "explosionDelayBonus", "aoeVelocityBonus", "falloffBonus", "maxRangeBonus", "aoeCloudSizeBonus", "trackingSpeedBonus"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), makeOptional<std::string>("weaponDisruptor"), nullopt, nullopt));
+				}
+
+				for (auto attributeID: {"maxTargetRangeBonus", "scanResolutionBonus"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), makeOptional<std::string>("sensorDampener"), nullopt, nullopt));
+				}
+
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("signatureRadiusBonus"), Name(modifyingAttributeID), makeOptional<std::string>("targetPainter"), nullopt, nullopt));
+
+				break;
+		case 18://electronicHardeningChargeBuff1 = 18,
+				id = "electronicHardeningChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto attributeID: {"scanGravimetricStrength", "scanRadarStrength", "scanLadarStrength", "scanMagnetometricStrength"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 19://electronicHardeningChargeBuff2 = 19,
+				id = "electronicHardeningChargeBuff2";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto attributeID: {"sensorDampenerResistance", "weaponDisruptionResistance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 20://evasiveManeuversChargeBuff1 = 20,
+				id = "evasiveManeuversChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("signatureRadius"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 21://interdictionManeuversChargeBuff1 = 21,
+				id = "interdictionManeuversChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto groupID: {"stasisWeb", "warpScrambler"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("maxRange"), Name(modifyingAttributeID), makeOptional<std::string>(groupID), nullopt, nullopt));
+				}
+				break;
+		case 22://rapidDeploymentChargeBuff1 = 22,
+				id = "rapidDeploymentChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto skillID: {"afterburner", "highSpeedManeuvering"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("speedFactor"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
+				}
+				break;
+		case 23://miningLaserFieldEnhancementChargeBuff1 = 23,
+				id = "miningLaserFieldEnhancementChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto skillID: {"mining", "iceHarvesting", "gasCloudHarvesting"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("maxRange"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
+				}
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("surveyScanRange"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>("CPUManagement"), nullopt));
+				break;
+		case 24://miningLaserOptimizationChargeBuff1 = 24,
+				id = "miningLaserOptimizationChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				for (auto attributeID: {"capacitorNeed", "duration"}) {
+					for (auto skillID: {"mining", "iceHarvesting", "gasCloudHarvesting"}) {
+						modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
+					}
+				}
+				break;
+		case 25://miningEquipmentPreservationChargeBuff1 = 25,
+				id = "miningEquipmentPreservationChargeBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("crystalVolatilityChance"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>("mining"), nullopt));
+				break;
+		case 26://sensorOptimizationChargeBuff2 = 26,
+				id = "sensorOptimizationChargeBuff2";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("maxTargetRange"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 39://amarrPhenomenaGeneratorBuff1 = 39,
+				id = "amarrPhenomenaGeneratorBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("rechargeRate"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 40://amarrPhenomenaGeneratorBuff2 = 40,
+				id = "amarrPhenomenaGeneratorBuff2";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto attributeID: {"armorKineticDamageResonance", "shieldKineticDamageResonance", "kineticDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 41://amarrPhenomenaGeneratorBuff3 = 41,
+				id = "amarrPhenomenaGeneratorBuff3";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto attributeID: {"armorEmDamageResonance", "shieldEmDamageResonance", "emDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 42://gallentePhenomenaGeneratorBuff1 = 42,
+				id = "gallentePhenomenaGeneratorBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("armorHP"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 43://gallentePhenomenaGeneratorBuff2 = 43,
+				id = "gallentePhenomenaGeneratorBuff2";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto attributeID: {"armorExplosiveDamageResonance", "shieldExplosiveDamageResonance", "explosiveDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 44://gallentePhenomenaGeneratorBuff3 = 44,
+				id = "gallentePhenomenaGeneratorBuff3";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto attributeID: {"armorThermalDamageResonance", "shieldThermalDamageResonance", "thermalDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 45://minmatarPhenomenaGeneratorBuff1 = 45,
+				id = "minmatarPhenomenaGeneratorBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("signatureRadius"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 46://minmatarPhenomenaGeneratorBuff2 = 46,
+				id = "minmatarPhenomenaGeneratorBuff2";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto attributeID: {"armorThermalDamageResonance", "shieldThermalDamageResonance", "thermalDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 47://minmatarPhenomenaGeneratorBuff3 = 47,
+				id = "minmatarPhenomenaGeneratorBuff3";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto attributeID: {"armorExplosiveDamageResonance", "shieldExplosiveDamageResonance", "explosiveDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 48://caldariPhenomenaGeneratorBuff1 = 48,
+				id = "caldariPhenomenaGeneratorBuff1";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("shieldCapacity"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 49://caldariPhenomenaGeneratorBuff2 = 49,
+				id = "caldariPhenomenaGeneratorBuff2";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto attributeID: {"armorEmDamageResonance", "shieldEmDamageResonance", "emDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 50://caldariPhenomenaGeneratorBuff3 = 50,
+				id = "caldariPhenomenaGeneratorBuff3";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto attributeID: {"armorKineticDamageResonance", "shieldKineticDamageResonance", "kineticDamageResonance"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				}
+				break;
+		case 51://amarrPhenomenaGeneratorBuff4 = 51,
+				id = "amarrPhenomenaGeneratorBuff4";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("maxVelocity"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		case 52://gallentePhenomenaGeneratorBuff4 = 52,
+				id = "gallentePhenomenaGeneratorBuff4";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("shieldBonus"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>("shieldEmissionSystems"), nullopt));
+				break;
+		case 53://caldariPhenomenaGeneratorBuff4 = 53,
+				id = "caldariPhenomenaGeneratorBuff4";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("armorDamageAmount"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>("remoteArmorRepairSystems"), nullopt));
+				break;
+		case 54://minmatarPhenomenaGeneratorBuff4 = 54,
+				id = "minmatarPhenomenaGeneratorBuff4";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
+				for (auto groupID: {"energyWeapon", "hybridWeapon"}) {
+					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("maxRange"), Name(modifyingAttributeID), makeOptional<std::string>(groupID), nullopt, nullopt));
+				}
+				break;
+		case 60://evasiveManeuversChargeBuff2 = 60
+				id = "evasiveManeuversChargeBuff2";
+				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("agility"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
+				break;
+		default:
+			throw 0;
+		}
+		
+		int i = 0;
+		std::list<std::string> mnames;
+		for (auto modifier: modifiers) {
+			auto modifierID = id + "_modifier" + std::to_string(i++);
+			std::cout << "\t\t\t"
+			<< "constexpr MetaInfo::Modifier " << modifierID << " = " << modifier << ";" << std::endl;
+			mnames.push_back(modifierID);
+		}
+		
+		std::cout << "\t\t\t"
+		<< "constexpr auto " << id << " = MakeBuff(WarfareBuffID::" << id
+		<< ", AttributeID::" << Name(modifyingAttributeID).to_str()
+		<< ", _modifiers(";
+		bool isFirst = true;
+		for (auto modifier: mnames) {
+			if (!isFirst) {
+				std::cout << ", " << std::endl;
+			}
+			std::cout << "&" << modifier;
+			isFirst = false;
+		}
+		std::cout << "));" << std::endl;
+		
+		names.push_back(id);
+	}
+	
+	std::cout << "\t\t}\n" << std::endl
+	//	<< "using namespace Types;" << std::endl
+	<< "		constexpr const MetaInfo::WarfareBuff* warfareBuffs[] {" << std::endl;
+	
+	std::transform(names.begin(), names.end(), std::ostream_iterator<std::string>(std::cout, ", "), [](const auto& i) {
+		return "&WafrareBuffs::" + i;
+	});
+	
+	
+	std::cout << "};" << std::endl
+	<< "	}" << std::endl
+	<< "}" << std::endl;
+
+}
+
 int main(int argc, const char * argv[]) {
 	if (argc == 3) {
 		std::cout << std::boolalpha;
@@ -582,6 +950,10 @@ int main(int argc, const char * argv[]) {
 			dumpEffects(database);
 			return 0;
 		}
+		else if (action == "--warfareBuffs") {
+			dumpWafrareBuffs(database);
+			return 0;
+		}
 		else if (action == "--skills") {
 			dumpSkills(database);
 			return 0;
@@ -596,10 +968,13 @@ actions:\n\
 	--groupIDs\n\
 	--categoryIDs\n\
 	--effectIDs\n\
+	--warfareBuffIDs\n\
 	--attributes\n\
 	--types\n\
 	--modifiers\n\
-	--effects" << std::endl;
+	--effects\n\
+	--warfareBuffs\n\
+	--skills" << std::endl;
 	
 	return 1;
 }

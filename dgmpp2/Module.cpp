@@ -179,18 +179,25 @@ namespace dgmpp2 {
 	}
 	
 	void Module::charge (std::unique_ptr<Charge> charge) {
-		if (auto currentCharge = this->charge()) {
-			currentCharge->parent(nullptr);
-			charge_ = nullptr;
-		}
-		if (charge != nullptr) {
-			if (canFit(charge.get())) {
-				charge_ = std::move(charge);
-				charge_->parent(this);
+		batchUpdates([&]() {
+			auto enabled = isEnabled();
+			
+			setEnabled(false);
+			if (auto currentCharge = this->charge()) {
+				currentCharge->parent(nullptr);
+				charge_ = nullptr;
 			}
-			else
-				throw CannotFit<Charge>(std::move(charge));
-		}
+			if (charge != nullptr) {
+				if (canFit(charge.get())) {
+					charge_ = std::move(charge);
+					charge_->parent(this);
+				}
+				else
+					throw CannotFit<Charge>(std::move(charge));
+			}
+			if (enabled)
+				setEnabled(true);
+		});
 	}
 	
 	bool Module::canFit(Charge* charge) {

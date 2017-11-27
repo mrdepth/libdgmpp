@@ -29,6 +29,7 @@ namespace dgmpp2 {
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		
 	private:
+		friend class WarfareBuffEffect;
 		Gang() : Type(TypeID::none) {}
 		std::list<std::unique_ptr<Character>> pilots_;
 	};

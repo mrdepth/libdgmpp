@@ -133,6 +133,8 @@
 		125ECFD21C4A28DD00A1CDA9 /* Cycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		125ECFD61C4A2AC800A1CDA9 /* ProductionCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */; };
 		125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12649A131FCC2060007B22CD /* WarfareBuffs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12649A121FCC2060007B22CD /* WarfareBuffs.hpp */; };
+		12649A141FCC2060007B22CD /* WarfareBuffs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12649A121FCC2060007B22CD /* WarfareBuffs.hpp */; };
 		12791CBC1FA1C1CC00577188 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
 		1286564F1C57AD440002BA7E /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1286564D1C57AD440002BA7E /* State.cpp */; };
 		128656511C57AD440002BA7E /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 1286564E1C57AD440002BA7E /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -197,8 +199,8 @@
 		12B3311F1FBD99B40072D4E4 /* Attribute.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B3311B1FBD99B40072D4E4 /* Attribute.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B53FFB1FCAD48500631067 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B53FF91FCAD48500631067 /* WarfareBuff.cpp */; };
 		12B53FFC1FCAD48500631067 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B53FF91FCAD48500631067 /* WarfareBuff.cpp */; };
-		12B53FFD1FCAD48500631067 /* WarfareBuff.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */; };
-		12B53FFE1FCAD48500631067 /* WarfareBuff.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */; };
+		12B53FFD1FCAD48500631067 /* WarfareBuff.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12B53FFE1FCAD48500631067 /* WarfareBuff.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B540001FCB61F400631067 /* WarfareBuffID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B540011FCB61F400631067 /* WarfareBuffID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D9F9841CC3A98B00313F8D /* SqliteFetchResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A3C6C9177C28A90067E00C /* SqliteFetchResult.cpp */; };
@@ -377,6 +379,7 @@
 		125ECFCF1C4A28DD00A1CDA9 /* Cycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cycle.h; sourceTree = "<group>"; };
 		125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionCycle.cpp; sourceTree = "<group>"; };
 		125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductionCycle.h; sourceTree = "<group>"; };
+		12649A121FCC2060007B22CD /* WarfareBuffs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WarfareBuffs.hpp; sourceTree = "<group>"; };
 		1286564D1C57AD440002BA7E /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
 		1286564E1C57AD440002BA7E /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		128656531C57AE6A0002BA7E /* ProductionState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionState.cpp; sourceTree = "<group>"; };
@@ -700,6 +703,7 @@
 				12B331021FBD97F80072D4E4 /* Skills.hpp */,
 				12B330FC1FBD97F80072D4E4 /* TypeID.hpp */,
 				12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */,
+				12649A121FCC2060007B22CD /* WarfareBuffs.hpp */,
 				12B330FF1FBD97F80072D4E4 /* Types.hpp */,
 			);
 			name = SDE;
@@ -947,6 +951,7 @@
 				12A156B01C46548D00C3CF0B /* Route.h in Headers */,
 				12A1567A1C464E6400C3CF0B /* CommandCenter.h in Headers */,
 				12E864F31FC864F600C9C4BD /* Implant.hpp in Headers */,
+				12649A131FCC2060007B22CD /* WarfareBuffs.hpp in Headers */,
 				12564BFE1B84B07F000F68D8 /* types.h in Headers */,
 				12B3310E1FBD99070072D4E4 /* EffectID.hpp in Headers */,
 				12B3310B1FBD98F60072D4E4 /* CategoryID.hpp in Headers */,
@@ -1043,6 +1048,7 @@
 				12D9F9EA1CC3A98B00313F8D /* Route.h in Headers */,
 				12D9F9EB1CC3A98B00313F8D /* CommandCenter.h in Headers */,
 				12E864F41FC864F600C9C4BD /* Implant.hpp in Headers */,
+				12649A141FCC2060007B22CD /* WarfareBuffs.hpp in Headers */,
 				12D9F9EC1CC3A98B00313F8D /* types.h in Headers */,
 				12B331101FBD99080072D4E4 /* EffectID.hpp in Headers */,
 				12B331071FBD98F50072D4E4 /* CategoryID.hpp in Headers */,

@@ -29,6 +29,14 @@ namespace dgmpp2 {
 			};
 		}
 		
+		HP total() const {
+			return shield + armor + hull;
+		}
+		
+		explicit operator HP() const {
+			return total();
+		}
+
 	};
 }
 

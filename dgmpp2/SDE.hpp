@@ -13,6 +13,10 @@
 
 namespace dgmpp2 {
 	namespace SDE {
+		extern const MetaInfo::Attribute& get (AttributeID attributeID);
+		extern const MetaInfo::Type& get (TypeID typeID);
+		extern const MetaInfo::WarfareBuff& get (WarfareBuffID warfareBuffID);
+
 		extern const MetaInfo::Type* const *skills;
 		extern const size_t skillsCount;
 		
@@ -53,9 +57,6 @@ namespace dgmpp2 {
 			AttributeID::canFitShipType9,
 			AttributeID::canFitShipType10,
 		};
-		
-		extern const MetaInfo::Attribute& get (AttributeID attributeID);
-		extern const MetaInfo::Type& get (TypeID typeID);
 		
 		const auto chargeGroupAttributeIDs = {
 			AttributeID::chargeGroup1,
@@ -132,5 +133,21 @@ namespace dgmpp2 {
 			AttributeID::scanGravimetricStrength
 		};
 
+		const auto warfareBuffIDAttributes = {
+			AttributeID::warfareBuff1ID,
+			AttributeID::warfareBuff2ID,
+			AttributeID::warfareBuff3ID,
+			AttributeID::warfareBuff4ID
+		};
+		const auto warfareBuffValueAttributes = {
+			AttributeID::warfareBuff1Value,
+			AttributeID::warfareBuff2Value,
+			AttributeID::warfareBuff3Value,
+			AttributeID::warfareBuff4Value,
+			AttributeID::warfareBuff1Multiplier,
+			AttributeID::warfareBuff2Multiplier,
+			AttributeID::warfareBuff3Multiplier,
+			AttributeID::warfareBuff4Multiplier
+		};
 	}
 }

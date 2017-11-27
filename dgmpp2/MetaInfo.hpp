@@ -148,12 +148,6 @@ namespace dgmpp2 {
 			Effect(Effect&& other) = default;
 		};
 		
-		struct WarfareBuff {
-			WarfareBuffID warfareBuffID;
-			AttributeID modifiedAttributeID;
-			virtual dgmpp2::slice<const Modifier* const*> modifiers() const = 0;
-		};
-		
 		template<typename Modifiers>
 		struct _Effect : public Effect {
 			
@@ -164,6 +158,33 @@ namespace dgmpp2 {
 			virtual dgmpp2::slice<const Modifier* const*> modifiers() const override {
 				return { modifiers_.data(), modifiers_.data() + modifiers_.size() };
 			}
+		private:
+			Modifiers modifiers_;
+		};
+
+		struct WarfareBuff {
+			WarfareBuffID warfareBuffID;
+			AttributeID modifyingAttributeID;
+			constexpr WarfareBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID)
+			: warfareBuffID(warfareBuffID), modifyingAttributeID(modifyingAttributeID) {}
+			virtual dgmpp2::slice<const Modifier* const*> modifiers() const = 0;
+			
+			WarfareBuff (const WarfareBuff& other) = delete;
+			WarfareBuff (WarfareBuff&& other) = delete;
+			WarfareBuff& operator= (const WarfareBuff& other) = delete;
+			WarfareBuff& operator= (WarfareBuff&& other) = delete;
+			~WarfareBuff() = default;
+		};
+		
+		template<typename Modifiers>
+		struct _WarfareBuff : public WarfareBuff {
+			constexpr _WarfareBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID, const Modifiers& modifiers)
+			: WarfareBuff(warfareBuffID, modifyingAttributeID), modifiers_(modifiers) {}
+			
+			virtual dgmpp2::slice<const Modifier* const*> modifiers() const override {
+				return { modifiers_.data(), modifiers_.data() + modifiers_.size() };
+			}
+
 		private:
 			Modifiers modifiers_;
 		};
@@ -233,6 +254,11 @@ namespace dgmpp2 {
 			return { typeID, groupID, categoryID, attributes, effects, requiredSkills };
 		}
 
+		template <typename Modifiers>
+		constexpr _WarfareBuff<Modifiers> MakeBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID, const Modifiers& modifiers) {
+			return { warfareBuffID, modifyingAttributeID, modifiers };
+		}
+
 		template<typename T, typename... Args>
 		struct arr {
 			constexpr arr (T (&a)[sizeof...(Args)]) : array(a) {}
@@ -257,6 +283,11 @@ namespace dgmpp2 {
 		template <typename... Args>
 		constexpr auto _modifiers(Args... args) {
 			return _array<const MetaInfo::Modifier*>(args...);
+		}
+
+		template <typename... Args>
+		constexpr auto _buffModifiers(Args... args) {
+			return _array<MetaInfo::Modifier>(args...);
 		}
 
 		template <typename... Args>

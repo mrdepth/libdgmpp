@@ -851,42 +851,46 @@ int main(int argc, const char * argv[]) {
 			auto pilot = gang->add(dgmpp2::Character::Create());
 			pilot->setSkillLevels(5);
 			auto ship = pilot->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-			auto module = ship->add(dgmpp2::Module::Create(TypeID::heavyNeutronBlasterII));
-			module->charge(dgmpp2::Charge::Create(TypeID::antimatterChargeM));
 			
-			std::cout << module->powerGridUse() << std::endl;
+			std::cout << ship->effectiveHitPoints().total() << std::endl;
 			
-			auto dp = dgmpp2::DamageVector {0.1, 0.3, 0.4, 0.2};
-			auto res = dgmpp2::Resistances {0.3, 0.4, 0.5, 0.6, 0.1, 0.1, 0.1, 0.1, 0.9, 0.9, 0.9, 0.9};
-			auto hp = dgmpp2::HitPoints{100, 100, 100};
-			hp = hp.effective(res, dp);
-			std::copy(&hp.layers[0], &hp.layers[0] + 3, std::ostream_iterator<double>(std::cout, " "));
-			std::cout << std::endl;
+			auto pilot2 = gang->add(dgmpp2::Character::Create());
+			pilot2->setSkillLevels(5);
+			auto erebus = pilot2->setShip(dgmpp2::Ship::Create(TypeID::erebus));
+			auto pg = erebus->add(dgmpp2::Module::Create(TypeID::gallentePhenomenaGenerator));
+			std::cout << ship->effectiveHitPoints().total() << std::endl;
+			pg->state(dgmpp2::Module::State::offline);
+			std::cout << ship->effectiveHitPoints().total() << std::endl;
+			
 			
 		}
 		auto t1 = std::chrono::high_resolution_clock::now();
 		{
-			auto dp = dgmpp::DamagePattern {0.1, 0.3, 0.4, 0.2};
-			auto res = dgmpp::Resistances {0.3, 0.4, 0.5, 0.6, 0.1, 0.1, 0.1, 0.1, 0.9, 0.9, 0.9, 0.9};
-			auto hp = dgmpp::HitPoints {100, 100, 100};
-			hp = dp.effectiveHitPoints(res, hp);
-			std::copy(&hp.layers[0], &hp.layers[0] + 3, std::ostream_iterator<double>(std::cout, " "));
-			std::cout << std::endl;
-
 			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 			auto pilot = engine->getGang()->addPilot();
 			pilot->setAllSkillsLevel(5);
 			auto ship = pilot->setShip(dgmpp::TypeID::dominix);
-			auto module = ship->addModule(dgmpp::TypeID::heavyNeutronBlasterII);
-			module->setCharge(TypeID::antimatterChargeM);
+			
+			auto total = [](dgmpp::HitPoints ehp) {
+				return ehp.shield + ehp.armor + ehp.hull;
+			};
 
-			std::cout << static_cast<Float>(module->getPowerGridUse()) << std::endl;
+			std::cout << total(ship->getEffectiveHitPoints()) << std::endl;
+			
+			auto pilot2 = engine->getGang()->addPilot();
+			pilot2->setAllSkillsLevel(5);
+			auto erebus = pilot->setShip(dgmpp::TypeID::erebus);
+			auto pg = erebus->addModule(TypeID::gallentePhenomenaGenerator);
+			std::cout << total(ship->getEffectiveHitPoints()) << std::endl;
+			pg->setState(dgmpp::Module::State::offline);
+			std::cout << total(ship->getEffectiveHitPoints()) << std::endl;
+
 		}
-		return 0;
 		auto t2 = std::chrono::high_resolution_clock::now();
 		auto dt0 = t1-t0;
 		auto dt1 = t2-t1;
 		std::cout << dt0.count() << " " << dt1.count() << std::endl << (double)dt1.count() / (double)dt0.count() << std::endl;
+		return 0;
 //		578=2
 //		37=218
 //

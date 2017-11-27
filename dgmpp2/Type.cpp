@@ -8,7 +8,7 @@
 #include <utility>
 #include "Type.hpp"
 #include "SDE.hpp"
-
+#include <numeric>
 
 namespace dgmpp2 {
 	
@@ -37,8 +37,12 @@ namespace dgmpp2 {
 		
 		effects_.reserve(metaInfo.effects().size());
 		
-		for (const auto& i: metaInfo.effects())
-			effects_.push_back(std::unique_ptr<Effect>(new Effect(*i, *this)));
+		for (auto i: metaInfo.effects()) {
+			if (i->effectID == EffectID::gangBoost)
+				effects_.push_back(std::unique_ptr<Effect>(new WarfareBuffEffect(*i, *this)));
+			else
+				effects_.push_back(std::unique_ptr<Effect>(new Effect(*i, *this)));
+		}
 	}
 	
 	void Type::parent (Type* parent) {
@@ -86,7 +90,7 @@ namespace dgmpp2 {
 			deactivateEffects(MetaInfo::Effect::Category::generic);
 
 		if (enabled)
-			reset();
+			resetCache();
 	}
 
 	void Type::addModifier(const Modifier* modifier) {
@@ -253,6 +257,35 @@ namespace dgmpp2 {
 		if (auto parent = this->parent()) {
 			result.splice(result.end(), parent->modifiersMatchingType(attribute, *this));
 		}
+		
+		
+		if (!buffs_.empty() &&
+			std::find(SDE::warfareBuffIDAttributes.begin(), SDE::warfareBuffIDAttributes.end(), attribute.attributeID) == SDE::warfareBuffIDAttributes.end() &&
+			std::find(SDE::warfareBuffValueAttributes.begin(), SDE::warfareBuffValueAttributes.end(), attribute.attributeID) == SDE::warfareBuffValueAttributes.end()) {
+
+			std::vector<std::tuple<Float, WarfareBuffID, const WarfareBuff*>> v;
+			v.reserve(buffs_.size());
+			std::transform(buffs_.begin(), buffs_.end(), std::back_inserter(v), [](const auto& i) {
+				return std::tuple_cat(std::make_tuple(std::abs(std::get<const WarfareBuff*>(i)->value())), i);
+			});
+			
+			auto i = v.begin();
+			while (i != v.end()) {
+				auto j =std::upper_bound(i, v.end(), std::get<WarfareBuffID>(*i), [](auto id, const auto& v) {
+					return id < std::get<WarfareBuffID>(v);
+				});
+				auto max = std::max_element(i, j, [](const auto& a, const auto& b) {
+					return std::get<Float>(a) < std::get<Float>(b);
+				});
+				
+				for (const auto& m: std::get<const WarfareBuff*>(*max)->modifiers()) {
+					if (m.metaInfo().modifiedAttributeID == attribute.attributeID && m.match(&type))
+						result.push_back(&m);
+				}
+				
+				i = j;
+			}
+		}
 		return result;
 	}
 	
@@ -260,7 +293,7 @@ namespace dgmpp2 {
 		batchUpdates([&]() {
 			auto range = std::equal_range(effects_.begin(), effects_.end(), category, EffectComparator());
 			std::for_each(range.first, range.second, [&](const auto& i) {
-				if (!i->active()) {
+				if (!i->isActive()) {
 					activate(i.get());
 				}
 			});
@@ -271,7 +304,7 @@ namespace dgmpp2 {
 		batchUpdates([&]() {
 			auto range = std::equal_range(effects_.begin(), effects_.end(), category, EffectComparator());
 			std::for_each(range.first, range.second, [&](const auto& i) {
-				if (i->active()) {
+				if (i->isActive()) {
 					deactivate(i.get());
 				}
 			});
@@ -279,15 +312,27 @@ namespace dgmpp2 {
 	}
 	
 	void Type::activate (Effect* effect) {
-		effect->active(true);
+		effect->setActive(true);
 		for (const auto& modifier: effect->modifiers()) {
 			if (auto type = modifier.domain())
 				type->addModifier(&modifier);
 		}
+		if (auto warfareBuffEffect = dynamic_cast<WarfareBuffEffect*>(effect)) {
+			if (auto gang = domain(MetaInfo::Modifier::Domain::gang)) {
+				for (const auto& buff: warfareBuffEffect->warfareBuffs())
+					gang->addBuff(&buff);
+			}
+		}
 	}
 	
 	void Type::deactivate (Effect* effect) {
-		effect->active(false);
+		if (auto warfareBuffEffect = dynamic_cast<WarfareBuffEffect*>(effect)) {
+			if (auto gang = domain(MetaInfo::Modifier::Domain::gang)) {
+				for (const auto& buff: warfareBuffEffect->warfareBuffs())
+					gang->removeBuff(&buff);
+			}
+		}
+		effect->setActive(false);
 		for (const auto& modifier: effect->modifiers()) {
 			if (auto type = modifier.domain())
 				type->removeModifier(&modifier);
@@ -299,7 +344,7 @@ namespace dgmpp2 {
 		effects.reserve(effects_.size());
 		
 		for (const auto& effect: effects_) {
-			if (effect->active())
+			if (effect->isActive())
 				effects.push_back(effect.get());
 		}
 		return effects;
@@ -332,4 +377,17 @@ namespace dgmpp2 {
 			return *cache_;
 		}
 	}
+	
+	void Type::addBuff (const WarfareBuff* buff) {
+		auto key = std::make_tuple(buff->metaInfo().warfareBuffID, buff);
+		assert (buffs_.find(key) == buffs_.end());
+		buffs_.insert(key);
+	}
+	
+	void Type::removeBuff (const WarfareBuff* buff) {
+		auto key = std::make_tuple(buff->metaInfo().warfareBuffID, buff);
+		assert (buffs_.find(key) != buffs_.end());
+		buffs_.erase(key);
+	}
+
 }

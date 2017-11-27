@@ -6,3 +6,18 @@
 //
 
 #include "WarfareBuff.hpp"
+#include "Type.hpp"
+
+namespace dgmpp2 {
+	WarfareBuff::WarfareBuff (const MetaInfo::WarfareBuff& metaInfo, Type& owner, Effect& effect)
+	: metaInfo_(metaInfo), owner_(owner) {
+		for (const auto info: metaInfo_.modifiers()) {
+			modifiers_.emplace_back(*info, owner, effect);
+		}
+	}
+	
+	Float WarfareBuff::value() const {
+		return owner_[metaInfo_.modifyingAttributeID]->value();
+	}
+	
+}

@@ -7,6 +7,7 @@
 
 #pragma once
 #include "MetaInfo.hpp"
+#include "Modifier.hpp"
 
 namespace dgmpp2 {
 	class Type;
@@ -15,32 +16,25 @@ namespace dgmpp2 {
 	
 	class WarfareBuff {
 	public:
-		Modifier (const MetaInfo::Modifier& metaInfo, Type& owner, const Effect& effect);
-		Modifier (const Modifier& other) = delete;
-		Modifier (Modifier&& other) = delete;
-		Modifier& operator= (const Modifier& other) = delete;
-		Modifier& operator= (Modifier&& other) = delete;
-		virtual ~Modifier() = default;
+		WarfareBuff (const MetaInfo::WarfareBuff& metaInfo, Type& owner, Effect& effect);
+		WarfareBuff (const WarfareBuff& other) = delete;
+		WarfareBuff (WarfareBuff&& other) = delete;
+		WarfareBuff& operator= (const WarfareBuff& other) = delete;
+		WarfareBuff& operator= (WarfareBuff&& other) = delete;
+		virtual ~WarfareBuff() = default;
 		
-		const MetaInfo::Modifier& metaInfo() const { return metaInfo_; }
-		Type& owner() const { return owner_; }
-		Type* domain() const;
-		const Effect& effect() const { return effect_; }
+		const MetaInfo::WarfareBuff& metaInfo() const { return metaInfo_; }
 		
-		bool match(const Type* type) const;
+		const std::list<Modifier>& modifiers() const	{ return modifiers_; };
 		Float value() const;
-		operator Float() const { return value(); }
-		bool needsStackingCheck() const { return needsStackingCheck_; }
-		
 	private:
-		friend class Effect;
+		friend class Type;
+		Type& owner_;
 		
-		const MetaInfo::WarfareBuff&	metaInfo_;
-		Type&				owner_;
-		const Effect&		effect_;
-		Attribute&			modifyingAttribute_;
-		bool				needsStackingCheck_;
-		
+		const MetaInfo::WarfareBuff& metaInfo_;
+		std::list<Modifier>	modifiers_;
+
+
 	};
 }
 
