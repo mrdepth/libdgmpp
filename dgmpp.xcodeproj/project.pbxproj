@@ -61,6 +61,10 @@
 		123BEF481FBDB5D200AC8EB1 /* Drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF451FBDB5D200AC8EB1 /* Drone.cpp */; };
 		123BEF491FBDB5D200AC8EB1 /* Drone.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF461FBDB5D200AC8EB1 /* Drone.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		123BEF4A1FBDB5D200AC8EB1 /* Drone.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123BEF461FBDB5D200AC8EB1 /* Drone.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123CC8A61FCD659200C34372 /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8A41FCD659200C34372 /* Area.cpp */; };
+		123CC8A71FCD659200C34372 /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8A41FCD659200C34372 /* Area.cpp */; };
+		123CC8A81FCD659200C34372 /* Area.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8A51FCD659200C34372 /* Area.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123CC8A91FCD659200C34372 /* Area.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8A51FCD659200C34372 /* Area.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12424E391E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3B1E36397F0078AB0F /* Cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 12424E381E36397F0078AB0F /* Cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -135,6 +139,10 @@
 		125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12649A131FCC2060007B22CD /* WarfareBuffs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12649A121FCC2060007B22CD /* WarfareBuffs.hpp */; };
 		12649A141FCC2060007B22CD /* WarfareBuffs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12649A121FCC2060007B22CD /* WarfareBuffs.hpp */; };
+		12649A171FCD5E77007B22CD /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12649A151FCD5E77007B22CD /* Structure.cpp */; };
+		12649A181FCD5E77007B22CD /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12649A151FCD5E77007B22CD /* Structure.cpp */; };
+		12649A191FCD5E77007B22CD /* Structure.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12649A161FCD5E77007B22CD /* Structure.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12649A1A1FCD5E77007B22CD /* Structure.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12649A161FCD5E77007B22CD /* Structure.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12791CBC1FA1C1CC00577188 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
 		1286564F1C57AD440002BA7E /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1286564D1C57AD440002BA7E /* State.cpp */; };
 		128656511C57AD440002BA7E /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 1286564E1C57AD440002BA7E /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -367,6 +375,8 @@
 		123BEF401FBDB59200AC8EB1 /* Charge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Charge.hpp; sourceTree = "<group>"; };
 		123BEF451FBDB5D200AC8EB1 /* Drone.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Drone.cpp; sourceTree = "<group>"; };
 		123BEF461FBDB5D200AC8EB1 /* Drone.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Drone.hpp; sourceTree = "<group>"; };
+		123CC8A41FCD659200C34372 /* Area.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Area.cpp; sourceTree = "<group>"; };
+		123CC8A51FCD659200C34372 /* Area.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Area.hpp; sourceTree = "<group>"; };
 		12424E371E36397F0078AB0F /* Cargo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cargo.cpp; sourceTree = "<group>"; };
 		12424E381E36397F0078AB0F /* Cargo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cargo.h; sourceTree = "<group>"; };
 		1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GangBoostEffect.cpp; sourceTree = "<group>"; };
@@ -380,6 +390,8 @@
 		125ECFD41C4A2AC800A1CDA9 /* ProductionCycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionCycle.cpp; sourceTree = "<group>"; };
 		125ECFD51C4A2AC800A1CDA9 /* ProductionCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductionCycle.h; sourceTree = "<group>"; };
 		12649A121FCC2060007B22CD /* WarfareBuffs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WarfareBuffs.hpp; sourceTree = "<group>"; };
+		12649A151FCD5E77007B22CD /* Structure.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Structure.cpp; sourceTree = "<group>"; };
+		12649A161FCD5E77007B22CD /* Structure.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Structure.hpp; sourceTree = "<group>"; };
 		1286564D1C57AD440002BA7E /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
 		1286564E1C57AD440002BA7E /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		128656531C57AE6A0002BA7E /* ProductionState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionState.cpp; sourceTree = "<group>"; };
@@ -574,31 +586,35 @@
 			name = Base;
 			sourceTree = "<group>";
 		};
-		123BEF201FBDA51000AC8EB1 /* Ship */ = {
+		123BEF201FBDA51000AC8EB1 /* Fitting */ = {
 			isa = PBXGroup;
 			children = (
-				123BEF211FBDA52500AC8EB1 /* Gang.cpp */,
-				123BEF221FBDA52500AC8EB1 /* Gang.hpp */,
-				123BEF271FBDA58700AC8EB1 /* Character.cpp */,
-				123BEF281FBDA58700AC8EB1 /* Character.hpp */,
-				12E864EF1FC864F600C9C4BD /* Implant.cpp */,
-				12E864F01FC864F600C9C4BD /* Implant.hpp */,
+				123CC8A41FCD659200C34372 /* Area.cpp */,
+				123CC8A51FCD659200C34372 /* Area.hpp */,
 				12E864F51FC8650000C9C4BD /* Booster.cpp */,
 				12E864F61FC8650000C9C4BD /* Booster.hpp */,
-				123BEF2D1FBDB3AB00AC8EB1 /* Skill.cpp */,
-				123BEF2E1FBDB3AB00AC8EB1 /* Skill.hpp */,
-				123BEF331FBDB40800AC8EB1 /* Ship.cpp */,
-				123BEF341FBDB40800AC8EB1 /* Ship.hpp */,
-				123BEF391FBDB4A200AC8EB1 /* Module.cpp */,
-				123BEF3A1FBDB4A200AC8EB1 /* Module.hpp */,
+				12EC664F1FBECD840083DBB8 /* Capacitor.cpp */,
+				12EC66501FBECD840083DBB8 /* Capacitor.hpp */,
+				123BEF271FBDA58700AC8EB1 /* Character.cpp */,
+				123BEF281FBDA58700AC8EB1 /* Character.hpp */,
 				123BEF3F1FBDB59200AC8EB1 /* Charge.cpp */,
 				123BEF401FBDB59200AC8EB1 /* Charge.hpp */,
 				123BEF451FBDB5D200AC8EB1 /* Drone.cpp */,
 				123BEF461FBDB5D200AC8EB1 /* Drone.hpp */,
-				12EC664F1FBECD840083DBB8 /* Capacitor.cpp */,
-				12EC66501FBECD840083DBB8 /* Capacitor.hpp */,
+				123BEF211FBDA52500AC8EB1 /* Gang.cpp */,
+				123BEF221FBDA52500AC8EB1 /* Gang.hpp */,
+				12E864EF1FC864F600C9C4BD /* Implant.cpp */,
+				12E864F01FC864F600C9C4BD /* Implant.hpp */,
+				123BEF391FBDB4A200AC8EB1 /* Module.cpp */,
+				123BEF3A1FBDB4A200AC8EB1 /* Module.hpp */,
+				123BEF331FBDB40800AC8EB1 /* Ship.cpp */,
+				123BEF341FBDB40800AC8EB1 /* Ship.hpp */,
+				123BEF2D1FBDB3AB00AC8EB1 /* Skill.cpp */,
+				123BEF2E1FBDB3AB00AC8EB1 /* Skill.hpp */,
+				12649A151FCD5E77007B22CD /* Structure.cpp */,
+				12649A161FCD5E77007B22CD /* Structure.hpp */,
 			);
-			name = Ship;
+			name = Fitting;
 			sourceTree = "<group>";
 		};
 		12A156751C464E2600C3CF0B /* PlanetaryInteraction */ = {
@@ -681,7 +697,7 @@
 			children = (
 				123BEF1F1FBDA4A100AC8EB1 /* Base */,
 				12B331051FBD982B0072D4E4 /* SDE */,
-				123BEF201FBDA51000AC8EB1 /* Ship */,
+				123BEF201FBDA51000AC8EB1 /* Fitting */,
 				12B330F41FBD97F80072D4E4 /* Utility.hpp */,
 				12E864EC1FC8627D00C9C4BD /* Errors.hpp */,
 				12B330F71FBD97F80072D4E4 /* SDE.cpp */,
@@ -702,9 +718,9 @@
 				12B330FE1FBD97F80072D4E4 /* Modifiers.hpp */,
 				12B331021FBD97F80072D4E4 /* Skills.hpp */,
 				12B330FC1FBD97F80072D4E4 /* TypeID.hpp */,
+				12B330FF1FBD97F80072D4E4 /* Types.hpp */,
 				12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */,
 				12649A121FCC2060007B22CD /* WarfareBuffs.hpp */,
-				12B330FF1FBD97F80072D4E4 /* Types.hpp */,
 			);
 			name = SDE;
 			sourceTree = "<group>";
@@ -907,6 +923,7 @@
 				12564BEB1B84B07F000F68D8 /* Drone.h in Headers */,
 				121064A71C9312370032B3DB /* Structure.h in Headers */,
 				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
+				12649A191FCD5E77007B22CD /* Structure.hpp in Headers */,
 				12E864D91FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
 				12E864E71FC8208A00C9C4BD /* Tank.hpp in Headers */,
 				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
@@ -955,6 +972,7 @@
 				12564BFE1B84B07F000F68D8 /* types.h in Headers */,
 				12B3310E1FBD99070072D4E4 /* EffectID.hpp in Headers */,
 				12B3310B1FBD98F60072D4E4 /* CategoryID.hpp in Headers */,
+				123CC8A81FCD659200C34372 /* Area.hpp in Headers */,
 				12B3310A1FBD98F60072D4E4 /* AttributeID.hpp in Headers */,
 				123BEF251FBDA52500AC8EB1 /* Gang.hpp in Headers */,
 				12AEEFE61C26C54200FB7B1D /* EffectPrototype.h in Headers */,
@@ -1004,6 +1022,7 @@
 				12D9F9CD1CC3A98B00313F8D /* Drone.h in Headers */,
 				12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */,
 				12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */,
+				12649A1A1FCD5E77007B22CD /* Structure.hpp in Headers */,
 				12E864DA1FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
 				12E864E81FC8208A00C9C4BD /* Tank.hpp in Headers */,
 				12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */,
@@ -1052,6 +1071,7 @@
 				12D9F9EC1CC3A98B00313F8D /* types.h in Headers */,
 				12B331101FBD99080072D4E4 /* EffectID.hpp in Headers */,
 				12B331071FBD98F50072D4E4 /* CategoryID.hpp in Headers */,
+				123CC8A91FCD659200C34372 /* Area.hpp in Headers */,
 				12B331061FBD98F50072D4E4 /* AttributeID.hpp in Headers */,
 				123BEF261FBDA52500AC8EB1 /* Gang.hpp in Headers */,
 				12D9F9ED1CC3A98B00313F8D /* EffectPrototype.h in Headers */,
@@ -1223,6 +1243,7 @@
 				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
 				12E864F11FC864F600C9C4BD /* Implant.cpp in Sources */,
 				12215B471C1D7725003B6DA5 /* SqliteFetchRequest.cpp in Sources */,
+				123CC8A61FCD659200C34372 /* Area.cpp in Sources */,
 				12424E391E36397F0078AB0F /* Cargo.cpp in Sources */,
 				12B331181FBD999F0072D4E4 /* SDE.cpp in Sources */,
 				12A156961C4650A700C3CF0B /* Facility.cpp in Sources */,
@@ -1249,6 +1270,7 @@
 				12564BBF1B84B027000F68D8 /* HeatSimulator.cpp in Sources */,
 				12EC66511FBECD840083DBB8 /* Capacitor.cpp in Sources */,
 				12564BC51B84B027000F68D8 /* SqliteConnector.cpp in Sources */,
+				12649A171FCD5E77007B22CD /* Structure.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1299,6 +1321,7 @@
 				12D9F9A01CC3A98B00313F8D /* FetchRequest.cpp in Sources */,
 				12E864F21FC864F600C9C4BD /* Implant.cpp in Sources */,
 				12D9F9A11CC3A98B00313F8D /* SqliteFetchRequest.cpp in Sources */,
+				123CC8A71FCD659200C34372 /* Area.cpp in Sources */,
 				12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */,
 				12B331191FBD999F0072D4E4 /* SDE.cpp in Sources */,
 				12D9F9A21CC3A98B00313F8D /* Facility.cpp in Sources */,
@@ -1325,6 +1348,7 @@
 				12D9F9B51CC3A98B00313F8D /* HeatSimulator.cpp in Sources */,
 				12EC66521FBECD840083DBB8 /* Capacitor.cpp in Sources */,
 				12D9F9B61CC3A98B00313F8D /* SqliteConnector.cpp in Sources */,
+				12649A181FCD5E77007B22CD /* Structure.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

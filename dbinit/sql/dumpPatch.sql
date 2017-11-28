@@ -11,8 +11,9 @@ UPDATE dgmExpressions SET expressionTypeID=3423 WHERE expressionID=1555;
 UPDATE dgmExpressions SET expressionTypeID=3452 WHERE expressionID=1506;
 
 --Filter invTypes
-delete from invCategories where categoryID not in (1, 4, 8, 17, 18, 20, 7, 6, 16, 23, 32, 41, 42, 43, 65, 66, 87);
+delete from invCategories where categoryID not in (1, 2, 4, 8, 17, 18, 20, 7, 6, 16, 23, 32, 41, 42, 43, 65, 66, 87);
 delete from invGroups where categoryID not in (select categoryID from invCategories);
+delete from invGroups where categoryID = 2 AND groupName <> "Effect Beacon";
 delete from invTypes where groupID not in (select groupID from invGroups);
 delete from dgmTypeAttributes where typeID not in (select typeID from invTypes);
 delete from dgmTypeEffects where typeID not in (select typeID from invTypes);

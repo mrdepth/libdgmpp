@@ -4,6 +4,7 @@ namespace dgmpp {
 	enum class CategoryID: unsigned short {
 		none = 0,
 		owner = 1,
+		celestial = 2,
 		material = 4,
 		ship = 6,
 		module = 7,

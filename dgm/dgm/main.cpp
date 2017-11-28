@@ -573,7 +573,7 @@ void dumpSkills(SQLiteDatabase& database) {
 	<< "#include \"Types.hpp\"\n" << std::endl
 	<< "namespace dgmpp2 {" << std::endl
 	<< "	namespace SDE {" << std::endl
-	<< "		constexpr const MetaInfo::Type* skills[] = {" << std::endl;
+	<< "		constexpr const MetaInfo::Type* skills_array[] = {" << std::endl;
 	
 	std::set<std::string> unique;
 

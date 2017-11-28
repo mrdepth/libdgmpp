@@ -12,6 +12,7 @@
 #include "Capacitor.hpp"
 #include "Tank.hpp"
 #include "HitPoints.hpp"
+#include "Area.hpp"
 
 namespace dgmpp2 {
 	class Module;
@@ -51,6 +52,9 @@ namespace dgmpp2 {
 		std::vector<Module*> modules (Module::Slot slot) const;
 		std::vector<Module*> modules () const;// {return modules_;}
 		std::vector<Drone*> drones () const;// {return drones_;}
+		
+		Area* area() const { return area_.get(); }
+		void area(std::unique_ptr<Area> area);
 		
 		//Drones
 		size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
@@ -130,6 +134,14 @@ namespace dgmpp2 {
 		
 		virtual void setEnabled (bool enabled) override;
 	protected:
+		ModulesContainer modules_;
+		DronesContainer drones_;
+		
+		std::list<Module*> projectedModules_;
+		std::list<Drone*> projectedDrones_;
+
+		Ship (TypeID typeID): Type(typeID), capacitor_(*this) {};
+		
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		virtual void reset() override;
 		
@@ -148,13 +160,7 @@ namespace dgmpp2 {
 		friend class Module;
 		friend class Drone;
 		
-		Ship (TypeID typeID): Type(typeID), capacitor_(*this) {};
-		
-		ModulesContainer modules_;
-		DronesContainer drones_;
-		
-		std::list<Module*> projectedModules_;
-		std::list<Drone*> projectedDrones_;
+		std::unique_ptr<Area> area_;
 		
 		Capacitor capacitor_;
 		DamageVector damagePattern_ = {0.25};

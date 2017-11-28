@@ -3,7 +3,7 @@
 
 namespace dgmpp2 {
 	namespace SDE {
-		constexpr const MetaInfo::Type* const skills_array[] = {
+		constexpr const MetaInfo::Type* skills_array[] = {
 			&Types::advancedPlanetology,
 			&Types::planetology,
 			&Types::interplanetaryConsolidation,

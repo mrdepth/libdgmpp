@@ -277,6 +277,17 @@ namespace dgmpp2 {
 		std::transform(drones_.begin(), drones_.end(), std::back_inserter(result), [](const auto& i) { return std::get<std::unique_ptr<Drone>>(i).get(); });
 		return result;
 	}
+	
+	void Ship::area(std::unique_ptr<Area> area) {
+		if (area_)
+			area_->parent(nullptr);
+		if (area) {
+			area_ = std::move(area);
+			area_->parent(this);
+		}
+		else
+			area_ = nullptr;
+	}
 
 	Type* Ship::domain (MetaInfo::Modifier::Domain domain) {
 		switch (domain) {

@@ -39,4 +39,3 @@ namespace dgmpp {
 		evasiveManeuversChargeBuff2 = 60
 	};
 }
-	

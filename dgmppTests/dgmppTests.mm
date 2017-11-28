@@ -270,6 +270,24 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 	
 }
 
+- (void) testArea {
+	using namespace dgmpp2;
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->setShip(Ship::Create(TypeID::dominix));
+	
+	auto ehp0 = ship->effectiveHitPoints();
+	ship->area(Area::Create(TypeID::wolfRayetEffectBeaconClass6));
+	auto ehp1 = ship->effectiveHitPoints();
+	ship->area(nullptr);
+	auto ehp2 = ship->effectiveHitPoints();
+	
+	XCTAssertGreaterThan(ehp1.total(), ehp0.total());
+	XCTAssertEqual(ehp2.total(), ehp0.total());
+
+}
+
 - (void)testShips {
 	using namespace dgmpp;
 	return;

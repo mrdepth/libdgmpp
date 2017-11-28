@@ -344,6 +344,7 @@ namespace dgmpp {
 		sensorDampenerScript = 911,
 		advancedCapitalConstructionComponents = 913,
 		naniteRepairPaste = 916,
+		effectBeacon = 920,
 		industrialCommandShip = 941,
 		defensiveSystems = 954,
 		depricatedSubsystems = 955,
