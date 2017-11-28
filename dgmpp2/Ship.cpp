@@ -191,7 +191,7 @@ namespace dgmpp2 {
 		switch (module->slot()) {
 			case Module::Slot::subsystem: {
 				auto subSystemSlot = static_cast<int>((*module)[AttributeID::subSystemSlot]->value());
-				auto v = modules(Module::Slot::subsystem);
+				auto v = slice(Module::Slot::subsystem);
 				auto isFull = std::any_of(v.begin(), v.end(), [=](const auto& i) {
 					return static_cast<int>((*std::get<std::unique_ptr<Module>>(i))[AttributeID::subSystemSlot]->value()) == subSystemSlot;
 				});
@@ -245,7 +245,7 @@ namespace dgmpp2 {
 		return false;
 	}
 	
-	slice<Ship::ModulesContainer::const_iterator> Ship::modules (Module::Slot slot) const {
+	slice<Ship::ModulesContainer::const_iterator> Ship::slice (Module::Slot slot) const {
 		return equal_range(modules_, std::make_tuple(slot));
 //		auto first = std::lower_bound(modules_.cbegin(), modules_.cend(), slot, [](auto a, auto b) {
 //			return a->slot() < b;
@@ -256,6 +256,28 @@ namespace dgmpp2 {
 //		return {first, last};
 	}
 	
+	std::vector<Module*> Ship::modules (Module::Slot slot) const {
+		auto s = slice(slot);
+		std::vector<Module*> result;
+		result.reserve(s.size());
+		std::transform(s.begin(), s.end(), std::back_inserter(result), [](const auto& i) { return std::get<std::unique_ptr<Module>>(i).get(); });
+		return result;
+	}
+
+	std::vector<Module*> Ship::modules () const {
+		std::vector<Module*> result;
+		result.reserve(modules_.size());
+		std::transform(modules_.begin(), modules_.end(), std::back_inserter(result), [](const auto& i) { return std::get<std::unique_ptr<Module>>(i).get(); });
+		return result;
+	}
+
+	std::vector<Drone*> Ship::drones () const {
+		std::vector<Drone*> result;
+		result.reserve(drones_.size());
+		std::transform(drones_.begin(), drones_.end(), std::back_inserter(result), [](const auto& i) { return std::get<std::unique_ptr<Drone>>(i).get(); });
+		return result;
+	}
+
 	Type* Ship::domain (MetaInfo::Modifier::Domain domain) {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::ship :
@@ -374,7 +396,7 @@ namespace dgmpp2 {
 	}
 	
 	CalibrationPoints Ship::usedCalibration() {
-		auto rigs = modules(Module::Slot::rig);
+		auto rigs = slice(Module::Slot::rig);
 		return std::accumulate(rigs.begin(), rigs.end(), CalibrationPoints(0), [](auto sum, const auto& i) {
 			return std::get<std::unique_ptr<Module>>(i)->calibrationUse() + sum;
 		});
@@ -812,13 +834,13 @@ namespace dgmpp2 {
 			Module::Slot::starbaseStructure};
 		for (auto slot: slots) {
 			auto n = totalSlots(slot);
-			for (const auto& i: modules(slot)) {
+			for (const auto& i: slice(slot)) {
 				std::get<std::unique_ptr<Module>>(i)->fail(n <= 0);
 				n--;
 			}
 		}
 		
-		for (const auto& i: modules()) {
+		for (const auto& i: modules_) {
 			std::get<std::unique_ptr<Module>>(i)->adjustState();
 		}
 		capacitor_.reset();

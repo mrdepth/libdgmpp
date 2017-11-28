@@ -48,9 +48,9 @@ namespace dgmpp2 {
 		void remove (Drone* drone);
 		bool canFit (Module* module);
 		bool canFit (Drone* drone);
-		slice<ModulesContainer::const_iterator> modules (Module::Slot slot) const;
-		const ModulesContainer& modules () const {return modules_;}
-		const DronesContainer& drones () const {return drones_;}
+		std::vector<Module*> modules (Module::Slot slot) const;
+		std::vector<Module*> modules () const;// {return modules_;}
+		std::vector<Drone*> drones () const;// {return drones_;}
 		
 		//Drones
 		size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
@@ -62,7 +62,7 @@ namespace dgmpp2 {
 		//Resources
 		size_t totalSlots (Module::Slot slot);
 		size_t freeSlots (Module::Slot slot) {return totalSlots(slot) - usedSlots(slot);}
-		size_t usedSlots (Module::Slot slot) {return modules(slot).size();}
+		size_t usedSlots (Module::Slot slot) {return slice(slot).size();}
 		
 		size_t totalHardpoints (Module::Hardpoint hardpoint);
 		size_t freeHardpoints (Module::Hardpoint hardpoint);
@@ -139,6 +139,8 @@ namespace dgmpp2 {
 		void project(Drone* drone);
 		void removeProjected(Module* module);
 		void removeProjected(Drone* drone);
+
+		slice<ModulesContainer::const_iterator> slice (Module::Slot slot) const;
 
 	private:
 		friend class Character;

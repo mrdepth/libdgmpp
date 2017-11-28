@@ -10,12 +10,12 @@
 #import <dgmpp/dgmpp.h>
 #include <memory>
 
-using namespace dgmpp;
+//using namespace dgmpp;
 using namespace std::chrono_literals;
 
-std::shared_ptr<Engine> createEngine() {
-//	return std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-	return std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+std::shared_ptr<dgmpp::Engine> createEngine() {
+	return std::make_shared<dgmpp::Engine>(std::make_shared<dgmpp::SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+//	return std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 }
 
 @interface dgmppTests : XCTestCase {
@@ -35,7 +35,60 @@ std::shared_ptr<Engine> createEngine() {
     [super tearDown];
 }
 
+- (void) testSkills {
+	using namespace dgmpp2;
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	auto ship = pilot->setShip(Ship::Create(TypeID::dominix));
+	ship->add(Module::Create(TypeID::largeArmorRepairerI));
+	
+	auto hp0 = ship->hitPoints();
+	auto tank0 = ship->tank();
+	auto cap0 = ship->capacitor().lastsTime();
+	pilot->setSkillLevels(5);
+	auto hp1 = ship->hitPoints();
+	auto tank1 = ship->tank();
+	auto cap1 = ship->capacitor().lastsTime();
+	
+	XCTAssertGreaterThan(hp1.total(), hp0.total());
+	XCTAssertGreaterThan(tank1.armorRepair, tank0.armorRepair);
+	XCTAssertGreaterThan(tank1.passiveShield, tank0.passiveShield);
+	XCTAssertGreaterThan(cap1, cap0);
+}
+
+- (void) testGangBoost {
+	using namespace dgmpp2;
+	auto gang = Gang::Create();
+	auto pilotA = gang->add(Character::Create());
+	pilotA->setSkillLevels(5);
+	auto shipA = pilotA->setShip(Ship::Create(TypeID::dominix));
+	shipA->add(Module::Create(TypeID::largeArmorRepairerI));
+	
+	auto ehp0 = shipA->effectiveHitPoints();
+
+	auto pilotB = gang->add(Character::Create());
+	pilotB->setSkillLevels(5);
+	auto shipB = pilotB->setShip(Ship::Create(TypeID::erebus));
+	shipB->add(Module::Create(TypeID::gallentePhenomenaGenerator));
+	
+	auto ehp1 = shipA->effectiveHitPoints();
+	
+	auto burst = shipB->add(Module::Create(TypeID::shieldCommandBurstI));
+	burst->charge(Charge::Create(TypeID::shieldHarmonizingCharge));
+	
+	auto ehp2 = shipA->effectiveHitPoints();
+	burst->charge(nullptr);
+	auto ehp3 = shipA->effectiveHitPoints();
+	
+	XCTAssertGreaterThan(ehp1.total(), ehp0.total());
+	XCTAssertGreaterThan(ehp2.total(), ehp1.total());
+	XCTAssertEqual(ehp3.total(), ehp1.total());
+
+}
+
+
 - (void) testRepairers {
+	using namespace dgmpp;
 	auto engine = createEngine();
 	auto gang = engine->getGang();
 	auto pilot = gang->addPilot();
@@ -67,6 +120,7 @@ std::shared_ptr<Engine> createEngine() {
 }
 
 - (void) testRemoteRepairers {
+	using namespace dgmpp;
 	auto engine = createEngine();
 	auto gang = engine->getGang();
 	auto pilotA = gang->addPilot();
@@ -105,14 +159,21 @@ std::shared_ptr<Engine> createEngine() {
 		i->target(shipB2);
 	
 	auto tank2 = shipB2->tank();
+
+	for (auto i: repairers2)
+		shipA2->remove(i);
 	
+	auto tank3 = shipB2->tank();
+
 	XCTAssertTrue(tank1.armorRepair == tank2.armorRepair * 1s);
 	XCTAssertTrue(tank1.shieldRepair == tank2.shieldRepair * 1s);
 	XCTAssertTrue(tank1.hullRepair == tank2.hullRepair * 1s);
+	XCTAssertEqual(tank3.armorRepair * 1s + tank3.shieldRepair * 1s + tank3.hullRepair * 1s, 0);
 
 }
 
 - (void) testAncillaries {
+	using namespace dgmpp;
 	auto engine = createEngine();
 	auto gang = engine->getGang();
 	auto pilot = gang->addPilot();
@@ -155,6 +216,7 @@ std::shared_ptr<Engine> createEngine() {
 }
 
 - (void) testEnergyDrainers {
+	using namespace dgmpp;
 	auto engine = createEngine();
 	auto gang = engine->getGang();
 	auto pilotA = gang->addPilot();
@@ -186,7 +248,30 @@ std::shared_ptr<Engine> createEngine() {
 	XCTAssertGreaterThan(capUsed3[3], capUsed2[3]);
 }
 
+- (void) testDrones {
+	using namespace dgmpp2;
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->setShip(Ship::Create(TypeID::dominix));
+	
+	auto dps0 = ship->dronesDPS() * 1s;
+	for (int i = 0; i < 5; i++)
+		ship->add(Drone::Create(TypeID::ogreII));
+	auto dps1 = ship->dronesDPS() * 1s;
+	
+	for (const auto& i: ship->drones())
+		ship->remove(i);
+	
+	auto dps2 = ship->dronesDPS() * 1s;
+
+	XCTAssertGreaterThan(dps1.total(), dps0.total());
+	XCTAssertEqual(dps2.total(), dps0.total());
+	
+}
+
 - (void)testShips {
+	using namespace dgmpp;
 	return;
 	
 	[self measureBlock:^{

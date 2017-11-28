@@ -139,7 +139,7 @@ namespace dgmpp2 {
 			AttributeID::warfareBuff3ID,
 			AttributeID::warfareBuff4ID
 		};
-		const auto warfareBuffValueAttributes = {
+		/*const auto warfareBuffValueAttributes = {
 			AttributeID::warfareBuff1Value,
 			AttributeID::warfareBuff2Value,
 			AttributeID::warfareBuff3Value,
@@ -148,6 +148,6 @@ namespace dgmpp2 {
 			AttributeID::warfareBuff2Multiplier,
 			AttributeID::warfareBuff3Multiplier,
 			AttributeID::warfareBuff4Multiplier
-		};
+		};*/
 	}
 }

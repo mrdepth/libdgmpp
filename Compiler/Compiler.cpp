@@ -280,15 +280,26 @@ int main(int argc, char* argv[])
 	PRIMARY KEY (\"effectID\", \"modifierID\"));" << std::endl;
 
 	
-	exec("select a.effectID, preExpression, effectName from dgmEffects as a, dgmTypeEffects as b where a.effectID=b.effectID group by a.effectID", [&](sqlite3_stmt* stmt) -> bool {
+	exec("select a.effectID, preExpression, effectName, modifierInfo from dgmEffects as a, dgmTypeEffects as b where a.effectID=b.effectID group by a.effectID", [&](sqlite3_stmt* stmt) -> bool {
 		int32_t effectID = sqlite3_column_int(stmt, 0);
 		int32_t preExpression = sqlite3_column_int(stmt, 1);
-		currentExpressionID = preExpression;
+//		int32_t modifierInfo = sqlite3_column_int(stmt, 3);
 		
 		try {
-			if (mutators.find((preExpression)) == mutators.end() && modifiers.find(preExpression) == modifiers.end())
-				expressions[preExpression]->exec();
-			
+			currentExpressionID = preExpression;
+			if (mutators.find((currentExpressionID)) == mutators.end() && modifiers.find(currentExpressionID) == modifiers.end())
+				expressions[currentExpressionID]->exec();
+
+			/*if (modifierInfo > 0 && preExpression != modifierInfo) {
+				currentExpressionID = modifierInfo;
+				if (mutators.find((currentExpressionID)) == mutators.end() && modifiers.find(currentExpressionID) == modifiers.end())
+					expressions[currentExpressionID]->exec();
+				if (modifiers[preExpression].size() > modifiers[modifierInfo].size()) {
+					std::cout << effectID << std::endl;
+//					assert(false);
+				}
+			}*/
+
 			for (const auto& modifier: modifiers[preExpression]) {
 				effectModifiersStream << "INSERT INTO dgmEffectModifiers VALUES (" << effectID << "," << modifier.modifierID << ");" << std::endl;
 			}

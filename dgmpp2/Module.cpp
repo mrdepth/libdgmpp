@@ -144,7 +144,7 @@ namespace dgmpp2 {
 							auto maxGroupActive = static_cast<size_t>(attribute->value());
 							auto groupID = metaInfo().groupID;
 							
-							for (const auto& i: ship->modules()) {
+							for (const auto& i: ship->modules_) {
 								auto module = std::get<std::unique_ptr<Module>>(i).get();
 								if (module == this)
 									continue;

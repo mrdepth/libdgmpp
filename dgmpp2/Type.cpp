@@ -259,11 +259,26 @@ namespace dgmpp2 {
 		}
 		
 		
-		if (!buffs_.empty() &&
-			std::find(SDE::warfareBuffIDAttributes.begin(), SDE::warfareBuffIDAttributes.end(), attribute.attributeID) == SDE::warfareBuffIDAttributes.end() &&
-			std::find(SDE::warfareBuffValueAttributes.begin(), SDE::warfareBuffValueAttributes.end(), attribute.attributeID) == SDE::warfareBuffValueAttributes.end()) {
+		if (!buffs_.empty()) {
+			
+			std::map<std::pair<WarfareBuffID, AttributeID>, std::pair<Float, const Modifier*>> modifiers;
+			
+			for (const auto& buff: buffs_) {
+				for (const auto& modifier: std::get<const WarfareBuff*>(buff)->modifiers()) {
+					if (modifier.metaInfo().modifiedAttributeID == attribute.attributeID && modifier.match(&type)) {
+						auto key = std::make_pair(std::get<WarfareBuffID>(buff), modifier.metaInfo().modifyingAttributeID);
+						auto v = std::abs(modifier.value());
 
-			std::vector<std::tuple<Float, WarfareBuffID, const WarfareBuff*>> v;
+						auto i = modifiers.find(key);
+						if (i == modifiers.end() || i->second.first < v) {
+							modifiers[key] = std::make_pair(v, &modifier);
+						}
+					}
+				}
+			}
+			std::transform(modifiers.begin(), modifiers.end(), std::back_inserter(result), [](const auto& i) { return i.second.second; });
+
+			/*std::vector<std::tuple<Float, WarfareBuffID, const WarfareBuff*>> v;
 			v.reserve(buffs_.size());
 			std::transform(buffs_.begin(), buffs_.end(), std::back_inserter(v), [](const auto& i) {
 				return std::tuple_cat(std::make_tuple(std::abs(std::get<const WarfareBuff*>(i)->value())), i);
@@ -284,7 +299,7 @@ namespace dgmpp2 {
 				}
 				
 				i = j;
-			}
+			}*/
 		}
 		return result;
 	}

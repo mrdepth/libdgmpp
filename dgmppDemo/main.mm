@@ -796,77 +796,28 @@ template <typename A, typename B> struct Sort<Mul<A, B>, std::enable_if_t<(type_
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-//		using M = Mul<Meter, Second>;
-//		using T = typename Sort<M>::type;
-//		T t = 0;
-		
-////		auto m = Meter();
-////		auto s = Second();
-////		using tt = decltype(m * s);
-////		tt t = "234";
-//		
-//		auto h = typeid(void).hash_code() > typeid(Meter).hash_code();
-//		//(M*S)/(S/M)/M
-//		using T = Mul<Second, Div<Div<Mul<Meter, Second>, Div<Second, Meter>>, Meter>>;
-//		using T2 = Div<Mul<Meter, Second>, Mul<Second, Meter>>;
-////		typename Normalize<T1>::type n1 = 0;
-////		typename Normalize<T>::type n2 = 0;
-//		using R = typename Normalize<typename Reduce<typename Normalize<T>::type>::type>::type;
-//		using N = typename Normalize<T>::type;
-//		R n = 0;
-////		using V = Div<Meter, Second>;
-////		using L = Reduce<Mul<V, Second>>::type;
-		
-		
-		auto r = rate<dgmpp2::GigaJoule, std::chrono::hours>(1.0);
-		rate<dgmpp2::GigaJoule> r2 = r;
-		
-		r = rate<dgmpp2::GigaJoule>(2.0);
-		
-		auto r3 = r + r2;
-		r += r2;
-		
-		/*const char* s[] = {"a", "b", "c"};
-		dgmpp2::TuplesSet<int, int, const char*> set;
-		for (int i = 0; i < 100; i++)
-			for (int j = 0; j < 100; j++)
-				for (int k = 0; k < 3; k++) {
-					set.emplace(i, j, s[k]);
-				}
-		
-		
-		
-		auto range = dgmpp2::equal_range(set, std::make_tuple(50, 60));
-		
-		std::transform(range.first, range.second, std::ostream_iterator<std::string>(std::cout, "\n"), [](auto i) {
-			return "{" + std::to_string(std::get<0>(i)) + "," + std::to_string(std::get<1>(i)) + "}";
-		});*/
-		
-//		print(range.first, range.second);
 
 		auto t0 = std::chrono::high_resolution_clock::now();
 		{
 		
 			auto gang = dgmpp2::Gang::Create();
-			auto pilot = gang->add(dgmpp2::Character::Create());
-			pilot->setSkillLevels(5);
-			auto ship = pilot->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+			auto pilotA = gang->add(dgmpp2::Character::Create());
+			pilotA->setSkillLevels(5);
+			auto shipA = pilotA->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+			shipA->add(dgmpp2::Module::Create(TypeID::largeArmorRepairerI));
 			
-            auto repairer = ship->add(dgmpp2::Module::Create(TypeID::largeAncillaryArmorRepairer));
-            repairer->charge(dgmpp2::Charge::Create(TypeID::naniteRepairPaste));
-            auto tank = ship->tank();
-
-            
-			std::cout << ship->effectiveHitPoints().total() << std::endl;
+//			auto ehp0 = shipA->effectiveHitPoints();
 			
-			auto pilot2 = gang->add(dgmpp2::Character::Create());
-			pilot2->setSkillLevels(5);
-			auto erebus = pilot2->setShip(dgmpp2::Ship::Create(TypeID::erebus));
-			auto pg = erebus->add(dgmpp2::Module::Create(TypeID::gallentePhenomenaGenerator));
-			std::cout << ship->effectiveHitPoints().total() << std::endl;
-			pg->state(dgmpp2::Module::State::offline);
-			std::cout << ship->effectiveHitPoints().total() << std::endl;
+			auto pilotB = gang->add(dgmpp2::Character::Create());
+			pilotB->setSkillLevels(5);
+			auto shipB = pilotB->setShip(dgmpp2::Ship::Create(TypeID::erebus));
+//			shipB->add(dgmpp2::Module::Create(TypeID::gallentePhenomenaGenerator));
 			
+//			auto ehp1 = shipA->effectiveHitPoints();
+			
+			shipB->add(dgmpp2::Module::Create(TypeID::shieldCommandBurstI))->charge(dgmpp2::Charge::Create(TypeID::shieldHarmonizingCharge));
+			
+			auto ehp2 = shipA->effectiveHitPoints();
 			
 		}
 		auto t1 = std::chrono::high_resolution_clock::now();

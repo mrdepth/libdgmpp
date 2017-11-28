@@ -625,14 +625,14 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 		switch (buffID) {
 		case 10://shieldHarmonizingChargeBuff1 = 10,
 				id = "shieldHarmonizingChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto attributeID: {"shieldEmDamageResonance", "shieldKineticDamageResonance", "shieldThermalDamageResonance", "shieldExplosiveDamageResonance"}) {
 					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				}
 				break;
 		case 11://activeShieldingChargeBuff1 = 11,
 				id = "activeShieldingChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto attributeID: {"capacitorNeed", "duration"}) {
 					for (auto skillID: {"shieldOperation", "shieldEmissionSystems"}) {
 						modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
@@ -641,19 +641,19 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 				break;
 		case 12://shieldExtensionChargeBuff1 = 12,
 				id = "shieldExtensionChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("shieldCapacity"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				break;
 		case 13://armorEnergizingChargeBuff1 = 13,
 				id = "armorEnergizingChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto attributeID: {"armorEmDamageResonance", "armorKineticDamageResonance", "armorThermalDamageResonance", "armorExplosiveDamageResonance"}) {
 					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				}
 				break;
 		case 14://rapidRepairChargeBuff1 = 14,
 				id = "rapidRepairChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto attributeID: {"capacitorNeed", "duration"}) {
 					for (auto skillID: {"repairSystems", "remoteArmorRepairSystems"}) {
 						modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
@@ -662,17 +662,17 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 				break;
 		case 15://armorReinforcementChargeBuff1 = 15,
 				id = "armorReinforcementChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("armorHP"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				break;
 		case 16://sensorOptimizationChargeBuff1 = 16,
 				id = "sensorOptimizationChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("scanResolution"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				break;
 		case 17://electronicSuperiorityChargeBuff1 = 17,
 				id = "electronicSuperiorityChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto attributeID: {"maxRange", "falloffEffectiveness"}) {
 					for (auto groupID: {"ECM", "sensorDampener", "weaponDisruptor", "targetPainter"}) {
 						modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), makeOptional<std::string>(groupID), nullopt, nullopt));
@@ -696,40 +696,40 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 				break;
 		case 18://electronicHardeningChargeBuff1 = 18,
 				id = "electronicHardeningChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto attributeID: {"scanGravimetricStrength", "scanRadarStrength", "scanLadarStrength", "scanMagnetometricStrength"}) {
 					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				}
 				break;
 		case 19://electronicHardeningChargeBuff2 = 19,
 				id = "electronicHardeningChargeBuff2";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto attributeID: {"sensorDampenerResistance", "weaponDisruptionResistance"}) {
 					modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				}
 				break;
 		case 20://evasiveManeuversChargeBuff1 = 20,
 				id = "evasiveManeuversChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("signatureRadius"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				break;
 		case 21://interdictionManeuversChargeBuff1 = 21,
 				id = "interdictionManeuversChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto groupID: {"stasisWeb", "warpScrambler"}) {
 					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationGroup), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("maxRange"), Name(modifyingAttributeID), makeOptional<std::string>(groupID), nullopt, nullopt));
 				}
 				break;
 		case 22://rapidDeploymentChargeBuff1 = 22,
 				id = "rapidDeploymentChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto skillID: {"afterburner", "highSpeedManeuvering"}) {
 					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("speedFactor"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
 				}
 				break;
 		case 23://miningLaserFieldEnhancementChargeBuff1 = 23,
 				id = "miningLaserFieldEnhancementChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto skillID: {"mining", "iceHarvesting", "gasCloudHarvesting"}) {
 					modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("maxRange"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
 				}
@@ -737,7 +737,7 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 				break;
 		case 24://miningLaserOptimizationChargeBuff1 = 24,
 				id = "miningLaserOptimizationChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				for (auto attributeID: {"capacitorNeed", "duration"}) {
 					for (auto skillID: {"mining", "iceHarvesting", "gasCloudHarvesting"}) {
 						modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name(attributeID), Name(modifyingAttributeID), nullopt, makeOptional<std::string>(skillID), nullopt));
@@ -746,12 +746,12 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 				break;
 		case 25://miningEquipmentPreservationChargeBuff1 = 25,
 				id = "miningEquipmentPreservationChargeBuff1";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				modifiers.push_back(modifier(ModifierType(ModifierType::Type::locationRequiredSkill), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("crystalVolatilityChance"), Name(modifyingAttributeID), nullopt, makeOptional<std::string>("mining"), nullopt));
 				break;
 		case 26://sensorOptimizationChargeBuff2 = 26,
 				id = "sensorOptimizationChargeBuff2";
-				modifyingAttributeID = "warfareBuff" + group + "Multiplier";
+				modifyingAttributeID = "warfareBuff" + group + "Value";
 				modifiers.push_back(modifier(ModifierType(ModifierType::Type::item), Association(Association::Type::postPercent), Domain(Domain::Type::ship), Name("maxTargetRange"), Name(modifyingAttributeID), nullopt, nullopt, nullopt));
 				break;
 		case 39://amarrPhenomenaGeneratorBuff1 = 39,
