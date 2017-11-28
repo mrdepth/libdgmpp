@@ -13,6 +13,9 @@
 #include <sstream>
 #include <list>
 #include <set>
+#include "modifiersdump.hpp"
+
+extern void compile (SQLiteDatabase& database);
 
 class Name {
 public:
@@ -958,6 +961,14 @@ int main(int argc, const char * argv[]) {
 			dumpSkills(database);
 			return 0;
 		}
+		else if (action == "--convertModifiers") {
+			convertModifiers(database);
+			return 0;
+		}
+		else if (action == "--compile") {
+			compile(database);
+			return 0;
+		}
 	}
 	
 	std::cout << "\
@@ -974,7 +985,10 @@ actions:\n\
 	--modifiers\n\
 	--effects\n\
 	--warfareBuffs\n\
-	--skills" << std::endl;
+	--skills\n\
+	--convertModifiers\n\
+	--compile\n\
+	" << std::endl;
 	
 	return 1;
 }

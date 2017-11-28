@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		123CC8AC1FCD778F00C34372 /* modifiersdump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8AA1FCD778F00C34372 /* modifiersdump.cpp */; };
+		123CC8AF1FCD878500C34372 /* Compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8AD1FCD878400C34372 /* Compiler.cpp */; };
 		12A821FD1FA8B2CE002809F0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A821FC1FA8B2CE002809F0 /* main.cpp */; };
 		12A822051FA8B2DA002809F0 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A822041FA8B2DA002809F0 /* libsqlite3.tbd */; };
 		12A822081FA8B307002809F0 /* SQLiteDatabase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A822061FA8B307002809F0 /* SQLiteDatabase.cpp */; };
@@ -25,6 +27,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		123CC8AA1FCD778F00C34372 /* modifiersdump.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = modifiersdump.cpp; sourceTree = "<group>"; };
+		123CC8AB1FCD778F00C34372 /* modifiersdump.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = modifiersdump.hpp; sourceTree = "<group>"; };
+		123CC8AD1FCD878400C34372 /* Compiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compiler.cpp; sourceTree = "<group>"; };
+		123CC8AE1FCD878400C34372 /* Compiler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Compiler.hpp; sourceTree = "<group>"; };
+		123CC8B01FCD879500C34372 /* Operands.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Operands.hpp; sourceTree = "<group>"; };
 		12A821F91FA8B2CE002809F0 /* dgm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dgm; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A821FC1FA8B2CE002809F0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		12A822041FA8B2DA002809F0 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -65,8 +72,13 @@
 			isa = PBXGroup;
 			children = (
 				12A821FC1FA8B2CE002809F0 /* main.cpp */,
+				123CC8AA1FCD778F00C34372 /* modifiersdump.cpp */,
+				123CC8AB1FCD778F00C34372 /* modifiersdump.hpp */,
 				12A822061FA8B307002809F0 /* SQLiteDatabase.cpp */,
 				12A822071FA8B307002809F0 /* SQLiteDatabase.hpp */,
+				123CC8AD1FCD878400C34372 /* Compiler.cpp */,
+				123CC8AE1FCD878400C34372 /* Compiler.hpp */,
+				123CC8B01FCD879500C34372 /* Operands.hpp */,
 			);
 			path = dgm;
 			sourceTree = "<group>";
@@ -136,7 +148,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				123CC8AF1FCD878500C34372 /* Compiler.cpp in Sources */,
 				12A822081FA8B307002809F0 /* SQLiteDatabase.cpp in Sources */,
+				123CC8AC1FCD778F00C34372 /* modifiersdump.cpp in Sources */,
 				12A821FD1FA8B2CE002809F0 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,13 +1,16 @@
 SHELL:=/bin/sh
 CC=g++
 #CFLAGS=-arch x86_64 -std=gnu++11 -stdlib=libc++ -lsqlite3
-CFLAGS=-std=c++11 -fvisibility-inlines-hidden
+CFLAGS=-std=gnu++14 -fvisibility-inlines-hidden
 OUTPUT_DIR+=./
 DUMP=${PWD}/dump
 SQL=${PWD}/sql
 T+=${PWD}/tmp
 
-all: dgm.sqlite EffectID.h AttributeID.h CategoryID.h GroupID.h TypeID.h
+all: dgm.sqlite AttributeID.hpp Attributes.hpp CategoryID.hpp EffectID.hpp Effects.hpp GroupID.hpp Modifiers.hpp Skills.hpp TypeID.hpp Types.hpp WarfareBuffID.hpp WarfareBuffs.hpp
+
+dgm: tmp
+	$(CC) $(CFLAGS) ../dgm/dgm/Compiler.cpp ../dgm/dgm/main.cpp ../dgm/dgm/modifiersdump.cpp ../dgm/dgm/SQLiteDatabase.cpp -o $(T)/$@ -lsqlite3
 
 dgmExpressions.sql:
 	cd $(T); ${DUMP}/dump.py
@@ -15,32 +18,22 @@ dgmExpressions.sql:
 dbpatch: dbpatch.h
 	$(CC) $(CFLAGS) ../dbpatch/dbpatch.cpp -o $(T)/$@ -lsqlite3 -I $(T)/
 
-compiler: tmp EffectID.h AttributeID.h CategoryID.h GroupID.h TypeID.h
-	$(CC) $(CFLAGS) ../Compiler/Compiler.cpp -o $(T)/$@ -lsqlite3 -I "../dgmpp/" -I "../dgmpp2/"
-
-modifiersdump: tmp
-	$(CC) $(CFLAGS) ../modifiersdump/main.cpp -o $(T)/$@ -lsqlite3
-
-idsdump: tmp
-	$(CC) $(CFLAGS) ../idsdump/idsdump/main.cpp -o $(T)/$@ -lsqlite3
-
-dbpatch.h: modifiersdump dgmExpressions.sql
+dbpatch.h: dgm dgmExpressions.sql
 	cd $(T); sqlite3 $(T)/dump.sqlite ".read $(SQL)/dump.sql"
 	sqlite3 $(T)/dump.sqlite ".read $(SQL)/dumpPatch.sql"
-	$(T)/modifiersdump $(T)/dump.sqlite $(T)/dbpatch.h
+	$(T)/dgm $(T)/dump.sqlite --convertModifiers > $(T)/dbpatch.h
 
 
 dump.sqlite: dbpatch
 	$(T)/dbpatch $(T)/dump.sqlite
 
 
-dgmModifiers.sql: dump.sqlite compiler
-	$(T)/compiler $(T)/dump.sqlite $(T)/
+dgmModifiers.sql: dump.sqlite dgm
+	$(T)/dgm $(T)/dump.sqlite --compile > $(T)/dgmModifiers.sql
 
 dgm.sqlite: dgmModifiers.sql
 	sqlite3 $(T)/dump.sqlite ".read $(SQL)/dgmpp.sql"
 	sqlite3 dgm.sqlite ".read $(T)/dgmModifiers.sql"
-	sqlite3 dgm.sqlite ".read $(T)/dgmEffectModifiers.sql"
 	sqlite3 dgm.sqlite "vacuum"
 	mv ./dgm.sqlite $(OUTPUT_DIR)/dgm.sqlite
 
@@ -52,22 +45,50 @@ clean:
 	rm -rf ${T}
 	rm -f *.sqlite
 
-EffectID.h: idsdump dump.sqlite
-	$(T)/idsdump $(T)/dump.sqlite EffectID "select effectID, effectName from dgmEffects order by effectID" > ${T}/EffectID.h
-	cp -rf ${T}/EffectID.h ../dgmpp/EffectID.h
+AttributeID.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --attributeIDs > ${T}/AttributeID.hpp
+	cp -rf ${T}/AttributeID.hpp ../dgmpp2/AttributeID.hpp
 
-AttributeID.h: idsdump dump.sqlite
-	$(T)/idsdump $(T)/dump.sqlite AttributeID "select attributeID, attributeName c from dgmAttributeTypes GROUP BY attributeName order by attributeID" > ${T}/AttributeID.h
-	cp -rf ${T}/AttributeID.h ../dgmpp/AttributeID.h
+TypeID.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --typeIDs > ${T}/TypeID.hpp
+	cp -rf ${T}/TypeID.hpp ../dgmpp2/TypeID.hpp
 
-CategoryID.h: idsdump dump.sqlite
-	$(T)/idsdump $(T)/dump.sqlite CategoryID "select categoryID, categoryName from invCategories order by categoryID" > ${T}/CategoryID.h
-	cp -rf ${T}/CategoryID.h ../dgmpp/CategoryID.h
+GroupID.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --groupIDs > ${T}/GroupID.hpp
+	cp -rf ${T}/GroupID.hpp ../dgmpp2/GroupID.hpp
 
-GroupID.h: idsdump dump.sqlite
-	$(T)/idsdump $(T)/dump.sqlite GroupID "SELECT groupID, groupName FROM invGroups WHERE categoryID NOT IN (1,2) GROUP BY groupName ORDER BY groupID" > ${T}/GroupID.h
-	cp -rf ${T}/GroupID.h ../dgmpp/GroupID.h
+CategoryID.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --categoryIDs > ${T}/CategoryID.hpp
+	cp -rf ${T}/CategoryID.hpp ../dgmpp2/CategoryID.hpp
 
-TypeID.h: idsdump dump.sqlite
-	$(T)/idsdump $(T)/dump.sqlite TypeID "select typeID, typeName from invTypes where published = 1 OR groupID = 1 order by typeID" > ${T}/TypeID.h
-	cp -rf ${T}/TypeID.h ../dgmpp/TypeID.h
+EffectID.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --effectIDs > ${T}/EffectID.hpp
+	cp -rf ${T}/EffectID.hpp ../dgmpp2/EffectID.hpp
+
+WarfareBuffID.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --warfareBuffIDs > ${T}/WarfareBuffID.hpp
+	cp -rf ${T}/WarfareBuffID.hpp ../dgmpp2/WarfareBuffID.hpp
+
+Attributes.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --attributes > ${T}/Attributes.hpp
+	cp -rf ${T}/Attributes.hpp ../dgmpp2/Attributes.hpp
+
+Types.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --types > ${T}/Types.hpp
+	cp -rf ${T}/Types.hpp ../dgmpp2/Types.hpp
+
+Modifiers.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --modifiers > ${T}/Modifiers.hpp
+	cp -rf ${T}/Modifiers.hpp ../dgmpp2/Modifiers.hpp
+
+Effects.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --effects > ${T}/Effects.hpp
+	cp -rf ${T}/Effects.hpp ../dgmpp2/Effects.hpp
+
+WarfareBuffs.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --warfareBuffs > ${T}/WarfareBuffs.hpp
+	cp -rf ${T}/WarfareBuffs.hpp ../dgmpp2/WarfareBuffs.hpp
+
+Skills.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --skills > ${T}/Skills.hpp
+	cp -rf ${T}/Skills.hpp ../dgmpp2/Skills.hpp
