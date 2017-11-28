@@ -902,6 +902,67 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 	std::cout << "};" << std::endl
 	<< "	}" << std::endl
 	<< "}" << std::endl;
+}
+
+void dumpCommodityTiers(SQLiteDatabase& database) {
+	database.fetch<>("CREATE TEMP TABLE temp.tiers as SELECT typeID, 0 as \"tier\" FROM planetSchematicsTypeMap WHERE typeID not in (SELECT typeID FROM planetSchematicsTypeMap WHERE isInput = 0 GROUP BY typeID);").next();
+	
+	for (int i = 1; i <= 4; i++) {
+		database.fetch<>("INSERT INTO temp.tiers SELECT typeID, " + std::to_string(i) + " AS \"tier\" FROM planetSchematicsTypeMap WHERE schematicID in (SELECT schematicID FROM planetSchematicsTypeMap WHERE typeID in (SELECT typeID FROM tiers WHERE tier = " + std::to_string(i - 1) + ") AND isInput=1) AND isInput = 0  GROUP BY typeID").next();
+	}
+	
+	auto result = database.fetch<std::string, int, double>("SELECT typeName, tier, volume FROM tiers as a, invTypes as b WHERE a.typeID=b.typeID GROUP BY a.typeID HAVING MAX(tier) order by a.typeID");
+	
+	std::cout
+	<< "#pragma once" << std::endl
+	<< "#include \"MetaInfo.hpp\"\n" << std::endl
+	<< "namespace dgmpp2 {" << std::endl
+	<< "	namespace SDE {" << std::endl
+	<< "		namespace Commodities {" << std::endl;
+
+	std::list<std::string> names;
+	
+	while (auto row = result.next()) {
+		auto typeName = Name(row.get<0>());
+		auto tier = row.get<1>();
+		auto volume = row.get<2>();
+		std::cout << "\t\t\t"
+		<< "constexpr MetaInfo::Commodity " << typeName.to_str() << " = {TypeID::" << typeName.to_str() << ", MetaInfo::Commodity::Tier::";
+		switch (tier) {
+			case 0:
+				std::cout << "raw";
+				break;
+			case 1:
+				std::cout << "tier1";
+				break;
+			case 2:
+				std::cout << "tier2";
+				break;
+			case 3:
+				std::cout << "tier3";
+				break;
+			case 4:
+				std::cout << "tier4";
+				break;
+			default:
+				std::cout << "unknown";
+				break;
+		}
+		std::cout << ", " << volume << "};" << std::endl;
+		
+		names.push_back(typeName.to_str());
+	}
+	
+	std::cout << "\t\t}\n" << std::endl
+	<< "		constexpr const MetaInfo::Commodity* commodities[] {" << std::endl;
+	
+	std::transform(names.begin(), names.end(), std::ostream_iterator<std::string>(std::cout, ", "), [](const auto& i) {
+		return "&Commodities::" + i;
+	});
+	
+	std::cout << "\t\t};" << std::endl
+	<< "	}" << std::endl
+	<< "}" << std::endl;
 
 }
 
@@ -969,6 +1030,10 @@ int main(int argc, const char * argv[]) {
 			compile(database);
 			return 0;
 		}
+		else if (action == "--commodity") {
+			dumpCommodityTiers(database);
+			return 0;
+		}
 	}
 	
 	std::cout << "\
@@ -988,6 +1053,7 @@ actions:\n\
 	--skills\n\
 	--convertModifiers\n\
 	--compile\n\
+	--commodity\
 	" << std::endl;
 	
 	return 1;

@@ -65,6 +65,20 @@
 		123CC8A71FCD659200C34372 /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8A41FCD659200C34372 /* Area.cpp */; };
 		123CC8A81FCD659200C34372 /* Area.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8A51FCD659200C34372 /* Area.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		123CC8A91FCD659200C34372 /* Area.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8A51FCD659200C34372 /* Area.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123CC8B41FCD9B4100C34372 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8B21FCD9B4100C34372 /* Planet.cpp */; };
+		123CC8B51FCD9B4100C34372 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8B21FCD9B4100C34372 /* Planet.cpp */; };
+		123CC8B61FCD9B4100C34372 /* Planet.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8B31FCD9B4100C34372 /* Planet.hpp */; };
+		123CC8B71FCD9B4100C34372 /* Planet.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8B31FCD9B4100C34372 /* Planet.hpp */; };
+		123CC8BA1FCD9B5300C34372 /* Facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8B81FCD9B5300C34372 /* Facility.cpp */; };
+		123CC8BB1FCD9B5300C34372 /* Facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8B81FCD9B5300C34372 /* Facility.cpp */; };
+		123CC8BC1FCD9B5300C34372 /* Facility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8B91FCD9B5300C34372 /* Facility.hpp */; };
+		123CC8BD1FCD9B5300C34372 /* Facility.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8B91FCD9B5300C34372 /* Facility.hpp */; };
+		123CC8C01FCD9B6B00C34372 /* Commodity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8BE1FCD9B6B00C34372 /* Commodity.cpp */; };
+		123CC8C11FCD9B6B00C34372 /* Commodity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8BE1FCD9B6B00C34372 /* Commodity.cpp */; };
+		123CC8C21FCD9B6B00C34372 /* Commodity.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8BF1FCD9B6B00C34372 /* Commodity.hpp */; };
+		123CC8C31FCD9B6B00C34372 /* Commodity.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8BF1FCD9B6B00C34372 /* Commodity.hpp */; };
+		123CC8C51FCDA00800C34372 /* Commodities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8C41FCDA00800C34372 /* Commodities.hpp */; };
+		123CC8C61FCDA00800C34372 /* Commodities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8C41FCDA00800C34372 /* Commodities.hpp */; };
 		12424E391E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3B1E36397F0078AB0F /* Cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 12424E381E36397F0078AB0F /* Cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -377,6 +391,13 @@
 		123BEF461FBDB5D200AC8EB1 /* Drone.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Drone.hpp; sourceTree = "<group>"; };
 		123CC8A41FCD659200C34372 /* Area.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Area.cpp; sourceTree = "<group>"; };
 		123CC8A51FCD659200C34372 /* Area.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Area.hpp; sourceTree = "<group>"; };
+		123CC8B21FCD9B4100C34372 /* Planet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Planet.cpp; sourceTree = "<group>"; };
+		123CC8B31FCD9B4100C34372 /* Planet.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Planet.hpp; sourceTree = "<group>"; };
+		123CC8B81FCD9B5300C34372 /* Facility.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Facility.cpp; sourceTree = "<group>"; };
+		123CC8B91FCD9B5300C34372 /* Facility.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Facility.hpp; sourceTree = "<group>"; };
+		123CC8BE1FCD9B6B00C34372 /* Commodity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Commodity.cpp; sourceTree = "<group>"; };
+		123CC8BF1FCD9B6B00C34372 /* Commodity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Commodity.hpp; sourceTree = "<group>"; };
+		123CC8C41FCDA00800C34372 /* Commodities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Commodities.hpp; sourceTree = "<group>"; };
 		12424E371E36397F0078AB0F /* Cargo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cargo.cpp; sourceTree = "<group>"; };
 		12424E381E36397F0078AB0F /* Cargo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cargo.h; sourceTree = "<group>"; };
 		1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GangBoostEffect.cpp; sourceTree = "<group>"; };
@@ -617,6 +638,19 @@
 			name = Fitting;
 			sourceTree = "<group>";
 		};
+		123CC8B11FCD94F800C34372 /* PlanetaryInteraction */ = {
+			isa = PBXGroup;
+			children = (
+				123CC8B21FCD9B4100C34372 /* Planet.cpp */,
+				123CC8B31FCD9B4100C34372 /* Planet.hpp */,
+				123CC8B81FCD9B5300C34372 /* Facility.cpp */,
+				123CC8B91FCD9B5300C34372 /* Facility.hpp */,
+				123CC8BE1FCD9B6B00C34372 /* Commodity.cpp */,
+				123CC8BF1FCD9B6B00C34372 /* Commodity.hpp */,
+			);
+			name = PlanetaryInteraction;
+			sourceTree = "<group>";
+		};
 		12A156751C464E2600C3CF0B /* PlanetaryInteraction */ = {
 			isa = PBXGroup;
 			children = (
@@ -698,6 +732,7 @@
 				123BEF1F1FBDA4A100AC8EB1 /* Base */,
 				12B331051FBD982B0072D4E4 /* SDE */,
 				123BEF201FBDA51000AC8EB1 /* Fitting */,
+				123CC8B11FCD94F800C34372 /* PlanetaryInteraction */,
 				12B330F41FBD97F80072D4E4 /* Utility.hpp */,
 				12E864EC1FC8627D00C9C4BD /* Errors.hpp */,
 				12B330F71FBD97F80072D4E4 /* SDE.cpp */,
@@ -721,6 +756,7 @@
 				12B330FF1FBD97F80072D4E4 /* Types.hpp */,
 				12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */,
 				12649A121FCC2060007B22CD /* WarfareBuffs.hpp */,
+				123CC8C41FCDA00800C34372 /* Commodities.hpp */,
 			);
 			name = SDE;
 			sourceTree = "<group>";
@@ -901,6 +937,7 @@
 				123BEF091FBD9E5F00AC8EB1 /* Attributes.hpp in Headers */,
 				12564BE21B84B07E000F68D8 /* LocationGroupModifier.h in Headers */,
 				12B3310D1FBD98F60072D4E4 /* TypeID.hpp in Headers */,
+				123CC8B61FCD9B4100C34372 /* Planet.hpp in Headers */,
 				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
 				123BEF171FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
 				123BEF371FBDB40800AC8EB1 /* Ship.hpp in Headers */,
@@ -918,15 +955,18 @@
 				12564BE81B84B07F000F68D8 /* CapacitorSimulator.h in Headers */,
 				128656571C57AE6A0002BA7E /* ProductionState.h in Headers */,
 				12564BE91B84B07F000F68D8 /* Charge.h in Headers */,
+				123CC8C51FCDA00800C34372 /* Commodities.hpp in Headers */,
 				12564BEA1B84B07F000F68D8 /* DamagePattern.h in Headers */,
 				12B331131FBD990F0072D4E4 /* Type.hpp in Headers */,
 				12564BEB1B84B07F000F68D8 /* Drone.h in Headers */,
+				123CC8BC1FCD9B5300C34372 /* Facility.hpp in Headers */,
 				121064A71C9312370032B3DB /* Structure.h in Headers */,
 				12564BEC1B84B07F000F68D8 /* Module.h in Headers */,
 				12649A191FCD5E77007B22CD /* Structure.hpp in Headers */,
 				12E864D91FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
 				12E864E71FC8208A00C9C4BD /* Tank.hpp in Headers */,
 				12564BED1B84B07F000F68D8 /* Ship.h in Headers */,
+				123CC8C21FCD9B6B00C34372 /* Commodity.hpp in Headers */,
 				12424E3B1E36397F0078AB0F /* Cargo.h in Headers */,
 				12B331121FBD990F0072D4E4 /* Utility.hpp in Headers */,
 				12B3310F1FBD99070072D4E4 /* MetaInfo.hpp in Headers */,
@@ -1000,6 +1040,7 @@
 				123BEF0E1FBD9E6000AC8EB1 /* Attributes.hpp in Headers */,
 				12D9F9BF1CC3A98B00313F8D /* LocationGroupModifier.h in Headers */,
 				12B331091FBD98F50072D4E4 /* TypeID.hpp in Headers */,
+				123CC8B71FCD9B4100C34372 /* Planet.hpp in Headers */,
 				12D9F9C01CC3A98B00313F8D /* LocationRequiredSkillModifier.h in Headers */,
 				123BEF181FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
 				123BEF381FBDB40800AC8EB1 /* Ship.hpp in Headers */,
@@ -1017,15 +1058,18 @@
 				12D9F9C91CC3A98B00313F8D /* CapacitorSimulator.h in Headers */,
 				12D9F9CA1CC3A98B00313F8D /* ProductionState.h in Headers */,
 				12D9F9CB1CC3A98B00313F8D /* Charge.h in Headers */,
+				123CC8C61FCDA00800C34372 /* Commodities.hpp in Headers */,
 				12D9F9CC1CC3A98B00313F8D /* DamagePattern.h in Headers */,
 				12B331151FBD990F0072D4E4 /* Type.hpp in Headers */,
 				12D9F9CD1CC3A98B00313F8D /* Drone.h in Headers */,
+				123CC8BD1FCD9B5300C34372 /* Facility.hpp in Headers */,
 				12D9F9CE1CC3A98B00313F8D /* Structure.h in Headers */,
 				12D9F9CF1CC3A98B00313F8D /* Module.h in Headers */,
 				12649A1A1FCD5E77007B22CD /* Structure.hpp in Headers */,
 				12E864DA1FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
 				12E864E81FC8208A00C9C4BD /* Tank.hpp in Headers */,
 				12D9F9D01CC3A98B00313F8D /* Ship.h in Headers */,
+				123CC8C31FCD9B6B00C34372 /* Commodity.hpp in Headers */,
 				12424E3C1E36397F0078AB0F /* Cargo.h in Headers */,
 				12B331141FBD990F0072D4E4 /* Utility.hpp in Headers */,
 				12B331111FBD99080072D4E4 /* MetaInfo.hpp in Headers */,
@@ -1207,6 +1251,7 @@
 				125ECFD01C4A28DD00A1CDA9 /* Cycle.cpp in Sources */,
 				123BEF411FBDB59200AC8EB1 /* Charge.cpp in Sources */,
 				12564BD01B84B03C000F68D8 /* Character.cpp in Sources */,
+				123CC8C01FCD9B6B00C34372 /* Commodity.cpp in Sources */,
 				1248DB541F1E445C009625EC /* GangBoost.cpp in Sources */,
 				1286564F1C57AD440002BA7E /* State.cpp in Sources */,
 				12564BB51B84B027000F68D8 /* Modifier.cpp in Sources */,
@@ -1222,6 +1267,7 @@
 				12AEEFCC1C25BAC200FB7B1D /* Environment.cpp in Sources */,
 				12564BB71B84B027000F68D8 /* LocationRequiredSkillModifier.cpp in Sources */,
 				123BEF351FBDB40800AC8EB1 /* Ship.cpp in Sources */,
+				123CC8BA1FCD9B5300C34372 /* Facility.cpp in Sources */,
 				12A1567E1C464EE800C3CF0B /* ExtractorControlUnit.cpp in Sources */,
 				12564BC41B84B027000F68D8 /* SqlConnector.cpp in Sources */,
 				123BEF1B1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
@@ -1239,6 +1285,7 @@
 				12A156A21C46518000C3CF0B /* Commodity.cpp in Sources */,
 				12B331161FBD99140072D4E4 /* Type.cpp in Sources */,
 				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
+				123CC8B41FCD9B4100C34372 /* Planet.cpp in Sources */,
 				1293C4291C46C10A00B33378 /* Planet.cpp in Sources */,
 				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
 				12E864F11FC864F600C9C4BD /* Implant.cpp in Sources */,
@@ -1285,6 +1332,7 @@
 				12D9F9861CC3A98B00313F8D /* Cycle.cpp in Sources */,
 				123BEF421FBDB59200AC8EB1 /* Charge.cpp in Sources */,
 				12D9F9871CC3A98B00313F8D /* Character.cpp in Sources */,
+				123CC8C11FCD9B6B00C34372 /* Commodity.cpp in Sources */,
 				1248DB551F1E445C009625EC /* GangBoost.cpp in Sources */,
 				12D9F9881CC3A98B00313F8D /* State.cpp in Sources */,
 				12D9F9891CC3A98B00313F8D /* Modifier.cpp in Sources */,
@@ -1300,6 +1348,7 @@
 				12D9F98F1CC3A98B00313F8D /* Environment.cpp in Sources */,
 				12D9F9901CC3A98B00313F8D /* LocationRequiredSkillModifier.cpp in Sources */,
 				123BEF361FBDB40800AC8EB1 /* Ship.cpp in Sources */,
+				123CC8BB1FCD9B5300C34372 /* Facility.cpp in Sources */,
 				12D9F9911CC3A98B00313F8D /* ExtractorControlUnit.cpp in Sources */,
 				12D9F9921CC3A98B00313F8D /* SqlConnector.cpp in Sources */,
 				123BEF1C1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
@@ -1317,6 +1366,7 @@
 				12D9F99D1CC3A98B00313F8D /* Commodity.cpp in Sources */,
 				12B331171FBD99150072D4E4 /* Type.cpp in Sources */,
 				12D9F99E1CC3A98B00313F8D /* FetchResult.cpp in Sources */,
+				123CC8B51FCD9B4100C34372 /* Planet.cpp in Sources */,
 				12D9F99F1CC3A98B00313F8D /* Planet.cpp in Sources */,
 				12D9F9A01CC3A98B00313F8D /* FetchRequest.cpp in Sources */,
 				12E864F21FC864F600C9C4BD /* Implant.cpp in Sources */,

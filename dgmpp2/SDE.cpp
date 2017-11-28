@@ -8,6 +8,7 @@
 #include "SDE.hpp"
 #include "Skills.hpp"
 #include "WarfareBuffs.hpp"
+#include "Commodities.hpp"
 
 namespace dgmpp2 {
 	namespace SDE {
@@ -68,6 +69,10 @@ namespace dgmpp2 {
 			return value->warfareBuffID;
 		}
 
+		template<> TypeID getKey<TypeID, const MetaInfo::Commodity* const>(const MetaInfo::Commodity* const value) {
+			return value->typeID;
+		}
+
 		const MetaInfo::Attribute& get(AttributeID attributeID) {
 			return *get<AttributeID>(attributes, attributeID);
 		}
@@ -79,6 +84,11 @@ namespace dgmpp2 {
 		const MetaInfo::WarfareBuff& get (WarfareBuffID warfareBuffID) {
 			return *get<WarfareBuffID>(warfareBuffs, warfareBuffID);
 		}
+		
+		const MetaInfo::Commodity& commodity (TypeID typeID) {
+			return *get<TypeID>(commodities, typeID);
+		}
+
 
 	}
 }

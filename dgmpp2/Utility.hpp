@@ -17,6 +17,7 @@
 #include <chrono>
 #include <algorithm>
 #include <cassert>
+#include <experimental/optional>
 
 #include "AttributeID.hpp"
 #include "CategoryID.hpp"
@@ -25,6 +26,12 @@
 #include "EffectID.hpp"
 #include "WarfareBuffID.hpp"
 #include "Rate.hpp"
+
+namespace std {
+	template<typename T>
+	using optional = std::experimental::optional<T>;
+	constexpr auto nullopt = std::experimental::nullopt;
+}
 
 namespace dgmpp2 {
 	using Float = double;
@@ -133,7 +140,7 @@ namespace dgmpp2 {
 		return std::make_pair(c.lower_bound(k), c.upper_bound(k));
 	}
 
-	template <typename T> struct optional {
+	/*template <typename T> struct optional {
 		optional(T* ptr) : value_(ptr) {}
 		optional(const T& value) : value_(new T(value)) {}
 		optional(optional&& other) = default;
@@ -192,9 +199,9 @@ namespace dgmpp2 {
 	
 	template <typename T> optional<T> make_optional(T&& t) {
 		return optional<T>(std::forward<T>(t));
-	}
+	}*/
 	
-	template <typename T> class ref {
+	/*template <typename T> class ref {
 	public:
 		constexpr ref(T& ref) : ref_(ref) {}
 		
@@ -207,7 +214,8 @@ namespace dgmpp2 {
 		}
 	private:
 		T& ref_;
-	};
+	};*/
+	
 	
 	template <typename Iter> class slice {
 	public:

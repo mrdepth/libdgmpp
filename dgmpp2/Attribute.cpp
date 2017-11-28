@@ -95,7 +95,7 @@ namespace dgmpp2 {
 	Attribute& Attribute::Proxy::operator*() const {
 		if (!attribute_->second) {
 			const auto& metaInfo = this->metaInfo();
-			attribute_->second = std::unique_ptr<Attribute>(new Attribute(metaInfo, metaInfo.defaultValue, owner_));
+			attribute_->second = std::unique_ptr<Attribute>(new Attribute(metaInfo, metaInfo.defaultValue, *owner_));
 		}
 		return *attribute_->second;
 	}
@@ -110,7 +110,7 @@ namespace dgmpp2 {
 		return *metaInfo_;
 	}
 	
-	Attribute& Attribute::operator= (optional<Float>&& value) {
+	Attribute& Attribute::operator= (std::optional<Float>&& value) {
 		forcedValue_ = std::move(value);
 		owner().resetCache();
 		return *this;
@@ -243,7 +243,7 @@ namespace dgmpp2 {
 			value = multiply(range, value);
 			
 			if (maxAttribute_) {
-				value = std::min(value, maxAttribute_->value());
+				value = std::min(value, (*maxAttribute_)->value());
 			}
 //			std::cout << static_cast<int>(metaInfo().attributeID) << ": " << value << std::endl;
 			value_ = value;

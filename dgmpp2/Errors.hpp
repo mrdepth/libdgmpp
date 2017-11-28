@@ -22,9 +22,17 @@ namespace dgmpp2 {
 	};
 
 	template<typename T>
-	class NotFound : public std::runtime_error {
+	class NotFound: public std::runtime_error {
 	public:
 		NotFound (T identifier) : std::runtime_error("id = " + std::to_string(static_cast<int>(identifier))) {};
 	};
+	
+	struct NotEnoughCommodities: public std::runtime_error {
+		NotEnoughCommodities(size_t quantity) : std::runtime_error(std::to_string(quantity)) {}
+	};
+	
+//	struct DifferentCommodities: public std::runtime_error {
+//		DifferentCommodities(TypeID a, TypeID b) : std::runtime_error(std::to_string(static_cast<int>(a)) + " != " + std::to_string(static_cast<int>(b))) {}
+//	}
 
 }

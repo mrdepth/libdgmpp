@@ -211,7 +211,30 @@ namespace dgmpp2 {
 				return std::find(requiredSkills.begin(), requiredSkills.end(), skillID) != requiredSkills.end();
 			}
 		protected:
-			Type(Type&& other) = default;
+			Type (Type&& other) = default;
+		};
+		
+		
+		struct Commodity {
+			enum class Tier {
+				unknown = -1,
+				raw,
+				tier1,
+				tier2,
+				tier3,
+				tier4
+			};
+
+			TypeID typeID;
+			Tier tier;
+			CubicMeter volume;
+			
+			Commodity (const Commodity& other) = delete;
+			Commodity (Commodity&& other) = delete;
+			Commodity& operator= (const Commodity& other) = delete;
+			Commodity& operator= (Commodity&& other) = delete;
+			~Commodity() = default;
+
 		};
 		
 		template <typename Attributes, typename Effects, typename RequiredSkills>
