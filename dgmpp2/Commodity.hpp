@@ -37,11 +37,11 @@ namespace dgmpp2 {
 			return *this;
 		}
 
-		Commodity& operator= (const Commodity& other) noexcept {
-			assert(metaInfo_.typeID == other.metaInfo_.typeID);
-			quantity_ = other.quantity_;
-			return *this;
-		}
+//        Commodity& operator= (const Commodity& other) noexcept {
+//            assert(metaInfo_.typeID == other.metaInfo_.typeID);
+//            quantity_ = other.quantity_;
+//            return *this;
+//        }
 
 		Commodity operator+ (size_t value) const noexcept {
 			auto other = Commodity(*this);
@@ -57,22 +57,22 @@ namespace dgmpp2 {
 			return other;
 		}
 
-		Commodity operator+ (const Commodity& other) const noexcept {
-			assert(metaInfo_.typeID == other.metaInfo_.typeID);
-			auto result = Commodity(*this);
-			result.quantity_ += other.quantity_;
-			return result;
-		}
-		
-		Commodity operator- (const Commodity& other) const {
-			assert(metaInfo_.typeID == other.metaInfo_.typeID);
-			
-			if (quantity_ < other.quantity_)
-				throw NotEnoughCommodities(quantity_ - other.quantity_);
-			auto result = Commodity(*this);
-			result.quantity_ -= other.quantity_;
-			return result;
-		}
+//        Commodity operator+ (const Commodity& other) const noexcept {
+//            assert(metaInfo_.typeID == other.metaInfo_.typeID);
+//            auto result = Commodity(*this);
+//            result.quantity_ += other.quantity_;
+//            return result;
+//        }
+//
+//        Commodity operator- (const Commodity& other) const {
+//            assert(metaInfo_.typeID == other.metaInfo_.typeID);
+//
+//            if (quantity_ < other.quantity_)
+//                throw NotEnoughCommodities(quantity_ - other.quantity_);
+//            auto result = Commodity(*this);
+//            result.quantity_ -= other.quantity_;
+//            return result;
+//        }
 
 		bool operator== (const Commodity& other) const noexcept {
 			return metaInfo_.typeID == other.metaInfo_.typeID && quantity_ == other.quantity_;

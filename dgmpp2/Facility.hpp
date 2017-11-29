@@ -23,6 +23,10 @@ namespace dgmpp2 {
 		CubicMeter capacity() const { return metaInfo_.capacity; }
 		CubicMeter freeVolume() const { return capacity() - usedVolume(); }
 		CubicMeter usedVolume() const;
+        
+        void add (const Commodity& commodity);
+        void extract (const Commodity& commodity);
+        std::vector<Commodity> commodities();
 		
 	protected:
 		Facility(const MetaInfo::Facility& metaInfo, Planet& planet, int64_t identifier)
@@ -30,6 +34,7 @@ namespace dgmpp2 {
 
 		virtual std::optional<std::chrono::seconds> nextUpdateTime() const { return std::nullopt; }
 		virtual int priority() const { return 0; }
+        virtual void update(std::chrono::seconds time);
 
 		std::unordered_set<Route> inputs_;
 		std::unordered_set<Route> outputs_;
@@ -37,7 +42,6 @@ namespace dgmpp2 {
 		std::map<TypeID, Commodity> income_;
 		std::list<std::unique_ptr<State>> states_;
 		
-		virtual void update(std::chrono::seconds time);
 		
 	private:
 		friend class Planet;

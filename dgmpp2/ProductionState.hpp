@@ -11,7 +11,7 @@ namespace dgmpp2 {
 	
 	struct State {
 		std::chrono::seconds timestamp;
-		std::list<Commodity> commodities;
+		std::vector<Commodity> commodities;
 	};
 	
 	struct ProductionState: State {

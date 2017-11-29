@@ -15,6 +15,7 @@ namespace dgmpp2 {
 		using Facility::Facility;
 		
 		virtual int priority() const override { return -900; }
+        virtual void update(std::chrono::seconds time) override;
 	public:
 		friend class Planet;
 	};
