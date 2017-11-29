@@ -277,4 +277,45 @@ namespace dgmpp2 {
 		static HostileTarget Default() { return HostileTarget(); }
 //		const static HostileTarget defaultTarget;
 	};
+	
+	template<typename T, typename... Tail>
+	struct HashCombine {
+		constexpr static std::size_t value(const T& t, const Tail&... args) {
+			auto seed = HashCombine<Tail...>::value(args...);
+			return seed ^ (std::hash<T>()(t) + 0x9e3779b9 + (seed << 6) + (seed >> 2));
+		}
+	};
+	
+	
+	template<typename T>
+	struct HashCombine<T> {
+		constexpr static std::size_t value(const T& t) {
+			return (std::hash<T>()(t) + 0x9e3779b9);
+		}
+	};
+	
+	template<typename... Args>
+	constexpr std::size_t hashValue(const Args&... args) {
+		return HashCombine<Args...>::value(args...);
+	}
 };
+
+namespace std {
+	template<typename... Args>
+	struct hash<tuple<Args...>> {
+		typedef tuple<Args...> argument_type;
+		typedef size_t result_type;
+		
+		template<size_t... I>
+		constexpr result_type hashValue(const argument_type& value, std::index_sequence<I...>) const noexcept {
+			return dgmpp2::hashValue(std::get<I>(value)...);
+//			return dgmpp2::hash_combine<Args...>::value(std::get<I>(value)...);
+		}
+		
+		constexpr result_type operator()(const argument_type& value) const noexcept {
+			return hashValue(value, std::make_index_sequence<sizeof...(Args)>{});
+		}
+		
+	};
+};
+

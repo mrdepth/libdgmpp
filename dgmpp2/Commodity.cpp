@@ -10,7 +10,6 @@
 
 namespace dgmpp2 {
 	
-	Commodity::Commodity (TypeID typeID) : metaInfo_ (SDE::commodity(typeID)) {}
-
+	Commodity::Commodity(TypeID typeID, size_t quantity) : Commodity(SDE::commodity(typeID), quantity) {}
 
 }

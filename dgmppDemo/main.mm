@@ -794,11 +794,29 @@ template <typename A, typename B> struct Sort<Mul<A, B>, std::enable_if_t<(type_
 	typedef Mul<B,A> type;
 };
 
+template<typename T>
+constexpr size_t hash_combine_v(size_t seed, const T& t) {
+	return seed ^ (std::hash<T>()(t) + 0x9e3779b9 + (seed << 6) + (seed >> 2));
+}
+
+
+
+
+
+
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
+		
 
 		auto t0 = std::chrono::high_resolution_clock::now();
 		{
+			std::unordered_set<std::tuple<int, int>> set;
+			set.emplace(1,2);
+//			auto t = std::make_tuple(1,2);
+//			auto h = std::hash<decltype(t)>()(t);
+//			std::cout << std::hash<decltype(t)>()(t) << std::endl;
+//			std::cout << hash_combine_v(hash_combine_v(0, 2), 1) << std::endl;
+//			std::cout << hash(1,&t) << std::endl;
 		
 			auto gang = dgmpp2::Gang::Create();
 			auto pilotA = gang->add(dgmpp2::Character::Create());

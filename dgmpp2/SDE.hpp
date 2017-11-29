@@ -16,7 +16,9 @@ namespace dgmpp2 {
 		extern const MetaInfo::Attribute& get (AttributeID attributeID);
 		extern const MetaInfo::Type& get (TypeID typeID);
 		extern const MetaInfo::WarfareBuff& get (WarfareBuffID warfareBuffID);
+		extern const MetaInfo::Schematic& get (SchematicID schematicID);
 		extern const MetaInfo::Commodity& commodity (TypeID typeID);
+		extern const MetaInfo::Facility& facility (TypeID typeID);
 
 		extern const MetaInfo::Type* const *skills;
 		extern const size_t skillsCount;

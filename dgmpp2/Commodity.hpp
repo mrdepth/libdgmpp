@@ -12,7 +12,10 @@
 namespace dgmpp2 {
 	class Commodity {
 	public:
-		
+		Commodity(TypeID typeID, size_t quantity = 0);
+		Commodity(const MetaInfo::Commodity& metaInfo, size_t quantity = 0)
+		: metaInfo_(metaInfo), quantity_(quantity) {}
+
 		const MetaInfo::Commodity& metaInfo() const noexcept { return metaInfo_; }
 		size_t quantity() const noexcept { return quantity_; }
 		CubicMeter volume() const noexcept { return metaInfo_.volume * quantity_; }
@@ -34,6 +37,12 @@ namespace dgmpp2 {
 			return *this;
 		}
 
+		Commodity& operator= (const Commodity& other) noexcept {
+			assert(metaInfo_.typeID == other.metaInfo_.typeID);
+			quantity_ = other.quantity_;
+			return *this;
+		}
+
 		Commodity operator+ (size_t value) const noexcept {
 			auto other = Commodity(*this);
 			other.quantity_ += value;
@@ -49,6 +58,7 @@ namespace dgmpp2 {
 		}
 
 		Commodity operator+ (const Commodity& other) const noexcept {
+			assert(metaInfo_.typeID == other.metaInfo_.typeID);
 			auto result = Commodity(*this);
 			result.quantity_ += other.quantity_;
 			return result;
@@ -63,7 +73,7 @@ namespace dgmpp2 {
 			result.quantity_ -= other.quantity_;
 			return result;
 		}
-		
+
 		bool operator== (const Commodity& other) const noexcept {
 			return metaInfo_.typeID == other.metaInfo_.typeID && quantity_ == other.quantity_;
 		}
@@ -73,8 +83,22 @@ namespace dgmpp2 {
 		}
 
 	private:
-		Commodity(TypeID typeID);
+		friend class std::hash<Commodity>;
 		const MetaInfo::Commodity& metaInfo_;
-		size_t quantity_ = 0;
+		size_t quantity_;
 	};
 }
+
+namespace std {
+	template<>
+	struct hash<dgmpp2::Commodity> {
+		typedef dgmpp2::Commodity argument_type;
+		typedef size_t result_type;
+		
+		constexpr result_type operator()(const argument_type& value) const noexcept {
+			return dgmpp2::hashValue(value.quantity_, value.metaInfo_.typeID);
+		}
+		
+	};
+};
+
