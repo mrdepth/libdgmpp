@@ -8,7 +8,7 @@
 #include "SDE.hpp"
 #include "Skills.hpp"
 #include "WarfareBuffs.hpp"
-#include "Commodities.hpp"
+#include "Schematics.hpp"
 
 namespace dgmpp2 {
 	namespace SDE {

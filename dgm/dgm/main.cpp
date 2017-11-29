@@ -904,10 +904,10 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 	<< "}" << std::endl;
 }
 
-void dumpCommodityTiers(SQLiteDatabase& database) {
-	database.fetch<>("CREATE TEMP TABLE temp.tiers as SELECT typeID, 0 as \"tier\" FROM planetSchematicsTypeMap WHERE typeID not in (SELECT typeID FROM planetSchematicsTypeMap WHERE isInput = 0 GROUP BY typeID);").next();
+void dumpCommodities(SQLiteDatabase& database) {
+	database.fetch<>("CREATE TEMP TABLE temp.tiers as SELECT typeID, 1 as \"tier\" FROM planetSchematicsTypeMap WHERE typeID not in (SELECT typeID FROM planetSchematicsTypeMap WHERE isInput = 0) GROUP BY typeID").next();
 	
-	for (int i = 1; i <= 4; i++) {
+	for (int i = 2; i <= 5; i++) {
 		database.fetch<>("INSERT INTO temp.tiers SELECT typeID, " + std::to_string(i) + " AS \"tier\" FROM planetSchematicsTypeMap WHERE schematicID in (SELECT schematicID FROM planetSchematicsTypeMap WHERE typeID in (SELECT typeID FROM tiers WHERE tier = " + std::to_string(i - 1) + ") AND isInput=1) AND isInput = 0  GROUP BY typeID").next();
 	}
 	
@@ -929,19 +929,19 @@ void dumpCommodityTiers(SQLiteDatabase& database) {
 		std::cout << "\t\t\t"
 		<< "constexpr MetaInfo::Commodity " << typeName.to_str() << " = {TypeID::" << typeName.to_str() << ", MetaInfo::Commodity::Tier::";
 		switch (tier) {
-			case 0:
+			case 1:
 				std::cout << "raw";
 				break;
-			case 1:
+			case 2:
 				std::cout << "tier1";
 				break;
-			case 2:
+			case 3:
 				std::cout << "tier2";
 				break;
-			case 3:
+			case 4:
 				std::cout << "tier3";
 				break;
-			case 4:
+			case 5:
 				std::cout << "tier4";
 				break;
 			default:
@@ -964,6 +964,98 @@ void dumpCommodityTiers(SQLiteDatabase& database) {
 	<< "	}" << std::endl
 	<< "}" << std::endl;
 
+}
+
+void dumpFacilities(SQLiteDatabase& database) {
+	auto result = database.fetch<std::string, std::string, double>("select typeName, groupName, capacity from invTypes as a, invGroups as b where a.groupID=b.groupID and b.groupName in (\"Extractors\", \"Command Centers\", \"Processors\", \"Storage Facilities\", \"Spaceports\", \"Extractor Control Units\") order by typeID");
+	
+	std::cout
+	<< "#pragma once" << std::endl
+	<< "#include \"MetaInfo.hpp\"\n" << std::endl
+	<< "namespace dgmpp2 {" << std::endl
+	<< "	namespace SDE {" << std::endl
+	<< "		namespace Facilities {" << std::endl;
+	
+	std::list<std::string> names;
+	
+	while (auto row = result.next()) {
+		auto typeName = Name(row.get<0>());
+		auto groupName = Name(row.get<1>());
+		auto capacity = row.get<2>();
+		
+		std::cout << "\t\t\t"
+		<< "constexpr MetaInfo::Facility " << typeName.to_str() << " = {TypeID::" << typeName.to_str() << ", GroupID::" << groupName.to_str() << ", " << capacity << "};" << std::endl;
+
+		names.push_back(typeName.to_str());
+	}
+	
+	std::cout << "\t\t}\n" << std::endl
+	<< "		constexpr const MetaInfo::Facility* facilities[] {" << std::endl;
+	
+	std::transform(names.begin(), names.end(), std::ostream_iterator<std::string>(std::cout, ", "), [](const auto& i) {
+		return "&Facilities::" + i;
+	});
+	
+	std::cout << "\t\t};" << std::endl
+	<< "	}" << std::endl
+	<< "}" << std::endl;
+	
+}
+
+void dumpSchematics(SQLiteDatabase& database) {
+	auto result = database.fetch<int, std::string, int>("select schematicID, schematicName, cycleTime from planetSchematics order by schematicID");
+	
+	std::cout
+	<< "#pragma once" << std::endl
+	<< "#include \"Commodities.hpp\"\n" << std::endl
+	<< "namespace dgmpp2 {" << std::endl
+	<< "	namespace SDE {" << std::endl
+	<< "		namespace Schematics {" << std::endl
+	<< "			using namespace std::chrono_literals;" << std::endl;
+	
+	std::list<std::string> names;
+	
+	while (auto row = result.next()) {
+		auto schematicID = row.get<0>();
+		auto schematicName = Name(row.get<1>());
+		auto cycleTime = row.get<2>();
+		
+		auto outputRow = database.fetch<std::string, int>("select typeName, quantity from planetSchematicsTypeMap as a, invTypes as b where a.typeID=b.typeID and isInput = 0 and schematicID=" + std::to_string(schematicID)).next();
+		auto output = "_C(&Commodities::" + Name(outputRow.get<0>()).to_str() + ", " + std::to_string(outputRow.get<1>()) + ")";
+		
+		auto result = database.fetch<std::string, int>("select typeName, quantity from planetSchematicsTypeMap as a, invTypes as b where a.typeID=b.typeID and isInput = 1 and schematicID=" + std::to_string(schematicID) + " order by a.typeID");
+		std::list<std::string> inputs;
+		while (auto row = result.next()) {
+			inputs.push_back("_C(&Commodities::" + Name(row.get<0>()).to_str() + ", " + std::to_string(row.get<1>()) + ")");
+		}
+		
+		std::cout << "\t\t\t"
+		<< "constexpr auto " << schematicName.to_str() << " = MakeSchematic(SchematicID::" << schematicName.to_str() << ", " << cycleTime << "s, " << output << ", _inputs(";
+
+		bool isFirst = true;
+		for (auto& i: inputs) {
+			if (!isFirst) {
+				std::cout << ", ";
+			}
+			std::cout << i;
+			isFirst = false;
+		}
+		std::cout << "));" << std::endl;
+		
+		names.push_back(schematicName.to_str());
+	}
+	
+	std::cout << "\t\t}\n" << std::endl
+	<< "		constexpr const MetaInfo::Schematic* schematics[] {" << std::endl;
+	
+	std::transform(names.begin(), names.end(), std::ostream_iterator<std::string>(std::cout, ", "), [](const auto& i) {
+		return "&Schematics::" + i;
+	});
+	
+	std::cout << "\t\t};" << std::endl
+	<< "	}" << std::endl
+	<< "}" << std::endl;
+	
 }
 
 int main(int argc, const char * argv[]) {
@@ -1030,8 +1122,20 @@ int main(int argc, const char * argv[]) {
 			compile(database);
 			return 0;
 		}
-		else if (action == "--commodity") {
-			dumpCommodityTiers(database);
+		else if (action == "--commodities") {
+			dumpCommodities(database);
+			return 0;
+		}
+		else if (action == "--facilities") {
+			dumpFacilities(database);
+			return 0;
+		}
+		else if (action == "--schematicIDs") {
+			dumpIDs(database, "SchematicID", "select schematicID, schematicName from planetSchematics order by schematicID");
+			return 0;
+		}
+		else if (action == "--schematics") {
+			dumpSchematics(database);
 			return 0;
 		}
 	}
@@ -1053,7 +1157,10 @@ actions:\n\
 	--skills\n\
 	--convertModifiers\n\
 	--compile\n\
-	--commodity\
+	--commodities\n\
+	--facilities\n\
+	--schematicIDs\n\
+	--schematics\n\
 	" << std::endl;
 	
 	return 1;

@@ -206,7 +206,6 @@ namespace dgmpp2 {
 			~Type() = default;
 			
 			bool requireSkill (TypeID skillID) const {
-//				return false;
 				auto requiredSkills = this->requiredSkills();
 				return std::find(requiredSkills.begin(), requiredSkills.end(), skillID) != requiredSkills.end();
 			}
@@ -214,28 +213,6 @@ namespace dgmpp2 {
 			Type (Type&& other) = default;
 		};
 		
-		
-		struct Commodity {
-			enum class Tier {
-				unknown = -1,
-				raw,
-				tier1,
-				tier2,
-				tier3,
-				tier4
-			};
-
-			TypeID typeID;
-			Tier tier;
-			CubicMeter volume;
-			
-			Commodity (const Commodity& other) = delete;
-			Commodity (Commodity&& other) = delete;
-			Commodity& operator= (const Commodity& other) = delete;
-			Commodity& operator= (Commodity&& other) = delete;
-			~Commodity() = default;
-
-		};
 		
 		template <typename Attributes, typename Effects, typename RequiredSkills>
 		struct _Type : public Type {
@@ -263,6 +240,62 @@ namespace dgmpp2 {
 		};
 		
 
+		struct Commodity {
+			enum class Tier {
+				unknown = -1,
+				raw,
+				tier1,
+				tier2,
+				tier3,
+				tier4
+			};
+			
+			TypeID typeID;
+			Tier tier;
+			CubicMeter volume;
+			
+			Commodity (const Commodity& other) = delete;
+			Commodity (Commodity&& other) = delete;
+			Commodity& operator= (const Commodity& other) = delete;
+			Commodity& operator= (Commodity&& other) = delete;
+			~Commodity() = default;
+		};
+		
+		struct Facility {
+			TypeID typeID;
+			GroupID groupID;
+			CubicMeter capacity;
+		};
+		
+		struct Schematic {
+			SchematicID schematicID;
+			std::chrono::seconds cycleTime;
+			std::pair<const Commodity*, size_t> output;
+			virtual dgmpp2::slice<const std::pair<const Commodity*, size_t>*> inputs() const = 0;
+			
+			constexpr Schematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, size_t> output)
+			: schematicID(schematicID), cycleTime(cycleTime), output(output) {}
+			
+			Schematic (const Schematic& other) = delete;
+			Schematic (Schematic&& other) = delete;
+			Schematic& operator= (const Schematic& other) = delete;
+			Schematic& operator= (Schematic&& other) = delete;
+			~Schematic() = default;
+		};
+		
+		template <typename Inputs>
+		struct _Schematic : public Schematic {
+			
+			constexpr _Schematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, size_t> output, const Inputs& inputs)
+			: Schematic(schematicID, cycleTime, output), inputs_(inputs) {}
+
+			virtual dgmpp2::slice<const std::pair<const Commodity*, size_t>*> inputs() const override {
+				return { inputs_.data(), inputs_.data() + inputs_.size() };
+			}
+			
+		private:
+			Inputs inputs_;
+		};
 		
 		template<typename Modifiers>
 		constexpr _Effect<Modifiers> MakeEffect(EffectID effectID, Effect::Category category, bool isAssistance, bool isOffensive, const Modifiers& modifiers) {
@@ -280,6 +313,11 @@ namespace dgmpp2 {
 		template <typename Modifiers>
 		constexpr _WarfareBuff<Modifiers> MakeBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID, const Modifiers& modifiers) {
 			return { warfareBuffID, modifyingAttributeID, modifiers };
+		}
+
+		template <typename Inputs>
+		constexpr _Schematic<Inputs> MakeSchematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, size_t> output, const Inputs& inputs) {
+			return { schematicID, cycleTime, output, inputs };
 		}
 
 		template<typename T, typename... Args>
@@ -321,5 +359,15 @@ namespace dgmpp2 {
 		constexpr std::pair<const Attribute*, Float> _A (const Attribute* attribute, Float value) {
 			return {attribute, value};
 		}
+		
+		template <typename... Args>
+		constexpr auto _inputs(Args... args) {
+			return _array<std::pair<const Commodity*, size_t>, Args...>(args...);
+		}
+
+		constexpr std::pair<const Commodity*, size_t> _C (const Commodity* commodity, size_t quantity) {
+			return {commodity, quantity};
+		}
+
 	}
 }

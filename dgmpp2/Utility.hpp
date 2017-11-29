@@ -26,6 +26,7 @@
 #include "EffectID.hpp"
 #include "WarfareBuffID.hpp"
 #include "Rate.hpp"
+#include "SchematicID.hpp"
 
 namespace std {
 	template<typename T>
@@ -41,8 +42,8 @@ namespace dgmpp2 {
 	using AttributeID = dgmpp::AttributeID;
 	using EffectID = dgmpp::EffectID;
 	using WarfareBuffID = dgmpp::WarfareBuffID;
+	using SchematicID = dgmpp::SchematicID;
 	using ModifierID = int;
-	using SchematicID = int;
 	using GigaJoule = Float;
 	using Teraflops = Float;
 	using MegaWatts = Float;

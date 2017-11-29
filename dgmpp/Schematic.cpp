@@ -26,7 +26,7 @@ Schematic::Schematic(std::shared_ptr<Engine> const& engine, SchematicID schemati
 	}
 	
 	stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeID, quantity, isInput FROM planetSchematicsTypeMap WHERE schematicID = ?");
-	stmt->bindInt(1, schematicID);
+	stmt->bindInt(1, static_cast<int>(schematicID));
 	result = engine->getSqlConnector()->exec(stmt);
 	while (result->next()) {
 		TypeID typeID = static_cast<TypeID>(result->getInt(0));

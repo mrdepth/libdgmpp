@@ -79,6 +79,12 @@
 		123CC8C31FCD9B6B00C34372 /* Commodity.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8BF1FCD9B6B00C34372 /* Commodity.hpp */; };
 		123CC8C51FCDA00800C34372 /* Commodities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8C41FCDA00800C34372 /* Commodities.hpp */; };
 		123CC8C61FCDA00800C34372 /* Commodities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8C41FCDA00800C34372 /* Commodities.hpp */; };
+		123CC8C91FCE940400C34372 /* Facilities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8C81FCE940400C34372 /* Facilities.hpp */; };
+		123CC8CA1FCE940400C34372 /* Facilities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8C81FCE940400C34372 /* Facilities.hpp */; };
+		123CC8CC1FCE94F400C34372 /* SchematicID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8CB1FCE94F400C34372 /* SchematicID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123CC8CD1FCE94F400C34372 /* SchematicID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8CB1FCE94F400C34372 /* SchematicID.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		123CC8CF1FCE99CE00C34372 /* Schematics.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8CE1FCE99CE00C34372 /* Schematics.hpp */; };
+		123CC8D01FCE99CE00C34372 /* Schematics.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 123CC8CE1FCE99CE00C34372 /* Schematics.hpp */; };
 		12424E391E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3A1E36397F0078AB0F /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12424E371E36397F0078AB0F /* Cargo.cpp */; };
 		12424E3B1E36397F0078AB0F /* Cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 12424E381E36397F0078AB0F /* Cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -398,6 +404,9 @@
 		123CC8BE1FCD9B6B00C34372 /* Commodity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Commodity.cpp; sourceTree = "<group>"; };
 		123CC8BF1FCD9B6B00C34372 /* Commodity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Commodity.hpp; sourceTree = "<group>"; };
 		123CC8C41FCDA00800C34372 /* Commodities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Commodities.hpp; sourceTree = "<group>"; };
+		123CC8C81FCE940400C34372 /* Facilities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Facilities.hpp; sourceTree = "<group>"; };
+		123CC8CB1FCE94F400C34372 /* SchematicID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SchematicID.hpp; sourceTree = "<group>"; };
+		123CC8CE1FCE99CE00C34372 /* Schematics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Schematics.hpp; sourceTree = "<group>"; };
 		12424E371E36397F0078AB0F /* Cargo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cargo.cpp; sourceTree = "<group>"; };
 		12424E381E36397F0078AB0F /* Cargo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cargo.h; sourceTree = "<group>"; };
 		1248DB4B1F1E3EDC009625EC /* GangBoostEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GangBoostEffect.cpp; sourceTree = "<group>"; };
@@ -757,6 +766,9 @@
 				12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */,
 				12649A121FCC2060007B22CD /* WarfareBuffs.hpp */,
 				123CC8C41FCDA00800C34372 /* Commodities.hpp */,
+				123CC8C81FCE940400C34372 /* Facilities.hpp */,
+				123CC8CB1FCE94F400C34372 /* SchematicID.hpp */,
+				123CC8CE1FCE99CE00C34372 /* Schematics.hpp */,
 			);
 			name = SDE;
 			sourceTree = "<group>";
@@ -930,6 +942,7 @@
 				12B540001FCB61F400631067 /* WarfareBuffID.hpp in Headers */,
 				125ECFD81C4A2AC800A1CDA9 /* ProductionCycle.h in Headers */,
 				123BEF1D1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
+				123CC8CC1FCE94F400C34372 /* SchematicID.hpp in Headers */,
 				12B3310C1FBD98F60072D4E4 /* GroupID.hpp in Headers */,
 				12E864ED1FC8627D00C9C4BD /* Errors.hpp in Headers */,
 				1293C42B1C46C10A00B33378 /* Planet.h in Headers */,
@@ -939,6 +952,7 @@
 				12B3310D1FBD98F60072D4E4 /* TypeID.hpp in Headers */,
 				123CC8B61FCD9B4100C34372 /* Planet.hpp in Headers */,
 				12564BE31B84B07F000F68D8 /* LocationRequiredSkillModifier.h in Headers */,
+				123CC8C91FCE940400C34372 /* Facilities.hpp in Headers */,
 				123BEF171FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
 				123BEF371FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				12564BE41B84B07F000F68D8 /* Booster.h in Headers */,
@@ -947,6 +961,7 @@
 				12B0A3011C0DC5CC00194715 /* CombatSimulator.h in Headers */,
 				12564BE51B84B07F000F68D8 /* Character.h in Headers */,
 				123BEF0D1FBD9E5F00AC8EB1 /* Types.hpp in Headers */,
+				123CC8CF1FCE99CE00C34372 /* Schematics.hpp in Headers */,
 				12564BE61B84B07F000F68D8 /* Implant.h in Headers */,
 				12564BE71B84B07F000F68D8 /* Skill.h in Headers */,
 				12A156A41C46518000C3CF0B /* Commodity.h in Headers */,
@@ -1033,6 +1048,7 @@
 				12B540011FCB61F400631067 /* WarfareBuffID.hpp in Headers */,
 				12D9F9BD1CC3A98B00313F8D /* ProductionCycle.h in Headers */,
 				123BEF1E1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
+				123CC8CD1FCE94F400C34372 /* SchematicID.hpp in Headers */,
 				12B331081FBD98F50072D4E4 /* GroupID.hpp in Headers */,
 				12E864EE1FC8627D00C9C4BD /* Errors.hpp in Headers */,
 				12D9F9BE1CC3A98B00313F8D /* Planet.h in Headers */,
@@ -1042,6 +1058,7 @@
 				12B331091FBD98F50072D4E4 /* TypeID.hpp in Headers */,
 				123CC8B71FCD9B4100C34372 /* Planet.hpp in Headers */,
 				12D9F9C01CC3A98B00313F8D /* LocationRequiredSkillModifier.h in Headers */,
+				123CC8CA1FCE940400C34372 /* Facilities.hpp in Headers */,
 				123BEF181FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
 				123BEF381FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				12D9F9C11CC3A98B00313F8D /* Booster.h in Headers */,
@@ -1050,6 +1067,7 @@
 				12D9F9C41CC3A98B00313F8D /* CombatSimulator.h in Headers */,
 				12D9F9C51CC3A98B00313F8D /* Character.h in Headers */,
 				123BEF121FBD9E6000AC8EB1 /* Types.hpp in Headers */,
+				123CC8D01FCE99CE00C34372 /* Schematics.hpp in Headers */,
 				12D9F9C61CC3A98B00313F8D /* Implant.h in Headers */,
 				12D9F9C71CC3A98B00313F8D /* Skill.h in Headers */,
 				12D9F9C81CC3A98B00313F8D /* Commodity.h in Headers */,

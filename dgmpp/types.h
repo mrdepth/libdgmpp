@@ -15,6 +15,7 @@
 #include "GroupID.hpp"
 #include "TypeID.hpp"
 #include "EffectID.hpp"
+#include "SchematicID.hpp"
 
 namespace dgmpp {
 //	typedef int TypeID;
@@ -28,7 +29,7 @@ namespace dgmpp {
 		};
 		
 	typedef int ModifierID;
-	typedef int SchematicID;
+//	typedef int SchematicID;
 
 	typedef double Float;
 

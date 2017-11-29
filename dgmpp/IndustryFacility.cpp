@@ -21,7 +21,7 @@ IndustryFacility::IndustryFacility(TypeID typeID, const std::string& typeName, d
 }
 
 std::shared_ptr<Schematic> IndustryFacility::setSchematic(SchematicID schematicID) {
-	schematic_ = schematicID > 0 ? std::make_shared<Schematic>(getOwner()->getEngine(), schematicID) : nullptr;
+	schematic_ = schematicID != SchematicID::none ? std::make_shared<Schematic>(getOwner()->getEngine(), schematicID) : nullptr;
 	return schematic_;
 }
 

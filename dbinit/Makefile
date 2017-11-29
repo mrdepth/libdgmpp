@@ -7,7 +7,7 @@ DUMP=${PWD}/dump
 SQL=${PWD}/sql
 T+=${PWD}/tmp
 
-all: dgm.sqlite AttributeID.hpp Attributes.hpp CategoryID.hpp EffectID.hpp Effects.hpp GroupID.hpp Modifiers.hpp Skills.hpp TypeID.hpp Types.hpp WarfareBuffID.hpp WarfareBuffs.hpp
+all: dgm.sqlite AttributeID.hpp Attributes.hpp CategoryID.hpp EffectID.hpp Effects.hpp GroupID.hpp Modifiers.hpp Skills.hpp TypeID.hpp Types.hpp WarfareBuffID.hpp WarfareBuffs.hpp Commodities.hpp Facilities.hpp SchematicID.hpp Schematics.hpp
 
 dgm: tmp
 	$(CC) $(CFLAGS) ../dgm/dgm/Compiler.cpp ../dgm/dgm/main.cpp ../dgm/dgm/modifiersdump.cpp ../dgm/dgm/SQLiteDatabase.cpp -o $(T)/$@ -lsqlite3
@@ -92,3 +92,19 @@ WarfareBuffs.hpp: dgm dgm.sqlite
 Skills.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --skills > ${T}/Skills.hpp
 	cp -rf ${T}/Skills.hpp ../dgmpp2/Skills.hpp
+
+Commodities.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --commodities > ${T}/Commodities.hpp
+	cp -rf ${T}/Commodities.hpp ../dgmpp2/Commodities.hpp
+
+Facilities.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --facilities > ${T}/Facilities.hpp
+	cp -rf ${T}/Facilities.hpp ../dgmpp2/Facilities.hpp
+
+SchematicID.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --schematicIDs > ${T}/SchematicID.hpp
+	cp -rf ${T}/SchematicID.hpp ../dgmpp2/SchematicID.hpp
+
+Schematics.hpp: dgm dgm.sqlite
+	$(T)/dgm dgm.sqlite --schematics > ${T}/Schematics.hpp
+	cp -rf ${T}/Schematics.hpp ../dgmpp2/Schematics.hpp
