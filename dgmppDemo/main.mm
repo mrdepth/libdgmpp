@@ -801,12 +801,90 @@ constexpr size_t hash_combine_v(size_t seed, const T& t) {
 
 
 
-
+void testPI(std::shared_ptr<Engine> const& engine) {
+	using namespace dgmpp;
+	double lastUpdateTime = 1452068276;
+	auto planet = engine->setPlanet(TypeID::none);
+	planet->setLastUpdate(lastUpdateTime - lastUpdateTime);
+	planet->addFacility(TypeID::barrenCommandCenter, 1019338918550);
+	planet->addFacility(TypeID::barrenStorageFacility, 1019339001861);
+	planet->addFacility(TypeID::barrenAdvancedIndustryFacility, 1019339001862);
+	planet->addFacility(TypeID::barrenLaunchpad, 1019339001863);
+	planet->addFacility(TypeID::barrenAdvancedIndustryFacility, 1019339001865);
+	planet->addFacility(TypeID::barrenBasicIndustryFacility, 1019339001870);
+	planet->addFacility(TypeID::barrenBasicIndustryFacility, 1019339001873);
+	planet->addFacility(TypeID::barrenBasicIndustryFacility, 1019339001877);
+	planet->addFacility(TypeID::barrenExtractorControlUnit, 1019339001881);
+	planet->addFacility(TypeID::barrenBasicIndustryFacility, 1019339001884);
+	planet->addFacility(TypeID::barrenBasicIndustryFacility, 1019339001885);
+	planet->addFacility(TypeID::barrenBasicIndustryFacility, 1019339001888);
+	planet->addFacility(TypeID::barrenAdvancedIndustryFacility, 1019586416755);
+	planet->addFacility(TypeID::barrenExtractorControlUnit, 1019741064685);
+	
+	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001877), Commodity(engine, TypeID::nobleMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001873), Commodity(engine, TypeID::nobleMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001870), Commodity(engine, TypeID::nobleMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001865), Commodity(engine, TypeID::preciousMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001862), Commodity(engine, TypeID::preciousMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), Commodity(engine, TypeID::preciousMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), Commodity(engine, TypeID::preciousMetals, 0));
+	
+	planet->addRoute(planet->findFacility(1019339001862), planet->findFacility(1019339001863), Commodity(engine, TypeID::mechanicalParts, 0));
+	planet->addRoute(planet->findFacility(1019339001865), planet->findFacility(1019339001863), Commodity(engine, TypeID::biocells, 0));
+	planet->addRoute(planet->findFacility(1019339001870), planet->findFacility(1019339001861), Commodity(engine, TypeID::preciousMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001873), planet->findFacility(1019339001861), Commodity(engine, TypeID::preciousMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001877), planet->findFacility(1019339001861), Commodity(engine, TypeID::preciousMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001881), planet->findFacility(1019339001861), Commodity(engine, TypeID::nobleMetals, 0));
+	planet->addRoute(planet->findFacility(1019339001884), planet->findFacility(1019339001861), Commodity(engine, TypeID::biofuels, 0));
+	planet->addRoute(planet->findFacility(1019339001885), planet->findFacility(1019339001861), Commodity(engine, TypeID::biofuels, 0));
+	planet->addRoute(planet->findFacility(1019339001888), planet->findFacility(1019339001861), Commodity(engine, TypeID::biofuels, 0));
+	planet->addRoute(planet->findFacility(1019586416755), planet->findFacility(1019339001863), Commodity(engine, TypeID::biocells, 0));
+	planet->addRoute(planet->findFacility(1019741064685), planet->findFacility(1019339001861), Commodity(engine, TypeID::carbonCompounds, 0));
+	
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001862))->setSchematic(SchematicID::mechanicalParts);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001865))->setSchematic(SchematicID::biocells);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001870))->setSchematic(SchematicID::preciousMetals);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001873))->setSchematic(SchematicID::preciousMetals);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001877))->setSchematic(SchematicID::preciousMetals);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001884))->setSchematic(SchematicID::biofuels);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001885))->setSchematic(SchematicID::biofuels);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001888))->setSchematic(SchematicID::biofuels);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019586416755))->setSchematic(SchematicID::biocells);
+	
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setCycleTime(120 * 60);
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setQuantityPerCycle(4741);
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setLaunchTime(1452068276 - lastUpdateTime);
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setInstallTime(1452068276 - lastUpdateTime);
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019339001881))->setExpiryTime(1452500276 - lastUpdateTime);
+	
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setCycleTime(120 * 60);
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setQuantityPerCycle(6425);
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setLaunchTime(1452068276 - lastUpdateTime);
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setInstallTime(1452068276 - lastUpdateTime);
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet->findFacility(1019741064685))->setExpiryTime(1452500276 - lastUpdateTime);
+	
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019586416755))->setLaunchTime(0);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001865))->setLaunchTime(0);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001870))->setLaunchTime(0);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001873))->setLaunchTime(0);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001877))->setLaunchTime(0);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001884))->setLaunchTime(0);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001885))->setLaunchTime(0);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019339001888))->setLaunchTime(0);
+	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019586416755))->setLaunchTime(0);
+	
+	double endTime = planet->simulate();
+	
+	
+	auto fac = planet->findFacility(1019339001865);
+	
+	//std::cout << *planet << std::endl;
+	auto free = fac->getFreeVolume();
+}
 
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
-		
 
 		auto t0 = std::chrono::high_resolution_clock::now();
 		{
@@ -841,6 +919,9 @@ int main(int argc, const char * argv[]) {
 		auto t1 = std::chrono::high_resolution_clock::now();
 		{
 			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+			testPI(engine);
+
+			
 			auto pilot = engine->getGang()->addPilot();
 			pilot->setAllSkillsLevel(5);
 			auto ship = pilot->setShip(dgmpp::TypeID::dominix);

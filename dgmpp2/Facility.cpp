@@ -18,13 +18,13 @@ namespace dgmpp2 {
     
     void Facility::add(const dgmpp2::Commodity &commodity) {
         try {
-            commodities_.at(commodity.metaInfo().typeID) += commodity.quantity();
+            commodities_.at(commodity.metaInfo().typeID) += commodity;
         }
         catch (std::out_of_range) {
             commodities_.emplace(commodity.metaInfo().typeID, commodity);
         }
         try {
-            income_.at(commodity.metaInfo().typeID) += commodity.quantity();
+            income_.at(commodity.metaInfo().typeID) += commodity;
         }
         catch (std::out_of_range) {
             income_.emplace(commodity.metaInfo().typeID, commodity);
@@ -32,11 +32,11 @@ namespace dgmpp2 {
     }
     
     void Facility::extract(const dgmpp2::Commodity &commodity) {
-        if (commodity.quantity() == 0)
+        if (commodity.empty())
             return;
         
         try {
-            commodities_.at(commodity.metaInfo().typeID) -= commodity.quantity();
+            commodities_.at(commodity.metaInfo().typeID) -= commodity;
         }
         catch (std::out_of_range) {
             throw NotEnoughCommodities(commodity.quantity());
@@ -47,9 +47,40 @@ namespace dgmpp2 {
         std::vector<Commodity> result;
         result.reserve(commodities_.size());
         for (const auto& i: commodities_) {
-            if (i.second.quantity() > 0)
+            if (!i.second.empty())
                 result.push_back(i.second);
         }
         return result;
     }
+	
+	Commodity& Facility::operator[] (TypeID typeID) {
+		auto i = commodities_.find(typeID);
+		if (i != commodities_.end())
+			return i->second;
+		else {
+			auto i = commodities_.emplace(typeID, Commodity(typeID));
+			return i.first->second;
+		}
+	}
+	
+	Commodity& Facility::operator[] (const Commodity& key) {
+		return (*this)[key.metaInfo().typeID];
+	}
+	
+//	std::optional<Commodity> Facility::commodity (TypeID typeID) const {
+//		auto i = commodities_.find(typeID);
+//		if (i != commodities_.end())
+//			return i->second;
+//		else
+//			return std::nullopt;
+//	}
+	
+	std::optional<Commodity> Facility::income (TypeID typeID) const {
+		auto i = income_.find(typeID);
+		if (i != income_.end())
+			return i->second;
+		else
+			return std::nullopt;
+	}
+
 }

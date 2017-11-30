@@ -16,6 +16,7 @@ namespace dgmpp2 {
 	
 	class Facility {
 	public:
+		virtual ~Facility() = default;
 		
 		const MetaInfo::Facility& metaInfo() const noexcept { return metaInfo_; }
 		Planet& planet() const noexcept { return planet_; }
@@ -28,6 +29,13 @@ namespace dgmpp2 {
         void extract (const Commodity& commodity);
         std::vector<Commodity> commodities();
 		
+//		std::optional<Commodity> commodity	(TypeID typeID) const;
+		Commodity& operator[] (TypeID typeID);
+		Commodity& operator[] (const Commodity& key);
+		std::optional<Commodity> income (TypeID typeID) const;
+		
+		virtual bool configured() const { return true; };
+
 	protected:
 		Facility(const MetaInfo::Facility& metaInfo, Planet& planet, int64_t identifier)
 		: metaInfo_(metaInfo), planet_(planet), identifier_(identifier) {}

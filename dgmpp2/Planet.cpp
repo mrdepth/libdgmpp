@@ -46,9 +46,9 @@ namespace dgmpp2 {
 	
 	void Planet::remove(Facility* facility) {
 		for (auto& route: facility->inputs_)
-			route.from_->outputs_.erase(route);
+			route.from->outputs_.erase(route);
 		for (auto& route: facility->outputs_)
-			route.to_->inputs_.erase(route);
+			route.to->inputs_.erase(route);
 		
 		auto i = facilities_.find(facility);
 		assert(i != facilities_.end());
@@ -63,13 +63,13 @@ namespace dgmpp2 {
 	}
 	
 	void Planet::add(const Route& route) {
-		route.from_->outputs_.insert(route);
-		route.to_->inputs_.insert(route);
+		route.from->outputs_.insert(route);
+		route.to->inputs_.insert(route);
 	}
 	
 	void Planet::remove(const Route& route) {
-		route.from_->outputs_.erase(route);
-		route.to_->inputs_.erase(route);
+		route.from->outputs_.erase(route);
+		route.to->inputs_.erase(route);
 	}
 	
 	std::optional<std::chrono::seconds> Planet::nextCycleTime() {

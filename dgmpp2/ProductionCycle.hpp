@@ -9,12 +9,21 @@
 
 namespace dgmpp2 {
 	
-	struct Cycle {
-		std::chrono::seconds launchTime;
-		std::chrono::seconds cycleTime;
-	};
+//	struct Cycle {
+//		virtual ~Cycle() = default;
+//
+//		Cycle(std::chrono::seconds start, std::chrono::seconds duration) : start(start), duration(duration) {}
+//		
+//	};
 	
-	struct ProductionCycle: Cycle {
+	struct ProductionCycle {
+//		ProductionCycle(std::chrono::seconds start, std::chrono::seconds duration, const Commodity& yield, const Commodity& waste)
+//		: Cycle(start, duration), yield(yield), waste(waste) {}
+
+		std::chrono::seconds end() const { return start + duration; }
+
+		std::chrono::seconds start;
+		std::chrono::seconds duration;
 		Commodity yield;
 		Commodity waste;
 	};

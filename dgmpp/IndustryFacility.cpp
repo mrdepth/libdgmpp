@@ -58,6 +58,7 @@ void IndustryFacility::finishCycle(double time) {
 	auto left = getCommodity(getOutput());
 	if (left.getQuantity() > 0)
 		extractCommodity(left);
+
 	productionCycle_->setYield(product - left);
 	productionCycle_->setWaste(left);
 	productionTime_ += productionCycle_->getCycleTime();
@@ -118,8 +119,9 @@ void IndustryFacility::update(double time) {
 	std::shared_ptr<ProductionState> currentState;
 	if (states_.size() > 0) {
 		currentState = std::dynamic_pointer_cast<ProductionState>(states_.back());
-		if (currentState->getTimestamp() < time && (currentState->getCurrentCycle() != productionCycle_ || currentState->getCommodities() != materials))
+		if (currentState->getTimestamp() < time && (currentState->getCurrentCycle() != productionCycle_ || currentState->getCommodities() != materials)) {
 			currentState = nullptr;
+		}
 	}
 	
 	if (!currentState) {
