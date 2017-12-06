@@ -298,6 +298,33 @@ namespace dgmpp2 {
 	constexpr std::size_t hashValue(const Args&... args) {
 		return HashCombine<Args...>::value(args...);
 	}
+	
+	template <typename T1, typename T2, typename = std::enable_if_t<std::is_scalar_v<T1> && std::is_scalar_v<T2>>>
+	constexpr Percent percentage(T1 value, T2 sum) {
+		return sum > 0 ? static_cast<Percent>(value) / static_cast<Percent>(sum) : 0;
+	}
+
+	template <typename Rep, typename Rate>
+	constexpr Percent percentage(std::chrono::duration<Rep, Rate> value, std::chrono::duration<Rep, Rate> sum) {
+		return sum.count() > 0 ? static_cast<Percent>(value.count()) / static_cast<Percent>(sum.count()) : 0;
+	}
+
+//	template <typename T>
+//	constexpr T sum(T first) noexcept {
+//		return first;
+//	}
+//
+//	template <typename T, typename... Tail>
+//	constexpr T sum(T first, Tail... args) noexcept {
+//		return first + sum(args...);
+//	}
+//
+//	template<typename T, typename... Tail>
+//	constexpr Percent percentage(T first, Tail... args) noexcept {
+//		auto s = static_cast<Percent> (sum(first, args...));
+//		return s > 0 ? first / s : 0;
+//	}
+
 };
 
 namespace std {

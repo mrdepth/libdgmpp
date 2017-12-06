@@ -800,7 +800,6 @@ constexpr size_t hash_combine_v(size_t seed, const T& t) {
 }
 
 
-
 void testPI(std::shared_ptr<Engine> const& engine) {
 	using namespace dgmpp;
 	double lastUpdateTime = 1452068276;
@@ -827,7 +826,7 @@ void testPI(std::shared_ptr<Engine> const& engine) {
 	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001865), Commodity(engine, TypeID::preciousMetals, 0));
 	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019339001862), Commodity(engine, TypeID::preciousMetals, 0));
 	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), Commodity(engine, TypeID::preciousMetals, 0));
-	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), Commodity(engine, TypeID::preciousMetals, 0));
+//	planet->addRoute(planet->findFacility(1019339001861), planet->findFacility(1019586416755), Commodity(engine, TypeID::preciousMetals, 0));
 	
 	planet->addRoute(planet->findFacility(1019339001862), planet->findFacility(1019339001863), Commodity(engine, TypeID::mechanicalParts, 0));
 	planet->addRoute(planet->findFacility(1019339001865), planet->findFacility(1019339001863), Commodity(engine, TypeID::biocells, 0));
@@ -874,20 +873,157 @@ void testPI(std::shared_ptr<Engine> const& engine) {
 	std::dynamic_pointer_cast<IndustryFacility>(planet->findFacility(1019586416755))->setLaunchTime(0);
 	
 	double endTime = planet->simulate();
+	auto fac1 = planet->findFacility(1019339001877);
+	auto fac2 = planet->findFacility(1019339001873);
+	auto fac3 = planet->findFacility(1019339001870);
+	auto i = fac1->getIncomming(Commodity(engine, TypeID::preciousMetals, 0)).getQuantity() +
+			fac2->getIncomming(Commodity(engine, TypeID::preciousMetals, 0)).getQuantity() +
+			fac3->getIncomming(Commodity(engine, TypeID::preciousMetals, 0)).getQuantity();
 	
-	
-	auto fac = planet->findFacility(1019339001865);
-	
-	//std::cout << *planet << std::endl;
-	auto free = fac->getFreeVolume();
+//	i = planet->findFacility(1019339001861)->getIncomming(Commodity(engine, TypeID::nobleMetals, 0)).getQuantity();
+//	auto ecu1 = planet->findFacility(1019339001881);
+//	auto ecu2 = planet->findFacility(1019741064685);
+//	i = ecu1->getIncomming(Commodity(engine, TypeID::nobleMetals, 0)).getQuantity();
+//	i += ecu2->getIncomming(Commodity(engine, TypeID::carbonCompounds, 0)).getQuantity();
+	std::cout <<"endTime1:" << endTime << "; income1: " << i << std::endl;
 }
+
+void testPI2() {
+	using namespace std::chrono_literals;
+	
+	auto planet = dgmpp2::Planet();
+	auto lastUpdateTime = 1452068276s;
+//	planet.lastUpdate(0s);
+	
+	planet.add(TypeID::barrenCommandCenter, 1019338918550);
+	planet.add(TypeID::barrenStorageFacility, 1019339001861);
+	planet.add(TypeID::barrenAdvancedIndustryFacility, 1019339001862);
+	planet.add(TypeID::barrenLaunchpad, 1019339001863);
+	planet.add(TypeID::barrenAdvancedIndustryFacility, 1019339001865);
+	planet.add(TypeID::barrenBasicIndustryFacility, 1019339001870);
+	planet.add(TypeID::barrenBasicIndustryFacility, 1019339001873);
+	planet.add(TypeID::barrenBasicIndustryFacility, 1019339001877);
+	planet.add(TypeID::barrenExtractorControlUnit, 1019339001881);
+	planet.add(TypeID::barrenBasicIndustryFacility, 1019339001884);
+	planet.add(TypeID::barrenBasicIndustryFacility, 1019339001885);
+	planet.add(TypeID::barrenBasicIndustryFacility, 1019339001888);
+	planet.add(TypeID::barrenAdvancedIndustryFacility, 1019586416755);
+	planet.add(TypeID::barrenExtractorControlUnit, 1019741064685);
+	
+	planet.add(dgmpp2::Route{planet[1019339001861], planet[1019339001877], dgmpp2::Commodity{TypeID::nobleMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001861], planet[1019339001873], dgmpp2::Commodity{TypeID::nobleMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001861], planet[1019339001870], dgmpp2::Commodity{TypeID::nobleMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001861], planet[1019339001865], dgmpp2::Commodity{TypeID::preciousMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001861], planet[1019339001862], dgmpp2::Commodity{TypeID::preciousMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001861], planet[1019586416755], dgmpp2::Commodity{TypeID::preciousMetals}});
+//	planet.add(dgmpp2::Route{planet[1019339001861], planet[1019586416755], dgmpp2::Commodity{TypeID::preciousMetals}});
+
+	planet.add(dgmpp2::Route{planet[1019339001862], planet[1019339001863], dgmpp2::Commodity{TypeID::mechanicalParts}});
+	planet.add(dgmpp2::Route{planet[1019339001865], planet[1019339001863], dgmpp2::Commodity{TypeID::biocells}});
+	planet.add(dgmpp2::Route{planet[1019339001870], planet[1019339001861], dgmpp2::Commodity{TypeID::preciousMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001873], planet[1019339001861], dgmpp2::Commodity{TypeID::preciousMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001877], planet[1019339001861], dgmpp2::Commodity{TypeID::preciousMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001881], planet[1019339001861], dgmpp2::Commodity{TypeID::nobleMetals}});
+	planet.add(dgmpp2::Route{planet[1019339001884], planet[1019339001861], dgmpp2::Commodity{TypeID::biofuels}});
+	planet.add(dgmpp2::Route{planet[1019339001885], planet[1019339001861], dgmpp2::Commodity{TypeID::biofuels}});
+	planet.add(dgmpp2::Route{planet[1019339001888], planet[1019339001861], dgmpp2::Commodity{TypeID::biofuels}});
+	planet.add(dgmpp2::Route{planet[1019586416755], planet[1019339001863], dgmpp2::Commodity{TypeID::biocells}});
+	planet.add(dgmpp2::Route{planet[1019741064685], planet[1019339001861], dgmpp2::Commodity{TypeID::carbonCompounds}});
+
+	dynamic_cast<dgmpp2::Factory*>(planet[1019339001862])->schematic(SchematicID::mechanicalParts);
+	dynamic_cast<dgmpp2::Factory*>(planet[1019339001865])->schematic(SchematicID::biocells);
+	dynamic_cast<dgmpp2::Factory*>(planet[1019339001870])->schematic(SchematicID::preciousMetals);
+	dynamic_cast<dgmpp2::Factory*>(planet[1019339001873])->schematic(SchematicID::preciousMetals);
+	dynamic_cast<dgmpp2::Factory*>(planet[1019339001877])->schematic(SchematicID::preciousMetals);
+	dynamic_cast<dgmpp2::Factory*>(planet[1019339001884])->schematic(SchematicID::biofuels);
+	dynamic_cast<dgmpp2::Factory*>(planet[1019339001885])->schematic(SchematicID::biofuels);
+	dynamic_cast<dgmpp2::Factory*>(planet[1019339001888])->schematic(SchematicID::biofuels);
+	dynamic_cast<dgmpp2::Factory*>(planet[1019586416755])->schematic(SchematicID::biocells);
+
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019339001881])->cycleTime(2h);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019339001881])->quantityPerCycle(4741);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019339001881])->launchTime(1452068276s - lastUpdateTime);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019339001881])->installTime(1452068276s - lastUpdateTime);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019339001881])->expiryTime(1452500276s - lastUpdateTime);
+
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019741064685])->cycleTime(2h);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019741064685])->quantityPerCycle(6425);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019741064685])->launchTime(1452068276s - lastUpdateTime);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019741064685])->installTime(1452068276s - lastUpdateTime);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet[1019741064685])->expiryTime(1452500276s - lastUpdateTime);
+
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019586416755])->launchTime(0s);
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019339001865])->launchTime(0s);
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019339001870])->launchTime(0s);
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019339001873])->launchTime(0s);
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019339001877])->launchTime(0s);
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019339001884])->launchTime(0s);
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019339001885])->launchTime(0s);
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019339001888])->launchTime(0s);
+//	dynamic_cast<dgmpp2::Factory*>(planet[1019586416755])->launchTime(0s);
+
+	auto endTime = planet.run();
+	auto fac1 = planet[1019339001877];
+	auto fac2 = planet[1019339001873];
+	auto fac3 = planet[1019339001870];
+	auto i = fac1->income(TypeID::preciousMetals).quantity() +
+			fac2->income(TypeID::preciousMetals).quantity() +
+			fac3->income(TypeID::preciousMetals).quantity();
+//	i = planet[1019339001861]->income(TypeID::nobleMetals).quantity();
+//	auto free = fac->freeVolume();
+	
+//	auto ecu1 = planet[1019339001881];
+//	auto ecu2 = planet[1019741064685];
+//	i = ecu1->income(TypeID::nobleMetals).quantity() +
+//		ecu2->income(TypeID::carbonCompounds).quantity();
+	
+	std::cout <<"endTime2:" << endTime.count() << "; income2: " << i << std::endl;
+
+}
+
+template <typename T>
+constexpr T sum(T first) {
+	return first;
+}
+
+
+template <typename T, typename... Tail>
+constexpr T sum(T first, Tail... args) {
+	return first + sum(args...);
+}
+
+template<typename T, typename... Tail>
+constexpr double percentage(T first, Tail... args) {
+	auto s = sum(first, args...);
+	return s > 0 ? first / s : 0;
+}
+
+
 
 
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
+		
+		std::list<std::vector<int>> prev;
+		for (int i = 0; i < 10; i++) {
+			std::unordered_set<int> set;
+			for (int j = 0; j < 100; j++) {
+				set.insert(j);
+			}
+			std::vector<int> v;
+			std::copy(set.begin(), set.end(), std::back_inserter(v));
+			auto b = std::all_of(prev.begin(), prev.end(), [&](const auto& i) {
+//				return std::equal(i.begin(), i.end(), v.begin());
+				return i == v;
+			});
+			assert(b);
+			prev.push_back(std::move(v));
+		}
 
 		auto t0 = std::chrono::high_resolution_clock::now();
 		{
+			constexpr auto s = dgmpp2::percentage(10, 40);
+			
 			std::unordered_set<std::tuple<int, int>> set;
 			set.emplace(1,2);
 //			auto t = std::make_tuple(1,2);
@@ -920,7 +1056,7 @@ int main(int argc, const char * argv[]) {
 		{
 			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 			testPI(engine);
-
+			testPI2();
 			
 			auto pilot = engine->getGang()->addPilot();
 			pilot->setAllSkillsLevel(5);

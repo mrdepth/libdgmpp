@@ -98,6 +98,27 @@ namespace dgmpp2 {
 		bool operator!= (const Commodity& other) const noexcept {
 			return !operator==(other);
 		}
+		
+		bool operator< (const Commodity& other) const noexcept {
+			assert(metaInfo_.typeID == other.metaInfo_.typeID);
+			return quantity_ < other.quantity_;
+		}
+
+		bool operator> (const Commodity& other) const noexcept {
+			assert(metaInfo_.typeID == other.metaInfo_.typeID);
+			return quantity_ > other.quantity_;
+		}
+
+		bool operator<= (const Commodity& other) const noexcept {
+			assert(metaInfo_.typeID == other.metaInfo_.typeID);
+			return quantity_ <= other.quantity_;
+		}
+				
+		bool operator>= (const Commodity& other) const noexcept {
+			assert(metaInfo_.typeID == other.metaInfo_.typeID);
+			return quantity_ >= other.quantity_;
+		}
+
 
 	private:
 		friend class std::hash<Commodity>;

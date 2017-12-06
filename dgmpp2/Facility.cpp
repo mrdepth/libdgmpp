@@ -10,12 +10,25 @@
 
 namespace dgmpp2 {
 	
-	CubicMeter Facility::usedVolume() const {
+//	Facility::Facility(const MetaInfo::Facility& metaInfo, Planet& planet, Identifier identifier)
+//	: metaInfo_(metaInfo), planet_(planet), identifier_(identifier) {
+//		if (identifier_ <= 0)
+//			identifier_ = reinterpret_cast<intptr_t>(this);
+//	}
+
+	
+	CubicMeter Facility::usedVolume() const noexcept {
 		return std::accumulate(commodities_.begin(), commodities_.end(), CubicMeter(0), [](auto sum, const auto& i) {
 			return sum + i.second.volume();
 		});
 	}
-    
+	
+	Commodity Facility::free(const Commodity& key) noexcept {
+		auto output = key;
+		output = key.metaInfo().volume > 0 ? std::trunc(freeVolume() / key.metaInfo().volume) : std::numeric_limits<size_t>::max();
+		return output;
+	}
+	
     void Facility::add(const dgmpp2::Commodity &commodity) {
         try {
             commodities_.at(commodity.metaInfo().typeID) += commodity;
@@ -67,6 +80,8 @@ namespace dgmpp2 {
 		return (*this)[key.metaInfo().typeID];
 	}
 	
+
+	
 //	std::optional<Commodity> Facility::commodity (TypeID typeID) const {
 //		auto i = commodities_.find(typeID);
 //		if (i != commodities_.end())
@@ -75,12 +90,18 @@ namespace dgmpp2 {
 //			return std::nullopt;
 //	}
 	
-	std::optional<Commodity> Facility::income (TypeID typeID) const {
+	Commodity Facility::income (TypeID typeID) const {
 		auto i = income_.find(typeID);
 		if (i != income_.end())
 			return i->second;
 		else
-			return std::nullopt;
+			return Commodity(typeID);
+//			return std::nullopt;
+	}
+
+	void Facility::update(std::chrono::seconds time) {
+		for (const auto& output: outputs_)
+			output.update(time);
 	}
 
 }

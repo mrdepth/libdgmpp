@@ -30,7 +30,11 @@ namespace dgmpp2 {
 	struct NotEnoughCommodities: public std::runtime_error {
 		NotEnoughCommodities(size_t quantity) : std::runtime_error(std::to_string(quantity)) {}
 	};
-	
+
+	struct InvalidRoute: public std::runtime_error {
+		InvalidRoute() : std::runtime_error("Missing source or destination") {}
+	};
+
 //	struct DifferentCommodities: public std::runtime_error {
 //		DifferentCommodities(TypeID a, TypeID b) : std::runtime_error(std::to_string(static_cast<int>(a)) + " != " + std::to_string(static_cast<int>(b))) {}
 //	}

@@ -12,9 +12,6 @@
 namespace dgmpp2 {
 	
 	bool Factory::configured() const {
-		if (!startTime_)
-			return false;
-		
 		if (auto product = output()) {
 			auto isOutputRouted = std::any_of(outputs_.begin(), outputs_.end(), [typeID = product->metaInfo().typeID](const auto& i) {
 				return i.commodity.metaInfo().typeID == typeID;
@@ -38,6 +35,22 @@ namespace dgmpp2 {
 			return std::nullopt;
 	}
 	
+	Commodity Factory::free(const Commodity& key) noexcept {
+		auto inputs = schematic_->inputs();
+		auto i = std::find_if(inputs.begin(), inputs.end(), [typeID = key.metaInfo().typeID](const auto& i) {
+			return i.first->typeID == typeID;
+		});
+		
+		auto output = key;
+		if (i == inputs.end()) {
+			output = 0;
+		}
+		else {
+			output = std::max(i->second - (*this)[key].quantity(), size_t(0));
+		}
+		return output;
+	}
+	
 	void Factory::schematic(SchematicID schematicID) {
 		schematic_ = &SDE::get(schematicID);
 	}
@@ -54,15 +67,16 @@ namespace dgmpp2 {
 	}
 	
 	std::optional<std::chrono::seconds> Factory::nextUpdateTime() const {
-		if (!configured())
-			return std::nullopt;
-		
-		if (productionCycle_)
-			return productionCycle_->end();
-		else if (launchTime_ && (*launchTime_ + *cycleTime()) < planet().lastUpdate())
-			return planet().lastUpdate();
+		if (production_)
+			return production_->end();
+		else if (states_.empty()) {
+			if ((launchTime_ + *cycleTime()) < planet().lastUpdate())
+				return planet().lastUpdate();
+			else
+				return launchTime_;
+		}
 		else
-			return launchTime_;
+			return std::nullopt;
 	}
 	
 	void Factory::update(std::chrono::seconds time) {
@@ -70,89 +84,105 @@ namespace dgmpp2 {
 			return;
 		updating_ = true;
 		
-		if (productionCycle_) {
-			const auto isCycleFinished = productionCycle_->end() == time;
-			if (isCycleFinished)
-				finishCycle(time);
+		/*
+		 Измнение состояния:
+		 	- Новый цикл производства
+		 	- Поступление материалов
+		 */
+		
+		auto isStateChanged = states_.empty();
+
+		//Завершение текущего цикла производства
+		if (production_) {
+			const auto isCycleFinished = production_->end() == time;
+			if (isCycleFinished) {
+				finishCycle(*production_, time);
+				production_ = nullptr;
+				isStateChanged = true;
+			}
 		}
 		
-		if (!productionCycle_)
-			startCycle(time);
+		//Старт нового цикла производства
+		if (!production_) {
+			if (auto cycle = startCycle(time)) {
+				production_ = cycle;
+				isStateChanged = true;
+			}
+		}
 		
 		auto materials = commodities();
-		ProductionState* currentState = nullptr;
-		
-		if (!states_.empty()) {
-			currentState = dynamic_cast<ProductionState*>(states_.back().get());
-			if (currentState->timestamp < time && (currentState->cycle.get() != productionCycle_ || currentState->commodities != materials))
-				currentState = nullptr;
+
+		//Поступление новых материалов
+		if (!isStateChanged) {
+			auto last = *states_.back();
+			if (last.timestamp < time && last.commodities != materials)
+				isStateChanged = true;
 		}
 		
-		if (!currentState) {
-			currentState = new ProductionState(time, productionCycle_, 0);
-			states_.emplace_back(currentState);
-		}
+		if (isStateChanged)
+			states_.emplace_back(new ProductionState(time, production_, 0));
 		
-		currentState->commodities.swap(materials);
-		
-		if (startTime_->count() > 0) {
-			auto duration = time - *startTime_;
-			if (duration.count() > 0)
-				currentState->efficiency = productionTime_ / duration;
-		}
+		states_.back()->efficiency = percentage(productionTime_, (time - startTime_));
+		states_.back()->commodities = std::move(materials);
 		
 		updating_ = false;
 	}
 	
-	void Factory::finishCycle(std::chrono::seconds time) {
+	void Factory::finishCycle(ProductionCycle& cycle, std::chrono::seconds time) {
 		auto product = *output();
 		
 		add(product);
 		Facility::update(time);
 		auto left = (*this)[product];
-		productionCycle_->yield = product - left;
-		productionCycle_->waste = left;
+		cycle.yield = product - left;
+		cycle.waste = left;
 		if (left.quantity() > 0)
 			extract(left);
 
-		productionTime_ += productionCycle_->duration;
-		productionCycle_ = nullptr;
-		launchTime_ = std::nullopt;
+		productionTime_ += cycle.duration;
+//		launchTime_ = std::nullopt;
 		
-		states_.emplace_back(new ProductionState(time, nullptr, productionTime_ / (time - *startTime_)));
+		
+//		states_.emplace_back(new ProductionState(time, std::nullopt, productionTime_ / (time - *startTime_)));
 	}
 	
-	void Factory::startCycle(std::chrono::seconds time) {
-		if (launchTime_) {
-			if (*launchTime_ + *cycleTime() < planet().lastUpdate()) {
+	ProductionCycle* Factory::startCycle(std::chrono::seconds time) {
+		if (states_.empty()) {
+			if (launchTime_ + *cycleTime() < planet().lastUpdate()) {
 				if (time != planet().lastUpdate())
-					return;
+					return nullptr;
 			}
-			else if (time != *launchTime_)
-				return;
-		}
-		if (launchTime_->count() < 0) {
-			launchTime_ = std::nullopt;
-			auto product = *output();
-			productionCycle_ = new ProductionCycle{time, *cycleTime(), product, product};
-		}
-		else {
-			launchTime_ = std::nullopt;
-			auto required = schematic_->inputs();
-			auto available = commodities();
+			else if (time != launchTime_)
+				return nullptr;
 			
-			auto equal = required.size() == available.size() && std::equal(required.begin(), required.end(), available.begin(), [](const auto& a, const auto& b) {
-				return a.first->typeID == b.metaInfo().typeID && a.second == b.quantity();
-			});
-			
-			if (equal) {
+			if (launchTime_.count() < 0) {
 				auto product = *output();
-				productionCycle_ = new ProductionCycle{time, *cycleTime(), product, product};
-				commodities_.clear();
-//				for (const auto& i: inputs_)
-//					i.from->update(time);
+				return cycles_.emplace_back(new ProductionCycle{time, *cycleTime(), product, product}).get();
 			}
 		}
+		
+		auto required = schematic_->inputs();
+		auto available = commodities();
+		
+		auto equal = required.size() == available.size() && std::equal(required.begin(), required.end(), available.begin(), [](const auto& a, const auto& b) {
+			return a.first->typeID == b.metaInfo().typeID && a.second == b.quantity();
+		});
+		
+		if (equal) {
+			if (cycles_.empty())
+				startTime_ = time;
+
+			auto product = *output();
+			commodities_.clear();
+			
+			//Забрать материалы со склада
+			for (const auto& i: inputs_)
+				i.from->update(time);
+			return cycles_.emplace_back(new ProductionCycle{time, *cycleTime(), product, product}).get();
+		}
+		else
+			return nullptr;
+
 	}
 
 }

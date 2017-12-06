@@ -21,11 +21,14 @@ namespace dgmpp2 {
 	};
 	
 	struct ProductionState: State {
-		template <typename T>
-		ProductionState(std::chrono::seconds timestamp, T&& cycle, Percent efficiency)
-		: State(timestamp), cycle(std::forward<T>(cycle)), efficiency(efficiency)  {}
+		ProductionState(std::chrono::seconds timestamp, ProductionCycle* cycle, Percent efficiency)
+		: State(timestamp), cycle(cycle), efficiency(efficiency)  {}
 
-		std::unique_ptr<ProductionCycle> cycle;
+		template <typename T>
+		ProductionState(std::chrono::seconds timestamp, ProductionCycle* cycle, T&& commodities, Percent efficiency)
+		: State(timestamp, std::forward<T>(commodities)), cycle(cycle), efficiency(efficiency)  {}
+
+		ProductionCycle* cycle;
 		Percent efficiency;
 	};
 }

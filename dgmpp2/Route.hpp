@@ -14,22 +14,18 @@ namespace dgmpp2 {
 	
 	struct Route {
 	public:
-//		Route (Facility* from, Facility* to, const Commodity& commodity, int64_t identifier)
-//		: from_(from), to_(to), commodity_(commodity), identifier_(identifier) {}
-		
 		Facility* const from;
 		Facility* const to;
 		const Commodity commodity;
-		const int64_t identifier;
+//		const int64_t identifier;
 
 		
 		bool operator== (const Route& other) const noexcept {
-			return from == other.from && to == other.to && commodity == other.commodity && identifier == other.identifier;
+//			return from == other.from && to == other.to && commodity == other.commodity && identifier == other.identifier;
+			return from == other.from && to == other.to && commodity == other.commodity;
 		}
-
-//	private:
-//		friend class Planet;
-//		friend class std::hash<Route>;
+		
+		void update(std::chrono::seconds time) const;
 	};
 }
 
@@ -40,10 +36,7 @@ namespace std {
 		typedef dgmpp2::Route argument_type;
 		typedef size_t result_type;
 		
-		constexpr result_type operator()(const argument_type& value) const noexcept {
-			return dgmpp2::hashValue(value.from, value.to, value.commodity, value.identifier);
-		}
-		
+		result_type operator() (const argument_type& value) const noexcept;
 	};
 };
 

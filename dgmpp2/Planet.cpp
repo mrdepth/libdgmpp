@@ -15,9 +15,12 @@
 #include <algorithm>
 
 namespace dgmpp2 {
-	Facility* Planet::add(TypeID typeID, int64_t identifier) {
+	Facility* Planet::add(TypeID typeID, Facility::Identifier identifier) {
 		const auto& metaInfo = SDE::facility(typeID);
 		Facility* facility = nullptr;
+		
+		if (identifier <= 0)
+			identifier = facilities_.size() + 1;
 		
 		switch (metaInfo.groupID) {
 			case GroupID::commandCenters:
@@ -62,7 +65,14 @@ namespace dgmpp2 {
 		return result;
 	}
 	
+	Facility* Planet::operator[] (Facility::Identifier key) const {
+		auto i = std::find_if(facilities_.begin(), facilities_.end(), [key](const auto& i) { return i->identifier() == key; });
+		return i != facilities_.end() ? i->get() : nullptr;
+	}
+
 	void Planet::add(const Route& route) {
+		if (!route.from || !route.to)
+			throw InvalidRoute();
 		route.from->outputs_.insert(route);
 		route.to->inputs_.insert(route);
 	}
@@ -72,9 +82,9 @@ namespace dgmpp2 {
 		route.to->inputs_.erase(route);
 	}
 	
-	std::optional<std::chrono::seconds> Planet::nextCycleTime() {
+	std::optional<std::chrono::seconds> Planet::nextCycleTime(const std::vector<Facility*>& facilities) {
 		std::optional<std::chrono::seconds> next = std::nullopt;
-		for (auto& facility: facilities_) {
+		for (auto& facility: facilities) {
 			if (auto time = facility->nextUpdateTime(); time && *time >= timestamp_)
 				next = next ? std::min(*next, *time) : time;
 		}
@@ -84,10 +94,19 @@ namespace dgmpp2 {
 	std::chrono::seconds Planet::run() {
 		auto endTime = std::chrono::seconds::zero();
 		timestamp_ = endTime;
+
+		std::vector<Facility*> facilities;
+		facilities.reserve(facilities_.size());
+		for (const auto& i: facilities_) {
+			if (i->configured()) {
+				facilities.push_back(i.get());
+			}
+		}
+		
 		while(true) {
-			if (auto next = nextCycleTime(); next->count() >= 0) {
+			if (auto next = nextCycleTime(facilities); next && next->count() >= 0) {
 				timestamp_ = *next;
-				for (auto& i: facilities_)
+				for (auto& i: facilities)
 					i->update(timestamp_);
 				endTime = *next;
 			}

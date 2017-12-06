@@ -12,10 +12,11 @@
 namespace dgmpp2 {
 	class Planet {
 	public:
-		Facility* add(TypeID typeID, int64_t identifier = 0);
+		Facility* add(TypeID typeID, Facility::Identifier identifier = 0);
 		void remove(Facility* facility);
 		std::vector<Facility*> facilities() const;
-
+		Facility* operator[] (Facility::Identifier key) const;
+		
 		void add(const Route& route);
 		void remove(const Route& route);
 		
@@ -40,7 +41,7 @@ namespace dgmpp2 {
 		std::chrono::seconds lastUpdate_ = std::chrono::seconds::zero();
 		std::chrono::seconds timestamp_ = std::chrono::seconds::zero();
 		
-		std::optional<std::chrono::seconds> nextCycleTime();
+		std::optional<std::chrono::seconds> nextCycleTime(const std::vector<Facility*>& facilities);
 //		void runCycle(std::chrono::seconds cycleTime);
 
 	};

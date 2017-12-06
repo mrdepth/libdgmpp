@@ -11,7 +11,7 @@
 namespace dgmpp2 {
 	
 	bool ExtractorControlUnit::configured() const {
-		return installTime_ && expiryTime_ && cycleTime_ && output();
+		return launchTime_ < expiryTime_ && installTime_ < expiryTime_ && output() && cycleTime_.count() > 0;
 	}
 
 	std::optional<Commodity> ExtractorControlUnit::output() const {
@@ -22,15 +22,12 @@ namespace dgmpp2 {
 	}
 	
 	std::optional<Commodity> ExtractorControlUnit::yieldAt(std::chrono::seconds time) const {
-		if (!configured())
-			return std::nullopt;
-		
 		auto product = *output();
 
 		if (time >= expiryTime_ || time < installTime_)
 			product = 0;
 		else {
-			auto cycleIndex = std::trunc((time - *installTime_) / *cycleTime_);
+			auto cycleIndex = std::trunc((time - installTime_) / cycleTime_);
 			auto t = (cycleIndex + 0.5) * w_.count();
 			
 			static auto decayFactor = SDE::get(AttributeID::ecuDecayFactor).defaultValue;
@@ -54,21 +51,14 @@ namespace dgmpp2 {
 	}
 	
 	std::optional<std::chrono::seconds> ExtractorControlUnit::nextUpdateTime() const {
-		if (!configured())
-			return std::nullopt;
-		
-		if (extractionCycle_)
-			return extractionCycle_->end();
-		else {
-			if (cycleTime_->count() > 0) {
-				if (!launchTime_ || *launchTime_ < *installTime_)
-					return installTime_;
-				else
-					return launchTime_;
-			}
+		if (!cycles_.empty()) {
+			if (extraction_)
+				return extraction_->end();
 			else
 				return std::nullopt;
 		}
+		else
+			return std::max(launchTime_, installTime_);
 	}
 	
 	void ExtractorControlUnit::update(std::chrono::seconds time) {
@@ -76,55 +66,50 @@ namespace dgmpp2 {
 			return;
 		updating_ = true;
 		
-		if (extractionCycle_) {
-			const auto isCycleFinished = extractionCycle_->end() == time;
-			
-			if (isCycleFinished) {
-				auto product = *yieldAt(extractionCycle_->start);
-				
-				add(product);
-				Facility::update(time);
-				const auto left = (*this)[product];
-				extractionCycle_->yield = product - left;
-				extractionCycle_->waste = left;
-				commodities_.clear();
-
-				totalYield_ = extractionCycle_->yield.quantity();
-				totalWaste_ = extractionCycle_->waste.quantity();
-				
-				extractionCycle_ = nullptr;
-				
-				const auto sum = totalYield_ + totalWaste_;
-				const Percent efficiency = sum > 0 ? static_cast<Float>(totalYield_) / static_cast<Float>(sum) : 0;
-				auto state = new ProductionState(time, nullptr, efficiency);
-				states_.emplace_back(state);
+		if (cycles_.empty()) {
+			if (auto cycle = startCycle(time)) {
+				extraction_ = cycle;
+				states_.emplace_back(new ProductionState(time, cycle, percentage(totalYield_, totalYield_ + totalWaste_)));
 			}
 		}
-		
-		if (!extractionCycle_) {
-			auto isNewCycle = false;
-			if (launchTime_) {
-				if (*launchTime_ < *installTime_) {
-					if (time == *installTime_)
-						isNewCycle = true;
-				}
-				else if (time == *launchTime_)
-					isNewCycle = true;
-			}
-			else if (time <= *expiryTime_ - *cycleTime_)
-				isNewCycle = true;
-			if (isNewCycle) {
-				launchTime_ = std::nullopt;
-				auto product = *output();
-				extractionCycle_ = new ProductionCycle{time, *cycleTime_, product, product};
-				if (states_.empty())
-					states_.emplace_back(new ProductionState(time, extractionCycle_, 0));
-				else
-					(dynamic_cast<ProductionState*>(states_.back().get()))->cycle.reset(extractionCycle_);
+		else if (extraction_) {
+			auto& cycle = *extraction_;
+			const auto isCycleFinished = cycle.end() == time;
+			
+			if (isCycleFinished) {
+				finishCycle(cycle, time);
+				extraction_ = startCycle(time);
+				states_.emplace_back(new ProductionState(time, extraction_, percentage(totalYield_, totalYield_ + totalWaste_)));
 			}
 		}
 		
 		updating_ = false;
 	}
+	
+	void ExtractorControlUnit::finishCycle(ProductionCycle& cycle, std::chrono::seconds time) {
+		auto product = *yieldAt(cycle.start);
+		
+		add(product);
+		Facility::update(time);
+		const auto left = (*this)[product];
+		cycle.yield = product - left;
+		cycle.waste = left;
+		commodities_.clear();
+		
+		totalYield_ = cycle.yield.quantity();
+		totalWaste_ = cycle.waste.quantity();
+	}
+	
+	ProductionCycle* ExtractorControlUnit::startCycle(std::chrono::seconds time) {
+		if ((!cycles_.empty() && time <= expiryTime_ - cycleTime_) ||
+			(time == std::max(launchTime_, installTime_))) {
+			
+			auto product = *output();
+			return cycles_.emplace_back(new ProductionCycle{time, cycleTime_, product, product}).get();
+		}
+		else
+			return nullptr;
+	}
+
 	
 }
