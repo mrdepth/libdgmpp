@@ -799,6 +799,47 @@ constexpr size_t hash_combine_v(size_t seed, const T& t) {
 	return seed ^ (std::hash<T>()(t) + 0x9e3779b9 + (seed << 6) + (seed >> 2));
 }
 
+void addFacility(std::shared_ptr<dgmpp::Planet> planet1, dgmpp2::Planet& planet2, dgmpp::TypeID typeID, int64_t identifier) {
+	planet1->addFacility(typeID, identifier);
+	planet2.add(typeID, identifier);
+}
+
+void route(std::shared_ptr<dgmpp::Planet> planet1, dgmpp2::Planet& planet2, int64_t from, int64_t to, dgmpp::TypeID typeID) {
+	planet1->addRoute(planet1->findFacility(from), planet1->findFacility(to), Commodity(planet1->getEngine(), typeID, 0));
+	planet2.add({planet2[from], planet2[to], dgmpp2::Commodity(typeID)});
+}
+
+void setSchematic(std::shared_ptr<dgmpp::Planet> planet1, dgmpp2::Planet& planet2, int64_t identifier, dgmpp::SchematicID schematicID) {
+	std::dynamic_pointer_cast<dgmpp::IndustryFacility>(planet1->findFacility(identifier))->setSchematic(schematicID);
+	dynamic_cast<dgmpp2::Factory*>(planet2[identifier])->schematic(schematicID);
+}
+
+void setLaunchTime(std::shared_ptr<dgmpp::Planet> planet1, dgmpp2::Planet& planet2, int64_t identifier, double launchTime) {
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet1->findFacility(identifier))->setLaunchTime(launchTime);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet2[identifier])->launchTime(std::chrono::seconds(static_cast<long long>(launchTime)));
+
+}
+
+void setInstallTime(std::shared_ptr<dgmpp::Planet> planet1, dgmpp2::Planet& planet2, int64_t identifier, double installTime) {
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet1->findFacility(identifier))->setInstallTime(installTime);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet2[identifier])->installTime(std::chrono::seconds(static_cast<long long>(installTime)));
+}
+
+void setExpiryTime(std::shared_ptr<dgmpp::Planet> planet1, dgmpp2::Planet& planet2, int64_t identifier, double expiryTime) {
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet1->findFacility(identifier))->setExpiryTime(expiryTime);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet2[identifier])->expiryTime(std::chrono::seconds(static_cast<long long>(expiryTime)));
+}
+
+void setCycleTime(std::shared_ptr<dgmpp::Planet> planet1, dgmpp2::Planet& planet2, int64_t identifier, double cycleTime) {
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet1->findFacility(identifier))->setCycleTime(cycleTime);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet2[identifier])->cycleTime(std::chrono::seconds(static_cast<long long>(cycleTime)));
+}
+
+void setQuantityPerCycle(std::shared_ptr<dgmpp::Planet> planet1, dgmpp2::Planet& planet2, int64_t identifier, uint32_t quantityPerCycle) {
+	std::dynamic_pointer_cast<ExtractorControlUnit>(planet1->findFacility(identifier))->setQuantityPerCycle(quantityPerCycle);
+	dynamic_cast<dgmpp2::ExtractorControlUnit*>(planet2[identifier])->quantityPerCycle(quantityPerCycle);
+}
+
 
 void testPI(std::shared_ptr<Engine> const& engine) {
 	using namespace dgmpp;
@@ -981,6 +1022,160 @@ void testPI2() {
 
 }
 
+void testPI3(std::shared_ptr<Engine> const& engine) {
+	using namespace dgmpp;
+	auto planet1 = engine->setPlanet(TypeID::none);
+	auto planet2 = dgmpp2::Planet();
+	
+	addFacility(planet1, planet2, TypeID::barrenStorageFacility, 10);
+
+	for (int i = 30; i <= 45; i++)
+		addFacility(planet1, planet2, TypeID::barrenBasicIndustryFacility, i);
+	for (int i = 20; i <= 28; i++) {
+		addFacility(planet1, planet2, TypeID::barrenExtractorControlUnit, i);
+		setCycleTime(planet1, planet2, i, 2 * 3600);
+		setQuantityPerCycle(planet1, planet2, i, 4000);
+		setExpiryTime(planet1, planet2, i, 432000);
+	}
+	
+	setSchematic(planet1, planet2, 30, dgmpp::SchematicID::nanoFactory);
+	route(planet1, planet2, 10, 30, TypeID::industrialExplosives);
+	route(planet1, planet2, 10, 30, TypeID::reactiveMetals);
+	route(planet1, planet2, 10, 30, TypeID::ukomiSuperconductors);
+	route(planet1, planet2, 30, 10, TypeID::nanoFactory);
+
+	setSchematic(planet1, planet2, 31, dgmpp::SchematicID::industrialExplosives);
+	route(planet1, planet2, 10, 31, TypeID::fertilizer);
+	route(planet1, planet2, 10, 31, TypeID::polytextiles);
+	route(planet1, planet2, 31, 10, TypeID::industrialExplosives);
+
+	setSchematic(planet1, planet2, 32, dgmpp::SchematicID::reactiveMetals);
+	route(planet1, planet2, 10, 32, TypeID::baseMetals);
+	route(planet1, planet2, 32, 10, TypeID::reactiveMetals);
+
+	setSchematic(planet1, planet2, 33, dgmpp::SchematicID::ukomiSuperconductor);
+	route(planet1, planet2, 10, 33, TypeID::syntheticOil);
+	route(planet1, planet2, 10, 33, TypeID::superconductors);
+	route(planet1, planet2, 33, 10, TypeID::ukomiSuperconductors);
+
+	setSchematic(planet1, planet2, 34, dgmpp::SchematicID::fertilizer);
+	route(planet1, planet2, 10, 34, TypeID::bacteria);
+	route(planet1, planet2, 10, 34, TypeID::proteins);
+	route(planet1, planet2, 34, 10, TypeID::fertilizer);
+
+	setSchematic(planet1, planet2, 35, dgmpp::SchematicID::polytextiles);
+	route(planet1, planet2, 10, 35, TypeID::biofuels);
+	route(planet1, planet2, 10, 35, TypeID::industrialFibers);
+	route(planet1, planet2, 35, 10, TypeID::polytextiles);
+
+	setSchematic(planet1, planet2, 36, dgmpp::SchematicID::syntheticOil);
+	route(planet1, planet2, 10, 36, TypeID::electrolytes);
+	route(planet1, planet2, 10, 36, TypeID::oxygen);
+	route(planet1, planet2, 36, 10, TypeID::syntheticOil);
+
+	setSchematic(planet1, planet2, 37, dgmpp::SchematicID::superconductors);
+	route(planet1, planet2, 10, 37, TypeID::plasmoids);
+	route(planet1, planet2, 10, 37, TypeID::water);
+	route(planet1, planet2, 37, 10, TypeID::superconductors);
+
+	setSchematic(planet1, planet2, 38, dgmpp::SchematicID::bacteria);
+	route(planet1, planet2, 10, 38, TypeID::microorganisms);
+	route(planet1, planet2, 38, 10, TypeID::bacteria);
+
+	setSchematic(planet1, planet2, 39, dgmpp::SchematicID::proteins);
+	route(planet1, planet2, 10, 39, TypeID::complexOrganisms);
+	route(planet1, planet2, 39, 10, TypeID::proteins);
+
+	setSchematic(planet1, planet2, 40, dgmpp::SchematicID::biofuels);
+	route(planet1, planet2, 10, 40, TypeID::carbonCompounds);
+	route(planet1, planet2, 40, 10, TypeID::biofuels);
+
+	setSchematic(planet1, planet2, 41, dgmpp::SchematicID::industrialFibers);
+	route(planet1, planet2, 10, 41, TypeID::autotrophs);
+	route(planet1, planet2, 41, 10, TypeID::industrialFibers);
+
+	setSchematic(planet1, planet2, 42, dgmpp::SchematicID::electrolytes);
+	route(planet1, planet2, 10, 42, TypeID::ionicSolutions);
+	route(planet1, planet2, 42, 10, TypeID::electrolytes);
+
+	setSchematic(planet1, planet2, 43, dgmpp::SchematicID::oxygen);
+	route(planet1, planet2, 10, 43, TypeID::nobleGas);
+	route(planet1, planet2, 43, 10, TypeID::oxygen);
+
+	setSchematic(planet1, planet2, 44, dgmpp::SchematicID::plasmoids);
+	route(planet1, planet2, 10, 44, TypeID::suspendedPlasma);
+	route(planet1, planet2, 44, 10, TypeID::plasmoids);
+
+	setSchematic(planet1, planet2, 45, dgmpp::SchematicID::water);
+	route(planet1, planet2, 10, 45, TypeID::aqueousLiquids);
+	route(planet1, planet2, 45, 10, TypeID::water);
+
+	
+	route(planet1, planet2, 20, 10, TypeID::baseMetals);
+	route(planet1, planet2, 21, 10, TypeID::microorganisms);
+	route(planet1, planet2, 22, 10, TypeID::complexOrganisms);
+	route(planet1, planet2, 23, 10, TypeID::carbonCompounds);
+	route(planet1, planet2, 24, 10, TypeID::autotrophs);
+	route(planet1, planet2, 25, 10, TypeID::ionicSolutions);
+	route(planet1, planet2, 26, 10, TypeID::nobleGas);
+	route(planet1, planet2, 27, 10, TypeID::suspendedPlasma);
+	route(planet1, planet2, 28, 10, TypeID::aqueousLiquids);
+	
+	auto e1 = planet1->simulate();
+	auto e2 = planet2.run();
+	
+	auto s1 = planet1->findFacility(10).get();
+	auto s2 = planet2[10];
+	
+	auto raw = 	{TypeID::baseMetals,
+	TypeID::microorganisms,
+	TypeID::complexOrganisms,
+	TypeID::carbonCompounds,
+	TypeID::autotrophs,
+	TypeID::ionicSolutions,
+	TypeID::nobleGas,
+	TypeID::suspendedPlasma,
+		TypeID::aqueousLiquids};
+
+	
+	size_t sum1 = 0;
+	for (auto i: s1->getCommodities()) {
+		if (i.getQuantity() > 0)
+			std::cout << (int)i.getTypeID() << ": " << i.getQuantity() << " ";
+		sum1 += i.getQuantity();
+	}
+	std::cout << std::endl;
+	size_t sum2 = 0;
+	for (auto i: s2->commodities()) {
+		if (i.quantity() > 0)
+			std::cout << (int)i.metaInfo().typeID << ": " << i.quantity() << " ";
+		sum2 += i.quantity();
+	}
+	
+//	sum1 = sum2 = 0;
+//	for (auto i: raw) {
+//		auto a = s1->getIncomming(dgmpp::Commodity(planet1->getEngine(), i)).getQuantity();
+//		auto b = s2->income(i).quantity();
+//		sum1 += a;
+//		sum2 += b;
+//		if (a != b)
+//			std::cout << a - b << " ";
+//	}
+	
+	std::cout << std::endl;
+	for (auto i: planet1->getFacilities())
+		std::cout << i->getIdentifier() << " ";
+	std::cout << std::endl;
+	
+	
+	for (auto i: planet2.facilities())
+		std::cout << i->identifier() << " ";
+	std::cout << std::endl;
+
+	std::cout << sum1 << " " << sum2 << std::endl;
+
+}
+
 template <typename T>
 constexpr T sum(T first) {
 	return first;
@@ -1055,6 +1250,9 @@ int main(int argc, const char * argv[]) {
 		auto t1 = std::chrono::high_resolution_clock::now();
 		{
 			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+			testPI3(engine);
+			return 1;
+			
 			testPI(engine);
 			testPI2();
 			

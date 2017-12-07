@@ -36,6 +36,12 @@ namespace dgmpp2 {
 	}
 	
 	Commodity Factory::free(const Commodity& key) noexcept {
+		if (!schematic_) {
+			auto output = key;
+			output = 0;
+			return output;
+		}
+		
 		auto inputs = schematic_->inputs();
 		auto i = std::find_if(inputs.begin(), inputs.end(), [typeID = key.metaInfo().typeID](const auto& i) {
 			return i.first->typeID == typeID;

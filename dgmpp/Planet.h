@@ -29,7 +29,7 @@ namespace dgmpp {
 		FacilitiesList facilities_;
 		RoutesList routes_;
 		std::weak_ptr<Engine> engine_;
-		double lastUpdate_;
+		double lastUpdate_ = 0;
 		double timestamp_;
 		TypeID typeID_;
 		
