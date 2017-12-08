@@ -128,7 +128,8 @@ void HeatSimulator::simulate(const ModulesList& modules)
 
 			tNow = state->tNow;
 			
-			Float h = heat(static_cast<Float>(tNow), heatCapacity, heatGeneration);
+			Float h = heat(static_cast<Float>(tNow / 1000.0), heatCapacity, heatGeneration);
+			
 			int numberOfDeadModules = 0;
 			for (int i = 0; i < n; i++)
 			{

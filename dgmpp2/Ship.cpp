@@ -41,6 +41,8 @@ namespace dgmpp2 {
 			module->state(dgmpp2::Module::State::unknown);
 			if (socket == Module::anySocket)
 				socket = Module::Socket(0);
+			else
+				socket = std::min(socket, static_cast<Module::Socket>(totalSlots(module->slot())) - 1);
 			
 			auto l = modules_.lower_bound(std::make_tuple(module->slot(), socket));
 			auto u = modules_.upper_bound(std::make_tuple(module->slot()));
@@ -855,6 +857,7 @@ namespace dgmpp2 {
 			std::get<std::unique_ptr<Module>>(i)->adjustState();
 		}
 		capacitor_.reset();
+		heatSimulator_.reset();
 	}
 	
 	void Ship::project(Module* module) {

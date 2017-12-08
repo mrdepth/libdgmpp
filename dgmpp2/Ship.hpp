@@ -13,6 +13,7 @@
 #include "Tank.hpp"
 #include "HitPoints.hpp"
 #include "Area.hpp"
+#include "HeatSimulator.hpp"
 
 namespace dgmpp2 {
 	class Module;
@@ -140,7 +141,7 @@ namespace dgmpp2 {
 		std::list<Module*> projectedModules_;
 		std::list<Drone*> projectedDrones_;
 
-		Ship (TypeID typeID): Type(typeID), capacitor_(*this) {};
+		Ship (TypeID typeID): Type(typeID), capacitor_(*this), heatSimulator_(*this) {};
 		
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		virtual void reset() override;
@@ -163,6 +164,7 @@ namespace dgmpp2 {
 		std::unique_ptr<Area> area_;
 		
 		Capacitor capacitor_;
+		HeatSimulator heatSimulator_;
 		DamageVector damagePattern_ = {0.25};
 
 	};

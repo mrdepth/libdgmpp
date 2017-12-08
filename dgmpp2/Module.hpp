@@ -82,7 +82,6 @@ namespace dgmpp2 {
 		bool factorReload()		const	{ return flags_.factorReload; }
 		void factorReload (bool factorReload) { flags_.factorReload = factorReload; }
 
-		
 		//Calculations
 		
 		std::chrono::milliseconds reloadTime();
@@ -106,17 +105,21 @@ namespace dgmpp2 {
 		Meter optimal();
 		Meter falloff();
 
+		std::optional<std::chrono::milliseconds> lifeTime();
+
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) override;
 		
 	private:
 		friend class Ship;
+		friend class HeatSimulator;
 		State state_ = State::unknown;
 		State preferredState_ = State::unknown;
 		Slot slot_;
 		Hardpoint hardpoint_;
 		Socket socket_ = anySocket;
 		std::chrono::milliseconds defaultReloadTime_;
+		std::optional<std::chrono::milliseconds> lifeTime_;
 		
 		struct {
 			bool canBeOnline : 1;
@@ -136,5 +139,6 @@ namespace dgmpp2 {
 		void socket (Socket socket) { socket_ = socket; }
 		void adjustState();
 		void fail(bool fail) { flags_.fail = fail; }
+		void lifeTime (std::chrono::milliseconds lifeTime) { lifeTime_ = lifeTime; };
 	};
 }

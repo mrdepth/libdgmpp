@@ -270,7 +270,7 @@ namespace dgmpp2 {
 			if (isEnabled() && !flags_.fail) {
 				auto availableStates = this->availableStates();
 				auto i = std::lower_bound(availableStates.begin(), availableStates.end(), preferredState_);
-				auto state = i != availableStates.end() ? *i : State::offline;
+				auto state = i != availableStates.end() ? *i : availableStates.back();
 				
 				if (state != state_) {
 					if (state < state_) {
@@ -591,6 +591,15 @@ namespace dgmpp2 {
 				return attribute->value();
 		}
 		return 0;
+	}
+
+	std::optional<std::chrono::milliseconds> Module::lifeTime() {
+		if (!lifeTime_) {
+			if (auto ship = dynamic_cast<Ship*>(parent())) {
+				ship->heatSimulator_.simulate();
+			}
+		}
+		return lifeTime_;
 	}
 
 }

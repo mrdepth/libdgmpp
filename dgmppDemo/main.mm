@@ -1199,92 +1199,26 @@ constexpr double percentage(T first, Tail... args) {
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
 		
-		std::list<std::vector<int>> prev;
-		for (int i = 0; i < 10; i++) {
-			std::unordered_set<int> set;
-			for (int j = 0; j < 100; j++) {
-				set.insert(j);
-			}
-			std::vector<int> v;
-			std::copy(set.begin(), set.end(), std::back_inserter(v));
-			auto b = std::all_of(prev.begin(), prev.end(), [&](const auto& i) {
-//				return std::equal(i.begin(), i.end(), v.begin());
-				return i == v;
-			});
-			assert(b);
-			prev.push_back(std::move(v));
-		}
-
-		auto t0 = std::chrono::high_resolution_clock::now();
-		{
-			constexpr auto s = dgmpp2::percentage(10, 40);
-			
-			std::unordered_set<std::tuple<int, int>> set;
-			set.emplace(1,2);
-//			auto t = std::make_tuple(1,2);
-//			auto h = std::hash<decltype(t)>()(t);
-//			std::cout << std::hash<decltype(t)>()(t) << std::endl;
-//			std::cout << hash_combine_v(hash_combine_v(0, 2), 1) << std::endl;
-//			std::cout << hash(1,&t) << std::endl;
 		
-			auto gang = dgmpp2::Gang::Create();
-			auto pilotA = gang->add(dgmpp2::Character::Create());
-			pilotA->setSkillLevels(5);
-			auto shipA = pilotA->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-			shipA->add(dgmpp2::Module::Create(TypeID::largeArmorRepairerI));
-			
-//			auto ehp0 = shipA->effectiveHitPoints();
-			
-			auto pilotB = gang->add(dgmpp2::Character::Create());
-			pilotB->setSkillLevels(5);
-			auto shipB = pilotB->setShip(dgmpp2::Ship::Create(TypeID::erebus));
-//			shipB->add(dgmpp2::Module::Create(TypeID::gallentePhenomenaGenerator));
-			
-//			auto ehp1 = shipA->effectiveHitPoints();
-			
-			shipB->add(dgmpp2::Module::Create(TypeID::shieldCommandBurstI))->charge(dgmpp2::Charge::Create(TypeID::shieldHarmonizingCharge));
-			
-			auto ehp2 = shipA->effectiveHitPoints();
-			
-		}
-		auto t1 = std::chrono::high_resolution_clock::now();
-		{
-			std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-			testPI3(engine);
-			return 1;
-			
-			testPI(engine);
-			testPI2();
-			
-			auto pilot = engine->getGang()->addPilot();
-			pilot->setAllSkillsLevel(5);
-			auto ship = pilot->setShip(dgmpp::TypeID::dominix);
-			
-			auto total = [](dgmpp::HitPoints ehp) {
-				return ehp.shield + ehp.armor + ehp.hull;
-			};
+		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 
-			std::cout << total(ship->getEffectiveHitPoints()) << std::endl;
-			
-			auto pilot2 = engine->getGang()->addPilot();
-			pilot2->setAllSkillsLevel(5);
-			auto erebus = pilot->setShip(dgmpp::TypeID::erebus);
-			auto pg = erebus->addModule(TypeID::gallentePhenomenaGenerator);
-			std::cout << total(ship->getEffectiveHitPoints()) << std::endl;
-			pg->setState(dgmpp::Module::State::offline);
-			std::cout << total(ship->getEffectiveHitPoints()) << std::endl;
-
-		}
-		auto t2 = std::chrono::high_resolution_clock::now();
-		auto dt0 = t1-t0;
-		auto dt1 = t2-t1;
-		std::cout << dt0.count() << " " << dt1.count() << std::endl << (double)dt1.count() / (double)dt0.count() << std::endl;
-		return 0;
-//		578=2
-//		37=218
-//
-//		578=2.34775
-//		37=255.905
+		auto pilot1 = engine->getGang()->addPilot();
+		pilot1->setAllSkillsLevel(5);
+		auto ship1 = pilot1->setShip(dgmpp::TypeID::dominix);
+		auto rep1 = ship1->addModule(dgmpp::TypeID::largeArmorRepairerI);
+		rep1->setState(dgmpp::Module::State::overloaded);
+		auto dc1 = ship1->addModule(dgmpp::TypeID::armorEMHardenerI, false, 2);
+		dc1->setState(dgmpp::Module::State::overloaded);
+		
+		auto gang = dgmpp2::Gang::Create();
+		auto pilot2 = gang->add(dgmpp2::Character::Create());
+		pilot2->setSkillLevels(5);
+		auto ship2 = pilot2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+		auto rep2 = ship2->add(dgmpp2::Module::Create(TypeID::largeArmorRepairerI));
+		rep2->state(dgmpp2::Module::State::overloaded);
+		auto dc2 = ship2->add(dgmpp2::Module::Create(TypeID::armorEMHardenerI), false, 2);
+		dc2->state(dgmpp2::Module::State::overloaded);
+		std::cout << dc1->getLifeTime() << " " << dc2->lifeTime()->count() / 1000.0 << std::endl;
 		
 		
 		return 0;
@@ -1293,7 +1227,7 @@ int main(int argc, const char * argv[]) {
 //		auto typeName = std::get<1>(result);
 		
 //		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/work/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
-		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
+//		std::shared_ptr<Engine> engine = std::make_shared<Engine>(std::make_shared<SqliteConnector>("/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/dbinit/dgm.sqlite"));
 		auto pilot = engine->getGang()->addPilot();
 		pilot->setAllSkillsLevel(5);
 		

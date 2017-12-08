@@ -195,6 +195,10 @@
 		12649A181FCD5E77007B22CD /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12649A151FCD5E77007B22CD /* Structure.cpp */; };
 		12649A191FCD5E77007B22CD /* Structure.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12649A161FCD5E77007B22CD /* Structure.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12649A1A1FCD5E77007B22CD /* Structure.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12649A161FCD5E77007B22CD /* Structure.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		127442B61FD9835400B70A3A /* HeatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 127442B41FD9835400B70A3A /* HeatSimulator.cpp */; };
+		127442B71FD9835400B70A3A /* HeatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 127442B41FD9835400B70A3A /* HeatSimulator.cpp */; };
+		127442B81FD9835400B70A3A /* HeatSimulator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 127442B51FD9835400B70A3A /* HeatSimulator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		127442B91FD9835400B70A3A /* HeatSimulator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 127442B51FD9835400B70A3A /* HeatSimulator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12791CBC1FA1C1CC00577188 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
 		1286564F1C57AD440002BA7E /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1286564D1C57AD440002BA7E /* State.cpp */; };
 		128656511C57AD440002BA7E /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 1286564E1C57AD440002BA7E /* State.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -470,6 +474,8 @@
 		12649A121FCC2060007B22CD /* WarfareBuffs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WarfareBuffs.hpp; sourceTree = "<group>"; };
 		12649A151FCD5E77007B22CD /* Structure.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Structure.cpp; sourceTree = "<group>"; };
 		12649A161FCD5E77007B22CD /* Structure.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Structure.hpp; sourceTree = "<group>"; };
+		127442B41FD9835400B70A3A /* HeatSimulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HeatSimulator.cpp; sourceTree = "<group>"; };
+		127442B51FD9835400B70A3A /* HeatSimulator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HeatSimulator.hpp; sourceTree = "<group>"; };
 		1286564D1C57AD440002BA7E /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
 		1286564E1C57AD440002BA7E /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		128656531C57AE6A0002BA7E /* ProductionState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProductionState.cpp; sourceTree = "<group>"; };
@@ -673,6 +679,8 @@
 				12E864F61FC8650000C9C4BD /* Booster.hpp */,
 				12EC664F1FBECD840083DBB8 /* Capacitor.cpp */,
 				12EC66501FBECD840083DBB8 /* Capacitor.hpp */,
+				127442B41FD9835400B70A3A /* HeatSimulator.cpp */,
+				127442B51FD9835400B70A3A /* HeatSimulator.hpp */,
 				123BEF271FBDA58700AC8EB1 /* Character.cpp */,
 				123BEF281FBDA58700AC8EB1 /* Character.hpp */,
 				123BEF3F1FBDB59200AC8EB1 /* Charge.cpp */,
@@ -1098,6 +1106,7 @@
 				12A156861C464FA400C3CF0B /* IndustryFacility.h in Headers */,
 				12564BFC1B84B07F000F68D8 /* Gang.h in Headers */,
 				12A156801C464EE800C3CF0B /* ExtractorControlUnit.h in Headers */,
+				127442B81FD9835400B70A3A /* HeatSimulator.hpp in Headers */,
 				12B3311E1FBD99B40072D4E4 /* Attribute.hpp in Headers */,
 				12564BFD1B84B07F000F68D8 /* Item.h in Headers */,
 				12A156B01C46548D00C3CF0B /* Route.h in Headers */,
@@ -1212,6 +1221,7 @@
 				12D9F9E61CC3A98B00313F8D /* IndustryFacility.h in Headers */,
 				12D9F9E71CC3A98B00313F8D /* Gang.h in Headers */,
 				12D9F9E81CC3A98B00313F8D /* ExtractorControlUnit.h in Headers */,
+				127442B91FD9835400B70A3A /* HeatSimulator.hpp in Headers */,
 				12B3311F1FBD99B40072D4E4 /* Attribute.hpp in Headers */,
 				12D9F9E91CC3A98B00313F8D /* Item.h in Headers */,
 				12D9F9EA1CC3A98B00313F8D /* Route.h in Headers */,
@@ -1395,6 +1405,7 @@
 				12A156A21C46518000C3CF0B /* Commodity.cpp in Sources */,
 				12B331161FBD99140072D4E4 /* Type.cpp in Sources */,
 				12564BC31B84B027000F68D8 /* FetchResult.cpp in Sources */,
+				127442B61FD9835400B70A3A /* HeatSimulator.cpp in Sources */,
 				123CC8B41FCD9B4100C34372 /* Planet.cpp in Sources */,
 				1293C4291C46C10A00B33378 /* Planet.cpp in Sources */,
 				12215B411C1D7643003B6DA5 /* FetchRequest.cpp in Sources */,
@@ -1484,6 +1495,7 @@
 				12D9F99D1CC3A98B00313F8D /* Commodity.cpp in Sources */,
 				12B331171FBD99150072D4E4 /* Type.cpp in Sources */,
 				12D9F99E1CC3A98B00313F8D /* FetchResult.cpp in Sources */,
+				127442B71FD9835400B70A3A /* HeatSimulator.cpp in Sources */,
 				123CC8B51FCD9B4100C34372 /* Planet.cpp in Sources */,
 				12D9F99F1CC3A98B00313F8D /* Planet.cpp in Sources */,
 				12D9F9A01CC3A98B00313F8D /* FetchRequest.cpp in Sources */,
