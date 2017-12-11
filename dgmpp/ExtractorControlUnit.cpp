@@ -2,131 +2,114 @@
 //  ExtractorControlUnit.cpp
 //  dgmpp
 //
-//  Created by Артем Шиманский on 13.01.16.
+//  Created by Artem Shimanski on 29.11.2017.
 //
-//
 
-#include "ExtractorControlUnit.h"
-#include "Planet.h"
-#include "Engine.h"
-#include "Route.h"
-#include "Commodity.h"
-#include <cmath>
-#include <iostream>
+#include "ExtractorControlUnit.hpp"
+#include "SDE.hpp"
 
-using namespace dgmpp;
-
-ExtractorControlUnit::ExtractorControlUnit(TypeID typeID, const std::string& typeName, double capacity, std::shared_ptr<Planet> const& owner, int64_t identifier) : Facility(typeID, typeName, capacity, owner, identifier), launchTime_(0), installTime_(0), expiryTime_(0), cycleTime_(0), quantityPerCycle_(0), yield_(0), waste_(0), updating_(false) {
-	decayFactor_ = owner->getEngine()->decayFactor();
-	noiseFactor_ = owner->getEngine()->noiseFactor();
-}
-
-void ExtractorControlUnit::setCycleTime(double cycleTime) {
-	cycleTime_ = std::max(cycleTime, 0.0);
-	double cycleTimeMinutes = std::trunc(cycleTime_ / 60);
-	w_ = cycleTimeMinutes / 15;
-};
-
-void ExtractorControlUnit::setQuantityPerCycle(uint32_t quantityPerCycle) {
-	quantityPerCycle_ = quantityPerCycle;
-	phaseShift_ = std::pow(quantityPerCycle_, 0.7);
-}
-
-uint32_t ExtractorControlUnit::getYieldAtTime(double time) const {
-	if (time >= expiryTime_ || time < installTime_)
-		return 0;
+namespace dgmpp {
 	
-	int cycleIndex = (time - installTime_) / cycleTime_;
-	double t = (cycleIndex + 0.5) * w_;
-	
-	static double f1 = 1.0 / 12.0;
-	static double f2 = 1.0 / 5.0;
-	static double f3 = 1.0 / 2.0;
-	
-	double decay = quantityPerCycle_ / (1.0 + t * decayFactor_);
-	double sina = std::cos(phaseShift_ + t * f1);
-	double sinb = std::cos(phaseShift_ / 2 + t * f2);
-	double sinc = std::cos(t * f3);
-	double sins = std::max((sina + sinb + sinc) / 3.0, 0.0);
-	double h = decay * (1 + noiseFactor_ * sins);
-	double yield = w_ * h;
-	return std::trunc(yield);
-}
+	bool ExtractorControlUnit::configured() const {
+		return launchTime_ < expiryTime_ && installTime_ < expiryTime_ && output() && cycleTime_.count() > 0;
+	}
 
-double ExtractorControlUnit::getNextUpdateTime() const {
-	if (extractionCycle_)
-		return extractionCycle_->getLaunchTime() + extractionCycle_->getCycleTime();
-	else {
-		double cycleTime = getCycleTime();
-		if (cycleTime > 0) {
-			if (getLaunchTime() < getInstallTime())
-				return getInstallTime();
+	std::optional<Commodity> ExtractorControlUnit::output() const noexcept {
+		if (!outputs_.empty())
+			return outputs_.begin()->commodity;
+		else
+			return std::nullopt;
+	}
+	
+	std::optional<Commodity> ExtractorControlUnit::yieldAt(std::chrono::seconds time) const noexcept {
+		auto product = *output();
+
+		if (time >= expiryTime_ || time < installTime_)
+			product = 0;
+		else {
+			auto cycleIndex = std::trunc((time - installTime_) / cycleTime_);
+			auto t = (cycleIndex + 0.5) * w_.count();
+			
+			static auto decayFactor = SDE::get(AttributeID::ecuDecayFactor).defaultValue;
+			static auto noiseFactor = SDE::get(AttributeID::ecuNoiseFactor).defaultValue;
+			
+			constexpr auto f1 = 1.0 / 12.0;
+			constexpr auto f2 = 1.0 / 5.0;
+			constexpr auto f3 = 1.0 / 2.0;
+			
+			auto decay = quantityPerCycle_ / (1.0 + t * decayFactor);
+			auto sina = std::cos(phaseShift_ + t * f1);
+			auto sinb = std::cos(phaseShift_ / 2 + t * f2);
+			auto sinc = std::cos(t * f3);
+			auto sins = std::max((sina + sinb + sinc) / 3.0, 0.0);
+			auto h = decay * (1 + noiseFactor * sins);
+			auto yield = w_.count() * h;
+			product = std::trunc(yield);
+		}
+		
+		return product;
+	}
+	
+	std::optional<std::chrono::seconds> ExtractorControlUnit::nextUpdateTime() const noexcept {
+		if (!cycles_.empty()) {
+			if (extraction_)
+				return extraction_->end();
 			else
-				return getLaunchTime();
+				return std::nullopt;
 		}
 		else
-			return std::numeric_limits<double>::infinity();
-	}
-}
-
-void ExtractorControlUnit::update(double time) {
-	if (updating_)
-		return;
-	updating_ = true;
-	if (extractionCycle_) {
-		double cycleEndTime = extractionCycle_->getLaunchTime() + extractionCycle_->getCycleTime();
-		bool endCycle = cycleEndTime == time;
-		
-		if (endCycle) {
-			uint32_t yield = getYieldAtTime(extractionCycle_->getLaunchTime());
-			Commodity product = Commodity(getOutput(), yield);
-			addCommodity(product);
-			Facility::update(time);
-			auto left = getCommodity(getOutput());
-			extractionCycle_->setYield(product - left);
-			extractionCycle_->setWaste(left);
-			yield_ = extractionCycle_->getYield().getQuantity();
-			waste_ = extractionCycle_->getWaste().getQuantity();
-			clear();
-			extractionCycle_ = nullptr;
-			double sum = yield_ + waste_;
-			states_.push_back(std::make_shared<ProductionState>(time, nullptr, sum > 0 ? yield_ / sum : 0));
-		}
+			return std::max(launchTime_, installTime_);
 	}
 	
-	if (!extractionCycle_) {
-		bool newCycle = false;
-		if (!std::isinf(getLaunchTime())) {
-			if (getLaunchTime() < getInstallTime()) {
-				if (time == getInstallTime())
-					newCycle = true;
+	void ExtractorControlUnit::update(std::chrono::seconds time) {
+		if (updating_ || !configured())
+			return;
+		updating_ = true;
+		
+		if (cycles_.empty()) {
+			if (auto cycle = startCycle(time)) {
+				extraction_ = cycle;
+				states_.emplace_back(new ProductionState(time, cycle, percentage(totalYield_, totalYield_ + totalWaste_)));
 			}
-			else if (time == getLaunchTime())
-				newCycle = true;
 		}
-		else if (time <= getExpiryTime() - getCycleTime())
-			newCycle = true;
-		if (newCycle) {
-			setLaunchTime(std::numeric_limits<double>::infinity());
-			extractionCycle_ = std::make_shared<ProductionCycle>(time, getCycleTime(), getOutput(), getOutput());
-			if (states_.size() == 0)
-				states_.push_back(std::make_shared<ProductionState>(time, extractionCycle_));
-			else
-				std::dynamic_pointer_cast<ProductionState>(states_.back())->setCurrentCycle(extractionCycle_);
+		else if (extraction_) {
+			auto& cycle = *extraction_;
+			const auto isCycleFinished = cycle.end() == time;
+			
+			if (isCycleFinished) {
+				finishCycle(cycle, time);
+				extraction_ = startCycle(time);
+				states_.emplace_back(new ProductionState(time, extraction_, percentage(totalYield_, totalYield_ + totalWaste_)));
+			}
 		}
+		
+		updating_ = false;
 	}
-	updating_ = false;
-}
+	
+	void ExtractorControlUnit::finishCycle(ProductionCycle& cycle, std::chrono::seconds time) {
+		auto product = *yieldAt(cycle.start);
+		
+		add(product);
+		Facility::update(time);
+		const auto left = (*this)[product];
+		cycle.yield = product - left;
+		cycle.waste = left;
+		commodities_.clear();
+		
+		totalYield_ = cycle.yield.quantity();
+		totalWaste_ = cycle.waste.quantity();
+	}
+	
+	ProductionCycle* ExtractorControlUnit::startCycle(std::chrono::seconds time) {
+		if ((!cycles_.empty() && time <= expiryTime_ - cycleTime_) ||
+			(time == std::max(launchTime_, installTime_))) {
+			
+			auto product = *output();
+			return cycles_.emplace_back(new ProductionCycle{time, cycleTime_, product, product}).get();
+		}
+		else
+			return nullptr;
+	}
 
-
-Commodity ExtractorControlUnit::getOutput() const {
-	auto outputs = getOutputs();
-	if (outputs.size() > 0)
-		return outputs.front()->getCommodity();
-	else
-		return Commodity::InvalidCommodity();
-}
-
-bool ExtractorControlUnit::routed() const {
-	return getOutputs().size() > 0;
+	
 }

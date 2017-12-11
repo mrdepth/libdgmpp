@@ -1,1060 +1,606 @@
-#include "Module.h"
-#include "Ship.h"
-#include "Effect.h"
-#include "Attribute.h"
-#include "Engine.h"
-#include "Area.h"
-#include "Charge.h"
-#include "Modifier.h"
-#include "LocationGroupModifier.h"
-#include "LocationRequiredSkillModifier.h"
-#include "HeatSimulator.h"
-#include <algorithm>
-#include <cmath>
+//
+//  Module.cpp
+//  dgmpp
+//
+//  Created by Artem Shimanski on 16.11.2017.
+//
 
-using namespace dgmpp;
+#include "Module.hpp"
+#include "Ship.hpp"
+#include "SDE.hpp"
+#include "Errors.hpp"
 
-Module::Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : Item(engine, typeID, owner), state_(State::offline), preferredState_(State::unknown), target_(), reloadTime_(0), forceReload_(false), charge_(nullptr), slot_(Slot::unknown), enabled_(true), factorReload_(false), socket_(0)
-{
-}
+namespace dgmpp {
+	using namespace std::chrono_literals;
 
-Module::~Module(void)
-{
-}
-
-/*Attribute* Module::getAttribute(TypeID attributeID)
-{
-	AttributesMap::iterator i = attributes_.find(attributeID);
-	if (i != attributes_.end())
-		return i->second;
-	else
-		return attributes_[attributeID] = new Attribute(engine_, attributeID, this);
-}*/
-
-Module::Slot Module::getSlot()
-{
-	loadIfNeeded();
-	return slot_;
-}
-
-Module::Hardpoint Module::getHardpoint()
-{
-	loadIfNeeded();
-	return hardpoint_;
-}
-
-int Module::getSocket() {
-	std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
-	auto modules = ship->getModules(getSlot(), true);
-	return static_cast<int>(std::find(modules.begin(), modules.end(), shared_from_this()) - modules.begin());
-}
-
-bool Module::canHaveState(State state)
-{
-	if (isDummy())
-		return false;
+	Module::Module (TypeID typeID) : Type(typeID) {
+		const auto& effects = this->effects();
+		
+		
+		flags_.canBeOnline = (*this)[EffectID::online] != nullptr || (*this)[EffectID::onlineForStructures];
+		
+		flags_.canBeOverloaded = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+			return i->metaInfo().category == MetaInfo::Effect::Category::overloaded;
+		});
+		
+		flags_.requireTarget = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+			return i->metaInfo().category == MetaInfo::Effect::Category::target;
+		});
+		
+		flags_.canBeActive = flags_.canBeOverloaded || flags_.requireTarget || std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+			return i->metaInfo().category == MetaInfo::Effect::Category::active;
+		});
+		
+		flags_.fail = false;
+		
+		flags_.forceReload = metaInfo().groupID == GroupID::capacitorBooster;
+		flags_.factorReload = false;
+		
+		if ((*this)[EffectID::loPower])
+			slot_ = Module::Slot::low;
+		else if ((*this)[EffectID::medPower])
+			slot_ = Module::Slot::med;
+		else if ((*this)[EffectID::hiPower])
+			slot_ = Module::Slot::hi;
+		else if ((*this)[EffectID::rigSlot])
+			slot_ = Module::Slot::rig;
+		else if ((*this)[EffectID::subSystem])
+			slot_ = Module::Slot::subsystem;
+		else if ((*this)[EffectID::tacticalMode])
+			slot_ = Module::Slot::mode;
+		else if (metaInfo().categoryID == CategoryID::starbase)
+			slot_ = Module::Slot::starbaseStructure;
+		else if ((*this)[EffectID::serviceSlot])
+			slot_ = Module::Slot::service;
+		else
+			slot_ = Module::Slot::none;
+		
+		if ((*this)[EffectID::turretFitted])
+			hardpoint_ = Module::Hardpoint::turret;
+		else if ((*this)[EffectID::launcherFitted])
+			hardpoint_ = Module::Hardpoint::turret;
+		else
+			hardpoint_ = Module::Hardpoint::none;
+		
+		for (auto attributeID : SDE::chargeGroupAttributeIDs) {
+			if (auto groupIDAttribute = (*this)[attributeID]) {
+				GroupID groupID = static_cast<GroupID>(static_cast<int>(groupIDAttribute->value()));
+				if (groupID != GroupID::none) {
+					chargeGroups_.push_back(groupID);
+					if (groupID == GroupID::capacitorBoosterCharge || groupID == GroupID::naniteRepairPaste)
+						flags_.forceReload = true;
+				}
+			}
+		}
+		chargeGroups_.shrink_to_fit();
+		std::sort(chargeGroups_.begin(), chargeGroups_.end());
+		
+		if (std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+			switch (i->metaInfo().effectID) {
+				case EffectID::miningLaser:
+				case EffectID::targetAttack:
+				case EffectID::useMissiles:
+					return true;
+				default:
+					return false;
+			}
+		})) {
+			defaultReloadTime_ = std::chrono::seconds(1);
+		}
+		else if (std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+			switch (i->metaInfo().effectID) {
+				case EffectID::powerBooster:
+				case EffectID::projectileFired:
+					return true;
+				default:
+					return false;
+			}
+		})) {
+			defaultReloadTime_ = std::chrono::seconds(10);
+		}
+	}
 	
-	loadIfNeeded();
-	if (isEnabled()) {
-		auto charge = getCharge();
-		bool canBeActive = canBeActive_ | (charge ? charge->canBeActive() : false);
-		bool canHaveState =	 state == State::offline ||
-		(state == State::online && canBeOnline_) ||
-		(state == State::active && canBeActive) ||
-		(state == State::overloaded && canBeOverloaded_);
-		if (canHaveState && state >= State::active)
-		{
-			if (getAttribute(AttributeID::activationBlocked)->getValue() > 0)
-				return false;
+	Module::~Module() {
+		if (target_)
+			target_->removeProjected(this);
+	}
+	
+	void Module::setEnabled (bool enabled) {
+		if (isEnabled() == enabled)
+			return Type::setEnabled(enabled);
+		else
+			Type::setEnabled(enabled);
+		if (charge_ != nullptr)
+			charge_->setEnabled(enabled);
+		adjustState();
+	}
+	
+	void Module::state (dgmpp::Module::State state) {
+		preferredState_ = state;
+		adjustState();
+	}
+	
+	bool Module::canHaveState (State state) {
+		auto states = availableStates();
+		return std::find(states.begin(), states.end(), state) != states.end();
+	}
+	
+	std::vector<Module::State> Module::availableStates() {
+		if (isEnabled()) {
+			std::vector<Module::State> states;
+			states.reserve(4);
+			states.push_back(Module::State::offline);
 			
-			std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
+			if (canBeOnline()) {
+				states.push_back(Module::State::online);
+				
+				bool canBeActive = this->canBeActive();
+				
+				if (canBeActive) {
+					if ((*this)[AttributeID::activationBlocked]->value() > 0)
+						canBeActive = false;
+					else if (auto ship = dynamic_cast<Ship*>(parent())) {
+						if (auto attribute = (*this)[AttributeID::maxGroupActive]) {
+							auto maxGroupActive = static_cast<size_t>(attribute->value());
+							auto groupID = metaInfo().groupID;
+							
+							for (const auto& i: ship->modules_) {
+								auto module = std::get<std::unique_ptr<Module>>(i).get();
+								if (module == this)
+									continue;
+								
+								if (module->state() >= Module::State::active && module->metaInfo().groupID == groupID)
+									maxGroupActive--;
+								if (maxGroupActive <= 0) {
+									canBeActive = false;
+									break;
+								}
+							}
+						}
+					}
+					
+					if (canBeActive) {
+						states.push_back(Module::State::active);
+						if (canBeOverloaded())
+							states.push_back(Module::State::overloaded);
+					}
+				}
+			}
 			
-			if (hasAttribute(AttributeID::maxGroupActive))
-			{
-				int maxGroupActive = static_cast<int>(getAttribute(AttributeID::maxGroupActive)->getValue()) - 1;
-				
-				for (const auto& i: ship->getModules())
-					if (i.get() != this && i->getState() >= Module::State::active && i->getGroupID() == groupID_)
-						maxGroupActive--;
-				if (maxGroupActive < 0)
-					canHaveState = false;
-			}
+			
+			return states;
 		}
-		return canHaveState;
+		else
+			return {};
 	}
-	else
-		return state == State::offline;
-}
-
-Module::State Module::getState()
-{
-	if (isDummy())
-		return State::unknown;
-	loadIfNeeded();
-	return isEnabled() ? state_ : State::offline;
-}
-
-void Module::setInternalState(State state)
-{
-	if (isDummy())
-		return;
-	if (state == state_)
-		return;
-	if (canHaveState(state))
-	{
-		if (state < state_)
-		{
-			if (state_ >= State::overloaded && state < State::overloaded)
-				removeEffects(Effect::Category::overloaded);
-			if (state_ >= State::active && state < State::active)
-			{
-				removeEffects(Effect::Category::active);
-				removeEffects(Effect::Category::target);
-			}
-			if (state_ >= State::online && state < State::online)
-			{
-				removeEffects(Effect::Category::passive);
-				getEffect(EffectID::online)->removeEffect(this);
-			}
-		}
-		else if (state > state_)
-		{
-			if (state_ < State::online && state >= State::online)
-			{
-				addEffects(Effect::Category::passive);
-				getEffect(EffectID::online)->addEffect(this);
-			}
-			if (state_ < State::active && state >= State::active)
-			{
-				addEffects(Effect::Category::active);
-				addEffects(Effect::Category::target);
-			}
-			if (state_ < State::overloaded && state >= State::overloaded)
-				addEffects(Effect::Category::overloaded);
-		}
-		state_ = state;
-		auto engine = getEngine();
-		if (engine)
-			engine->reset();
-	}
-}
-
-Module::State Module::getPreferredState() {
-	if (isDummy())
-		return State::unknown;
-	return preferredState_;
-}
-
-void Module::setState(State state) {
-	if (isDummy())
-		return;
-	preferredState_ = state;
-	setInternalState(state);
-}
-
-bool Module::isAssistance() {
-	if (isDummy())
-		return false;
-	for (const auto& effect: getEffects())
-		if (effect->getCategory() == Effect::Category::target)
-			return  effect->isAssistance();
-	auto charge = getCharge();
-	if (charge)
-		return charge->isAssistance();
-	return false;
-}
-
-bool Module::isOffensive() {
-	if (isDummy())
-		return false;
-	for (const auto& effect: getEffects())
-		if (effect->getCategory() == Effect::Category::target)
-			return  effect->isOffensive();
-	auto charge = getCharge();
-	if (charge)
-		return charge->isOffensive();
-	return false;
-}
-
-void Module::addEffects(Effect::Category category)
-{
-	if (isDummy())
-		return;
-	loadIfNeeded();
 	
-	for (const auto& i: effects_)
-		if (i->getEffectID() != EffectID::online && i->getCategory() == category)
-			i->addEffect(this);
-	
-	if (category == Effect::Category::generic)
-	{
-		if (state_ >= State::online)
-		{
-			addEffects(Effect::Category::passive);
-			getEffect(EffectID::online)->addEffect(this);
-		}
-		if (state_ >= State::active)
-		{
-			addEffects(Effect::Category::active);
-			addEffects(Effect::Category::target);
-		}
-		if (state_ >= State::overloaded)
-			addEffects(Effect::Category::overloaded);
-		
-	}
-	if (charge_)
-		charge_->addEffects(category);
-}
-
-void Module::removeEffects(Effect::Category category)
-{
-	if (isDummy())
-		return;
-	loadIfNeeded();
-
-	for (const auto& i: effects_)
-		if (i->getEffectID() != EffectID::online && i->getCategory() == category)
-			i->removeEffect(this);
-//	if (category == Effect::Category::generic && charge_ != nullptr)
-//		charge_->removeEffects(category);
-	if (category == Effect::Category::generic)
-	{
-		if (state_ >= State::overloaded)
-			removeEffects(Effect::Category::overloaded);
-		if (state_ >= State::active)
-		{
-			removeEffects(Effect::Category::active);
-			removeEffects(Effect::Category::target);
-		}
-		if (state_ >= State::online)
-		{
-			removeEffects(Effect::Category::passive);
-			getEffect(EffectID::online)->removeEffect(this);
-		}
-		
-	}
-	if (charge_)
-		charge_->removeEffects(category);
-}
-
-void Module::reset()
-{
-	Item::reset();
-	shots_ = -1;
-	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = miningYield_ = -1;
-	lifeTime_ = -1;
-	if (charge_)
-		charge_->reset();
-}
-
-std::shared_ptr<Charge> Module::setCharge(TypeID typeID)
-{
-	if (isDummy())
-		return nullptr;
-	loadIfNeeded();
-	try
-	{
-		auto engine = getEngine();
-		if (!engine)
-			return nullptr;
-		
-		if (typeID != TypeID::none) {
-			std::shared_ptr<Charge> charge = std::make_shared<Charge>(engine, typeID, shared_from_this());
-			if (charge && canFit(charge))
-			{
-				if (charge_)
-					charge_->removeEffects(Effect::Category::generic);
-				
-				charge_ = charge;
-				charge_->addEffects(Effect::Category::generic);
+	void Module::target(Ship* target) {
+		batchUpdates([&]() {
+			if (target_) {
+				if (state() >= State::active)
+					deactivateEffects(MetaInfo::Effect::Category::target);
+				target_->removeProjected(this);
 			}
+			target_ = target;
+			if (target) {
+				assert(!isDescendant(*target));
+				
+				target_->project(this);
+				if (state() >= State::active)
+					activateEffects(MetaInfo::Effect::Category::target);
+			}
+		});
+	}
+	
+	Type* Module::domain (MetaInfo::Modifier::Domain domain) noexcept {
+		switch (domain) {
+			case MetaInfo::Modifier::Domain::target :
+				return target_;
+			default:
+				return Type::domain(domain);
 		}
-		else {
-			if (charge_) {
-				charge_->removeEffects(Effect::Category::generic);
+	}
+	
+	Charge* Module::charge (std::unique_ptr<Charge> charge) {
+		batchUpdates([&]() {
+			auto enabled = isEnabled();
+			
+			setEnabled(false);
+			if (auto currentCharge = this->charge()) {
+				currentCharge->parent(nullptr);
 				charge_ = nullptr;
 			}
-		}
-		
-		engine->reset();
-		return charge_;
+			if (charge != nullptr) {
+				if (canFit(charge.get())) {
+					charge_ = std::move(charge);
+					charge_->parent(this);
+				}
+				else
+					throw CannotFit<Charge>(std::move(charge));
+			}
+			if (enabled)
+				setEnabled(true);
+		});
+		return charge_.get();
 	}
-	catch(Item::UnknownTypeIDException)
-	{
-		return nullptr;
-	}
-}
-
-void Module::clearCharge()
-{
-	setCharge(TypeID::none);
-}
-
-
-std::shared_ptr<Charge> Module::getCharge()
-{
-	return charge_;
-}
-
-const std::vector<GroupID>& Module::getChargeGroups()
-{
-	loadIfNeeded();
-	return chargeGroups_;
-}
-
-int Module::getChargeSize()
-{
-	if (isDummy())
-		return 0;
-	if (hasAttribute(AttributeID::chargeSize))
-		return static_cast<int>(getAttribute(AttributeID::chargeSize)->getValue());
-	else
-		return 0;
-}
-
-bool Module::canFit(std::shared_ptr<Charge> const& charge)
-{
-	if (isDummy())
-		return false;
-	loadIfNeeded();
-	if (!charge)
-		return true;
-	Float capacity = getAttribute(AttributeID::capacity)->getValue();
-	if (capacity > 0 && charge->getAttribute(AttributeID::volume)->getValue() > capacity)
-		return false;
 	
-	int chargeSize = getChargeSize();
-	if (chargeSize > 0)
-	{
-		if (!charge->hasAttribute(AttributeID::chargeSize) || static_cast<int>(charge->getAttribute(AttributeID::chargeSize)->getValue()) != chargeSize)
+	bool Module::canFit(Charge* charge) {
+		auto capacity = (*this)[AttributeID::capacity]->value();
+		if (capacity > 0 && (*charge)[AttributeID::volume]->value() > capacity)
+			return false;
+		
+		auto chargeSize = this->chargeSize();
+		if (chargeSize != Charge::Size::none && chargeSize != charge->chargeSize())
+			return false;
+		
+		auto chargeGroup = charge->metaInfo().groupID;
+		for (auto i: chargeGroups_) {
+			if (i == chargeGroup)
+				return true;
+		}
+		return false;
+	}
+	
+	Charge::Size Module::chargeSize() {
+		if (auto attribute = (*this)[AttributeID::chargeSize])
+			return static_cast<Charge::Size>(static_cast<int>(attribute->value()));
+		else
+			return Charge::Size::none;
+	}
+
+	bool Module::canBeActive() const noexcept {
+		if (flags_.canBeActive)
+			return true;
+		else if (auto charge = this->charge())
+			return charge->canBeActive();
+		else
 			return false;
 	}
 	
-	GroupID chargeGroup = charge->getGroupID();
-	
-	for (const auto& i: chargeGroups_)
-		if (i == chargeGroup)
+	bool Module::requireTarget() const noexcept {
+		if (flags_.requireTarget)
 			return true;
-	return false;
-}
-
-bool Module::requireTarget()
-{
-	if (isDummy())
-		return false;
-	for (const auto& i: effects_)
-	{
-		Effect::Category category = i->getCategory();
-		if (category == Effect::Category::target)
-			return true;
-	}
-	if (charge_)
-		for (const auto& i: charge_->getEffects()) {
-			Effect::Category category = i->getCategory();
-			if (category == Effect::Category::target)
-				return true;
-			
-		}
-	return false;
-}
-
-void Module::setTarget(std::shared_ptr<Ship> const& target)
-{
-	if (isDummy())
-		return;
-	loadIfNeeded();
-	std::shared_ptr<Ship> oldTarget = target_.lock();
-	if (oldTarget == target)
-		return;
-
-	if (target && target == getOwner())
-		throw BadTargetException("self");
-	
-	
-	if (oldTarget)
-	{
-		removeEffects(Effect::Category::target);
-		oldTarget->removeProjectedModule(shared_from_this());
-	}
-	target_ = target;
-	if (target)
-	{
-		target->addProjectedModule(shared_from_this());
-		addEffects(Effect::Category::target);
-	}
-	auto engine = getEngine();
-	if (engine)
-		engine->reset();
-}
-
-void Module::clearTarget()
-{
-	setTarget(nullptr);
-}
-
-std::shared_ptr<Ship> Module::getTarget()
-{
-	return target_.lock();
-}
-
-Float Module::getReloadTime()
-{
-	if (isDummy())
-		return 0;
-	if (hasAttribute(AttributeID::reloadTime))
-		return getAttribute(AttributeID::reloadTime)->getValue() / 1000.0;
-	else
-		return reloadTime_;
-}
-
-//Calculations
-
-Float Module::getCycleTime()
-{
-	if (isDummy())
-		return 0;
-	Float reactivation = hasAttribute(AttributeID::moduleReactivationDelay) ? getAttribute(AttributeID::moduleReactivationDelay)->getValue()  / 1000.0: 0;
-	Float speed = getRawCycleTime();
-	
-	bool factorReload = forceReload_ || factorReload_;
-	Float reload = charge_ ? getReloadTime() : 0;
-	if (factorReload && reload > 0)
-	{
-//		Float additionalReloadTime = (reload - reactivation);
-		Float numShots = static_cast<Float>(getShots());
-		speed = numShots > 0 ? (speed * numShots + std::max(reload, reactivation)) / numShots : speed;
-	}
-	return speed;
-}
-
-Float Module::getRawCycleTime()
-{
-	if (isDummy())
-		return 0;
-	Float speed = 0;
-	if (hasAttribute(AttributeID::speed))
-		speed = getAttribute(AttributeID::speed)->getValue();
-	else if (hasAttribute(AttributeID::duration))
-		speed = getAttribute(AttributeID::duration)->getValue();
-	else if (hasAttribute(AttributeID::missileLaunchDuration))
-		speed = getAttribute(AttributeID::missileLaunchDuration)->getValue();
-	return speed / 1000.0;
-}
-
-bool Module::factorReload() {
-	return factorReload_;
-}
-
-void Module::setFactorReload(bool factorReload) {
-	factorReload_ = factorReload;
-	auto engine = getEngine();
-	if (engine)
-		engine->reset();
-}
-
-int Module::getCharges()
-{
-	if (isDummy())
-		return 0;
-	if (!charge_)
-		return 0;
-	
-	Float chargeVolume = charge_->getAttribute(AttributeID::volume)->getValue();
-	Float containerCapacity = getAttribute(AttributeID::capacity)->getValue();
-	if (!chargeVolume || !containerCapacity)
-		return 0;
-	return static_cast<int>(containerCapacity / chargeVolume);
-}
-
-int Module::getShots()
-{
-	if (isDummy())
-		return 0;
-	loadIfNeeded();
-	if (!charge_)
-		return 0;
-	if (shots_ < 0)
-	{
-		int charges = getCharges();
-		if (charges > 0 && hasAttribute(AttributeID::chargeRate))
-		{
-			Float chargeRate = getAttribute(AttributeID::chargeRate)->getValue();
-			shots_ = static_cast<int>(getCharges() / chargeRate);
-		}
-		else if (charges > 0 && hasAttribute(AttributeID::crystalsGetDamaged))
-		{
-			Float hp = charge_->getAttribute(AttributeID::hp)->getValue();
-			Float chance = charge_->getAttribute(AttributeID::crystalVolatilityChance)->getValue();
-			Float damage = charge_->getAttribute(AttributeID::crystalVolatilityDamage)->getValue();
-			shots_ = static_cast<int>(getCharges() * hp / (damage * chance));
-		}
+		else if (auto charge = this->charge())
+			return charge->requireTarget();
 		else
-			shots_ = 0;
+			return false;
 	}
-	return shots_;
-}
-
-Float Module::getCapUse()
-{
-	if (isDummy())
-		return 0;
-	loadIfNeeded();
-	if (state_ >= State::active)
-	{
-		Float capNeed = 0.0;
-		
-		if (hasAttribute(AttributeID::capacitorNeed))
-			capNeed = getAttribute(AttributeID::capacitorNeed)->getValue();
-		if (capNeed == 0.0 && hasEffect(EffectID::energyNosferatuFalloff))
-			capNeed = -getAttribute(AttributeID::powerTransferAmount)->getValue();
-		if (capNeed == 0.0 && hasEffect(EffectID::powerBooster) && charge_)
-			capNeed = -charge_->getAttribute(AttributeID::capacitorBonus)->getValue();
-		
-		if (capNeed != 0.0)
-		{
-			Float cycleTime = getCycleTime();
-			return cycleTime != 0.0 ? capNeed / cycleTime : 0.0;
-		}
-		else
-			return 0.0;
-		return capNeed;
-	}
-	else
-		return 0.0;
-}
-
-Float Module::getCpuUse() {
-	if (isDummy())
-		return 0;
-	loadIfNeeded();
-	return getAttribute(AttributeID::cpu)->getValue();
-}
-
-Float Module::getPowerGridUse() {
-	if (isDummy())
-		return 0;
-	loadIfNeeded();
-	return getAttribute(AttributeID::power)->getValue();
-}
-
-Float Module::getCalibrationUse() {
-	if (isDummy())
-		return 0;
-	loadIfNeeded();
-	return getAttribute(AttributeID::upgradeCost)->getValue();
-}
-
-
-DamageVector Module::getVolley()
-{
-	if (isDummy())
-		return DamageVector();
-	loadIfNeeded();
-	if (volley_ < 0)
-		calculateDamageStats();
-	return volley_;
-}
-
-DamageVector Module::getDps(const HostileTarget& target)
-{
-	if (isDummy())
-		return DamageVector();
-	loadIfNeeded();
-	if (dps_ < 0)
-		calculateDamageStats();
-	auto hardpoint = getHardpoint();
-	if (hardpoint == Module::Hardpoint::turret && (target.range > 0 || target.angularVelocity > 0 || target.signature > 0)) {
-		Float a = 0;
-		if (target.angularVelocity > 0) {
-			Float accuracyScore = getAccuracyScore();
-			a = accuracyScore > 0 ? target.angularVelocity / accuracyScore : 0;
-		}
-		
-		if (target.signature > 0) {
-			Float signatureResolution = getSignatureResolution();
-			if (signatureResolution > 0)
-				a *= signatureResolution / target.signature;
-		}
-
-		Float b = 0;
-		if (target.range > 0) {
-			Float maxRange = getMaxRange();
-			Float falloff = getFalloff();
-			b = falloff > 0 ? std::max(0.0, (target.range - maxRange) / falloff) : 0;
-		}
-		
-		Float blob = a * a + b * b;
-		Float hitChance = std::pow(0.5, blob);
-		Float relativeDPS;
-		if (hitChance > 0.01)
-			relativeDPS = (hitChance - 0.01) * (0.5 + (hitChance + 0.49)) / 2 + 0.01 * 3;
-		else
-			relativeDPS = hitChance * 3;
-		return dps_ * relativeDPS;
-	}
-	else if (hardpoint == Module::Hardpoint::launcher) {
-		auto charge = getCharge();
-		if (charge) {
-			if (target.range > getMaxRange())
-				return 0;
-			if (target.velocity > 0) {
-				Float missileEntityVelocityMultiplier = 1;
+	
+	void Module::adjustState() {
+		batchUpdates([&] {
+			if (isEnabled() && !flags_.fail) {
+				auto availableStates = this->availableStates();
+				auto i = std::lower_bound(availableStates.begin(), availableStates.end(), preferredState_);
+				auto state = i != availableStates.end() ? *i : availableStates.back();
 				
-				if (hasAttribute(AttributeID::missileEntityVelocityMultiplier))
-					missileEntityVelocityMultiplier = getAttribute(AttributeID::missileEntityVelocityMultiplier)->getValue();
-				Float maxVelocity = charge_->getAttribute(AttributeID::maxVelocity)->getValue() * missileEntityVelocityMultiplier;
-				if (maxVelocity < target.velocity)
-					return 0;
+				if (state != state_) {
+					if (state < state_) {
+						if (state_ >= State::overloaded	&& state < State::overloaded)
+							deactivateEffects(MetaInfo::Effect::Category::overloaded);
+						
+						if (state_ >= State::active		&& state < State::active) {
+							deactivateEffects(MetaInfo::Effect::Category::active);
+							if (target())
+								deactivateEffects(MetaInfo::Effect::Category::target);
+						}
+						
+						if (state_ >= State::online		&& state < State::online)
+							deactivateEffects(MetaInfo::Effect::Category::passive);
+					}
+					else if (state > state_) {
+						if (state_ < State::online		&& state >= State::online)
+							activateEffects(MetaInfo::Effect::Category::passive);
+						
+						if (state_ < State::active		&& state >= State::active) {
+							activateEffects(MetaInfo::Effect::Category::active);
+							if (target())
+								activateEffects(MetaInfo::Effect::Category::target);
+						}
+						
+						if (state_ < State::overloaded	&& state >= State::overloaded)
+							activateEffects(MetaInfo::Effect::Category::overloaded);
+					}
+					state_ = state;
+				}
 			}
-			
-			Float a = 1;
-			if (target.signature > 0) {
-				Float e = charge->getAttribute(AttributeID::aoeCloudSize)->getValue();
-				a = target.signature / e;
+			else {
+				if (state_ >= State::overloaded)
+					deactivateEffects(MetaInfo::Effect::Category::overloaded);
+				if (state_ >= State::active) {
+					deactivateEffects(MetaInfo::Effect::Category::active);
+					if (target())
+						deactivateEffects(MetaInfo::Effect::Category::target);
+				}
+				if (state_ >= State::online)
+					deactivateEffects(MetaInfo::Effect::Category::passive);
+                state_ = Module::State::offline;
 			}
-			Float b = 1;
-			if (target.velocity > 0) {
-				Float v = charge->getAttribute(AttributeID::aoeVelocity)->getValue();
-				Float drf = charge->getAttribute(AttributeID::aoeDamageReductionFactor)->getValue();
-				Float drs = charge->getAttribute(AttributeID::aoeDamageReductionSensitivity)->getValue();
-				if (drf > 0 && drs > 0 && v > 0)
-					b = std::pow(a * v / target.velocity, std::log(drf)/std::log(drs));
-			}
-			Float relativeDPS = std::min(1.0, std::min(a, b));
-			return dps_ * relativeDPS;
-		}
+		});
 	}
-	else if (dps_ > 0) {
-		Float maxRange = getMaxRange();
-		if (maxRange < target.range)
+	
+	//Calculations
+	
+	std::chrono::milliseconds Module::reloadTime() {
+		if (auto attribute = (*this)[AttributeID::reloadTime])
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		else
+			return defaultReloadTime_;
+	}
+
+	
+	std::chrono::milliseconds Module::cycleTime() {
+		auto reactivation = 0ms;
+		
+		if (auto attribute = (*this)[AttributeID::moduleReactivationDelay])
+			reactivation = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		
+		auto speed = rawCycleTime();
+		auto factorReload = flags_.factorReload || flags_.forceReload;
+		
+		if (factorReload && charge() != nullptr) {
+			auto reload = reloadTime();
+			if (reload > 0ms) {
+				auto shots = this->shots();
+				if (shots > 0)
+					speed = (speed * shots + std::max(reload, reactivation)) / shots;
+			}
+		}
+		
+		
+		return speed;
+	}
+	
+	std::chrono::milliseconds Module::rawCycleTime() {
+		for (auto attributeID: SDE::moduleCycleTimeAttributes) {
+			if (auto attribute = (*this)[attributeID]; attribute && attribute->value() > 0)
+				return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+		}
+		return 0ms;
+	}
+	
+	size_t Module::charges() {
+		if (auto charge = this->charge()) {
+			auto volume = (*charge)[AttributeID::volume]->value();
+			if (volume > 0)
+				return 0;
+			else {
+				auto capacity = (*this)[AttributeID::capacity]->value();
+				return static_cast<size_t>(capacity / volume);
+			}
+		}
+		else
 			return 0;
 	}
-	return dps_;
-}
-
-Float Module::getMaxRange()
-{
-	if (isDummy())
-		return 0;
-	loadIfNeeded();
-	if (maxRange_ < 0)
-	{
-		AttributeID attributes[] = {
-			AttributeID::maxRange, AttributeID::shieldTransferRange, AttributeID::powerTransferRange, AttributeID::energyNeutralizerRangeOptimal,
-			AttributeID::empFieldRange, AttributeID::ecmBurstRange, AttributeID::warpScrambleRange, AttributeID::cargoScanRange,
-			AttributeID::shipScanRange, AttributeID::surveyScanRange};
-		for (int i = 0; i < 10; i++)
-			if (hasAttribute(attributes[i]))
-			{
-				maxRange_ = getAttribute(attributes[i])->getValue();
-				return maxRange_;
+	
+	size_t Module::shots() {
+		if (auto charge = this->charge()) {
+			auto charges = this->charges();
+			if (charges > 0) {
+				if (auto attribute = (*this)[AttributeID::chargeRate]) {
+					auto rate = attribute->value();
+					if (rate > 0)
+						return static_cast<size_t>(charges / rate);
+				}
+				else if (auto attribute = (*this)[AttributeID::crystalsGetDamaged]) {
+					auto hp = (*charge)[AttributeID::hp]->value();
+					auto chance = (*charge)[AttributeID::crystalVolatilityChance]->value();
+					auto damage = (*charge)[AttributeID::crystalVolatilityDamage]->value();
+					return static_cast<size_t>(charges * hp / (damage * chance));
+				}
 			}
+		}
+		return 0;
+	}
+	
+	GigaJoulePerSecond Module::capUse() {
+		if (state() >= State::active) {
+			GigaJoule capNeed = 0.0;
+			if (auto attribute = (*this)[AttributeID::capacitorNeed])
+				capNeed = static_cast<GigaJoule>(attribute->value());
+			if (capNeed == 0.0 && (*this)[EffectID::energyNosferatuFalloff] != nullptr)
+				capNeed -= static_cast<GigaJoule>((*this)[AttributeID::powerTransferAmount]->value());
+			if (capNeed == 0.0 && (*this)[EffectID::powerBooster] != nullptr)
+				capNeed -= static_cast<GigaJoule>((*this)[AttributeID::capacitorBonus]->value());
+			return make_rate(capNeed, cycleTime());
+		}
+		return GigaJoulePerSecond(0);
+	}
+
+	Teraflops Module::cpuUse() {
+		return (*this)[AttributeID::cpu]->value();
+	}
+	
+	MegaWatts Module::powerGridUse() {
+		return (*this)[AttributeID::power]->value();
+	}
+	
+	CalibrationPoints Module::calibrationUse() {
+		return (*this)[AttributeID::upgradeCost]->value();
+	}
+
+	Points Module::accuracyScore() {
+		if (auto attribute = (*this)[AttributeID::trackingSpeed])
+			return attribute->value();
+		else
+			return 0;
+	}
+	
+	Meter Module::signatureResolution() {
+		if (auto attribute = (*this)[AttributeID::optimalSigRadius])
+			return attribute->value();
+		else
+			return 0;
+	}
+	
+	CubicMeterPerSecond Module::miningYield() {
+		if (state() >= State::active) {
+			CubicMeter volley = 0;
+			if (auto attribute = (*this)[AttributeID::specialtyMiningAmount])
+				volley += attribute->value();
+			if (auto attribute = (*this)[AttributeID::miningAmount])
+				volley += attribute->value();
+			return make_rate(volley, cycleTime());
+		}
+		else
+			return CubicMeterPerSecond(0.0);
+	}
+
+	DamageVector Module::volley() {
+		if (state() >= State::active) {
+			auto volley = DamageVector(0);
+			auto& item = charge_ ? *static_cast<Type*> (charge_.get()) : *static_cast<Type*>(this);
+			
+			if (auto attribute = item[AttributeID::emDamage])
+				volley.em += attribute->value();
+			if (auto attribute = item[AttributeID::kineticDamage])
+				volley.kinetic += attribute->value();
+			if (auto attribute = item[AttributeID::thermalDamage])
+				volley.thermal += attribute->value();
+			if (auto attribute = item[AttributeID::explosiveDamage])
+				volley.explosive += attribute->value();
+			
+			if (auto attribute = (*this)[AttributeID::damageMultiplier])
+				volley *= attribute->value();
+			else if (auto attribute = (*this)[AttributeID::missileDamageMultiplier])
+				volley *= attribute->value();
+			
+			return volley;
+		}
+		else
+			return {0};
+	}
+	
+	DamagePerSecond Module::dps(const HostileTarget& target) {
+		auto dps = make_rate(volley(), cycleTime());
 		
-		if (charge_)
-		{
-			if (charge_->hasAttribute(AttributeID::maxVelocity) && charge_->hasAttribute(AttributeID::explosionDelay) &&
-				charge_->hasAttribute(AttributeID::mass) && charge_->hasAttribute(AttributeID::agility))
-			{
+		switch (hardpoint()) {
+			case Module::Hardpoint::turret: {
+				if (target.range > 0 || target.angularVelocity.count() > 0 || target.signature > 0) {
+					
+					Float a = 0;
+					if (target.angularVelocity.count() > 0) {
+						if (auto accuracyScore = this->accuracyScore(); accuracyScore > 0)
+							a = target.angularVelocity * 1s / accuracyScore;
+					}
+
+					if (target.signature > 0) {
+						auto signatureResolution = this->signatureResolution();
+						if (signatureResolution > 0)
+							a *= signatureResolution / target.signature;
+					}
+					
+					Float b = 0;
+					if (target.range > 0) {
+						auto optimal = this->optimal();
+						auto falloff = this->falloff();
+						b = falloff > 0 ? std::max(0.0, (target.range - optimal) / falloff) : 0;
+					}
+					
+					auto blob = std::pow(a, 2) + std::pow(b, 2);
+					auto hitChance = std::pow(0.5, blob);
+					auto relativeDPS = hitChance > 0.01
+						? (hitChance - 0.01) * (0.5 + (hitChance + 0.49)) / 2 + 0.01 * 3
+						: hitChance * 3;
+					return dps * relativeDPS;
+
+				}
+				else
+					return dps;
+			}
+			case Module::Hardpoint::launcher: {
+				if (auto charge = this->charge(); optimal() >= target.range) {
+					if (target.velocity.count() > 0) {
+						Float missileEntityVelocityMultiplier = 1;
+						
+						if (auto attribute = (*this)[AttributeID::missileEntityVelocityMultiplier])
+							missileEntityVelocityMultiplier = attribute->value();
+						auto maxVelocity = MetersPerSecond((*charge)[AttributeID::maxVelocity]->value() * missileEntityVelocityMultiplier);
+
+						if (maxVelocity < target.velocity)
+							return DamagePerSecond(0);
+					}
+					
+					Float a = 1;
+					if (target.signature > 0) {
+						auto e = (*charge)[AttributeID::aoeCloudSize]->value();
+						a = e != 0.0 ? target.signature / e : 1;
+					}
+					Float b = 1;
+					if (target.velocity.count() > 0) {
+						auto v = (*charge)[AttributeID::aoeCloudSize]->value();
+						auto drf = (*charge)[AttributeID::aoeDamageReductionFactor]->value();
+						auto drs = (*charge)[AttributeID::aoeDamageReductionSensitivity]->value();
+						if (drf > 0 && drs > 0 && v > 0)
+							b = std::pow(a * v / (target.velocity * 1s), std::log(drf)/std::log(drs));
+					}
+					auto relativeDPS = std::min(1.0, std::min(a, b));
+					return dps * relativeDPS;
+				}
+				else
+					return DamagePerSecond(0);
+			}
+			default:
+				return optimal() >= target.range ? static_cast<DamagePerSecond>(dps) : DamagePerSecond(0);
+		}
+		
+	}
+	
+	Meter Module::optimal() {
+		
+		for (auto attributeID: SDE::moduleOptimalAttributes) {
+			if (auto attribute = (*this)[attributeID])
+				return attribute->value();
+		}
+		
+		if (auto charge = this->charge()) {
+			auto maxVelocity = (*charge)[AttributeID::maxVelocity];
+			auto explosionDelay = (*charge)[AttributeID::explosionDelay];
+			auto mass = (*charge)[AttributeID::mass];
+			auto agility = (*charge)[AttributeID::agility];
+			if (maxVelocity && explosionDelay && mass && agility) {
 				Float missileEntityVelocityMultiplier = 1;
 				Float missileEntityFlightTimeMultiplier = 1;
-				if (hasAttribute(AttributeID::missileEntityVelocityMultiplier))
-					missileEntityVelocityMultiplier = getAttribute(AttributeID::missileEntityVelocityMultiplier)->getValue();
-				if (hasAttribute(AttributeID::missileEntityFlightTimeMultiplier))
-					missileEntityFlightTimeMultiplier = getAttribute(AttributeID::missileEntityFlightTimeMultiplier)->getValue();
+				
+				if (auto attribute = (*this)[AttributeID::missileEntityVelocityMultiplier])
+					missileEntityVelocityMultiplier = attribute->value();
+				if (auto attribute = (*this)[AttributeID::missileEntityFlightTimeMultiplier])
+					missileEntityFlightTimeMultiplier = attribute->value();
+
 				if (missileEntityVelocityMultiplier == 0)
 					missileEntityVelocityMultiplier = 1.0;
 				if (missileEntityFlightTimeMultiplier == 0)
 					missileEntityFlightTimeMultiplier = 1.0;
 				
-				Float maxVelocity = charge_->getAttribute(AttributeID::maxVelocity)->getValue() * missileEntityVelocityMultiplier;
-				Float flightTime = charge_->getAttribute(AttributeID::explosionDelay)->getValue() / 1000.0 * missileEntityFlightTimeMultiplier;
-				Float mass = charge_->getAttribute(AttributeID::mass)->getValue();
-				Float agility = charge_->getAttribute(AttributeID::agility)->getValue();
+				rate<Meter, std::chrono::milliseconds> mv = MetersPerSecond(maxVelocity->value() * missileEntityVelocityMultiplier);
+				auto flightTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep> (explosionDelay->value() * missileEntityFlightTimeMultiplier));
+				Kilogram m = mass->value();
+				auto a = agility->value();
 				
-				Float accelTime = std::min(flightTime, static_cast<Float>(mass * agility / 1000000.0));
-				Float duringAcceleration = maxVelocity / 2 * accelTime;
-				Float fullSpeed = maxVelocity * (flightTime - accelTime);
-				maxRange_ =  duringAcceleration + fullSpeed;
+				auto accelerationTime = min(flightTime, std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(m * a / 1'000'000.0 * 1000.0)));
+				auto acceleration = mv / 2.0 * accelerationTime;
+				auto fullSpeed = mv * (flightTime - accelerationTime);
+				return acceleration + fullSpeed;
 			}
-			else
-				maxRange_ = 0;
 		}
-		else
-			maxRange_ = 0;
-	}
-	return maxRange_;
-}
-
-Float Module::getFalloff()
-{
-	if (isDummy())
+		
 		return 0;
-	loadIfNeeded();
-	if (falloff_ < 0)
-	{
-		if (hasAttribute(AttributeID::falloff))
-			falloff_ = getAttribute(AttributeID::falloff)->getValue();
-		else if (hasAttribute(AttributeID::shipScanFalloff))
-			falloff_ = getAttribute(AttributeID::shipScanFalloff)->getValue();
-		else if (hasAttribute(AttributeID::falloffEffectiveness))
-			falloff_ = getAttribute(AttributeID::falloffEffectiveness)->getValue();
-		else
-			falloff_ = 0;
 	}
-	return falloff_;
-}
-
-/*Float Module::getTrackingSpeed()
-{
-	loadIfNeeded();
-	if (trackingSpeed_ < 0)
-	{
-		if (hasAttribute(TRACKING_SPEED_ATTRIBUTE_ID))
-			trackingSpeed_ = getAttribute(TRACKING_SPEED_ATTRIBUTE_ID)->getValue();
-		else
-			trackingSpeed_ = 0;
-	}
-	return trackingSpeed_;
-}*/
-
-Float Module::getAccuracyScore()
-{
-	if (isDummy())
+	
+	Meter Module::falloff() {
+		for (auto attributeID: SDE::moduleFalloffAttributes) {
+			if (auto attribute = (*this)[attributeID]; attribute && attribute->value() > 0)
+				return attribute->value();
+		}
 		return 0;
-	loadIfNeeded();
-	if (accuracyScore_ < 0)
-	{
-		if (hasAttribute(AttributeID::trackingSpeed))
-			accuracyScore_ = getAttribute(AttributeID::trackingSpeed)->getValue();
-		else
-			accuracyScore_ = 0;
 	}
-	return accuracyScore_;
-}
 
-Float Module::getSignatureResolution() {
-	if (isDummy())
-		return 0;
-	loadIfNeeded();
-	if (signatureResolution_ < 0)
-	{
-		if (hasAttribute(AttributeID::optimalSigRadius))
-			signatureResolution_ = getAttribute(AttributeID::optimalSigRadius)->getValue();
-		else
-			signatureResolution_ = 0;
-	}
-	return signatureResolution_;
-}
-
-Float Module::getAngularVelocity(Float targetSignature, Float hitChance) {
-	if (isDummy())
-		return 0;
-	Float signatureResolution = getSignatureResolution();
-	Float accuracyScore = getAccuracyScore();
-	
-	Float v = std::sqrt(std::log(hitChance) / std::log(0.5)) * accuracyScore * targetSignature / signatureResolution;
-	return v;
-}
-
-Float Module::getMiningYield()
-{
-	if (isDummy())
-		return 0;
-	if (miningYield_ < 0)
-	{
-		miningYield_ = 0;
-		if (state_ >= State::active)
-		{
-			Float volley = 0;
-			if (hasAttribute(AttributeID::specialtyMiningAmount))
-				volley += getAttribute(AttributeID::specialtyMiningAmount)->getValue();
-			else if (hasAttribute(AttributeID::miningAmount))
-				volley += getAttribute(AttributeID::miningAmount)->getValue();
-			
-			Float cycleTime = getCycleTime();
-			if (volley > 0 && cycleTime > 0)
-			{
-				miningYield_ = volley / cycleTime;
+	std::optional<std::chrono::milliseconds> Module::lifeTime() {
+		if (!lifeTime_) {
+			if (auto ship = dynamic_cast<Ship*>(parent())) {
+				ship->heatSimulator_.simulate();
 			}
 		}
+		return lifeTime_;
 	}
-	return miningYield_;
+
 }
-
-Float Module::getLifeTime()
-{
-	if (isDummy())
-		return 0;
-	loadIfNeeded();
-	if (lifeTime_ < 0)
-	{
-		std::shared_ptr<Ship> ship = std::dynamic_pointer_cast<Ship>(getOwner());
-		ship->updateHeatDamage();
-	}
-	return lifeTime_;
-}
-
-void Module::setLifeTime(Float lifeTime)
-{
-	lifeTime_ = lifeTime;
-}
-
-void Module::setEnabled(bool enabled) {
-	enabled_ = enabled;
-}
-
-bool Module::isEnabled() {
-	if (isDummy())
-		return false;
-	return enabled_;
-}
-
-void Module::calculateDamageStats()
-{
-	if (isDummy())
-		return;
-	loadIfNeeded();
-	if (state_ < State::active)
-		dps_ = volley_ = 0;
-	else
-	{
-		volley_ = 0;
-		dps_ = 0;
-		std::shared_ptr<Item> item = charge_ ? charge_  : std::static_pointer_cast<Item>(shared_from_this());
-		if (item->hasAttribute(AttributeID::emDamage))
-			volley_.emAmount += item->getAttribute(AttributeID::emDamage)->getValue();
-		if (item->hasAttribute(AttributeID::kineticDamage))
-			volley_.kineticAmount += item->getAttribute(AttributeID::kineticDamage)->getValue();
-		if (item->hasAttribute(AttributeID::explosiveDamage))
-			volley_.explosiveAmount += item->getAttribute(AttributeID::explosiveDamage)->getValue();
-		if (item->hasAttribute(AttributeID::thermalDamage))
-			volley_.thermalAmount += item->getAttribute(AttributeID::thermalDamage)->getValue();
-		if (hasAttribute(AttributeID::damageMultiplier))
-			volley_ *= getAttribute(AttributeID::damageMultiplier)->getValue();
-		else if (hasAttribute(AttributeID::missileDamageMultiplier))
-			volley_ *= getAttribute(AttributeID::missileDamageMultiplier)->getValue();
-
-		Float speed = getCycleTime();
-		if (speed > 0)
-			dps_ = volley_ / speed;
-	}
-}
-
-void Module::lazyLoad() {
-	Item::lazyLoad();
-	if (isDummy())
-		return;
-	addExtraAttribute(AttributeID::isOnline, 0.0);
-	
-	if (hasEffect(EffectID::loPower))
-		slot_ = Module::Slot::low;
-	else if (hasEffect(EffectID::medPower))
-		slot_ = Module::Slot::med;
-	else if (hasEffect(EffectID::hiPower))
-		slot_ = Module::Slot::hi;
-	else if (hasEffect(EffectID::rigSlot))
-		slot_ = Module::Slot::rig;
-	else if (hasEffect(EffectID::subSystem))
-		slot_ = Module::Slot::subsystem;
-	else if (hasEffect(EffectID::tacticalMode))
-		slot_ = Module::Slot::mode;
-	else if (getCategoryID() == CategoryID::starbase)
-		slot_ = Module::Slot::starbaseStructure;
-	else if (hasEffect(EffectID::serviceSlot))
-		slot_ = Module::Slot::service;
-	else
-		slot_ = Module::Slot::none;
-	
-	if (hasAttribute(AttributeID::reloadTime))
-		reloadTime_ = getAttribute(AttributeID::reloadTime)->getValue() / 1000.0;
-	else
-	{
-		if (hasEffect(EffectID::miningLaser) || hasEffect(EffectID::targetAttack) || hasEffect(EffectID::useMissiles))
-			reloadTime_ = 1.0;
-		else if (hasEffect(EffectID::powerBooster) || hasEffect(EffectID::projectileFired))
-			reloadTime_ = 10.0;
-	}
-	
-	if (hasEffect(EffectID::turretFitted))
-		hardpoint_ = Module::Hardpoint::turret;
-	else if (hasEffect(EffectID::launcherFitted))
-		hardpoint_ = Module::Hardpoint::launcher;
-	else
-		hardpoint_ = Module::Hardpoint::none;
-	
-	canBeOnline_ = hasEffect(EffectID::online) || hasEffect(EffectID::onlineForStructures);
-	
-	state_ = State::offline;
-	
-	canBeActive_ = false;
-	canBeOverloaded_ = false;
-	int n = 0;
-	
-	for (const auto& i: effects_)
-	{
-		Effect::Category category = i->getCategory();
-		if (category == Effect::Category::active)
-		{
-			n++;
-			if (n >= 2)
-			{
-				canBeActive_ = true;
-			}
-		}
-		else if (category == Effect::Category::target)
-		{
-			canBeActive_ = true;
-		}
-		else if (category == Effect::Category::overloaded)
-		{
-			canBeActive_ = true;
-			canBeOverloaded_ = true;
-		}
-	}
-	
-	forceReload_ = groupID_ == GroupID::capacitorBooster;
-	
-	shots_ = -1;
-	dps_ = volley_ = maxRange_ = falloff_ = accuracyScore_ = signatureResolution_ = miningYield_ = -1;
-	
-	AttributeID attributes[] = {AttributeID::chargeGroup1, AttributeID::chargeGroup2, AttributeID::chargeGroup3, AttributeID::chargeGroup4, AttributeID::chargeGroup5};
-	for (int i = 0; i < 5; i++)
-		if (hasAttribute(attributes[i]))
-		{
-			GroupID groupID = static_cast<GroupID>(getAttribute(attributes[i])->getValue());
-			if (groupID != GroupID::none) {
-				chargeGroups_.push_back(groupID);
-				
-				if (!forceReload_ && (groupID == GroupID::capacitorBoosterCharge || groupID == GroupID::naniteRepairPaste))
-					forceReload_ = true;
-			}
-		}
-	std::sort(chargeGroups_.begin(), chargeGroups_.end());
-}
-
-Item* Module::ship() {
-	return getOwner().get();
-}
-
-Item* Module::character() {
-	return ship()->character();
-}
-
-Item* Module::target() {
-	return getTarget().get();
-}
-
-
-std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Module& module)
-{
-	os << "{\"typeName\":\"" << module.getTypeName() << "\", \"typeID\":\"" << static_cast<int>(module.typeID_) << "\", \"groupID\":\"" << static_cast<int>(module.groupID_) << "\", \"attributes\":[";
-	
-	if (module.attributes_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& i: module.attributes_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i.second;
-		}
-	}
-	
-	os << "], \"effects\":[";
-	
-	if (module.effects_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& i: module.effects_)
-		{
-			if (isFirst)
-				isFirst = false;
-			else
-				os << ',';
-			os << *i;
-		}
-	}
-	
-	os << "],";
-	
-	if (module.charge_)
-		os << "\"charge\":" << *module.charge_ << ",";
-
-	os << "\"itemModifiers\":[";
-	
-	if (module.itemModifiers_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& list: module.itemModifiers_) {
-			for (const auto& i: list.second)
-			{
-				if (isFirst)
-					isFirst = false;
-				else
-					os << ',';
-				os << *i;
-			}
-		}
-	}
-	
-	os << "], \"locationModifiers\":[";
-	
-	if (module.locationModifiers_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& list: module.locationModifiers_) {
-			for (const auto& i: list.second)
-			{
-				if (isFirst)
-					isFirst = false;
-				else
-					os << ',';
-				os << *i;
-			}
-		}
-	}
-	
-	os << "], \"locationGroupModifiers\":[";
-	
-	if (module.locationGroupModifiers_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& map: module.locationGroupModifiers_) {
-			for (const auto& list: map.second) {
-				for (const auto& i: list.second)
-				{
-					if (isFirst)
-						isFirst = false;
-					else
-						os << ',';
-					os << *i;
-				}
-			}
-		}
-	}
-	
-	os << "], \"locationRequiredSkillModifiers\":[";
-	
-	if (module.locationRequiredSkillModifiers_.size() > 0)
-	{
-		bool isFirst = true;
-		for (const auto& map: module.locationRequiredSkillModifiers_) {
-			for (const auto& list: map.second) {
-				for (const auto& i: list.second)
-				{
-					if (isFirst)
-						isFirst = false;
-					else
-						os << ',';
-					os << *i;
-				}
-			}
-		}
-	}
-	
-	os << "]}";
-	return os;
-}
-

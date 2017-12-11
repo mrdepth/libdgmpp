@@ -1,39 +1,8 @@
-#include "Implant.h"
-#include "Character.h"
-#include "Attribute.h"
-#include "Ship.h"
-#include "Engine.h"
-#include "Area.h"
+//
+//  Implant.cpp
+//  dgmpp
+//
+//  Created by Artem Shimanski on 24.11.2017.
+//
 
-using namespace dgmpp;
-
-Implant::Implant(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Character> const& owner) : Item(engine, typeID, owner), slot_(-1)
-{
-}
-
-Implant::~Implant()
-{
-}
-
-int Implant::getSlot()
-{
-	loadIfNeeded();
-	return slot_;
-}
-
-void Implant::lazyLoad() {
-	Item::lazyLoad();
-	slot_ = static_cast<int>(getAttribute(AttributeID::implantness)->getValue());
-}
-
-Item* Implant::character() {
-	return getOwner().get();
-}
-
-Item* Implant::ship() {
-	return character()->ship();
-}
-
-Item* Implant::structure() {
-	return character()->structure();
-}
+#include "Implant.hpp"

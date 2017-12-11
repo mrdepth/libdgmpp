@@ -36,7 +36,7 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 }
 
 - (void) testSkills {
-	using namespace dgmpp2;
+	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilot = gang->add(Character::Create());
 	auto ship = pilot->setShip(Ship::Create(TypeID::dominix));
@@ -57,7 +57,7 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 }
 
 - (void) testGangBoost {
-	using namespace dgmpp2;
+	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilotA = gang->add(Character::Create());
 	pilotA->setSkillLevels(5);
@@ -105,13 +105,13 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 	XCTAssertTrue(tank1.shieldRepair > tank0.shieldRepair);
 	XCTAssertTrue(tank1.hullRepair > tank0.hullRepair);
 	
-	auto gang2 = dgmpp2::Gang::Create();
-	auto pilot2 = gang2->add(dgmpp2::Character::Create());
+	auto gang2 = dgmpp::Gang::Create();
+	auto pilot2 = gang2->add(dgmpp::Character::Create());
 	pilot2->setSkillLevels(5);
-	auto ship2 = pilot2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-	ship2->add(dgmpp2::Module::Create(TypeID::largeArmorRepairerI));
-	ship2->add(dgmpp2::Module::Create(TypeID::largeShieldBoosterI));
-	ship2->add(dgmpp2::Module::Create(TypeID::largeHullRepairerI));
+	auto ship2 = pilot2->setShip(dgmpp::Ship::Create(TypeID::dominix));
+	ship2->add(dgmpp::Module::Create(TypeID::largeArmorRepairerI));
+	ship2->add(dgmpp::Module::Create(TypeID::largeShieldBoosterI));
+	ship2->add(dgmpp::Module::Create(TypeID::largeHullRepairerI));
 	auto tank2 = ship2->tank();
 	
 	XCTAssertTrue(tank1.armorRepair == tank2.armorRepair * 1s);
@@ -143,17 +143,17 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 	XCTAssertGreaterThan(tank1.shieldRepair, tank0.shieldRepair);
 	XCTAssertGreaterThan(tank1.hullRepair, tank0.hullRepair);
 	
-	auto gang2 = dgmpp2::Gang::Create();
-	auto pilotA2 = gang2->add(dgmpp2::Character::Create());
-	auto pilotB2 = gang2->add(dgmpp2::Character::Create());
+	auto gang2 = dgmpp::Gang::Create();
+	auto pilotA2 = gang2->add(dgmpp::Character::Create());
+	auto pilotB2 = gang2->add(dgmpp::Character::Create());
 	pilotA2->setSkillLevels(5);
 	pilotB2->setSkillLevels(5);
-	auto shipA2 = pilotA2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-	auto shipB2 = pilotB2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
+	auto shipA2 = pilotA2->setShip(dgmpp::Ship::Create(TypeID::dominix));
+	auto shipB2 = pilotB2->setShip(dgmpp::Ship::Create(TypeID::dominix));
 	auto repairers2 = {
-		shipA2->add(dgmpp2::Module::Create(TypeID::largeRemoteArmorRepairerI)),
-		shipA2->add(dgmpp2::Module::Create(TypeID::largeRemoteShieldBoosterI)),
-		shipA2->add(dgmpp2::Module::Create(TypeID::largeRemoteHullRepairerI))};
+		shipA2->add(dgmpp::Module::Create(TypeID::largeRemoteArmorRepairerI)),
+		shipA2->add(dgmpp::Module::Create(TypeID::largeRemoteShieldBoosterI)),
+		shipA2->add(dgmpp::Module::Create(TypeID::largeRemoteHullRepairerI))};
 	
 	for (auto i: repairers2)
 		i->target(shipB2);
@@ -200,12 +200,12 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 	XCTAssertGreaterThan(capUsed1, capUsed0);
 	XCTAssertGreaterThan(capUsed1, capUsed2);
 	
-	auto gang2 = dgmpp2::Gang::Create();
-	auto pilot2 = gang2->add(dgmpp2::Character::Create());
+	auto gang2 = dgmpp::Gang::Create();
+	auto pilot2 = gang2->add(dgmpp::Character::Create());
 	pilot2->setSkillLevels(5);
-	auto ship2 = pilot2->setShip(dgmpp2::Ship::Create(TypeID::dominix));
-	auto repairer2 = ship2->add(dgmpp2::Module::Create(TypeID::largeAncillaryArmorRepairer));
-	repairer2->charge(dgmpp2::Charge::Create(TypeID::naniteRepairPaste));
+	auto ship2 = pilot2->setShip(dgmpp::Ship::Create(TypeID::dominix));
+	auto repairer2 = ship2->add(dgmpp::Module::Create(TypeID::largeAncillaryArmorRepairer));
+	repairer2->charge(dgmpp::Charge::Create(TypeID::naniteRepairPaste));
 	auto tank3 = ship2->tank();
 	auto capUsed3 = ship2->capacitor().use();
 	XCTAssertTrue(tank2.armorRepair == tank3.armorRepair * 1s);
@@ -249,7 +249,7 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 }
 
 - (void) testDrones {
-	using namespace dgmpp2;
+	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilot = gang->add(Character::Create());
 	pilot->setSkillLevels(5);
@@ -271,7 +271,7 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 }
 
 - (void) testArea {
-	using namespace dgmpp2;
+	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilot = gang->add(Character::Create());
 	pilot->setSkillLevels(5);
@@ -382,11 +382,11 @@ std::shared_ptr<dgmpp::Engine> createEngine() {
 		
 		{
 			for (auto typeID: typeIDs) {
-				auto gang = dgmpp2::Gang::Create();
-				auto pilot = gang->add(dgmpp2::Character::Create());
+				auto gang = dgmpp::Gang::Create();
+				auto pilot = gang->add(dgmpp::Character::Create());
 				pilot->setSkillLevels(5);
-				auto ship = pilot->setShip(dgmpp2::Ship::Create(static_cast<TypeID>(typeID)));
-				(*ship)[dgmpp2::AttributeID::maxVelocity]->value();
+				auto ship = pilot->setShip(dgmpp::Ship::Create(static_cast<TypeID>(typeID)));
+				(*ship)[dgmpp::AttributeID::maxVelocity]->value();
 			}
 		}
 

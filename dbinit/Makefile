@@ -47,64 +47,64 @@ clean:
 
 AttributeID.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --attributeIDs > ${T}/AttributeID.hpp
-	cp -rf ${T}/AttributeID.hpp ../dgmpp2/AttributeID.hpp
+	cp -rf ${T}/AttributeID.hpp ../dgmpp/SDE/AttributeID.hpp
 
 TypeID.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --typeIDs > ${T}/TypeID.hpp
-	cp -rf ${T}/TypeID.hpp ../dgmpp2/TypeID.hpp
+	cp -rf ${T}/TypeID.hpp ../dgmpp/SDE/TypeID.hpp
 
 GroupID.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --groupIDs > ${T}/GroupID.hpp
-	cp -rf ${T}/GroupID.hpp ../dgmpp2/GroupID.hpp
+	cp -rf ${T}/GroupID.hpp ../dgmpp/SDE/GroupID.hpp
 
 CategoryID.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --categoryIDs > ${T}/CategoryID.hpp
-	cp -rf ${T}/CategoryID.hpp ../dgmpp2/CategoryID.hpp
+	cp -rf ${T}/CategoryID.hpp ../dgmpp/SDE/CategoryID.hpp
 
 EffectID.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --effectIDs > ${T}/EffectID.hpp
-	cp -rf ${T}/EffectID.hpp ../dgmpp2/EffectID.hpp
+	cp -rf ${T}/EffectID.hpp ../dgmpp/SDE/EffectID.hpp
 
 WarfareBuffID.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --warfareBuffIDs > ${T}/WarfareBuffID.hpp
-	cp -rf ${T}/WarfareBuffID.hpp ../dgmpp2/WarfareBuffID.hpp
+	cp -rf ${T}/WarfareBuffID.hpp ../dgmpp/SDE/WarfareBuffID.hpp
 
 Attributes.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --attributes > ${T}/Attributes.hpp
-	cp -rf ${T}/Attributes.hpp ../dgmpp2/Attributes.hpp
+	cp -rf ${T}/Attributes.hpp ../dgmpp/SDE/Attributes.hpp
 
 Types.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --types > ${T}/Types.hpp
-	cp -rf ${T}/Types.hpp ../dgmpp2/Types.hpp
+	cp -rf ${T}/Types.hpp ../dgmpp/SDE/Types.hpp
 
 Modifiers.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --modifiers > ${T}/Modifiers.hpp
-	cp -rf ${T}/Modifiers.hpp ../dgmpp2/Modifiers.hpp
+	cp -rf ${T}/Modifiers.hpp ../dgmpp/SDE/Modifiers.hpp
 
 Effects.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --effects > ${T}/Effects.hpp
-	cp -rf ${T}/Effects.hpp ../dgmpp2/Effects.hpp
+	cp -rf ${T}/Effects.hpp ../dgmpp/SDE/Effects.hpp
 
 WarfareBuffs.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --warfareBuffs > ${T}/WarfareBuffs.hpp
-	cp -rf ${T}/WarfareBuffs.hpp ../dgmpp2/WarfareBuffs.hpp
+	cp -rf ${T}/WarfareBuffs.hpp ../dgmpp/SDE/WarfareBuffs.hpp
 
 Skills.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --skills > ${T}/Skills.hpp
-	cp -rf ${T}/Skills.hpp ../dgmpp2/Skills.hpp
+	cp -rf ${T}/Skills.hpp ../dgmpp/SDE/Skills.hpp
 
 Commodities.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --commodities > ${T}/Commodities.hpp
-	cp -rf ${T}/Commodities.hpp ../dgmpp2/Commodities.hpp
+	cp -rf ${T}/Commodities.hpp ../dgmpp/SDE/Commodities.hpp
 
 Facilities.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --facilities > ${T}/Facilities.hpp
-	cp -rf ${T}/Facilities.hpp ../dgmpp2/Facilities.hpp
+	cp -rf ${T}/Facilities.hpp ../dgmpp/SDE/Facilities.hpp
 
 SchematicID.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --schematicIDs > ${T}/SchematicID.hpp
-	cp -rf ${T}/SchematicID.hpp ../dgmpp2/SchematicID.hpp
+	cp -rf ${T}/SchematicID.hpp ../dgmpp/SDE/SchematicID.hpp
 
 Schematics.hpp: dgm dgm.sqlite
 	$(T)/dgm dgm.sqlite --schematics > ${T}/Schematics.hpp
-	cp -rf ${T}/Schematics.hpp ../dgmpp2/Schematics.hpp
+	cp -rf ${T}/Schematics.hpp ../dgmpp/SDE/Schematics.hpp

@@ -1,177 +1,130 @@
-#include "HeatSimulator.h"
-#include "Ship.h"
-#include "Module.h"
-#include "Attribute.h"
-#include <math.h>
-#include <algorithm>
+//
+//  HeatSimulator.cpp
+//  dgmpp
+//
+//  Created by Artem Shimanski on 07.12.2017.
+//
 
-using namespace dgmpp;
+#include "HeatSimulator.hpp"
+#include "Ship.hpp"
+#include <numeric>
+#include <queue>
+#include <functional>
 
-class StateCompareFunction : public std::binary_function<std::shared_ptr<const HeatSimulator::State> const&, std::shared_ptr<const HeatSimulator::State> const&, bool>
-{
-public:
-	bool operator() (std::shared_ptr<const HeatSimulator::State> const& a, std::shared_ptr<const HeatSimulator::State> const& b)
-	{
-		return a->tNow > b->tNow;
+#include <iostream>
+
+namespace dgmpp {
+	
+	static Float heat(std::chrono::milliseconds t, Float heatCapacity, Float heatGeneration) {
+		return heatCapacity - std::exp(-t.count() / 1000.0 * heatGeneration);
 	}
-};
+	
+	static Float damageProbability(Float h, size_t range, size_t numberOfOnlineModules, size_t numberOfSlots, Float heatAttenuation) {
+		return static_cast<Float>(numberOfOnlineModules) / static_cast<Float>(numberOfSlots) * h * std::pow(heatAttenuation, range);
+	}
 
-HeatSimulator::HeatSimulator(std::shared_ptr<Ship> const& ship) : ship_(ship)
-{
-}
+	void HeatSimulator::simulate() {
+		
+		if (flags_.isCalculated_)
+			return;
+		heatGenerationMultiplier_ = owner_[AttributeID::heatGenerationMultiplier]->value();
+		
+		for (auto slot: {Module::Slot::hi, Module::Slot::med, Module::Slot::low})
+			run(slot);
+		flags_.isCalculated_ = true;
+	}
+	
+	void HeatSimulator::run(Module::Slot slot) {
+		const auto totalSlots = owner_.totalSlots(slot);
 
-HeatSimulator::~HeatSimulator(void)
-{
-	states_.clear();
-}
-
-void HeatSimulator::reset()
-{
-	isCalculated_ = false;
-}
-
-
-void HeatSimulator::simulate()
-{
-	if (!isCalculated_)
-	{
-		std::shared_ptr<Ship> ship = ship_.lock();
-		if (!ship)
+		auto modules = owner_.modules(slot);
+		modules.erase(std::remove_if(modules.begin(), modules.end(), [totalSlots](auto i) {
+			return i->socket() >= totalSlots;
+		}), modules.end());
+		
+		if (modules.empty())
 			return;
 		
-		for (auto slot: {Module::Slot::hi, Module::Slot::mode, Module::Slot::low}) {
-			simulate(ship->getModules(slot, true));
+		const auto onlineModules = std::count_if(modules.begin(), modules.end(), [](auto i) { return i->state() >= Module::State::online; });
+		const auto heatAbsorbtionRateModifier = std::accumulate(modules.begin(), modules.end(), Float(0), [](auto sum, auto i) {
+			return i->state() == Module::State::overloaded
+			? sum + (*i)[AttributeID::heatAbsorbtionRateModifier]->value()
+			: sum;
+		});
+		const auto heatGeneration = heatAbsorbtionRateModifier * heatGenerationMultiplier_;
+		
+		Float heatCapacity = 0;
+		Float heatAttenuation = 0;
+		switch (slot) {
+			case Module::Slot::hi:
+				heatCapacity = owner_[AttributeID::heatCapacityHi]->value() / 100.0;
+				heatAttenuation = owner_[AttributeID::heatAttenuationHi]->value();
+				break;
+			case Module::Slot::med:
+				heatCapacity = owner_[AttributeID::heatCapacityMed]->value() / 100.0;
+				heatAttenuation = owner_[AttributeID::heatAttenuationMed]->value();
+				break;
+			case Module::Slot::low:
+				heatCapacity = owner_[AttributeID::heatCapacityLow]->value() / 100.0;
+				heatAttenuation = owner_[AttributeID::heatAttenuationLow]->value();
+				break;
+			default:
+				break;
 		}
 		
-		isCalculated_ = true;
-	}
-}
+		std::vector<std::pair<HP, Module*>> hp(totalSlots, std::make_pair(HP(0), nullptr));
 
-void HeatSimulator::simulate(const ModulesList& modules)
-{
-	if (modules.size() == 0)
-		return;
-	
-	states_.clear();
+		std::vector<State> c;
+		c.reserve(modules.size());
 
-	std::shared_ptr<Ship> ship = ship_.lock();
-	if (!ship)
-		return;
-	std::shared_ptr<Module> module = modules.front();
-	Module::Slot slot = module->getSlot();
-	Float heatCapacity = 0;
-	Float heatGenerationMultiplier = ship->getAttribute(AttributeID::heatGenerationMultiplier)->getValue();
-	Float heatAttenuation = 0;
-	Float heatGeneration = 0;
-	Float heatAbsorbtionRateModifier = 0;
-	int numberOfSlots = ship->getNumberOfSlots(slot);
-	int numberOfOnlineModules = 0;
-	
-	if (slot == Module::Slot::hi)
-	{
-		heatCapacity = ship->getAttribute(AttributeID::heatCapacityHi)->getValue() / 100.0;
-		heatAttenuation = ship->getAttribute(AttributeID::heatAttenuationHi)->getValue();
-	}
-	else if (slot == Module::Slot::med)
-	{
-		heatCapacity = ship->getAttribute(AttributeID::heatCapacityMed)->getValue() / 100.0;
-		heatAttenuation = ship->getAttribute(AttributeID::heatAttenuationMed)->getValue();
-	}
-	else if (slot == Module::Slot::low)
-	{
-		heatCapacity = ship->getAttribute(AttributeID::heatCapacityLow)->getValue() / 100.0;
-		heatAttenuation = ship->getAttribute(AttributeID::heatAttenuationLow)->getValue();
-	}
-	
-	int n = (int) modules.size();
-	std::vector<Float> modulesHP(n);
-
-	for (int i = 0; i < n; i++)
-	{
-		std::shared_ptr<Module> module = modules[i];
-		if (module->isDummy())
-			continue;
-		
-		modulesHP[i] = module->getAttribute(AttributeID::hp)->getValue();
-		Module::State state = module->getState();
-		if (state >= Module::State::online)
-			numberOfOnlineModules++;
-		if (state == Module::State::overloaded)
-		{
-			heatAbsorbtionRateModifier += module->getAttribute(AttributeID::heatAbsorbtionRateModifier)->getValue();
-			int clipSize = module->getShots();
-
-			std::shared_ptr<State> state = std::make_shared<State>();
-			state->tNow = 0;
-			state->duration = static_cast<int>(module->getCycleTime() * 1000.0);
-			state->clipSize = clipSize;
-			state->shot = 0;
-			state->reloadTime = static_cast<int>(module->getReloadTime());
-			state->moduleIndex = i;
-			state->heatDamage = module->getAttribute(AttributeID::heatDamage)->getValue();
-			states_.push_back(state);
-			std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
+		for (auto i: modules) {
+			hp[i->socket()] = std::make_pair((*i)[AttributeID::hp]->value(), i);
+			if (i->state() == Module::State::overloaded) {
+				c.emplace_back(i->rawCycleTime(), i->reloadTime(), (*i)[AttributeID::heatDamage]->value(), i->shots(), i->socket());
+			}
 		}
-	}
-	heatGeneration = heatAbsorbtionRateModifier * heatGenerationMultiplier;
-	
-	if (states_.size() > 0)
-	{
-		int tNow = 0;
-		std::shared_ptr<State> state;
+		if (c.empty())
+			return;
 
-		while (1)
-		{
-			state = states_.front();
-			std::pop_heap(states_.begin(), states_.end(), StateCompareFunction());
-			states_.pop_back();
+		typedef std::priority_queue<State, std::vector<State>, std::greater<>> PQ;
+		PQ states(PQ::value_compare(), std::move(c));
+		
+		auto tNow = 0ms;
 
-			tNow = state->tNow;
+		while (true) {
+			auto state = states.top();
+			states.pop();
+			tNow = state.tNow;
 			
-			Float h = heat(static_cast<Float>(tNow / 1000.0), heatCapacity, heatGeneration);
-			
-			int numberOfDeadModules = 0;
-			for (int i = 0; i < n; i++)
-			{
-				if (modulesHP[i] > 0)
-				{
-					int range = abs(i - state->moduleIndex);
-					modulesHP[i] -= damageProbability(h, range, numberOfOnlineModules, numberOfSlots, heatAttenuation) * state->heatDamage;
-					if (modulesHP[i] <= 0.0)
-					{
-						modules[i]->setLifeTime(tNow / 1000.0);
-						numberOfDeadModules++;
+			auto h = heat(tNow, heatCapacity, heatGeneration);
+			size_t dead = 0;
+			for (int i = 0; i < totalSlots; i++) {
+				if (hp[i].first > 0) {
+					auto range = std::abs(i - static_cast<int>(state.socket));
+					hp[i].first -= damageProbability(h, range, onlineModules, totalSlots, heatAttenuation) * state.heatDamage;
+					if (hp[i].first <= 0) {
+						hp[i].second->lifeTime (tNow);
+						dead++;
 					}
 				}
 				else
-					numberOfDeadModules++;
+					dead++;
 			}
 			
-			if (numberOfDeadModules == n)
+			if (dead >= totalSlots)
 				break;
 			
-			tNow += state->duration;
-			state->shot++;
+			tNow += state.cycleTime;
+			state.shot++;
 			
-			if (state->clipSize) {
-				if (state->shot % state->clipSize == 0) {
-					state->shot = 0;
-					tNow += state->reloadTime;
+			if (state.clipSize > 0) {
+				if (state.shot % state.clipSize == 0) {
+					state.shot = 0;
+					tNow += state.reloadTime;
 				}
 			}
-			state->tNow = tNow;
-			states_.push_back(state);
-			std::push_heap(states_.begin(), states_.end(), StateCompareFunction());
+			state.tNow = tNow;
+			states.push(state);
 		}
 	}
-}
-
-Float HeatSimulator::heat(Float t, Float heatCapacity, Float heatGeneration)
-{
-	return heatCapacity - exp(-t * heatGeneration);
-}
-
-Float HeatSimulator::damageProbability(Float h, int range, int numberOfOnlineModules, int numberOfSlots, Float heatAttenuation)
-{
-	return (float) numberOfOnlineModules / (float) numberOfSlots * h * pow(heatAttenuation, range);
 }

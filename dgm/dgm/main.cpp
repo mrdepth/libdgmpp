@@ -55,7 +55,7 @@ void dumpAttributeTypes(SQLiteDatabase& database) {
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"MetaInfo.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		namespace Attributes {" << std::endl;
 	//<< "		constexpr MetaInfo::Attribute attributes[] {" << std::endl;
@@ -156,7 +156,7 @@ void dumpItems(SQLiteDatabase& database) {
 	<< "#include \"MetaInfo.hpp\"" << std::endl
 	<< "#include \"Attributes.hpp\"" << std::endl
 	<< "#include \"Effects.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		namespace Types {" << std::endl
 	<< "			using namespace MetaInfo;" << std::endl;
@@ -443,7 +443,7 @@ void dumpModifiers(SQLiteDatabase& database) {
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"MetaInfo.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		namespace Modifiers {" << std::endl;
 //	<< "		constexpr MetaInfo::Modifier modifiers[] {" << std::endl;
@@ -526,7 +526,7 @@ void dumpEffects(SQLiteDatabase& database) {
 	<< "#pragma once" << std::endl
 	<< "#include \"MetaInfo.hpp\"" << std::endl
 	<< "#include \"Modifiers.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		namespace Effects {" << std::endl
 	<< "			using namespace MetaInfo;" << std::endl;
@@ -574,7 +574,7 @@ void dumpSkills(SQLiteDatabase& database) {
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"Types.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		constexpr const MetaInfo::Type* skills_array[] = {" << std::endl;
 	
@@ -609,7 +609,7 @@ void dumpWafrareBuffs(SQLiteDatabase& database) {
 	<< "#pragma once" << std::endl
 	<< "#include \"MetaInfo.hpp\"" << std::endl
 	<< "#include \"Modifiers.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		namespace WafrareBuffs {" << std::endl
 	<< "			using namespace MetaInfo;" << std::endl;
@@ -916,7 +916,7 @@ void dumpCommodities(SQLiteDatabase& database) {
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"MetaInfo.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		namespace Commodities {" << std::endl;
 
@@ -972,7 +972,7 @@ void dumpFacilities(SQLiteDatabase& database) {
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"MetaInfo.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		namespace Facilities {" << std::endl;
 	
@@ -1008,7 +1008,7 @@ void dumpSchematics(SQLiteDatabase& database) {
 	std::cout
 	<< "#pragma once" << std::endl
 	<< "#include \"Commodities.hpp\"\n" << std::endl
-	<< "namespace dgmpp2 {" << std::endl
+	<< "namespace dgmpp {" << std::endl
 	<< "	namespace SDE {" << std::endl
 	<< "		namespace Schematics {" << std::endl
 	<< "			using namespace std::chrono_literals;" << std::endl;

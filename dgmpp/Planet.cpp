@@ -2,181 +2,127 @@
 //  Planet.cpp
 //  dgmpp
 //
-//  Created by Artem Shimanski on 13.01.16.
+//  Created by Artem Shimanski on 28.11.2017.
 //
-//
 
-#include "Planet.h"
-#include "Engine.h"
-#include "Item.h"
-#include "CommandCenter.h"
-#include "ExtractorControlUnit.h"
-#include "IndustryFacility.h"
-#include "StorageFacility.h"
-#include "Spaceport.h"
-#include <cmath>
-#include <sstream>
+#include "Planet.hpp"
+#include "SDE.hpp"
+#include "CommandCenter.hpp"
+#include "Factory.hpp"
+#include "Spaceport.hpp"
+#include "ExtractorControlUnit.hpp"
 
-using namespace dgmpp;
+#include <algorithm>
 
-Planet::Planet(std::shared_ptr<Engine> const& engine, TypeID typeID): engine_(engine), typeID_(typeID) {
-}
-
-std::shared_ptr<Engine> Planet::getEngine() const {
-	return engine_.lock();
-}
-
-std::shared_ptr<Facility> Planet::addFacility(TypeID typeID, int64_t identifier) {
-	auto engine = getEngine();
-	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT groupID, capacity, typeName FROM invTypes WHERE typeID = ? LIMIT 1");
-	
-	stmt->bindInt(1, static_cast<int>(typeID));
-	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
-	if (result->next()) {
-		GroupID groupID = static_cast<GroupID>(result->getInt(0));
-		double capacity = result->getDouble(1);
-		std::string typeName = result->getText(2);
-		std::shared_ptr<Facility> facility;
+namespace dgmpp {
+	Facility* Planet::add(TypeID typeID, Facility::Identifier identifier) {
+		const auto& metaInfo = SDE::facility(typeID);
+		Facility* facility = nullptr;
 		
-		switch (groupID) {
-			case CommandCenter::groupID:
-				facility = std::make_shared<CommandCenter>(typeID, typeName, capacity, shared_from_this(), identifier);
+		if (identifier <= 0)
+			identifier = facilities_.size() + 1;
+		
+		switch (metaInfo.groupID) {
+			case GroupID::commandCenters:
+				facility = new CommandCenter(metaInfo, *this, identifier);
 				break;
-			case IndustryFacility::groupID:
-				facility = std::make_shared<IndustryFacility>(typeID, typeName, capacity, shared_from_this(), identifier);
+			case GroupID::processors:
+				facility = new Factory(metaInfo, *this, identifier);
 				break;
-			case StorageFacility::groupID:
-				facility = std::make_shared<StorageFacility>(typeID, typeName, capacity, shared_from_this(), identifier);
+			case GroupID::storageFacilities:
+				facility = new Storage(metaInfo, *this, identifier);
 				break;
-			case Spaceport::groupID:
-				facility = std::make_shared<Spaceport>(typeID, typeName, capacity, shared_from_this(), identifier);
+			case GroupID::spaceports:
+				facility = new Spaceport(metaInfo, *this, identifier);
 				break;
-			case ExtractorControlUnit::groupID:
-				facility = std::make_shared<ExtractorControlUnit>(typeID, typeName, capacity, shared_from_this(), identifier);
+			case GroupID::extractorControlUnits:
+				facility = new ExtractorControlUnit(metaInfo, *this, identifier);
 				break;
 			default:
-				facility = std::make_shared<Facility>(typeID, typeName, capacity, shared_from_this(), identifier);
 				break;
 		}
-		facilities_.push_back(facility);
+		assert(facility);
+		
+		facilities_.emplace_back(facility);
 		return facility;
 	}
-	else {
-		throw Item::UnknownTypeIDException(std::to_string(static_cast<int>(typeID)));
-	}
-
-}
-
-void Planet::removeFacility(std::shared_ptr<Facility> const& facility) {
-	RoutesList routes;
-	for (auto route: routes_) {
-		if (route->getSource() == facility)
-			route->getDestination()->removeInput(route);
-		else if (route->getDestination() == facility)
-			route->getSource()->removeOutput(route);
-		else
-			routes.push_back(route);
-	}
-	routes_ = routes;
-	facilities_.remove(facility);
-}
-
-std::shared_ptr<Route> Planet::addRoute(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, const Commodity& commodity, int64_t identifier) {
-	auto route = std::make_shared<Route>(source, destination, commodity, identifier);
-	for (const auto& i: routes_)
-		if (*i == *route)
-			return nullptr;
 	
-	source->addOutput(route);
-	destination->addInput(route);
-	routes_.push_back(route);
-	return route;
-}
-
-void Planet::removeRoute(std::shared_ptr<const Route> const& route) {
-	route->getSource()->removeOutput(route);
-	route->getDestination()->removeInput(route);
-	routes_.remove(route);
-}
-
-std::shared_ptr<Facility> Planet::findFacility(int64_t identifier) {
-	for (auto facility: facilities_)
-		if (facility->getIdentifier() == identifier)
-			return facility;
-	return nullptr;
-}
-
-void Planet::setLastUpdate(double lastUpdate) {
-	lastUpdate_ = lastUpdate;
-}
-
-double Planet::getLastUpdate() {
-	return lastUpdate_;
-}
-
-double Planet::getNextCycleTime() {
-	double nextCycleTime = std::numeric_limits<double>::infinity();
-	for (auto facility: facilities_) {
-		double time = facility->getNextUpdateTime();
-		if (!std::isinf(time) && time >= timestamp_)
-			nextCycleTime = std::min(time, nextCycleTime);
+	void Planet::remove(Facility* facility) {
+		for (auto& route: facility->inputs_)
+			route.from->outputs_.erase(route);
+		for (auto& route: facility->outputs_)
+			route.to->inputs_.erase(route);
+		
+		auto i = std::find_if(facilities_.begin(), facilities_.end(), [&](const auto& i) { return i.get() == facility; });
+//		auto i = facilities_.find(facility);
+		assert(i != facilities_.end());
+		facilities_.erase(i);
 	}
-	return nextCycleTime;
-}
-
-void Planet::runCycle(double cycleTime) {
-	//setLastUpdate(cycleTime);
-	timestamp_ = cycleTime;
-	for (auto facility: facilities_) {
-		facility->update(cycleTime);
-/*		double cycleEndTime = facility->getCycleEndTime();
-		if (cycleEndTime > 0 && cycleEndTime - cycleTime < 0.5) {
-			facility->finishCycle(cycleTime);
-		}*/
+	
+	std::vector<Facility*> Planet::facilities() const {
+		std::vector<Facility*> result;
+		result.reserve(facilities_.size());
+//		std::set<Facility*, FacilityCompare> set;
+//		std::transform(facilities_.begin(), facilities_.end(), std::inserter(set, set.end()), [](const auto& i) { return i.get(); });
+//		std::copy(set.begin(), set.end(), std::back_inserter(result));
+		
+		std::transform(facilities_.begin(), facilities_.end(), std::back_inserter(result), [](const auto& i) { return i.get(); });
+		return result;
 	}
-/*	for (auto facility: facilities_) {
-		double launchTime = facility->getLaunchTime();
-		if (launchTime == 0)
-			facility->startCycle(cycleTime);
-	}*/
-}
+	
+	Facility* Planet::operator[] (Facility::Identifier key) const {
+		auto i = std::find_if(facilities_.begin(), facilities_.end(), [key](const auto& i) { return i->identifier() == key; });
+		return i != facilities_.end() ? i->get() : nullptr;
+	}
 
-double Planet::simulate() {
-//	setLastUpdate(0);
-//	double endTime = getLastUpdate();
-	double endTime = 0;
-	timestamp_ = 0;
-	facilities_.sort([](const std::shared_ptr<Facility>& a, const std::shared_ptr<Facility>& b) -> bool {
-		return a->priority() > b->priority();
-	});
-//	runCycle(endTime);
-	while (1) {
-		double nextCycleTime = getNextCycleTime();
-		if (nextCycleTime >= 0 && !std::isinf(nextCycleTime)) {
-			runCycle(nextCycleTime);
-			endTime = nextCycleTime;
+	void Planet::add(const Route& route) {
+		if (!route.from || !route.to)
+			throw InvalidRoute();
+		route.from->outputs_.insert(route);
+		route.to->inputs_.insert(route);
+	}
+	
+	void Planet::remove(const Route& route) {
+		route.from->outputs_.erase(route);
+		route.to->inputs_.erase(route);
+	}
+	
+	std::optional<std::chrono::seconds> Planet::nextCycleTime(const std::set<Facility*, FacilityCompare>& facilities) const noexcept {
+		std::optional<std::chrono::seconds> next = std::nullopt;
+		for (auto& facility: facilities) {
+			if (auto time = facility->nextUpdateTime(); time && *time >= timestamp_)
+				next = next ? std::min(*next, *time) : time;
 		}
-		else
-			break;
+		return next;
 	}
-	return endTime;
-}
+	
+	std::chrono::seconds Planet::run() {
+		auto endTime = std::chrono::seconds::zero();
+		timestamp_ = endTime;
 
-std::string Planet::toJSONString() const {
-	std::stringstream os;
-	bool isFirst = true;
-	os << "\"facilities\":[";
-	for (const auto& facility: facilities_) {
-		if (isFirst)
-			isFirst = false;
-		else
-			os << "," << std::endl;;
-		os << *facility;
+		std::set<Facility*, FacilityCompare> facilities;
+//		facilities.reserve(facilities_.size());
+		for (const auto& i: facilities_) {
+			if (i->configured()) {
+				facilities.insert(i.get());
+//				facilities.push_back(i.get());
+			}
+		}
+		
+		while(true) {
+			if (timestamp_.count() == 442800)
+				assert(1);
+			if (auto next = nextCycleTime(facilities); next && next->count() >= 0) {
+				timestamp_ = *next;
+				for (auto& i: facilities)
+					i->update(timestamp_);
+				endTime = *next;
+			}
+			else
+				break;
+		}
+		
+		return endTime;
 	}
-	os << "]" << std::endl;
-	return os.str();
-}
 
-std::ostream& dgmpp::operator<<(std::ostream& os, const Planet& planet) {
-	return os << "{" << planet.toJSONString() << "}" << std::endl;
 }

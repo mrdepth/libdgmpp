@@ -2,44 +2,47 @@
 //  Route.cpp
 //  dgmpp
 //
-//  Created by Артем Шиманский on 13.01.16.
+//  Created by Artem Shimanski on 29.11.2017.
 //
-//
 
-#include "Route.h"
-#include "Facility.h"
-#include "Planet.h"
-#include "Commodity.h"
+#include "Route.hpp"
+#include "Facility.hpp"
 
-using namespace dgmpp;
+#include <iostream>
 
-Route::Route(std::shared_ptr<Facility> const& source, std::shared_ptr<Facility> const& destination, const Commodity& commodity, int64_t identifier) : source_(source), destination_(destination), commodity_(commodity), identifier_(identifier) {
-};
+namespace dgmpp {
 
-std::shared_ptr<Facility> Route::getSource() const {
-	return source_.lock();
-}
-
-std::shared_ptr<Facility> Route::getDestination() const {
-	return destination_.lock();
-}
-
-void Route::update(double time) const {
-	if (commodity_.getTypeID() != TypeID::none) {
-		uint32_t quantity = std::min(getSource()->getCommodity(commodity_).getQuantity(), getDestination()->getFreeStorage(commodity_));
-		if (quantity > 0) {
-			auto product = Commodity(commodity_, quantity);
-			getSource()->extractCommodity(product);
-			getDestination()->addCommodity(product);
-			getDestination()->update(time);
+	void Route::update(std::chrono::seconds time) const {
+		auto c = std::min((*from)[commodity], to->free(commodity));
+		if (c.quantity() > 0) {
+			from->extract(c);
+			to->add(c);
+			to->update(time);
 		}
 	}
 }
 
-bool Route::operator==(const Route& other) const {
-	return source_.lock() == other.source_.lock() && destination_.lock() == other.destination_.lock() && commodity_.getTypeID() == other.commodity_.getTypeID();
+/*namespace std {
+	template<>
+	struct hash<dgmpp::Route> {
+		typedef dgmpp::Route argument_type;
+		typedef size_t result_type;
+		
+		constexpr result_type operator()(const argument_type& value) const noexcept {
+			//			return dgmpp::hashValue(value.from, value.to, value.commodity, value.identifier);
+			return dgmpp::hashValue(value.from->identifier(), value.to->identifier(), value.commodity);
+		}
+		
+	};
+};
+
+*/
+
+namespace std {
+	hash<dgmpp::Route>::result_type hash<dgmpp::Route>::operator() (const hash<dgmpp::Route>::argument_type& value) const noexcept {
+		return dgmpp::hashValue(value.from, value.to, value.commodity);
+		
+//		return dgmpp::hashValue(value.from->identifier(), value.to->identifier(), value.commodity);
+	}
 }
 
-bool Route::operator!=(const Route& other) const {
-	return !operator==(other);
-}
