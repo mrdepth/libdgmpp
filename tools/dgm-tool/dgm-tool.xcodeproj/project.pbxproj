@@ -32,7 +32,7 @@
 		123CC8AD1FCD878400C34372 /* Compiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compiler.cpp; sourceTree = "<group>"; };
 		123CC8AE1FCD878400C34372 /* Compiler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Compiler.hpp; sourceTree = "<group>"; };
 		123CC8B01FCD879500C34372 /* Operands.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Operands.hpp; sourceTree = "<group>"; };
-		12A821F91FA8B2CE002809F0 /* dgm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dgm; sourceTree = BUILT_PRODUCTS_DIR; };
+		12A821F91FA8B2CE002809F0 /* dgm-tool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "dgm-tool"; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A821FC1FA8B2CE002809F0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		12A822041FA8B2DA002809F0 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		12A822061FA8B307002809F0 /* SQLiteDatabase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SQLiteDatabase.cpp; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 		12A821FA1FA8B2CE002809F0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				12A821F91FA8B2CE002809F0 /* dgm */,
+				12A821F91FA8B2CE002809F0 /* dgm-tool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,7 +80,8 @@
 				123CC8AE1FCD878400C34372 /* Compiler.hpp */,
 				123CC8B01FCD879500C34372 /* Operands.hpp */,
 			);
-			path = dgm;
+			name = dgm;
+			path = src;
 			sourceTree = "<group>";
 		};
 		12A822031FA8B2DA002809F0 /* Frameworks */ = {
@@ -94,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		12A821F81FA8B2CE002809F0 /* dgm */ = {
+		12A821F81FA8B2CE002809F0 /* dgm-tool */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 12A822001FA8B2CE002809F0 /* Build configuration list for PBXNativeTarget "dgm" */;
+			buildConfigurationList = 12A822001FA8B2CE002809F0 /* Build configuration list for PBXNativeTarget "dgm-tool" */;
 			buildPhases = (
 				12A821F51FA8B2CE002809F0 /* Sources */,
 				12A821F61FA8B2CE002809F0 /* Frameworks */,
@@ -106,9 +107,9 @@
 			);
 			dependencies = (
 			);
-			name = dgm;
+			name = "dgm-tool";
 			productName = dgm;
-			productReference = 12A821F91FA8B2CE002809F0 /* dgm */;
+			productReference = 12A821F91FA8B2CE002809F0 /* dgm-tool */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -126,7 +127,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 12A821F41FA8B2CE002809F0 /* Build configuration list for PBXProject "dgm" */;
+			buildConfigurationList = 12A821F41FA8B2CE002809F0 /* Build configuration list for PBXProject "dgm-tool" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -138,7 +139,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				12A821F81FA8B2CE002809F0 /* dgm */,
+				12A821F81FA8B2CE002809F0 /* dgm-tool */,
 			);
 		};
 /* End PBXProject section */
@@ -282,7 +283,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		12A821F41FA8B2CE002809F0 /* Build configuration list for PBXProject "dgm" */ = {
+		12A821F41FA8B2CE002809F0 /* Build configuration list for PBXProject "dgm-tool" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				12A821FE1FA8B2CE002809F0 /* Debug */,
@@ -291,7 +292,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		12A822001FA8B2CE002809F0 /* Build configuration list for PBXNativeTarget "dgm" */ = {
+		12A822001FA8B2CE002809F0 /* Build configuration list for PBXNativeTarget "dgm-tool" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				12A822011FA8B2CE002809F0 /* Debug */,

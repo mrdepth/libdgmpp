@@ -43,7 +43,7 @@ namespace dgmpp {
 		std::chrono::seconds launchTime_ = std::chrono::seconds::zero();
 		std::chrono::seconds installTime_ = std::chrono::seconds::zero();
 		std::chrono::seconds expiryTime_ = std::chrono::seconds::zero();
-		std::chrono::seconds cycleTime_ = std::chrono::seconds::zero();;
+		std::chrono::seconds cycleTime_ = std::chrono::seconds::zero();
 		size_t quantityPerCycle_ = 0;
 		std::chrono::duration<Float, std::ratio<60 * 15>> w_;
 		Float phaseShift_ = 0;

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1248DB4A1F1E30E3009625EC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1248DB491F1E30E3009625EC /* libsqlite3.tbd */; };
-		12DBEA621E1D39670088A486 /* dbpatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DBEA601E1D39670088A486 /* dbpatch.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,9 +24,9 @@
 
 /* Begin PBXFileReference section */
 		1248DB491F1E30E3009625EC /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		128AA1EE1FDEB2C900AD4ED3 /* dbpatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = dbpatch.cpp; sourceTree = "<group>"; };
+		128AA1EF1FDEB2C900AD4ED3 /* dbpatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dbpatch.h; sourceTree = "<group>"; };
 		12DBEA561E1D39400088A486 /* dbpatch */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dbpatch; sourceTree = BUILT_PRODUCTS_DIR; };
-		12DBEA601E1D39670088A486 /* dbpatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbpatch.cpp; sourceTree = "<group>"; };
-		12DBEA611E1D39670088A486 /* dbpatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbpatch.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,10 +49,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		128AA1ED1FDEB2C900AD4ED3 /* dbpatch */ = {
+			isa = PBXGroup;
+			children = (
+				128AA1EE1FDEB2C900AD4ED3 /* dbpatch.cpp */,
+				128AA1EF1FDEB2C900AD4ED3 /* dbpatch.h */,
+			);
+			path = dbpatch;
+			sourceTree = "<group>";
+		};
 		12DBEA4D1E1D39400088A486 = {
 			isa = PBXGroup;
 			children = (
-				12DBEA581E1D39400088A486 /* dbpatch */,
+				128AA1ED1FDEB2C900AD4ED3 /* dbpatch */,
 				12DBEA571E1D39400088A486 /* Products */,
 				1248DB481F1E30E3009625EC /* Frameworks */,
 			);
@@ -65,15 +73,6 @@
 				12DBEA561E1D39400088A486 /* dbpatch */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		12DBEA581E1D39400088A486 /* dbpatch */ = {
-			isa = PBXGroup;
-			children = (
-				12DBEA601E1D39670088A486 /* dbpatch.cpp */,
-				12DBEA611E1D39670088A486 /* dbpatch.h */,
-			);
-			path = dbpatch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,7 +133,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12DBEA621E1D39670088A486 /* dbpatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

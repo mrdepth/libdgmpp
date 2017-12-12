@@ -8,7 +8,7 @@
 #include "Gang.hpp"
 
 namespace dgmpp {
-	Character* Gang::add(std::unique_ptr<Character> pilot) {
+	Character* Gang::add(std::unique_ptr<Character>&& pilot) {
 		assert(pilot != nullptr);
 		auto ptr = pilot.get();
 		pilots_.push_back(std::move(pilot));

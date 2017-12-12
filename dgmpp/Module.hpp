@@ -67,7 +67,7 @@ namespace dgmpp {
 		Socket socket() const noexcept			{return socket_;}
 		
 		Charge* charge() const noexcept { return charge_.get(); }
-		Charge* charge (std::unique_ptr<Charge> charge);
+		Charge* charge (std::unique_ptr<Charge>&& charge);
 		Charge* charge (TypeID typeID) { return charge(Charge::Create(typeID)); }
 		bool canFit (Charge* charge);
 		const std::vector<GroupID>& chargeGroups() const noexcept { return chargeGroups_; };

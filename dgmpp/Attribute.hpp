@@ -29,9 +29,8 @@ namespace dgmpp {
 			}
 
 			Attribute& operator*() const;
-			Attribute* operator->() const {
-				return &(**this);
-			}
+			Attribute* operator->() const { return get(); }
+			Attribute* get() const { return &(**this); }
 			
 		private:
 			Type* owner_;

@@ -21,7 +21,7 @@ namespace dgmpp {
 		}
 	}
 	
-	Ship* Character::ship(std::unique_ptr<Ship> ship) {
+	Ship* Character::ship(std::unique_ptr<Ship>&& ship) {
 		batchUpdates([&]() {
 			auto enabled = isEnabled();
 			if (enabled)
@@ -42,6 +42,10 @@ namespace dgmpp {
 		});
 		
 		return ship_.get();
+	}
+	
+	Structure* Character::structure (std::unique_ptr<Structure>&& structure) {
+		return dynamic_cast<Structure*>(ship(std::move(structure)));
 	}
 	
 	Type* Character::domain(MetaInfo::Modifier::Domain domain) noexcept {
@@ -73,7 +77,7 @@ namespace dgmpp {
 			throw InvalidSkillLevel();
 	}
 	
-	Implant* Character::add(std::unique_ptr<Implant> implant, bool replace) {
+	Implant* Character::add(std::unique_ptr<Implant>&& implant, bool replace) {
 		auto old = implants_.find(implant->slot());
 		if (old != implants_.end()) {
 			if (replace) {
@@ -91,7 +95,7 @@ namespace dgmpp {
 		return ptr;
 	}
 	
-	Booster* Character::add(std::unique_ptr<Booster> booster, bool replace) {
+	Booster* Character::add(std::unique_ptr<Booster>&& booster, bool replace) {
 		auto old = boosters_.find(booster->slot());
 		if (old != boosters_.end()) {
 			if (replace) {
@@ -121,6 +125,13 @@ namespace dgmpp {
 		assert(i != boosters_.end());
 		(*i)->parent(nullptr);
 		boosters_.erase(i);
+	}
+	
+	std::vector<Skill*> Character::skills() const {
+		std::vector<Skill*> result;
+		result.reserve(skills_.size());
+		std::transform(skills_.begin(), skills_.end(), std::back_inserter(result), [](const auto& i) { return i.second.get(); });
+		return result;
 	}
 
 	std::vector<Implant*> Character::implants() const {

@@ -201,7 +201,7 @@ namespace dgmpp {
 		}
 	}
 	
-	Charge* Module::charge (std::unique_ptr<Charge> charge) {
+	Charge* Module::charge (std::unique_ptr<Charge>&& charge) {
 		batchUpdates([&]() {
 			auto enabled = isEnabled();
 			

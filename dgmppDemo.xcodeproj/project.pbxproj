@@ -9,28 +9,29 @@
 /* Begin PBXBuildFile section */
 		1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1248DB3E1F1DE90E009625EC /* QuartzCore.framework */; };
 		12791CA01F9F843600577188 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12791C9F1F9F843600577188 /* libsqlite3.tbd */; };
-		12DBEAA81E1D3B0E0088A486 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DBEAA71E1D3B0E0088A486 /* main.mm */; };
-		12DBEAAB1E1D3B160088A486 /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DBEAAA1E1D3B160088A486 /* Dgmpp.framework */; };
+		128AA29F1FE0248600AD4ED3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29E1FE0248600AD4ED3 /* main.swift */; };
+		128AA2A31FE02A1500AD4ED3 /* Dgm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 128AA2A41FE02A1500AD4ED3 /* Dgm.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		12DBEA951E1D3AEA0088A486 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 6;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1248DB3E1F1DE90E009625EC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		12791C9F1F9F843600577188 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		128AA29E1FE0248600AD4ED3 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		128AA2A41FE02A1500AD4ED3 /* Dgm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dgm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEA971E1D3AEA0088A486 /* dgmppDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dgmppDemo; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEAA71E1D3B0E0088A486 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
-		12DBEAAA1E1D3B160088A486 /* Dgmpp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dgmpp.framework; path = "build/Debug-iphoneos/Dgmpp.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,9 +39,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				128AA2A31FE02A1500AD4ED3 /* Dgm.framework in Frameworks */,
 				12791CA01F9F843600577188 /* libsqlite3.tbd in Frameworks */,
 				1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */,
-				12DBEAAB1E1D3B160088A486 /* Dgmpp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				12DBEAA71E1D3B0E0088A486 /* main.mm */,
+				128AA29E1FE0248600AD4ED3 /* main.swift */,
 			);
 			path = dgmppDemo;
 			sourceTree = "<group>";
@@ -75,9 +77,9 @@
 		12DBEAA91E1D3B160088A486 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				128AA2A41FE02A1500AD4ED3 /* Dgm.framework */,
 				12791C9F1F9F843600577188 /* libsqlite3.tbd */,
 				1248DB3E1F1DE90E009625EC /* QuartzCore.framework */,
-				12DBEAAA1E1D3B160088A486 /* Dgmpp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -114,6 +116,7 @@
 					12DBEA961E1D3AEA0088A486 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = YB4RLQ4M9A;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -140,7 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12DBEAA81E1D3B0E0088A486 /* main.mm in Sources */,
+				128AA29F1FE0248600AD4ED3 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,12 +241,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -251,12 +255,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

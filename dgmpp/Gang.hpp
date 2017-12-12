@@ -19,7 +19,7 @@ namespace dgmpp {
 			return gang;
 		}
 		
-		Character* add (std::unique_ptr<Character> pilot);
+		Character* add (std::unique_ptr<Character>&& pilot);
 		Character* addPilot() { return add(Character::Create()); }
 		
 		void remove (Character* pilot);

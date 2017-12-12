@@ -7,6 +7,7 @@
 
 #pragma once
 #include "Skill.hpp"
+#include "Structure.hpp"
 #include "Ship.hpp"
 #include "Implant.hpp"
 #include "Booster.hpp"
@@ -17,18 +18,22 @@ namespace dgmpp {
 		static std::unique_ptr<Character> Create() { return std::unique_ptr<Character>(new Character); }
 		
 		Ship* ship() const { return ship_.get(); }
-		Ship* ship (std::unique_ptr<Ship> ship);
+		Ship* ship (std::unique_ptr<Ship>&& ship);
 		Ship* ship (TypeID typeID) { return ship(Ship::Create(typeID)); }
+		Structure* structure() const { return dynamic_cast<Structure*>(ship_.get()); }
+		Structure* structure (std::unique_ptr<Structure>&& structure);
+		Structure* structure (TypeID typeID) { return structure(Structure::Create(typeID)); }
 		
 		void setSkillLevels (int level);
 		
-		Implant* add(std::unique_ptr<Implant> implant, bool replace = false);
-		Booster* add(std::unique_ptr<Booster> booster, bool replace = false);
+		Implant* add(std::unique_ptr<Implant>&& implant, bool replace = false);
+		Booster* add(std::unique_ptr<Booster>&& booster, bool replace = false);
 		Implant* addImplant(TypeID typeID, bool replace = false) { return add(Implant::Create(typeID), replace); }
 		Booster* addBooster(TypeID typeID, bool replace = false) { return add(Booster::Create(typeID), replace); }
 		void remove(Implant* implant);
 		void remove(Booster* booster);
 		
+		std::vector<Skill*> skills() const;
 		std::vector<Implant*> implants() const;
 		std::vector<Booster*> boosters() const;
 		

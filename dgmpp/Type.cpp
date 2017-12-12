@@ -405,4 +405,13 @@ namespace dgmpp {
 		buffs_.erase(key);
 	}
 
+	std::unordered_set<Type*> Type::affectors() const {
+		std::unordered_set<Type*> types;
+		for (const auto& i: attributes_) {
+			for (const auto& j: modifiers(i.second->metaInfo())) {
+				types.insert(&j->owner());
+			}
+		}
+		return types;
+	}
 }

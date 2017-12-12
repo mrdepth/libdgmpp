@@ -33,7 +33,7 @@ namespace dgmpp {
 		
 	}
 	
-	Module* Ship::add (std::unique_ptr<Module> module, bool ignoringRequirements, Module::Socket socket) {
+	Module* Ship::add (std::unique_ptr<Module>&& module, bool ignoringRequirements, Module::Socket socket) {
 		assert(module != nullptr);
 		
 		if (ignoringRequirements || canFit(module.get())) {
@@ -77,7 +77,7 @@ namespace dgmpp {
 			throw CannotFit<Module>(std::move(module));
 	}
 	
-	Drone* Ship::add (std::unique_ptr<Drone> drone, Drone::SquadronTag squadronTag) {
+	Drone* Ship::add (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag) {
 		assert(drone != nullptr);
 		
 		if (canFit(drone.get())) {
@@ -280,7 +280,7 @@ namespace dgmpp {
 		return result;
 	}
 	
-	Area* Ship::area(std::unique_ptr<Area> area) {
+	Area* Ship::area(std::unique_ptr<Area>&& area) {
 		if (area_)
 			area_->parent(nullptr);
 		if (area) {
@@ -694,7 +694,7 @@ namespace dgmpp {
 		return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(-std::log(0.25) * agility() * mass() / 1'000'000.0 * 1000.0));
 	}
 	
-	AstronomicalUnitsPerSecond Ship::getWarpSpeed() {
+	AstronomicalUnitsPerSecond Ship::warpSpeed() {
 		auto base = AstronomicalUnitsPerSecond((*this)[AttributeID::baseWarpSpeed]->value());
 		auto multiplier = (*this)[AttributeID::warpSpeedMultiplier]->value();
 		if (base.count() == 0.0)

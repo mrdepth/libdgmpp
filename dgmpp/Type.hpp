@@ -54,6 +54,8 @@ namespace dgmpp {
 		virtual bool isEnabled() const noexcept { return enabled_; }
 		virtual void setEnabled (bool enabled);
 		
+		std::unordered_set<Type*> affectors() const;
+		
 	protected:
 		
 		Type (TypeID typeID);

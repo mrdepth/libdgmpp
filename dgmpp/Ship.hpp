@@ -21,8 +21,6 @@ namespace dgmpp {
 	class Ship: public Type {
 	public:
 //		using Position = std::vector<Module*>::const_iterator;
-		using ModulesContainer = TuplesSet<Module::Slot, Module::Socket, std::unique_ptr<Module>>;
-		using DronesContainer = TuplesSet<TypeID, Drone::SquadronTag, std::unique_ptr<Drone>>;
 		
 		enum class ScanType
 		{
@@ -44,8 +42,8 @@ namespace dgmpp {
 		const DamageVector& damagePattern() const noexcept { return damagePattern_; }
 
 		//Fitting
-		Module* add (std::unique_ptr<Module> module, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket);
-		Drone* add (std::unique_ptr<Drone> drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
+		Module* add (std::unique_ptr<Module>&& module, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket);
+		Drone* add (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
 		Module* addModule (TypeID typeID, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket) { return add(Module::Create(typeID), ignoringRequirements, socket); }
 		Drone* add (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add(Drone::Create(typeID), squadronTag); }
 
@@ -58,7 +56,7 @@ namespace dgmpp {
 		std::vector<Drone*> drones () const;// {return drones_;}
 		
 		Area* area() const noexcept { return area_.get(); }
-		Area* area(std::unique_ptr<Area> area);
+		Area* area(std::unique_ptr<Area>&& area);
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 		
 		//Drones
@@ -118,7 +116,7 @@ namespace dgmpp {
 
 		//Mobility
 		std::chrono::milliseconds alignTime();
-		AstronomicalUnitsPerSecond getWarpSpeed();
+		AstronomicalUnitsPerSecond warpSpeed();
 		AstronomicalUnit maxWarpDistance();
 		MetersPerSecond velocity();
 		Meter signatureRadius();
@@ -139,6 +137,9 @@ namespace dgmpp {
 		
 		virtual void setEnabled (bool enabled) override;
 	protected:
+		using ModulesContainer = TuplesSet<Module::Slot, Module::Socket, std::unique_ptr<Module>>;
+		using DronesContainer = TuplesSet<TypeID, Drone::SquadronTag, std::unique_ptr<Drone>>;
+
 		ModulesContainer modules_;
 		DronesContainer drones_;
 		

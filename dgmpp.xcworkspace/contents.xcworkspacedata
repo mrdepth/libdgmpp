@@ -2,15 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:dgm/dgm.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:dgmpp.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:dgmppDemo.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:dbpatch.xcodeproj">
+      location = "group:/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/tools/dbpatch/dbpatch.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:tools/dgm-tool/dgm-tool.xcodeproj">
    </FileRef>
 </Workspace>

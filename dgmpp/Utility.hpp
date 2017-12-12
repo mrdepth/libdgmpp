@@ -168,7 +168,9 @@ namespace dgmpp {
 
 		union {
 			struct {
-				Layer shield, armor, hull;
+				Layer shield;
+				Layer armor;
+				Layer hull;
 			};
 			Layer layers[3];
 		};
