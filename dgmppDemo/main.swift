@@ -8,13 +8,12 @@
 
 import Foundation
 import Dgm
+import AVFoundation
+
+//let dps = try! DGMShip(typeID: 645).turretsDPS(target: DGMHostileTarget(angularVelocity: 0, velocity: 0, signature: 0, range: 0))
 
 
-let gang = DGMGang()
-let pilot = DGMCharacter()
-let ship = try! DGMShip(typeID: 645)
-pilot.setSkillLevels(5)
-gang.addPilot(pilot)
-pilot.ship = ship
+let f = DGMFuelUnitsPerHour(10) * Hours(4)
 
-print("\(ship.supportedDroneCategories)")
+print("\(f)")
+

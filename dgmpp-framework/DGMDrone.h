@@ -23,12 +23,12 @@
 
 @property (readonly) NSTimeInterval cycleTime;
 @property (readonly) DGMDamageVector volley;
-@property (readonly) DGMDamagePerSecond dps;
-- (DGMDamagePerSecond) dpsWithTaget:(DGMHostileTarget) target;
+@property (readonly) DGMDamagePerSecond dps NS_REFINED_FOR_SWIFT;
+- (DGMDamagePerSecond) dpsWithTaget:(DGMHostileTarget) target NS_SWIFT_NAME(__dps(target:)) NS_REFINED_FOR_SWIFT;
 @property (readonly) DGMMeter optimal;
 @property (readonly) DGMMeter falloff;
 @property (readonly) DGMPoints accuracyScore;
-@property (readonly) DGMCubicMeterPerSecond miningYield;
-@property (readonly) DGMMetersPerSecond velocity;
+@property (readonly) DGMCubicMeterPerSecond miningYield NS_REFINED_FOR_SWIFT;
+@property (readonly) DGMMetersPerSecond velocity NS_REFINED_FOR_SWIFT;
 
 @end

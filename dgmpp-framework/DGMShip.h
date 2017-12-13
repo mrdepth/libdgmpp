@@ -15,8 +15,8 @@
 @property(readonly) NSTimeInterval lastsTime;
 @property(readonly) BOOL isStable;
 @property(readonly) DGMPercent stableLevel;
-@property(readonly) DGMGigaJoulePerSecond use;
-@property(readonly) DGMGigaJoulePerSecond recharge;
+@property(readonly) DGMGigaJoulePerSecond use NS_REFINED_FOR_SWIFT;
+@property(readonly) DGMGigaJoulePerSecond recharge NS_REFINED_FOR_SWIFT;
 
 @end
 
@@ -76,36 +76,36 @@
 @property (readonly) DGMCubicMeter oreHoldCapacity;
 
 @property (readonly) DGMResistances resistances;
-@property (readonly) DGMTank tank;
-@property (readonly) DGMTank effectiveTank;
-@property (readonly) DGMTank sustainableTank;
-@property (readonly) DGMTank effectiveSustainableTank;
+@property (readonly) DGMTank tank NS_REFINED_FOR_SWIFT;
+@property (readonly) DGMTank effectiveTank NS_REFINED_FOR_SWIFT;
+@property (readonly) DGMTank sustainableTank NS_REFINED_FOR_SWIFT;
+@property (readonly) DGMTank effectiveSustainableTank NS_REFINED_FOR_SWIFT;
 @property (readonly) DGMHitPoints hitPoints;
 @property (readonly) DGMHitPoints effectiveHitPoints;
 
 @property (readonly) DGMDamageVector turretsVolley;
 @property (readonly) DGMDamageVector launchersVolley;
 @property (readonly) DGMDamageVector dronesVolley;
-@property (readonly) DGMDamagePerSecond turretsDPS;
-@property (readonly) DGMDamagePerSecond launchersDPS;
-@property (readonly) DGMDamagePerSecond dronesDPS;
-- (DGMDamagePerSecond) turretsDPSWithTaget:(DGMHostileTarget) target;
-- (DGMDamagePerSecond) launchersDPSWithTaget:(DGMHostileTarget) target;
-- (DGMDamagePerSecond) dronesDPSWithTaget:(DGMHostileTarget) target;
+@property (readonly) DGMDamagePerSecond turretsDPS NS_REFINED_FOR_SWIFT;
+@property (readonly) DGMDamagePerSecond launchersDPS NS_REFINED_FOR_SWIFT;
+@property (readonly) DGMDamagePerSecond dronesDPS NS_REFINED_FOR_SWIFT;
+- (DGMDamagePerSecond) turretsDPSWithTaget:(DGMHostileTarget) target NS_SWIFT_NAME(__turretsDPS(target:)) NS_REFINED_FOR_SWIFT;
+- (DGMDamagePerSecond) launchersDPSWithTaget:(DGMHostileTarget) target NS_SWIFT_NAME(__launchersDPS(target:)) NS_REFINED_FOR_SWIFT;
+- (DGMDamagePerSecond) dronesDPSWithTaget:(DGMHostileTarget) target NS_SWIFT_NAME(__dronesDPS(target:)) NS_REFINED_FOR_SWIFT;
 
-@property (readonly) DGMCubicMeterPerSecond minerYield;
-@property (readonly) DGMCubicMeterPerSecond droneYield;
+@property (readonly) DGMCubicMeterPerSecond minerYield NS_REFINED_FOR_SWIFT;
+@property (readonly) DGMCubicMeterPerSecond droneYield NS_REFINED_FOR_SWIFT;
 
 @property (readonly) NSTimeInterval alignTime;
-@property (readonly) DGMAstronomicalUnitsPerSecond warpSpeed;
-@property (readonly) DGMMetersPerSecond velocity;
+@property (readonly) DGMAstronomicalUnitsPerSecond warpSpeed NS_REFINED_FOR_SWIFT;
+@property (readonly) DGMMetersPerSecond velocity NS_REFINED_FOR_SWIFT;
 @property (readonly) DGMMeter signatureRadius;
 @property (readonly) DGMKilogram mass;
 @property (readonly) DGMCubicMeter volume;
 @property (readonly) DGMMultiplier agility;
-- (DGMMetersPerSecond) maxVelocityInOrbit:(DGMMeter) radius;
-- (DGMMeter) orbitRadiusWithTransverseVelocity:(DGMMetersPerSecond) velocity;
-- (DGMMeter) orbitRadiusWithAngularVelocity:(DGMRadiansPerSecond) velocity;
+- (DGMMetersPerSecond) maxVelocityInOrbit:(DGMMeter) radius NS_SWIFT_NAME(__maxVelocity(orbit:)) NS_REFINED_FOR_SWIFT;
+- (DGMMeter) orbitRadiusWithTransverseVelocity:(DGMMetersPerSecond) velocity NS_SWIFT_NAME(__orbitRadius(transverseVelocity:)) NS_REFINED_FOR_SWIFT;
+- (DGMMeter) orbitRadiusWithAngularVelocity:(DGMRadiansPerSecond) velocity NS_SWIFT_NAME(__orbitRadius(angularVelocity:)) NS_REFINED_FOR_SWIFT;
 
 @property (readonly) NSInteger maxTargets;
 @property (readonly) DGMMeter maxTargetRange;

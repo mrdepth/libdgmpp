@@ -35,13 +35,13 @@ typedef double DGMAstronomicalUnit;
 typedef double DGMPercent;
 typedef double DGMMultiplier;
 
-typedef double DGMGigaJoulePerSecond;
-typedef double DGMCubicMeterPerSecond;
-typedef double DGMRadiansPerSecond;
-typedef double DGMMetersPerSecond;
-typedef double DGMAstronomicalUnitsPerSecond;
-typedef double DGMHPPerSecond;
-typedef double DGMFuelUnitsPerHour;
+typedef double DGMGigaJoulePerSecond NS_REFINED_FOR_SWIFT;
+typedef double DGMCubicMeterPerSecond NS_REFINED_FOR_SWIFT;
+typedef double DGMRadiansPerSecond NS_REFINED_FOR_SWIFT;
+typedef double DGMMetersPerSecond NS_REFINED_FOR_SWIFT;
+typedef double DGMAstronomicalUnitsPerSecond NS_REFINED_FOR_SWIFT;
+typedef double DGMHPPerSecond NS_REFINED_FOR_SWIFT;
+typedef double DGMFuelUnitsPerHour NS_REFINED_FOR_SWIFT;
 
 typedef NSError * _Nullable __autoreleasing * _Nullable NSErrorPtr;
 
@@ -69,7 +69,7 @@ typedef struct {
 	DGMHP explosive;
 } DGMDamageVector;
 
-typedef DGMDamageVector DGMDamagePerSecond;
+typedef DGMDamageVector DGMDamagePerSecond NS_REFINED_FOR_SWIFT;
 
 typedef struct {
 	DGMHP shield;
@@ -82,7 +82,7 @@ typedef struct {
 	DGMHPPerSecond shieldRepair;
 	DGMHPPerSecond armorRepair;
 	DGMHPPerSecond hullRepair;
-} DGMTank;
+} DGMTank NS_REFINED_FOR_SWIFT;
 
 typedef struct {
 	DGMPercent em;
@@ -146,5 +146,5 @@ typedef struct {
 	DGMMetersPerSecond velocity;
 	DGMMeter signature;
 	DGMMeter range;
-} DGMHostileTarget;
+} DGMHostileTarget NS_REFINED_FOR_SWIFT;
 
