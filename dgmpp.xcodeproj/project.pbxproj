@@ -243,6 +243,8 @@
 		12BE88841FE154F200854893 /* DGMRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88811FE154F200854893 /* DGMRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12BE88851FE154F200854893 /* DGMRoute.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88821FE154F200854893 /* DGMRoute.mm */; };
 		12BE88861FE154F200854893 /* DGMRoute.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88821FE154F200854893 /* DGMRoute.mm */; };
+		12BE88881FE17AB400854893 /* dgmpp.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88871FE17AB400854893 /* dgmpp.hpp */; };
+		12BE88891FE17AB400854893 /* dgmpp.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88871FE17AB400854893 /* dgmpp.hpp */; };
 		12D9F9BB1CC3A98B00313F8D /* dgm.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* dgm.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DBEAB31E1D3B9D0088A486 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */; };
 		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
@@ -404,6 +406,7 @@
 		12BE887C1FE1532E00854893 /* DGMSpaceport.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMSpaceport.mm; sourceTree = "<group>"; };
 		12BE88811FE154F200854893 /* DGMRoute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMRoute.h; sourceTree = "<group>"; };
 		12BE88821FE154F200854893 /* DGMRoute.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMRoute.mm; sourceTree = "<group>"; };
+		12BE88871FE17AB400854893 /* dgmpp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dgmpp.hpp; sourceTree = "<group>"; };
 		12D9F9F21CC3A98B00313F8D /* Dgm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dgm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
 		12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -556,7 +559,7 @@
 				128AA2A01FE024FD00AD4ED3 /* dgm - Info.plist */,
 			);
 			name = swift;
-			path = "../dgmpp-framework";
+			path = "dgmpp-framework";
 			sourceTree = "<group>";
 		};
 		128AA2171FDECAC500AD4ED3 /* Fitting */ = {
@@ -604,7 +607,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		12B330F11FBD97F80072D4E4 /* dgmpp */ = {
+		12B330F11FBD97F80072D4E4 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				123BEF1F1FBDA4A100AC8EB1 /* Base */,
@@ -615,8 +618,9 @@
 				12E864EC1FC8627D00C9C4BD /* Errors.hpp */,
 				12B330F71FBD97F80072D4E4 /* SDE.cpp */,
 				12B330FA1FBD97F80072D4E4 /* SDE.hpp */,
+				12BE88871FE17AB400854893 /* dgmpp.hpp */,
 			);
-			path = dgmpp;
+			path = src;
 			sourceTree = SOURCE_ROOT;
 		};
 		12B331051FBD982B0072D4E4 /* SDE */ = {
@@ -696,11 +700,11 @@
 		37B33D401473CA0D006B18D7 /* dgmpp */ = {
 			isa = PBXGroup;
 			children = (
-				12B330F11FBD97F80072D4E4 /* dgmpp */,
+				12B330F11FBD97F80072D4E4 /* src */,
 				128AA1F01FDEB45100AD4ED3 /* swift */,
 				12564BA71B84AFAD000F68D8 /* dgm.h */,
 			);
-			path = dgmpp;
+			name = dgmpp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -731,6 +735,7 @@
 				123CC8C91FCE940400C34372 /* Facilities.hpp in Headers */,
 				12BE885F1FE14E0600854893 /* DGMProductionCycle.h in Headers */,
 				123BEF171FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
+				12BE88881FE17AB400854893 /* dgmpp.hpp in Headers */,
 				123BEF371FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				123BEF0D1FBD9E5F00AC8EB1 /* Types.hpp in Headers */,
 				128AA20C1FDEC62E00AD4ED3 /* DGMArea.h in Headers */,
@@ -814,6 +819,7 @@
 				123CC8CA1FCE940400C34372 /* Facilities.hpp in Headers */,
 				12BE88601FE14E0600854893 /* DGMProductionCycle.h in Headers */,
 				123BEF181FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
+				12BE88891FE17AB400854893 /* dgmpp.hpp in Headers */,
 				123BEF381FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				123BEF121FBD9E6000AC8EB1 /* Types.hpp in Headers */,
 				128AA20D1FDEC62E00AD4ED3 /* DGMArea.h in Headers */,

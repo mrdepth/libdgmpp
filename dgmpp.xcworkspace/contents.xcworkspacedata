@@ -5,7 +5,7 @@
       location = "group:dgmpp.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:dgmppDemo.xcodeproj">
+      location = "group:/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/sample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/tools/dbpatch/dbpatch.xcodeproj">

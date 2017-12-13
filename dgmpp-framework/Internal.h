@@ -26,15 +26,7 @@
 #import "DGMSpaceport.h"
 #import "DGMRoute.h"
 
-#import "Gang.hpp"
-#import "Planet.hpp"
-#import "ExtractorControlUnit.hpp"
-#import "Factory.hpp"
-#import "Spaceport.hpp"
-#import "CommandCenter.hpp"
-#import "ProductionCycle.hpp"
-#import "ProductionState.hpp"
-#import "Commodity.hpp"
+#import "dgmpp.hpp"
 
 using namespace std::chrono_literals;
 
@@ -130,7 +122,7 @@ NSTimeInterval NSTimeIntervalMake(const std::chrono::duration<Rep, Ratio>& v) {
 @end
 
 @interface DGMState()
-@property (readonly) const dgmpp::State* state;
+@property (readonly, nonnull) const dgmpp::State* state;
 - (nonnull instancetype) initWithState:(nonnull const dgmpp::State*) state;
 @end
 
