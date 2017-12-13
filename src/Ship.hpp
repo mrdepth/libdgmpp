@@ -45,7 +45,7 @@ namespace dgmpp {
 		Module* add (std::unique_ptr<Module>&& module, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket);
 		Drone* add (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
 		Module* addModule (TypeID typeID, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket) { return add(Module::Create(typeID), ignoringRequirements, socket); }
-		Drone* add (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add(Drone::Create(typeID), squadronTag); }
+		Drone* addDrone (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add(Drone::Create(typeID), squadronTag); }
 
 		void remove (Module* module);
 		void remove (Drone* drone);

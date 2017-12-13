@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Dgm
+import Dgmpp
 
 do {
 	let gang = DGMGang()

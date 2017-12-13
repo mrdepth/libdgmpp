@@ -99,7 +99,7 @@ namespace dgmpp {
 				else if ((*module)[EffectID::energyNeutralizerFalloff])
 					value = (*module)[AttributeID::energyNeutralizerAmount]->value();
 				else if ((*module)[EffectID::shipModuleRemoteCapacitorTransmitter])
-					value = (*module)[AttributeID::powerTransferAmount]->value();
+					value = -(*module)[AttributeID::powerTransferAmount]->value();
 				
 				if ((value > 0 && !isDisallowedAssistance) || (value < 0 && !isDisallowedOffense))
 					capNeed = value;

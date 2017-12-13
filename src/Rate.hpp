@@ -92,6 +92,14 @@ namespace dgmpp {
 		bool operator<= (const rate<Rep, Period>& other) const noexcept {
 			return count() <= other.count();
 		}
+		
+		bool operator== (const rate<Rep, Period>& other) const noexcept {
+			return count() == other.count();
+		}
+		
+		bool operator!= (const rate<Rep, Period>& other) const noexcept {
+			return count() != other.count();
+		}
 
 		
 	private:

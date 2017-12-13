@@ -863,10 +863,12 @@ namespace dgmpp {
 	
 	void Ship::project(Module* module) {
 		assert(std::find(projectedModules_.begin(), projectedModules_.end(), module) == projectedModules_.end());
+		projectedModules_.push_back(module);
 	}
 	
 	void Ship::project(Drone* drone) {
 		assert(std::find(projectedDrones_.begin(), projectedDrones_.end(), drone) == projectedDrones_.end());
+		projectedDrones_.push_back(drone);
 	}
 	
 	void Ship::removeProjected(Module* module) {
