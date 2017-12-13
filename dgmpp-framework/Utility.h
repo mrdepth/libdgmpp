@@ -45,6 +45,8 @@ typedef double DGMFuelUnitsPerHour NS_REFINED_FOR_SWIFT;
 
 typedef NSError * _Nullable __autoreleasing * _Nullable NSErrorPtr;
 
+#define DGMErrorDomain @"DogmaError"
+
 typedef NS_ENUM(NSInteger, DGMRaceID) {
 	DGMRaceIDNone = 0,
 	DGMRaceIDCaldari = 1,
@@ -138,6 +140,15 @@ typedef NS_ENUM(NSInteger, DGMChargeSize) {
 	DGMChargeSizeMedium = 2,
 	DGMChargeSizeLarge = 3,
 	DGMChargeSizeXLarge = 4
+};
+
+typedef NS_ENUM(NSInteger, DGMCommodityTier) {
+	DGMCommodityTierUnknown = -1,
+	DGMCommodityTierRaw,
+	DGMCommodityTierTier1,
+	DGMCommodityTierTier2,
+	DGMCommodityTierTier3,
+	DGMCommodityTierTier4
 };
 
 

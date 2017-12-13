@@ -63,15 +63,15 @@ using namespace std::chrono_literals;
 }
 
 - (nullable instancetype) initWithTypeID:(DGMTypeID) typeID error:(NSErrorPtr) error {
-	@try {
+	try {
 		_ship = dgmpp::Ship::Create(static_cast<dgmpp::TypeID>(typeID));
 		if (self = [super initWithType:_ship.get()]) {
 		}
 		return self;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return nil;
 	}
 }
@@ -112,14 +112,14 @@ using namespace std::chrono_literals;
 }
 
 - (BOOL) addModule:(nonnull DGMModule*) module socket:(NSInteger) socket ignoringRequirements:(BOOL) ignoringRequirements error:(NSErrorPtr) error {
-	@try {
+	try {
 		if (auto& ptr = module.module)
 			dynamic_cast<dgmpp::Ship*>(self.type)->add(std::move(ptr), ignoringRequirements, static_cast<dgmpp::Module::Socket>(socket));
 		return YES;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return NO;
 	}
 }
@@ -133,14 +133,14 @@ using namespace std::chrono_literals;
 }
 
 - (BOOL) addDrone:(nonnull DGMDrone*) drone squadronTag:(NSInteger) squadronTag error:(NSErrorPtr) error {
-	@try {
+	try {
 		if (auto& ptr = drone.drone)
 			dynamic_cast<dgmpp::Ship*>(self.type)->add(std::move(ptr), static_cast<dgmpp::Drone::SquadronTag>(squadronTag));
 		return YES;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return NO;
 	}
 }

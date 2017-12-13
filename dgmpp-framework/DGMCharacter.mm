@@ -24,15 +24,15 @@
 }
 
 - (nullable instancetype) initWithTypeID:(DGMTypeID) typeID error:(NSErrorPtr) error {
-	@try {
+	try {
 		_implant = dgmpp::Implant::Create(static_cast<dgmpp::TypeID>(typeID));
 		if (self = [super initWithType:_implant.get()]) {
 		}
 		return self;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return nil;
 	}
 }
@@ -48,15 +48,15 @@
 }
 
 - (nullable instancetype) initWithTypeID:(DGMTypeID) typeID error:(NSErrorPtr) error {
-	@try {
+	try {
 		_booster = dgmpp::Booster::Create(static_cast<dgmpp::TypeID>(typeID));
 		if (self = [super initWithType:_booster.get()]) {
 		}
 		return self;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return nil;
 	}
 }
@@ -83,25 +83,27 @@
 }
 
 - (BOOL) addImplant:(nonnull DGMImplant*) implant replace:(BOOL) replace error:(NSErrorPtr) error {
-	@try {
+	try {
 		if (auto& ptr = implant.implant)
 			dynamic_cast<dgmpp::Character*>(self.type)->add(std::move(ptr));
 		return YES;
 	}
-	@catch(NSException* exc) {
-		*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+	catch(const std::logic_error& exc) {
+		if (error)
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return NO;
 	}
 }
 
 - (BOOL) addBooster:(nonnull DGMBooster*) booster replace:(BOOL) replace error:(NSErrorPtr) error {
-	@try {
+	try {
 		if (auto& ptr = booster.booster)
 			dynamic_cast<dgmpp::Character*>(self.type)->add(std::move(ptr));
 		return YES;
 	}
-	@catch(NSException* exc) {
-		*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+	catch(const std::logic_error& exc) {
+		if (error)
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return NO;
 	}
 }

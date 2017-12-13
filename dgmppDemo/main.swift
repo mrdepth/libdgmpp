@@ -10,10 +10,3 @@ import Foundation
 import Dgm
 import AVFoundation
 
-//let dps = try! DGMShip(typeID: 645).turretsDPS(target: DGMHostileTarget(angularVelocity: 0, velocity: 0, signature: 0, range: 0))
-
-
-let f = DGMFuelUnitsPerHour(10) * Hours(4)
-
-print("\(f)")
-

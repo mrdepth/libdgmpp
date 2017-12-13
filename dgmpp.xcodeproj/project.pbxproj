@@ -199,6 +199,50 @@
 		12B53FFE1FCAD48500631067 /* WarfareBuff.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */; };
 		12B540001FCB61F400631067 /* WarfareBuffID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */; };
 		12B540011FCB61F400631067 /* WarfareBuffID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */; };
+		12BE88471FE13C1200854893 /* DGMPlanet.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88451FE13C1200854893 /* DGMPlanet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88481FE13C1200854893 /* DGMPlanet.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88451FE13C1200854893 /* DGMPlanet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88491FE13C1200854893 /* DGMPlanet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88461FE13C1200854893 /* DGMPlanet.mm */; };
+		12BE884A1FE13C1200854893 /* DGMPlanet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88461FE13C1200854893 /* DGMPlanet.mm */; };
+		12BE884D1FE13D9500854893 /* DGMFacility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE884B1FE13D9500854893 /* DGMFacility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE884E1FE13D9500854893 /* DGMFacility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE884B1FE13D9500854893 /* DGMFacility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE884F1FE13D9500854893 /* DGMFacility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE884C1FE13D9500854893 /* DGMFacility.mm */; };
+		12BE88501FE13D9500854893 /* DGMFacility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE884C1FE13D9500854893 /* DGMFacility.mm */; };
+		12BE88531FE13EBD00854893 /* DGMStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88511FE13EBD00854893 /* DGMStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88541FE13EBD00854893 /* DGMStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88511FE13EBD00854893 /* DGMStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88551FE13EBD00854893 /* DGMStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88521FE13EBD00854893 /* DGMStorage.mm */; };
+		12BE88561FE13EBD00854893 /* DGMStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88521FE13EBD00854893 /* DGMStorage.mm */; };
+		12BE88591FE14D9B00854893 /* DGMProductionState.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88571FE14D9B00854893 /* DGMProductionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE885A1FE14D9B00854893 /* DGMProductionState.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88571FE14D9B00854893 /* DGMProductionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE885B1FE14D9B00854893 /* DGMProductionState.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88581FE14D9B00854893 /* DGMProductionState.mm */; };
+		12BE885C1FE14D9B00854893 /* DGMProductionState.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88581FE14D9B00854893 /* DGMProductionState.mm */; };
+		12BE885F1FE14E0600854893 /* DGMProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE885D1FE14E0600854893 /* DGMProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88601FE14E0600854893 /* DGMProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE885D1FE14E0600854893 /* DGMProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88611FE14E0600854893 /* DGMProductionCycle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE885E1FE14E0600854893 /* DGMProductionCycle.mm */; };
+		12BE88621FE14E0600854893 /* DGMProductionCycle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE885E1FE14E0600854893 /* DGMProductionCycle.mm */; };
+		12BE88651FE14F1C00854893 /* DGMCommodity.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88631FE14F1C00854893 /* DGMCommodity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88661FE14F1C00854893 /* DGMCommodity.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88631FE14F1C00854893 /* DGMCommodity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88671FE14F1C00854893 /* DGMCommodity.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88641FE14F1C00854893 /* DGMCommodity.mm */; };
+		12BE88681FE14F1C00854893 /* DGMCommodity.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88641FE14F1C00854893 /* DGMCommodity.mm */; };
+		12BE886B1FE152F900854893 /* DGMExtractorControlUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88691FE152F900854893 /* DGMExtractorControlUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE886C1FE152F900854893 /* DGMExtractorControlUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88691FE152F900854893 /* DGMExtractorControlUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE886D1FE152F900854893 /* DGMExtractorControlUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE886A1FE152F900854893 /* DGMExtractorControlUnit.mm */; };
+		12BE886E1FE152F900854893 /* DGMExtractorControlUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE886A1FE152F900854893 /* DGMExtractorControlUnit.mm */; };
+		12BE88711FE1530C00854893 /* DGMFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE886F1FE1530C00854893 /* DGMFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88721FE1530C00854893 /* DGMFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE886F1FE1530C00854893 /* DGMFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88731FE1530C00854893 /* DGMFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88701FE1530C00854893 /* DGMFactory.mm */; };
+		12BE88741FE1530C00854893 /* DGMFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88701FE1530C00854893 /* DGMFactory.mm */; };
+		12BE88771FE1531F00854893 /* DGMCommandCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88751FE1531F00854893 /* DGMCommandCenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88781FE1531F00854893 /* DGMCommandCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88751FE1531F00854893 /* DGMCommandCenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88791FE1531F00854893 /* DGMCommandCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88761FE1531F00854893 /* DGMCommandCenter.mm */; };
+		12BE887A1FE1531F00854893 /* DGMCommandCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88761FE1531F00854893 /* DGMCommandCenter.mm */; };
+		12BE887D1FE1532E00854893 /* DGMSpaceport.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE887B1FE1532E00854893 /* DGMSpaceport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE887E1FE1532E00854893 /* DGMSpaceport.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE887B1FE1532E00854893 /* DGMSpaceport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE887F1FE1532E00854893 /* DGMSpaceport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE887C1FE1532E00854893 /* DGMSpaceport.mm */; };
+		12BE88801FE1532E00854893 /* DGMSpaceport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE887C1FE1532E00854893 /* DGMSpaceport.mm */; };
+		12BE88831FE154F200854893 /* DGMRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88811FE154F200854893 /* DGMRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88841FE154F200854893 /* DGMRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88811FE154F200854893 /* DGMRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE88851FE154F200854893 /* DGMRoute.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88821FE154F200854893 /* DGMRoute.mm */; };
+		12BE88861FE154F200854893 /* DGMRoute.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88821FE154F200854893 /* DGMRoute.mm */; };
 		12D9F9BB1CC3A98B00313F8D /* dgm.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* dgm.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DBEAB31E1D3B9D0088A486 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */; };
 		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
@@ -338,6 +382,28 @@
 		12B53FF91FCAD48500631067 /* WarfareBuff.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WarfareBuff.cpp; sourceTree = "<group>"; };
 		12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WarfareBuff.hpp; sourceTree = "<group>"; };
 		12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WarfareBuffID.hpp; sourceTree = "<group>"; };
+		12BE88451FE13C1200854893 /* DGMPlanet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMPlanet.h; sourceTree = "<group>"; };
+		12BE88461FE13C1200854893 /* DGMPlanet.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMPlanet.mm; sourceTree = "<group>"; };
+		12BE884B1FE13D9500854893 /* DGMFacility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMFacility.h; sourceTree = "<group>"; };
+		12BE884C1FE13D9500854893 /* DGMFacility.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMFacility.mm; sourceTree = "<group>"; };
+		12BE88511FE13EBD00854893 /* DGMStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMStorage.h; sourceTree = "<group>"; };
+		12BE88521FE13EBD00854893 /* DGMStorage.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMStorage.mm; sourceTree = "<group>"; };
+		12BE88571FE14D9B00854893 /* DGMProductionState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMProductionState.h; sourceTree = "<group>"; };
+		12BE88581FE14D9B00854893 /* DGMProductionState.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMProductionState.mm; sourceTree = "<group>"; };
+		12BE885D1FE14E0600854893 /* DGMProductionCycle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMProductionCycle.h; sourceTree = "<group>"; };
+		12BE885E1FE14E0600854893 /* DGMProductionCycle.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMProductionCycle.mm; sourceTree = "<group>"; };
+		12BE88631FE14F1C00854893 /* DGMCommodity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMCommodity.h; sourceTree = "<group>"; };
+		12BE88641FE14F1C00854893 /* DGMCommodity.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMCommodity.mm; sourceTree = "<group>"; };
+		12BE88691FE152F900854893 /* DGMExtractorControlUnit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMExtractorControlUnit.h; sourceTree = "<group>"; };
+		12BE886A1FE152F900854893 /* DGMExtractorControlUnit.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMExtractorControlUnit.mm; sourceTree = "<group>"; };
+		12BE886F1FE1530C00854893 /* DGMFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMFactory.h; sourceTree = "<group>"; };
+		12BE88701FE1530C00854893 /* DGMFactory.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMFactory.mm; sourceTree = "<group>"; };
+		12BE88751FE1531F00854893 /* DGMCommandCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMCommandCenter.h; sourceTree = "<group>"; };
+		12BE88761FE1531F00854893 /* DGMCommandCenter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMCommandCenter.mm; sourceTree = "<group>"; };
+		12BE887B1FE1532E00854893 /* DGMSpaceport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMSpaceport.h; sourceTree = "<group>"; };
+		12BE887C1FE1532E00854893 /* DGMSpaceport.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMSpaceport.mm; sourceTree = "<group>"; };
+		12BE88811FE154F200854893 /* DGMRoute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMRoute.h; sourceTree = "<group>"; };
+		12BE88821FE154F200854893 /* DGMRoute.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMRoute.mm; sourceTree = "<group>"; };
 		12D9F9F21CC3A98B00313F8D /* Dgm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dgm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
 		12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -482,6 +548,7 @@
 			isa = PBXGroup;
 			children = (
 				128AA2171FDECAC500AD4ED3 /* Fitting */,
+				12BE88441FE13AED00854893 /* PI */,
 				128AA1F91FDEB50500AD4ED3 /* Utility.h */,
 				128AA1FA1FDEB50500AD4ED3 /* Utility.mm */,
 				128AA2081FDEC3E200AD4ED3 /* Internal.h */,
@@ -575,6 +642,35 @@
 			path = SDE;
 			sourceTree = "<group>";
 		};
+		12BE88441FE13AED00854893 /* PI */ = {
+			isa = PBXGroup;
+			children = (
+				12BE88451FE13C1200854893 /* DGMPlanet.h */,
+				12BE88461FE13C1200854893 /* DGMPlanet.mm */,
+				12BE884B1FE13D9500854893 /* DGMFacility.h */,
+				12BE884C1FE13D9500854893 /* DGMFacility.mm */,
+				12BE88511FE13EBD00854893 /* DGMStorage.h */,
+				12BE88521FE13EBD00854893 /* DGMStorage.mm */,
+				12BE88691FE152F900854893 /* DGMExtractorControlUnit.h */,
+				12BE886A1FE152F900854893 /* DGMExtractorControlUnit.mm */,
+				12BE886F1FE1530C00854893 /* DGMFactory.h */,
+				12BE88701FE1530C00854893 /* DGMFactory.mm */,
+				12BE88751FE1531F00854893 /* DGMCommandCenter.h */,
+				12BE88761FE1531F00854893 /* DGMCommandCenter.mm */,
+				12BE887B1FE1532E00854893 /* DGMSpaceport.h */,
+				12BE887C1FE1532E00854893 /* DGMSpaceport.mm */,
+				12BE88571FE14D9B00854893 /* DGMProductionState.h */,
+				12BE88581FE14D9B00854893 /* DGMProductionState.mm */,
+				12BE885D1FE14E0600854893 /* DGMProductionCycle.h */,
+				12BE885E1FE14E0600854893 /* DGMProductionCycle.mm */,
+				12BE88631FE14F1C00854893 /* DGMCommodity.h */,
+				12BE88641FE14F1C00854893 /* DGMCommodity.mm */,
+				12BE88811FE154F200854893 /* DGMRoute.h */,
+				12BE88821FE154F200854893 /* DGMRoute.mm */,
+			);
+			name = PI;
+			sourceTree = "<group>";
+		};
 		12DFCECF1CD74242006A19BD /* dgmppTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,7 +725,11 @@
 				12B3310D1FBD98F60072D4E4 /* TypeID.hpp in Headers */,
 				123CC8B61FCD9B4100C34372 /* Planet.hpp in Headers */,
 				128AA2011FDEBE3500AD4ED3 /* DGMAttribute.h in Headers */,
+				12BE88531FE13EBD00854893 /* DGMStorage.h in Headers */,
+				12BE88471FE13C1200854893 /* DGMPlanet.h in Headers */,
+				12BE88591FE14D9B00854893 /* DGMProductionState.h in Headers */,
 				123CC8C91FCE940400C34372 /* Facilities.hpp in Headers */,
+				12BE885F1FE14E0600854893 /* DGMProductionCycle.h in Headers */,
 				123BEF171FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
 				123BEF371FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				123BEF0D1FBD9E5F00AC8EB1 /* Types.hpp in Headers */,
@@ -649,12 +749,15 @@
 				123CC8C21FCD9B6B00C34372 /* Commodity.hpp in Headers */,
 				12B331121FBD990F0072D4E4 /* Utility.hpp in Headers */,
 				12B3310F1FBD99070072D4E4 /* MetaInfo.hpp in Headers */,
+				12BE884D1FE13D9500854893 /* DGMFacility.h in Headers */,
 				123BEF0C1FBD9E5F00AC8EB1 /* Skills.hpp in Headers */,
 				123BEF0A1FBD9E5F00AC8EB1 /* Effects.hpp in Headers */,
 				123CC8F31FCEA34E00C34372 /* Factory.hpp in Headers */,
 				123BEF0B1FBD9E5F00AC8EB1 /* Modifiers.hpp in Headers */,
+				12BE886B1FE152F900854893 /* DGMExtractorControlUnit.h in Headers */,
 				12E864DC1FC6C8F200C9C4BD /* Rate.hpp in Headers */,
 				128AA2351FDFD75200AD4ED3 /* DGMStructure.h in Headers */,
+				12BE88651FE14F1C00854893 /* DGMCommodity.h in Headers */,
 				123BEF071FBD9E4F00AC8EB1 /* SDE.hpp in Headers */,
 				123CC8E71FCEA32F00C34372 /* CommandCenter.hpp in Headers */,
 				123BEF3D1FBDB4A200AC8EB1 /* Module.hpp in Headers */,
@@ -663,6 +766,8 @@
 				123CC8ED1FCEA33700C34372 /* Storage.hpp in Headers */,
 				123CC9001FCEA39000C34372 /* Spaceport.hpp in Headers */,
 				128AA2901FE0187300AD4ED3 /* DGMDrone.h in Headers */,
+				12BE88771FE1531F00854893 /* DGMCommandCenter.h in Headers */,
+				12BE887D1FE1532E00854893 /* DGMSpaceport.h in Headers */,
 				123CC8F91FCEA35B00C34372 /* ExtractorControlUnit.hpp in Headers */,
 				128AA2961FE01C4000AD4ED3 /* DGMCharge.h in Headers */,
 				128AA1FB1FDEB50500AD4ED3 /* Utility.h in Headers */,
@@ -679,6 +784,8 @@
 				128AA21A1FDECD3300AD4ED3 /* DGMCharacter.h in Headers */,
 				123BEF251FBDA52500AC8EB1 /* Gang.hpp in Headers */,
 				12E864EA1FC8454900C9C4BD /* HitPoints.hpp in Headers */,
+				12BE88711FE1530C00854893 /* DGMFactory.h in Headers */,
+				12BE88831FE154F200854893 /* DGMRoute.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,7 +808,11 @@
 				12B331091FBD98F50072D4E4 /* TypeID.hpp in Headers */,
 				123CC8B71FCD9B4100C34372 /* Planet.hpp in Headers */,
 				128AA2021FDEBE3500AD4ED3 /* DGMAttribute.h in Headers */,
+				12BE88541FE13EBD00854893 /* DGMStorage.h in Headers */,
+				12BE88481FE13C1200854893 /* DGMPlanet.h in Headers */,
+				12BE885A1FE14D9B00854893 /* DGMProductionState.h in Headers */,
 				123CC8CA1FCE940400C34372 /* Facilities.hpp in Headers */,
+				12BE88601FE14E0600854893 /* DGMProductionCycle.h in Headers */,
 				123BEF181FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
 				123BEF381FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				123BEF121FBD9E6000AC8EB1 /* Types.hpp in Headers */,
@@ -721,12 +832,15 @@
 				123CC8C31FCD9B6B00C34372 /* Commodity.hpp in Headers */,
 				12B331141FBD990F0072D4E4 /* Utility.hpp in Headers */,
 				12B331111FBD99080072D4E4 /* MetaInfo.hpp in Headers */,
+				12BE884E1FE13D9500854893 /* DGMFacility.h in Headers */,
 				123BEF111FBD9E6000AC8EB1 /* Skills.hpp in Headers */,
 				123BEF0F1FBD9E6000AC8EB1 /* Effects.hpp in Headers */,
 				123CC8F41FCEA34E00C34372 /* Factory.hpp in Headers */,
 				123BEF101FBD9E6000AC8EB1 /* Modifiers.hpp in Headers */,
+				12BE886C1FE152F900854893 /* DGMExtractorControlUnit.h in Headers */,
 				12E864DD1FC6C8F200C9C4BD /* Rate.hpp in Headers */,
 				128AA2361FDFD75200AD4ED3 /* DGMStructure.h in Headers */,
+				12BE88661FE14F1C00854893 /* DGMCommodity.h in Headers */,
 				123BEF081FBD9E4F00AC8EB1 /* SDE.hpp in Headers */,
 				123CC8E81FCEA32F00C34372 /* CommandCenter.hpp in Headers */,
 				123BEF3E1FBDB4A200AC8EB1 /* Module.hpp in Headers */,
@@ -735,6 +849,8 @@
 				123CC8EE1FCEA33700C34372 /* Storage.hpp in Headers */,
 				123CC9011FCEA39000C34372 /* Spaceport.hpp in Headers */,
 				128AA2911FE0187300AD4ED3 /* DGMDrone.h in Headers */,
+				12BE88781FE1531F00854893 /* DGMCommandCenter.h in Headers */,
+				12BE887E1FE1532E00854893 /* DGMSpaceport.h in Headers */,
 				123CC8FA1FCEA35B00C34372 /* ExtractorControlUnit.hpp in Headers */,
 				128AA2971FE01C4000AD4ED3 /* DGMCharge.h in Headers */,
 				128AA1FC1FDEB50500AD4ED3 /* Utility.h in Headers */,
@@ -751,6 +867,8 @@
 				128AA21B1FDECD3300AD4ED3 /* DGMCharacter.h in Headers */,
 				123BEF261FBDA52500AC8EB1 /* Gang.hpp in Headers */,
 				12E864EB1FC8454900C9C4BD /* HitPoints.hpp in Headers */,
+				12BE88721FE1530C00854893 /* DGMFactory.h in Headers */,
+				12BE88841FE154F200854893 /* DGMRoute.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,8 +1000,12 @@
 			files = (
 				123CC8DF1FCEA30500C34372 /* ProductionCycle.cpp in Sources */,
 				12B3311C1FBD99B40072D4E4 /* Attribute.cpp in Sources */,
+				12BE88611FE14E0600854893 /* DGMProductionCycle.mm in Sources */,
+				12BE88851FE154F200854893 /* DGMRoute.mm in Sources */,
+				12BE88731FE1530C00854893 /* DGMFactory.mm in Sources */,
 				123BEF291FBDA58700AC8EB1 /* Character.cpp in Sources */,
 				123BEF411FBDB59200AC8EB1 /* Charge.cpp in Sources */,
+				12BE887F1FE1532E00854893 /* DGMSpaceport.mm in Sources */,
 				123CC8C01FCD9B6B00C34372 /* Commodity.cpp in Sources */,
 				12E864F71FC8650000C9C4BD /* Booster.cpp in Sources */,
 				123CC8D91FCEA2FA00C34372 /* ProductionState.cpp in Sources */,
@@ -901,13 +1023,18 @@
 				123CC8D31FCEA29700C34372 /* Route.cpp in Sources */,
 				123BEF1B1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
 				123BEF231FBDA52500AC8EB1 /* Gang.cpp in Sources */,
+				12BE88671FE14F1C00854893 /* DGMCommodity.mm in Sources */,
 				123CC8EB1FCEA33700C34372 /* Storage.cpp in Sources */,
+				12BE88491FE13C1200854893 /* DGMPlanet.mm in Sources */,
 				12B331161FBD99140072D4E4 /* Type.cpp in Sources */,
 				128AA2141FDECA9900AD4ED3 /* DGMGang.mm in Sources */,
 				127442B61FD9835400B70A3A /* HeatSimulator.cpp in Sources */,
 				123CC8B41FCD9B4100C34372 /* Planet.cpp in Sources */,
+				12BE886D1FE152F900854893 /* DGMExtractorControlUnit.mm in Sources */,
 				12E864F11FC864F600C9C4BD /* Implant.cpp in Sources */,
 				123CC8A61FCD659200C34372 /* Area.cpp in Sources */,
+				12BE88791FE1531F00854893 /* DGMCommandCenter.mm in Sources */,
+				12BE885B1FE14D9B00854893 /* DGMProductionState.mm in Sources */,
 				123CC8F11FCEA34E00C34372 /* Factory.cpp in Sources */,
 				128AA2981FE01C4000AD4ED3 /* DGMCharge.mm in Sources */,
 				12B331181FBD999F0072D4E4 /* SDE.cpp in Sources */,
@@ -920,8 +1047,10 @@
 				123BEF2F1FBDB3AB00AC8EB1 /* Skill.cpp in Sources */,
 				128AA1F71FDEB4C100AD4ED3 /* DGMType.mm in Sources */,
 				12EC66511FBECD840083DBB8 /* Capacitor.cpp in Sources */,
+				12BE884F1FE13D9500854893 /* DGMFacility.mm in Sources */,
 				12649A171FCD5E77007B22CD /* Structure.cpp in Sources */,
 				128AA20E1FDEC62E00AD4ED3 /* DGMArea.mm in Sources */,
+				12BE88551FE13EBD00854893 /* DGMStorage.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -931,8 +1060,12 @@
 			files = (
 				123CC8E01FCEA30500C34372 /* ProductionCycle.cpp in Sources */,
 				12B3311D1FBD99B40072D4E4 /* Attribute.cpp in Sources */,
+				12BE88621FE14E0600854893 /* DGMProductionCycle.mm in Sources */,
+				12BE88861FE154F200854893 /* DGMRoute.mm in Sources */,
+				12BE88741FE1530C00854893 /* DGMFactory.mm in Sources */,
 				123BEF2A1FBDA58700AC8EB1 /* Character.cpp in Sources */,
 				123BEF421FBDB59200AC8EB1 /* Charge.cpp in Sources */,
+				12BE88801FE1532E00854893 /* DGMSpaceport.mm in Sources */,
 				123CC8C11FCD9B6B00C34372 /* Commodity.cpp in Sources */,
 				12E864F81FC8650000C9C4BD /* Booster.cpp in Sources */,
 				123CC8DA1FCEA2FA00C34372 /* ProductionState.cpp in Sources */,
@@ -950,13 +1083,18 @@
 				123CC8D41FCEA29700C34372 /* Route.cpp in Sources */,
 				123BEF1C1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
 				123BEF241FBDA52500AC8EB1 /* Gang.cpp in Sources */,
+				12BE88681FE14F1C00854893 /* DGMCommodity.mm in Sources */,
 				123CC8EC1FCEA33700C34372 /* Storage.cpp in Sources */,
+				12BE884A1FE13C1200854893 /* DGMPlanet.mm in Sources */,
 				12B331171FBD99150072D4E4 /* Type.cpp in Sources */,
 				128AA2151FDECA9900AD4ED3 /* DGMGang.mm in Sources */,
 				127442B71FD9835400B70A3A /* HeatSimulator.cpp in Sources */,
 				123CC8B51FCD9B4100C34372 /* Planet.cpp in Sources */,
+				12BE886E1FE152F900854893 /* DGMExtractorControlUnit.mm in Sources */,
 				12E864F21FC864F600C9C4BD /* Implant.cpp in Sources */,
 				123CC8A71FCD659200C34372 /* Area.cpp in Sources */,
+				12BE887A1FE1531F00854893 /* DGMCommandCenter.mm in Sources */,
+				12BE885C1FE14D9B00854893 /* DGMProductionState.mm in Sources */,
 				123CC8F21FCEA34E00C34372 /* Factory.cpp in Sources */,
 				128AA2991FE01C4000AD4ED3 /* DGMCharge.mm in Sources */,
 				12B331191FBD999F0072D4E4 /* SDE.cpp in Sources */,
@@ -969,8 +1107,10 @@
 				123BEF301FBDB3AB00AC8EB1 /* Skill.cpp in Sources */,
 				128AA1F81FDEB4C100AD4ED3 /* DGMType.mm in Sources */,
 				12EC66521FBECD840083DBB8 /* Capacitor.cpp in Sources */,
+				12BE88501FE13D9500854893 /* DGMFacility.mm in Sources */,
 				12649A181FCD5E77007B22CD /* Structure.cpp in Sources */,
 				128AA20F1FDEC62E00AD4ED3 /* DGMArea.mm in Sources */,
+				12BE88561FE13EBD00854893 /* DGMStorage.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,10 +22,8 @@ public struct Seconds: TimeRate {
 	public init(_ value: Value) {
 		self.value = value
 	}
-
-	public static var rate: (Int, Int) {
-		return (1,1)
-	}
+	
+	public static let rate = (1, 1)
 }
 
 public struct Milliseconds: TimeRate {
@@ -35,9 +33,7 @@ public struct Milliseconds: TimeRate {
 		self.value = value
 	}
 
-	public static var rate: (Int, Int) {
-		return (1,1000)
-	}
+	public static let rate = (1, 1000)
 }
 
 public struct Minutes: TimeRate {
@@ -47,9 +43,7 @@ public struct Minutes: TimeRate {
 		self.value = value
 	}
 
-	public static var rate: (Int, Int) {
-		return (60,1)
-	}
+	public static let rate = (60, 1)
 }
 
 public struct Hours: TimeRate {
@@ -59,9 +53,7 @@ public struct Hours: TimeRate {
 		self.value = value
 	}
 
-	public static var rate: (Int, Int) {
-		return (3600,1)
-	}
+	public static let rate = (3600, 1)
 }
 
 public protocol Scalable {
@@ -198,3 +190,4 @@ public extension DGMDrone {
 	var miningYield: DGMCubicMeterPerSecond { return DGMCubicMeterPerSecond(__miningYield) }
 	var velocity: DGMMetersPerSecond { return DGMMetersPerSecond(__velocity) }
 }
+

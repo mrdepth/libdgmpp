@@ -12,15 +12,15 @@
 }
 
 - (nullable instancetype) initWithTypeID:(DGMTypeID) typeID error:(NSErrorPtr) error {
-	@try {
+	try {
 		_area = dgmpp::Area::Create(static_cast<dgmpp::TypeID>(typeID));
 		if (self = [super initWithType:_area.get()]) {
 		}
 		return self;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return nil;
 	}
 }

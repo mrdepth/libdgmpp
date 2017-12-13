@@ -16,7 +16,25 @@
 #import "DGMDrone.h"
 #import "DGMCharge.h"
 
+#import "DGMPlanet.h"
+#import "DGMCommodity.h"
+#import "DGMProductionCycle.h"
+#import "DGMProductionState.h"
+#import "DGMFactory.h"
+#import "DGMExtractorControlUnit.h"
+#import "DGMCommandCenter.h"
+#import "DGMSpaceport.h"
+#import "DGMRoute.h"
+
 #import "Gang.hpp"
+#import "Planet.hpp"
+#import "ExtractorControlUnit.hpp"
+#import "Factory.hpp"
+#import "Spaceport.hpp"
+#import "CommandCenter.hpp"
+#import "ProductionCycle.hpp"
+#import "ProductionState.hpp"
+#import "Commodity.hpp"
 
 using namespace std::chrono_literals;
 
@@ -99,3 +117,23 @@ template<typename Rep, typename Ratio>
 NSTimeInterval NSTimeIntervalMake(const std::chrono::duration<Rep, Ratio>& v) {
 	return std::chrono::duration_cast<std::chrono::seconds>(v).count();
 }
+
+@interface DGMFacility()
+@property (nonatomic, nonnull) dgmpp::Facility* facility;
++ (nullable instancetype) facility:(nullable dgmpp::Facility*) facility;
+- (nonnull instancetype) initWithFacility:(nonnull dgmpp::Facility*) facility;
+@end
+
+@interface DGMCommodity()
+@property (readonly) dgmpp::Commodity commodity;
+- (nonnull instancetype) initWithCommodity:(dgmpp::Commodity) commodity NS_DESIGNATED_INITIALIZER;
+@end
+
+@interface DGMState()
+@property (readonly) const dgmpp::State* state;
+- (nonnull instancetype) initWithState:(nonnull const dgmpp::State*) state;
+@end
+
+@interface DGMProductionCycle()
+- (nonnull instancetype) initWithCycle:(nonnull const dgmpp::ProductionCycle*) cycle;
+@end

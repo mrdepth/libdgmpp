@@ -34,3 +34,12 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <Dgm/DGMDrone.h>
 #include <Dgm/DGMCharge.h>
 
+#include <Dgm/DGMPlanet.h>
+#include <Dgm/DGMCommodity.h>
+#include <Dgm/DGMProductionCycle.h>
+#include <Dgm/DGMProductionState.h>
+#include <Dgm/DGMFactory.h>
+#include <Dgm/DGMExtractorControlUnit.h>
+#include <Dgm/DGMCommandCenter.h>
+#include <Dgm/DGMSpaceport.h>
+#include <Dgm/DGMRoute.h>

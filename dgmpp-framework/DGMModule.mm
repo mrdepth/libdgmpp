@@ -12,15 +12,15 @@
 }
 
 - (nullable instancetype) initWithTypeID:(DGMTypeID) typeID error:(NSErrorPtr) error {
-	@try {
+	try {
 		_module = dgmpp::Module::Create(static_cast<dgmpp::TypeID>(typeID));
 		if (self = [super initWithType:_module.get()]) {
 		}
 		return self;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return nil;
 	}
 }
@@ -62,16 +62,16 @@
 }
 
 - (BOOL) setTarget:(nullable DGMShip*) target error:(NSErrorPtr) error {
-	@try {
+	try {
 		if (target)
 			dynamic_cast<dgmpp::Module*>(self.type)->target(dynamic_cast<dgmpp::Ship*>(target.type));
 		else
 			dynamic_cast<dgmpp::Module*>(self.type)->target(nullptr);
 		return YES;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return NO;
 	}
 }
@@ -81,16 +81,16 @@
 }
 
 - (BOOL) setCharge:(nullable DGMCharge*) charge error:(NSErrorPtr) error {
-	@try {
+	try {
 		if (charge && charge.charge)
 			dynamic_cast<dgmpp::Module*>(self.type)->charge(std::move(charge.charge));
 		else
 			dynamic_cast<dgmpp::Module*>(self.type)->charge(nil);
 		return YES;
 	}
-	@catch(NSException* exc) {
+	catch(const std::logic_error& exc) {
 		if (error)
-			*error = [NSError errorWithDomain:exc.name code:0 userInfo:exc.userInfo];
+			*error = [NSError errorWithDomain:DGMErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithUTF8String:exc.what()]}];
 		return NO;
 	}
 }

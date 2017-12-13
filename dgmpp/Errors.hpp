@@ -12,27 +12,27 @@
 namespace dgmpp {
 	
 	template <typename T>
-	struct CannotFit: public std::runtime_error {
-		CannotFit(std::unique_ptr<T> type): type(std::move(type)), std::runtime_error("Cannot fit") {}
+	struct CannotFit: public std::logic_error {
+		CannotFit(std::unique_ptr<T> type): type(std::move(type)), std::logic_error("Cannot fit") {}
 		std::unique_ptr<T> type;
 	};
 
-	struct InvalidSkillLevel: std::runtime_error {
-		InvalidSkillLevel(): std::runtime_error("Skill level should be in [0...5] range") {}
+	struct InvalidSkillLevel: std::invalid_argument {
+		InvalidSkillLevel(): std::invalid_argument("Skill level should be in [0...5] range") {}
 	};
 
 	template<typename T>
-	class NotFound: public std::runtime_error {
+	class NotFound: public std::out_of_range {
 	public:
-		NotFound (T identifier) : std::runtime_error("id = " + std::to_string(static_cast<int>(identifier))) {};
+		NotFound (T identifier) : std::out_of_range("id = " + std::to_string(static_cast<int>(identifier))) {};
 	};
 	
-	struct NotEnoughCommodities: public std::runtime_error {
-		NotEnoughCommodities(size_t quantity) : std::runtime_error(std::to_string(quantity)) {}
+	struct NotEnoughCommodities: public std::logic_error {
+		NotEnoughCommodities(size_t quantity) : std::logic_error(std::to_string(quantity)) {}
 	};
 
-	struct InvalidRoute: public std::runtime_error {
-		InvalidRoute() : std::runtime_error("Missing source or destination") {}
+	struct InvalidRoute: public std::invalid_argument {
+		InvalidRoute() : std::invalid_argument("Missing source or destination") {}
 	};
 
 //	struct DifferentCommodities: public std::runtime_error {

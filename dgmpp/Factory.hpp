@@ -20,8 +20,8 @@ namespace dgmpp {
 		
 		
 		std::chrono::seconds launchTime() const noexcept { return launchTime_; }
-		std::optional<std::chrono::seconds> cycleTime() const;
 		void launchTime (std::chrono::seconds value) noexcept { launchTime_ = value; }
+		std::optional<std::chrono::seconds> cycleTime() const;
 		std::optional<Commodity> output() const;
 
 		virtual Commodity free(const Commodity& key) noexcept override;

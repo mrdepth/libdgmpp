@@ -38,7 +38,30 @@
 @implementation DGMType
 
 + (nullable instancetype) type:(nullable dgmpp::Type*) type {
-	return nullptr;
+	if (dynamic_cast<dgmpp::Module*>(type) != nullptr)
+		return [[DGMModule alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Drone*>(type) != nullptr)
+		return [[DGMDrone alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Structure*>(type) != nullptr)
+		return [[DGMStructure alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Ship*>(type) != nullptr)
+		return [[DGMShip alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Character*>(type) != nullptr)
+		return [[DGMCharacter alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Skill*>(type) != nullptr)
+		return [[DGMSkill alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Implant*>(type) != nullptr)
+		return [[DGMImplant alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Booster*>(type) != nullptr)
+		return [[DGMBooster alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Charge*>(type) != nullptr)
+		return [[DGMCharge alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Gang*>(type) != nullptr)
+		return [[DGMGang alloc] initWithType:type];
+	else if (dynamic_cast<dgmpp::Area*>(type) != nullptr)
+		return [[DGMArea alloc] initWithType:type];
+	else
+		return [[DGMType alloc] initWithType:type];
 }
 
 - (nonnull instancetype) init {
