@@ -414,4 +414,14 @@ namespace dgmpp {
 		}
 		return types;
 	}
+	
+	std::list<Attribute*> Type::attributes() const {
+		std::list<Attribute*> attributes;
+		for (const auto& i: attributes_) {
+			if (i.second) {
+				attributes.push_back(i.second.get());
+			}
+		}
+		return attributes;
+	}
 }

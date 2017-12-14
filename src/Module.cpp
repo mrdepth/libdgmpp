@@ -13,6 +13,8 @@
 namespace dgmpp {
 	using namespace std::chrono_literals;
 
+	const Module::Socket Module::anySocket = -1;
+	
 	Module::Module (TypeID typeID) : Type(typeID) {
 		const auto& effects = this->effects();
 		
@@ -230,7 +232,7 @@ namespace dgmpp {
 			return false;
 		
 		auto chargeSize = this->chargeSize();
-		if (chargeSize != Charge::Size::none && chargeSize != charge->chargeSize())
+		if (chargeSize != Charge::Size::none && chargeSize != charge->size())
 			return false;
 		
 		auto chargeGroup = charge->metaInfo().groupID;

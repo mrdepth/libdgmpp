@@ -23,23 +23,36 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 //#include <dgmpp/Factory.hpp>
 //#include <dgmpp/Spaceport.hpp>
 
-#include <Dgm/DGMType.h>
-#include <Dgm/DGMAttribute.h>
-#include <Dgm/DGMArea.h>
-#include <Dgm/DGMGang.h>
-#include <Dgm/DGMCharacter.h>
-#include <Dgm/DGMShip.h>
-#include <Dgm/DGMStructure.h>
-#include <Dgm/DGMModule.h>
-#include <Dgm/DGMDrone.h>
-#include <Dgm/DGMCharge.h>
+/*#include <Dgmpp/DGMType.h>
+#include <Dgmpp/DGMAttribute.h>
+#include <Dgmpp/DGMArea.h>
+#include <Dgmpp/DGMGang.h>
+#include <Dgmpp/DGMCharacter.h>
+#include <Dgmpp/DGMShip.h>
+#include <Dgmpp/DGMStructure.h>
+#include <Dgmpp/DGMModule.h>
+#include <Dgmpp/DGMDrone.h>
+#include <Dgmpp/DGMCharge.h>
 
-#include <Dgm/DGMPlanet.h>
-#include <Dgm/DGMCommodity.h>
-#include <Dgm/DGMProductionCycle.h>
-#include <Dgm/DGMProductionState.h>
-#include <Dgm/DGMFactory.h>
-#include <Dgm/DGMExtractorControlUnit.h>
-#include <Dgm/DGMCommandCenter.h>
-#include <Dgm/DGMSpaceport.h>
-#include <Dgm/DGMRoute.h>
+#include <Dgmpp/DGMPlanet.h>
+#include <Dgmpp/DGMCommodity.h>
+#include <Dgmpp/DGMProductionCycle.h>
+#include <Dgmpp/DGMProductionState.h>
+#include <Dgmpp/DGMFactory.h>
+#include <Dgmpp/DGMExtractorControlUnit.h>
+#include <Dgmpp/DGMCommandCenter.h>
+#include <Dgmpp/DGMSpaceport.h>
+#include <Dgmpp/DGMRoute.h>*/
+
+
+#include <Dgmpp/area.h>
+#include <Dgmpp/attribute.h>
+#include <Dgmpp/character.h>
+#include <Dgmpp/charge.h>
+#include <Dgmpp/drone.h>
+#include <Dgmpp/gang.h>
+#include <Dgmpp/module.h>
+#include <Dgmpp/ship.h>
+#include <Dgmpp/structure.h>
+#include <Dgmpp/type.h>
+

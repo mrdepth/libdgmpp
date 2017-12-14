@@ -42,7 +42,7 @@ namespace dgmpp {
 		const DamageVector& damagePattern() const noexcept { return damagePattern_; }
 
 		//Fitting
-		Module* add (std::unique_ptr<Module>&& module, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket);
+		Module* add (std::unique_ptr<Module>&& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false);
 		Drone* add (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
 		Module* addModule (TypeID typeID, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket) { return add(Module::Create(typeID), ignoringRequirements, socket); }
 		Drone* addDrone (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add(Drone::Create(typeID), squadronTag); }
@@ -123,9 +123,9 @@ namespace dgmpp {
 		Kilogram mass();
 		CubicMeter volume();
 		Multiplier agility();
-		MetersPerSecond maxVelocityInOrbit(Meter r);
-		Meter orbitRadiusWithTransverseVelocity(MetersPerSecond v);
-		Meter orbitRadiusWithAngularVelocity(RadiansPerSecond v);
+		MetersPerSecond maxVelocityInOrbit (Meter r);
+		Meter orbitRadiusWithTransverseVelocity (MetersPerSecond v);
+		Meter orbitRadiusWithAngularVelocity (RadiansPerSecond v);
 
 		//Targeting
 		size_t maxTargets();
@@ -153,10 +153,10 @@ namespace dgmpp {
 		
 		const std::list<Module*>& projectedModules() const noexcept { return projectedModules_; }
 		const std::list<Drone*>& projectedDrones() const noexcept { return projectedDrones_; }
-		void project(Module* module);
-		void project(Drone* drone);
-		void removeProjected(Module* module);
-		void removeProjected(Drone* drone);
+		void project (Module* module);
+		void project (Drone* drone);
+		void removeProjected (Module* module);
+		void removeProjected (Drone* drone);
 
 		slice<ModulesContainer::const_iterator> slice (Module::Slot slot) const noexcept;
 

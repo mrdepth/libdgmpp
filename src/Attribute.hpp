@@ -54,6 +54,7 @@ namespace dgmpp {
 		Type& owner() const noexcept {return owner_;}
 		
 		Float value();
+		Float initialValue() const { return initialValue_; }
 		
 		Attribute& operator= (std::optional<Float>&& value) noexcept;
 		

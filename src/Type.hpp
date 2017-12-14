@@ -55,6 +55,7 @@ namespace dgmpp {
 		virtual void setEnabled (bool enabled);
 		
 		std::unordered_set<Type*> affectors() const;
+		std::list<Attribute*> attributes() const;
 		
 	protected:
 		

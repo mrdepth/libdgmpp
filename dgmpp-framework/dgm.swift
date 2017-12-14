@@ -7,7 +7,23 @@
 
 import Foundation
 
-public protocol TimeRate {
+
+
+extension UnsafeMutablePointer where Pointee == dgmpp_types_array {
+	var array: [DGMType] {
+		return (0..<pointee.count).map {DGMType(pointee.types[$0]!)}
+	}
+}
+
+extension UnsafeMutablePointer where Pointee == dgmpp_attributes_array {
+	var array: [DGMAttribute] {
+		return (0..<pointee.count).map {DGMAttribute(pointee.attributes[$0]!)}
+	}
+}
+
+
+
+/*public protocol TimeRate {
 	typealias Value = Int
 	var value: Value {get set}
 	static var rate: (Int, Int) {get}
@@ -190,4 +206,6 @@ public extension DGMDrone {
 	var miningYield: DGMCubicMeterPerSecond { return DGMCubicMeterPerSecond(__miningYield) }
 	var velocity: DGMMetersPerSecond { return DGMMetersPerSecond(__velocity) }
 }
+
+*/
 

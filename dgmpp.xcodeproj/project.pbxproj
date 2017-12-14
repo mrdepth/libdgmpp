@@ -122,50 +122,6 @@
 		127442B81FD9835400B70A3A /* HeatSimulator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 127442B51FD9835400B70A3A /* HeatSimulator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		127442B91FD9835400B70A3A /* HeatSimulator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 127442B51FD9835400B70A3A /* HeatSimulator.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12791CBC1FA1C1CC00577188 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */; };
-		128AA1F51FDEB4C100AD4ED3 /* DGMType.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA1F31FDEB4C100AD4ED3 /* DGMType.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA1F61FDEB4C100AD4ED3 /* DGMType.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA1F31FDEB4C100AD4ED3 /* DGMType.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA1F71FDEB4C100AD4ED3 /* DGMType.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA1F41FDEB4C100AD4ED3 /* DGMType.mm */; };
-		128AA1F81FDEB4C100AD4ED3 /* DGMType.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA1F41FDEB4C100AD4ED3 /* DGMType.mm */; };
-		128AA1FB1FDEB50500AD4ED3 /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA1F91FDEB50500AD4ED3 /* Utility.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA1FC1FDEB50500AD4ED3 /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA1F91FDEB50500AD4ED3 /* Utility.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA1FD1FDEB50500AD4ED3 /* Utility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA1FA1FDEB50500AD4ED3 /* Utility.mm */; };
-		128AA1FE1FDEB50500AD4ED3 /* Utility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA1FA1FDEB50500AD4ED3 /* Utility.mm */; };
-		128AA2011FDEBE3500AD4ED3 /* DGMAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA1FF1FDEBE3500AD4ED3 /* DGMAttribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2021FDEBE3500AD4ED3 /* DGMAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA1FF1FDEBE3500AD4ED3 /* DGMAttribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2031FDEBE3500AD4ED3 /* DGMAttribute.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2001FDEBE3500AD4ED3 /* DGMAttribute.mm */; };
-		128AA2041FDEBE3500AD4ED3 /* DGMAttribute.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2001FDEBE3500AD4ED3 /* DGMAttribute.mm */; };
-		128AA20C1FDEC62E00AD4ED3 /* DGMArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA20A1FDEC62E00AD4ED3 /* DGMArea.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA20D1FDEC62E00AD4ED3 /* DGMArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA20A1FDEC62E00AD4ED3 /* DGMArea.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA20E1FDEC62E00AD4ED3 /* DGMArea.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA20B1FDEC62E00AD4ED3 /* DGMArea.mm */; };
-		128AA20F1FDEC62E00AD4ED3 /* DGMArea.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA20B1FDEC62E00AD4ED3 /* DGMArea.mm */; };
-		128AA2121FDECA9900AD4ED3 /* DGMGang.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2101FDECA9900AD4ED3 /* DGMGang.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2131FDECA9900AD4ED3 /* DGMGang.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2101FDECA9900AD4ED3 /* DGMGang.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2141FDECA9900AD4ED3 /* DGMGang.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2111FDECA9900AD4ED3 /* DGMGang.mm */; };
-		128AA2151FDECA9900AD4ED3 /* DGMGang.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2111FDECA9900AD4ED3 /* DGMGang.mm */; };
-		128AA21A1FDECD3300AD4ED3 /* DGMCharacter.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2181FDECD3300AD4ED3 /* DGMCharacter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA21B1FDECD3300AD4ED3 /* DGMCharacter.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2181FDECD3300AD4ED3 /* DGMCharacter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA21C1FDECD3300AD4ED3 /* DGMCharacter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2191FDECD3300AD4ED3 /* DGMCharacter.mm */; };
-		128AA21D1FDECD3300AD4ED3 /* DGMCharacter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2191FDECD3300AD4ED3 /* DGMCharacter.mm */; };
-		128AA2201FDFBBD700AD4ED3 /* DGMShip.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA21E1FDFBBD700AD4ED3 /* DGMShip.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2211FDFBBD700AD4ED3 /* DGMShip.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA21E1FDFBBD700AD4ED3 /* DGMShip.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2221FDFBBD700AD4ED3 /* DGMShip.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA21F1FDFBBD700AD4ED3 /* DGMShip.mm */; };
-		128AA2231FDFBBD700AD4ED3 /* DGMShip.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA21F1FDFBBD700AD4ED3 /* DGMShip.mm */; };
-		128AA2351FDFD75200AD4ED3 /* DGMStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2331FDFD75200AD4ED3 /* DGMStructure.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2361FDFD75200AD4ED3 /* DGMStructure.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2331FDFD75200AD4ED3 /* DGMStructure.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2371FDFD75200AD4ED3 /* DGMStructure.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2341FDFD75200AD4ED3 /* DGMStructure.mm */; };
-		128AA2381FDFD75200AD4ED3 /* DGMStructure.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2341FDFD75200AD4ED3 /* DGMStructure.mm */; };
-		128AA28A1FE0029600AD4ED3 /* DGMModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2881FE0029600AD4ED3 /* DGMModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA28B1FE0029600AD4ED3 /* DGMModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2881FE0029600AD4ED3 /* DGMModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA28C1FE0029600AD4ED3 /* DGMModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2891FE0029600AD4ED3 /* DGMModule.mm */; };
-		128AA28D1FE0029600AD4ED3 /* DGMModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2891FE0029600AD4ED3 /* DGMModule.mm */; };
-		128AA2901FE0187300AD4ED3 /* DGMDrone.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA28E1FE0187300AD4ED3 /* DGMDrone.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2911FE0187300AD4ED3 /* DGMDrone.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA28E1FE0187300AD4ED3 /* DGMDrone.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2921FE0187300AD4ED3 /* DGMDrone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA28F1FE0187300AD4ED3 /* DGMDrone.mm */; };
-		128AA2931FE0187300AD4ED3 /* DGMDrone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA28F1FE0187300AD4ED3 /* DGMDrone.mm */; };
-		128AA2961FE01C4000AD4ED3 /* DGMCharge.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2941FE01C4000AD4ED3 /* DGMCharge.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2971FE01C4000AD4ED3 /* DGMCharge.h in Headers */ = {isa = PBXBuildFile; fileRef = 128AA2941FE01C4000AD4ED3 /* DGMCharge.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		128AA2981FE01C4000AD4ED3 /* DGMCharge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2951FE01C4000AD4ED3 /* DGMCharge.mm */; };
-		128AA2991FE01C4000AD4ED3 /* DGMCharge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 128AA2951FE01C4000AD4ED3 /* DGMCharge.mm */; };
 		128AA29B1FE0213C00AD4ED3 /* dgm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29A1FE0213C00AD4ED3 /* dgm.swift */; };
 		128AA29C1FE0213C00AD4ED3 /* dgm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29A1FE0213C00AD4ED3 /* dgm.swift */; };
 		12B0A30C1C0EEC8400194715 /* Dgmpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* Dgmpp.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -199,52 +155,112 @@
 		12B53FFE1FCAD48500631067 /* WarfareBuff.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFA1FCAD48500631067 /* WarfareBuff.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B540001FCB61F400631067 /* WarfareBuffID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */; };
 		12B540011FCB61F400631067 /* WarfareBuffID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B53FFF1FCB61F400631067 /* WarfareBuffID.hpp */; };
-		12BE88471FE13C1200854893 /* DGMPlanet.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88451FE13C1200854893 /* DGMPlanet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88481FE13C1200854893 /* DGMPlanet.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88451FE13C1200854893 /* DGMPlanet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88491FE13C1200854893 /* DGMPlanet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88461FE13C1200854893 /* DGMPlanet.mm */; };
-		12BE884A1FE13C1200854893 /* DGMPlanet.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88461FE13C1200854893 /* DGMPlanet.mm */; };
-		12BE884D1FE13D9500854893 /* DGMFacility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE884B1FE13D9500854893 /* DGMFacility.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE884E1FE13D9500854893 /* DGMFacility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE884B1FE13D9500854893 /* DGMFacility.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE884F1FE13D9500854893 /* DGMFacility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE884C1FE13D9500854893 /* DGMFacility.mm */; };
-		12BE88501FE13D9500854893 /* DGMFacility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE884C1FE13D9500854893 /* DGMFacility.mm */; };
-		12BE88531FE13EBD00854893 /* DGMStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88511FE13EBD00854893 /* DGMStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88541FE13EBD00854893 /* DGMStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88511FE13EBD00854893 /* DGMStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88551FE13EBD00854893 /* DGMStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88521FE13EBD00854893 /* DGMStorage.mm */; };
-		12BE88561FE13EBD00854893 /* DGMStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88521FE13EBD00854893 /* DGMStorage.mm */; };
-		12BE88591FE14D9B00854893 /* DGMProductionState.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88571FE14D9B00854893 /* DGMProductionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE885A1FE14D9B00854893 /* DGMProductionState.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88571FE14D9B00854893 /* DGMProductionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE885B1FE14D9B00854893 /* DGMProductionState.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88581FE14D9B00854893 /* DGMProductionState.mm */; };
-		12BE885C1FE14D9B00854893 /* DGMProductionState.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88581FE14D9B00854893 /* DGMProductionState.mm */; };
-		12BE885F1FE14E0600854893 /* DGMProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE885D1FE14E0600854893 /* DGMProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88601FE14E0600854893 /* DGMProductionCycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE885D1FE14E0600854893 /* DGMProductionCycle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88611FE14E0600854893 /* DGMProductionCycle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE885E1FE14E0600854893 /* DGMProductionCycle.mm */; };
-		12BE88621FE14E0600854893 /* DGMProductionCycle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE885E1FE14E0600854893 /* DGMProductionCycle.mm */; };
-		12BE88651FE14F1C00854893 /* DGMCommodity.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88631FE14F1C00854893 /* DGMCommodity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88661FE14F1C00854893 /* DGMCommodity.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88631FE14F1C00854893 /* DGMCommodity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88671FE14F1C00854893 /* DGMCommodity.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88641FE14F1C00854893 /* DGMCommodity.mm */; };
-		12BE88681FE14F1C00854893 /* DGMCommodity.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88641FE14F1C00854893 /* DGMCommodity.mm */; };
-		12BE886B1FE152F900854893 /* DGMExtractorControlUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88691FE152F900854893 /* DGMExtractorControlUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE886C1FE152F900854893 /* DGMExtractorControlUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88691FE152F900854893 /* DGMExtractorControlUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE886D1FE152F900854893 /* DGMExtractorControlUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE886A1FE152F900854893 /* DGMExtractorControlUnit.mm */; };
-		12BE886E1FE152F900854893 /* DGMExtractorControlUnit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE886A1FE152F900854893 /* DGMExtractorControlUnit.mm */; };
-		12BE88711FE1530C00854893 /* DGMFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE886F1FE1530C00854893 /* DGMFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88721FE1530C00854893 /* DGMFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE886F1FE1530C00854893 /* DGMFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88731FE1530C00854893 /* DGMFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88701FE1530C00854893 /* DGMFactory.mm */; };
-		12BE88741FE1530C00854893 /* DGMFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88701FE1530C00854893 /* DGMFactory.mm */; };
-		12BE88771FE1531F00854893 /* DGMCommandCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88751FE1531F00854893 /* DGMCommandCenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88781FE1531F00854893 /* DGMCommandCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88751FE1531F00854893 /* DGMCommandCenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88791FE1531F00854893 /* DGMCommandCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88761FE1531F00854893 /* DGMCommandCenter.mm */; };
-		12BE887A1FE1531F00854893 /* DGMCommandCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88761FE1531F00854893 /* DGMCommandCenter.mm */; };
-		12BE887D1FE1532E00854893 /* DGMSpaceport.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE887B1FE1532E00854893 /* DGMSpaceport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE887E1FE1532E00854893 /* DGMSpaceport.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE887B1FE1532E00854893 /* DGMSpaceport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE887F1FE1532E00854893 /* DGMSpaceport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE887C1FE1532E00854893 /* DGMSpaceport.mm */; };
-		12BE88801FE1532E00854893 /* DGMSpaceport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE887C1FE1532E00854893 /* DGMSpaceport.mm */; };
-		12BE88831FE154F200854893 /* DGMRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88811FE154F200854893 /* DGMRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88841FE154F200854893 /* DGMRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88811FE154F200854893 /* DGMRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		12BE88851FE154F200854893 /* DGMRoute.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88821FE154F200854893 /* DGMRoute.mm */; };
-		12BE88861FE154F200854893 /* DGMRoute.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88821FE154F200854893 /* DGMRoute.mm */; };
 		12BE88881FE17AB400854893 /* dgmpp.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88871FE17AB400854893 /* dgmpp.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
 		12BE88891FE17AB400854893 /* dgmpp.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12BE88871FE17AB400854893 /* dgmpp.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89141FE25BB100854893 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89121FE25BB100854893 /* utility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89151FE25BB100854893 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89121FE25BB100854893 /* utility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89161FE25BB100854893 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
+		12BE89171FE25BB100854893 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
+		12BE891A1FE260CA00854893 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
+		12BE891B1FE260CA00854893 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
+		12BE891C1FE260CA00854893 /* type.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89191FE260CA00854893 /* type.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE891D1FE260CA00854893 /* type.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89191FE260CA00854893 /* type.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89211FE2660A00854893 /* attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE891F1FE2660A00854893 /* attribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89221FE2660A00854893 /* attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE891F1FE2660A00854893 /* attribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89231FE2660A00854893 /* attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89201FE2660A00854893 /* attribute.cpp */; };
+		12BE89241FE2660A00854893 /* attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89201FE2660A00854893 /* attribute.cpp */; };
+		12BE89271FE26A0700854893 /* gang.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89251FE26A0700854893 /* gang.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89281FE26A0700854893 /* gang.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89251FE26A0700854893 /* gang.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89291FE26A0700854893 /* gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89261FE26A0700854893 /* gang.cpp */; };
+		12BE892A1FE26A0700854893 /* gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89261FE26A0700854893 /* gang.cpp */; };
+		12BE892D1FE26ADD00854893 /* character.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE892B1FE26ADD00854893 /* character.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE892E1FE26ADD00854893 /* character.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE892B1FE26ADD00854893 /* character.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE892F1FE26ADD00854893 /* character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE892C1FE26ADD00854893 /* character.cpp */; };
+		12BE89301FE26ADD00854893 /* character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE892C1FE26ADD00854893 /* character.cpp */; };
+		12BE89331FE270B900854893 /* ship.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89311FE270B900854893 /* ship.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89341FE270B900854893 /* ship.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89311FE270B900854893 /* ship.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89351FE270B900854893 /* ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89321FE270B900854893 /* ship.cpp */; };
+		12BE89361FE270B900854893 /* ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89321FE270B900854893 /* ship.cpp */; };
+		12BE89391FE27D5800854893 /* module.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89371FE27D5800854893 /* module.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE893A1FE27D5800854893 /* module.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89371FE27D5800854893 /* module.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE893B1FE27D5800854893 /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89381FE27D5800854893 /* module.cpp */; };
+		12BE893C1FE27D5800854893 /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89381FE27D5800854893 /* module.cpp */; };
+		12BE893F1FE2819800854893 /* drone.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE893D1FE2819800854893 /* drone.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89401FE2819800854893 /* drone.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE893D1FE2819800854893 /* drone.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89411FE2819800854893 /* drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE893E1FE2819800854893 /* drone.cpp */; };
+		12BE89421FE2819800854893 /* drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE893E1FE2819800854893 /* drone.cpp */; };
+		12BE89451FE2831E00854893 /* charge.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89431FE2831E00854893 /* charge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89461FE2831E00854893 /* charge.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89431FE2831E00854893 /* charge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89471FE2831E00854893 /* charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89441FE2831E00854893 /* charge.cpp */; };
+		12BE89481FE2831E00854893 /* charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89441FE2831E00854893 /* charge.cpp */; };
+		12BE894B1FE2836A00854893 /* area.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89491FE2836A00854893 /* area.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE894C1FE2836A00854893 /* area.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89491FE2836A00854893 /* area.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE894D1FE2836A00854893 /* area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE894A1FE2836A00854893 /* area.cpp */; };
+		12BE894E1FE2836A00854893 /* area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE894A1FE2836A00854893 /* area.cpp */; };
+		12BE89531FE283DA00854893 /* structure.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89511FE283DA00854893 /* structure.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89541FE283DA00854893 /* structure.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89511FE283DA00854893 /* structure.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		12BE89551FE283DA00854893 /* structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89521FE283DA00854893 /* structure.cpp */; };
+		12BE89561FE283DA00854893 /* structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89521FE283DA00854893 /* structure.cpp */; };
+		12BE895A1FE2861C00854893 /* command_center.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89581FE2861C00854893 /* command_center.h */; };
+		12BE895B1FE2861C00854893 /* command_center.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89581FE2861C00854893 /* command_center.h */; };
+		12BE895C1FE2861C00854893 /* command_center.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89591FE2861C00854893 /* command_center.c */; };
+		12BE895D1FE2861C00854893 /* command_center.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89591FE2861C00854893 /* command_center.c */; };
+		12BE89601FE2863900854893 /* commodity.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE895E1FE2863900854893 /* commodity.h */; };
+		12BE89611FE2863900854893 /* commodity.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE895E1FE2863900854893 /* commodity.h */; };
+		12BE89621FE2863900854893 /* commodity.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE895F1FE2863900854893 /* commodity.c */; };
+		12BE89631FE2863900854893 /* commodity.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE895F1FE2863900854893 /* commodity.c */; };
+		12BE89661FE2864F00854893 /* extractor_control_unit.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89641FE2864F00854893 /* extractor_control_unit.h */; };
+		12BE89671FE2864F00854893 /* extractor_control_unit.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89641FE2864F00854893 /* extractor_control_unit.h */; };
+		12BE89681FE2864F00854893 /* extractor_control_unit.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89651FE2864F00854893 /* extractor_control_unit.c */; };
+		12BE89691FE2864F00854893 /* extractor_control_unit.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89651FE2864F00854893 /* extractor_control_unit.c */; };
+		12BE896C1FE2865C00854893 /* facility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE896A1FE2865C00854893 /* facility.h */; };
+		12BE896D1FE2865C00854893 /* facility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE896A1FE2865C00854893 /* facility.h */; };
+		12BE896E1FE2865C00854893 /* facility.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE896B1FE2865C00854893 /* facility.c */; };
+		12BE896F1FE2865C00854893 /* facility.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE896B1FE2865C00854893 /* facility.c */; };
+		12BE89721FE2866F00854893 /* factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89701FE2866F00854893 /* factory.h */; };
+		12BE89731FE2866F00854893 /* factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89701FE2866F00854893 /* factory.h */; };
+		12BE89741FE2866F00854893 /* factory.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89711FE2866F00854893 /* factory.c */; };
+		12BE89751FE2866F00854893 /* factory.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89711FE2866F00854893 /* factory.c */; };
+		12BE89781FE2867A00854893 /* planet.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89761FE2867A00854893 /* planet.h */; };
+		12BE89791FE2867A00854893 /* planet.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89761FE2867A00854893 /* planet.h */; };
+		12BE897A1FE2867A00854893 /* planet.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89771FE2867A00854893 /* planet.c */; };
+		12BE897B1FE2867A00854893 /* planet.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89771FE2867A00854893 /* planet.c */; };
+		12BE897E1FE2871E00854893 /* production_state.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE897C1FE2871E00854893 /* production_state.h */; };
+		12BE897F1FE2871E00854893 /* production_state.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE897C1FE2871E00854893 /* production_state.h */; };
+		12BE89801FE2871E00854893 /* production_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.c */; };
+		12BE89811FE2871E00854893 /* production_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.c */; };
+		12BE89841FE2872900854893 /* spaceport.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89821FE2872900854893 /* spaceport.h */; };
+		12BE89851FE2872900854893 /* spaceport.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89821FE2872900854893 /* spaceport.h */; };
+		12BE89861FE2872900854893 /* spaceport.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89831FE2872900854893 /* spaceport.c */; };
+		12BE89871FE2872900854893 /* spaceport.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89831FE2872900854893 /* spaceport.c */; };
+		12BE898A1FE2873800854893 /* storage.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89881FE2873800854893 /* storage.h */; };
+		12BE898B1FE2873800854893 /* storage.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89881FE2873800854893 /* storage.h */; };
+		12BE898C1FE2873800854893 /* storage.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.c */; };
+		12BE898D1FE2873800854893 /* storage.c in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.c */; };
+		12C457D91FE2C07F0045BD84 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
+		12C457DA1FE2C07F0045BD84 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
+		12C457DC1FE2C0890045BD84 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
+		12C457DD1FE2C0890045BD84 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
+		12C457DF1FE2CB210045BD84 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* Rate.swift */; };
+		12C457E01FE2CB210045BD84 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* Rate.swift */; };
+		12C457E21FE2CB790045BD84 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
+		12C457E31FE2CB790045BD84 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
+		12C457E51FE2CB850045BD84 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
+		12C457E61FE2CB850045BD84 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
+		12C457E81FE2CB8E0045BD84 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
+		12C457E91FE2CB8E0045BD84 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
+		12C457EB1FE2CB990045BD84 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
+		12C457EC1FE2CB990045BD84 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
+		12C457EE1FE2CBA60045BD84 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
+		12C457EF1FE2CBA60045BD84 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
+		12C457F11FE2CBAF0045BD84 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
+		12C457F21FE2CBAF0045BD84 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
+		12C457F41FE2CBBA0045BD84 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
+		12C457F51FE2CBBA0045BD84 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
+		12C457F71FE2CBC30045BD84 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
+		12C457F81FE2CBC30045BD84 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
+		12C457FA1FE2CBDC0045BD84 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F91FE2CBDC0045BD84 /* Utility.swift */; };
+		12C457FB1FE2CBDC0045BD84 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F91FE2CBDC0045BD84 /* Utility.swift */; };
 		12D9F9BB1CC3A98B00313F8D /* Dgmpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* Dgmpp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DBEAB31E1D3B9D0088A486 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */; };
 		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
@@ -407,6 +423,59 @@
 		12BE88811FE154F200854893 /* DGMRoute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DGMRoute.h; sourceTree = "<group>"; };
 		12BE88821FE154F200854893 /* DGMRoute.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DGMRoute.mm; sourceTree = "<group>"; };
 		12BE88871FE17AB400854893 /* dgmpp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dgmpp.hpp; sourceTree = "<group>"; };
+		12BE89121FE25BB100854893 /* utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		12BE89131FE25BB100854893 /* utility.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
+		12BE89181FE260CA00854893 /* type.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = type.cpp; sourceTree = "<group>"; };
+		12BE89191FE260CA00854893 /* type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = type.h; sourceTree = "<group>"; };
+		12BE891E1FE2616400854893 /* internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = internal.h; sourceTree = "<group>"; };
+		12BE891F1FE2660A00854893 /* attribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = attribute.h; sourceTree = "<group>"; };
+		12BE89201FE2660A00854893 /* attribute.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = attribute.cpp; sourceTree = "<group>"; };
+		12BE89251FE26A0700854893 /* gang.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gang.h; sourceTree = "<group>"; };
+		12BE89261FE26A0700854893 /* gang.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gang.cpp; sourceTree = "<group>"; };
+		12BE892B1FE26ADD00854893 /* character.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = character.h; sourceTree = "<group>"; };
+		12BE892C1FE26ADD00854893 /* character.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = character.cpp; sourceTree = "<group>"; };
+		12BE89311FE270B900854893 /* ship.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ship.h; sourceTree = "<group>"; };
+		12BE89321FE270B900854893 /* ship.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ship.cpp; sourceTree = "<group>"; };
+		12BE89371FE27D5800854893 /* module.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = module.h; sourceTree = "<group>"; };
+		12BE89381FE27D5800854893 /* module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = module.cpp; sourceTree = "<group>"; };
+		12BE893D1FE2819800854893 /* drone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = drone.h; sourceTree = "<group>"; };
+		12BE893E1FE2819800854893 /* drone.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = drone.cpp; sourceTree = "<group>"; };
+		12BE89431FE2831E00854893 /* charge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = charge.h; sourceTree = "<group>"; };
+		12BE89441FE2831E00854893 /* charge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = charge.cpp; sourceTree = "<group>"; };
+		12BE89491FE2836A00854893 /* area.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = area.h; sourceTree = "<group>"; };
+		12BE894A1FE2836A00854893 /* area.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = area.cpp; sourceTree = "<group>"; };
+		12BE89511FE283DA00854893 /* structure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = structure.h; sourceTree = "<group>"; };
+		12BE89521FE283DA00854893 /* structure.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = structure.cpp; sourceTree = "<group>"; };
+		12BE89581FE2861C00854893 /* command_center.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = command_center.h; sourceTree = "<group>"; };
+		12BE89591FE2861C00854893 /* command_center.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = command_center.c; sourceTree = "<group>"; };
+		12BE895E1FE2863900854893 /* commodity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commodity.h; sourceTree = "<group>"; };
+		12BE895F1FE2863900854893 /* commodity.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = commodity.c; sourceTree = "<group>"; };
+		12BE89641FE2864F00854893 /* extractor_control_unit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = extractor_control_unit.h; sourceTree = "<group>"; };
+		12BE89651FE2864F00854893 /* extractor_control_unit.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = extractor_control_unit.c; sourceTree = "<group>"; };
+		12BE896A1FE2865C00854893 /* facility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = facility.h; sourceTree = "<group>"; };
+		12BE896B1FE2865C00854893 /* facility.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = facility.c; sourceTree = "<group>"; };
+		12BE89701FE2866F00854893 /* factory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = factory.h; sourceTree = "<group>"; };
+		12BE89711FE2866F00854893 /* factory.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = factory.c; sourceTree = "<group>"; };
+		12BE89761FE2867A00854893 /* planet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = planet.h; sourceTree = "<group>"; };
+		12BE89771FE2867A00854893 /* planet.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = planet.c; sourceTree = "<group>"; };
+		12BE897C1FE2871E00854893 /* production_state.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = production_state.h; sourceTree = "<group>"; };
+		12BE897D1FE2871E00854893 /* production_state.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = production_state.c; sourceTree = "<group>"; };
+		12BE89821FE2872900854893 /* spaceport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spaceport.h; sourceTree = "<group>"; };
+		12BE89831FE2872900854893 /* spaceport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = spaceport.c; sourceTree = "<group>"; };
+		12BE89881FE2873800854893 /* storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = storage.h; sourceTree = "<group>"; };
+		12BE89891FE2873800854893 /* storage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = storage.c; sourceTree = "<group>"; };
+		12C457D81FE2C07F0045BD84 /* DGMType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMType.swift; sourceTree = "<group>"; };
+		12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMAttirbute.swift; sourceTree = "<group>"; };
+		12C457DE1FE2CB210045BD84 /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
+		12C457E11FE2CB790045BD84 /* DGMCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMCharacter.swift; sourceTree = "<group>"; };
+		12C457E41FE2CB850045BD84 /* DGMArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMArea.swift; sourceTree = "<group>"; };
+		12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMCharge.swift; sourceTree = "<group>"; };
+		12C457EA1FE2CB990045BD84 /* DGMDrone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMDrone.swift; sourceTree = "<group>"; };
+		12C457ED1FE2CBA60045BD84 /* DGMGang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMGang.swift; sourceTree = "<group>"; };
+		12C457F01FE2CBAF0045BD84 /* DGMModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMModule.swift; sourceTree = "<group>"; };
+		12C457F31FE2CBBA0045BD84 /* DGMShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMShip.swift; sourceTree = "<group>"; };
+		12C457F61FE2CBC30045BD84 /* DGMStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMStructure.swift; sourceTree = "<group>"; };
+		12C457F91FE2CBDC0045BD84 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dgmpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DBEAB21E1D3B9D0088A486 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
 		12DDFBAC1C157E42005F1382 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -550,12 +619,15 @@
 		128AA1F01FDEB45100AD4ED3 /* swift */ = {
 			isa = PBXGroup;
 			children = (
+				12C457D71FE2C0640045BD84 /* Fitting */,
 				128AA2171FDECAC500AD4ED3 /* Fitting */,
 				12BE88441FE13AED00854893 /* PI */,
 				128AA1F91FDEB50500AD4ED3 /* Utility.h */,
 				128AA1FA1FDEB50500AD4ED3 /* Utility.mm */,
 				128AA2081FDEC3E200AD4ED3 /* Internal.h */,
 				128AA29A1FE0213C00AD4ED3 /* dgm.swift */,
+				12C457DE1FE2CB210045BD84 /* Rate.swift */,
+				12C457F91FE2CBDC0045BD84 /* Utility.swift */,
 				128AA2A01FE024FD00AD4ED3 /* Dgmpp - Info.plist */,
 			);
 			name = swift;
@@ -565,26 +637,26 @@
 		128AA2171FDECAC500AD4ED3 /* Fitting */ = {
 			isa = PBXGroup;
 			children = (
-				128AA1F31FDEB4C100AD4ED3 /* DGMType.h */,
-				128AA1F41FDEB4C100AD4ED3 /* DGMType.mm */,
-				128AA1FF1FDEBE3500AD4ED3 /* DGMAttribute.h */,
-				128AA2001FDEBE3500AD4ED3 /* DGMAttribute.mm */,
 				128AA20A1FDEC62E00AD4ED3 /* DGMArea.h */,
 				128AA20B1FDEC62E00AD4ED3 /* DGMArea.mm */,
-				128AA2101FDECA9900AD4ED3 /* DGMGang.h */,
-				128AA2111FDECA9900AD4ED3 /* DGMGang.mm */,
+				128AA1FF1FDEBE3500AD4ED3 /* DGMAttribute.h */,
+				128AA2001FDEBE3500AD4ED3 /* DGMAttribute.mm */,
 				128AA2181FDECD3300AD4ED3 /* DGMCharacter.h */,
 				128AA2191FDECD3300AD4ED3 /* DGMCharacter.mm */,
+				128AA2941FE01C4000AD4ED3 /* DGMCharge.h */,
+				128AA2951FE01C4000AD4ED3 /* DGMCharge.mm */,
+				128AA28E1FE0187300AD4ED3 /* DGMDrone.h */,
+				128AA28F1FE0187300AD4ED3 /* DGMDrone.mm */,
+				128AA2101FDECA9900AD4ED3 /* DGMGang.h */,
+				128AA2111FDECA9900AD4ED3 /* DGMGang.mm */,
+				128AA2881FE0029600AD4ED3 /* DGMModule.h */,
+				128AA2891FE0029600AD4ED3 /* DGMModule.mm */,
 				128AA21E1FDFBBD700AD4ED3 /* DGMShip.h */,
 				128AA21F1FDFBBD700AD4ED3 /* DGMShip.mm */,
 				128AA2331FDFD75200AD4ED3 /* DGMStructure.h */,
 				128AA2341FDFD75200AD4ED3 /* DGMStructure.mm */,
-				128AA2881FE0029600AD4ED3 /* DGMModule.h */,
-				128AA2891FE0029600AD4ED3 /* DGMModule.mm */,
-				128AA28E1FE0187300AD4ED3 /* DGMDrone.h */,
-				128AA28F1FE0187300AD4ED3 /* DGMDrone.mm */,
-				128AA2941FE01C4000AD4ED3 /* DGMCharge.h */,
-				128AA2951FE01C4000AD4ED3 /* DGMCharge.mm */,
+				128AA1F31FDEB4C100AD4ED3 /* DGMType.h */,
+				128AA1F41FDEB4C100AD4ED3 /* DGMType.mm */,
 			);
 			name = Fitting;
 			sourceTree = "<group>";
@@ -649,30 +721,111 @@
 		12BE88441FE13AED00854893 /* PI */ = {
 			isa = PBXGroup;
 			children = (
-				12BE88451FE13C1200854893 /* DGMPlanet.h */,
-				12BE88461FE13C1200854893 /* DGMPlanet.mm */,
-				12BE884B1FE13D9500854893 /* DGMFacility.h */,
-				12BE884C1FE13D9500854893 /* DGMFacility.mm */,
-				12BE88511FE13EBD00854893 /* DGMStorage.h */,
-				12BE88521FE13EBD00854893 /* DGMStorage.mm */,
-				12BE88691FE152F900854893 /* DGMExtractorControlUnit.h */,
-				12BE886A1FE152F900854893 /* DGMExtractorControlUnit.mm */,
-				12BE886F1FE1530C00854893 /* DGMFactory.h */,
-				12BE88701FE1530C00854893 /* DGMFactory.mm */,
 				12BE88751FE1531F00854893 /* DGMCommandCenter.h */,
 				12BE88761FE1531F00854893 /* DGMCommandCenter.mm */,
-				12BE887B1FE1532E00854893 /* DGMSpaceport.h */,
-				12BE887C1FE1532E00854893 /* DGMSpaceport.mm */,
-				12BE88571FE14D9B00854893 /* DGMProductionState.h */,
-				12BE88581FE14D9B00854893 /* DGMProductionState.mm */,
-				12BE885D1FE14E0600854893 /* DGMProductionCycle.h */,
-				12BE885E1FE14E0600854893 /* DGMProductionCycle.mm */,
 				12BE88631FE14F1C00854893 /* DGMCommodity.h */,
 				12BE88641FE14F1C00854893 /* DGMCommodity.mm */,
+				12BE88691FE152F900854893 /* DGMExtractorControlUnit.h */,
+				12BE886A1FE152F900854893 /* DGMExtractorControlUnit.mm */,
+				12BE884B1FE13D9500854893 /* DGMFacility.h */,
+				12BE884C1FE13D9500854893 /* DGMFacility.mm */,
+				12BE886F1FE1530C00854893 /* DGMFactory.h */,
+				12BE88701FE1530C00854893 /* DGMFactory.mm */,
+				12BE88451FE13C1200854893 /* DGMPlanet.h */,
+				12BE88461FE13C1200854893 /* DGMPlanet.mm */,
+				12BE885D1FE14E0600854893 /* DGMProductionCycle.h */,
+				12BE885E1FE14E0600854893 /* DGMProductionCycle.mm */,
+				12BE88571FE14D9B00854893 /* DGMProductionState.h */,
+				12BE88581FE14D9B00854893 /* DGMProductionState.mm */,
 				12BE88811FE154F200854893 /* DGMRoute.h */,
 				12BE88821FE154F200854893 /* DGMRoute.mm */,
+				12BE887B1FE1532E00854893 /* DGMSpaceport.h */,
+				12BE887C1FE1532E00854893 /* DGMSpaceport.mm */,
+				12BE88511FE13EBD00854893 /* DGMStorage.h */,
+				12BE88521FE13EBD00854893 /* DGMStorage.mm */,
 			);
 			name = PI;
+			sourceTree = "<group>";
+		};
+		12BE89051FE25B1E00854893 /* c-wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				12BE89501FE283B800854893 /* Fitting */,
+				12BE89571FE285FA00854893 /* PI */,
+				12BE891E1FE2616400854893 /* internal.h */,
+				12BE89131FE25BB100854893 /* utility.cpp */,
+				12BE89121FE25BB100854893 /* utility.h */,
+			);
+			path = "c-wrapper";
+			sourceTree = "<group>";
+		};
+		12BE89501FE283B800854893 /* Fitting */ = {
+			isa = PBXGroup;
+			children = (
+				12BE894A1FE2836A00854893 /* area.cpp */,
+				12BE89491FE2836A00854893 /* area.h */,
+				12BE89201FE2660A00854893 /* attribute.cpp */,
+				12BE891F1FE2660A00854893 /* attribute.h */,
+				12BE892C1FE26ADD00854893 /* character.cpp */,
+				12BE892B1FE26ADD00854893 /* character.h */,
+				12BE89441FE2831E00854893 /* charge.cpp */,
+				12BE89431FE2831E00854893 /* charge.h */,
+				12BE893E1FE2819800854893 /* drone.cpp */,
+				12BE893D1FE2819800854893 /* drone.h */,
+				12BE89261FE26A0700854893 /* gang.cpp */,
+				12BE89251FE26A0700854893 /* gang.h */,
+				12BE89381FE27D5800854893 /* module.cpp */,
+				12BE89371FE27D5800854893 /* module.h */,
+				12BE89321FE270B900854893 /* ship.cpp */,
+				12BE89311FE270B900854893 /* ship.h */,
+				12BE89521FE283DA00854893 /* structure.cpp */,
+				12BE89511FE283DA00854893 /* structure.h */,
+				12BE89181FE260CA00854893 /* type.cpp */,
+				12BE89191FE260CA00854893 /* type.h */,
+			);
+			name = Fitting;
+			sourceTree = "<group>";
+		};
+		12BE89571FE285FA00854893 /* PI */ = {
+			isa = PBXGroup;
+			children = (
+				12BE89581FE2861C00854893 /* command_center.h */,
+				12BE89591FE2861C00854893 /* command_center.c */,
+				12BE895E1FE2863900854893 /* commodity.h */,
+				12BE895F1FE2863900854893 /* commodity.c */,
+				12BE89641FE2864F00854893 /* extractor_control_unit.h */,
+				12BE89651FE2864F00854893 /* extractor_control_unit.c */,
+				12BE896A1FE2865C00854893 /* facility.h */,
+				12BE896B1FE2865C00854893 /* facility.c */,
+				12BE89701FE2866F00854893 /* factory.h */,
+				12BE89711FE2866F00854893 /* factory.c */,
+				12BE89761FE2867A00854893 /* planet.h */,
+				12BE89771FE2867A00854893 /* planet.c */,
+				12BE897C1FE2871E00854893 /* production_state.h */,
+				12BE897D1FE2871E00854893 /* production_state.c */,
+				12BE89821FE2872900854893 /* spaceport.h */,
+				12BE89831FE2872900854893 /* spaceport.c */,
+				12BE89881FE2873800854893 /* storage.h */,
+				12BE89891FE2873800854893 /* storage.c */,
+			);
+			name = PI;
+			sourceTree = "<group>";
+		};
+		12C457D71FE2C0640045BD84 /* Fitting */ = {
+			isa = PBXGroup;
+			children = (
+				12C457E41FE2CB850045BD84 /* DGMArea.swift */,
+				12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */,
+				12C457E11FE2CB790045BD84 /* DGMCharacter.swift */,
+				12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */,
+				12C457EA1FE2CB990045BD84 /* DGMDrone.swift */,
+				12C457ED1FE2CBA60045BD84 /* DGMGang.swift */,
+				12C457F01FE2CBAF0045BD84 /* DGMModule.swift */,
+				12C457F31FE2CBBA0045BD84 /* DGMShip.swift */,
+				12C457F61FE2CBC30045BD84 /* DGMStructure.swift */,
+				12C457D81FE2C07F0045BD84 /* DGMType.swift */,
+			);
+			name = Fitting;
 			sourceTree = "<group>";
 		};
 		12DFCECF1CD74242006A19BD /* dgmppTests */ = {
@@ -702,6 +855,7 @@
 			children = (
 				12B330F11FBD97F80072D4E4 /* src */,
 				128AA1F01FDEB45100AD4ED3 /* swift */,
+				12BE89051FE25B1E00854893 /* c-wrapper */,
 				12564BA71B84AFAD000F68D8 /* Dgmpp.h */,
 			);
 			name = dgmpp;
@@ -714,83 +868,81 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12BE894B1FE2836A00854893 /* area.h in Headers */,
 				12B53FFD1FCAD48500631067 /* WarfareBuff.hpp in Headers */,
+				12BE89661FE2864F00854893 /* extractor_control_unit.h in Headers */,
+				12BE896C1FE2865C00854893 /* facility.h in Headers */,
 				123BEF431FBDB59200AC8EB1 /* Charge.hpp in Headers */,
 				12B0A30C1C0EEC8400194715 /* Dgmpp.h in Headers */,
+				12BE89211FE2660A00854893 /* attribute.h in Headers */,
 				12B540001FCB61F400631067 /* WarfareBuffID.hpp in Headers */,
 				123BEF1D1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
+				12BE892D1FE26ADD00854893 /* character.h in Headers */,
+				12BE89841FE2872900854893 /* spaceport.h in Headers */,
 				123CC8CC1FCE94F400C34372 /* SchematicID.hpp in Headers */,
+				12BE89451FE2831E00854893 /* charge.h in Headers */,
 				123CC8D51FCEA29700C34372 /* Route.hpp in Headers */,
 				12B3310C1FBD98F60072D4E4 /* GroupID.hpp in Headers */,
 				12E864ED1FC8627D00C9C4BD /* Errors.hpp in Headers */,
+				12BE895A1FE2861C00854893 /* command_center.h in Headers */,
 				123BEF2B1FBDA58700AC8EB1 /* Character.hpp in Headers */,
 				123BEF091FBD9E5F00AC8EB1 /* Attributes.hpp in Headers */,
-				128AA2201FDFBBD700AD4ED3 /* DGMShip.h in Headers */,
+				12BE89781FE2867A00854893 /* planet.h in Headers */,
 				12B3310D1FBD98F60072D4E4 /* TypeID.hpp in Headers */,
 				123CC8B61FCD9B4100C34372 /* Planet.hpp in Headers */,
-				128AA2011FDEBE3500AD4ED3 /* DGMAttribute.h in Headers */,
-				12BE88531FE13EBD00854893 /* DGMStorage.h in Headers */,
-				12BE88471FE13C1200854893 /* DGMPlanet.h in Headers */,
-				12BE88591FE14D9B00854893 /* DGMProductionState.h in Headers */,
 				123CC8C91FCE940400C34372 /* Facilities.hpp in Headers */,
-				12BE885F1FE14E0600854893 /* DGMProductionCycle.h in Headers */,
 				123BEF171FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
 				12BE88881FE17AB400854893 /* dgmpp.hpp in Headers */,
 				123BEF371FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				123BEF0D1FBD9E5F00AC8EB1 /* Types.hpp in Headers */,
-				128AA20C1FDEC62E00AD4ED3 /* DGMArea.h in Headers */,
 				123CC8CF1FCE99CE00C34372 /* Schematics.hpp in Headers */,
+				12BE897E1FE2871E00854893 /* production_state.h in Headers */,
 				12EC66531FBECD840083DBB8 /* Capacitor.hpp in Headers */,
-				128AA28A1FE0029600AD4ED3 /* DGMModule.h in Headers */,
 				123BEF311FBDB3AB00AC8EB1 /* Skill.hpp in Headers */,
 				123CC8C51FCDA00800C34372 /* Commodities.hpp in Headers */,
-				128AA2121FDECA9900AD4ED3 /* DGMGang.h in Headers */,
 				12B331131FBD990F0072D4E4 /* Type.hpp in Headers */,
 				123CC8DB1FCEA2FA00C34372 /* ProductionState.hpp in Headers */,
 				123CC8BC1FCD9B5300C34372 /* Facility.hpp in Headers */,
+				12BE89601FE2863900854893 /* commodity.h in Headers */,
 				12649A191FCD5E77007B22CD /* Structure.hpp in Headers */,
 				12E864D91FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
 				12E864E71FC8208A00C9C4BD /* Tank.hpp in Headers */,
 				123CC8C21FCD9B6B00C34372 /* Commodity.hpp in Headers */,
 				12B331121FBD990F0072D4E4 /* Utility.hpp in Headers */,
 				12B3310F1FBD99070072D4E4 /* MetaInfo.hpp in Headers */,
-				12BE884D1FE13D9500854893 /* DGMFacility.h in Headers */,
+				12BE893F1FE2819800854893 /* drone.h in Headers */,
+				12BE89331FE270B900854893 /* ship.h in Headers */,
 				123BEF0C1FBD9E5F00AC8EB1 /* Skills.hpp in Headers */,
 				123BEF0A1FBD9E5F00AC8EB1 /* Effects.hpp in Headers */,
 				123CC8F31FCEA34E00C34372 /* Factory.hpp in Headers */,
+				12BE89531FE283DA00854893 /* structure.h in Headers */,
 				123BEF0B1FBD9E5F00AC8EB1 /* Modifiers.hpp in Headers */,
-				12BE886B1FE152F900854893 /* DGMExtractorControlUnit.h in Headers */,
 				12E864DC1FC6C8F200C9C4BD /* Rate.hpp in Headers */,
-				128AA2351FDFD75200AD4ED3 /* DGMStructure.h in Headers */,
-				12BE88651FE14F1C00854893 /* DGMCommodity.h in Headers */,
 				123BEF071FBD9E4F00AC8EB1 /* SDE.hpp in Headers */,
 				123CC8E71FCEA32F00C34372 /* CommandCenter.hpp in Headers */,
 				123BEF3D1FBDB4A200AC8EB1 /* Module.hpp in Headers */,
 				123BEF491FBDB5D200AC8EB1 /* Drone.hpp in Headers */,
 				123CC8E11FCEA30500C34372 /* ProductionCycle.hpp in Headers */,
+				12BE898A1FE2873800854893 /* storage.h in Headers */,
 				123CC8ED1FCEA33700C34372 /* Storage.hpp in Headers */,
 				123CC9001FCEA39000C34372 /* Spaceport.hpp in Headers */,
-				128AA2901FE0187300AD4ED3 /* DGMDrone.h in Headers */,
-				12BE88771FE1531F00854893 /* DGMCommandCenter.h in Headers */,
-				12BE887D1FE1532E00854893 /* DGMSpaceport.h in Headers */,
 				123CC8F91FCEA35B00C34372 /* ExtractorControlUnit.hpp in Headers */,
-				128AA2961FE01C4000AD4ED3 /* DGMCharge.h in Headers */,
-				128AA1FB1FDEB50500AD4ED3 /* Utility.h in Headers */,
+				12BE89721FE2866F00854893 /* factory.h in Headers */,
 				12E864F91FC8650000C9C4BD /* Booster.hpp in Headers */,
 				127442B81FD9835400B70A3A /* HeatSimulator.hpp in Headers */,
 				12B3311E1FBD99B40072D4E4 /* Attribute.hpp in Headers */,
 				12E864F31FC864F600C9C4BD /* Implant.hpp in Headers */,
 				12649A131FCC2060007B22CD /* WarfareBuffs.hpp in Headers */,
+				12BE89391FE27D5800854893 /* module.h in Headers */,
 				12B3310E1FBD99070072D4E4 /* EffectID.hpp in Headers */,
-				128AA1F51FDEB4C100AD4ED3 /* DGMType.h in Headers */,
+				12BE89141FE25BB100854893 /* utility.h in Headers */,
 				12B3310B1FBD98F60072D4E4 /* CategoryID.hpp in Headers */,
 				123CC8A81FCD659200C34372 /* Area.hpp in Headers */,
 				12B3310A1FBD98F60072D4E4 /* AttributeID.hpp in Headers */,
-				128AA21A1FDECD3300AD4ED3 /* DGMCharacter.h in Headers */,
+				12BE891C1FE260CA00854893 /* type.h in Headers */,
 				123BEF251FBDA52500AC8EB1 /* Gang.hpp in Headers */,
+				12BE89271FE26A0700854893 /* gang.h in Headers */,
 				12E864EA1FC8454900C9C4BD /* HitPoints.hpp in Headers */,
-				12BE88711FE1530C00854893 /* DGMFactory.h in Headers */,
-				12BE88831FE154F200854893 /* DGMRoute.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,83 +950,81 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12BE894C1FE2836A00854893 /* area.h in Headers */,
 				12B53FFE1FCAD48500631067 /* WarfareBuff.hpp in Headers */,
+				12BE89671FE2864F00854893 /* extractor_control_unit.h in Headers */,
+				12BE896D1FE2865C00854893 /* facility.h in Headers */,
 				123BEF441FBDB59200AC8EB1 /* Charge.hpp in Headers */,
 				12D9F9BB1CC3A98B00313F8D /* Dgmpp.h in Headers */,
+				12BE89221FE2660A00854893 /* attribute.h in Headers */,
 				12B540011FCB61F400631067 /* WarfareBuffID.hpp in Headers */,
 				123BEF1E1FBDA2A900AC8EB1 /* Effect.hpp in Headers */,
+				12BE892E1FE26ADD00854893 /* character.h in Headers */,
+				12BE89851FE2872900854893 /* spaceport.h in Headers */,
 				123CC8CD1FCE94F400C34372 /* SchematicID.hpp in Headers */,
+				12BE89461FE2831E00854893 /* charge.h in Headers */,
 				123CC8D61FCEA29700C34372 /* Route.hpp in Headers */,
 				12B331081FBD98F50072D4E4 /* GroupID.hpp in Headers */,
 				12E864EE1FC8627D00C9C4BD /* Errors.hpp in Headers */,
+				12BE895B1FE2861C00854893 /* command_center.h in Headers */,
 				123BEF2C1FBDA58700AC8EB1 /* Character.hpp in Headers */,
 				123BEF0E1FBD9E6000AC8EB1 /* Attributes.hpp in Headers */,
-				128AA2211FDFBBD700AD4ED3 /* DGMShip.h in Headers */,
+				12BE89791FE2867A00854893 /* planet.h in Headers */,
 				12B331091FBD98F50072D4E4 /* TypeID.hpp in Headers */,
 				123CC8B71FCD9B4100C34372 /* Planet.hpp in Headers */,
-				128AA2021FDEBE3500AD4ED3 /* DGMAttribute.h in Headers */,
-				12BE88541FE13EBD00854893 /* DGMStorage.h in Headers */,
-				12BE88481FE13C1200854893 /* DGMPlanet.h in Headers */,
-				12BE885A1FE14D9B00854893 /* DGMProductionState.h in Headers */,
 				123CC8CA1FCE940400C34372 /* Facilities.hpp in Headers */,
-				12BE88601FE14E0600854893 /* DGMProductionCycle.h in Headers */,
 				123BEF181FBDA20F00AC8EB1 /* Modifier.hpp in Headers */,
 				12BE88891FE17AB400854893 /* dgmpp.hpp in Headers */,
 				123BEF381FBDB40800AC8EB1 /* Ship.hpp in Headers */,
 				123BEF121FBD9E6000AC8EB1 /* Types.hpp in Headers */,
-				128AA20D1FDEC62E00AD4ED3 /* DGMArea.h in Headers */,
 				123CC8D01FCE99CE00C34372 /* Schematics.hpp in Headers */,
+				12BE897F1FE2871E00854893 /* production_state.h in Headers */,
 				12EC66541FBECD840083DBB8 /* Capacitor.hpp in Headers */,
-				128AA28B1FE0029600AD4ED3 /* DGMModule.h in Headers */,
 				123BEF321FBDB3AB00AC8EB1 /* Skill.hpp in Headers */,
 				123CC8C61FCDA00800C34372 /* Commodities.hpp in Headers */,
-				128AA2131FDECA9900AD4ED3 /* DGMGang.h in Headers */,
 				12B331151FBD990F0072D4E4 /* Type.hpp in Headers */,
 				123CC8DC1FCEA2FA00C34372 /* ProductionState.hpp in Headers */,
 				123CC8BD1FCD9B5300C34372 /* Facility.hpp in Headers */,
+				12BE89611FE2863900854893 /* commodity.h in Headers */,
 				12649A1A1FCD5E77007B22CD /* Structure.hpp in Headers */,
 				12E864DA1FC5AB4500C9C4BD /* DamageVector.hpp in Headers */,
 				12E864E81FC8208A00C9C4BD /* Tank.hpp in Headers */,
 				123CC8C31FCD9B6B00C34372 /* Commodity.hpp in Headers */,
 				12B331141FBD990F0072D4E4 /* Utility.hpp in Headers */,
 				12B331111FBD99080072D4E4 /* MetaInfo.hpp in Headers */,
-				12BE884E1FE13D9500854893 /* DGMFacility.h in Headers */,
+				12BE89401FE2819800854893 /* drone.h in Headers */,
+				12BE89341FE270B900854893 /* ship.h in Headers */,
 				123BEF111FBD9E6000AC8EB1 /* Skills.hpp in Headers */,
 				123BEF0F1FBD9E6000AC8EB1 /* Effects.hpp in Headers */,
 				123CC8F41FCEA34E00C34372 /* Factory.hpp in Headers */,
+				12BE89541FE283DA00854893 /* structure.h in Headers */,
 				123BEF101FBD9E6000AC8EB1 /* Modifiers.hpp in Headers */,
-				12BE886C1FE152F900854893 /* DGMExtractorControlUnit.h in Headers */,
 				12E864DD1FC6C8F200C9C4BD /* Rate.hpp in Headers */,
-				128AA2361FDFD75200AD4ED3 /* DGMStructure.h in Headers */,
-				12BE88661FE14F1C00854893 /* DGMCommodity.h in Headers */,
 				123BEF081FBD9E4F00AC8EB1 /* SDE.hpp in Headers */,
 				123CC8E81FCEA32F00C34372 /* CommandCenter.hpp in Headers */,
 				123BEF3E1FBDB4A200AC8EB1 /* Module.hpp in Headers */,
 				123BEF4A1FBDB5D200AC8EB1 /* Drone.hpp in Headers */,
 				123CC8E21FCEA30500C34372 /* ProductionCycle.hpp in Headers */,
+				12BE898B1FE2873800854893 /* storage.h in Headers */,
 				123CC8EE1FCEA33700C34372 /* Storage.hpp in Headers */,
 				123CC9011FCEA39000C34372 /* Spaceport.hpp in Headers */,
-				128AA2911FE0187300AD4ED3 /* DGMDrone.h in Headers */,
-				12BE88781FE1531F00854893 /* DGMCommandCenter.h in Headers */,
-				12BE887E1FE1532E00854893 /* DGMSpaceport.h in Headers */,
 				123CC8FA1FCEA35B00C34372 /* ExtractorControlUnit.hpp in Headers */,
-				128AA2971FE01C4000AD4ED3 /* DGMCharge.h in Headers */,
-				128AA1FC1FDEB50500AD4ED3 /* Utility.h in Headers */,
+				12BE89731FE2866F00854893 /* factory.h in Headers */,
 				12E864FA1FC8650000C9C4BD /* Booster.hpp in Headers */,
 				127442B91FD9835400B70A3A /* HeatSimulator.hpp in Headers */,
 				12B3311F1FBD99B40072D4E4 /* Attribute.hpp in Headers */,
 				12E864F41FC864F600C9C4BD /* Implant.hpp in Headers */,
 				12649A141FCC2060007B22CD /* WarfareBuffs.hpp in Headers */,
+				12BE893A1FE27D5800854893 /* module.h in Headers */,
 				12B331101FBD99080072D4E4 /* EffectID.hpp in Headers */,
-				128AA1F61FDEB4C100AD4ED3 /* DGMType.h in Headers */,
+				12BE89151FE25BB100854893 /* utility.h in Headers */,
 				12B331071FBD98F50072D4E4 /* CategoryID.hpp in Headers */,
 				123CC8A91FCD659200C34372 /* Area.hpp in Headers */,
 				12B331061FBD98F50072D4E4 /* AttributeID.hpp in Headers */,
-				128AA21B1FDECD3300AD4ED3 /* DGMCharacter.h in Headers */,
+				12BE891D1FE260CA00854893 /* type.h in Headers */,
 				123BEF261FBDA52500AC8EB1 /* Gang.hpp in Headers */,
+				12BE89281FE26A0700854893 /* gang.h in Headers */,
 				12E864EB1FC8454900C9C4BD /* HitPoints.hpp in Headers */,
-				12BE88721FE1530C00854893 /* DGMFactory.h in Headers */,
-				12BE88841FE154F200854893 /* DGMRoute.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1005,58 +1155,68 @@
 			buildActionMask = 2147483647;
 			files = (
 				123CC8DF1FCEA30500C34372 /* ProductionCycle.cpp in Sources */,
+				12BE898C1FE2873800854893 /* storage.c in Sources */,
+				12C457EE1FE2CBA60045BD84 /* DGMGang.swift in Sources */,
 				12B3311C1FBD99B40072D4E4 /* Attribute.cpp in Sources */,
-				12BE88611FE14E0600854893 /* DGMProductionCycle.mm in Sources */,
-				12BE88851FE154F200854893 /* DGMRoute.mm in Sources */,
-				12BE88731FE1530C00854893 /* DGMFactory.mm in Sources */,
 				123BEF291FBDA58700AC8EB1 /* Character.cpp in Sources */,
 				123BEF411FBDB59200AC8EB1 /* Charge.cpp in Sources */,
-				12BE887F1FE1532E00854893 /* DGMSpaceport.mm in Sources */,
+				12BE89801FE2871E00854893 /* production_state.c in Sources */,
 				123CC8C01FCD9B6B00C34372 /* Commodity.cpp in Sources */,
 				12E864F71FC8650000C9C4BD /* Booster.cpp in Sources */,
+				12BE89861FE2872900854893 /* spaceport.c in Sources */,
+				12C457E51FE2CB850045BD84 /* DGMArea.swift in Sources */,
+				12C457E21FE2CB790045BD84 /* DGMCharacter.swift in Sources */,
+				12C457EB1FE2CB990045BD84 /* DGMDrone.swift in Sources */,
 				123CC8D91FCEA2FA00C34372 /* ProductionState.cpp in Sources */,
 				12B53FFB1FCAD48500631067 /* WarfareBuff.cpp in Sources */,
-				128AA2371FDFD75200AD4ED3 /* DGMStructure.mm in Sources */,
-				128AA2031FDEBE3500AD4ED3 /* DGMAttribute.mm in Sources */,
 				128AA29B1FE0213C00AD4ED3 /* dgm.swift in Sources */,
-				128AA28C1FE0029600AD4ED3 /* DGMModule.mm in Sources */,
+				12C457DC1FE2C0890045BD84 /* DGMAttirbute.swift in Sources */,
+				12BE892F1FE26ADD00854893 /* character.cpp in Sources */,
+				12BE89681FE2864F00854893 /* extractor_control_unit.c in Sources */,
 				123BEF151FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
-				128AA21C1FDECD3300AD4ED3 /* DGMCharacter.mm in Sources */,
+				12BE89471FE2831E00854893 /* charge.cpp in Sources */,
 				123BEF471FBDB5D200AC8EB1 /* Drone.cpp in Sources */,
+				12BE89621FE2863900854893 /* commodity.c in Sources */,
+				12BE89411FE2819800854893 /* drone.cpp in Sources */,
 				123BEF351FBDB40800AC8EB1 /* Ship.cpp in Sources */,
 				123CC8BA1FCD9B5300C34372 /* Facility.cpp in Sources */,
-				128AA2221FDFBBD700AD4ED3 /* DGMShip.mm in Sources */,
 				123CC8D31FCEA29700C34372 /* Route.cpp in Sources */,
 				123BEF1B1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
+				12BE89161FE25BB100854893 /* utility.cpp in Sources */,
 				123BEF231FBDA52500AC8EB1 /* Gang.cpp in Sources */,
-				12BE88671FE14F1C00854893 /* DGMCommodity.mm in Sources */,
+				12BE89351FE270B900854893 /* ship.cpp in Sources */,
 				123CC8EB1FCEA33700C34372 /* Storage.cpp in Sources */,
-				12BE88491FE13C1200854893 /* DGMPlanet.mm in Sources */,
+				12C457F11FE2CBAF0045BD84 /* DGMModule.swift in Sources */,
 				12B331161FBD99140072D4E4 /* Type.cpp in Sources */,
-				128AA2141FDECA9900AD4ED3 /* DGMGang.mm in Sources */,
+				12BE895C1FE2861C00854893 /* command_center.c in Sources */,
 				127442B61FD9835400B70A3A /* HeatSimulator.cpp in Sources */,
 				123CC8B41FCD9B4100C34372 /* Planet.cpp in Sources */,
-				12BE886D1FE152F900854893 /* DGMExtractorControlUnit.mm in Sources */,
+				12BE89551FE283DA00854893 /* structure.cpp in Sources */,
+				12BE897A1FE2867A00854893 /* planet.c in Sources */,
 				12E864F11FC864F600C9C4BD /* Implant.cpp in Sources */,
+				12BE89231FE2660A00854893 /* attribute.cpp in Sources */,
+				12BE893B1FE27D5800854893 /* module.cpp in Sources */,
 				123CC8A61FCD659200C34372 /* Area.cpp in Sources */,
-				12BE88791FE1531F00854893 /* DGMCommandCenter.mm in Sources */,
-				12BE885B1FE14D9B00854893 /* DGMProductionState.mm in Sources */,
 				123CC8F11FCEA34E00C34372 /* Factory.cpp in Sources */,
-				128AA2981FE01C4000AD4ED3 /* DGMCharge.mm in Sources */,
+				12BE896E1FE2865C00854893 /* facility.c in Sources */,
 				12B331181FBD999F0072D4E4 /* SDE.cpp in Sources */,
-				128AA2921FE0187300AD4ED3 /* DGMDrone.mm in Sources */,
 				123CC8F71FCEA35B00C34372 /* ExtractorControlUnit.cpp in Sources */,
-				128AA1FD1FDEB50500AD4ED3 /* Utility.mm in Sources */,
 				123CC8E51FCEA32F00C34372 /* CommandCenter.cpp in Sources */,
+				12C457F71FE2CBC30045BD84 /* DGMStructure.swift in Sources */,
 				123BEF3B1FBDB4A200AC8EB1 /* Module.cpp in Sources */,
 				123CC8FE1FCEA39000C34372 /* Spaceport.cpp in Sources */,
+				12BE89291FE26A0700854893 /* gang.cpp in Sources */,
 				123BEF2F1FBDB3AB00AC8EB1 /* Skill.cpp in Sources */,
-				128AA1F71FDEB4C100AD4ED3 /* DGMType.mm in Sources */,
+				12C457D91FE2C07F0045BD84 /* DGMType.swift in Sources */,
 				12EC66511FBECD840083DBB8 /* Capacitor.cpp in Sources */,
-				12BE884F1FE13D9500854893 /* DGMFacility.mm in Sources */,
 				12649A171FCD5E77007B22CD /* Structure.cpp in Sources */,
-				128AA20E1FDEC62E00AD4ED3 /* DGMArea.mm in Sources */,
-				12BE88551FE13EBD00854893 /* DGMStorage.mm in Sources */,
+				12C457FA1FE2CBDC0045BD84 /* Utility.swift in Sources */,
+				12BE891A1FE260CA00854893 /* type.cpp in Sources */,
+				12C457DF1FE2CB210045BD84 /* Rate.swift in Sources */,
+				12C457F41FE2CBBA0045BD84 /* DGMShip.swift in Sources */,
+				12BE894D1FE2836A00854893 /* area.cpp in Sources */,
+				12C457E81FE2CB8E0045BD84 /* DGMCharge.swift in Sources */,
+				12BE89741FE2866F00854893 /* factory.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1065,58 +1225,68 @@
 			buildActionMask = 2147483647;
 			files = (
 				123CC8E01FCEA30500C34372 /* ProductionCycle.cpp in Sources */,
+				12BE898D1FE2873800854893 /* storage.c in Sources */,
+				12C457EF1FE2CBA60045BD84 /* DGMGang.swift in Sources */,
 				12B3311D1FBD99B40072D4E4 /* Attribute.cpp in Sources */,
-				12BE88621FE14E0600854893 /* DGMProductionCycle.mm in Sources */,
-				12BE88861FE154F200854893 /* DGMRoute.mm in Sources */,
-				12BE88741FE1530C00854893 /* DGMFactory.mm in Sources */,
 				123BEF2A1FBDA58700AC8EB1 /* Character.cpp in Sources */,
 				123BEF421FBDB59200AC8EB1 /* Charge.cpp in Sources */,
-				12BE88801FE1532E00854893 /* DGMSpaceport.mm in Sources */,
+				12BE89811FE2871E00854893 /* production_state.c in Sources */,
 				123CC8C11FCD9B6B00C34372 /* Commodity.cpp in Sources */,
 				12E864F81FC8650000C9C4BD /* Booster.cpp in Sources */,
+				12BE89871FE2872900854893 /* spaceport.c in Sources */,
+				12C457E61FE2CB850045BD84 /* DGMArea.swift in Sources */,
+				12C457E31FE2CB790045BD84 /* DGMCharacter.swift in Sources */,
+				12C457EC1FE2CB990045BD84 /* DGMDrone.swift in Sources */,
 				123CC8DA1FCEA2FA00C34372 /* ProductionState.cpp in Sources */,
 				12B53FFC1FCAD48500631067 /* WarfareBuff.cpp in Sources */,
-				128AA2381FDFD75200AD4ED3 /* DGMStructure.mm in Sources */,
-				128AA2041FDEBE3500AD4ED3 /* DGMAttribute.mm in Sources */,
 				128AA29C1FE0213C00AD4ED3 /* dgm.swift in Sources */,
-				128AA28D1FE0029600AD4ED3 /* DGMModule.mm in Sources */,
+				12C457DD1FE2C0890045BD84 /* DGMAttirbute.swift in Sources */,
+				12BE89301FE26ADD00854893 /* character.cpp in Sources */,
+				12BE89691FE2864F00854893 /* extractor_control_unit.c in Sources */,
 				123BEF161FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
-				128AA21D1FDECD3300AD4ED3 /* DGMCharacter.mm in Sources */,
+				12BE89481FE2831E00854893 /* charge.cpp in Sources */,
 				123BEF481FBDB5D200AC8EB1 /* Drone.cpp in Sources */,
+				12BE89631FE2863900854893 /* commodity.c in Sources */,
+				12BE89421FE2819800854893 /* drone.cpp in Sources */,
 				123BEF361FBDB40800AC8EB1 /* Ship.cpp in Sources */,
 				123CC8BB1FCD9B5300C34372 /* Facility.cpp in Sources */,
-				128AA2231FDFBBD700AD4ED3 /* DGMShip.mm in Sources */,
 				123CC8D41FCEA29700C34372 /* Route.cpp in Sources */,
 				123BEF1C1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
+				12BE89171FE25BB100854893 /* utility.cpp in Sources */,
 				123BEF241FBDA52500AC8EB1 /* Gang.cpp in Sources */,
-				12BE88681FE14F1C00854893 /* DGMCommodity.mm in Sources */,
+				12BE89361FE270B900854893 /* ship.cpp in Sources */,
 				123CC8EC1FCEA33700C34372 /* Storage.cpp in Sources */,
-				12BE884A1FE13C1200854893 /* DGMPlanet.mm in Sources */,
+				12C457F21FE2CBAF0045BD84 /* DGMModule.swift in Sources */,
 				12B331171FBD99150072D4E4 /* Type.cpp in Sources */,
-				128AA2151FDECA9900AD4ED3 /* DGMGang.mm in Sources */,
+				12BE895D1FE2861C00854893 /* command_center.c in Sources */,
 				127442B71FD9835400B70A3A /* HeatSimulator.cpp in Sources */,
 				123CC8B51FCD9B4100C34372 /* Planet.cpp in Sources */,
-				12BE886E1FE152F900854893 /* DGMExtractorControlUnit.mm in Sources */,
+				12BE89561FE283DA00854893 /* structure.cpp in Sources */,
+				12BE897B1FE2867A00854893 /* planet.c in Sources */,
 				12E864F21FC864F600C9C4BD /* Implant.cpp in Sources */,
+				12BE89241FE2660A00854893 /* attribute.cpp in Sources */,
+				12BE893C1FE27D5800854893 /* module.cpp in Sources */,
 				123CC8A71FCD659200C34372 /* Area.cpp in Sources */,
-				12BE887A1FE1531F00854893 /* DGMCommandCenter.mm in Sources */,
-				12BE885C1FE14D9B00854893 /* DGMProductionState.mm in Sources */,
 				123CC8F21FCEA34E00C34372 /* Factory.cpp in Sources */,
-				128AA2991FE01C4000AD4ED3 /* DGMCharge.mm in Sources */,
+				12BE896F1FE2865C00854893 /* facility.c in Sources */,
 				12B331191FBD999F0072D4E4 /* SDE.cpp in Sources */,
-				128AA2931FE0187300AD4ED3 /* DGMDrone.mm in Sources */,
 				123CC8F81FCEA35B00C34372 /* ExtractorControlUnit.cpp in Sources */,
-				128AA1FE1FDEB50500AD4ED3 /* Utility.mm in Sources */,
 				123CC8E61FCEA32F00C34372 /* CommandCenter.cpp in Sources */,
+				12C457F81FE2CBC30045BD84 /* DGMStructure.swift in Sources */,
 				123BEF3C1FBDB4A200AC8EB1 /* Module.cpp in Sources */,
 				123CC8FF1FCEA39000C34372 /* Spaceport.cpp in Sources */,
+				12BE892A1FE26A0700854893 /* gang.cpp in Sources */,
 				123BEF301FBDB3AB00AC8EB1 /* Skill.cpp in Sources */,
-				128AA1F81FDEB4C100AD4ED3 /* DGMType.mm in Sources */,
+				12C457DA1FE2C07F0045BD84 /* DGMType.swift in Sources */,
 				12EC66521FBECD840083DBB8 /* Capacitor.cpp in Sources */,
-				12BE88501FE13D9500854893 /* DGMFacility.mm in Sources */,
 				12649A181FCD5E77007B22CD /* Structure.cpp in Sources */,
-				128AA20F1FDEC62E00AD4ED3 /* DGMArea.mm in Sources */,
-				12BE88561FE13EBD00854893 /* DGMStorage.mm in Sources */,
+				12C457FB1FE2CBDC0045BD84 /* Utility.swift in Sources */,
+				12BE891B1FE260CA00854893 /* type.cpp in Sources */,
+				12C457E01FE2CB210045BD84 /* Rate.swift in Sources */,
+				12C457F51FE2CBBA0045BD84 /* DGMShip.swift in Sources */,
+				12BE894E1FE2836A00854893 /* area.cpp in Sources */,
+				12C457E91FE2CB8E0045BD84 /* DGMCharge.swift in Sources */,
+				12BE89751FE2866F00854893 /* factory.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

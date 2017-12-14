@@ -14,8 +14,6 @@
 
 namespace dgmpp {
 	
-	const Module::Socket Module::anySocket = -1;
-	
 	void Ship::setEnabled (bool enabled) {
 		if (isEnabled() == enabled)
 			return Type::setEnabled(enabled);
@@ -33,7 +31,7 @@ namespace dgmpp {
 		
 	}
 	
-	Module* Ship::add (std::unique_ptr<Module>&& module, bool ignoringRequirements, Module::Socket socket) {
+	Module* Ship::add (std::unique_ptr<Module>&& module, Module::Socket socket, bool ignoringRequirements) {
 		assert(module != nullptr);
 		
 		if (ignoringRequirements || canFit(module.get())) {

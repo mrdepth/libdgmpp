@@ -45,7 +45,7 @@ namespace dgmpp {
 		}
 	}
 	
-	Charge::Size Charge::chargeSize() {
+	Charge::Size Charge::size() {
 		if (auto attribute = (*this)[AttributeID::chargeSize])
 			return static_cast<Size>(static_cast<int>(attribute->value()));
 		else

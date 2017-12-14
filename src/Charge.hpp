@@ -21,7 +21,7 @@ namespace dgmpp {
 
 		static std::unique_ptr<Charge> Create (TypeID typeID) { return std::unique_ptr<Charge>(new Charge(typeID)); }
 		
-		Size chargeSize();
+		Size size();
 		
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
