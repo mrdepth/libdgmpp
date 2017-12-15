@@ -4,3 +4,6 @@
 *.v11.suo
 *.sdf
 *.suo
+android/.externalNativeBuild/
+android/.gradle/
+android/build/
