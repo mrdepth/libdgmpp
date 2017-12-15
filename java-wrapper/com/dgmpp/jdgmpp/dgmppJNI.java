@@ -231,6 +231,11 @@ public class dgmppJNI {
   public final static native long Capacitor_use(long jarg1, Capacitor jarg1_);
   public final static native long Capacitor_recharge(long jarg1, Capacitor jarg1_);
   public final static native void delete_Capacitor(long jarg1);
+  public final static native int Ship_RigSize_none_get();
+  public final static native int Ship_RigSize_small_get();
+  public final static native int Ship_RigSize_medium_get();
+  public final static native int Ship_RigSize_large_get();
+  public final static native int Ship_RigSize_xLarge_get();
   public final static native long Ship_supportedDroneCategories(long jarg1, Ship jarg1_);
   public final static native int Ship_rigSize(long jarg1, Ship jarg1_);
   public final static native void Ship_damagePattern__SWIG_0(long jarg1, Ship jarg1_, long jarg2, DamageVector jarg2_);

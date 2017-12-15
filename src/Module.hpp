@@ -29,8 +29,7 @@ namespace dgmpp {
 			overloaded
 		};
 		
-		enum class Slot
-		{
+		enum class Slot {
 			none,
 			hi,
 			med,
@@ -42,8 +41,7 @@ namespace dgmpp {
 			starbaseStructure
 		};
 		
-		enum class Hardpoint
-		{
+		enum class Hardpoint {
 			none,
 			launcher,
 			turret

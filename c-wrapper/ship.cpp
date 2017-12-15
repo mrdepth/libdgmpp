@@ -8,9 +8,9 @@
 #include "ship.h"
 #include "internal.h"
 
-void dgmpp_capacitor (dgmp_capacitor_ptr capacitor) {
+void dgmpp_capacitor_free (dgmpp_capacitor_ptr capacitor) {
 	if (capacitor)
-		delete reinterpret_cast<dgmp_capacitor_impl*>(capacitor);
+		delete reinterpret_cast<dgmpp_capacitor_impl*>(capacitor);
 }
 
 dgmpp_type_ptr dgmpp_ship_create (dgmpp_type_id type_id) {
@@ -38,8 +38,8 @@ void dgmpp_ship_set_area (dgmpp_type_ptr ship, dgmpp_type_ptr area) {
 	type_cast<Ship*>(ship)->area(std::move(reinterpret_cast<dgmpp_area_impl*>(area)->area));
 }
 
-int dgmpp_ship_get_rig_size (dgmpp_type_ptr ship) {
-	return type_cast<Ship*>(ship)->rigSize();
+DGMPP_RIG_SIZE dgmpp_ship_get_rig_size (dgmpp_type_ptr ship) {
+	return static_cast<DGMPP_RIG_SIZE>(type_cast<Ship*>(ship)->rigSize());
 }
 
 dgmpp_damage_vector dgmpp_ship_get_damage_pattern (dgmpp_type_ptr ship) {
@@ -147,8 +147,8 @@ size_t dgmpp_ship_get_used_hardpoints (dgmpp_type_ptr ship, DGMPP_MODULE_HARDPOI
 }
 
 
-dgmp_capacitor_ptr dgmpp_ship_get_capacitor (dgmpp_type_ptr ship) {
-	return reinterpret_cast<dgmp_capacitor_ptr>(new dgmp_capacitor_impl{&type_cast<Ship*>(ship)->capacitor()});
+dgmpp_capacitor_ptr dgmpp_ship_get_capacitor (dgmpp_type_ptr ship) {
+	return reinterpret_cast<dgmpp_capacitor_ptr>(new dgmpp_capacitor_impl{&type_cast<Ship*>(ship)->capacitor()});
 }
 
 dgmpp_calibration_points dgmpp_ship_get_used_calibration (dgmpp_type_ptr ship) {
@@ -343,30 +343,30 @@ dgmpp_millimeter dgmpp_ship_get_scan_resolution (dgmpp_type_ptr ship) {
 	return type_cast<Ship*>(ship)->scanResolution();
 }
 
-dgmpp_giga_joule dgmp_capacitor_get_capacity (dgmp_capacitor_ptr capacitor) {
-	return reinterpret_cast<dgmp_capacitor_impl*>(capacitor)->capacitor->capacity();
+dgmpp_giga_joule dgmpp_capacitor_get_capacity (dgmpp_capacitor_ptr capacitor) {
+	return reinterpret_cast<dgmpp_capacitor_impl*>(capacitor)->capacitor->capacity();
 }
 
-dgmpp_seconds dgmp_capacitor_get_recharge_time (dgmp_capacitor_ptr capacitor) {
-	return dgmpp_make_seconds(reinterpret_cast<dgmp_capacitor_impl*>(capacitor)->capacitor->rechargeTime());
+dgmpp_seconds dgmpp_capacitor_get_recharge_time (dgmpp_capacitor_ptr capacitor) {
+	return dgmpp_make_seconds(reinterpret_cast<dgmpp_capacitor_impl*>(capacitor)->capacitor->rechargeTime());
 }
 
-dgmpp_seconds dgmp_capacitor_get_lasts_time (dgmp_capacitor_ptr capacitor) {
-	return dgmpp_make_seconds(reinterpret_cast<dgmp_capacitor_impl*>(capacitor)->capacitor->lastsTime());
+dgmpp_seconds dgmpp_capacitor_get_lasts_time (dgmpp_capacitor_ptr capacitor) {
+	return dgmpp_make_seconds(reinterpret_cast<dgmpp_capacitor_impl*>(capacitor)->capacitor->lastsTime());
 }
 
-BOOL dgmp_capacitor_is_stable (dgmp_capacitor_ptr capacitor) {
-	return reinterpret_cast<dgmp_capacitor_impl*>(capacitor)->capacitor->isStable();
+BOOL dgmpp_capacitor_is_stable (dgmpp_capacitor_ptr capacitor) {
+	return reinterpret_cast<dgmpp_capacitor_impl*>(capacitor)->capacitor->isStable();
 }
 
-dgmpp_percent dgmp_capacitor_get_stable_level (dgmp_capacitor_ptr capacitor) {
-	return reinterpret_cast<dgmp_capacitor_impl*>(capacitor)->capacitor->stableLevel();
+dgmpp_percent dgmpp_capacitor_get_stable_level (dgmpp_capacitor_ptr capacitor) {
+	return reinterpret_cast<dgmpp_capacitor_impl*>(capacitor)->capacitor->stableLevel();
 }
 
-dgmpp_giga_joule_per_second dgmp_capacitor_get_use (dgmp_capacitor_ptr capacitor) {
-	return reinterpret_cast<dgmp_capacitor_impl*>(capacitor)->capacitor->use() * 1s;
+dgmpp_giga_joule_per_second dgmpp_capacitor_get_use (dgmpp_capacitor_ptr capacitor) {
+	return reinterpret_cast<dgmpp_capacitor_impl*>(capacitor)->capacitor->use() * 1s;
 }
 
-dgmpp_giga_joule_per_second dgmp_capacitor_get_recharge (dgmp_capacitor_ptr capacitor) {
-	return reinterpret_cast<dgmp_capacitor_impl*>(capacitor)->capacitor->recharge() * 1s;
+dgmpp_giga_joule_per_second dgmpp_capacitor_get_recharge (dgmpp_capacitor_ptr capacitor) {
+	return reinterpret_cast<dgmpp_capacitor_impl*>(capacitor)->capacitor->recharge() * 1s;
 }

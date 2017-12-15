@@ -26,6 +26,6 @@ public class DGMCharge: DGMType {
 	}
 	
 	public var size: Size {
-		return Size(rawValue: Int(dgmpp_charge_get_charge_size(opaque).rawValue)) ?? .none
+		return Size(dgmpp_charge_get_charge_size(opaque)) ?? .none
 	}
 }

@@ -169,7 +169,7 @@ struct dgmpp_area_impl : public dgmpp_type_impl {
 	}
 };
 
-struct dgmp_capacitor_impl {
+struct dgmpp_capacitor_impl {
 	Capacitor* capacitor;
 };
 

@@ -201,7 +201,7 @@ namespace dgmpp {
 			}
 				
 			case Module::Slot::rig: {
-				auto rigSize = static_cast<int>((*module)[AttributeID::rigSize]->value());
+				auto rigSize = static_cast<RigSize>(static_cast<int>((*module)[AttributeID::rigSize]->value()));
 				if (rigSize != this->rigSize())
 					return false;
 				break;
@@ -308,6 +308,10 @@ namespace dgmpp {
 			return {CategoryID::fighter};
 		else
 			return {CategoryID::drone};
+	}
+	
+	Ship::RigSize Ship::rigSize() {
+		return static_cast<RigSize>(static_cast<int>((*this)[AttributeID::rigSize]->value()));
 	}
 	
 	//Drones

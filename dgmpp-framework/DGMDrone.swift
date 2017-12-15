@@ -9,6 +9,14 @@ import Foundation
 
 public class DGMDrone: DGMType {
 	
+	public enum Squadron: Int {
+		case none
+		case heavy
+		case light
+		case support
+	}
+
+	
 	override init(_ opaque: dgmpp_attribute_ptr) {
 		super.init(opaque)
 	}
@@ -62,4 +70,24 @@ public class DGMDrone: DGMType {
 		return DGMDamagePerSecond(DGMDamageVector(dgmpp_drone_get_dps_v2(opaque, dgmpp_hostile_target(target))))
 	}
 	
+	var optimal: DGMMeter {
+		return dgmpp_drone_get_optimal(opaque)
+	}
+	
+	var falloff: DGMMeter {
+		return dgmpp_drone_get_falloff(opaque)
+	}
+
+	var accuracyScore: DGMPoints {
+		return dgmpp_drone_get_accuracy_score(opaque)
+	}
+
+	var miningYield: DGMCubicMeterPerSecond {
+		return DGMCubicMeterPerSecond(dgmpp_drone_get_mining_yield(opaque))
+	}
+
+	var velocity: DGMMetersPerSecond {
+		return DGMCubicMeterPerSecond(dgmpp_drone_get_velocity(opaque))
+	}
+
 }

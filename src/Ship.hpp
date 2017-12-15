@@ -28,12 +28,21 @@ namespace dgmpp {
 			multispectral
 		};
 		
+		enum class RigSize {
+			none = 0,
+			small = 1,
+			medium = 2,
+			large = 3,
+			xLarge = 4
+		};
+
+		
 		
 		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
 
 		RaceID raceID();
 		std::vector<CategoryID> supportedDroneCategories();
-		int rigSize() { return static_cast<int>((*this)[AttributeID::rigSize]->value()); }
+		RigSize rigSize();
 		
 		void damagePattern (const DamageVector& pattern) noexcept { damagePattern_ = pattern; resetCache(); }
 		const DamageVector& damagePattern() const noexcept { return damagePattern_; }

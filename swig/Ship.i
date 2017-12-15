@@ -43,9 +43,16 @@ namespace dgmpp {
 			multispectral
 		};
 		
+		enum class RigSize {
+			none = 0,
+			small = 1,
+			medium = 2,
+			large = 3,
+			xLarge = 4
+		};
 		
 		std::vector<CategoryID> supportedDroneCategories();
-		int rigSize();
+		RigSize rigSize();
 		
 		void damagePattern (const DamageVector& pattern) noexcept;
 		const DamageVector& damagePattern() const noexcept;

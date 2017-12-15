@@ -3667,6 +3667,66 @@ SWIGEXPORT void JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_delete_1Capacitor(JNIEnv 
 }
 
 
+SWIGEXPORT jint JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_Ship_1RigSize_1none_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  dgmpp::Ship::RigSize result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (dgmpp::Ship::RigSize)dgmpp::Ship::RigSize::none;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_Ship_1RigSize_1small_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  dgmpp::Ship::RigSize result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (dgmpp::Ship::RigSize)dgmpp::Ship::RigSize::small;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_Ship_1RigSize_1medium_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  dgmpp::Ship::RigSize result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (dgmpp::Ship::RigSize)dgmpp::Ship::RigSize::medium;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_Ship_1RigSize_1large_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  dgmpp::Ship::RigSize result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (dgmpp::Ship::RigSize)dgmpp::Ship::RigSize::large;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_Ship_1RigSize_1xLarge_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  dgmpp::Ship::RigSize result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (dgmpp::Ship::RigSize)dgmpp::Ship::RigSize::xLarge;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_Ship_1supportedDroneCategories(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
@@ -3685,13 +3745,13 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_Ship_1supportedDroneCate
 SWIGEXPORT jint JNICALL Java_com_dgmpp_jdgmpp_dgmppJNI_Ship_1rigSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
-  int result;
+  dgmpp::Ship::RigSize result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(dgmpp::Ship **)&jarg1; 
-  result = (int)(arg1)->rigSize();
+  result = (dgmpp::Ship::RigSize)(arg1)->rigSize();
   jresult = (jint)result; 
   return jresult;
 }

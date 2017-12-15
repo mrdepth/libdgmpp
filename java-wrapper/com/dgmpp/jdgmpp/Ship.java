@@ -39,8 +39,8 @@ public class Ship extends Type {
     return new CategoryIDs(dgmppJNI.Ship_supportedDroneCategories(swigCPtr, this), true);
   }
 
-  public int rigSize() {
-    return dgmppJNI.Ship_rigSize(swigCPtr, this);
+  public Ship.RigSize rigSize() {
+    return Ship.RigSize.swigToEnum(dgmppJNI.Ship_rigSize(swigCPtr, this));
   }
 
   public void damagePattern(DamageVector pattern) {
@@ -392,6 +392,53 @@ public class Ship extends Type {
     }
 
     private static ScanType[] swigValues = { radar, ladar, magnetometric, gravimetric, multispectral };
+    private static int swigNext = 0;
+    private final int swigValue;
+    private final String swigName;
+  }
+
+  public final static class RigSize {
+    public final static Ship.RigSize none = new Ship.RigSize("none", dgmppJNI.Ship_RigSize_none_get());
+    public final static Ship.RigSize small = new Ship.RigSize("small", dgmppJNI.Ship_RigSize_small_get());
+    public final static Ship.RigSize medium = new Ship.RigSize("medium", dgmppJNI.Ship_RigSize_medium_get());
+    public final static Ship.RigSize large = new Ship.RigSize("large", dgmppJNI.Ship_RigSize_large_get());
+    public final static Ship.RigSize xLarge = new Ship.RigSize("xLarge", dgmppJNI.Ship_RigSize_xLarge_get());
+
+    public final int swigValue() {
+      return swigValue;
+    }
+
+    public String toString() {
+      return swigName;
+    }
+
+    public static RigSize swigToEnum(int swigValue) {
+      if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
+        return swigValues[swigValue];
+      for (int i = 0; i < swigValues.length; i++)
+        if (swigValues[i].swigValue == swigValue)
+          return swigValues[i];
+      throw new IllegalArgumentException("No enum " + RigSize.class + " with value " + swigValue);
+    }
+
+    private RigSize(String swigName) {
+      this.swigName = swigName;
+      this.swigValue = swigNext++;
+    }
+
+    private RigSize(String swigName, int swigValue) {
+      this.swigName = swigName;
+      this.swigValue = swigValue;
+      swigNext = swigValue+1;
+    }
+
+    private RigSize(String swigName, RigSize swigEnum) {
+      this.swigName = swigName;
+      this.swigValue = swigEnum.swigValue;
+      swigNext = this.swigValue+1;
+    }
+
+    private static RigSize[] swigValues = { none, small, medium, large, xLarge };
     private static int swigNext = 0;
     private final int swigValue;
     private final String swigName;

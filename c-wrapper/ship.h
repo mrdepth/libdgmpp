@@ -10,9 +10,9 @@
 
 #include "type.h"
 
-typedef struct dgmp_capacitor dgmp_capacitor;
-typedef dgmp_capacitor* dgmp_capacitor_ptr;
-void dgmpp_capacitor_free (dgmp_capacitor_ptr capacitor);
+typedef struct dgmpp_capacitor dgmpp_capacitor;
+typedef dgmpp_capacitor* dgmpp_capacitor_ptr;
+void dgmpp_capacitor_free (dgmpp_capacitor_ptr capacitor);
 
 dgmpp_type_ptr dgmpp_ship_create (dgmpp_type_id type_id);
 
@@ -20,7 +20,7 @@ dgmpp_ints_array_ptr	dgmpp_ship_get_supported_drone_categories	(dgmpp_type_ptr s
 DGMPP_RACE_ID			dgmpp_ship_get_race_id						(dgmpp_type_ptr ship);
 dgmpp_type_ptr			dgmpp_ship_get_area							(dgmpp_type_ptr ship);
 void					dgmpp_ship_set_area							(dgmpp_type_ptr ship, dgmpp_type_ptr area);
-int						dgmpp_ship_get_rig_size						(dgmpp_type_ptr ship);
+DGMPP_RIG_SIZE			dgmpp_ship_get_rig_size						(dgmpp_type_ptr ship);
 dgmpp_damage_vector		dgmpp_ship_get_damage_pattern				(dgmpp_type_ptr ship);
 void					dgmpp_ship_set_damage_pattern				(dgmpp_type_ptr ship, dgmpp_damage_vector damage_pattern);
 
@@ -51,7 +51,7 @@ size_t dgmpp_ship_get_free_hardpoints	(dgmpp_type_ptr ship, DGMPP_MODULE_HARDPOI
 size_t dgmpp_ship_get_used_hardpoints	(dgmpp_type_ptr ship, DGMPP_MODULE_HARDPOINT hardpoint);
 
 
-dgmp_capacitor_ptr dgmpp_ship_get_capacitor (dgmpp_type_ptr ship);
+dgmpp_capacitor_ptr dgmpp_ship_get_capacitor (dgmpp_type_ptr ship);
 
 dgmpp_calibration_points	dgmpp_ship_get_used_calibration			(dgmpp_type_ptr ship);
 dgmpp_calibration_points	dgmpp_ship_get_total_calibration		(dgmpp_type_ptr ship);
@@ -108,12 +108,12 @@ dgmpp_meter			dgmpp_ship_get_probe_size		(dgmpp_type_ptr ship);
 dgmpp_millimeter	dgmpp_ship_get_scan_resolution	(dgmpp_type_ptr ship);
 
 
-dgmpp_giga_joule			dgmp_capacitor_get_capacity			(dgmp_capacitor_ptr capacitor);
-dgmpp_seconds				dgmp_capacitor_get_recharge_time	(dgmp_capacitor_ptr capacitor);
-dgmpp_seconds				dgmp_capacitor_get_lasts_time		(dgmp_capacitor_ptr capacitor);
-BOOL						dgmp_capacitor_is_stable			(dgmp_capacitor_ptr capacitor);
-dgmpp_percent				dgmp_capacitor_get_stable_level		(dgmp_capacitor_ptr capacitor);
-dgmpp_giga_joule_per_second	dgmp_capacitor_get_use				(dgmp_capacitor_ptr capacitor);
-dgmpp_giga_joule_per_second	dgmp_capacitor_get_recharge			(dgmp_capacitor_ptr capacitor);
+dgmpp_giga_joule			dgmpp_capacitor_get_capacity			(dgmpp_capacitor_ptr capacitor);
+dgmpp_seconds				dgmpp_capacitor_get_recharge_time	(dgmpp_capacitor_ptr capacitor);
+dgmpp_seconds				dgmpp_capacitor_get_lasts_time		(dgmpp_capacitor_ptr capacitor);
+BOOL						dgmpp_capacitor_is_stable			(dgmpp_capacitor_ptr capacitor);
+dgmpp_percent				dgmpp_capacitor_get_stable_level		(dgmpp_capacitor_ptr capacitor);
+dgmpp_giga_joule_per_second	dgmpp_capacitor_get_use				(dgmpp_capacitor_ptr capacitor);
+dgmpp_giga_joule_per_second	dgmpp_capacitor_get_recharge			(dgmpp_capacitor_ptr capacitor);
 
 #endif /* ship_h */

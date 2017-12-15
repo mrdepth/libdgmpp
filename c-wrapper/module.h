@@ -47,7 +47,7 @@ dgmpp_damage_per_second			dgmpp_module_get_dps					(dgmpp_type_ptr module);
 dgmpp_damage_per_second			dgmpp_module_get_dps_v2					(dgmpp_type_ptr module, dgmpp_hostile_target target);
 dgmpp_meter						dgmpp_module_get_optimal				(dgmpp_type_ptr module);
 dgmpp_meter						dgmpp_module_get_falloff				(dgmpp_type_ptr module);
-dgmpp_seconds					dgmpp_module_get_lifetime				(dgmpp_type_ptr module);
+dgmpp_seconds					dgmpp_module_get_life_time				(dgmpp_type_ptr module);
 
 
 #endif /* module_h */

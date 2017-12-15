@@ -161,7 +161,7 @@ dgmpp_meter dgmpp_module_get_falloff (dgmpp_type_ptr module) {
 	return type_cast<Module*>(module)->falloff();
 }
 
-dgmpp_seconds dgmpp_module_get_lifetime (dgmpp_type_ptr module) {
+dgmpp_seconds dgmpp_module_get_life_time (dgmpp_type_ptr module) {
 	if (auto lifeTime = type_cast<Module*>(module)->lifeTime())
 		return  dgmpp_make_seconds(*lifeTime);
 	else
