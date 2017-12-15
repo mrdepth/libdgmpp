@@ -13,6 +13,8 @@ namespace dgmpp {
 	
 	class Gang: public Type {
 	public:
+		Gang() : Type(TypeID::none) {}
+
 		static std::unique_ptr<Gang> Create() {
 			auto gang = std::unique_ptr<Gang>(new Gang);
 			gang->setEnabled(true);
@@ -31,7 +33,6 @@ namespace dgmpp {
 		
 	private:
 		friend class WarfareBuffEffect;
-		Gang() : Type(TypeID::none) {}
 		std::list<std::unique_ptr<Character>> pilots_;
 	};
 }

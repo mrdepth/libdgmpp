@@ -526,11 +526,11 @@ namespace dgmpp {
 					Armor,
 					Hull
 				};
-				Repairer(Module* module, rate<HP, std::chrono::seconds> hpPerSec, rate<GigaJoule, std::chrono::seconds> capPerSec, Float effectivity, Type type)
+				Repairer(Module* module, HPPerSecond hpPerSec, rate<GigaJoule, std::chrono::seconds> capPerSec, Float effectivity, Type type)
 				: module(module), hpPerSec(hpPerSec), capPerSec(capPerSec), effectivity(effectivity), type(type) {}
 				
 				Module* module;
-				rate<HP, std::chrono::seconds> hpPerSec;
+				HPPerSecond hpPerSec;
 				rate<GigaJoule, std::chrono::seconds> capPerSec;
 				Float effectivity;
 				Type type;
@@ -550,7 +550,7 @@ namespace dgmpp {
 			auto capUse = capacitor().use();
 			auto capRecharge = capacitor().recharge();
 			
-			std::tuple<AttributeID, Repairer::Type, rate<HP, std::chrono::seconds>&> t[] = {
+			std::tuple<AttributeID, Repairer::Type, HPPerSecond&> t[] = {
 				{AttributeID::shieldCharge, Repairer::Type::Shield, sustainableTank.shieldRepair},
 				{AttributeID::armorDamage, Repairer::Type::Armor, sustainableTank.armorRepair},
 				{AttributeID::damage, Repairer::Type::Hull, sustainableTank.hullRepair}

@@ -16,14 +16,11 @@
 #include "HeatSimulator.hpp"
 
 namespace dgmpp {
-	class Module;
 	
 	class Ship: public Type {
 	public:
-//		using Position = std::vector<Module*>::const_iterator;
-		
-		enum class ScanType
-		{
+
+		enum class ScanType {
 			radar,
 			ladar,
 			magnetometric,

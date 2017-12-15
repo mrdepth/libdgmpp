@@ -1,27 +1,19 @@
 %module dgmpp
 
 %{
-#include "dgmpp.h"
-using namespace std;
+#include "dgmpp.hpp"
+using namespace std::chrono_literals;
+	
+	namespace dgmpp {
+		typedef double Seconds;
+		
+		template<typename Rep, typename Ratio>
+		inline Seconds MakeSeconds(const std::chrono::duration<Rep, Ratio>& v) {
+			return std::chrono::duration_cast<std::chrono::seconds>(v).count();
+		}
+	}
+
 %}
 
-%include "Engine.i"
-%include "types.i"
-%include "Attribute.i"
-%include "Item.i"
-%include "Area.i"
+%include "Utility.i"
 %include "Gang.i"
-%include "Ship.i"
-%include "Effect.i"
-%include "Character.i"
-%include "Skill.i"
-%include "Booster.i"
-%include "Implant.i"
-%include "Ship.i"
-%include "Module.i"
-%include "Drone.i"
-%include "Charge.i"
-%include "DamageVector.i"
-%include "ControlTower.i"
-%include "StarbaseStructure.i"
-%include "SqliteConnector.i"

@@ -1,14 +1,8 @@
-%include "Item.i"
-
-%shared_ptr(dgmpp::Area);
+%include "Type.i"
 
 namespace dgmpp {
-
-	%nodefaultctor Area;
-
-	class Area : public dgmpp::Item
-	{
-		public:
+	class Area : public Type {
+	public:
+		
 	};
-	
 }
