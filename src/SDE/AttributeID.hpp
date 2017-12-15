@@ -2389,9 +2389,12 @@ namespace dgmpp {
 		behaviorShieldBoosterDuration = 2725,
 		asteroidMaxRadius = 2727,
 		moonAsteroidDecayDisplayValue = 2728,
+		nextActivationTime = 2729,
 		behaviorSiegeMissileDamageModifier = 2730,
 		eliteBonusCovertOps4 = 2731,
 		stealthBomberLauncherCPU = 2732,
+		npcStructureStasisWebificationBonus = 2735,
+		npcStructureEnergyWarfareBonus = 2736,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
 	};

@@ -435,7 +435,7 @@ namespace dgmpp {
 		structureGuidedBombLauncher = 1328,
 		structureEnergyNeutralizer = 1329,
 		structureAreaDenialModule = 1330,
-		structureBumpingModule = 1331,
+		structureBurstProjector = 1331,
 		structureECMBattery = 1332,
 		structureDoomsdayWeapon = 1333,
 		missileGuidanceEnhancer = 1395,

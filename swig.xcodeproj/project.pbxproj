@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		12C458701FE3C5470045BD84 /* dgmpp_wrap.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 12C4586F1FE3C5470045BD84 /* dgmpp_wrap.cxx */; };
 		12C458C71FE3C5510045BD84 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C458721FE3C5510045BD84 /* WarfareBuff.cpp */; };
 		12C458C81FE3C5510045BD84 /* Gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C458751FE3C5510045BD84 /* Gang.cpp */; };
 		12C458C91FE3C5510045BD84 /* Facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C4587B1FE3C5510045BD84 /* Facility.cpp */; };
@@ -38,6 +37,7 @@
 		12C458E21FE3C5510045BD84 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C458C31FE3C5510045BD84 /* Type.cpp */; };
 		12C458E31FE3C5510045BD84 /* CommandCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C458C41FE3C5510045BD84 /* CommandCenter.cpp */; };
 		12C458E41FE3C5510045BD84 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C458C51FE3C5510045BD84 /* Planet.cpp */; };
+		12C458EF1FE3D95D0045BD84 /* dgmpp_wrap.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 12C458EE1FE3D95C0045BD84 /* dgmpp_wrap.cxx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +72,6 @@
 		12C4585F1FE3C0C40045BD84 /* Character.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Character.i; sourceTree = "<group>"; };
 		12C458601FE3C23A0045BD84 /* Ship.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Ship.i; sourceTree = "<group>"; };
 		12C458671FE3C53B0045BD84 /* jni_test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = jni_test; sourceTree = BUILT_PRODUCTS_DIR; };
-		12C4586F1FE3C5470045BD84 /* dgmpp_wrap.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dgmpp_wrap.cxx; sourceTree = SOURCE_ROOT; };
 		12C458721FE3C5510045BD84 /* WarfareBuff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WarfareBuff.cpp; sourceTree = "<group>"; };
 		12C458731FE3C5510045BD84 /* Errors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Errors.hpp; sourceTree = "<group>"; };
 		12C458741FE3C5510045BD84 /* Factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Factory.hpp; sourceTree = "<group>"; };
@@ -162,6 +161,7 @@
 		12C458E91FE3D1810045BD84 /* Charge.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Charge.i; sourceTree = "<group>"; };
 		12C458EA1FE3D1BA0045BD84 /* Drone.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Drone.i; sourceTree = "<group>"; };
 		12C458EC1FE3D24F0045BD84 /* Area.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Area.i; sourceTree = "<group>"; };
+		12C458EE1FE3D95C0045BD84 /* dgmpp_wrap.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dgmpp_wrap.cxx; path = "java-wrapper/jni/dgmpp_wrap.cxx"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,7 +314,7 @@
 		12C458ED1FE3D5F40045BD84 /* jni_test */ = {
 			isa = PBXGroup;
 			children = (
-				12C4586F1FE3C5470045BD84 /* dgmpp_wrap.cxx */,
+				12C458EE1FE3D95C0045BD84 /* dgmpp_wrap.cxx */,
 				12C458711FE3C5510045BD84 /* src */,
 			);
 			name = jni_test;
@@ -410,7 +410,6 @@
 				12C458D41FE3C5510045BD84 /* Commodity.cpp in Sources */,
 				12C458D31FE3C5510045BD84 /* Storage.cpp in Sources */,
 				12C458E21FE3C5510045BD84 /* Type.cpp in Sources */,
-				12C458701FE3C5470045BD84 /* dgmpp_wrap.cxx in Sources */,
 				12C458DD1FE3C5510045BD84 /* Area.cpp in Sources */,
 				12C458DB1FE3C5510045BD84 /* Skill.cpp in Sources */,
 				12C458CE1FE3C5510045BD84 /* Character.cpp in Sources */,
@@ -431,6 +430,7 @@
 				12C458C71FE3C5510045BD84 /* WarfareBuff.cpp in Sources */,
 				12C458DE1FE3C5510045BD84 /* Spaceport.cpp in Sources */,
 				12C458E41FE3C5510045BD84 /* Planet.cpp in Sources */,
+				12C458EF1FE3D95D0045BD84 /* dgmpp_wrap.cxx in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

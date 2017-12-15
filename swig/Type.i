@@ -21,10 +21,7 @@ namespace dgmpp {
 			CategoryID categoryID() const { return $self->metaInfo().categoryID; }
 			
 			Attribute* attribute (AttributeID attributeID) {
-				if (auto attribute = (*$self)[attributeID])
-					return attribute.get();
-				else
-					return nullptr;
+				return ((*$self)[attributeID]).get();
 			}
 			
 			std::vector<Type*> affectors() const {

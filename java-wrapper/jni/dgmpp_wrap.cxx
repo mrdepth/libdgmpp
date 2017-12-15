@@ -284,10 +284,7 @@ SWIGINTERN dgmpp::TypeID dgmpp_Type_typeID(dgmpp::Type const *self){ return self
 SWIGINTERN dgmpp::GroupID dgmpp_Type_groupID(dgmpp::Type const *self){ return self->metaInfo().groupID; }
 SWIGINTERN dgmpp::CategoryID dgmpp_Type_categoryID(dgmpp::Type const *self){ return self->metaInfo().categoryID; }
 SWIGINTERN dgmpp::Attribute *dgmpp_Type_attribute(dgmpp::Type *self,dgmpp::AttributeID attributeID){
-				if (auto attribute = (*self)[attributeID])
-					return attribute.get();
-				else
-					return nullptr;
+				return ((*self)[attributeID]).get();
 			}
 SWIGINTERN std::vector< dgmpp::Type * > dgmpp_Type_affectors(dgmpp::Type const *self){
 				auto c = self->affectors();
