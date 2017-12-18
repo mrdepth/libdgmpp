@@ -10,8 +10,8 @@
 #import <Dgmpp/dgmpp.hpp>
 #include <memory>
 
-//using namespace dgmpp;
 using namespace std::chrono_literals;
+using namespace dgmpp;
 
 @interface dgmppTests : XCTestCase {
 }
@@ -30,8 +30,42 @@ using namespace std::chrono_literals;
     [super tearDown];
 }
 
+- (void) testSlots {
+	auto gang = Gang();
+	auto pilot = gang.addPilot();
+	auto ship = pilot->ship(TypeID::dominix);
+	auto hi0 = ship->freeSlots(Module::Slot::hi);
+	auto med0 = ship->freeSlots(Module::Slot::med);
+	auto low0 = ship->freeSlots(Module::Slot::low);
+	auto turrets0 = ship->freeHardpoints(Module::Hardpoint::turret);
+	
+	auto module = ship->addModule(TypeID::ionBlasterCannonII);
+	
+	auto hi1 = ship->freeSlots(Module::Slot::hi);
+	auto med1 = ship->freeSlots(Module::Slot::med);
+	auto low1 = ship->freeSlots(Module::Slot::low);
+	auto turrets1 = ship->freeHardpoints(Module::Hardpoint::turret);
+	
+	ship->remove(module);
+
+	auto hi2 = ship->freeSlots(Module::Slot::hi);
+	auto med2 = ship->freeSlots(Module::Slot::med);
+	auto low2 = ship->freeSlots(Module::Slot::low);
+	auto turrets2 = ship->freeHardpoints(Module::Hardpoint::turret);
+
+	XCTAssertEqual(hi0, hi1 + 1);
+	XCTAssertEqual(med0, med1);
+	XCTAssertEqual(low0, low1);
+	XCTAssertEqual(turrets0, turrets1 + 1);
+	
+	XCTAssertEqual(hi0, hi2);
+	XCTAssertEqual(med0, med2);
+	XCTAssertEqual(low0, low2);
+	XCTAssertEqual(turrets0, turrets2);
+
+}
+
 - (void) testSkills {
-	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilot = gang->add(Character::Create());
 	auto ship = pilot->ship(Ship::Create(TypeID::dominix));
@@ -52,7 +86,6 @@ using namespace std::chrono_literals;
 }
 
 - (void) testGangBoost {
-	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilotA = gang->add(Character::Create());
 	pilotA->setSkillLevels(5);
@@ -83,7 +116,6 @@ using namespace std::chrono_literals;
 
 
 - (void) testRepairers {
-	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilot = gang->add(Character::Create());
 	pilot->setSkillLevels(5);
@@ -102,7 +134,6 @@ using namespace std::chrono_literals;
 }
 
 - (void) testRemoteRepairers {
-	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilotA = gang->addPilot();
 	auto pilotB = gang->addPilot();
@@ -126,7 +157,6 @@ using namespace std::chrono_literals;
 }
 
 - (void) testAncillaries {
-	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilot = gang->addPilot();
 	pilot->setSkillLevels(5);
@@ -155,7 +185,6 @@ using namespace std::chrono_literals;
 }
 
 - (void) testEnergyDrainers {
-	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilotA = gang->addPilot();
 	auto pilotB = gang->addPilot();
@@ -187,7 +216,6 @@ using namespace std::chrono_literals;
 }
 
 - (void) testDrones {
-	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilot = gang->add(Character::Create());
 	pilot->setSkillLevels(5);
@@ -209,7 +237,6 @@ using namespace std::chrono_literals;
 }
 
 - (void) testArea {
-	using namespace dgmpp;
 	auto gang = Gang::Create();
 	auto pilot = gang->add(Character::Create());
 	pilot->setSkillLevels(5);
@@ -227,11 +254,6 @@ using namespace std::chrono_literals;
 }
 
 - (void)testShips {
-	using namespace dgmpp;
-	return;
-	
-//	[self measureBlock:^{
-//	}];
 }
 
 @end

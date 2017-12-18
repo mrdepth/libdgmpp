@@ -1,6 +1,7 @@
 ROOT=${PROJECT_DIR}/java-wrapper/
 rm -rf ${ROOT}
 mkdir -p ${ROOT}/jni/
-mkdir -p ${ROOT}/com/dgmpp/jdgmpp
+mkdir -p ${ROOT}/src/com/dgmpp
 
-swig -c++ -java -package com.dgmpp.jdgmpp -outdir ${ROOT}/com/dgmpp/jdgmpp -o ${ROOT}/jni/dgmpp_wrap.cxx ${PROJECT_DIR}/swig/dgmpp.i
+swig -c++ -java -package com.dgmpp -I${PROJECT_DIR}/src/ -outdir ${ROOT}/src/com/dgmpp -o ${ROOT}/jni/dgmpp_wrap.cxx ${PROJECT_DIR}/swig/dgmpp.i
+

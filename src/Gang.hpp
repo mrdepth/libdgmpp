@@ -11,15 +11,11 @@
 namespace dgmpp {
 	class Character;
 	
-	class Gang: public Type {
+	class Gang final: public Type {
 	public:
-		Gang() : Type(TypeID::none) {}
+		Gang() : Type(TypeID::none) { setEnabled(true); }
 
-		static std::unique_ptr<Gang> Create() {
-			auto gang = std::unique_ptr<Gang>(new Gang);
-			gang->setEnabled(true);
-			return gang;
-		}
+		static std::unique_ptr<Gang> Create() { return std::unique_ptr<Gang>(new Gang); }
 		
 		Character* add (std::unique_ptr<Character>&& pilot);
 		Character* addPilot() { return add(Character::Create()); }

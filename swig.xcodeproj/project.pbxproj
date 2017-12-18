@@ -71,7 +71,7 @@
 		12C4585E1FE3B8640045BD84 /* Gang.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Gang.i; sourceTree = "<group>"; };
 		12C4585F1FE3C0C40045BD84 /* Character.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Character.i; sourceTree = "<group>"; };
 		12C458601FE3C23A0045BD84 /* Ship.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = Ship.i; sourceTree = "<group>"; };
-		12C458671FE3C53B0045BD84 /* jni_test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = jni_test; sourceTree = BUILT_PRODUCTS_DIR; };
+		12C458671FE3C53B0045BD84 /* libdgmpp.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = libdgmpp.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		12C458721FE3C5510045BD84 /* WarfareBuff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WarfareBuff.cpp; sourceTree = "<group>"; };
 		12C458731FE3C5510045BD84 /* Errors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Errors.hpp; sourceTree = "<group>"; };
 		12C458741FE3C5510045BD84 /* Factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Factory.hpp; sourceTree = "<group>"; };
@@ -207,7 +207,7 @@
 		12C458681FE3C53B0045BD84 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				12C458671FE3C53B0045BD84 /* jni_test */,
+				12C458671FE3C53B0045BD84 /* libdgmpp.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -340,9 +340,9 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
-		12C458661FE3C53B0045BD84 /* jni_test */ = {
+		12C458661FE3C53B0045BD84 /* libdgmpp.dylib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 12C4586C1FE3C53B0045BD84 /* Build configuration list for PBXNativeTarget "jni_test" */;
+			buildConfigurationList = 12C4586C1FE3C53B0045BD84 /* Build configuration list for PBXNativeTarget "libdgmpp.dylib" */;
 			buildPhases = (
 				12C458631FE3C53B0045BD84 /* Sources */,
 				12C458641FE3C53B0045BD84 /* Frameworks */,
@@ -353,9 +353,9 @@
 			dependencies = (
 				12C458E61FE3C76F0045BD84 /* PBXTargetDependency */,
 			);
-			name = jni_test;
+			name = libdgmpp.dylib;
 			productName = jni_test;
-			productReference = 12C458671FE3C53B0045BD84 /* jni_test */;
+			productReference = 12C458671FE3C53B0045BD84 /* libdgmpp.dylib */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -390,7 +390,7 @@
 			projectRoot = "";
 			targets = (
 				12C458491FE3ABC60045BD84 /* java */,
-				12C458661FE3C53B0045BD84 /* jni_test */,
+				12C458661FE3C53B0045BD84 /* libdgmpp.dylib */,
 			);
 		};
 /* End PBXProject section */
@@ -573,8 +573,13 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_LDFLAGS = (
+					"-dynamiclib",
+					"-framework",
+					JavaVM,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SYSTEM_HEADER_SEARCH_PATHS = /System/Library/Frameworks/JavaVM.framework/Versions/A/Headers/;
@@ -587,8 +592,13 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				MACH_O_TYPE = staticlib;
+				MACH_O_TYPE = mh_dylib;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_LDFLAGS = (
+					"-dynamiclib",
+					"-framework",
+					JavaVM,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SYSTEM_HEADER_SEARCH_PATHS = /System/Library/Frameworks/JavaVM.framework/Versions/A/Headers/;
@@ -616,7 +626,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		12C4586C1FE3C53B0045BD84 /* Build configuration list for PBXNativeTarget "jni_test" */ = {
+		12C4586C1FE3C53B0045BD84 /* Build configuration list for PBXNativeTarget "libdgmpp.dylib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				12C4586D1FE3C53B0045BD84 /* Debug */,
