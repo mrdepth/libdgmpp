@@ -18,31 +18,31 @@ public class DGMCapacitor {
 		dgmpp_type_free(opaque)
 	}
 	
-	var capacity: DGMGigaJoule {
+	public var capacity: DGMGigaJoule {
 		return dgmpp_capacitor_get_capacity(opaque)
 	}
 	
-	var rechargeTime: TimeInterval {
+	public var rechargeTime: TimeInterval {
 		return dgmpp_capacitor_get_recharge(opaque)
 	}
 
-	var lastsTime: TimeInterval {
+	public var lastsTime: TimeInterval {
 		return dgmpp_capacitor_get_lasts_time(opaque)
 	}
 
-	var isStable: Bool {
+	public var isStable: Bool {
 		return dgmpp_capacitor_is_stable(opaque)
 	}
 
-	var stableLevel: DGMPercent {
+	public var stableLevel: DGMPercent {
 		return dgmpp_capacitor_get_stable_level(opaque)
 	}
 
-	var use: DGMGigaJoulePerSecond {
+	public var use: DGMGigaJoulePerSecond {
 		return DGMGigaJoulePerSecond(dgmpp_capacitor_get_use(opaque))
 	}
 
-	var recharge: DGMGigaJoulePerSecond {
+	public var recharge: DGMGigaJoulePerSecond {
 		return DGMGigaJoulePerSecond(dgmpp_capacitor_get_recharge(opaque))
 	}
 
@@ -66,7 +66,7 @@ public class DGMShip: DGMType {
 		case xLarge = 4
 	}
 	
-	override init(_ opaque: dgmpp_attribute_ptr) {
+	public required init(_ opaque: dgmpp_attribute_ptr) {
 		super.init(opaque)
 	}
 
@@ -75,19 +75,19 @@ public class DGMShip: DGMType {
 		super.init(type)
 	}
 	
-	var raceID: DGMRaceID {
+	public var raceID: DGMRaceID {
 		return DGMRaceID(dgmpp_ship_get_race_id(opaque)) ?? .none
 	}
 	
-	var supportedDroneCategories: [DGMCategoryID] {
-		return dgmpp_ship_get_supported_drone_categories(opaque).array.map {DGMCategoryID($0)}
+	public var supportedDroneCategories: [DGMCategoryID] {
+		return DGMInts(dgmpp_ship_get_supported_drone_categories(opaque)).array.map {DGMCategoryID($0)}
 	}
 	
-	var rigSize: RigSize {
+	public var rigSize: RigSize {
 		return RigSize(dgmpp_ship_get_rig_size(opaque)) ?? .none
 	}
 	
-	var damagePattern: DGMDamageVector {
+	public var damagePattern: DGMDamageVector {
 		get {
 			return DGMDamageVector(dgmpp_ship_get_damage_pattern(opaque))
 		}
@@ -96,40 +96,40 @@ public class DGMShip: DGMType {
 		}
 	}
 	
-	func add(_ module: DGMModule, socket: Int = -1, ignoringRequirements: Bool = false) throws {
+	public func add(_ module: DGMModule, socket: Int = -1, ignoringRequirements: Bool = false) throws {
 		guard dgmpp_ship_add_module_v2(opaque, module.opaque, Int32(socket), ignoringRequirements) else { throw DGMError.cannotFit(module)}
 	}
 	
-	func add(_ drone: DGMDrone, squadronTag: Int = -1) throws {
+	public func add(_ drone: DGMDrone, squadronTag: Int = -1) throws {
 		guard dgmpp_ship_add_drone_v2(opaque, drone.opaque, Int32(squadronTag)) else { throw DGMError.cannotFit(drone)}
 	}
 	
-	func remove(_ module: DGMModule) {
+	public func remove(_ module: DGMModule) {
 		dgmpp_ship_remove_module(opaque, module.opaque)
 	}
 	
-	func remove(_ drone: DGMDrone) {
+	public func remove(_ drone: DGMDrone) {
 		dgmpp_ship_remove_drone(opaque, drone.opaque)
 	}
 
-	func canFit(_ module: DGMModule) -> Bool {
+	public func canFit(_ module: DGMModule) -> Bool {
 		return dgmpp_ship_can_fit_module(opaque, module.opaque)
 	}
 	
-	func canFit(_ drone: DGMDrone) -> Bool {
+	public func canFit(_ drone: DGMDrone) -> Bool {
 		return dgmpp_ship_can_fit_drone(opaque, drone.opaque)
 	}
 	
-	var modules: [DGMModule] {
-		return dgmpp_ship_get_modules(opaque).array.map {DGMModule($0.opaque)}
+	public var modules: [DGMModule] {
+		return DGMTypes(dgmpp_ship_get_modules(opaque)).array()
 	}
 
-	var drones: [DGMDrone] {
-		return dgmpp_ship_get_drones(opaque).array.map {DGMDrone($0.opaque)}
+	public var drones: [DGMDrone] {
+		return DGMTypes(dgmpp_ship_get_drones(opaque)).array()
 	}
 	
-	func modules(slot: DGMModule.Slot) -> [DGMModule] {
-		return dgmpp_ship_get_modules_slot(opaque, DGMPP_MODULE_SLOT(slot)).array.map {DGMModule($0.opaque)}
+	public func modules(slot: DGMModule.Slot) -> [DGMModule] {
+		return DGMTypes(dgmpp_ship_get_modules_slot(opaque, DGMPP_MODULE_SLOT(slot))).array()
 	}
 	
 	public var area: DGMArea? {
@@ -142,133 +142,234 @@ public class DGMShip: DGMType {
 		}
 	}
 	
-	func totalDroneSquadron(_ squadron: DGMDrone.Squadron = .none) -> Int {
+	public func totalDroneSquadron(_ squadron: DGMDrone.Squadron = .none) -> Int {
 		return dgmpp_ship_get_total_drone_squadron(opaque, DGMPP_DRONE_SQUADRON(squadron))
 	}
 
-	func usedDroneSquadron(_ squadron: DGMDrone.Squadron = .none) -> Int {
+	public func usedDroneSquadron(_ squadron: DGMDrone.Squadron = .none) -> Int {
 		return dgmpp_ship_get_used_drone_squadron(opaque, DGMPP_DRONE_SQUADRON(squadron))
 	}
 
-	var totalFighterLaunchTubes: Int {
+	public var totalFighterLaunchTubes: Int {
 		return dgmpp_ship_get_total_fighter_launch_tubes(opaque)
 	}
 
-	var usedFighterLaunchTubes: Int {
+	public var usedFighterLaunchTubes: Int {
 		return dgmpp_ship_get_used_fighter_launch_tubes(opaque)
 	}
 
-	func totalSlots(_ slot: DGMModule.Slot) -> Int {
+	public func totalSlots(_ slot: DGMModule.Slot) -> Int {
 		return dgmpp_ship_get_total_slots(opaque, DGMPP_MODULE_SLOT(slot))
 	}
 
-	func freeSlots(_ slot: DGMModule.Slot) -> Int {
+	public func freeSlots(_ slot: DGMModule.Slot) -> Int {
 		return dgmpp_ship_get_free_slots(opaque, DGMPP_MODULE_SLOT(slot))
 	}
 
-	func usedSlots(_ slot: DGMModule.Slot) -> Int {
+	public func usedSlots(_ slot: DGMModule.Slot) -> Int {
 		return dgmpp_ship_get_used_slots(opaque, DGMPP_MODULE_SLOT(slot))
 	}
 
-	func totalHardpoints(_ hardpoint: DGMModule.Hardpoint) -> Int {
+	public func totalHardpoints(_ hardpoint: DGMModule.Hardpoint) -> Int {
 		return dgmpp_ship_get_total_hardpoints(opaque, DGMPP_MODULE_HARDPOINT(hardpoint))
 	}
 
-	func freeHardpoints(_ hardpoint: DGMModule.Hardpoint) -> Int {
+	public func freeHardpoints(_ hardpoint: DGMModule.Hardpoint) -> Int {
 		return dgmpp_ship_get_free_hardpoints(opaque, DGMPP_MODULE_HARDPOINT(hardpoint))
 	}
 
-	func usedHardpoints(_ hardpoint: DGMModule.Hardpoint) -> Int {
+	public func usedHardpoints(_ hardpoint: DGMModule.Hardpoint) -> Int {
 		return dgmpp_ship_get_used_hardpoints(opaque, DGMPP_MODULE_HARDPOINT(hardpoint))
 	}
 
-	var capacitor: DGMCapacitor {
+	public var capacitor: DGMCapacitor {
 		return DGMCapacitor(dgmpp_ship_get_capacitor(opaque))
 	}
 	
-	var usedCalibration: DGMCalibrationPoints {
+	public var usedCalibration: DGMCalibrationPoints {
 		return dgmpp_ship_get_used_calibration(opaque)
 	}
 	
-	var totalCalibration: DGMCalibrationPoints {
+	public var totalCalibration: DGMCalibrationPoints {
 		return dgmpp_ship_get_total_calibration(opaque)
 	}
 	
-	var usedPowerGrid: DGMGigaJoule {
+	public var usedPowerGrid: DGMGigaJoule {
 		return dgmpp_ship_get_used_power_grid(opaque)
 	}
 	
-	var totalPowerGrid: DGMGigaJoule {
+	public var totalPowerGrid: DGMGigaJoule {
 		return dgmpp_ship_get_total_power_grid(opaque)
 	}
 	
-	var usedCPU: DGMTeraflops {
+	public var usedCPU: DGMTeraflops {
 		return dgmpp_ship_get_used_cpu(opaque)
 	}
 	
-	var totalCPU: DGMTeraflops {
+	public var totalCPU: DGMTeraflops {
 		return dgmpp_ship_get_total_cpu(opaque)
 	}
 	
-	var usedDroneBandwidth: DGMMegabitsPerSecond {
+	public var usedDroneBandwidth: DGMMegabitsPerSecond {
 		return dgmpp_ship_get_used_drone_bandwidth(opaque)
 	}
 	
-	var totalDroneBandwidth: DGMMegabitsPerSecond {
+	public var totalDroneBandwidth: DGMMegabitsPerSecond {
 		return dgmpp_ship_get_total_drone_bandwidth(opaque)
 	}
 	
-	var usedDroneBay: DGMCubicMeter {
+	public var usedDroneBay: DGMCubicMeter {
 		return dgmpp_ship_get_used_drone_bay(opaque)
 	}
 	
-	var totalDroneBay: DGMCubicMeter {
+	public var totalDroneBay: DGMCubicMeter {
 		return dgmpp_ship_get_total_drone_bay(opaque)
 	}
 	
-	var usedFighterHangar: DGMCubicMeter {
+	public var usedFighterHangar: DGMCubicMeter {
 		return dgmpp_ship_get_used_fighter_hangar(opaque)
 	}
 	
-	var totalFighterHangar: DGMCubicMeter {
+	public var totalFighterHangar: DGMCubicMeter {
 		return dgmpp_ship_get_total_fighter_hangar(opaque)
 	}
 	
-	var cargoCapacity: DGMCubicMeter {
+	public var cargoCapacity: DGMCubicMeter {
 		return dgmpp_ship_get_cargo_capacity(opaque)
 	}
 	
-	var oreHoldCapacity: DGMCubicMeter {
+	public var oreHoldCapacity: DGMCubicMeter {
 		return dgmpp_ship_get_ore_hold_capacity(opaque)
 	}
 	
-	var resistances: DGMResistances {
+	public var resistances: DGMResistances {
 		return DGMResistances(dgmpp_ship_get_resistances(opaque))
 	}
 	
-	var tank: DGMTank {
+	public var tank: DGMTank {
 		return DGMTank(dgmpp_ship_get_tank(opaque))
 	}
 	
-	var effectiveTank: DGMTank {
+	public var effectiveTank: DGMTank {
 		return DGMTank(dgmpp_ship_get_effective_tank(opaque))
 	}
 	
-	var sustainableTank: DGMTank {
+	public var sustainableTank: DGMTank {
 		return DGMTank(dgmpp_ship_get_sustainable_tank(opaque))
 	}
 	
-	var effectiveSustainableTank: DGMTank {
+	public var effectiveSustainableTank: DGMTank {
 		return DGMTank(dgmpp_ship_get_effective_sustainable_tank(opaque))
 	}
 
-	var hitPoints: DGMHitPoints {
+	public var hitPoints: DGMHitPoints {
 		return DGMHitPoints(dgmpp_ship_get_hit_points(opaque))
 	}
 
-	var effectiveHitPoints: DGMHitPoints {
+	public var effectiveHitPoints: DGMHitPoints {
 		return DGMHitPoints(dgmpp_ship_get_effective_hit_points(opaque))
 	}
+	
+	public var turretsVolley: DGMDamageVector {
+		return DGMDamageVector(dgmpp_ship_get_turrets_dps(opaque))
+	}
+	
+	public var launchersVolley: DGMDamageVector {
+		return DGMDamageVector(dgmpp_ship_get_launchers_volley(opaque))
+	}
 
+	public var dronesVolley: DGMDamageVector {
+		return DGMDamageVector(dgmpp_ship_get_drones_volley(opaque))
+	}
+	
+	public func turretsDPS(target: DGMHostileTarget = DGMHostileTarget.default) -> DGMDamagePerSecond {
+		return DGMDamagePerSecond(DGMDamageVector(dgmpp_ship_get_turrets_dps_v2(opaque, dgmpp_hostile_target(target))))
+	}
+
+	public func launchersDPS(target: DGMHostileTarget = DGMHostileTarget.default) -> DGMDamagePerSecond {
+		return DGMDamagePerSecond(DGMDamageVector(dgmpp_ship_get_launchers_dps_v2(opaque, dgmpp_hostile_target(target))))
+	}
+
+	public func dronesDPS(target: DGMHostileTarget = DGMHostileTarget.default) -> DGMDamagePerSecond {
+		return DGMDamagePerSecond(DGMDamageVector(dgmpp_ship_get_drones_dps_v2(opaque, dgmpp_hostile_target(target))))
+	}
+
+	public var minerYield: DGMCubicMeterPerSecond {
+		return DGMCubicMeterPerSecond(dgmpp_ship_get_miner_yield(opaque))
+	}
+
+	public var droneYield: DGMCubicMeterPerSecond {
+		return DGMCubicMeterPerSecond(dgmpp_ship_get_drone_yield(opaque))
+	}
+	
+	public var alignTime: TimeInterval {
+		return dgmpp_ship_get_align_time(opaque)
+	}
+
+	public var warpSpeed: DGMAstronomicalUnitsPerSecond {
+		return DGMAstronomicalUnitsPerSecond(dgmpp_ship_get_warp_speed(opaque))
+	}
+
+	public var maxWarpDistance: DGMAstronomicalUnit {
+		return dgmpp_ship_get_max_warp_distance(opaque)
+	}
+	
+	public var velocity: DGMMetersPerSecond {
+		return DGMMetersPerSecond(dgmpp_ship_get_velocity(opaque))
+	}
+	
+	public var signatureRadius: DGMMeter {
+		return dgmpp_ship_get_signature_radius(opaque)
+	}
+	
+	public var mass: DGMKilogram {
+		return dgmpp_ship_get_mass(opaque)
+	}
+	
+	public var volume: DGMCubicMeter {
+		return dgmpp_ship_get_volume(opaque)
+	}
+	
+	public var agility: DGMMultiplier {
+		return dgmpp_ship_get_agility(opaque)
+	}
+	
+	public func maxVelocityInOrbit(_ radius: DGMMeter) -> DGMMetersPerSecond {
+		return DGMMetersPerSecond(dgmpp_ship_get_max_velocity_in_orbit(opaque, radius))
+	}
+	
+	public func orbitRadius(transverseVelocity: DGMMetersPerSecond) -> DGMMeter {
+		return dgmpp_ship_get_orbit_radius_with_transverse_velocity(opaque, transverseVelocity.value)
+	}
+
+	public func orbitRadius(angularVelocity: DGMRadiansPerSecond) -> DGMMeter {
+		return dgmpp_ship_get_orbit_radius_with_angular_velocity(opaque, angularVelocity.value)
+	}
+
+	public var maxTargets: Int {
+		return dgmpp_ship_get_max_targets(opaque)
+	}
+	
+	public var maxTargetRange: DGMMeter {
+		return dgmpp_ship_get_max_target_range(opaque)
+	}
+	
+	public var scanStrength: DGMPoints {
+		return dgmpp_ship_get_scan_strength(opaque)
+	}
+	
+	public var scanType: DGMShip.ScanType {
+		return DGMShip.ScanType(dgmpp_ship_get_scan_type(opaque)) ?? .multispectral
+	}
+	
+	public var probeSize: DGMMeter {
+		return dgmpp_ship_get_probe_size(opaque)
+	}
+	
+	public var scanResolution: DGMMillimeter {
+		return dgmpp_ship_get_scan_resolution(opaque)
+	}
+	
 
 }
+

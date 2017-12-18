@@ -10,8 +10,8 @@
 
 #include "type.h"
 
-dgmpp_type_ptr dgmpp_charge_create (dgmpp_type_id type_id);
+DGMPP_EXTERN dgmpp_type_ptr dgmpp_charge_create (dgmpp_type_id type_id);
 
-DGMPP_CHARGE_SIZE dgmpp_charge_get_charge_size (dgmpp_type_ptr charge);
+DGMPP_EXTERN DGMPP_CHARGE_SIZE dgmpp_charge_get_charge_size (dgmpp_type_ptr charge);
 
 #endif /* charge_h */

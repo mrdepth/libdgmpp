@@ -101,11 +101,9 @@ namespace dgmpp {
 		timestamp_ = endTime;
 
 		std::set<Facility*, FacilityCompare> facilities;
-//		facilities.reserve(facilities_.size());
 		for (const auto& i: facilities_) {
 			if (i->configured()) {
 				facilities.insert(i.get());
-//				facilities.push_back(i.get());
 			}
 		}
 		

@@ -13,6 +13,10 @@ void dgmpp_type_free (dgmpp_type_ptr type) {
 		delete reinterpret_cast<dgmpp_type_impl*>(type);
 }
 
+void dgmpp_type_take_ownership (dgmpp_type_ptr type) {
+	reinterpret_cast<dgmpp_type_impl*>(type)->owned = false;
+}
+
 dgmpp_type_id dgmpp_type_get_type_id (dgmpp_type_ptr type) {
 	return static_cast<dgmpp_type_id>(type_cast<Type*>(type)->metaInfo().typeID);
 }

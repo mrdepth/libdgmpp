@@ -39,7 +39,7 @@ public typealias DGMRadiansPerSecond = Rate<DGMRadians, Seconds>
 public typealias DGMMetersPerSecond = Rate<DGMMeter, Seconds>
 public typealias DGMAstronomicalUnitsPerSecond = Rate<DGMAstronomicalUnit, Seconds>
 public typealias DGMHPPerSecond = Rate<DGMHP, Seconds>
-public typealias DGMFuelUnitsPerHour = Rate<Float, Hours>
+public typealias DGMFuelUnitsPerHour = Rate<Double, Hours>
 public typealias DGMDamagePerSecond = Rate<DGMDamageVector, Seconds>
 
 public enum DGMRaceID: Int {
@@ -50,6 +50,57 @@ public enum DGMRaceID: Int {
 	case gallente = 8
 }
 
+public class DGMTypes {
+	private var opaque: dgmpp_types_array_ptr
+	
+	init(_ opaque: dgmpp_types_array_ptr) {
+		self.opaque = opaque
+	}
+
+	deinit {
+		dgmpp_types_array_free(opaque)
+	}
+	
+	func array<T:DGMType>() -> [T] {
+		return (0..<opaque.pointee.count).map {T(opaque.pointee.types[$0]!)}
+	}
+	
+//	var array: [dgmpp_type_ptr] {
+//		return (0..<opaque.pointee.count).map {opaque.pointee.types[$0]!}
+//	}
+}
+
+public class DGMAttributes {
+	private var opaque: dgmpp_attributes_array_ptr
+	
+	init(_ opaque: dgmpp_attributes_array_ptr) {
+		self.opaque = opaque
+	}
+	
+	deinit {
+		dgmpp_attributes_array_free(opaque)
+	}
+	
+	var array: [DGMAttribute] {
+		return (0..<opaque.pointee.count).map { DGMAttribute(opaque.pointee.attributes[$0]!) }
+	}
+}
+
+public class DGMInts {
+	private var opaque: dgmpp_ints_array_ptr
+	
+	init(_ opaque: dgmpp_ints_array_ptr) {
+		self.opaque = opaque
+	}
+	
+	deinit {
+		dgmpp_ints_array_free(opaque)
+	}
+	
+	var array: [Int] {
+		return (0..<opaque.pointee.count).map {Int(opaque.pointee.values[$0])}
+	}
+}
 
 public struct DGMDamageVector: Scalable {
 	public var em: DGMHP
@@ -100,7 +151,16 @@ public struct DGMHostileTarget {
 	var signature: DGMMeter = 0
 	var range: DGMMeter = 0
 	
-	static let `default` = DGMHostileTarget()
+	public static let `default` = DGMHostileTarget(dgmpp_hostile_target_default)
+}
+
+extension DGMHostileTarget {
+	init(_ target: dgmpp_hostile_target) {
+		angularVelocity = DGMRadiansPerSecond(target.angular_velocity)
+		velocity = DGMMetersPerSecond (target.velocity)
+		signature = target.signature
+		range = target.range
+	}
 }
 
 extension dgmpp_hostile_target {
@@ -112,8 +172,8 @@ extension dgmpp_hostile_target {
 	}
 }
 
-struct DGMResistances {
-	struct Layer {
+public struct DGMResistances {
+	public struct Layer {
 		var em: DGMPercent
 		var thermal: DGMPercent
 		var kinetic: DGMPercent

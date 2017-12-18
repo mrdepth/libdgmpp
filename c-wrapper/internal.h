@@ -9,11 +9,13 @@
 
 #include "dgmpp.hpp"
 #include "type.h"
+#include "attribute.h"
 
 using namespace dgmpp;
 
 struct dgmpp_type_impl {
 	Type* type;
+	BOOL owned = true;
 	dgmpp_type_impl (Type* type) : type(type) {}
 	virtual ~dgmpp_type_impl() {}
 };
@@ -24,6 +26,16 @@ inline dgmpp_type_ptr dgmpp_make_type(Type* type) {
 
 struct dgmpp_attribute_impl {
 	Attribute* attribute;
+	BOOL owned = true;
+};
+
+struct dgmpp_planet_impl {
+	std::unique_ptr<Planet> planet;
+};
+
+struct dgmpp_facility_impl {
+	Facility* facility;
+	BOOL owned = true;
 };
 
 
@@ -35,7 +47,7 @@ struct dgmpp_types_array_impl : public dgmpp_types_array {
 			types = new dgmpp_type_ptr[count];
 			auto ptr = types;
 			for (auto i: container) {
-				*ptr = dgmpp_make_type(i);
+				*ptr++ = dgmpp_make_type(i);
 			}
 		}
 		else
@@ -45,8 +57,10 @@ struct dgmpp_types_array_impl : public dgmpp_types_array {
 	~dgmpp_types_array_impl() {
 		if (types) {
 			auto ptr = types;
-			for (int i = 0; i < count; i++, ptr++)
-				delete reinterpret_cast<dgmpp_type_impl*>(*ptr);
+			for (int i = 0; i < count; i++, ptr++) {
+				if (auto type = reinterpret_cast<dgmpp_type_impl*>(*ptr); type->owned)
+					delete type;
+			}
 			delete[] types;
 		}
 	}
@@ -60,7 +74,7 @@ struct dgmpp_attributes_array_impl : public dgmpp_attributes_array {
 			attributes = new dgmpp_attribute_ptr[count];
 			auto ptr = attributes;
 			for (auto i: container) {
-				*ptr = reinterpret_cast<dgmpp_attribute_ptr>(new dgmpp_attribute_impl{i});
+				*ptr++ = reinterpret_cast<dgmpp_attribute_ptr>(new dgmpp_attribute_impl{i});
 			}
 		}
 		else
@@ -70,8 +84,10 @@ struct dgmpp_attributes_array_impl : public dgmpp_attributes_array {
 	~dgmpp_attributes_array_impl() {
 		if (attributes) {
 			auto ptr = attributes;
-			for (int i = 0; i < count; i++, ptr++)
-				delete reinterpret_cast<dgmpp_attribute_impl*>(*ptr);
+			for (int i = 0; i < count; i++, ptr++) {
+				if (auto attribute = reinterpret_cast<dgmpp_attribute_impl*>(*ptr); attribute->owned)
+					delete attribute;
+			}
 			delete[] attributes;
 		}
 	}
@@ -85,7 +101,7 @@ struct dgmpp_ints_array_impl : public dgmpp_ints_array {
 			values = new int[count];
 			auto ptr = values;
 			for (auto i: container) {
-				*ptr = static_cast<int>(i);
+				*ptr++ = static_cast<int>(i);
 			}
 		}
 		else
@@ -101,14 +117,14 @@ struct dgmpp_ints_array_impl : public dgmpp_ints_array {
 
 struct dgmpp_gang_impl : public dgmpp_type_impl {
 	std::unique_ptr<Gang> gang;
-	dgmpp_gang_impl() : dgmpp_type_impl(nullptr) {
+	dgmpp_gang_impl() : dgmpp_type_impl(nullptr), gang(Gang::Create()) {
 		type = gang.get();
 	}
 };
 
 struct dgmpp_character_impl : public dgmpp_type_impl {
 	std::unique_ptr<Character> character;
-	dgmpp_character_impl() : dgmpp_type_impl(nullptr) {
+	dgmpp_character_impl() : dgmpp_type_impl(nullptr), character(Character::Create()) {
 		type = character.get();
 	}
 };

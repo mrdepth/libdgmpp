@@ -37,13 +37,11 @@ namespace dgmpp {
 			typedef void is_transparent;
 		};
 		
-//		std::set<std::unique_ptr<Facility>, FacilityCompare> facilities_;
 		std::list<std::unique_ptr<Facility>> facilities_;
 		std::chrono::seconds lastUpdate_ = std::chrono::seconds::zero();
 		std::chrono::seconds timestamp_ = std::chrono::seconds::zero();
 		
 		std::optional<std::chrono::seconds> nextCycleTime(const std::set<Facility*, FacilityCompare>& facilities) const noexcept;
-//		void runCycle(std::chrono::seconds cycleTime);
 
 	};
 }

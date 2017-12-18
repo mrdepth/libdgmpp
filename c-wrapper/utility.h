@@ -10,15 +10,19 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+#define DGMPP_EXTERN extern "C"
+#else
+#define DGMPP_EXTERN
+#endif
+
+
 typedef signed char BOOL;
 typedef int dgmpp_type_id;
 typedef int dgmpp_group_id;
 typedef int dgmpp_category_id;
 typedef int dgmpp_attribute_id;
-//typedef int dgmpp_effect_id;
-//typedef int dgmpp_warfare_buff_id;
 typedef int dgmpp_schematic_id;
-//typedef int dgmpp_modifier_id;
 typedef double dgmpp_giga_joule;
 typedef double dgmpp_teraflops;
 typedef double dgmpp_mega_watts;
@@ -43,32 +47,56 @@ typedef double dgmpp_hp_per_second;
 typedef double dgmpp_fuel_units_per_hour;
 typedef double dgmpp_seconds;
 
-typedef struct dgmpp_attribute dgmpp_attribute;
-typedef dgmpp_attribute* dgmpp_attribute_ptr;
 typedef struct dgmpp_type dgmpp_type;
+typedef struct dgmpp_attribute dgmpp_attribute;
+typedef struct dgmpp_planet dgmpp_planet;
+typedef struct dgmpp_facility dgmpp_facility;
+typedef struct dgmpp_state dgmpp_state;
+typedef struct dgmpp_production_state dgmpp_production_state;
+//typedef struct dgmpp_commodity dgmpp_commodity;
+
 typedef dgmpp_type* dgmpp_type_ptr;
+typedef dgmpp_attribute* dgmpp_attribute_ptr;
+typedef dgmpp_planet* dgmpp_planet_ptr;
+typedef dgmpp_facility* dgmpp_facility_ptr;
+typedef dgmpp_state* dgmpp_state_ptr;
+typedef dgmpp_production_state* dgmpp_production_state_ptr;
+//typedef dgmpp_commodity* dgmpp_commodity_ptr;
 
 typedef struct {
 	size_t count;
 	dgmpp_type_ptr* types;
 } dgmpp_types_array;
 typedef dgmpp_types_array* dgmpp_types_array_ptr;
-void dgmpp_types_array_free (dgmpp_types_array_ptr array);
+DGMPP_EXTERN void dgmpp_types_array_free (dgmpp_types_array_ptr array);
 
 typedef struct {
 	size_t count;
 	dgmpp_attribute_ptr* attributes;
 } dgmpp_attributes_array;
 typedef dgmpp_attributes_array* dgmpp_attributes_array_ptr;
-void dgmpp_attributes_array_free (dgmpp_attributes_array_ptr array);
+DGMPP_EXTERN void dgmpp_attributes_array_free (dgmpp_attributes_array_ptr array);
 
 typedef struct {
 	size_t count;
 	int* values;
 } dgmpp_ints_array;
 typedef dgmpp_ints_array* dgmpp_ints_array_ptr;
-void dgmpp_ints_array_free (dgmpp_ints_array_ptr array);
+DGMPP_EXTERN void dgmpp_ints_array_free (dgmpp_ints_array_ptr array);
 
+typedef struct {
+	size_t count;
+	dgmpp_facility_ptr* facilities;
+} dgmpp_facilities_array;
+typedef dgmpp_facilities_array* dgmpp_facilities_array_ptr;
+DGMPP_EXTERN void dgmpp_facilities_array_free (dgmpp_facilities_array_ptr array);
+
+typedef struct {
+	size_t count;
+	dgmpp_state_ptr* states;
+} dgmpp_states_array;
+typedef dgmpp_states_array* dgmpp_states_array_ptr;
+DGMPP_EXTERN void dgmpp_states_array_free (dgmpp_states_array_ptr array);
 
 typedef enum {
 	DGMPP_RACE_ID_NONE = 0,
@@ -187,6 +215,27 @@ typedef struct {
 	dgmpp_meter range;
 } dgmpp_hostile_target;
 
-extern const dgmpp_hostile_target dgmpp_hostile_target_default;
+DGMPP_EXTERN const dgmpp_hostile_target dgmpp_hostile_target_default;
+
+typedef struct {
+	dgmpp_type_id type_id;
+	DGMPP_COMMODITY_TIER tier;
+	dgmpp_cubic_meter volume;
+	size_t quantity;
+} dgmpp_commodity;
+
+typedef struct {
+	size_t count;
+	dgmpp_commodity* commodities;
+} dgmpp_commodities_array;
+typedef dgmpp_commodities_array* dgmpp_commodities_array_ptr;
+DGMPP_EXTERN void dgmpp_commodities_array_free (dgmpp_commodities_array_ptr array);
+
+typedef struct {
+	dgmpp_seconds start;
+	dgmpp_seconds end;
+	dgmpp_commodity yield;
+	dgmpp_commodity waste;
+} dgmpp_production_cycle;
 
 #endif /* utility_h */

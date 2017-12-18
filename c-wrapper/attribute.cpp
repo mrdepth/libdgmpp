@@ -8,8 +8,12 @@
 #include "attribute.h"
 #include "internal.h"
 
-void dgmpp_attribute_free (dgmpp_attribute_ptr type) {
-	delete reinterpret_cast<dgmpp_attribute_impl*>(type);
+void dgmpp_attribute_free (dgmpp_attribute_ptr attribute) {
+	delete reinterpret_cast<dgmpp_attribute_impl*>(attribute);
+}
+
+void dgmpp_attribute_take_ownership (dgmpp_attribute_ptr attribute) {
+	reinterpret_cast<dgmpp_attribute_impl*>(attribute)->owned = false;
 }
 
 dgmpp_attribute_id dgmpp_attribute_get_attribute_id (dgmpp_attribute_ptr attribute) {

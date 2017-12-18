@@ -17,7 +17,7 @@ public class DGMDrone: DGMType {
 	}
 
 	
-	override init(_ opaque: dgmpp_attribute_ptr) {
+	public required init(_ opaque: dgmpp_attribute_ptr) {
 		super.init(opaque)
 	}
 
@@ -58,35 +58,35 @@ public class DGMDrone: DGMType {
 		}
 	}
 	
-	var cycleTime: TimeInterval {
+	public var cycleTime: TimeInterval {
 		return dgmpp_drone_get_cycle_time(opaque)
 	}
 	
-	var volley: DGMDamageVector {
+	public var volley: DGMDamageVector {
 		return DGMDamageVector(dgmpp_drone_get_volley(opaque))
 	}
 	
-	func dps(target: DGMHostileTarget = DGMHostileTarget.default) -> DGMDamagePerSecond {
+	public func dps(target: DGMHostileTarget = DGMHostileTarget.default) -> DGMDamagePerSecond {
 		return DGMDamagePerSecond(DGMDamageVector(dgmpp_drone_get_dps_v2(opaque, dgmpp_hostile_target(target))))
 	}
 	
-	var optimal: DGMMeter {
+	public var optimal: DGMMeter {
 		return dgmpp_drone_get_optimal(opaque)
 	}
 	
-	var falloff: DGMMeter {
+	public var falloff: DGMMeter {
 		return dgmpp_drone_get_falloff(opaque)
 	}
 
-	var accuracyScore: DGMPoints {
+	public var accuracyScore: DGMPoints {
 		return dgmpp_drone_get_accuracy_score(opaque)
 	}
 
-	var miningYield: DGMCubicMeterPerSecond {
+	public var miningYield: DGMCubicMeterPerSecond {
 		return DGMCubicMeterPerSecond(dgmpp_drone_get_mining_yield(opaque))
 	}
 
-	var velocity: DGMMetersPerSecond {
+	public var velocity: DGMMetersPerSecond {
 		return DGMCubicMeterPerSecond(dgmpp_drone_get_velocity(opaque))
 	}
 

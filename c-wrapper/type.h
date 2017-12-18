@@ -13,14 +13,15 @@
 
 //struct dgmpp_attribute;
 
-void dgmpp_type_free (dgmpp_type_ptr type);
+DGMPP_EXTERN void dgmpp_type_free (dgmpp_type_ptr type);
+DGMPP_EXTERN void dgmpp_type_take_ownership (dgmpp_type_ptr type);
 
-dgmpp_type_id				dgmpp_type_get_type_id		(dgmpp_type_ptr type);
-dgmpp_group_id				dgmpp_type_get_group_id		(dgmpp_type_ptr type);
-dgmpp_category_id			dgmpp_type_get_category_id	(dgmpp_type_ptr type);
-dgmpp_type_ptr				dgmpp_type_get_parent		(dgmpp_type_ptr type);
-dgmpp_attribute_ptr			dgmpp_type_get_attribute	(dgmpp_type_ptr type, dgmpp_attribute_id attribute_id);
-dgmpp_types_array_ptr		dgmpp_type_get_affectors	(dgmpp_type_ptr type);
-dgmpp_attributes_array_ptr	dgmpp_type_get_attributes	(dgmpp_type_ptr type);
+DGMPP_EXTERN dgmpp_type_id				dgmpp_type_get_type_id		(dgmpp_type_ptr type);
+DGMPP_EXTERN dgmpp_group_id				dgmpp_type_get_group_id		(dgmpp_type_ptr type);
+DGMPP_EXTERN dgmpp_category_id			dgmpp_type_get_category_id	(dgmpp_type_ptr type);
+DGMPP_EXTERN dgmpp_type_ptr				dgmpp_type_get_parent		(dgmpp_type_ptr type);
+DGMPP_EXTERN dgmpp_attribute_ptr			dgmpp_type_get_attribute	(dgmpp_type_ptr type, dgmpp_attribute_id attribute_id);
+DGMPP_EXTERN dgmpp_types_array_ptr		dgmpp_type_get_affectors	(dgmpp_type_ptr type);
+DGMPP_EXTERN dgmpp_attributes_array_ptr	dgmpp_type_get_attributes	(dgmpp_type_ptr type);
 
 #endif /* type_h */

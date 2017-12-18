@@ -9,7 +9,7 @@ import Foundation
 
 public class DGMArea: DGMType {
 	
-	override init(_ opaque: dgmpp_attribute_ptr) {
+	public required init(_ opaque: dgmpp_attribute_ptr) {
 		super.init(opaque)
 	}
 

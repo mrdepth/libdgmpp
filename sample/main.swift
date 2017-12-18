@@ -12,11 +12,13 @@ import Dgmpp
 do {
 	let gang = DGMGang()
 	let pilot = DGMCharacter()
+	gang.add(pilot)
 	pilot.setSkillLevels(5)
-	gang.addPilot(pilot)
-	
 	let dominix = try DGMShip(typeID: 645)
 	pilot.ship = dominix
+	
+	print("\(dominix.hitPoints.shield)")
+	print(dominix.attributes.map {"\($0.attributeID): \($0.value)"}.joined(separator: "\n"))
 }
 catch _ {
 	

@@ -10,9 +10,11 @@ import Foundation
 public class DGMType {
 	var opaque: dgmpp_type_ptr
 	
-	init(_ opaque: dgmpp_attribute_ptr) {
+	public required init(_ opaque: dgmpp_attribute_ptr) {
 		self.opaque = opaque
+		dgmpp_type_take_ownership(opaque)
 	}
+	
 	
 	deinit {
 		dgmpp_type_free(opaque)
@@ -41,11 +43,11 @@ public class DGMType {
 	}
 	
 	public var affectors: [DGMType] {
-		return dgmpp_type_get_affectors(opaque).array
+		return DGMTypes(dgmpp_type_get_affectors(opaque)).array()
 	}
 	
 	public var attributes: [DGMAttribute] {
-		return dgmpp_type_get_attributes(opaque).array
+		return DGMAttributes(dgmpp_type_get_attributes(opaque)).array
 	}
 
 }

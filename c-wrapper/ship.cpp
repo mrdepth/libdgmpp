@@ -287,6 +287,10 @@ dgmpp_astronomical_units_per_second dgmpp_ship_get_warp_speed (dgmpp_type_ptr sh
 	return type_cast<Ship*>(ship)->warpSpeed() * 1s;
 }
 
+dgmpp_astronomical_unit dgmpp_ship_get_max_warp_distance (dgmpp_type_ptr ship) {
+	return type_cast<Ship*>(ship)->maxWarpDistance();
+}
+
 dgmpp_meters_per_second dgmpp_ship_get_velocity (dgmpp_type_ptr ship) {
 	return type_cast<Ship*>(ship)->velocity() * 1s;
 }

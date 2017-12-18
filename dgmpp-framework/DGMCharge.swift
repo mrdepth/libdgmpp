@@ -16,7 +16,7 @@ public class DGMCharge: DGMType {
 		case xLarge = 4
 	}
 	
-	override init(_ opaque: dgmpp_attribute_ptr) {
+	public required init(_ opaque: dgmpp_attribute_ptr) {
 		super.init(opaque)
 	}
 	

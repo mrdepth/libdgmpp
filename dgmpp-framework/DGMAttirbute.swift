@@ -12,6 +12,7 @@ public class DGMAttribute {
 	
 	init(_ opaque: dgmpp_attribute_ptr) {
 		self.opaque = opaque
+		dgmpp_attribute_take_ownership(opaque)
 	}
 	
 	deinit {
