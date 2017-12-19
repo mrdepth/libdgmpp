@@ -56,3 +56,9 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <Dgmpp/structure.h>
 #include <Dgmpp/type.h>
 
+#include <Dgmpp/extractor_control_unit.h>
+#include <Dgmpp/facility.h>
+#include <Dgmpp/factory.h>
+#include <Dgmpp/planet.h>
+#include <Dgmpp/production_state.h>
+#include <Dgmpp/storage.h>

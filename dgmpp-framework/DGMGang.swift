@@ -26,7 +26,7 @@ public class DGMGang: DGMType {
 	}
 	
 	public var pilots: [DGMCharacter] {
-		return DGMTypes(dgmpp_gang_get_pilots(opaque)).array()
+		return DGMArray<DGMCharacter>(dgmpp_gang_get_pilots(opaque)).array
 	}
 
 }

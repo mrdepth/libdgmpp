@@ -47,56 +47,32 @@ typedef double dgmpp_hp_per_second;
 typedef double dgmpp_fuel_units_per_hour;
 typedef double dgmpp_seconds;
 
-typedef struct dgmpp_type dgmpp_type;
-typedef struct dgmpp_attribute dgmpp_attribute;
-typedef struct dgmpp_planet dgmpp_planet;
-typedef struct dgmpp_facility dgmpp_facility;
-typedef struct dgmpp_state dgmpp_state;
-typedef struct dgmpp_production_state dgmpp_production_state;
+typedef struct dgmpp_t dgmpp_t;
+
+typedef dgmpp_t dgmpp_type;
+typedef dgmpp_t dgmpp_attribute;
+typedef dgmpp_t dgmpp_planet;
+typedef dgmpp_t dgmpp_facility;
+typedef dgmpp_t dgmpp_state;
+typedef dgmpp_t dgmpp_array;
+typedef dgmpp_t dgmpp_capacitor;
+
 //typedef struct dgmpp_commodity dgmpp_commodity;
 
+typedef struct dgmpp_t* dgmpp_ptr;
 typedef dgmpp_type* dgmpp_type_ptr;
 typedef dgmpp_attribute* dgmpp_attribute_ptr;
 typedef dgmpp_planet* dgmpp_planet_ptr;
 typedef dgmpp_facility* dgmpp_facility_ptr;
 typedef dgmpp_state* dgmpp_state_ptr;
-typedef dgmpp_production_state* dgmpp_production_state_ptr;
-//typedef dgmpp_commodity* dgmpp_commodity_ptr;
+typedef dgmpp_array* dgmpp_array_ptr;
+typedef dgmpp_capacitor* dgmpp_capacitor_ptr;
 
-typedef struct {
-	size_t count;
-	dgmpp_type_ptr* types;
-} dgmpp_types_array;
-typedef dgmpp_types_array* dgmpp_types_array_ptr;
-DGMPP_EXTERN void dgmpp_types_array_free (dgmpp_types_array_ptr array);
+DGMPP_EXTERN void dgmpp_retain	(dgmpp_ptr ptr);
+DGMPP_EXTERN void dgmpp_release	(dgmpp_ptr ptr);
 
-typedef struct {
-	size_t count;
-	dgmpp_attribute_ptr* attributes;
-} dgmpp_attributes_array;
-typedef dgmpp_attributes_array* dgmpp_attributes_array_ptr;
-DGMPP_EXTERN void dgmpp_attributes_array_free (dgmpp_attributes_array_ptr array);
-
-typedef struct {
-	size_t count;
-	int* values;
-} dgmpp_ints_array;
-typedef dgmpp_ints_array* dgmpp_ints_array_ptr;
-DGMPP_EXTERN void dgmpp_ints_array_free (dgmpp_ints_array_ptr array);
-
-typedef struct {
-	size_t count;
-	dgmpp_facility_ptr* facilities;
-} dgmpp_facilities_array;
-typedef dgmpp_facilities_array* dgmpp_facilities_array_ptr;
-DGMPP_EXTERN void dgmpp_facilities_array_free (dgmpp_facilities_array_ptr array);
-
-typedef struct {
-	size_t count;
-	dgmpp_state_ptr* states;
-} dgmpp_states_array;
-typedef dgmpp_states_array* dgmpp_states_array_ptr;
-DGMPP_EXTERN void dgmpp_states_array_free (dgmpp_states_array_ptr array);
+DGMPP_EXTERN size_t			dgmpp_array_get_size	(dgmpp_array_ptr ptr);
+DGMPP_EXTERN const void*	dgmpp_array_get_values	(dgmpp_array_ptr ptr);
 
 typedef enum {
 	DGMPP_RACE_ID_NONE = 0,
@@ -225,15 +201,8 @@ typedef struct {
 } dgmpp_commodity;
 
 typedef struct {
-	size_t count;
-	dgmpp_commodity* commodities;
-} dgmpp_commodities_array;
-typedef dgmpp_commodities_array* dgmpp_commodities_array_ptr;
-DGMPP_EXTERN void dgmpp_commodities_array_free (dgmpp_commodities_array_ptr array);
-
-typedef struct {
 	dgmpp_seconds start;
-	dgmpp_seconds end;
+	dgmpp_seconds duration;
 	dgmpp_commodity yield;
 	dgmpp_commodity waste;
 } dgmpp_production_cycle;

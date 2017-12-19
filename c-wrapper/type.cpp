@@ -8,15 +8,6 @@
 #include "type.h"
 #include "internal.h"
 
-void dgmpp_type_free (dgmpp_type_ptr type) {
-	if (type)
-		delete reinterpret_cast<dgmpp_type_impl*>(type);
-}
-
-void dgmpp_type_take_ownership (dgmpp_type_ptr type) {
-	reinterpret_cast<dgmpp_type_impl*>(type)->owned = false;
-}
-
 dgmpp_type_id dgmpp_type_get_type_id (dgmpp_type_ptr type) {
 	return static_cast<dgmpp_type_id>(type_cast<Type*>(type)->metaInfo().typeID);
 }
@@ -39,10 +30,10 @@ dgmpp_attribute_ptr dgmpp_type_get_attribute (dgmpp_type_ptr type, dgmpp_attribu
 		return nullptr;
 }
 
-dgmpp_types_array_ptr dgmpp_type_get_affectors (dgmpp_type_ptr type) {
-	return new dgmpp_types_array_impl(type_cast<Type*>(type)->affectors());
+dgmpp_array_ptr dgmpp_type_get_affectors (dgmpp_type_ptr type) {
+	return dgmpp_make_array<dgmpp_type_impl*>(type_cast<Type*>(type)->affectors());
 }
 
-dgmpp_attributes_array_ptr dgmpp_type_get_attributes (dgmpp_type_ptr type) {
-	return new dgmpp_attributes_array_impl(type_cast<Type*>(type)->attributes());
+dgmpp_array_ptr dgmpp_type_get_attributes (dgmpp_type_ptr type) {
+	return dgmpp_make_array<dgmpp_attribute_impl*>(type_cast<Type*>(type)->attributes());
 }

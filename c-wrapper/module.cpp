@@ -41,8 +41,8 @@ DGMPP_MODULE_STATE dgmpp_module_get_preferred_state (dgmpp_type_ptr module) {
 	return static_cast<DGMPP_MODULE_STATE>(type_cast<Module*>(module)->preferredState());
 }
 
-dgmpp_ints_array_ptr dgmpp_module_get_available_states (dgmpp_type_ptr module) {
-	return new dgmpp_ints_array_impl(type_cast<Module*>(module)->availableStates());
+dgmpp_array_ptr dgmpp_module_get_available_states (dgmpp_type_ptr module) {
+	return dgmpp_make_array<int>(type_cast<Module*>(module)->availableStates());
 }
 
 dgmpp_type_ptr dgmpp_module_get_target (dgmpp_type_ptr module) {
@@ -73,8 +73,8 @@ BOOL dgmpp_module_set_charge (dgmpp_type_ptr module, dgmpp_type_ptr charge) {
 	}
 }
 
-dgmpp_ints_array_ptr dgmpp_module_get_charge_groups (dgmpp_type_ptr module) {
-	return new dgmpp_ints_array_impl(type_cast<Module*>(module)->chargeGroups());
+dgmpp_array_ptr dgmpp_module_get_charge_groups (dgmpp_type_ptr module) {
+	return dgmpp_make_array<int>(type_cast<Module*>(module)->chargeGroups());
 }
 
 DGMPP_CHARGE_SIZE dgmpp_module_get_charge_size (dgmpp_type_ptr module) {

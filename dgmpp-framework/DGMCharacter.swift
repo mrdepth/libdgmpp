@@ -107,15 +107,15 @@ public class DGMCharacter: DGMType {
 	}
 	
 	public var implants: [DGMImplant] {
-		return DGMTypes(dgmpp_character_get_implants(opaque)).array()
+		return DGMArray<DGMImplant>(dgmpp_character_get_implants(opaque)).array
 	}
 
 	public var boosters: [DGMBooster] {
-		return DGMTypes(dgmpp_character_get_boosters(opaque)).array()
+		return DGMArray<DGMBooster>(dgmpp_character_get_boosters(opaque)).array
 	}
 
 	public var skills: [DGMSkill] {
-		return DGMTypes(dgmpp_character_get_skills(opaque)).array()
+		return DGMArray<DGMSkill>(dgmpp_character_get_skills(opaque)).array
 	}
 
 }

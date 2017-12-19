@@ -22,8 +22,8 @@ dgmpp_type_ptr dgmpp_ship_create (dgmpp_type_id type_id) {
 	}
 }
 
-dgmpp_ints_array_ptr dgmpp_ship_get_supported_drone_categories (dgmpp_type_ptr ship) {
-	return new dgmpp_ints_array_impl(type_cast<Ship*>(ship)->supportedDroneCategories());
+dgmpp_array_ptr dgmpp_ship_get_supported_drone_categories (dgmpp_type_ptr ship) {
+	return dgmpp_make_array<int>(type_cast<Ship*>(ship)->supportedDroneCategories());
 }
 
 DGMPP_RACE_ID dgmpp_ship_get_race_id (dgmpp_type_ptr ship) {
@@ -94,16 +94,16 @@ BOOL dgmpp_ship_can_fit_drone (dgmpp_type_ptr ship, dgmpp_type_ptr drone) {
 	return type_cast<Ship*>(ship)->canFit(type_cast<Drone*>(drone));
 }
 
-dgmpp_types_array_ptr dgmpp_ship_get_modules (dgmpp_type_ptr ship) {
-	return new dgmpp_types_array_impl(type_cast<Ship*>(ship)->modules());
+dgmpp_array_ptr dgmpp_ship_get_modules (dgmpp_type_ptr ship) {
+	return dgmpp_make_array<dgmpp_type_impl*>(type_cast<Ship*>(ship)->modules());
 }
 
-dgmpp_types_array_ptr dgmpp_ship_get_drones (dgmpp_type_ptr ship) {
-	return new dgmpp_types_array_impl(type_cast<Ship*>(ship)->drones());
+dgmpp_array_ptr dgmpp_ship_get_drones (dgmpp_type_ptr ship) {
+	return dgmpp_make_array<dgmpp_type_impl*>(type_cast<Ship*>(ship)->drones());
 }
 
-dgmpp_types_array_ptr dgmpp_ship_get_modules_slot (dgmpp_type_ptr ship, DGMPP_MODULE_SLOT slot) {
-	return new dgmpp_types_array_impl(type_cast<Ship*>(ship)->modules(static_cast<Module::Slot>(slot)));
+dgmpp_array_ptr dgmpp_ship_get_modules_slot (dgmpp_type_ptr ship, DGMPP_MODULE_SLOT slot) {
+	return dgmpp_make_array<dgmpp_type_impl*>(type_cast<Ship*>(ship)->modules(static_cast<Module::Slot>(slot)));
 }
 
 size_t dgmpp_ship_get_total_drone_squadron (dgmpp_type_ptr ship, DGMPP_DRONE_SQUADRON squadron) {

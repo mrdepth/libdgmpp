@@ -22,8 +22,8 @@ BOOL dgmpp_character_set_skill_levels (dgmpp_type_ptr character, int skill_level
 	}
 }
 
-dgmpp_types_array_ptr dgmpp_character_get_skills (dgmpp_type_ptr character) {
-	return new dgmpp_types_array_impl(type_cast<Character*>(character)->skills());
+dgmpp_array_ptr dgmpp_character_get_skills (dgmpp_type_ptr character) {
+	return dgmpp_make_array<dgmpp_type_impl*>(type_cast<Character*>(character)->skills());
 }
 
 BOOL dgmpp_character_add_implant (dgmpp_type_ptr character, dgmpp_type_ptr implant) {
@@ -62,12 +62,12 @@ void dgmpp_character_remove_booster (dgmpp_type_ptr character, dgmpp_type_ptr bo
 	type_cast<Character*>(character)->remove(type_cast<Booster*>(booster));
 }
 
-dgmpp_types_array_ptr dgmpp_character_get_implants (dgmpp_type_ptr character) {
-	return new dgmpp_types_array_impl(type_cast<Character*>(character)->implants());
+dgmpp_array_ptr dgmpp_character_get_implants (dgmpp_type_ptr character) {
+	return dgmpp_make_array<dgmpp_type_impl*>(type_cast<Character*>(character)->implants());
 }
 
-dgmpp_types_array_ptr dgmpp_character_get_boosters (dgmpp_type_ptr character) {
-	return new dgmpp_types_array_impl(type_cast<Character*>(character)->boosters());
+dgmpp_array_ptr dgmpp_character_get_boosters (dgmpp_type_ptr character) {
+	return dgmpp_make_array<dgmpp_type_impl*>(type_cast<Character*>(character)->boosters());
 }
 
 

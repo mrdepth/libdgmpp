@@ -10,6 +10,7 @@ import Foundation
 enum DGMError: Error {
 	case typeNotFound(DGMTypeID)
 	case cannotFit(DGMType)
+	case NotEnoughCommodities
 }
 
 public typealias DGMTypeID = Int
@@ -50,7 +51,50 @@ public enum DGMRaceID: Int {
 	case gallente = 8
 }
 
-public class DGMTypes {
+class DGMArray<T> {
+	
+	private var opaque: dgmpp_array_ptr
+	init(_ opaque: dgmpp_array_ptr) {
+		self.opaque = opaque
+	}
+	
+	deinit {
+		dgmpp_release(opaque)
+	}
+}
+
+extension DGMArray where T: DGMType {
+	var array: [T] {
+		let size = dgmpp_array_get_size(opaque)
+		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_type_ptr.self, capacity: size)
+		return (0..<size).map {
+			dgmpp_retain(ptr[$0])
+			return T(ptr[$0])
+		}
+	}
+}
+
+extension DGMArray where T == DGMAttribute {
+	var array: [T] {
+		let size = dgmpp_array_get_size(opaque)
+		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_attribute_ptr.self, capacity: size)
+		return (0..<size).map {
+			dgmpp_retain(ptr[$0])
+			return T(ptr[$0])
+		}
+	}
+}
+
+extension DGMArray where T == Int {
+	var array: [T] {
+		let size = dgmpp_array_get_size(opaque)
+		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: Int.self, capacity: size)
+		return (0..<size).map {ptr[$0]}
+	}
+}
+
+
+/*public class DGMTypes {
 	private var opaque: dgmpp_types_array_ptr
 	
 	init(_ opaque: dgmpp_types_array_ptr) {
@@ -100,7 +144,7 @@ public class DGMInts {
 	var array: [Int] {
 		return (0..<opaque.pointee.count).map {Int(opaque.pointee.values[$0])}
 	}
-}
+}*/
 
 public struct DGMDamageVector: Scalable {
 	public var em: DGMHP
@@ -215,3 +259,52 @@ extension DGMHitPoints {
 		hull = hitPoints.hull
 	}
 }
+
+public struct DGMCommodity {
+	public enum Tier: Int {
+		case unknown = -1
+		case raw
+		case tier1
+		case tier2
+		case tier3
+		case tier4
+	}
+	public var typeID: DGMTypeID
+	public var tier: Tier;
+	var volume: DGMCubicMeter;
+	var quantity: Int;
+	var total: DGMCubicMeter {
+		return volume * DGMCubicMeter(quantity)
+	}
+}
+
+extension DGMCommodity {
+	init(_ commodity: dgmpp_commodity) {
+		typeID = DGMTypeID(commodity.type_id)
+		tier = Tier(commodity.tier) ?? .unknown
+		volume = commodity.volume
+		quantity = commodity.quantity
+	}
+}
+
+extension dgmpp_commodity {
+	init(_ commodity: DGMCommodity) {
+		type_id = Int32(commodity.typeID)
+		tier = DGMPP_COMMODITY_TIER(Int32(commodity.tier.rawValue))
+		volume = commodity.volume
+		quantity = commodity.quantity
+	}
+}
+
+struct DGMProductionCycle{
+	var start: TimeInterval;
+	var duration: TimeInterval;
+	var end: TimeInterval {
+		return start + duration
+	}
+	
+	var yield: DGMCommodity;
+	var waste: DGMCommodity;
+};
+
+

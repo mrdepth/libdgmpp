@@ -16,9 +16,7 @@ namespace dgmpp {
 
 		const MetaInfo::Schematic* schematic() const noexcept { return schematic_; }
 		void schematic(SchematicID schematicID);
-		
-		
-		
+
 		std::chrono::seconds launchTime() const noexcept { return launchTime_; }
 		void launchTime (std::chrono::seconds value) noexcept { launchTime_ = value; }
 		std::optional<std::chrono::seconds> cycleTime() const;

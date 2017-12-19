@@ -15,7 +15,7 @@ public class DGMCapacitor {
 	}
 	
 	deinit {
-		dgmpp_type_free(opaque)
+		dgmpp_release(opaque)
 	}
 	
 	public var capacity: DGMGigaJoule {
@@ -80,7 +80,7 @@ public class DGMShip: DGMType {
 	}
 	
 	public var supportedDroneCategories: [DGMCategoryID] {
-		return DGMInts(dgmpp_ship_get_supported_drone_categories(opaque)).array.map {DGMCategoryID($0)}
+		return DGMArray<Int>(dgmpp_ship_get_supported_drone_categories(opaque)).array.map {DGMCategoryID($0)}
 	}
 	
 	public var rigSize: RigSize {
@@ -121,15 +121,15 @@ public class DGMShip: DGMType {
 	}
 	
 	public var modules: [DGMModule] {
-		return DGMTypes(dgmpp_ship_get_modules(opaque)).array()
+		return DGMArray<DGMModule>(dgmpp_ship_get_modules(opaque)).array
 	}
 
 	public var drones: [DGMDrone] {
-		return DGMTypes(dgmpp_ship_get_drones(opaque)).array()
+		return DGMArray<DGMDrone>(dgmpp_ship_get_drones(opaque)).array
 	}
 	
 	public func modules(slot: DGMModule.Slot) -> [DGMModule] {
-		return DGMTypes(dgmpp_ship_get_modules_slot(opaque, DGMPP_MODULE_SLOT(slot))).array()
+		return DGMArray<DGMModule>(dgmpp_ship_get_modules_slot(opaque, DGMPP_MODULE_SLOT(slot))).array
 	}
 	
 	public var area: DGMArea? {

@@ -10,13 +10,12 @@ import Foundation
 public class DGMAttribute {
 	private var opaque: dgmpp_attribute_ptr
 	
-	init(_ opaque: dgmpp_attribute_ptr) {
+	public required init(_ opaque: dgmpp_attribute_ptr) {
 		self.opaque = opaque
-		dgmpp_attribute_take_ownership(opaque)
 	}
 	
 	deinit {
-		dgmpp_attribute_free(opaque)
+		dgmpp_release(opaque)
 	}
 
 	public var attributeID: DGMAttributeID {

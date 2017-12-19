@@ -10,18 +10,17 @@
 
 const dgmpp_hostile_target dgmpp_hostile_target_default = {0, 0, 0, 0};
 
-void dgmpp_types_array_free (dgmpp_types_array_ptr array) {
-	if (array)
-		delete reinterpret_cast<dgmpp_types_array_impl*> (array);
+void dgmpp_retain	(dgmpp_ptr ptr) {
+	reinterpret_cast<dgmpp_t_impl*>(ptr)->retain();
 }
 
-void dgmpp_attributes_array_free (dgmpp_attributes_array_ptr array) {
-	if (array)
-		delete reinterpret_cast<dgmpp_attributes_array_impl*> (array);
+void dgmpp_release	(dgmpp_ptr ptr) {
+	reinterpret_cast<dgmpp_t_impl*>(ptr)->release();
 }
 
-void dgmpp_ints_array_free (dgmpp_ints_array_ptr array) {
-	if (array)
-		delete reinterpret_cast<dgmpp_ints_array_impl*> (array);
+size_t dgmpp_array_get_size (dgmpp_array_ptr ptr) {
+	return reinterpret_cast<dgmpp_array_impl_base*>(ptr)->size;
 }
-
+const void* dgmpp_array_get_values (dgmpp_array_ptr ptr) {
+	return reinterpret_cast<dgmpp_array_impl_base*>(ptr)->ptr();
+}

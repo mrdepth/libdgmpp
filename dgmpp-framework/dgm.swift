@@ -87,3 +87,10 @@ extension DGMRaceID {
 	}
 }
 
+extension DGMCommodity.Tier {
+	init?(_ tier: DGMPP_COMMODITY_TIER) {
+		guard let value = DGMCommodity.Tier(rawValue: Int(tier.rawValue)) else {return nil}
+		self = value
+	}
+}
+

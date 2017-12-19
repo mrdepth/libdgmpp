@@ -10,14 +10,13 @@ import Foundation
 public class DGMType {
 	var opaque: dgmpp_type_ptr
 	
-	public required init(_ opaque: dgmpp_attribute_ptr) {
+	public required init(_ opaque: dgmpp_type_ptr) {
 		self.opaque = opaque
-		dgmpp_type_take_ownership(opaque)
 	}
 	
 	
 	deinit {
-		dgmpp_type_free(opaque)
+		dgmpp_release(opaque)
 	}
 	
 	public var typeID: DGMTypeID {
@@ -43,11 +42,11 @@ public class DGMType {
 	}
 	
 	public var affectors: [DGMType] {
-		return DGMTypes(dgmpp_type_get_affectors(opaque)).array()
+		return DGMArray<DGMType>(dgmpp_type_get_affectors(opaque)).array
 	}
 	
 	public var attributes: [DGMAttribute] {
-		return DGMAttributes(dgmpp_type_get_attributes(opaque)).array
+		return DGMArray<DGMAttribute>(dgmpp_type_get_attributes(opaque)).array
 	}
 
 }

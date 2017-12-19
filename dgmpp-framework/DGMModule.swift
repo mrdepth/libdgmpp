@@ -49,7 +49,7 @@ public class DGMModule: DGMType {
 	}
 	
 	public var availableStates: [State] {
-		return DGMInts(dgmpp_module_get_available_states(opaque)).array.flatMap {State(rawValue: $0)}
+		return DGMArray<Int>(dgmpp_module_get_available_states(opaque)).array.flatMap {State(rawValue: $0)}
 	}
 	
 	public var state: State {
@@ -114,7 +114,7 @@ public class DGMModule: DGMType {
 	}
 	
 	public var chargeGroups: [DGMGroupID] {
-		return DGMInts(dgmpp_module_get_charge_groups(opaque)).array.map {DGMGroupID($0)}
+		return DGMArray<Int>(dgmpp_module_get_charge_groups(opaque)).array.map {DGMGroupID($0)}
 	}
 
 	public var chargeSize: DGMCharge.Size {

@@ -23,8 +23,10 @@ DGMPP_EXTERN void			dgmpp_ecu_set_cycle_time	(dgmpp_facility_ptr facility, dgmpp
 DGMPP_EXTERN size_t	dgmpp_ecu_get_quantity_per_cycle (dgmpp_facility_ptr facility);
 DGMPP_EXTERN void	dgmpp_ecu_set_quantity_per_cycle (dgmpp_facility_ptr facility, size_t quantity_per_cycle);
 
-DGMPP_EXTERN BOOL dgmpp_ecu_get_output (dgmpp_facility_ptr facility, dgmpp_commodity* commodity);
+DGMPP_EXTERN BOOL	dgmpp_ecu_get_output (dgmpp_facility_ptr facility, dgmpp_commodity* commodity);
 
-DGMPP_EXTERN dgmpp_production_state_ptr dgmpp_ecu_get_states (dgmpp_facility_ptr facility);
+DGMPP_EXTERN dgmpp_array_ptr dgmpp_ecu_get_states (dgmpp_facility_ptr facility);
+DGMPP_EXTERN dgmpp_array_ptr dgmpp_ecu_get_cycles (dgmpp_facility_ptr facility);
 
 #endif /* extractor_control_unit_h */
+

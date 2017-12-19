@@ -10,9 +10,6 @@
 
 #include "utility.h"
 
-DGMPP_EXTERN void dgmpp_attribute_free (dgmpp_attribute_ptr attribute);
-DGMPP_EXTERN void dgmpp_attribute_take_ownership (dgmpp_attribute_ptr attribute);
-
 DGMPP_EXTERN dgmpp_attribute_id	dgmpp_attribute_get_attribute_id	(dgmpp_attribute_ptr attribute);
 DGMPP_EXTERN dgmpp_type_ptr		dgmpp_attribute_get_owner			(dgmpp_attribute_ptr attribute);
 DGMPP_EXTERN double				dgmpp_attribute_get_value			(dgmpp_attribute_ptr attribute);

@@ -18,12 +18,12 @@ DGMPP_EXTERN size_t					dgmpp_module_get_socket				(dgmpp_type_ptr module);
 DGMPP_EXTERN DGMPP_MODULE_STATE		dgmpp_module_get_state				(dgmpp_type_ptr module);
 DGMPP_EXTERN void					dgmpp_module_set_state				(dgmpp_type_ptr module, DGMPP_MODULE_STATE state);
 DGMPP_EXTERN DGMPP_MODULE_STATE		dgmpp_module_get_preferred_state	(dgmpp_type_ptr module);
-DGMPP_EXTERN dgmpp_ints_array_ptr	dgmpp_module_get_available_states	(dgmpp_type_ptr module);
+DGMPP_EXTERN dgmpp_array_ptr		dgmpp_module_get_available_states	(dgmpp_type_ptr module);
 DGMPP_EXTERN dgmpp_type_ptr			dgmpp_module_get_target				(dgmpp_type_ptr module);
 DGMPP_EXTERN BOOL					dgmpp_module_set_target				(dgmpp_type_ptr module, dgmpp_type_ptr target);
 DGMPP_EXTERN dgmpp_type_ptr			dgmpp_module_get_charge				(dgmpp_type_ptr module);
 DGMPP_EXTERN BOOL					dgmpp_module_set_charge				(dgmpp_type_ptr module, dgmpp_type_ptr charge);
-DGMPP_EXTERN dgmpp_ints_array_ptr	dgmpp_module_get_charge_groups		(dgmpp_type_ptr module);
+DGMPP_EXTERN dgmpp_array_ptr		dgmpp_module_get_charge_groups		(dgmpp_type_ptr module);
 DGMPP_EXTERN DGMPP_CHARGE_SIZE		dgmpp_module_get_charge_size		(dgmpp_type_ptr module);
 DGMPP_EXTERN BOOL 					dgmpp_module_is_fail				(dgmpp_type_ptr module);
 
