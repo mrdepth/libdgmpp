@@ -14,6 +14,9 @@ DGMPP_EXTERN void dgmpp_capacitor_free (dgmpp_capacitor_ptr capacitor);
 
 DGMPP_EXTERN dgmpp_type_ptr dgmpp_ship_create (dgmpp_type_id type_id);
 
+DGMPP_EXTERN const char*	dgmpp_ship_get_name (dgmpp_type_ptr ship);
+DGMPP_EXTERN void			dgmpp_ship_set_name (dgmpp_type_ptr ship, const char* name);
+
 DGMPP_EXTERN dgmpp_array_ptr		dgmpp_ship_get_supported_drone_categories	(dgmpp_type_ptr ship);
 DGMPP_EXTERN DGMPP_RACE_ID			dgmpp_ship_get_race_id						(dgmpp_type_ptr ship);
 DGMPP_EXTERN dgmpp_type_ptr			dgmpp_ship_get_area							(dgmpp_type_ptr ship);

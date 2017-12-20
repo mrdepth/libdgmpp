@@ -39,6 +39,11 @@ namespace dgmpp {
 		
 		
 		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
+		
+		const std::string& name() const { return name_; }
+		
+		template<typename T>
+		void name (T&& name) { name_ = std::forward<T>(name); }
 
 		RaceID raceID();
 		std::vector<CategoryID> supportedDroneCategories();
@@ -75,7 +80,7 @@ namespace dgmpp {
 		//Resources
 		size_t totalSlots	(Module::Slot slot);
 		size_t freeSlots	(Module::Slot slot) {return totalSlots(slot) - usedSlots(slot);}
-		size_t usedSlots	(Module::Slot slot) {return slice(slot).size();}
+		size_t usedSlots	(Module::Slot slot) {return modulesSlice(slot).size();}
 		
 		size_t totalHardpoints	(Module::Hardpoint hardpoint);
 		size_t freeHardpoints	(Module::Hardpoint hardpoint);
@@ -164,7 +169,7 @@ namespace dgmpp {
 		void removeProjected (Module* module);
 		void removeProjected (Drone* drone);
 
-		slice<ModulesContainer::const_iterator> slice (Module::Slot slot) const noexcept;
+		slice<ModulesContainer::const_iterator> modulesSlice (Module::Slot slot) const noexcept;
 
 	private:
 		friend class Character;
@@ -177,6 +182,7 @@ namespace dgmpp {
 		Capacitor capacitor_;
 		HeatSimulator heatSimulator_;
 		DamageVector damagePattern_ = {0.25};
+		std::string name_;
 
 	};
 }

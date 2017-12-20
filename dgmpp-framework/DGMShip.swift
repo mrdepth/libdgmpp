@@ -75,6 +75,16 @@ public class DGMShip: DGMType {
 		super.init(type)
 	}
 	
+	public var name: String {
+		get {
+			return String(cString: dgmpp_ship_get_name(opaque));
+		}
+		set {
+			guard let string = newValue.cString(using: .utf8) else {return}
+			dgmpp_ship_set_name(opaque, string)
+		}
+	}
+	
 	public var raceID: DGMRaceID {
 		return DGMRaceID(dgmpp_ship_get_race_id(opaque)) ?? .none
 	}
@@ -371,5 +381,16 @@ public class DGMShip: DGMType {
 	}
 	
 
+}
+
+extension DGMCapacitor: Hashable {
+	
+	public var hashValue: Int {
+		return dgmpp_get_hash(opaque)
+	}
+	
+	public static func ==(lhs: DGMCapacitor, rhs: DGMCapacitor) -> Bool {
+		return lhs.hashValue == rhs.hashValue
+	}
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DGMError: Error {
+public enum DGMError: Error {
 	case typeNotFound(DGMTypeID)
 	case cannotFit(DGMType)
 	case invalidFacility(DGMTypeID)
@@ -52,122 +52,6 @@ public enum DGMRaceID: Int {
 	case gallente = 8
 }
 
-class DGMArray<T> {
-	
-	private var opaque: dgmpp_array_ptr
-	init(_ opaque: dgmpp_array_ptr) {
-		self.opaque = opaque
-	}
-	
-	deinit {
-		dgmpp_release(opaque)
-	}
-}
-
-extension DGMArray where T: DGMType {
-	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_type_ptr.self, capacity: size)
-		return (0..<size).map {
-			dgmpp_retain(ptr[$0])
-			return T(ptr[$0])
-		}
-	}
-}
-
-extension DGMArray where T == DGMAttribute {
-	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_attribute_ptr.self, capacity: size)
-		return (0..<size).map {
-			dgmpp_retain(ptr[$0])
-			return T(ptr[$0])
-		}
-	}
-}
-
-extension DGMArray where T == Int {
-	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: Int.self, capacity: size)
-		return (0..<size).map {ptr[$0]}
-	}
-}
-
-extension DGMArray where T: DGMState {
-	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_state_ptr.self, capacity: size)
-		return (0..<size).map {
-			dgmpp_retain(ptr[$0])
-			return T(ptr[$0])
-		}
-	}
-}
-
-extension DGMArray where T == DGMFacility {
-	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_facility_ptr.self, capacity: size)
-		return (0..<size).map {
-			dgmpp_retain(ptr[$0])
-			return DGMFacility.facility(ptr[$0])
-		}
-	}
-}
-
-
-/*public class DGMTypes {
-	private var opaque: dgmpp_types_array_ptr
-	
-	init(_ opaque: dgmpp_types_array_ptr) {
-		self.opaque = opaque
-	}
-
-	deinit {
-		dgmpp_types_array_free(opaque)
-	}
-	
-	func array<T:DGMType>() -> [T] {
-		return (0..<opaque.pointee.count).map {T(opaque.pointee.types[$0]!)}
-	}
-	
-//	var array: [dgmpp_type_ptr] {
-//		return (0..<opaque.pointee.count).map {opaque.pointee.types[$0]!}
-//	}
-}
-
-public class DGMAttributes {
-	private var opaque: dgmpp_attributes_array_ptr
-	
-	init(_ opaque: dgmpp_attributes_array_ptr) {
-		self.opaque = opaque
-	}
-	
-	deinit {
-		dgmpp_attributes_array_free(opaque)
-	}
-	
-	var array: [DGMAttribute] {
-		return (0..<opaque.pointee.count).map { DGMAttribute(opaque.pointee.attributes[$0]!) }
-	}
-}
-
-public class DGMInts {
-	private var opaque: dgmpp_ints_array_ptr
-	
-	init(_ opaque: dgmpp_ints_array_ptr) {
-		self.opaque = opaque
-	}
-	
-	deinit {
-		dgmpp_ints_array_free(opaque)
-	}
-	
-	var array: [Int] {
-		return (0..<opaque.pointee.count).map {Int(opaque.pointee.values[$0])}
-	}
-}*/
 
 public struct DGMDamageVector: Scalable {
 	public var em: DGMHP
@@ -177,24 +61,6 @@ public struct DGMDamageVector: Scalable {
 	
 	public func scale(_ s: Double) -> DGMDamageVector {
 		return DGMDamageVector(em: em * s, thermal: thermal * s, kinetic: kinetic * s, explosive: explosive * s)
-	}
-}
-
-extension DGMDamageVector {
-	init(_ damageVector: dgmpp_damage_vector) {
-		em = damageVector.em
-		thermal = damageVector.thermal
-		kinetic = damageVector.kinetic
-		explosive = damageVector.explosive
-	}
-}
-
-extension dgmpp_damage_vector {
-	init(_ damageVector: DGMDamageVector) {
-		em = damageVector.em
-		thermal = damageVector.thermal
-		kinetic = damageVector.kinetic
-		explosive = damageVector.explosive
 	}
 }
 
@@ -221,24 +87,6 @@ public struct DGMHostileTarget {
 	public static let `default` = DGMHostileTarget(dgmpp_hostile_target_default)
 }
 
-extension DGMHostileTarget {
-	init(_ target: dgmpp_hostile_target) {
-		angularVelocity = DGMRadiansPerSecond(target.angular_velocity)
-		velocity = DGMMetersPerSecond (target.velocity)
-		signature = target.signature
-		range = target.range
-	}
-}
-
-extension dgmpp_hostile_target {
-	init(_ target: DGMHostileTarget) {
-		angular_velocity = target.angularVelocity.value
-		velocity = target.velocity.value
-		signature = target.signature
-		range = target.range
-	}
-}
-
 public struct DGMResistances {
 	public struct Layer {
 		public var em: DGMPercent
@@ -252,35 +100,10 @@ public struct DGMResistances {
 	public var hull: Layer
 }
 
-extension DGMResistances.Layer {
-	init(_ layer: dgmpp_resistances_layer) {
-		em = layer.em
-		thermal = layer.thermal
-		kinetic = layer.kinetic
-		explosive = layer.explosive
-	}
-}
-
-extension DGMResistances {
-	init(_ resistances: dgmpp_resistances) {
-		shield = Layer(resistances.shield)
-		armor = Layer(resistances.armor)
-		hull = Layer(resistances.hull)
-	}
-}
-
 public struct DGMHitPoints {
 	public var shield: DGMHP
 	public var armor: DGMHP
 	public var hull: DGMHP
-}
-
-extension DGMHitPoints {
-	init(_ hitPoints: dgmpp_hit_points) {
-		shield = hitPoints.shield
-		armor = hitPoints.armor
-		hull = hitPoints.hull
-	}
 }
 
 public struct DGMCommodity {
@@ -301,35 +124,6 @@ public struct DGMCommodity {
 	}
 }
 
-extension DGMCommodity {
-	init(_ commodity: dgmpp_commodity) {
-		typeID = DGMTypeID(commodity.type_id)
-		tier = Tier(commodity.tier) ?? .unknown
-		volume = commodity.volume
-		quantity = commodity.quantity
-	}
-}
-
-extension dgmpp_commodity {
-	init(_ commodity: DGMCommodity) {
-		type_id = dgmpp_type_id(commodity.typeID)
-		tier = DGMPP_COMMODITY_TIER(Int32(commodity.tier.rawValue))
-		volume = commodity.volume
-		quantity = commodity.quantity
-	}
-}
-
-extension DGMArray where T == DGMCommodity {
-	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_commodity.self, capacity: size)
-		return (0..<size).map {
-			return T(ptr[$0])
-		}
-	}
-}
-
-
 public struct DGMProductionCycle{
 	public var start: Date;
 	public var duration: TimeInterval;
@@ -340,26 +134,6 @@ public struct DGMProductionCycle{
 	public var yield: DGMCommodity;
 	public var waste: DGMCommodity;
 };
-
-extension DGMProductionCycle {
-	init(_ cycle: dgmpp_production_cycle) {
-		start = Date(timeIntervalSinceReferenceDate: cycle.start)
-		duration = cycle.duration
-		yield = DGMCommodity(cycle.yield)
-		waste = DGMCommodity(cycle.waste)
-	}
-}
-
-
-extension DGMArray where T == DGMProductionCycle {
-	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_production_cycle.self, capacity: size)
-		return (0..<size).map {
-			return T(ptr[$0])
-		}
-	}
-}
 
 public struct DGMRoute {
 	public var from: DGMFacility

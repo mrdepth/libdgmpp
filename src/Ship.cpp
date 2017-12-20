@@ -191,7 +191,7 @@ namespace dgmpp {
 		switch (module->slot()) {
 			case Module::Slot::subsystem: {
 				auto subSystemSlot = static_cast<int>((*module)[AttributeID::subSystemSlot]->value());
-				auto v = slice(Module::Slot::subsystem);
+				auto v = modulesSlice(Module::Slot::subsystem);
 				auto isFull = std::any_of(v.begin(), v.end(), [=](const auto& i) {
 					return static_cast<int>((*std::get<std::unique_ptr<Module>>(i))[AttributeID::subSystemSlot]->value()) == subSystemSlot;
 				});
@@ -245,7 +245,7 @@ namespace dgmpp {
 		return false;
 	}
 	
-	slice<Ship::ModulesContainer::const_iterator> Ship::slice (Module::Slot slot) const noexcept {
+	slice<Ship::ModulesContainer::const_iterator> Ship::modulesSlice (Module::Slot slot) const noexcept {
 		return equal_range(modules_, std::make_tuple(slot));
 //		auto first = std::lower_bound(modules_.cbegin(), modules_.cend(), slot, [](auto a, auto b) {
 //			return a->slot() < b;
@@ -257,7 +257,7 @@ namespace dgmpp {
 	}
 	
 	std::vector<Module*> Ship::modules (Module::Slot slot) const {
-		auto s = slice(slot);
+		auto s = modulesSlice(slot);
 		std::vector<Module*> result;
 		result.reserve(s.size());
 		std::transform(s.begin(), s.end(), std::back_inserter(result), [](const auto& i) { return std::get<std::unique_ptr<Module>>(i).get(); });
@@ -412,7 +412,7 @@ namespace dgmpp {
 	}
 	
 	CalibrationPoints Ship::usedCalibration() {
-		auto rigs = slice(Module::Slot::rig);
+		auto rigs = modulesSlice(Module::Slot::rig);
 		return std::accumulate(rigs.begin(), rigs.end(), CalibrationPoints(0), [](auto sum, const auto& i) {
 			return std::get<std::unique_ptr<Module>>(i)->calibrationUse() + sum;
 		});
@@ -850,7 +850,7 @@ namespace dgmpp {
 			Module::Slot::starbaseStructure};
 		for (auto slot: slots) {
 			auto n = totalSlots(slot);
-			for (const auto& i: slice(slot)) {
+			for (const auto& i: modulesSlice(slot)) {
 				std::get<std::unique_ptr<Module>>(i)->fail(n <= 0);
 				n--;
 			}

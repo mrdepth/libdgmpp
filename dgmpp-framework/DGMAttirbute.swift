@@ -8,7 +8,7 @@
 import Foundation
 
 public class DGMAttribute {
-	private var opaque: dgmpp_attribute_ptr
+	fileprivate var opaque: dgmpp_attribute_ptr
 	
 	public required init(_ opaque: dgmpp_attribute_ptr) {
 		self.opaque = opaque
@@ -34,5 +34,16 @@ public class DGMAttribute {
 		return dgmpp_attribute_get_initial_value(opaque)
 	}
 
+}
+
+extension DGMAttribute: Hashable {
+	
+	public var hashValue: Int {
+		return dgmpp_get_hash(opaque)
+	}
+	
+	public static func ==(lhs: DGMAttribute, rhs: DGMAttribute) -> Bool {
+		return lhs.hashValue == rhs.hashValue
+	}
 }
 

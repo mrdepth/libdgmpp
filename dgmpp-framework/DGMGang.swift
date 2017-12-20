@@ -21,8 +21,8 @@ public class DGMGang: DGMType {
 		dgmpp_gang_add_pilot(opaque, pilot.opaque)
 	}
 	
-	public func remove(_ implant: DGMImplant) {
-		dgmpp_gang_remove_pilot(opaque, implant.opaque)
+	public func remove(_ pilot: DGMCharacter) {
+		dgmpp_gang_remove_pilot(opaque, pilot.opaque)
 	}
 	
 	public var pilots: [DGMCharacter] {

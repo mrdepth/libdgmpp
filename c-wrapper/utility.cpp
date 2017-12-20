@@ -18,6 +18,10 @@ void dgmpp_release	(dgmpp_ptr ptr) {
 	reinterpret_cast<dgmpp_t_impl*>(ptr)->release();
 }
 
+size_t dgmpp_get_hash	(dgmpp_ptr ptr) {
+	return reinterpret_cast<dgmpp_t_impl*>(ptr)->hash();
+}
+
 size_t dgmpp_array_get_size (dgmpp_array_ptr ptr) {
 	return reinterpret_cast<dgmpp_array_impl_base*>(ptr)->size;
 }

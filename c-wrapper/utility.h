@@ -17,7 +17,9 @@
 #endif
 
 
+#ifndef OBJC_BOOL_DEFINED
 typedef signed char BOOL;
+#endif
 typedef int dgmpp_type_id;
 typedef int dgmpp_group_id;
 typedef int dgmpp_category_id;
@@ -68,8 +70,9 @@ typedef dgmpp_state* dgmpp_state_ptr;
 typedef dgmpp_array* dgmpp_array_ptr;
 typedef dgmpp_capacitor* dgmpp_capacitor_ptr;
 
-DGMPP_EXTERN void dgmpp_retain	(dgmpp_ptr ptr);
-DGMPP_EXTERN void dgmpp_release	(dgmpp_ptr ptr);
+DGMPP_EXTERN void	dgmpp_retain	(dgmpp_ptr ptr);
+DGMPP_EXTERN void 	dgmpp_release	(dgmpp_ptr ptr);
+DGMPP_EXTERN size_t	dgmpp_get_hash	(dgmpp_ptr ptr);
 
 DGMPP_EXTERN size_t			dgmpp_array_get_size	(dgmpp_array_ptr ptr);
 DGMPP_EXTERN const void*	dgmpp_array_get_values	(dgmpp_array_ptr ptr);

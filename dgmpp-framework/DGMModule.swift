@@ -193,6 +193,9 @@ public class DGMModule: DGMType {
 		return dgmpp_module_get_life_time(opaque)
 	}
 
+	public func angularVelocity(targetSignature: DGMMeter, hitChance: DGMPercent = 0.75) -> DGMRadiansPerSecond {
+		return DGMRadiansPerSecond(dgmpp_module_get_angular_velocity(opaque, targetSignature, hitChance))
+	}
 
 }
 

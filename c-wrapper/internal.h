@@ -11,22 +11,31 @@
 #include "type.h"
 #include "attribute.h"
 #include <type_traits>
+#include <functional>
 
 using namespace dgmpp;
 
 struct dgmpp_t_impl {
 	virtual ~dgmpp_t_impl() {}
 	int ref_count = 1;
+	
 	void retain() { ref_count++; }
+	
 	void release() {
 		if (--ref_count == 0)
 			delete this;
 	}
+	
+	virtual size_t hash() const = 0;
 };
 
 struct dgmpp_type_impl: public dgmpp_t_impl {
 	Type* type;
 	dgmpp_type_impl (Type* type) : type(type) {}
+	
+	virtual size_t hash() const override {
+		return std::hash<const Type*>()(type);
+	}
 };
 
 inline dgmpp_type_ptr dgmpp_make_type(Type* type) {
@@ -36,6 +45,11 @@ inline dgmpp_type_ptr dgmpp_make_type(Type* type) {
 struct dgmpp_attribute_impl: public dgmpp_t_impl {
 	Attribute* attribute;
 	dgmpp_attribute_impl (Attribute* attribute) : attribute(attribute) {};
+	
+	virtual size_t hash() const override {
+		return std::hash<const Attribute*>()(attribute);
+	}
+
 };
 
 struct dgmpp_gang_impl : public dgmpp_type_impl {
@@ -111,27 +125,53 @@ struct dgmpp_area_impl : public dgmpp_type_impl {
 struct dgmpp_capacitor_impl: public dgmpp_t_impl {
 	Capacitor* capacitor;
 	dgmpp_capacitor_impl (Capacitor* capacitor) : capacitor(capacitor) {}
+	
+	virtual size_t hash() const override {
+		return std::hash<const Capacitor*>()(capacitor);
+	}
+
 };
 
 struct dgmpp_planet_impl: public dgmpp_t_impl {
 	Planet planet;
+	
+	virtual size_t hash() const override {
+		return std::hash<const Planet*>()(&planet);
+	}
+
 };
 
 struct dgmpp_facility_impl: public dgmpp_t_impl {
 	Facility* facility;
 	dgmpp_facility_impl (Facility* facility) : facility(facility) {}
+	
+	virtual size_t hash() const override {
+		return std::hash<const Facility*>()(facility);
+	}
+
 };
 
 struct dgmpp_state_impl: public dgmpp_t_impl {
 	State* state;
 	template<typename T>
 	dgmpp_state_impl (const T& state) : state(remove_unique_ptr(state)) {}
+	
+	virtual size_t hash() const override {
+		return std::hash<const State*>()(state);
+	}
+	
+
 };
 
 struct dgmpp_array_impl_base: public dgmpp_t_impl {
 	size_t size;
 	dgmpp_array_impl_base (size_t size): size(size) {}
-	virtual const void* ptr() = 0;
+	virtual const void* ptr() const = 0;
+	
+	virtual size_t hash() const override {
+		return std::hash<const void*>()(ptr());
+	}
+
 };
 
 template <typename T, typename = void>
@@ -146,7 +186,7 @@ struct dgmpp_array_impl: public dgmpp_array_impl_base {
 		});
 	}
 	
-	virtual const void* ptr() override {
+	virtual const void* ptr() const override {
 		return reinterpret_cast<const void*>(&values[0]);
 	}
 };
@@ -163,7 +203,7 @@ struct dgmpp_array_impl<T, std::enable_if_t<std::is_pointer_v<T>>>: public dgmpp
 		});
 	}
 	
-	virtual const void* ptr() override {
+	virtual const void* ptr() const override {
 		return reinterpret_cast<const void*>(&values[0]);
 	}
 	

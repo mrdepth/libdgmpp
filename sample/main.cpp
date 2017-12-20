@@ -8,7 +8,7 @@ int main(int argc, const char * argv[]) {
 	auto pilot = gang->addPilot();
 	pilot->setSkillLevels(5);
 	auto ship = pilot->ship(TypeID::dominix);
-	
+		
 	auto ab = ship->add(Module::Create(TypeID::_100MNAfterburnerII));
 	ab->state(Module::State::overloaded);
 	

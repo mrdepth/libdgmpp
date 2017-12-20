@@ -22,6 +22,15 @@ dgmpp_type_ptr dgmpp_ship_create (dgmpp_type_id type_id) {
 	}
 }
 
+const char*	dgmpp_ship_get_name (dgmpp_type_ptr ship) {
+	return type_cast<Ship*>(ship)->name().c_str();
+}
+
+void dgmpp_ship_set_name (dgmpp_type_ptr ship, const char* name) {
+	type_cast<Ship*>(ship)->name(name);
+}
+
+
 dgmpp_array_ptr dgmpp_ship_get_supported_drone_categories (dgmpp_type_ptr ship) {
 	return dgmpp_make_array<int>(type_cast<Ship*>(ship)->supportedDroneCategories());
 }

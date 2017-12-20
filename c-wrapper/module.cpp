@@ -168,4 +168,6 @@ dgmpp_seconds dgmpp_module_get_life_time (dgmpp_type_ptr module) {
 		return -1;
 }
 
-
+dgmpp_radians_per_second dgmpp_module_get_angular_velocity (dgmpp_type_ptr module, dgmpp_meter target_signature, dgmpp_percent hit_chance) {
+	return type_cast<Module*>(module)->angularVelocity(target_signature, hit_chance) * 1s;
+}

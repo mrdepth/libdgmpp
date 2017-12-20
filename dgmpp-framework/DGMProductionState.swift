@@ -44,3 +44,15 @@ public class DGMProductionState: DGMState {
 		return dgmpp_production_state_get_efficiency(opaque)
 	}
 }
+
+extension DGMState: Hashable {
+	
+	public var hashValue: Int {
+		return dgmpp_get_hash(opaque)
+	}
+	
+	public static func ==(lhs: DGMState, rhs: DGMState) -> Bool {
+		return lhs.hashValue == rhs.hashValue
+	}
+}
+

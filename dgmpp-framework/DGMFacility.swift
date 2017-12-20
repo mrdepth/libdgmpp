@@ -76,3 +76,15 @@ public class DGMFacility {
 	}
 
 }
+
+extension DGMFacility: Hashable {
+	
+	public var hashValue: Int {
+		return dgmpp_get_hash(opaque)
+	}
+	
+	public static func ==(lhs: DGMFacility, rhs: DGMFacility) -> Bool {
+		return lhs.hashValue == rhs.hashValue
+	}
+}
+

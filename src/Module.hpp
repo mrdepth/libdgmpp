@@ -105,6 +105,8 @@ namespace dgmpp {
 		Meter falloff();
 
 		std::optional<std::chrono::milliseconds> lifeTime();
+		
+		RadiansPerSecond angularVelocity(Meter targetSignature, Percent hitChance = 0.75);
 
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;

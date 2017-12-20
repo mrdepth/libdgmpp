@@ -537,6 +537,18 @@
 			name = PI;
 			sourceTree = "<group>";
 		};
+		122E11B31FEA717D0057EB0D /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				128AA2171FDECAC500AD4ED3 /* Fitting */,
+				12BE88441FE13AED00854893 /* PI */,
+				128AA1F91FDEB50500AD4ED3 /* Utility.h */,
+				128AA1FA1FDEB50500AD4ED3 /* Utility.mm */,
+				128AA2081FDEC3E200AD4ED3 /* Internal.h */,
+			);
+			name = Deprecated;
+			sourceTree = "<group>";
+		};
 		123BEF1F1FBDA4A100AC8EB1 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,11 +646,7 @@
 			children = (
 				12C457D71FE2C0640045BD84 /* Fitting */,
 				122E118C1FE963100057EB0D /* PI */,
-				128AA2171FDECAC500AD4ED3 /* Fitting */,
-				12BE88441FE13AED00854893 /* PI */,
-				128AA1F91FDEB50500AD4ED3 /* Utility.h */,
-				128AA1FA1FDEB50500AD4ED3 /* Utility.mm */,
-				128AA2081FDEC3E200AD4ED3 /* Internal.h */,
+				122E11B31FEA717D0057EB0D /* Deprecated */,
 				128AA29A1FE0213C00AD4ED3 /* dgm.swift */,
 				12C457DE1FE2CB210045BD84 /* Rate.swift */,
 				12C457F91FE2CBDC0045BD84 /* Utility.swift */,

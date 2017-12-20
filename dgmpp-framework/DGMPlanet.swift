@@ -62,3 +62,15 @@ public class DGMPlanet {
 	}
 
 }
+
+extension DGMPlanet: Hashable {
+	
+	public var hashValue: Int {
+		return dgmpp_get_hash(opaque)
+	}
+	
+	public static func ==(lhs: DGMPlanet, rhs: DGMPlanet) -> Bool {
+		return lhs.hashValue == rhs.hashValue
+	}
+}
+

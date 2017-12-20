@@ -50,3 +50,15 @@ public class DGMType {
 	}
 
 }
+
+extension DGMType: Hashable {
+	
+	public var hashValue: Int {
+		return dgmpp_get_hash(opaque)
+	}
+	
+	public static func ==(lhs: DGMType, rhs: DGMType) -> Bool {
+		return lhs.hashValue == rhs.hashValue
+	}
+}
+

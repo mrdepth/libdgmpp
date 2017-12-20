@@ -19,6 +19,8 @@ do {
 	
 	print("\(dominix.hitPoints.shield)")
 	print(dominix.attributes.map {"\($0.attributeID): \($0.value)"}.joined(separator: "\n"))
+	
+	
 }
 catch _ {
 	

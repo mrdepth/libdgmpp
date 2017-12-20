@@ -135,7 +135,7 @@ namespace dgmpp {
 			Category	category;
 			bool		isAssistance;
 			bool		isOffensive;
-			virtual dgmpp::slice<const Modifier* const*> modifiers() const noexcept = 0;
+			virtual slice<const Modifier* const*> modifiers() const noexcept = 0;
 
 			constexpr Effect(EffectID effectID, Category category, bool isAssistance, bool isOffensive)
 			: effectID(effectID), category(category), isAssistance(isAssistance), isOffensive(isOffensive) {};
@@ -155,7 +155,7 @@ namespace dgmpp {
 			: Effect(effectID, category, isAssistance, isOffensive), modifiers_(modifiers) {};
 			
 			
-			virtual dgmpp::slice<const Modifier* const*> modifiers() const noexcept override {
+			virtual slice<const Modifier* const*> modifiers() const noexcept override {
 				return { modifiers_.data(), modifiers_.data() + modifiers_.size() };
 			}
 		private:
@@ -167,7 +167,7 @@ namespace dgmpp {
 			AttributeID modifyingAttributeID;
 			constexpr WarfareBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID)
 			: warfareBuffID(warfareBuffID), modifyingAttributeID(modifyingAttributeID) {}
-			virtual dgmpp::slice<const Modifier* const*> modifiers() const noexcept = 0;
+			virtual slice<const Modifier* const*> modifiers() const noexcept = 0;
 			
 			WarfareBuff (const WarfareBuff& other) = delete;
 			WarfareBuff (WarfareBuff&& other) = delete;
@@ -181,7 +181,7 @@ namespace dgmpp {
 			constexpr _WarfareBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID, const Modifiers& modifiers)
 			: WarfareBuff(warfareBuffID, modifyingAttributeID), modifiers_(modifiers) {}
 			
-			virtual dgmpp::slice<const Modifier* const*> modifiers() const noexcept override {
+			virtual slice<const Modifier* const*> modifiers() const noexcept override {
 				return { modifiers_.data(), modifiers_.data() + modifiers_.size() };
 			}
 
@@ -194,9 +194,9 @@ namespace dgmpp {
 			GroupID		groupID;
 			CategoryID	categoryID;
 			
-			virtual dgmpp::slice<const std::pair<const Attribute*, Float>*> attributes() const noexcept = 0;
-			virtual dgmpp::slice<const Effect* const*> effects() const noexcept = 0;
-			virtual dgmpp::slice<const TypeID*> requiredSkills() const noexcept = 0;
+			virtual slice<const std::pair<const Attribute*, Float>*> attributes() const noexcept = 0;
+			virtual slice<const Effect* const*> effects() const noexcept = 0;
+			virtual slice<const TypeID*> requiredSkills() const noexcept = 0;
 
 			constexpr Type(TypeID typeID, GroupID groupID, CategoryID categoryID)
 			: typeID(typeID), groupID(groupID), categoryID(categoryID) {}
@@ -220,15 +220,15 @@ namespace dgmpp {
 			constexpr _Type(TypeID typeID, GroupID groupID, CategoryID categoryID, const Attributes& attributes, const Effects& effects, const RequiredSkills& requiredSkills)
 			: Type(typeID, groupID, categoryID), attributes_(attributes), effects_(effects), requiredSkills_(requiredSkills) {}
 			
-			virtual dgmpp::slice<const std::pair<const Attribute*, Float>*> attributes() const noexcept override {
+			virtual slice<const std::pair<const Attribute*, Float>*> attributes() const noexcept override {
 				return { attributes_.data(), attributes_.data() + attributes_.size() };
 			}
 			
-			virtual dgmpp::slice<const Effect* const*> effects() const noexcept override {
+			virtual slice<const Effect* const*> effects() const noexcept override {
 				return { effects_.data(), effects_.data() + effects_.size() };
 			}
 			
-			virtual dgmpp::slice<const TypeID*> requiredSkills() const noexcept override {
+			virtual slice<const TypeID*> requiredSkills() const noexcept override {
 				return { requiredSkills_.data(), requiredSkills_.data() + requiredSkills_.size() };
 			}
 			
@@ -271,7 +271,7 @@ namespace dgmpp {
 			SchematicID schematicID;
 			std::chrono::seconds cycleTime;
 			std::pair<const Commodity*, size_t> output;
-			virtual dgmpp::slice<const std::pair<const Commodity*, size_t>*> inputs() const noexcept = 0;
+			virtual slice<const std::pair<const Commodity*, size_t>*> inputs() const noexcept = 0;
 			
 			constexpr Schematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, size_t> output)
 			: schematicID(schematicID), cycleTime(cycleTime), output(output) {}
@@ -289,7 +289,7 @@ namespace dgmpp {
 			constexpr _Schematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, size_t> output, const Inputs& inputs)
 			: Schematic(schematicID, cycleTime, output), inputs_(inputs) {}
 
-			virtual dgmpp::slice<const std::pair<const Commodity*, size_t>*> inputs() const noexcept override {
+			virtual slice<const std::pair<const Commodity*, size_t>*> inputs() const noexcept override {
 				return { inputs_.data(), inputs_.data() + inputs_.size() };
 			}
 			
