@@ -28,7 +28,7 @@
 #include "Rate.hpp"
 #include "SchematicID.hpp"
 
-#ifndef _LIBCPP_OPTIONAL
+#if !defined(_LIBCPP_OPTIONAL) && !defined(_GLIBCXX_OPTIONAL)
 namespace std {
 	template<typename T>
 	using optional = std::experimental::optional<T>;
