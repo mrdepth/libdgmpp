@@ -18,20 +18,20 @@ public class DGMPlanet {
 		dgmpp_release(opaque)
 	}
 	
-	convenience init() {
+	public convenience init() {
 		self.init(dgmpp_planet_create())
 	}
 	
-	func add(facility typeID: DGMTypeID, identifier: Int64 = 0) throws -> DGMFacility {
+	public func add(facility typeID: DGMTypeID, identifier: Int64 = 0) throws -> DGMFacility {
 		guard let facility = dgmpp_planet_add_facility(opaque, dgmpp_type_id(typeID), identifier) else {throw DGMError.invalidFacility(typeID)}
 		return DGMFacility.facility(facility)
 	}
 	
-	func remove(facility: DGMFacility) {
+	public func remove(facility: DGMFacility) {
 		dgmpp_planet_remove_facility(opaque, facility.opaque)
 	}
 	
-	var facilities: [DGMFacility] {
+	public var facilities: [DGMFacility] {
 		return DGMArray<DGMFacility>(dgmpp_planet_get_facilities(opaque)).array
 	}
 	
@@ -40,11 +40,11 @@ public class DGMPlanet {
 		return DGMFacility.facility(facility)
 	}
 	
-	func add(route: DGMRoute) {
+	public func add(route: DGMRoute) {
 		dgmpp_planet_add_route(opaque, route.from.opaque, route.to.opaque, dgmpp_commodity(route.commodity))
 	}
 	
-	func remove(route: DGMRoute) {
+	public func remove(route: DGMRoute) {
 		dgmpp_planet_remove_route(opaque, route.from.opaque, route.to.opaque, dgmpp_commodity(route.commodity))
 	}
 	

@@ -18,6 +18,8 @@
 #include <algorithm>
 #include <cassert>
 #include <experimental/optional>
+#include <functional>
+#include <cmath>
 
 #include "AttributeID.hpp"
 #include "CategoryID.hpp"
@@ -169,14 +171,9 @@ namespace dgmpp {
 			};
 		};
 
-		union {
-			struct {
-				Layer shield;
-				Layer armor;
-				Layer hull;
-			};
-			Layer layers[3];
-		};
+		Layer shield;
+		Layer armor;
+		Layer hull;
 	};
 	
 	struct HostileTarget {

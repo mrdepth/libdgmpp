@@ -199,10 +199,10 @@ extension dgmpp_damage_vector {
 }
 
 public struct DGMTank {
-	var passiveShield: DGMHPPerSecond
-	var shieldRepair: DGMHPPerSecond
-	var armorRepair: DGMHPPerSecond
-	var hullRepair: DGMHPPerSecond
+	public var passiveShield: DGMHPPerSecond
+	public var shieldRepair: DGMHPPerSecond
+	public var armorRepair: DGMHPPerSecond
+	public var hullRepair: DGMHPPerSecond
 	
 	init(_ tank: dgmpp_tank) {
 		passiveShield = DGMHPPerSecond(tank.passive_shield)
@@ -213,10 +213,10 @@ public struct DGMTank {
 }
 
 public struct DGMHostileTarget {
-	var angularVelocity: DGMRadiansPerSecond = DGMRadiansPerSecond(0)
-	var velocity: DGMMetersPerSecond = DGMMetersPerSecond(0)
-	var signature: DGMMeter = 0
-	var range: DGMMeter = 0
+	public var angularVelocity: DGMRadiansPerSecond = DGMRadiansPerSecond(0)
+	public var velocity: DGMMetersPerSecond = DGMMetersPerSecond(0)
+	public var signature: DGMMeter = 0
+	public var range: DGMMeter = 0
 	
 	public static let `default` = DGMHostileTarget(dgmpp_hostile_target_default)
 }
@@ -241,15 +241,15 @@ extension dgmpp_hostile_target {
 
 public struct DGMResistances {
 	public struct Layer {
-		var em: DGMPercent
-		var thermal: DGMPercent
-		var kinetic: DGMPercent
-		var explosive: DGMPercent
+		public var em: DGMPercent
+		public var thermal: DGMPercent
+		public var kinetic: DGMPercent
+		public var explosive: DGMPercent
 	}
 	
-	var shield: Layer
-	var armor: Layer
-	var hull: Layer
+	public var shield: Layer
+	public var armor: Layer
+	public var hull: Layer
 }
 
 extension DGMResistances.Layer {
@@ -292,11 +292,11 @@ public struct DGMCommodity {
 		case tier3
 		case tier4
 	}
-	var typeID: DGMTypeID
-	var tier: Tier;
-	var volume: DGMCubicMeter;
-	var quantity: Int;
-	var total: DGMCubicMeter {
+	public var typeID: DGMTypeID
+	public var tier: Tier;
+	public var volume: DGMCubicMeter;
+	public var quantity: Int;
+	public var total: DGMCubicMeter {
 		return volume * DGMCubicMeter(quantity)
 	}
 }
@@ -331,14 +331,14 @@ extension DGMArray where T == DGMCommodity {
 
 
 public struct DGMProductionCycle{
-	var start: Date;
-	var duration: TimeInterval;
-	var end: Date {
+	public var start: Date;
+	public var duration: TimeInterval;
+	public var end: Date {
 		return start.addingTimeInterval(duration)
 	}
 	
-	var yield: DGMCommodity;
-	var waste: DGMCommodity;
+	public var yield: DGMCommodity;
+	public var waste: DGMCommodity;
 };
 
 extension DGMProductionCycle {
@@ -361,8 +361,8 @@ extension DGMArray where T == DGMProductionCycle {
 	}
 }
 
-struct DGMRoute {
-	var from: DGMFacility
-	var to: DGMFacility
-	var commodity: DGMCommodity
+public struct DGMRoute {
+	public var from: DGMFacility
+	public var to: DGMFacility
+	public var commodity: DGMCommodity
 }
