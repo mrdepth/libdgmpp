@@ -28,11 +28,13 @@
 #include "Rate.hpp"
 #include "SchematicID.hpp"
 
+#ifndef _LIBCPP_OPTIONAL
 namespace std {
 	template<typename T>
 	using optional = std::experimental::optional<T>;
 	constexpr auto nullopt = std::experimental::nullopt;
 }
+#endif
 
 namespace dgmpp {
 	using Float = double;

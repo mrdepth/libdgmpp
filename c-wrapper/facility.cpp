@@ -8,6 +8,24 @@
 #include "facility.h"
 #include "internal.h"
 
+DGMPP_FACILITY_CATEGORY dgmpp_facility_get_category (dgmpp_facility_ptr facility) {
+	switch (facility_cast<Facility*>(facility)->metaInfo().groupID) {
+		case GroupID::commandCenters:
+			return DGMPP_FACILITY_CATEGORY_COMMAND_CENTER;
+		case GroupID::processors:
+			return DGMPP_FACILITY_CATEGORY_FACTORY;
+		case GroupID::storageFacilities:
+			return DGMPP_FACILITY_CATEGORY_STORAGE;
+		case GroupID::spaceports:
+			return DGMPP_FACILITY_CATEGORY_SPACEPORT;
+		case GroupID::extractorControlUnits:
+			return DGMPP_FACILITY_CATEGORY_ECU;
+		default:
+			return DGMPP_FACILITY_CATEGORY_NONE;
+			break;
+	}
+}
+
 dgmpp_type_id dgmpp_facility_get_type_id (dgmpp_facility_ptr facility) {
 	return static_cast<dgmpp_type_id>(facility_cast<Facility*>(facility)->metaInfo().typeID);
 }

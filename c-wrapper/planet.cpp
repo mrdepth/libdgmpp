@@ -8,6 +8,10 @@
 #include "planet.h"
 #include "internal.h"
 
+dgmpp_planet_ptr dgmpp_planet_create() {
+	return reinterpret_cast<dgmpp_planet_ptr>(new dgmpp_planet_impl());
+}
+
 dgmpp_facility_ptr dgmpp_planet_add_facility (dgmpp_planet_ptr planet, dgmpp_type_id type_id, int64_t identifier) {
 	try {
 		return dgmpp_make_facility(reinterpret_cast<dgmpp_planet_impl*>(planet)->planet.add(static_cast<TypeID>(type_id), identifier));

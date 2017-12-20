@@ -10,6 +10,23 @@ import Foundation
 public class DGMFacility {
 	var opaque: dgmpp_facility_ptr
 	
+	class func facility(_ opaque: dgmpp_facility_ptr) -> DGMFacility {
+		switch dgmpp_facility_get_category(opaque) {
+		case DGMPP_FACILITY_CATEGORY_COMMAND_CENTER:
+			return DGMCommandCenter(opaque)
+		case DGMPP_FACILITY_CATEGORY_SPACEPORT:
+			return DGMSpaceport(opaque)
+		case DGMPP_FACILITY_CATEGORY_FACTORY:
+			return DGMFactory(opaque)
+		case DGMPP_FACILITY_CATEGORY_ECU:
+			return DGMExtractorControlUnit(opaque)
+		case DGMPP_FACILITY_CATEGORY_STORAGE:
+			return DGMStorage(opaque)
+		default:
+			return DGMFactory(opaque)
+		}
+	}
+	
 	public required init(_ opaque: dgmpp_facility_ptr) {
 		self.opaque = opaque
 	}
@@ -18,39 +35,43 @@ public class DGMFacility {
 		dgmpp_release(opaque)
 	}
 
-	var typeID: DGMTypeID {
+	public var typeID: DGMTypeID {
 		return DGMTypeID(dgmpp_facility_get_type_id(opaque))
 	}
 	
-	var groupID: DGMGroupID {
+	public var groupID: DGMGroupID {
 		return DGMGroupID(dgmpp_facility_get_group_id(opaque))
 	}
 
-	var identifier: Int64 {
+	public var identifier: Int64 {
 		return dgmpp_facility_get_identifier(opaque)
 	}
 	
-	var capacity: DGMCubicMeter {
+	public var capacity: DGMCubicMeter {
 		return dgmpp_facility_get_capacity(opaque)
 	}
 	
-	var freeVolume: DGMCubicMeter {
+	public var freeVolume: DGMCubicMeter {
 		return dgmpp_facility_get_free_volume(opaque)
 	}
 
-	var usedVolume: DGMCubicMeter {
+	public var usedVolume: DGMCubicMeter {
 		return dgmpp_facility_get_used_volume(opaque)
 	}
+	
+	public var commodities: [DGMCommodity] {
+		return DGMArray<DGMCommodity>(dgmpp_facility_get_commodities(opaque)).array
+	}
 
-	func add(_ commodity: DGMCommodity) {
+	public func add(_ commodity: DGMCommodity) {
 		dgmpp_facility_add_commodity(opaque, dgmpp_commodity(commodity))
 	}
 
-	func extract(_ commodity: DGMCommodity) throws {
+	public func extract(_ commodity: DGMCommodity) throws {
 		guard dgmpp_facility_extract_commodity(opaque, dgmpp_commodity(commodity)) else {throw DGMError.NotEnoughCommodities}
 	}
 	
-	var isConfigured: Bool {
+	public var isConfigured: Bool {
 		return dgmpp_facility_is_configured(opaque)
 	}
 

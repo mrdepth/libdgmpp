@@ -11,6 +11,8 @@
 #include "utility.h"
 #include <stdio.h>
 
+DGMPP_EXTERN dgmpp_planet_ptr dgmpp_planet_create();
+
 DGMPP_EXTERN dgmpp_facility_ptr	dgmpp_planet_add_facility		(dgmpp_planet_ptr planet, dgmpp_type_id type_id, int64_t identifier);
 DGMPP_EXTERN void				dgmpp_planet_remove_facility	(dgmpp_planet_ptr planet, dgmpp_facility_ptr facility);
 DGMPP_EXTERN dgmpp_facility_ptr	dgmpp_planet_get_facility		(dgmpp_planet_ptr planet, int64_t identifier);

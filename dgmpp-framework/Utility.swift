@@ -10,6 +10,7 @@ import Foundation
 enum DGMError: Error {
 	case typeNotFound(DGMTypeID)
 	case cannotFit(DGMType)
+	case invalidFacility(DGMTypeID)
 	case NotEnoughCommodities
 }
 
@@ -90,6 +91,28 @@ extension DGMArray where T == Int {
 		let size = dgmpp_array_get_size(opaque)
 		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: Int.self, capacity: size)
 		return (0..<size).map {ptr[$0]}
+	}
+}
+
+extension DGMArray where T: DGMState {
+	var array: [T] {
+		let size = dgmpp_array_get_size(opaque)
+		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_state_ptr.self, capacity: size)
+		return (0..<size).map {
+			dgmpp_retain(ptr[$0])
+			return T(ptr[$0])
+		}
+	}
+}
+
+extension DGMArray where T == DGMFacility {
+	var array: [T] {
+		let size = dgmpp_array_get_size(opaque)
+		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_facility_ptr.self, capacity: size)
+		return (0..<size).map {
+			dgmpp_retain(ptr[$0])
+			return DGMFacility.facility(ptr[$0])
+		}
 	}
 }
 
@@ -269,8 +292,8 @@ public struct DGMCommodity {
 		case tier3
 		case tier4
 	}
-	public var typeID: DGMTypeID
-	public var tier: Tier;
+	var typeID: DGMTypeID
+	var tier: Tier;
 	var volume: DGMCubicMeter;
 	var quantity: Int;
 	var total: DGMCubicMeter {
@@ -289,22 +312,57 @@ extension DGMCommodity {
 
 extension dgmpp_commodity {
 	init(_ commodity: DGMCommodity) {
-		type_id = Int32(commodity.typeID)
+		type_id = dgmpp_type_id(commodity.typeID)
 		tier = DGMPP_COMMODITY_TIER(Int32(commodity.tier.rawValue))
 		volume = commodity.volume
 		quantity = commodity.quantity
 	}
 }
 
-struct DGMProductionCycle{
-	var start: TimeInterval;
+extension DGMArray where T == DGMCommodity {
+	var array: [T] {
+		let size = dgmpp_array_get_size(opaque)
+		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_commodity.self, capacity: size)
+		return (0..<size).map {
+			return T(ptr[$0])
+		}
+	}
+}
+
+
+public struct DGMProductionCycle{
+	var start: Date;
 	var duration: TimeInterval;
-	var end: TimeInterval {
-		return start + duration
+	var end: Date {
+		return start.addingTimeInterval(duration)
 	}
 	
 	var yield: DGMCommodity;
 	var waste: DGMCommodity;
 };
 
+extension DGMProductionCycle {
+	init(_ cycle: dgmpp_production_cycle) {
+		start = Date(timeIntervalSinceReferenceDate: cycle.start)
+		duration = cycle.duration
+		yield = DGMCommodity(cycle.yield)
+		waste = DGMCommodity(cycle.waste)
+	}
+}
 
+
+extension DGMArray where T == DGMProductionCycle {
+	var array: [T] {
+		let size = dgmpp_array_get_size(opaque)
+		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_production_cycle.self, capacity: size)
+		return (0..<size).map {
+			return T(ptr[$0])
+		}
+	}
+}
+
+struct DGMRoute {
+	var from: DGMFacility
+	var to: DGMFacility
+	var commodity: DGMCommodity
+}

@@ -45,7 +45,7 @@ public class DGMModule: DGMType {
 	}
 	
 	public func canHaveState(_ state: State) -> Bool {
-		return dgmpp_module_can_have_state(opaque, DGMPP_MODULE_STATE(rawValue: Int32(state.rawValue)))
+		return dgmpp_module_can_have_state(opaque, DGMPP_MODULE_STATE(Int32(state.rawValue)))
 	}
 	
 	public var availableStates: [State] {

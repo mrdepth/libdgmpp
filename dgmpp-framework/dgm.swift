@@ -16,7 +16,7 @@ extension DGMModule.State {
 
 extension DGMPP_MODULE_STATE {
 	init(_ state: DGMModule.State) {
-		self = DGMPP_MODULE_STATE(rawValue: Int32(state.rawValue))
+		self = DGMPP_MODULE_STATE(Int32(state.rawValue))
 	}
 }
 
@@ -29,7 +29,7 @@ extension DGMModule.Slot {
 
 extension DGMPP_MODULE_SLOT {
 	init(_ slot: DGMModule.Slot) {
-		self = DGMPP_MODULE_SLOT(rawValue: Int32(slot.rawValue))
+		self = DGMPP_MODULE_SLOT(Int32(slot.rawValue))
 	}
 }
 
@@ -42,7 +42,7 @@ extension DGMModule.Hardpoint {
 
 extension DGMPP_MODULE_HARDPOINT {
 	init(_ hardpoint: DGMModule.Hardpoint) {
-		self = DGMPP_MODULE_HARDPOINT(rawValue: UInt32(hardpoint.rawValue))
+		self = DGMPP_MODULE_HARDPOINT(UInt32(hardpoint.rawValue))
 	}
 }
 
@@ -55,7 +55,7 @@ extension DGMDrone.Squadron {
 
 extension DGMPP_DRONE_SQUADRON {
 	init(_ squadron: DGMDrone.Squadron) {
-		self = DGMPP_DRONE_SQUADRON(rawValue: UInt32(squadron.rawValue))
+		self = DGMPP_DRONE_SQUADRON(UInt32(squadron.rawValue))
 	}
 }
 

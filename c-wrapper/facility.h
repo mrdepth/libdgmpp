@@ -11,6 +11,8 @@
 #include "utility.h"
 #include <stdio.h>
 
+DGMPP_EXTERN DGMPP_FACILITY_CATEGORY dgmpp_facility_get_category (dgmpp_facility_ptr facility);
+
 DGMPP_EXTERN dgmpp_type_id		dgmpp_facility_get_type_id		(dgmpp_facility_ptr facility);
 DGMPP_EXTERN dgmpp_group_id		dgmpp_facility_get_group_id		(dgmpp_facility_ptr facility);
 DGMPP_EXTERN int64_t			dgmpp_facility_get_identifier	(dgmpp_facility_ptr facility);
