@@ -143,7 +143,7 @@ namespace dgmpp {
 						canBeActive = false;
 					else if (auto ship = dynamic_cast<Ship*>(parent())) {
 						if (auto attribute = (*this)[AttributeID::maxGroupActive]) {
-							auto maxGroupActive = static_cast<size_t>(attribute->value());
+							auto maxGroupActive = static_cast<std::size_t>(attribute->value());
 							auto groupID = metaInfo().groupID;
 							
 							for (const auto& i: ship->modules_) {
@@ -360,34 +360,34 @@ namespace dgmpp {
 		return 0ms;
 	}
 	
-	size_t Module::charges() {
+	std::size_t Module::charges() {
 		if (auto charge = this->charge()) {
 			auto volume = (*charge)[AttributeID::volume]->value();
 			if (volume > 0)
 				return 0;
 			else {
 				auto capacity = (*this)[AttributeID::capacity]->value();
-				return static_cast<size_t>(capacity / volume);
+				return static_cast<std::size_t>(capacity / volume);
 			}
 		}
 		else
 			return 0;
 	}
 	
-	size_t Module::shots() {
+	std::size_t Module::shots() {
 		if (auto charge = this->charge()) {
 			auto charges = this->charges();
 			if (charges > 0) {
 				if (auto attribute = (*this)[AttributeID::chargeRate]) {
 					auto rate = attribute->value();
 					if (rate > 0)
-						return static_cast<size_t>(charges / rate);
+						return static_cast<std::size_t>(charges / rate);
 				}
 				else if (auto attribute = (*this)[AttributeID::crystalsGetDamaged]) {
 					auto hp = (*charge)[AttributeID::hp]->value();
 					auto chance = (*charge)[AttributeID::crystalVolatilityChance]->value();
 					auto damage = (*charge)[AttributeID::crystalVolatilityDamage]->value();
-					return static_cast<size_t>(charges * hp / (damage * chance));
+					return static_cast<std::size_t>(charges * hp / (damage * chance));
 				}
 			}
 		}

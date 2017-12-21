@@ -33,7 +33,7 @@ namespace dgmpp {
 		Charge* charge() const noexcept { return charge_.get(); }
 
 		Squadron squadron() const noexcept { return squadron_; }
-		size_t squadronSize();
+		std::size_t squadronSize();
 
 		SquadronTag squadronTag() const noexcept { return squadronTag_; };
 

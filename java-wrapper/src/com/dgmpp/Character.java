@@ -109,4 +109,8 @@ public class Character extends Type {
     return (cPtr == 0) ? null : new Booster(cPtr, false);
   }
 
+  public double droneControlDistance() {
+    return dgmppJNI.Character_droneControlDistance(swigCPtr, this);
+  }
+
 }

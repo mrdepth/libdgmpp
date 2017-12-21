@@ -373,6 +373,7 @@ public class dgmppJNI {
   public final static native long Character_boosters(long jarg1, Character jarg1_);
   public final static native long Character_implant(long jarg1, Character jarg1_, int jarg2);
   public final static native long Character_booster(long jarg1, Character jarg1_, int jarg2);
+  public final static native double Character_droneControlDistance(long jarg1, Character jarg1_);
   public final static native void delete_Character(long jarg1);
   public final static native long new_Gang();
   public final static native long Gang_addPilot(long jarg1, Gang jarg1_);

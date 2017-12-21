@@ -85,6 +85,10 @@ BOOL dgmpp_module_is_fail (dgmpp_type_ptr module) {
 	return type_cast<Module*>(module)->fail();
 }
 
+BOOL dgmpp_module_require_target (dgmpp_type_ptr module) {
+	return type_cast<Module*>(module)->requireTarget();
+}
+
 BOOL dgmpp_module_can_have_state (dgmpp_type_ptr module, DGMPP_MODULE_STATE state) {
 	return type_cast<Module*>(module)->canHaveState(static_cast<Module::State>(state));
 }

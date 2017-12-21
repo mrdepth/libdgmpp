@@ -122,11 +122,11 @@ namespace dgmpp {
 		}
 	}
 	
-	size_t Drone::squadronSize() {
+	std::size_t Drone::squadronSize() {
 		if (squadron_ == Squadron::none)
 			return 5;
 		else {
-			auto size = static_cast<size_t>((*this)[AttributeID::fighterSquadronMaxSize]->value());
+			auto size = static_cast<std::size_t>((*this)[AttributeID::fighterSquadronMaxSize]->value());
 			return size > 0 ? size : 5;
 		}
 	}

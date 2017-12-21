@@ -35,14 +35,14 @@ public typealias DGMAstronomicalUnit = Double
 public typealias DGMPercent = Double
 public typealias DGMMultiplier = Double
 
-public typealias DGMGigaJoulePerSecond = Rate<DGMGigaJoule, Seconds>
-public typealias DGMCubicMeterPerSecond = Rate<DGMCubicMeter, Seconds>
-public typealias DGMRadiansPerSecond = Rate<DGMRadians, Seconds>
-public typealias DGMMetersPerSecond = Rate<DGMMeter, Seconds>
-public typealias DGMAstronomicalUnitsPerSecond = Rate<DGMAstronomicalUnit, Seconds>
-public typealias DGMHPPerSecond = Rate<DGMHP, Seconds>
-public typealias DGMFuelUnitsPerHour = Rate<Double, Hours>
-public typealias DGMDamagePerSecond = Rate<DGMDamageVector, Seconds>
+public typealias DGMGigaJoulePerSecond = DGMRate<DGMGigaJoule, DGMSeconds>
+public typealias DGMCubicMeterPerSecond = DGMRate<DGMCubicMeter, DGMSeconds>
+public typealias DGMRadiansPerSecond = DGMRate<DGMRadians, DGMSeconds>
+public typealias DGMMetersPerSecond = DGMRate<DGMMeter, DGMSeconds>
+public typealias DGMAstronomicalUnitsPerSecond = DGMRate<DGMAstronomicalUnit, DGMSeconds>
+public typealias DGMHPPerSecond = DGMRate<DGMHP, DGMSeconds>
+public typealias DGMFuelUnitsPerHour = DGMRate<Double, DGMHours>
+public typealias DGMDamagePerSecond = DGMRate<DGMDamageVector, DGMSeconds>
 
 public enum DGMRaceID: Int {
 	case none = 0
@@ -62,6 +62,28 @@ public struct DGMDamageVector: Scalable {
 	public func scale(_ s: Double) -> DGMDamageVector {
 		return DGMDamageVector(em: em * s, thermal: thermal * s, kinetic: kinetic * s, explosive: explosive * s)
 	}
+	
+	public init (em: DGMHP, thermal: DGMHP, kinetic: DGMHP, explosive: DGMHP) {
+		self.em = em
+		self.thermal = thermal
+		self.kinetic = kinetic
+		self.explosive = explosive
+	}
+	
+	public var total: Double {
+		return em + kinetic + thermal + explosive
+	}
+
+	public static func + (lhs: DGMDamageVector, rhs: DGMDamageVector) -> DGMDamageVector {
+		return DGMDamageVector(em: lhs.em + rhs.em, thermal: lhs.thermal + rhs.thermal, kinetic: lhs.kinetic + rhs.kinetic, explosive: lhs.explosive + rhs.explosive)
+	}
+
+	public static func - (lhs: DGMDamageVector, rhs: DGMDamageVector) -> DGMDamageVector {
+		return DGMDamageVector(em: lhs.em - rhs.em, thermal: lhs.thermal - rhs.thermal, kinetic: lhs.kinetic - rhs.kinetic, explosive: lhs.explosive - rhs.explosive)
+	}
+
+	public static let omni = DGMDamageVector(em: 0.25, thermal: 0.25, kinetic: 0.25, explosive: 0.25)
+	
 }
 
 public struct DGMTank {
@@ -85,6 +107,14 @@ public struct DGMHostileTarget {
 	public var range: DGMMeter = 0
 	
 	public static let `default` = DGMHostileTarget(dgmpp_hostile_target_default)
+	
+	public init (angularVelocity: DGMRadiansPerSecond, velocity: DGMMetersPerSecond, signature: DGMMeter, range: DGMMeter) {
+		self.angularVelocity = angularVelocity
+		self.velocity = velocity
+		self.signature = signature
+		self.range = range
+	}
+
 }
 
 public struct DGMResistances {
@@ -98,6 +128,15 @@ public struct DGMResistances {
 	public var shield: Layer
 	public var armor: Layer
 	public var hull: Layer
+}
+
+extension DGMDamageVector {
+	public init (_ resistances: DGMResistances.Layer) {
+		em = resistances.em
+		thermal = resistances.thermal
+		kinetic = resistances.kinetic
+		explosive = resistances.explosive
+	}
 }
 
 public struct DGMHitPoints {

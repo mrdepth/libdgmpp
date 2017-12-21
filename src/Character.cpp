@@ -12,7 +12,7 @@
 namespace dgmpp {
 	
 	Character::Character() : Type(TypeID::characterGallente) {
-		for (size_t i = 0; i < SDE::skillsCount; i++) {
+		for (std::size_t i = 0; i < SDE::skillsCount; i++) {
 			auto metaInfo = SDE::skills[i];
 			auto skill = Skill::Create(*metaInfo);
 			auto ptr = skill.get();
@@ -157,6 +157,11 @@ namespace dgmpp {
 		auto i = boosters_.find(slot);
 		return i != boosters_.end() ? i->get() : nullptr;
 	}
+	
+	Meter Character::droneControlDistance() {
+		return (*this)[AttributeID::droneControlDistance]->value();
+	}
+
 	
 	void Character::setEnabled (bool enabled) {
 		if (isEnabled() == enabled)

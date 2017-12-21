@@ -27,7 +27,6 @@ namespace dgmpp {
 	}
 	
 	Type::Type (TypeID typeID) : Type (SDE::get(typeID)) {
-//		children_.reserve(410);
 	}
 
 	Type::Type (const MetaInfo::Type& metaInfo): metaInfo_(metaInfo) {

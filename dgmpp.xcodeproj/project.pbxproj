@@ -241,8 +241,8 @@
 		12C457DA1FE2C07F0045BD84 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
 		12C457DC1FE2C0890045BD84 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
 		12C457DD1FE2C0890045BD84 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
-		12C457DF1FE2CB210045BD84 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* Rate.swift */; };
-		12C457E01FE2CB210045BD84 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* Rate.swift */; };
+		12C457DF1FE2CB210045BD84 /* DGMRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* DGMRate.swift */; };
+		12C457E01FE2CB210045BD84 /* DGMRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* DGMRate.swift */; };
 		12C457E21FE2CB790045BD84 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
 		12C457E31FE2CB790045BD84 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
 		12C457E51FE2CB850045BD84 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
@@ -466,7 +466,7 @@
 		12BE89891FE2873800854893 /* storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = storage.cpp; sourceTree = "<group>"; };
 		12C457D81FE2C07F0045BD84 /* DGMType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMType.swift; sourceTree = "<group>"; };
 		12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMAttirbute.swift; sourceTree = "<group>"; };
-		12C457DE1FE2CB210045BD84 /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
+		12C457DE1FE2CB210045BD84 /* DGMRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMRate.swift; sourceTree = "<group>"; };
 		12C457E11FE2CB790045BD84 /* DGMCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMCharacter.swift; sourceTree = "<group>"; };
 		12C457E41FE2CB850045BD84 /* DGMArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMArea.swift; sourceTree = "<group>"; };
 		12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMCharge.swift; sourceTree = "<group>"; };
@@ -648,7 +648,7 @@
 				122E118C1FE963100057EB0D /* PI */,
 				122E11B31FEA717D0057EB0D /* Deprecated */,
 				128AA29A1FE0213C00AD4ED3 /* dgm.swift */,
-				12C457DE1FE2CB210045BD84 /* Rate.swift */,
+				12C457DE1FE2CB210045BD84 /* DGMRate.swift */,
 				12C457F91FE2CBDC0045BD84 /* Utility.swift */,
 				128AA2A01FE024FD00AD4ED3 /* Dgmpp - Info.plist */,
 			);
@@ -1225,7 +1225,7 @@
 				12649A171FCD5E77007B22CD /* Structure.cpp in Sources */,
 				12C457FA1FE2CBDC0045BD84 /* Utility.swift in Sources */,
 				12BE891A1FE260CA00854893 /* type.cpp in Sources */,
-				12C457DF1FE2CB210045BD84 /* Rate.swift in Sources */,
+				12C457DF1FE2CB210045BD84 /* DGMRate.swift in Sources */,
 				12C457F41FE2CBBA0045BD84 /* DGMShip.swift in Sources */,
 				12BE894D1FE2836A00854893 /* area.cpp in Sources */,
 				12C457E81FE2CB8E0045BD84 /* DGMCharge.swift in Sources */,
@@ -1298,7 +1298,7 @@
 				12649A181FCD5E77007B22CD /* Structure.cpp in Sources */,
 				12C457FB1FE2CBDC0045BD84 /* Utility.swift in Sources */,
 				12BE891B1FE260CA00854893 /* type.cpp in Sources */,
-				12C457E01FE2CB210045BD84 /* Rate.swift in Sources */,
+				12C457E01FE2CB210045BD84 /* DGMRate.swift in Sources */,
 				12C457F51FE2CBBA0045BD84 /* DGMShip.swift in Sources */,
 				12BE894E1FE2836A00854893 /* area.cpp in Sources */,
 				12C457E91FE2CB8E0045BD84 /* DGMCharge.swift in Sources */,

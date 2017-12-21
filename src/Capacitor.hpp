@@ -39,11 +39,11 @@ namespace dgmpp {
 			std::chrono::milliseconds tNow = 0ms;
 			std::chrono::milliseconds duration = 0ms;
 			GigaJoule capNeed = 0;
-			size_t shot = 0;
-			size_t clipSize = 0;
+			std::size_t shot = 0;
+			std::size_t clipSize = 0;
 			
 			State() {}
-			State(std::chrono::milliseconds duration, GigaJoule capNeed, size_t clipSize)
+			State(std::chrono::milliseconds duration, GigaJoule capNeed, std::size_t clipSize)
 			: duration(duration), capNeed(capNeed), clipSize(clipSize) {}
 			
 

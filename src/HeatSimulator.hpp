@@ -33,11 +33,11 @@ namespace dgmpp {
 			std::chrono::milliseconds cycleTime = 0ms;
 			std::chrono::milliseconds reloadTime = 0ms;
 			HP heatDamage = 0;
-			size_t shot = 0;
-			size_t clipSize = 0;
+			std::size_t shot = 0;
+			std::size_t clipSize = 0;
 			Module::Socket socket = 0;
 			
-			State (std::chrono::milliseconds cycleTime, std::chrono::milliseconds reloadTime, HP heatDamage, size_t clipSize, Module::Socket socket)
+			State (std::chrono::milliseconds cycleTime, std::chrono::milliseconds reloadTime, HP heatDamage, std::size_t clipSize, Module::Socket socket)
 			: cycleTime(cycleTime), reloadTime(reloadTime), heatDamage(heatDamage), clipSize(clipSize), socket(socket) {}
 			
 			bool operator< (const State& other) const noexcept {

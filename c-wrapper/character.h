@@ -12,6 +12,9 @@
 
 DGMPP_EXTERN dgmpp_type_ptr dgmpp_character_create();
 
+DGMPP_EXTERN const char*	dgmpp_character_get_name (dgmpp_type_ptr character);
+DGMPP_EXTERN void			dgmpp_character_set_name (dgmpp_type_ptr character, const char* name);
+
 DGMPP_EXTERN BOOL dgmpp_character_set_skill_levels			(dgmpp_type_ptr character, int skill_levels);
 DGMPP_EXTERN dgmpp_array_ptr dgmpp_character_get_skills		(dgmpp_type_ptr character);
 
@@ -29,7 +32,10 @@ DGMPP_EXTERN dgmpp_type_ptr	dgmpp_character_get_structure	(dgmpp_type_ptr charac
 DGMPP_EXTERN void 			dgmpp_character_set_ship		(dgmpp_type_ptr character, dgmpp_type_ptr ship);
 DGMPP_EXTERN void 			dgmpp_character_set_structure	(dgmpp_type_ptr character, dgmpp_type_ptr structure);
 
-DGMPP_EXTERN int		dgmpp_skill_get_level (dgmpp_type_ptr skill);
+DGMPP_EXTERN dgmpp_meter dgmpp_character_get_drone_control_distance (dgmpp_type_ptr character);
+
+
+DGMPP_EXTERN int	dgmpp_skill_get_level (dgmpp_type_ptr skill);
 DGMPP_EXTERN BOOL	dgmpp_skill_set_level (dgmpp_type_ptr skill, int level);
 
 DGMPP_EXTERN dgmpp_type_ptr	dgmpp_implant_create	(dgmpp_type_id type_id);

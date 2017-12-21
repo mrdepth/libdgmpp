@@ -19,7 +19,7 @@ namespace dgmpp {
 		return heatCapacity - std::exp(-t.count() / 1000.0 * heatGeneration);
 	}
 	
-	static Float damageProbability(Float h, size_t range, size_t numberOfOnlineModules, size_t numberOfSlots, Float heatAttenuation) {
+	static Float damageProbability(Float h, std::size_t range, std::size_t numberOfOnlineModules, std::size_t numberOfSlots, Float heatAttenuation) {
 		return static_cast<Float>(numberOfOnlineModules) / static_cast<Float>(numberOfSlots) * h * std::pow(heatAttenuation, range);
 	}
 
@@ -97,7 +97,7 @@ namespace dgmpp {
 			tNow = state.tNow;
 			
 			auto h = heat(tNow, heatCapacity, heatGeneration);
-			size_t dead = 0;
+			std::size_t dead = 0;
 			for (int i = 0; i < totalSlots; i++) {
 				if (hp[i].first > 0) {
 					auto range = std::abs(i - static_cast<int>(state.socket));

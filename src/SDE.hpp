@@ -21,7 +21,7 @@ namespace dgmpp {
 		extern const MetaInfo::Facility& facility (TypeID typeID);
 
 		extern const MetaInfo::Type* const *skills;
-		extern const size_t skillsCount;
+		extern const std::size_t skillsCount;
 		
 		
 		const auto canFitShipGroupAttributes = {

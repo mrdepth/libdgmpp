@@ -124,7 +124,11 @@ public class DGMModule: DGMType {
 	public var isFail: Bool {
 		return dgmpp_module_is_fail(opaque)
 	}
-	
+
+	public var requireTarget: Bool {
+		return dgmpp_module_require_target(opaque)
+	}
+
 	public var reloadTime: TimeInterval {
 		return dgmpp_module_get_reload_time(opaque)
 	}

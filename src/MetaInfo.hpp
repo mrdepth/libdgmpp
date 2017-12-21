@@ -270,10 +270,10 @@ namespace dgmpp {
 		struct Schematic {
 			SchematicID schematicID;
 			std::chrono::seconds cycleTime;
-			std::pair<const Commodity*, size_t> output;
-			virtual slice<const std::pair<const Commodity*, size_t>*> inputs() const noexcept = 0;
+			std::pair<const Commodity*, std::size_t> output;
+			virtual slice<const std::pair<const Commodity*, std::size_t>*> inputs() const noexcept = 0;
 			
-			constexpr Schematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, size_t> output)
+			constexpr Schematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, std::size_t> output)
 			: schematicID(schematicID), cycleTime(cycleTime), output(output) {}
 			
 			Schematic (const Schematic& other) = delete;
@@ -286,10 +286,10 @@ namespace dgmpp {
 		template <typename Inputs>
 		struct _Schematic : public Schematic {
 			
-			constexpr _Schematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, size_t> output, const Inputs& inputs)
+			constexpr _Schematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, std::size_t> output, const Inputs& inputs)
 			: Schematic(schematicID, cycleTime, output), inputs_(inputs) {}
 
-			virtual slice<const std::pair<const Commodity*, size_t>*> inputs() const noexcept override {
+			virtual slice<const std::pair<const Commodity*, std::size_t>*> inputs() const noexcept override {
 				return { inputs_.data(), inputs_.data() + inputs_.size() };
 			}
 			
@@ -316,7 +316,7 @@ namespace dgmpp {
 		}
 
 		template <typename Inputs>
-		constexpr _Schematic<Inputs> MakeSchematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, size_t> output, const Inputs& inputs) {
+		constexpr _Schematic<Inputs> MakeSchematic(SchematicID schematicID, std::chrono::seconds cycleTime, std::pair<const Commodity*, std::size_t> output, const Inputs& inputs) {
 			return { schematicID, cycleTime, output, inputs };
 		}
 
@@ -362,10 +362,10 @@ namespace dgmpp {
 		
 		template <typename... Args>
 		constexpr auto _inputs(Args... args) {
-			return _array<std::pair<const Commodity*, size_t>, Args...>(args...);
+			return _array<std::pair<const Commodity*, std::size_t>, Args...>(args...);
 		}
 
-		constexpr std::pair<const Commodity*, size_t> _C (const Commodity* commodity, size_t quantity) {
+		constexpr std::pair<const Commodity*, std::size_t> _C (const Commodity* commodity, std::size_t quantity) {
 			return {commodity, quantity};
 		}
 

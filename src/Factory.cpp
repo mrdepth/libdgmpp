@@ -52,7 +52,7 @@ namespace dgmpp {
 			output = 0;
 		}
 		else {
-			output = std::max(i->second - (*this)[key].quantity(), size_t(0));
+			output = std::max(i->second - (*this)[key].quantity(), std::size_t(0));
 		}
 		return output;
 	}

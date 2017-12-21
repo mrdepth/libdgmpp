@@ -20,5 +20,7 @@ DGMPP_EXTERN dgmpp_type_ptr				dgmpp_type_get_parent		(dgmpp_type_ptr type);
 DGMPP_EXTERN dgmpp_attribute_ptr		dgmpp_type_get_attribute	(dgmpp_type_ptr type, dgmpp_attribute_id attribute_id);
 DGMPP_EXTERN dgmpp_array_ptr			dgmpp_type_get_affectors	(dgmpp_type_ptr type);
 DGMPP_EXTERN dgmpp_array_ptr			dgmpp_type_get_attributes	(dgmpp_type_ptr type);
+DGMPP_EXTERN size_t						dgmpp_type_get_identifier	(dgmpp_type_ptr type);
+DGMPP_EXTERN void						dgmpp_type_set_identifier	(dgmpp_type_ptr type, size_t identifier);
 
 #endif /* type_h */

@@ -87,8 +87,8 @@ namespace dgmpp {
 		std::chrono::milliseconds cycleTime();
 		std::chrono::milliseconds rawCycleTime();
 
-		size_t charges();
-		size_t shots();
+		std::size_t charges();
+		std::size_t shots();
 		
 		GigaJoulePerSecond capUse();
 		Teraflops cpuUse();

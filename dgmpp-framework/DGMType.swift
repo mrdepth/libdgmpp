@@ -48,6 +48,15 @@ public class DGMType {
 	public var attributes: [DGMAttribute] {
 		return DGMArray<DGMAttribute>(dgmpp_type_get_attributes(opaque)).array
 	}
+	
+	public var identifier: Int {
+		get {
+			return dgmpp_type_get_identifier(opaque)
+		}
+		set {
+			dgmpp_type_set_identifier(opaque, newValue)
+		}
+	}
 
 }
 

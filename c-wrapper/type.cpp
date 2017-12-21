@@ -37,3 +37,11 @@ dgmpp_array_ptr dgmpp_type_get_affectors (dgmpp_type_ptr type) {
 dgmpp_array_ptr dgmpp_type_get_attributes (dgmpp_type_ptr type) {
 	return dgmpp_make_array<dgmpp_attribute_impl*>(type_cast<Type*>(type)->attributes());
 }
+
+size_t dgmpp_type_get_identifier (dgmpp_type_ptr type) {
+	return type_cast<Type*>(type)->identifier();
+}
+
+void dgmpp_type_set_identifier (dgmpp_type_ptr type, size_t identifier) {
+	type_cast<Type*>(type)->identifier(identifier);
+}

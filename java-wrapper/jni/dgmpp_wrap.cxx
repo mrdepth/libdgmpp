@@ -5889,6 +5889,21 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Character_1booster(JNIEnv *jenv
 }
 
 
+SWIGEXPORT jdouble JNICALL Java_com_dgmpp_dgmppJNI_Character_1droneControlDistance(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  dgmpp::Character *arg1 = (dgmpp::Character *) 0 ;
+  dgmpp::Meter result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Character **)&jarg1; 
+  result = (dgmpp::Meter)(arg1)->droneControlDistance();
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_delete_1Character(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   dgmpp::Character *arg1 = (dgmpp::Character *) 0 ;
   

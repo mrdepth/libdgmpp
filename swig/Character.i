@@ -47,5 +47,7 @@ namespace dgmpp {
 		
 		Implant* implant (Implant::Slot slot) const noexcept;
 		Booster* booster (Booster::Slot slot) const noexcept;
+		
+		Meter droneControlDistance();
 	};
 }

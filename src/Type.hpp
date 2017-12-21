@@ -57,6 +57,9 @@ namespace dgmpp {
 		std::unordered_set<Type*> affectors() const;
 		std::list<Attribute*> attributes() const;
 		
+		std::size_t identifier() const noexcept { return identifier_; }
+		void identifier (std::size_t identifier) noexcept { identifier_ = identifier; }
+		
 	protected:
 		
 		Type (TypeID typeID);
@@ -103,7 +106,8 @@ namespace dgmpp {
 		TuplesSet<AttributeID, TypeID, const Modifier*> locationRequiredSkillModifiers_;
 		
 		std::unique_ptr<AttributesCache> cache_;
-		
+		std::size_t identifier_ = std::hash<Type*>()(this);
+
 		void addModifier	(const Modifier* modifier);
 		void removeModifier (const Modifier* modifier);
 		std::vector<Effect*> activeEffects() const;
@@ -169,7 +173,7 @@ namespace dgmpp {
 		
 	private:
 		std::list<Attribute*> attributes_;
-		size_t batchCounter_ = 0;
+		std::size_t batchCounter_ = 0;
 	};
 	
 }

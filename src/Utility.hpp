@@ -102,7 +102,7 @@ namespace dgmpp {
 			return lhs < rhs;
 		}
 		
-		template <typename... Args2, size_t... Is>
+		template <typename... Args2, std::size_t... Is>
 		std::tuple<Args2...> get(const Key& lhs, std::index_sequence<Is...>) const noexcept {
 			return std::make_tuple(remove_unique_ptr(std::get<Is>(lhs))...);
 		}
@@ -143,7 +143,7 @@ namespace dgmpp {
 			return to_;
 		}
 		
-		size_t size() const noexcept {
+		std::size_t size() const noexcept {
 			return std::distance(from_, to_);
 		}
 		

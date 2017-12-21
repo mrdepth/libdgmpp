@@ -86,7 +86,7 @@ namespace dgmpp {
 				if (range.first != range.second) {
 					auto squadron = range.first;
 					squadronTag = std::get<Drone::SquadronTag>(*squadron);
-					size_t size = 1;
+					std::size_t size = 1;
 					
 					auto i = range.first;
 					i++;
@@ -211,7 +211,7 @@ namespace dgmpp {
 		}
 		
 		if (auto attribute = (*this)[AttributeID::maxGroupFitted]) {
-			auto max = static_cast<size_t>(attribute->value());
+			auto max = static_cast<std::size_t>(attribute->value());
 			auto groupID = module->metaInfo().groupID;
 			for (const auto& i: modules_) {
 				if (std::get<std::unique_ptr<Module>>(i)->metaInfo().groupID == groupID)
@@ -222,7 +222,7 @@ namespace dgmpp {
 		}
 		
 		if (auto attribute = (*this)[AttributeID::maxTypeFitted]) {
-			auto max = static_cast<size_t>(attribute->value());
+			auto max = static_cast<std::size_t>(attribute->value());
 			auto typeID = module->metaInfo().typeID;
 			for (const auto& i: modules_) {
 				if (std::get<std::unique_ptr<Module>>(i)->metaInfo().typeID == typeID)
@@ -315,24 +315,24 @@ namespace dgmpp {
 	}
 	
 	//Drones
-	size_t Ship::totalDroneSquadron (Drone::Squadron squadron) {
+	std::size_t Ship::totalDroneSquadron (Drone::Squadron squadron) {
 		switch (squadron) {
 			case Drone::Squadron::heavy:
-				return static_cast<size_t>((*this)[AttributeID::fighterHeavySlots]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::fighterHeavySlots]->value());
 			case Drone::Squadron::light:
-				return static_cast<size_t>((*this)[AttributeID::fighterLightSlots]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::fighterLightSlots]->value());
 			case Drone::Squadron::support:
-				return static_cast<size_t>((*this)[AttributeID::fighterSupportSlots]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::fighterSupportSlots]->value());
 			default:
 				if (auto character = domain(MetaInfo::Modifier::Domain::character)) {
-					return static_cast<size_t>((*character)[AttributeID::maxActiveDrones]->value());
+					return static_cast<std::size_t>((*character)[AttributeID::maxActiveDrones]->value());
 				}
 				else
 					return 0;
 		}
 	}
 	
-	size_t Ship::usedDroneSquadron (Drone::Squadron squadron) {
+	std::size_t Ship::usedDroneSquadron (Drone::Squadron squadron) {
 		if (squadron == Drone::Squadron::none) {
 			return std::accumulate(drones_.begin(), drones_.end(), 0, [](auto sum, const auto& i) {
 				auto& drone = std::get<std::unique_ptr<Drone>>(i);
@@ -354,11 +354,11 @@ namespace dgmpp {
 		
 	}
 	
-	size_t Ship::totalFighterLaunchTubes() {
-		return static_cast<size_t>((*this)[AttributeID::fighterTubes]->value());
+	std::size_t Ship::totalFighterLaunchTubes() {
+		return static_cast<std::size_t>((*this)[AttributeID::fighterTubes]->value());
 	}
 	
-	size_t Ship::usedFighterLaunchTubes() {
+	std::size_t Ship::usedFighterLaunchTubes() {
 		std::set<std::pair<TypeID, Drone::SquadronTag>> squadrons;
 		for (const auto& i: drones_) {
 			auto& drone = std::get<std::unique_ptr<Drone>>(i);
@@ -369,45 +369,45 @@ namespace dgmpp {
 	}
 
 	
-	size_t Ship::totalSlots (Module::Slot slot) {
+	std::size_t Ship::totalSlots (Module::Slot slot) {
 		switch (slot) {
 			case Module::Slot::hi:
-				return static_cast<size_t>((*this)[AttributeID::hiSlots]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::hiSlots]->value());
 			case Module::Slot::med:
-				return static_cast<size_t>((*this)[AttributeID::medSlots]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::medSlots]->value());
 			case Module::Slot::low:
-				return static_cast<size_t>((*this)[AttributeID::lowSlots]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::lowSlots]->value());
 			case Module::Slot::rig:
-				return static_cast<size_t>((*this)[AttributeID::rigSlots]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::rigSlots]->value());
 			case Module::Slot::subsystem:
-				return static_cast<size_t>((*this)[AttributeID::maxSubSystems]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::maxSubSystems]->value());
 			case Module::Slot::mode:
-				return static_cast<size_t>((*this)[AttributeID::tacticalModes]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::tacticalModes]->value());
 			case Module::Slot::service:
-				return static_cast<size_t>((*this)[AttributeID::serviceSlots]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::serviceSlots]->value());
 			default:
 				return 0;
 		}
 	}
 	
-	size_t Ship::totalHardpoints (Module::Hardpoint hardpoint) {
+	std::size_t Ship::totalHardpoints (Module::Hardpoint hardpoint) {
 		return usedHardpoints(hardpoint) + freeHardpoints(hardpoint);
 	}
 	
-	size_t Ship::freeHardpoints (Module::Hardpoint hardpoint) {
+	std::size_t Ship::freeHardpoints (Module::Hardpoint hardpoint) {
 		switch (hardpoint) {
 			case Module::Hardpoint::none:
-				return std::numeric_limits<size_t>::max();
+				return std::numeric_limits<std::size_t>::max();
 			case Module::Hardpoint::launcher:
-				return static_cast<size_t>((*this)[AttributeID::launcherSlotsLeft]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::launcherSlotsLeft]->value());
 			case Module::Hardpoint::turret:
-				return static_cast<size_t>((*this)[AttributeID::turretSlotsLeft]->value());
+				return static_cast<std::size_t>((*this)[AttributeID::turretSlotsLeft]->value());
 			default:
 				return 0;
 		}
 	}
 	
-	size_t Ship::usedHardpoints (Module::Hardpoint hardpoint) {
+	std::size_t Ship::usedHardpoints (Module::Hardpoint hardpoint) {
 		return std::count_if(modules_.begin(), modules_.end(), [=](const auto& a) {return std::get<std::unique_ptr<Module>>(a)->hardpoint() == hardpoint;});
 	}
 	
@@ -775,10 +775,10 @@ namespace dgmpp {
 	}
 	
 	//Targeting
-	size_t Ship::maxTargets() {
-		auto maxTargets = static_cast<size_t>((*this)[AttributeID::maxLockedTargets]->value());
+	std::size_t Ship::maxTargets() {
+		auto maxTargets = static_cast<std::size_t>((*this)[AttributeID::maxLockedTargets]->value());
 		if (auto character = domain(MetaInfo::Modifier::Domain::character)) {
-			auto maxTargets2 = static_cast<size_t>((*character)[AttributeID::maxLockedTargets]->value());
+			auto maxTargets2 = static_cast<std::size_t>((*character)[AttributeID::maxLockedTargets]->value());
 			return std::min(maxTargets, maxTargets2);
 		}
 		else

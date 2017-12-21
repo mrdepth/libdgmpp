@@ -22,8 +22,8 @@ namespace dgmpp {
 		void installTime    (std::chrono::seconds value) noexcept { installTime_ = value; }
 		void expiryTime     (std::chrono::seconds value) noexcept { expiryTime_ = value; }
 		void cycleTime      (std::chrono::seconds value) noexcept { cycleTime_ = value; w_ = value; }
-		size_t quantityPerCycle() const noexcept { return quantityPerCycle_; };
-		void quantityPerCycle (size_t value) noexcept { quantityPerCycle_ = value; phaseShift_ = std::pow(value, 0.7); }
+		std::size_t quantityPerCycle() const noexcept { return quantityPerCycle_; };
+		void quantityPerCycle (std::size_t value) noexcept { quantityPerCycle_ = value; phaseShift_ = std::pow(value, 0.7); }
 		std::optional<Commodity> output() const noexcept;
 		
 		const std::list<std::unique_ptr<ProductionState>>& states() const noexcept { return states_; }
@@ -44,15 +44,15 @@ namespace dgmpp {
 		std::chrono::seconds installTime_ = std::chrono::seconds::zero();
 		std::chrono::seconds expiryTime_ = std::chrono::seconds::zero();
 		std::chrono::seconds cycleTime_ = std::chrono::seconds::zero();
-		size_t quantityPerCycle_ = 0;
+		std::size_t quantityPerCycle_ = 0;
 		std::chrono::duration<Float, std::ratio<60 * 15>> w_;
 		Float phaseShift_ = 0;
 		bool updating_ = false;
 		
 		ProductionCycle* extraction_ = nullptr;
 		
-		size_t totalYield_ = 0;
-		size_t totalWaste_ = 0;
+		std::size_t totalYield_ = 0;
+		std::size_t totalWaste_ = 0;
 		
 		std::optional<Commodity> yieldAt(std::chrono::seconds time) const noexcept;
 		void finishCycle(ProductionCycle& cycle, std::chrono::seconds time);

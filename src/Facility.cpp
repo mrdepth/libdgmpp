@@ -25,7 +25,7 @@ namespace dgmpp {
 	
 	Commodity Facility::free(const Commodity& key) noexcept {
 		auto output = key;
-		output = key.metaInfo().volume > 0 ? std::trunc(freeVolume() / key.metaInfo().volume) : std::numeric_limits<size_t>::max();
+		output = key.metaInfo().volume > 0 ? std::trunc(freeVolume() / key.metaInfo().volume) : std::numeric_limits<std::size_t>::max();
 		return output;
 	}
 	

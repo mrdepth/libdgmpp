@@ -17,6 +17,11 @@ namespace dgmpp {
 	public:
 		static std::unique_ptr<Character> Create() { return std::unique_ptr<Character>(new Character); }
 		
+		const std::string& name() const noexcept { return name_; }
+		template<typename T>
+		void name (T&& name) noexcept { name_ = std::forward<T>(name); }
+
+		
 		Ship* ship() const { return ship_.get(); }
 		Ship* ship (std::unique_ptr<Ship>&& ship);
 		Ship* ship (TypeID typeID) { return ship(Ship::Create(typeID)); }
@@ -39,6 +44,9 @@ namespace dgmpp {
 		
 		Implant* implant (Implant::Slot slot) const noexcept;
 		Booster* booster (Booster::Slot slot) const noexcept;
+		
+		Meter droneControlDistance();
+
 
 		virtual void setEnabled (bool enabled) override;
 	protected:
@@ -71,6 +79,7 @@ namespace dgmpp {
 		
 		std::set<std::unique_ptr<Implant>, SlotCompare> implants_;
 		std::set<std::unique_ptr<Booster>, SlotCompare> boosters_;
+		std::string name_;
 		
 		Character();
 	};

@@ -66,6 +66,17 @@ public class DGMCharacter: DGMType {
 		super.init(dgmpp_character_create()!)
 	}
 	
+	public var name: String {
+		get {
+			return String(cString: dgmpp_character_get_name(opaque));
+		}
+		set {
+			guard let string = newValue.cString(using: .utf8) else {return}
+			dgmpp_character_set_name(opaque, string)
+		}
+	}
+
+	
 	public var ship: DGMShip? {
 		get {
 			guard let ship = dgmpp_character_get_ship(opaque) else {return nil}
@@ -116,6 +127,10 @@ public class DGMCharacter: DGMType {
 
 	public var skills: [DGMSkill] {
 		return DGMArray<DGMSkill>(dgmpp_character_get_skills(opaque)).array
+	}
+	
+	public var droneControlDistance: DGMMeter {
+		return dgmpp_character_get_drone_control_distance(opaque)
 	}
 
 }

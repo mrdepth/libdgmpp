@@ -40,10 +40,9 @@ namespace dgmpp {
 		
 		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
 		
-		const std::string& name() const { return name_; }
-		
+		const std::string& name() const noexcept { return name_; }
 		template<typename T>
-		void name (T&& name) { name_ = std::forward<T>(name); }
+		void name (T&& name) noexcept { name_ = std::forward<T>(name); }
 
 		RaceID raceID();
 		std::vector<CategoryID> supportedDroneCategories();
@@ -71,20 +70,20 @@ namespace dgmpp {
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 		
 		//Drones
-		size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
-		size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
-		size_t totalFighterLaunchTubes();
-		size_t usedFighterLaunchTubes();
+		std::size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
+		std::size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
+		std::size_t totalFighterLaunchTubes();
+		std::size_t usedFighterLaunchTubes();
 
 		
 		//Resources
-		size_t totalSlots	(Module::Slot slot);
-		size_t freeSlots	(Module::Slot slot) {return totalSlots(slot) - usedSlots(slot);}
-		size_t usedSlots	(Module::Slot slot) {return modulesSlice(slot).size();}
+		std::size_t totalSlots	(Module::Slot slot);
+		std::size_t freeSlots	(Module::Slot slot) {return totalSlots(slot) - usedSlots(slot);}
+		std::size_t usedSlots	(Module::Slot slot) {return modulesSlice(slot).size();}
 		
-		size_t totalHardpoints	(Module::Hardpoint hardpoint);
-		size_t freeHardpoints	(Module::Hardpoint hardpoint);
-		size_t usedHardpoints	(Module::Hardpoint hardpoint);
+		std::size_t totalHardpoints	(Module::Hardpoint hardpoint);
+		std::size_t freeHardpoints	(Module::Hardpoint hardpoint);
+		std::size_t usedHardpoints	(Module::Hardpoint hardpoint);
 		
 		Capacitor& capacitor() noexcept { return capacitor_; }
 
@@ -139,7 +138,7 @@ namespace dgmpp {
 		Meter orbitRadiusWithAngularVelocity (RadiansPerSecond v);
 
 		//Targeting
-		size_t maxTargets();
+		std::size_t maxTargets();
 		Meter maxTargetRange();
 		Points scanStrength();
 		ScanType scanType();

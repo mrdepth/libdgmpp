@@ -26,6 +26,7 @@ DGMPP_EXTERN BOOL					dgmpp_module_set_charge				(dgmpp_type_ptr module, dgmpp_t
 DGMPP_EXTERN dgmpp_array_ptr		dgmpp_module_get_charge_groups		(dgmpp_type_ptr module);
 DGMPP_EXTERN DGMPP_CHARGE_SIZE		dgmpp_module_get_charge_size		(dgmpp_type_ptr module);
 DGMPP_EXTERN BOOL 					dgmpp_module_is_fail				(dgmpp_type_ptr module);
+DGMPP_EXTERN BOOL 					dgmpp_module_require_target			(dgmpp_type_ptr module);
 
 DGMPP_EXTERN BOOL dgmpp_module_can_have_state (dgmpp_type_ptr module, DGMPP_MODULE_STATE state);
 DGMPP_EXTERN BOOL dgmpp_module_can_fit_charge (dgmpp_type_ptr module, dgmpp_type_ptr charge);

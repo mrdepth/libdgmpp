@@ -10,6 +10,6 @@
 
 namespace dgmpp {
 	
-	Commodity::Commodity(TypeID typeID, size_t quantity) : Commodity(SDE::commodity(typeID), quantity) {}
+	Commodity::Commodity(TypeID typeID, std::size_t quantity) : Commodity(SDE::commodity(typeID), quantity) {}
 
 }

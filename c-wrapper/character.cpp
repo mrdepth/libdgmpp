@@ -12,6 +12,15 @@ dgmpp_type_ptr dgmpp_character_create() {
 	return reinterpret_cast<dgmpp_type_ptr>(new dgmpp_character_impl());
 }
 
+const char*	dgmpp_character_get_name (dgmpp_type_ptr character) {
+	return type_cast<Character*>(character)->name().c_str();
+}
+
+void dgmpp_character_set_name (dgmpp_type_ptr character, const char* name) {
+	type_cast<Character*>(character)->name(name);
+}
+
+
 BOOL dgmpp_character_set_skill_levels (dgmpp_type_ptr character, int skill_levels) {
 	try {
 		type_cast<Character*>(character)->setSkillLevels(skill_levels);
@@ -87,6 +96,9 @@ void dgmpp_character_set_structure (dgmpp_type_ptr character, dgmpp_type_ptr str
 	type_cast<Character*>(character)->ship(std::move(reinterpret_cast<dgmpp_structure_impl*>(structure)->structure));
 }
 
+dgmpp_meter dgmpp_character_get_drone_control_distance (dgmpp_type_ptr character) {
+	return type_cast<Character*>(character)->droneControlDistance();
+}
 
 int dgmpp_skill_get_level (dgmpp_type_ptr skill) {
 	return type_cast<Skill*>(skill)->level();
