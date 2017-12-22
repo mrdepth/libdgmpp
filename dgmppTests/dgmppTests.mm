@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <Dgmpp/dgmpp.hpp>
+#import "dgmpp.hpp"
 #include <memory>
 
 using namespace std::chrono_literals;
@@ -62,6 +62,11 @@ using namespace dgmpp;
 	XCTAssertEqual(med0, med2);
 	XCTAssertEqual(low0, low2);
 	XCTAssertEqual(turrets0, turrets2);
+
+	auto launchers0 = ship->freeHardpoints(Module::Hardpoint::launcher);
+	ship->addModule(TypeID::lightMissileLauncherII);
+	auto launchers1 = ship->freeHardpoints(Module::Hardpoint::launcher);
+	XCTAssertEqual(launchers0, launchers1 + 1);
 
 }
 

@@ -60,7 +60,7 @@ namespace dgmpp {
 		if ((*this)[EffectID::turretFitted])
 			hardpoint_ = Module::Hardpoint::turret;
 		else if ((*this)[EffectID::launcherFitted])
-			hardpoint_ = Module::Hardpoint::turret;
+			hardpoint_ = Module::Hardpoint::launcher;
 		else
 			hardpoint_ = Module::Hardpoint::none;
 		
