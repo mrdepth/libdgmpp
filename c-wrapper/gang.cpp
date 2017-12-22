@@ -8,18 +8,18 @@
 #include "gang.h"
 #include "internal.h"
 
-dgmpp_type_ptr dgmpp_gang_create() {
-	return reinterpret_cast<dgmpp_type_ptr>(new dgmpp_gang_impl());
+dgmpp_type dgmpp_gang_create() {
+	return reinterpret_cast<dgmpp_type>(new dgmpp_gang_impl());
 }
 
-void dgmpp_gang_add_pilot (dgmpp_type_ptr gang, dgmpp_type_ptr pilot) {
+void dgmpp_gang_add_pilot (dgmpp_type gang, dgmpp_type pilot) {
 	type_cast<Gang*>(gang)->add(std::move(reinterpret_cast<dgmpp_character_impl*>(pilot)->character));
 }
 
-void dgmpp_gang_remove_pilot (dgmpp_type_ptr gang, dgmpp_type_ptr pilot) {
+void dgmpp_gang_remove_pilot (dgmpp_type gang, dgmpp_type pilot) {
 	type_cast<Gang*>(gang)->remove(type_cast<Character*>(pilot));
 }
 
-dgmpp_array_ptr dgmpp_gang_get_pilots (dgmpp_type_ptr gang) {
+dgmpp_array dgmpp_gang_get_pilots (dgmpp_type gang) {
 	return dgmpp_make_array<dgmpp_type_impl*>(type_cast<Gang*>(gang)->pilots());
 }

@@ -68,7 +68,7 @@ BOOL dgmpp_facility_extract_commodity (dgmpp_facility_ptr facility, dgmpp_commod
 	}
 }
 
-dgmpp_array_ptr dgmpp_facility_get_commodities (dgmpp_facility_ptr facility) {
+dgmpp_array dgmpp_facility_get_commodities (dgmpp_facility_ptr facility) {
 	return dgmpp_make_array<dgmpp_commodity_impl>(facility_cast<Facility*>(facility)->commodities());
 }
 
@@ -80,11 +80,11 @@ dgmpp_commodity dgmpp_facility_get_income (dgmpp_facility_ptr facility, dgmpp_ty
 	return dgmpp_commodity_impl(facility_cast<Facility*>(facility)->income(static_cast<TypeID>(commodity_id)));
 }
 
-dgmpp_array_ptr dgmpp_facility_get_inputs (dgmpp_facility_ptr facility) {
+dgmpp_array dgmpp_facility_get_inputs (dgmpp_facility_ptr facility) {
 	return dgmpp_make_array<dgmpp_route_impl>(facility_cast<Facility*>(facility)->inputs());
 }
 
-dgmpp_array_ptr dgmpp_facility_get_outputs (dgmpp_facility_ptr facility) {
+dgmpp_array dgmpp_facility_get_outputs (dgmpp_facility_ptr facility) {
 	return dgmpp_make_array<dgmpp_route_impl>(facility_cast<Facility*>(facility)->outputs());
 }
 

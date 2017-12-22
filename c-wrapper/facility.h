@@ -24,11 +24,11 @@ DGMPP_EXTERN dgmpp_commodity	dgmpp_facility_get_free				(dgmpp_facility_ptr faci
 DGMPP_EXTERN void				dgmpp_facility_add_commodity		(dgmpp_facility_ptr facility, dgmpp_commodity commodity);
 DGMPP_EXTERN BOOL				dgmpp_facility_extract_commodity	(dgmpp_facility_ptr facility, dgmpp_commodity commodity);
 
-DGMPP_EXTERN dgmpp_array_ptr	dgmpp_facility_get_commodities	(dgmpp_facility_ptr facility);
+DGMPP_EXTERN dgmpp_array	dgmpp_facility_get_commodities	(dgmpp_facility_ptr facility);
 DGMPP_EXTERN dgmpp_commodity	dgmpp_facility_get_commodity	(dgmpp_facility_ptr facility, dgmpp_type_id commodity_id);
 DGMPP_EXTERN dgmpp_commodity	dgmpp_facility_get_income		(dgmpp_facility_ptr facility, dgmpp_type_id commodity_id);
-DGMPP_EXTERN dgmpp_array_ptr	dgmpp_facility_get_inputs		(dgmpp_facility_ptr facility);
-DGMPP_EXTERN dgmpp_array_ptr	dgmpp_facility_get_outputs		(dgmpp_facility_ptr facility);
+DGMPP_EXTERN dgmpp_array	dgmpp_facility_get_inputs		(dgmpp_facility_ptr facility);
+DGMPP_EXTERN dgmpp_array	dgmpp_facility_get_outputs		(dgmpp_facility_ptr facility);
 
 DGMPP_EXTERN BOOL dgmpp_facility_is_configured (dgmpp_facility_ptr facility);
 

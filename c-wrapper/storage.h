@@ -11,5 +11,5 @@
 #include "utility.h"
 #include <stdio.h>
 
-DGMPP_EXTERN dgmpp_array_ptr dgmpp_storage_get_states (dgmpp_facility_ptr facility);
+DGMPP_EXTERN dgmpp_array dgmpp_storage_get_states (dgmpp_facility_ptr facility);
 #endif /* storage_h */

@@ -28,7 +28,7 @@ dgmpp_facility_ptr dgmpp_planet_get_facility (dgmpp_planet_ptr planet, int64_t i
 	return dgmpp_make_facility(reinterpret_cast<dgmpp_planet_impl*>(planet)->planet[identifier]);
 }
 
-dgmpp_array_ptr dgmpp_planet_get_facilities (dgmpp_planet_ptr planet) {
+dgmpp_array dgmpp_planet_get_facilities (dgmpp_planet_ptr planet) {
 	return dgmpp_make_array<dgmpp_facility_impl*>(reinterpret_cast<dgmpp_planet_impl*>(planet)->planet.facilities());
 }
 

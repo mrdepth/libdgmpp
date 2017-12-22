@@ -51,31 +51,24 @@ typedef double dgmpp_seconds;
 
 typedef struct dgmpp_t dgmpp_t;
 
-typedef dgmpp_t dgmpp_type;
-typedef dgmpp_t dgmpp_attribute;
-typedef dgmpp_t dgmpp_planet;
-typedef dgmpp_t dgmpp_facility;
-typedef dgmpp_t dgmpp_state;
-typedef dgmpp_t dgmpp_array;
-typedef dgmpp_t dgmpp_capacitor;
+typedef struct {
+	char tag;
+	void* handle;
+} dgmpp_handle;
 
-//typedef struct dgmpp_commodity dgmpp_commodity;
+typedef dgmpp_handle dgmpp_type;
+typedef dgmpp_handle dgmpp_attribute;
+typedef dgmpp_handle dgmpp_planet;
+typedef dgmpp_handle dgmpp_facility;
+typedef dgmpp_handle dgmpp_state;
+typedef dgmpp_handle dgmpp_array;
+typedef dgmpp_handle dgmpp_capacitor;
 
-typedef struct dgmpp_t* dgmpp_ptr;
-typedef dgmpp_type* dgmpp_type_ptr;
-typedef dgmpp_attribute* dgmpp_attribute_ptr;
-typedef dgmpp_planet* dgmpp_planet_ptr;
-typedef dgmpp_facility* dgmpp_facility_ptr;
-typedef dgmpp_state* dgmpp_state_ptr;
-typedef dgmpp_array* dgmpp_array_ptr;
-typedef dgmpp_capacitor* dgmpp_capacitor_ptr;
+DGMPP_EXTERN void 	dgmpp_delete	(dgmpp_handle handle);
+DGMPP_EXTERN size_t	dgmpp_get_hash	(dgmpp_handle handle);
 
-DGMPP_EXTERN void	dgmpp_retain	(dgmpp_ptr ptr);
-DGMPP_EXTERN void 	dgmpp_release	(dgmpp_ptr ptr);
-DGMPP_EXTERN size_t	dgmpp_get_hash	(dgmpp_ptr ptr);
-
-DGMPP_EXTERN size_t			dgmpp_array_get_size	(dgmpp_array_ptr ptr);
-DGMPP_EXTERN const void*	dgmpp_array_get_values	(dgmpp_array_ptr ptr);
+DGMPP_EXTERN size_t			dgmpp_array_get_size	(dgmpp_array array);
+DGMPP_EXTERN const void*	dgmpp_array_get_values	(dgmpp_array array);
 
 typedef enum {
 	DGMPP_RACE_ID_NONE = 0,
@@ -203,12 +196,20 @@ typedef struct {
 	size_t quantity;
 } dgmpp_commodity;
 
+DGMPP_EXTERN dgmpp_commodity dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity);
+
 typedef struct {
 	dgmpp_seconds start;
 	dgmpp_seconds duration;
 	dgmpp_commodity yield;
 	dgmpp_commodity waste;
 } dgmpp_production_cycle;
+
+typedef struct {
+	int64_t from;
+	int64_t to;
+	dgmpp_commodity commodity;
+} dgmpp_route;
 
 typedef enum {
 	DGMPP_FACILITY_CATEGORY_NONE,

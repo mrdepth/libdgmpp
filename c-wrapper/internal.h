@@ -15,164 +15,150 @@
 
 using namespace dgmpp;
 
-struct dgmpp_t_impl {
-	virtual ~dgmpp_t_impl() {}
-	int ref_count = 1;
-	
-	void retain() { ref_count++; }
-	
-	void release() {
-		if (--ref_count == 0)
-			delete this;
-	}
-	
-	virtual size_t hash() const = 0;
+enum class dgmpp_handle_tag: char {
+	invalid = -1,
+	ptr,
+	unique_ptr_gang,
+	unique_ptr_character,
+	unique_ptr_booster,
+	unique_ptr_implant,
+	unique_ptr_ship,
+	unique_ptr_structure,
+	unique_ptr_module,
+	unique_ptr_drone,
+	unique_ptr_charge,
+	unique_ptr_area,
+	unique_ptr_planet,
+	unique_ptr_array
 };
 
-struct dgmpp_type_impl: public dgmpp_t_impl {
-	Type* type;
-	dgmpp_type_impl (Type* type) : type(type) {}
-	
-	virtual size_t hash() const override {
-		return std::hash<const Type*>()(type);
-	}
-};
-
-inline dgmpp_type_ptr dgmpp_make_type(Type* type) {
-	return type ? reinterpret_cast<dgmpp_type_ptr>(new dgmpp_type_impl{type}) : nullptr;
-}
-
-struct dgmpp_attribute_impl: public dgmpp_t_impl {
-	Attribute* attribute;
-	dgmpp_attribute_impl (Attribute* attribute) : attribute(attribute) {};
-	
-	virtual size_t hash() const override {
-		return std::hash<const Attribute*>()(attribute);
-	}
-
-};
-
-struct dgmpp_gang_impl : public dgmpp_type_impl {
-	std::unique_ptr<Gang> gang;
-	dgmpp_gang_impl() : dgmpp_type_impl(nullptr), gang(Gang::Create()) {
-		type = gang.get();
-	}
-};
-
-struct dgmpp_character_impl : public dgmpp_type_impl {
-	std::unique_ptr<Character> character;
-	dgmpp_character_impl() : dgmpp_type_impl(nullptr), character(Character::Create()) {
-		type = character.get();
-	}
-};
-
-struct dgmpp_implant_impl : public dgmpp_type_impl {
-	std::unique_ptr<Implant> implant;
-	dgmpp_implant_impl(TypeID typeID) : dgmpp_type_impl(nullptr), implant(Implant::Create(typeID)) {
-		type = implant.get();
-	}
-};
-
-struct dgmpp_booster_impl : public dgmpp_type_impl {
-	std::unique_ptr<Booster> booster;
-	dgmpp_booster_impl(TypeID typeID) : dgmpp_type_impl(nullptr), booster(Booster::Create(typeID)) {
-		type = booster.get();
-	}
-};
-
-struct dgmpp_ship_impl : public dgmpp_type_impl {
-	std::unique_ptr<Ship> ship;
-	dgmpp_ship_impl(TypeID typeID) : dgmpp_type_impl(nullptr), ship(Ship::Create(typeID)) {
-		type = ship.get();
-	}
-};
-
-struct dgmpp_structure_impl : public dgmpp_type_impl {
-	std::unique_ptr<Structure> structure;
-	dgmpp_structure_impl(TypeID typeID) : dgmpp_type_impl(nullptr), structure(Structure::Create(typeID)) {
-		type = structure.get();
-	}
-};
-
-struct dgmpp_module_impl : public dgmpp_type_impl {
-	std::unique_ptr<Module> module;
-	dgmpp_module_impl(TypeID typeID) : dgmpp_type_impl(nullptr), module(Module::Create(typeID)) {
-		type = module.get();
-	}
-};
-
-struct dgmpp_charge_impl : public dgmpp_type_impl {
-	std::unique_ptr<Charge> charge;
-	dgmpp_charge_impl(TypeID typeID) : dgmpp_type_impl(nullptr), charge(Charge::Create(typeID)) {
-		type = charge.get();
-	}
-};
-
-struct dgmpp_drone_impl : public dgmpp_type_impl {
-	std::unique_ptr<Drone> drone;
-	dgmpp_drone_impl(TypeID typeID) : dgmpp_type_impl(nullptr), drone(Drone::Create(typeID)) {
-		type = drone.get();
-	}
-};
-
-struct dgmpp_area_impl : public dgmpp_type_impl {
-	std::unique_ptr<Area> area;
-	dgmpp_area_impl(TypeID typeID) : dgmpp_type_impl(nullptr), area(Area::Create(typeID)) {
-		type = area.get();
-	}
-};
-
-struct dgmpp_capacitor_impl: public dgmpp_t_impl {
-	Capacitor* capacitor;
-	dgmpp_capacitor_impl (Capacitor* capacitor) : capacitor(capacitor) {}
-	
-	virtual size_t hash() const override {
-		return std::hash<const Capacitor*>()(capacitor);
-	}
-
-};
-
-struct dgmpp_planet_impl: public dgmpp_t_impl {
-	Planet planet;
-	
-	virtual size_t hash() const override {
-		return std::hash<const Planet*>()(&planet);
-	}
-
-};
-
-struct dgmpp_facility_impl: public dgmpp_t_impl {
-	Facility* facility;
-	dgmpp_facility_impl (Facility* facility) : facility(facility) {}
-	
-	virtual size_t hash() const override {
-		return std::hash<const Facility*>()(facility);
-	}
-
-};
-
-struct dgmpp_state_impl: public dgmpp_t_impl {
-	State* state;
-	template<typename T>
-	dgmpp_state_impl (const T& state) : state(remove_unique_ptr(state)) {}
-	
-	virtual size_t hash() const override {
-		return std::hash<const State*>()(state);
-	}
-	
-
-};
-
-struct dgmpp_array_impl_base: public dgmpp_t_impl {
+struct dgmpp_array_impl_base {
 	size_t size;
 	dgmpp_array_impl_base (size_t size): size(size) {}
 	virtual const void* ptr() const = 0;
+};
+
+
+struct dgmpp_handle_impl: public dgmpp_handle {
+	void destroy() {
+		switch (static_cast<dgmpp_handle_tag>(tag)) {
+			case dgmpp_handle_tag::unique_ptr_gang:
+				delete reinterpret_cast<std::unique_ptr<Gang>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_character:
+				delete reinterpret_cast<std::unique_ptr<Character>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_booster:
+				delete reinterpret_cast<std::unique_ptr<Booster>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_implant:
+				delete reinterpret_cast<std::unique_ptr<Implant>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_ship:
+				delete reinterpret_cast<std::unique_ptr<Ship>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_structure:
+				delete reinterpret_cast<std::unique_ptr<Structure>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_module:
+				delete reinterpret_cast<std::unique_ptr<Module>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_drone:
+				delete reinterpret_cast<std::unique_ptr<Drone>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_charge:
+				delete reinterpret_cast<std::unique_ptr<Charge>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_area:
+				delete reinterpret_cast<std::unique_ptr<Area>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_planet:
+				delete reinterpret_cast<std::unique_ptr<Planet>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_array:
+				delete reinterpret_cast<std::unique_ptr<dgmpp_array_impl_base>*>(handle);
+				break;
+			default:
+				break;
+		}
+		tag = static_cast<char>(dgmpp_handle_tag::invalid);
+	}
 	
-	virtual size_t hash() const override {
-		return std::hash<const void*>()(ptr());
+	template<typename T> T* get() const {
+		if (static_cast<dgmpp_handle_tag>(tag) == dgmpp_handle_tag::ptr)
+			return reinterpret_cast<T*>(handle);
+		else
+			return reinterpret_cast<std::unique_ptr<T>*>(handle)->get();
+	};
+	
+	template<typename T> std::unique_ptr<T>&& move() {
+		return std::move(*reinterpret_cast<std::unique_ptr<T>*>(handle));
+	}
+
+	
+	template<typename T> operator T* () const {
+		return get<T>();
+	};
+	
+	template<typename T> dgmpp_handle_impl(std::unique_ptr<T>&& ptr, dgmpp_handle_tag tag) : dgmpp_handle{static_cast<char>(tag), nullptr} {
+		*reinterpret_cast<std::unique_ptr<T>**>(&handle) = new std::unique_ptr<T>(std::move(ptr));
+	}
+	
+	template<typename T> dgmpp_handle_impl(T* ptr) : dgmpp_handle{static_cast<char>(dgmpp_handle_tag::ptr), ptr} {}
+	
+	template<typename T>
+	void reset(T ptr) {
+		switch (static_cast<dgmpp_handle_tag>(tag)) {
+			case dgmpp_handle_tag::invalid:
+			case dgmpp_handle_tag::ptr:
+				break;
+			default:
+				destroy();
+				break;
+		}
+		handle = reinterpret_cast<void*>(ptr);
+		tag = static_cast<char>(dgmpp_handle_tag::ptr);
+	}
+
+	void reset(std::nullptr_t) {
+		switch (static_cast<dgmpp_handle_tag>(tag)) {
+			case dgmpp_handle_tag::invalid:
+			case dgmpp_handle_tag::ptr:
+				break;
+			default:
+				destroy();
+				break;
+		}
+		handle = nullptr;
+		tag = static_cast<char>(dgmpp_handle_tag::ptr);
 	}
 
 };
+
+
+template<typename T> dgmpp_handle dgmpp_make_handle(T* ptr) {
+	return dgmpp_handle{dgmpp_handle_tag::ptr, ptr};
+}
+
+template<typename T>
+T& dgmpp_cast(dgmpp_handle& handle) {
+	return *reinterpret_cast<dgmpp_handle_impl*>(&handle)->get<T>();
+}
+
+template<typename T>
+std::unique_ptr<T>&& dgmpp_move(dgmpp_handle& handle) {
+	return reinterpret_cast<dgmpp_handle_impl*>(&handle)->move<T>();
+}
+
+template<typename T>
+void dgmpp_reset(dgmpp_handle& handle, T value) {
+	reinterpret_cast<dgmpp_handle_impl*>(&handle)->reset<T>(value);
+}
+
+template<>
+void dgmpp_reset<std::nullptr_t>(dgmpp_handle& handle, std::nullptr_t) {
+	reinterpret_cast<dgmpp_handle_impl*>(&handle)->reset<void*>(nullptr);
+}
 
 template <typename T, typename = void>
 struct dgmpp_array_impl: public dgmpp_array_impl_base {
@@ -191,50 +177,10 @@ struct dgmpp_array_impl: public dgmpp_array_impl_base {
 	}
 };
 
-template <typename T>
-struct dgmpp_array_impl<T, std::enable_if_t<std::is_pointer_v<T>>>: public dgmpp_array_impl_base {
-	std::vector<T> values;
-	
-	template <typename C>
-	dgmpp_array_impl(const C& c): dgmpp_array_impl_base (std::size(c)) {
-		values.reserve(size);
-		std::transform(c.begin(), c.end(), std::back_inserter(values), [](const auto& i) {
-			return new std::remove_pointer_t<T>(i);
-		});
-	}
-	
-	virtual const void* ptr() const override {
-		return reinterpret_cast<const void*>(&values[0]);
-	}
-	
-	virtual ~dgmpp_array_impl<T>() {
-		for (auto i: values)
-			dgmpp_release(reinterpret_cast<dgmpp_ptr>(i));
-	}
-};
-
-
-//template<typename T>
-//struct dgmpp_array_destroyer<T, std::enable_if_t<std::is_pointer_v<typename T::value_type>>> {
-//	static void destroy(T& arr) {
-//		for (auto i: arr.values)
-//			dgmpp_release(i);
-//	}
-//};
-
-
 
 template<typename T, typename C>
-dgmpp_array_ptr dgmpp_make_array(const C& c) {
-	return reinterpret_cast<dgmpp_array_ptr>(new dgmpp_array_impl<T>(c));
-}
-
-template <typename T> T type_cast(dgmpp_type_ptr type) {
-	return type ? reinterpret_cast<T>(reinterpret_cast<dgmpp_type_impl*>(type)->type) : nullptr;
-}
-
-template <typename T> T facility_cast(dgmpp_facility_ptr facility) {
-	return facility ? reinterpret_cast<T>(reinterpret_cast<dgmpp_facility_impl*>(facility)->facility) : nullptr;
+dgmpp_handle_impl dgmpp_make_array(const C& c) {
+	return dgmpp_handle_impl(std::unique_ptr<dgmpp_array_impl_base>(new dgmpp_array_impl<T>(c)), dgmpp_handle_tag::unique_ptr_array);
 }
 
 template<typename Rep, typename Ratio>
@@ -297,6 +243,12 @@ struct dgmpp_production_cycle_impl: public dgmpp_production_cycle {
 };
 
 
-inline dgmpp_facility_ptr dgmpp_make_facility(Facility* facility) {
-	return facility ? reinterpret_cast<dgmpp_facility_ptr>(new dgmpp_facility_impl{facility}) : nullptr;
-}
+struct dgmpp_route_impl: public dgmpp_route {
+	dgmpp_route_impl (const Route& route)
+	: dgmpp_route{
+		route.from->identifier(),
+		route.to->identifier(),
+		dgmpp_commodity_impl(route.commodity)} {}
+};
+
+

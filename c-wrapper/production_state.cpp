@@ -12,7 +12,7 @@ dgmpp_seconds dgmpp_state_get_timestamp (dgmpp_state_ptr state) {
 	return dgmpp_make_seconds(reinterpret_cast<dgmpp_state_impl*>(state)->state->timestamp);
 }
 
-dgmpp_array_ptr dgmpp_state_get_commodities (dgmpp_state_ptr state) {
+dgmpp_array dgmpp_state_get_commodities (dgmpp_state_ptr state) {
 	return dgmpp_make_array<dgmpp_commodity_impl>(reinterpret_cast<dgmpp_state_impl*>(state)->state->commodities);
 }
 

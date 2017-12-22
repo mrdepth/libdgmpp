@@ -10,6 +10,6 @@
 
 #include "type.h"
 
-DGMPP_EXTERN dgmpp_type_ptr dgmpp_area_create (dgmpp_type_id type_id);
+DGMPP_EXTERN BOOL dgmpp_area_create (dgmpp_type_id type_id, dgmpp_type* area);
 
 #endif /* area_h */

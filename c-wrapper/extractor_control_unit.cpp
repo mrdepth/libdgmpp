@@ -57,10 +57,10 @@ BOOL dgmpp_ecu_get_output (dgmpp_facility_ptr facility, dgmpp_commodity* commodi
 		return false;
 }
 
-dgmpp_array_ptr dgmpp_ecu_get_states (dgmpp_facility_ptr facility) {
+dgmpp_array dgmpp_ecu_get_states (dgmpp_facility_ptr facility) {
 	return dgmpp_make_array<dgmpp_state_impl*>(facility_cast<ExtractorControlUnit*>(facility)->states());
 }
 
-dgmpp_array_ptr dgmpp_ecu_get_cycles (dgmpp_facility_ptr facility) {
+dgmpp_array dgmpp_ecu_get_cycles (dgmpp_facility_ptr facility) {
 	return dgmpp_make_array<dgmpp_production_cycle_impl>(facility_cast<ExtractorControlUnit*>(facility)->cycles());
 }
