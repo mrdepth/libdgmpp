@@ -74,6 +74,11 @@ public class DGMFacility {
 	public var isConfigured: Bool {
 		return dgmpp_facility_is_configured(opaque)
 	}
+	
+	public var name: String {
+		return String(cString: dgmpp_facility_get_name(opaque));
+	}
+
 
 }
 

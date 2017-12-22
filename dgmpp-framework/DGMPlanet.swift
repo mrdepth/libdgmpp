@@ -48,7 +48,7 @@ public class DGMPlanet {
 		dgmpp_planet_remove_route(opaque, route.from.opaque, route.to.opaque, dgmpp_commodity(route.commodity))
 	}
 	
-	var lastUpdate: Date {
+	public var lastUpdate: Date {
 		get {
 			return Date(timeIntervalSinceReferenceDate: dgmpp_planet_get_last_update(opaque))
 		}
@@ -57,7 +57,8 @@ public class DGMPlanet {
 		}
 	}
 	
-	func run() -> Date {
+	@discardableResult
+	public func run() -> Date {
 		return Date(timeIntervalSinceReferenceDate: dgmpp_planet_run(opaque))
 	}
 

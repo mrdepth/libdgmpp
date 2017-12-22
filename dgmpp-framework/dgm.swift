@@ -265,3 +265,10 @@ extension DGMProductionCycle {
 		waste = DGMCommodity(cycle.waste)
 	}
 }
+
+//extension DGMRoute {
+//	init(_ route: dgmpp_route) {
+//		from
+//	}
+//}
+

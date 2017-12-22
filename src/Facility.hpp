@@ -37,11 +37,14 @@ namespace dgmpp {
 		Commodity& operator[] (const Commodity& key);
 		Commodity income (TypeID typeID) const;
 		
+		const std::string& name() const noexcept { return name_; }
+		const std::unordered_set<Route>& inputs() const noexcept { return inputs_; }
+		const std::unordered_set<Route>& outputs() const noexcept { return inputs_; }
+		
 		virtual bool configured() const { return true; };
 
 	protected:
-		Facility(const MetaInfo::Facility& metaInfo, Planet& planet, Identifier identifier)
-		: metaInfo_(metaInfo), planet_(planet), identifier_(identifier) {}
+		Facility(const MetaInfo::Facility& metaInfo, Planet& planet, Identifier identifier);
 
 		virtual std::optional<std::chrono::seconds> nextUpdateTime() const noexcept { return std::nullopt; }
 		virtual int priority() const noexcept { return 0; }
@@ -59,6 +62,7 @@ namespace dgmpp {
 		const MetaInfo::Facility& metaInfo_;
 		Planet& planet_;
 		Identifier identifier_;
+		std::string name_;
 	};
 
 }

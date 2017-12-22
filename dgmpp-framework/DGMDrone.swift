@@ -40,6 +40,10 @@ public class DGMDrone: DGMType {
 		return DGMCharge(charge)
 	}
 	
+	public var squadron: Squadron {
+		return Squadron(dgmpp_drone_get_squadron(opaque)) ?? .none
+	}
+	
 	public var squadronSize: Int {
 		return dgmpp_drone_get_squadron_size(opaque)
 	}

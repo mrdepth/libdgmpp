@@ -56,6 +56,16 @@ public struct DGMHours: DGMTimeRate {
 	public static let rate = (3600, 1)
 }
 
+public struct DGMDays: DGMTimeRate {
+	public var value: Value
+	
+	public init(_ value: Value) {
+		self.value = value
+	}
+	
+	public static let rate = (3600 * 24, 1)
+}
+
 public protocol Scalable {
 	func scale(_ s: Double) -> Self
 	static func+(lhs: Self, rhs: Self) -> Self

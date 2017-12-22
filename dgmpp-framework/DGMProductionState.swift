@@ -25,6 +25,10 @@ public class DGMState {
 	public var commodities: [DGMCommodity] {
 		return DGMArray<DGMCommodity>(dgmpp_state_get_commodities(opaque)).array
 	}
+	
+	public var volume: DGMCubicMeter {
+		return dgmpp_state_get_volume(opaque)
+	}
 
 }
 

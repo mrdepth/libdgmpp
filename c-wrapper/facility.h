@@ -27,7 +27,11 @@ DGMPP_EXTERN BOOL				dgmpp_facility_extract_commodity	(dgmpp_facility_ptr facili
 DGMPP_EXTERN dgmpp_array_ptr	dgmpp_facility_get_commodities	(dgmpp_facility_ptr facility);
 DGMPP_EXTERN dgmpp_commodity	dgmpp_facility_get_commodity	(dgmpp_facility_ptr facility, dgmpp_type_id commodity_id);
 DGMPP_EXTERN dgmpp_commodity	dgmpp_facility_get_income		(dgmpp_facility_ptr facility, dgmpp_type_id commodity_id);
+DGMPP_EXTERN dgmpp_array_ptr	dgmpp_facility_get_inputs		(dgmpp_facility_ptr facility);
+DGMPP_EXTERN dgmpp_array_ptr	dgmpp_facility_get_outputs		(dgmpp_facility_ptr facility);
 
 DGMPP_EXTERN BOOL dgmpp_facility_is_configured (dgmpp_facility_ptr facility);
+
+DGMPP_EXTERN const char* dgmpp_facility_get_name (dgmpp_facility_ptr facility);
 
 #endif /* facility_h */

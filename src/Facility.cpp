@@ -16,6 +16,24 @@ namespace dgmpp {
 //			identifier_ = reinterpret_cast<intptr_t>(this);
 //	}
 
+	Facility::Facility(const MetaInfo::Facility& metaInfo, Planet& planet, Identifier identifier)
+	: metaInfo_(metaInfo), planet_(planet), identifier_(identifier) {
+	
+		if (identifier > 0) {
+			std::string baseStr = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			int len = static_cast<int>(baseStr.length()) - 1;
+			std::string pinName;
+			
+			for (int i = 0; i < 5; i++) {
+				int at = static_cast<int64_t>((identifier_ / pow(len, i))) % len;
+				if (i == 2)
+					pinName += '-';
+				pinName += baseStr.at(at);
+			}
+			name_ = pinName;
+		}
+	}
+
 	
 	CubicMeter Facility::usedVolume() const noexcept {
 		return std::accumulate(commodities_.begin(), commodities_.end(), CubicMeter(0), [](auto sum, const auto& i) {

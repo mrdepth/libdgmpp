@@ -13,7 +13,7 @@ public class DGMFactory: DGMFacility {
 		super.init(opaque)
 	}
 	
-	var schematicID: DGMSchematicID {
+	public var schematicID: DGMSchematicID {
 		get {
 			return DGMSchematicID(dgmpp_factory_get_schematic_id(opaque))
 		}
@@ -22,7 +22,7 @@ public class DGMFactory: DGMFacility {
 		}
 	}
 	
-	var launchTime: Date {
+	public var launchTime: Date {
 		get {
 			return Date(timeIntervalSinceReferenceDate: dgmpp_factory_get_launch_time(opaque))
 		}
@@ -31,24 +31,24 @@ public class DGMFactory: DGMFacility {
 		}
 	}
 	
-	var cycleTime: TimeInterval? {
+	public var cycleTime: TimeInterval? {
 		get {
 			let cycleTime = dgmpp_factory_get_cycle_time(opaque)
 			return cycleTime > 0 ? cycleTime : nil
 		}
 	}
 	
-	var output: DGMCommodity? {
+	public var output: DGMCommodity? {
 		var commodity = dgmpp_commodity()
 		guard dgmpp_factory_get_output(opaque, &commodity) else {return nil}
 		return DGMCommodity(commodity)
 	}
 
-	var states: [DGMProductionState] {
+	public var states: [DGMProductionState] {
 		return DGMArray<DGMProductionState>(dgmpp_factory_get_states(opaque)).array
 	}
 	
-	var cycles: [DGMProductionCycle] {
+	public var cycles: [DGMProductionCycle] {
 		return DGMArray<DGMProductionCycle>(dgmpp_factory_get_cycles(opaque)).array
 	}
 

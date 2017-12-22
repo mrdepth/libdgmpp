@@ -13,7 +13,7 @@ public class DGMExtractorControlUnit: DGMFacility {
 		super.init(opaque)
 	}
 
-	var launchTime: Date {
+	public var launchTime: Date {
 		get {
 			return Date(timeIntervalSinceReferenceDate: dgmpp_ecu_get_launch_time(opaque))
 		}
@@ -22,7 +22,7 @@ public class DGMExtractorControlUnit: DGMFacility {
 		}
 	}
 	
-	var installTime: Date {
+	public var installTime: Date {
 		get {
 			return Date(timeIntervalSinceReferenceDate: dgmpp_ecu_get_install_time(opaque))
 		}
@@ -31,7 +31,7 @@ public class DGMExtractorControlUnit: DGMFacility {
 		}
 	}
 
-	var expiryTime: Date {
+	public var expiryTime: Date {
 		get {
 			return Date(timeIntervalSinceReferenceDate: dgmpp_ecu_get_expiry_time(opaque))
 		}
@@ -40,7 +40,7 @@ public class DGMExtractorControlUnit: DGMFacility {
 		}
 	}
 	
-	var cycleTime: TimeInterval {
+	public var cycleTime: TimeInterval {
 		get {
 			return dgmpp_ecu_get_cycle_time(opaque)
 		}
@@ -49,7 +49,7 @@ public class DGMExtractorControlUnit: DGMFacility {
 		}
 	}
 	
-	var quantityPerCycle: Int {
+	public var quantityPerCycle: Int {
 		get {
 			return dgmpp_ecu_get_quantity_per_cycle(opaque)
 		}
@@ -58,17 +58,17 @@ public class DGMExtractorControlUnit: DGMFacility {
 		}
 	}
 	
-	var output: DGMCommodity? {
+	public var output: DGMCommodity? {
 		var commodity = dgmpp_commodity()
 		guard dgmpp_ecu_get_output(opaque, &commodity) else {return nil}
 		return DGMCommodity(commodity)
 	}
 	
-	var states: [DGMProductionState] {
+	public var states: [DGMProductionState] {
 		return DGMArray<DGMProductionState>(dgmpp_ecu_get_states(opaque)).array
 	}
 	
-	var cycles: [DGMProductionCycle] {
+	public var cycles: [DGMProductionCycle] {
 		return DGMArray<DGMProductionCycle>(dgmpp_ecu_get_cycles(opaque)).array
 	}
 

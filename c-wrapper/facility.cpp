@@ -80,6 +80,19 @@ dgmpp_commodity dgmpp_facility_get_income (dgmpp_facility_ptr facility, dgmpp_ty
 	return dgmpp_commodity_impl(facility_cast<Facility*>(facility)->income(static_cast<TypeID>(commodity_id)));
 }
 
+dgmpp_array_ptr dgmpp_facility_get_inputs (dgmpp_facility_ptr facility) {
+	return dgmpp_make_array<dgmpp_route_impl>(facility_cast<Facility*>(facility)->inputs());
+}
+
+dgmpp_array_ptr dgmpp_facility_get_outputs (dgmpp_facility_ptr facility) {
+	return dgmpp_make_array<dgmpp_route_impl>(facility_cast<Facility*>(facility)->outputs());
+}
+
+
 BOOL dgmpp_facility_is_configured (dgmpp_facility_ptr facility) {
 	return facility_cast<Facility*>(facility)->configured();
+}
+
+const char* dgmpp_facility_get_name (dgmpp_facility_ptr facility) {
+	return facility_cast<Facility*>(facility)->name().c_str();
 }

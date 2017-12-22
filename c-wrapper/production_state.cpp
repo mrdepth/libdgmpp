@@ -16,6 +16,10 @@ dgmpp_array_ptr dgmpp_state_get_commodities (dgmpp_state_ptr state) {
 	return dgmpp_make_array<dgmpp_commodity_impl>(reinterpret_cast<dgmpp_state_impl*>(state)->state->commodities);
 }
 
+dgmpp_cubic_meter dgmpp_state_get_volume (dgmpp_state_ptr state) {
+	return reinterpret_cast<dgmpp_state_impl*>(state)->state->volume();
+}
+
 BOOL dgmpp_production_state_get_cycle (dgmpp_state_ptr state, dgmpp_production_cycle* cycle) {
 	if (auto c = reinterpret_cast<ProductionState*>(reinterpret_cast<dgmpp_state_impl*>(state)->state)->cycle) {
 		*cycle = dgmpp_production_cycle_impl(*c);

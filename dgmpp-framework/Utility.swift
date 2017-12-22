@@ -161,6 +161,10 @@ public struct DGMCommodity {
 	public var total: DGMCubicMeter {
 		return volume * DGMCubicMeter(quantity)
 	}
+	
+	public init(typeID: DGMTypeID, quantity: Int) {
+		self.init(dgmpp_commodity_create(dgmpp_type_id(typeID), quantity))
+	}
 }
 
 public struct DGMProductionCycle{
@@ -178,4 +182,11 @@ public struct DGMRoute {
 	public var from: DGMFacility
 	public var to: DGMFacility
 	public var commodity: DGMCommodity
+	
+	public init(from: DGMFacility, to: DGMFacility, commodity: DGMCommodity) {
+		self.from = from
+		self.to = to
+		self.commodity = commodity
+	}
 }
+

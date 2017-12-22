@@ -6,6 +6,7 @@
 //
 
 #include "ProductionCycle.hpp"
+#include <numeric>
 
 namespace dgmpp {
 	
@@ -18,6 +19,12 @@ namespace dgmpp {
 
 		std::chrono::seconds timestamp;
 		std::vector<Commodity> commodities;
+		
+		CubicMeter volume() const {
+			return std::accumulate(commodities.begin(), commodities.end(), CubicMeter(0), [](auto sum, const auto& i) {
+				return sum + i.volume();
+			});
+		}
 	};
 	
 	struct ProductionState: State {
