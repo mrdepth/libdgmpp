@@ -9,20 +9,16 @@ import Foundation
 
 public class DGMStructure: DGMShip {
 	
-	public override init(typeID: DGMTypeID) throws {
+	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_structure_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		super.init(type)
-	}
-
-	public required init(_ opaque: dgmpp_attribute_ptr) {
-		super.init(opaque)
+		self.init(type, owned: true)
 	}
 
 	public var fuelBlockTypeID: DGMTypeID {
-		return DGMTypeID(dgmpp_structure_get_fuel_block_type_id(opaque))
+		return DGMTypeID(dgmpp_structure_get_fuel_block_type_id(handle))
 	}
 	
 	public var fuelUse: DGMFuelUnitsPerHour {
-		return DGMFuelUnitsPerHour(dgmpp_structure_get_fuel_use(opaque))
+		return DGMFuelUnitsPerHour(dgmpp_structure_get_fuel_use(handle))
 	}
 }

@@ -15,6 +15,35 @@
 
 using namespace dgmpp;
 
+struct unique_ptr_wrapper_base {
+	virtual ~unique_ptr_wrapper_base() {}
+};
+
+template <typename T>
+struct unique_ptr_wrapper: public unique_ptr_wrapper_base {
+	std::unique_ptr<T> ptr;
+	unique_ptr_wrapper(std::unique_ptr<T>&& ptr): ptr(std::move(ptr)) {}
+	virtual ~unique_ptr_wrapper() {}
+};
+
+extern std::map<dgmpp_handle, std::unique_ptr<unique_ptr_wrapper_base>> unique_pointers;
+
+template <typename T>
+T* add_unique_ptr_wrapper(std::unique_ptr<T>&& ptr) {
+	auto key = ptr.get();
+	unique_pointers.emplace(key, std::unique_ptr<unique_ptr_wrapper<T>>{new unique_ptr_wrapper<T>{std::move(ptr)}});
+	return key;
+}
+
+template <typename T>
+std::unique_ptr<T> get_unique_ptr(dgmpp_handle h) {
+	auto i = unique_pointers.find(h);
+	if (i == unique_pointers.end())
+		return nullptr;
+	return std::move(dynamic_cast<unique_ptr_wrapper<T>*>(i->second.get())->ptr);
+}
+
+
 enum class dgmpp_handle_tag: char {
 	invalid = -1,
 	ptr,
@@ -31,7 +60,7 @@ enum class dgmpp_handle_tag: char {
 	unique_ptr_planet,
 	unique_ptr_array
 };
-
+	
 struct dgmpp_array_impl_base {
 	size_t size;
 	dgmpp_array_impl_base (size_t size): size(size) {}
@@ -39,7 +68,7 @@ struct dgmpp_array_impl_base {
 };
 
 
-struct dgmpp_handle_impl: public dgmpp_handle {
+/*struct dgmpp_handle_impl: public dgmpp_handle {
 	void destroy() {
 		switch (static_cast<dgmpp_handle_tag>(tag)) {
 			case dgmpp_handle_tag::unique_ptr_gang:
@@ -133,15 +162,15 @@ struct dgmpp_handle_impl: public dgmpp_handle {
 		tag = static_cast<char>(dgmpp_handle_tag::ptr);
 	}
 
-};
+};*/
 
 
 template<typename T> dgmpp_handle dgmpp_make_handle(T* ptr) {
 	return dgmpp_handle{dgmpp_handle_tag::ptr, ptr};
 }
 
-template<typename T>
-T& dgmpp_cast(dgmpp_handle& handle) {
+/*template<typename T>
+T& dgmpp_cast(dgmpp_handle handle) {
 	return *reinterpret_cast<dgmpp_handle_impl*>(&handle)->get<T>();
 }
 
@@ -158,7 +187,7 @@ void dgmpp_reset(dgmpp_handle& handle, T value) {
 template<>
 void dgmpp_reset<std::nullptr_t>(dgmpp_handle& handle, std::nullptr_t) {
 	reinterpret_cast<dgmpp_handle_impl*>(&handle)->reset<void*>(nullptr);
-}
+}*/
 
 template <typename T, typename = void>
 struct dgmpp_array_impl: public dgmpp_array_impl_base {
@@ -168,7 +197,7 @@ struct dgmpp_array_impl: public dgmpp_array_impl_base {
 	dgmpp_array_impl(const C& c): dgmpp_array_impl_base (std::size(c)) {
 		values.reserve(size);
 		std::transform(c.begin(), c.end(), std::back_inserter(values), [](const auto& i) {
-			return Constructor(i);
+			return Constructor(remove_unique_ptr(i));
 		});
 	}
 	
@@ -179,8 +208,8 @@ struct dgmpp_array_impl: public dgmpp_array_impl_base {
 
 
 template<typename T, typename C>
-dgmpp_handle_impl dgmpp_make_array(const C& c) {
-	return dgmpp_handle_impl(std::unique_ptr<dgmpp_array_impl_base>(new dgmpp_array_impl<T>(c)), dgmpp_handle_tag::unique_ptr_array);
+dgmpp_array dgmpp_make_array(const C& c) {
+	return add_unique_ptr_wrapper(std::unique_ptr<dgmpp_array_impl<T>>(new dgmpp_array_impl<T>(c)));
 }
 
 template<typename Rep, typename Ratio>
@@ -238,7 +267,7 @@ struct dgmpp_production_cycle_impl: public dgmpp_production_cycle {
 		dgmpp_commodity_impl(c.waste)} {}
 
 	
-	dgmpp_production_cycle_impl(const std::unique_ptr<ProductionCycle>& c)
+	dgmpp_production_cycle_impl(const ProductionCycle* c)
 	: dgmpp_production_cycle_impl(*c) {}
 };
 
@@ -246,8 +275,8 @@ struct dgmpp_production_cycle_impl: public dgmpp_production_cycle {
 struct dgmpp_route_impl: public dgmpp_route {
 	dgmpp_route_impl (const Route& route)
 	: dgmpp_route{
-		route.from->identifier(),
-		route.to->identifier(),
+		route.from,
+		route.to,
 		dgmpp_commodity_impl(route.commodity)} {}
 };
 

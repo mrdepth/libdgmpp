@@ -35,170 +35,166 @@ public class DGMModule: DGMType {
 		case turret
 	}
 	
-	public required init(_ opaque: dgmpp_attribute_ptr) {
-		super.init(opaque)
-	}
-	
-	public init(typeID: DGMTypeID) throws {
+	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_module_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		super.init(type)
+		self.init(type, owned: true)
 	}
-	
+
 	public func canHaveState(_ state: State) -> Bool {
-		return dgmpp_module_can_have_state(opaque, DGMPP_MODULE_STATE(Int32(state.rawValue)))
+		return dgmpp_module_can_have_state(handle, DGMPP_MODULE_STATE(Int32(state.rawValue)))
 	}
 	
 	public var availableStates: [State] {
-		return DGMArray<Int>(dgmpp_module_get_available_states(opaque)).array.flatMap {State(rawValue: $0)}
+		return DGMArray<Int>(dgmpp_module_copy_available_states(handle)).array.flatMap {State(rawValue: $0)}
 	}
 	
 	public var state: State {
 		get {
-			return State(dgmpp_module_get_state(opaque)) ?? .unknown
+			return State(dgmpp_module_get_state(handle)) ?? .unknown
 		}
 		set {
-			dgmpp_module_set_state(opaque, DGMPP_MODULE_STATE(newValue))
+			dgmpp_module_set_state(handle, DGMPP_MODULE_STATE(newValue))
 		}
 	}
 	
 	public var preferredState: State {
 		get {
-			return State(dgmpp_module_get_preferred_state(opaque)) ?? .unknown
+			return State(dgmpp_module_get_preferred_state(handle)) ?? .unknown
 		}
 	}
 	
 	public var target: DGMShip? {
 		get {
-			guard let target = dgmpp_module_get_target(opaque) else {return nil}
+			guard let target = dgmpp_module_get_target(handle) else {return nil}
 			return DGMShip(target)
 		}
 		set {
-			dgmpp_module_set_target(opaque, newValue?.opaque)
+			dgmpp_module_set_target(handle, newValue?.handle)
 		}
 	}
 	
 	public var slot: Slot {
 		get {
-			return Slot(dgmpp_module_get_slot(opaque)) ?? .none
+			return Slot(dgmpp_module_get_slot(handle)) ?? .none
 		}
 	}
 
 	public var hardpoint: Hardpoint {
 		get {
-			return Hardpoint(dgmpp_module_get_hardpoint(opaque)) ?? .none
+			return Hardpoint(dgmpp_module_get_hardpoint(handle)) ?? .none
 		}
 	}
 
 	public var socket: Int {
 		get {
-			return dgmpp_module_get_socket(opaque)
+			return dgmpp_module_get_socket(handle)
 		}
 	}
 	
 	public var charge: DGMCharge? {
-		guard let charge = dgmpp_module_get_charge(opaque) else {return nil}
+		guard let charge = dgmpp_module_get_charge(handle) else {return nil}
 		return DGMCharge(charge)
 	}
 	
 	public func setCharge(_ charge: DGMCharge?) throws {
 		if let charge = charge {
-			guard dgmpp_module_set_charge(opaque, charge.opaque) else {throw DGMError.cannotFit(charge)}
+			guard dgmpp_module_set_charge(handle, charge.handle) else {throw DGMError.cannotFit(charge)}
 		}
 		else {
-			dgmpp_module_set_charge(opaque, nil)
+			dgmpp_module_set_charge(handle, nil)
 		}
 	}
 	
 	public func canFit(_ charge: DGMCharge) -> Bool {
-		return dgmpp_module_can_fit_charge(opaque, charge.opaque)
+		return dgmpp_module_can_fit_charge(handle, charge.handle)
 	}
 	
 	public var chargeGroups: [DGMGroupID] {
-		return DGMArray<Int>(dgmpp_module_get_charge_groups(opaque)).array.map {DGMGroupID($0)}
+		return DGMArray<Int>(dgmpp_module_copy_charge_groups(handle)).array.map {DGMGroupID($0)}
 	}
 
 	public var chargeSize: DGMCharge.Size {
-		return DGMCharge.Size(dgmpp_module_get_charge_size(opaque)) ?? .none
+		return DGMCharge.Size(dgmpp_module_get_charge_size(handle)) ?? .none
 	}
 	
 	public var isFail: Bool {
-		return dgmpp_module_is_fail(opaque)
+		return dgmpp_module_is_fail(handle)
 	}
 
 	public var requireTarget: Bool {
-		return dgmpp_module_require_target(opaque)
+		return dgmpp_module_require_target(handle)
 	}
 
 	public var reloadTime: TimeInterval {
-		return dgmpp_module_get_reload_time(opaque)
+		return dgmpp_module_get_reload_time(handle)
 	}
 
 	public var cycleTime: TimeInterval {
-		return dgmpp_module_get_cycle_time(opaque)
+		return dgmpp_module_get_cycle_time(handle)
 	}
 
 	public var rawCycleTime: TimeInterval {
-		return dgmpp_module_get_raw_cycle_time(opaque)
+		return dgmpp_module_get_raw_cycle_time(handle)
 	}
 
 	public var charges: Int {
-		return dgmpp_module_get_charges(opaque)
+		return dgmpp_module_get_charges(handle)
 	}
 
 	public var shots: Int {
-		return dgmpp_module_get_shots(opaque)
+		return dgmpp_module_get_shots(handle)
 	}
 	
 	public var capUse: DGMGigaJoulePerSecond {
-		return DGMGigaJoulePerSecond(dgmpp_module_get_cap_use(opaque))
+		return DGMGigaJoulePerSecond(dgmpp_module_get_cap_use(handle))
 	}
 
 	public var cpuUse: DGMTeraflops {
-		return dgmpp_module_get_cpu_use(opaque)
+		return dgmpp_module_get_cpu_use(handle)
 	}
 	
 	public var powerGridUse: DGMMegaWatts {
-		return dgmpp_module_get_power_grid_use(opaque)
+		return dgmpp_module_get_power_grid_use(handle)
 	}
 	
 	public var calibrationUse: DGMCalibrationPoints {
-		return dgmpp_module_get_calibration_use(opaque)
+		return dgmpp_module_get_calibration_use(handle)
 	}
 	
 	public var accuracyScore: DGMPoints {
-		return dgmpp_module_get_accuracy_score(opaque)
+		return dgmpp_module_get_accuracy_score(handle)
 	}
 	
 	public var signatureResolution: DGMMeter {
-		return dgmpp_module_get_signature_resolution(opaque)
+		return dgmpp_module_get_signature_resolution(handle)
 	}
 	
 	public var miningYield: DGMCubicMeterPerSecond {
-		return DGMCubicMeterPerSecond(dgmpp_module_get_mining_yield(opaque))
+		return DGMCubicMeterPerSecond(dgmpp_module_get_mining_yield(handle))
 	}
 
 	public var volley: DGMDamageVector {
-		return DGMDamageVector(dgmpp_module_get_volley(opaque))
+		return DGMDamageVector(dgmpp_module_get_volley(handle))
 	}
 	
 	public func dps(target: DGMHostileTarget = DGMHostileTarget.default) -> DGMDamagePerSecond {
-		return DGMDamagePerSecond(DGMDamageVector(dgmpp_module_get_dps_v2(opaque, dgmpp_hostile_target(target))))
+		return DGMDamagePerSecond(DGMDamageVector(dgmpp_module_get_dps_v2(handle, dgmpp_hostile_target(target))))
 	}
 
 	public var optimal: DGMMeter {
-		return dgmpp_module_get_optimal(opaque)
+		return dgmpp_module_get_optimal(handle)
 	}
 	
 	public var falloff: DGMMeter {
-		return dgmpp_module_get_falloff(opaque)
+		return dgmpp_module_get_falloff(handle)
 	}
 	
 	public var lifeTime: TimeInterval {
-		return dgmpp_module_get_life_time(opaque)
+		return dgmpp_module_get_life_time(handle)
 	}
 
 	public func angularVelocity(targetSignature: DGMMeter, hitChance: DGMPercent = 0.75) -> DGMRadiansPerSecond {
-		return DGMRadiansPerSecond(dgmpp_module_get_angular_velocity(opaque, targetSignature, hitChance))
+		return DGMRadiansPerSecond(dgmpp_module_get_angular_velocity(handle, targetSignature, hitChance))
 	}
 
 }

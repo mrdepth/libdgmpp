@@ -10,7 +10,7 @@
 
 dgmpp_type dgmpp_structure_create (dgmpp_type_id type_id) {
 	try {
-		return reinterpret_cast<dgmpp_type>(new dgmpp_structure_impl(static_cast<TypeID>(type_id)));
+		return add_unique_ptr_wrapper(Structure::Create(static_cast<TypeID>(type_id)));
 	}
 	catch (...) {
 		return nullptr;
@@ -18,9 +18,9 @@ dgmpp_type dgmpp_structure_create (dgmpp_type_id type_id) {
 }
 
 dgmpp_type_id dgmpp_structure_get_fuel_block_type_id (dgmpp_type structure) {
-	return static_cast<dgmpp_type_id>(type_cast<Structure*>(structure)->fuelBlockTypeID());
+	return static_cast<dgmpp_type_id>(reinterpret_cast<Structure*>(structure)->fuelBlockTypeID());
 }
 
 dgmpp_fuel_units_per_hour dgmpp_structure_get_fuel_use (dgmpp_type structure) {
-	return type_cast<Structure*>(structure)->fuelUse() * 1h;
+	return reinterpret_cast<Structure*>(structure)->fuelUse() * 1h;
 }

@@ -7,89 +7,77 @@
 
 import Foundation
 
-public class DGMFacility {
-	var opaque: dgmpp_facility_ptr
+public class DGMFacility: DGMObject {
 	
-	class func facility(_ opaque: dgmpp_facility_ptr) -> DGMFacility {
-		switch dgmpp_facility_get_category(opaque) {
+	class func facility(_ handle: dgmpp_facility) -> DGMFacility {
+		switch dgmpp_facility_get_category(handle) {
 		case DGMPP_FACILITY_CATEGORY_COMMAND_CENTER:
-			return DGMCommandCenter(opaque)
+			return DGMCommandCenter(handle)
 		case DGMPP_FACILITY_CATEGORY_SPACEPORT:
-			return DGMSpaceport(opaque)
+			return DGMSpaceport(handle)
 		case DGMPP_FACILITY_CATEGORY_FACTORY:
-			return DGMFactory(opaque)
+			return DGMFactory(handle)
 		case DGMPP_FACILITY_CATEGORY_ECU:
-			return DGMExtractorControlUnit(opaque)
+			return DGMExtractorControlUnit(handle)
 		case DGMPP_FACILITY_CATEGORY_STORAGE:
-			return DGMStorage(opaque)
+			return DGMStorage(handle)
 		default:
-			return DGMFactory(opaque)
+			return DGMFactory(handle)
 		}
 	}
 	
-	public required init(_ opaque: dgmpp_facility_ptr) {
-		self.opaque = opaque
-	}
-	
-	deinit {
-		dgmpp_release(opaque)
+	convenience init(_ handle: dgmpp_facility) {
+		self.init(handle, owned: false)
 	}
 
+	
 	public var typeID: DGMTypeID {
-		return DGMTypeID(dgmpp_facility_get_type_id(opaque))
+		return DGMTypeID(dgmpp_facility_get_type_id(handle))
 	}
 	
 	public var groupID: DGMGroupID {
-		return DGMGroupID(dgmpp_facility_get_group_id(opaque))
+		return DGMGroupID(dgmpp_facility_get_group_id(handle))
 	}
 
 	public var identifier: Int64 {
-		return dgmpp_facility_get_identifier(opaque)
+		return dgmpp_facility_get_identifier(handle)
 	}
 	
 	public var capacity: DGMCubicMeter {
-		return dgmpp_facility_get_capacity(opaque)
+		return dgmpp_facility_get_capacity(handle)
 	}
 	
 	public var freeVolume: DGMCubicMeter {
-		return dgmpp_facility_get_free_volume(opaque)
+		return dgmpp_facility_get_free_volume(handle)
 	}
 
 	public var usedVolume: DGMCubicMeter {
-		return dgmpp_facility_get_used_volume(opaque)
+		return dgmpp_facility_get_used_volume(handle)
 	}
 	
 	public var commodities: [DGMCommodity] {
-		return DGMArray<DGMCommodity>(dgmpp_facility_get_commodities(opaque)).array
+		return DGMArray<DGMCommodity>(dgmpp_facility_copy_commodities(handle)).array
+	}
+	
+	public func income(typeID: DGMTypeID) -> DGMCommodity {
+		return DGMCommodity(dgmpp_facility_get_income(handle, dgmpp_type_id(typeID)))
 	}
 
 	public func add(_ commodity: DGMCommodity) {
-		dgmpp_facility_add_commodity(opaque, dgmpp_commodity(commodity))
+		dgmpp_facility_add_commodity(handle, dgmpp_commodity(commodity))
 	}
 
 	public func extract(_ commodity: DGMCommodity) throws {
-		guard dgmpp_facility_extract_commodity(opaque, dgmpp_commodity(commodity)) else {throw DGMError.NotEnoughCommodities}
+		guard dgmpp_facility_extract_commodity(handle, dgmpp_commodity(commodity)) else {throw DGMError.NotEnoughCommodities}
 	}
 	
 	public var isConfigured: Bool {
-		return dgmpp_facility_is_configured(opaque)
+		return dgmpp_facility_is_configured(handle)
 	}
 	
 	public var name: String {
-		return String(cString: dgmpp_facility_get_name(opaque));
+		return String(cString: dgmpp_facility_get_name(handle));
 	}
 
 
 }
-
-extension DGMFacility: Hashable {
-	
-	public var hashValue: Int {
-		return dgmpp_get_hash(opaque)
-	}
-	
-	public static func ==(lhs: DGMFacility, rhs: DGMFacility) -> Bool {
-		return lhs.hashValue == rhs.hashValue
-	}
-}
-

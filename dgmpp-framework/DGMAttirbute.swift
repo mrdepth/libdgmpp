@@ -7,43 +7,26 @@
 
 import Foundation
 
-public class DGMAttribute {
-	fileprivate var opaque: dgmpp_attribute_ptr
+public class DGMAttribute: DGMObject {
 	
-	public required init(_ opaque: dgmpp_attribute_ptr) {
-		self.opaque = opaque
+	convenience init(_ handle: dgmpp_attribute) {
+		self.init(handle, owned: false)
 	}
 	
-	deinit {
-		dgmpp_release(opaque)
-	}
-
 	public var attributeID: DGMAttributeID {
-		return DGMAttributeID(dgmpp_attribute_get_attribute_id(opaque))
+		return DGMAttributeID(dgmpp_attribute_get_attribute_id(handle))
 	}
 	
 	public var owner: DGMType {
-		return DGMType(dgmpp_attribute_get_owner(opaque))
+		return DGMType(dgmpp_attribute_get_owner(handle))
 	}
 
 	public var value: Double {
-		return dgmpp_attribute_get_value(opaque)
+		return dgmpp_attribute_get_value(handle)
 	}
 
 	public var initialValue: Double {
-		return dgmpp_attribute_get_initial_value(opaque)
+		return dgmpp_attribute_get_initial_value(handle)
 	}
 
 }
-
-extension DGMAttribute: Hashable {
-	
-	public var hashValue: Int {
-		return dgmpp_get_hash(opaque)
-	}
-	
-	public static func ==(lhs: DGMAttribute, rhs: DGMAttribute) -> Bool {
-		return lhs.hashValue == rhs.hashValue
-	}
-}
-

@@ -7,56 +7,31 @@
 
 import Foundation
 
-public class DGMState {
-	var opaque: dgmpp_state_ptr
-	
-	public required init(_ opaque: dgmpp_state_ptr) {
-		self.opaque = opaque
-	}
-
-	deinit {
-		dgmpp_release(opaque)
-	}
+public class DGMState: DGMObject {
 	
 	public var timestamp: Date {
-		return Date(timeIntervalSinceReferenceDate: dgmpp_state_get_timestamp(opaque))
+		return Date(timeIntervalSinceReferenceDate: dgmpp_state_get_timestamp(handle))
 	}
 	
 	public var commodities: [DGMCommodity] {
-		return DGMArray<DGMCommodity>(dgmpp_state_get_commodities(opaque)).array
+		return DGMArray<DGMCommodity>(dgmpp_state_copy_commodities(handle)).array
 	}
 	
 	public var volume: DGMCubicMeter {
-		return dgmpp_state_get_volume(opaque)
+		return dgmpp_state_get_volume(handle)
 	}
 
 }
 
 public class DGMProductionState: DGMState {
 
-	public required init(_ opaque: dgmpp_state_ptr) {
-		super.init(opaque)
-	}
-	
 	public var cycle: DGMProductionCycle? {
 		var cycle = dgmpp_production_cycle()
-		guard dgmpp_production_state_get_cycle(opaque, &cycle) else {return nil}
+		guard dgmpp_production_state_get_cycle(handle, &cycle) else {return nil}
 		return DGMProductionCycle(cycle)
 	}
 	
 	public var efficiency: DGMPercent {
-		return dgmpp_production_state_get_efficiency(opaque)
+		return dgmpp_production_state_get_efficiency(handle)
 	}
 }
-
-extension DGMState: Hashable {
-	
-	public var hashValue: Int {
-		return dgmpp_get_hash(opaque)
-	}
-	
-	public static func ==(lhs: DGMState, rhs: DGMState) -> Bool {
-		return lhs.hashValue == rhs.hashValue
-	}
-}
-

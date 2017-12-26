@@ -11,7 +11,7 @@
 #include "utility.h"
 
 DGMPP_EXTERN dgmpp_attribute_id	dgmpp_attribute_get_attribute_id	(dgmpp_attribute attribute);
-DGMPP_EXTERN BOOL				dgmpp_attribute_get_owner			(dgmpp_attribute attribute, dgmpp_type* owner);
+DGMPP_EXTERN dgmpp_type			dgmpp_attribute_get_owner			(dgmpp_attribute attribute);
 DGMPP_EXTERN double				dgmpp_attribute_get_value			(dgmpp_attribute attribute);
 DGMPP_EXTERN double				dgmpp_attribute_get_initial_value	(dgmpp_attribute attribute);
 DGMPP_EXTERN BOOL				dgmpp_attribute_is_stackable		(dgmpp_attribute attribute);

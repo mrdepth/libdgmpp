@@ -10,16 +10,14 @@
 
 #include "type.h"
 
-DGMPP_EXTERN void dgmpp_capacitor_free (dgmpp_capacitor_ptr capacitor);
-
 DGMPP_EXTERN dgmpp_type dgmpp_ship_create (dgmpp_type_id type_id);
 
 DGMPP_EXTERN const char*	dgmpp_ship_get_name (dgmpp_type ship);
 DGMPP_EXTERN void			dgmpp_ship_set_name (dgmpp_type ship, const char* name);
 
-DGMPP_EXTERN dgmpp_array		dgmpp_ship_get_supported_drone_categories	(dgmpp_type ship);
+DGMPP_EXTERN dgmpp_array			dgmpp_ship_copy_supported_drone_categories	(dgmpp_type ship);
 DGMPP_EXTERN DGMPP_RACE_ID			dgmpp_ship_get_race_id						(dgmpp_type ship);
-DGMPP_EXTERN dgmpp_type			dgmpp_ship_get_area							(dgmpp_type ship);
+DGMPP_EXTERN dgmpp_type				dgmpp_ship_get_area							(dgmpp_type ship);
 DGMPP_EXTERN void					dgmpp_ship_set_area							(dgmpp_type ship, dgmpp_type area);
 DGMPP_EXTERN DGMPP_RIG_SIZE			dgmpp_ship_get_rig_size						(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_damage_vector	dgmpp_ship_get_damage_pattern				(dgmpp_type ship);
@@ -34,9 +32,9 @@ DGMPP_EXTERN void dgmpp_ship_remove_drone	(dgmpp_type ship, dgmpp_type drone);
 DGMPP_EXTERN BOOL dgmpp_ship_can_fit_module	(dgmpp_type ship, dgmpp_type module);
 DGMPP_EXTERN BOOL dgmpp_ship_can_fit_drone	(dgmpp_type ship, dgmpp_type drone);
 
-DGMPP_EXTERN dgmpp_array dgmpp_ship_get_modules			(dgmpp_type ship);
-DGMPP_EXTERN dgmpp_array dgmpp_ship_get_drones			(dgmpp_type ship);
-DGMPP_EXTERN dgmpp_array dgmpp_ship_get_modules_slot	(dgmpp_type ship, DGMPP_MODULE_SLOT slot);
+DGMPP_EXTERN dgmpp_array dgmpp_ship_copy_modules			(dgmpp_type ship);
+DGMPP_EXTERN dgmpp_array dgmpp_ship_copy_drones			(dgmpp_type ship);
+DGMPP_EXTERN dgmpp_array dgmpp_ship_copy_modules_slot	(dgmpp_type ship, DGMPP_MODULE_SLOT slot);
 
 
 DGMPP_EXTERN size_t dgmpp_ship_get_total_drone_squadron			(dgmpp_type ship, DGMPP_DRONE_SQUADRON squadron);
@@ -51,7 +49,7 @@ DGMPP_EXTERN size_t dgmpp_ship_get_total_hardpoints	(dgmpp_type ship, DGMPP_MODU
 DGMPP_EXTERN size_t dgmpp_ship_get_free_hardpoints	(dgmpp_type ship, DGMPP_MODULE_HARDPOINT hardpoint);
 DGMPP_EXTERN size_t dgmpp_ship_get_used_hardpoints	(dgmpp_type ship, DGMPP_MODULE_HARDPOINT hardpoint);
 
-DGMPP_EXTERN dgmpp_capacitor_ptr dgmpp_ship_get_capacitor (dgmpp_type ship);
+DGMPP_EXTERN dgmpp_capacitor			dgmpp_ship_get_capacitor (dgmpp_type ship);
 
 DGMPP_EXTERN dgmpp_calibration_points	dgmpp_ship_get_used_calibration			(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_calibration_points	dgmpp_ship_get_total_calibration		(dgmpp_type ship);
@@ -109,12 +107,12 @@ DGMPP_EXTERN dgmpp_meter			dgmpp_ship_get_probe_size		(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_millimeter		dgmpp_ship_get_scan_resolution	(dgmpp_type ship);
 
 
-DGMPP_EXTERN dgmpp_giga_joule				dgmpp_capacitor_get_capacity			(dgmpp_capacitor_ptr capacitor);
-DGMPP_EXTERN dgmpp_seconds					dgmpp_capacitor_get_recharge_time	(dgmpp_capacitor_ptr capacitor);
-DGMPP_EXTERN dgmpp_seconds					dgmpp_capacitor_get_lasts_time		(dgmpp_capacitor_ptr capacitor);
-DGMPP_EXTERN BOOL							dgmpp_capacitor_is_stable			(dgmpp_capacitor_ptr capacitor);
-DGMPP_EXTERN dgmpp_percent					dgmpp_capacitor_get_stable_level		(dgmpp_capacitor_ptr capacitor);
-DGMPP_EXTERN dgmpp_giga_joule_per_second	dgmpp_capacitor_get_use				(dgmpp_capacitor_ptr capacitor);
-DGMPP_EXTERN dgmpp_giga_joule_per_second	dgmpp_capacitor_get_recharge			(dgmpp_capacitor_ptr capacitor);
+DGMPP_EXTERN dgmpp_giga_joule				dgmpp_capacitor_get_capacity		(dgmpp_capacitor capacitor);
+DGMPP_EXTERN dgmpp_seconds					dgmpp_capacitor_get_recharge_time	(dgmpp_capacitor capacitor);
+DGMPP_EXTERN dgmpp_seconds					dgmpp_capacitor_get_lasts_time		(dgmpp_capacitor capacitor);
+DGMPP_EXTERN BOOL							dgmpp_capacitor_is_stable			(dgmpp_capacitor capacitor);
+DGMPP_EXTERN dgmpp_percent					dgmpp_capacitor_get_stable_level	(dgmpp_capacitor capacitor);
+DGMPP_EXTERN dgmpp_giga_joule_per_second	dgmpp_capacitor_get_use				(dgmpp_capacitor capacitor);
+DGMPP_EXTERN dgmpp_giga_joule_per_second	dgmpp_capacitor_get_recharge		(dgmpp_capacitor capacitor);
 
 #endif /* ship_h */

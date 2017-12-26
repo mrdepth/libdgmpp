@@ -8,6 +8,6 @@
 #include "storage.h"
 #include "internal.h"
 
-dgmpp_array dgmpp_storage_get_states (dgmpp_facility_ptr facility) {
-	return dgmpp_make_array<dgmpp_state_impl*>(facility_cast<Storage*>(facility)->states());
+dgmpp_array dgmpp_storage_copy_states (dgmpp_facility facility) {
+	return dgmpp_make_array<State*>(reinterpret_cast<Storage*>(facility)->states());
 }

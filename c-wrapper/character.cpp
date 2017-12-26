@@ -8,23 +8,22 @@
 #include "character.h"
 #include "internal.h"
 
-BOOL dgmpp_character_create(dgmpp_type* character) {
-	*character = dgmpp_handle_impl(Character::Create(), dgmpp_handle_tag::unique_ptr_character);
-	return true;
+dgmpp_type dgmpp_character_create() {
+	return add_unique_ptr_wrapper(Character::Create());
 }
 
 const char*	dgmpp_character_get_name (dgmpp_type character) {
-	return dgmpp_cast<Character>(character).name().c_str();
+	return reinterpret_cast<Character*>(character)->name().c_str();
 }
 
 void dgmpp_character_set_name (dgmpp_type character, const char* name) {
-	dgmpp_cast<Character>(character).name(name);
+	reinterpret_cast<Character*>(character)->name(name);
 }
 
 
 BOOL dgmpp_character_set_skill_levels (dgmpp_type character, int skill_levels) {
 	try {
-		dgmpp_cast<Character>(character).setSkillLevels(skill_levels);
+		reinterpret_cast<Character*>(character)->setSkillLevels(skill_levels);
 		return true;
 	}
 	catch (...) {
@@ -32,18 +31,17 @@ BOOL dgmpp_character_set_skill_levels (dgmpp_type character, int skill_levels) {
 	}
 }
 
-BOOL dgmpp_character_get_skills (dgmpp_type character, dgmpp_array* skills) {
-	*skills = dgmpp_make_array<dgmpp_handle_impl>(dgmpp_cast<Character>(character).skills());
-	return true;
+dgmpp_array dgmpp_character_copy_skills (dgmpp_type character) {
+	return dgmpp_make_array<Type*>(reinterpret_cast<Character*>(character)->skills());
 }
 
-BOOL dgmpp_character_add_implant (dgmpp_type character, dgmpp_type* implant) {
+BOOL dgmpp_character_add_implant (dgmpp_type character, dgmpp_type implant) {
 	return dgmpp_character_add_implant_v2(character, implant, false);
 }
 
-BOOL dgmpp_character_add_implant_v2 (dgmpp_type character, dgmpp_type* implant, BOOL replace) {
+BOOL dgmpp_character_add_implant_v2 (dgmpp_type character, dgmpp_type implant, BOOL replace) {
 	try {
-		dgmpp_reset(*implant, dgmpp_cast<Character>(character).add(dgmpp_move<Implant>(*implant), replace));
+		reinterpret_cast<Character*>(character)->add(get_unique_ptr<Implant>(implant));
 		return true;
 	}
 	catch(...) {
@@ -51,13 +49,13 @@ BOOL dgmpp_character_add_implant_v2 (dgmpp_type character, dgmpp_type* implant, 
 	}
 }
 
-BOOL dgmpp_character_add_booster (dgmpp_type character, dgmpp_type* booster) {
+BOOL dgmpp_character_add_booster (dgmpp_type character, dgmpp_type booster) {
 	return dgmpp_character_add_booster_v2(character, booster, false);
 }
 
-BOOL dgmpp_character_add_booster_v2 (dgmpp_type character, dgmpp_type* booster, BOOL replace) {
+BOOL dgmpp_character_add_booster_v2 (dgmpp_type character, dgmpp_type booster, BOOL replace) {
 	try {
-		dgmpp_reset(*booster, dgmpp_cast<Character>(character).add(dgmpp_move<Booster>(*booster), replace));
+		reinterpret_cast<Character*>(character)->add(get_unique_ptr<Booster>(booster));
 		return true;
 	}
 	catch(...) {
@@ -65,70 +63,56 @@ BOOL dgmpp_character_add_booster_v2 (dgmpp_type character, dgmpp_type* booster, 
 	}
 }
 
-void dgmpp_character_remove_implant (dgmpp_type character, dgmpp_type* implant) {
-	dgmpp_cast<Character>(character).remove(&dgmpp_cast<Implant>(*implant));
-	dgmpp_reset(*implant, nullptr);
+void dgmpp_character_remove_implant (dgmpp_type character, dgmpp_type implant) {
+	reinterpret_cast<Character*>(character)->remove(reinterpret_cast<Implant*>(implant));
 }
 
-void dgmpp_character_remove_booster (dgmpp_type character, dgmpp_type* booster) {
-	dgmpp_cast<Character>(character).remove(&dgmpp_cast<Booster>(*booster));
-	dgmpp_reset(*booster, nullptr);
+void dgmpp_character_remove_booster (dgmpp_type character, dgmpp_type booster) {
+	reinterpret_cast<Character*>(character)->remove(reinterpret_cast<Booster*>(booster));
 }
 
-BOOL dgmpp_character_get_implants (dgmpp_type character, dgmpp_array* implants) {
-	*implants = dgmpp_make_array<dgmpp_handle_impl>(dgmpp_cast<Character>(character).implants());
-	return true;
+dgmpp_array dgmpp_character_copy_implants (dgmpp_type character) {
+	return dgmpp_make_array<Implant*>(reinterpret_cast<Character*>(character)->implants());
 }
 
-BOOL dgmpp_character_get_boosters (dgmpp_type character, dgmpp_array* boosters) {
-	*boosters = dgmpp_make_array<dgmpp_handle_impl>(dgmpp_cast<Character>(character).boosters());
-	return true;
+dgmpp_array dgmpp_character_copy_boosters (dgmpp_type character) {
+	return dgmpp_make_array<Booster*>(reinterpret_cast<Character*>(character)->boosters());
 }
 
 
-BOOL dgmpp_character_get_ship (dgmpp_type character, dgmpp_type* ship) {
-	if (auto type = dgmpp_cast<Character>(character).ship()) {
-		*ship = dgmpp_handle_impl(type);
-		return true;
-	}
-	else
-		return false;
+dgmpp_type dgmpp_character_get_ship (dgmpp_type character) {
+	return reinterpret_cast<Character*>(character)->ship();
 }
 
-BOOL dgmpp_character_get_structure (dgmpp_type character, dgmpp_type* structure) {
-	if (auto type = dgmpp_cast<Character>(character).structure()) {
-		*structure = dgmpp_handle_impl(type);
-		return true;
-	}
-	else
-		return false;
+dgmpp_type dgmpp_character_get_structure (dgmpp_type character) {
+	return reinterpret_cast<Character*>(character)->structure();
 }
 
-void dgmpp_character_set_ship (dgmpp_type character, dgmpp_type* ship) {
+void dgmpp_character_set_ship (dgmpp_type character, dgmpp_type ship) {
 	if (ship)
-		dgmpp_reset(*ship, dgmpp_cast<Character>(character).ship(dgmpp_move<Ship>(*ship)));
+		reinterpret_cast<Character*>(character)->ship(get_unique_ptr<Ship>(ship));
 	else
-		dgmpp_cast<Character>(character).ship(nullptr);
+		reinterpret_cast<Character*>(character)->ship(nullptr);
 }
 
-void dgmpp_character_set_structure (dgmpp_type character, dgmpp_type* structure) {
+void dgmpp_character_set_structure (dgmpp_type character, dgmpp_type structure) {
 	if (structure)
-		dgmpp_reset(*structure, dgmpp_cast<Character>(character).ship(dgmpp_move<Structure>(*structure)));
+		reinterpret_cast<Character*>(character)->structure(get_unique_ptr<Structure>(structure));
 	else
-		dgmpp_cast<Character>(character).structure(nullptr);
+		reinterpret_cast<Character*>(character)->structure(nullptr);
 }
 
 dgmpp_meter dgmpp_character_get_drone_control_distance (dgmpp_type character) {
-	return dgmpp_cast<Character>(character).droneControlDistance();
+	return reinterpret_cast<Character*>(character)->droneControlDistance();
 }
 
 int dgmpp_skill_get_level (dgmpp_type skill) {
-	return dgmpp_cast<Skill>(skill).level();
+	return reinterpret_cast<Skill*>(skill)->level();
 }
 
 BOOL dgmpp_skill_set_level (dgmpp_type skill, int level) {
 	try {
-		dgmpp_cast<Skill>(skill).level(level);
+		reinterpret_cast<Skill*>(skill)->level(level);
 		return true;
 	}
 	catch(...) {
@@ -137,32 +121,30 @@ BOOL dgmpp_skill_set_level (dgmpp_type skill, int level) {
 }
 
 
-BOOL dgmpp_implant_create (dgmpp_type_id type_id, dgmpp_type* implant) {
+dgmpp_type dgmpp_implant_create (dgmpp_type_id type_id) {
 	try {
-		*implant = dgmpp_handle_impl(Implant::Create(static_cast<TypeID>(type_id)), dgmpp_handle_tag::unique_ptr_area);
-		return true;
+		return add_unique_ptr_wrapper(Implant::Create(static_cast<TypeID>(type_id)));
 	}
 	catch (...) {
-		return false;
+		return nullptr;
 	}
 }
 
 int dgmpp_implant_get_slot (dgmpp_type implant) {
-	return dgmpp_cast<Implant>(implant).slot();
+	return reinterpret_cast<Implant*>(implant)->slot();
 }
 
 
-BOOL dgmpp_booster_create (dgmpp_type_id type_id, dgmpp_type* booster) {
+dgmpp_type dgmpp_booster_create (dgmpp_type_id type_id) {
 	try {
-		*booster = dgmpp_handle_impl(Booster::Create(static_cast<TypeID>(type_id)), dgmpp_handle_tag::unique_ptr_area);
-		return true;
+		return add_unique_ptr_wrapper(Booster::Create(static_cast<TypeID>(type_id)));
 	}
 	catch (...) {
-		return false;
+		return nullptr;
 	}
 }
 
 int dgmpp_booster_get_slot (dgmpp_type booster) {
-	return dgmpp_cast<Booster>(booster).slot();
+	return reinterpret_cast<Booster*>(booster)->slot();
 }
 

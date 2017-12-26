@@ -10,12 +10,13 @@ import Foundation
 import Dgmpp
 
 do {
-	let gang = DGMGang()
-	let pilot = DGMCharacter()
+	let gang = try DGMGang()
+	let pilot = try DGMCharacter()
 	gang.add(pilot)
 	pilot.setSkillLevels(5)
 	let dominix = try DGMShip(typeID: 645)
 	pilot.ship = dominix
+	dominix.modules(slot: .hi)
 	
 	print("\(dominix.hitPoints.shield)")
 	print(dominix.attributes.map {"\($0.attributeID): \($0.value)"}.joined(separator: "\n"))

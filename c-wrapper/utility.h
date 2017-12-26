@@ -50,11 +50,12 @@ typedef double dgmpp_fuel_units_per_hour;
 typedef double dgmpp_seconds;
 
 typedef struct dgmpp_t dgmpp_t;
+typedef void* dgmpp_handle;
 
-typedef struct {
-	char tag;
-	void* handle;
-} dgmpp_handle;
+//typedef struct {
+//	void* handle;
+//	char tag;
+//} dgmpp_handle;
 
 typedef dgmpp_handle dgmpp_type;
 typedef dgmpp_handle dgmpp_attribute;
@@ -64,8 +65,8 @@ typedef dgmpp_handle dgmpp_state;
 typedef dgmpp_handle dgmpp_array;
 typedef dgmpp_handle dgmpp_capacitor;
 
-DGMPP_EXTERN void 	dgmpp_delete	(dgmpp_handle handle);
-DGMPP_EXTERN size_t	dgmpp_get_hash	(dgmpp_handle handle);
+DGMPP_EXTERN void 	dgmpp_free		(dgmpp_handle handle);
+//DGMPP_EXTERN size_t	dgmpp_get_hash	(dgmpp_handle handle);
 
 DGMPP_EXTERN size_t			dgmpp_array_get_size	(dgmpp_array array);
 DGMPP_EXTERN const void*	dgmpp_array_get_values	(dgmpp_array array);
@@ -206,8 +207,8 @@ typedef struct {
 } dgmpp_production_cycle;
 
 typedef struct {
-	int64_t from;
-	int64_t to;
+	dgmpp_facility from;
+	dgmpp_facility to;
 	dgmpp_commodity commodity;
 } dgmpp_route;
 

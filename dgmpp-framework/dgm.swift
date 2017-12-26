@@ -94,65 +94,62 @@ extension DGMCommodity.Tier {
 	}
 }
 
-class DGMArray<T> {
+class DGMArray<T>: DGMObject {
 	
-	private var opaque: dgmpp_array_ptr
-	init(_ opaque: dgmpp_array_ptr) {
-		self.opaque = opaque
+	convenience init(_ handle: dgmpp_array) {
+		self.init(handle, owned: true)
 	}
 	
-	deinit {
-		dgmpp_release(opaque)
-	}
 }
 
 extension DGMArray where T: DGMType {
 	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_type_ptr.self, capacity: size)
+		let size = dgmpp_array_get_size(handle)
+		guard size > 0 else {return []}
+		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_type.self, capacity: size)
 		return (0..<size).map {
-			dgmpp_retain(ptr[$0])
-			return T(ptr[$0])
+			return T(ptr[$0], owned: false)
 		}
 	}
 }
 
 extension DGMArray where T == DGMAttribute {
 	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_attribute_ptr.self, capacity: size)
+		let size = dgmpp_array_get_size(handle)
+		guard size > 0 else {return []}
+		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_attribute.self, capacity: size)
 		return (0..<size).map {
-			dgmpp_retain(ptr[$0])
-			return T(ptr[$0])
+			return T(ptr[$0], owned: false)
 		}
 	}
 }
 
 extension DGMArray where T == Int {
 	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: Int.self, capacity: size)
-		return (0..<size).map {ptr[$0]}
+		let size = dgmpp_array_get_size(handle)
+		guard size > 0 else {return []}
+		let ptr = dgmpp_array_get_values(handle).bindMemory(to: Int32.self, capacity: size)
+		return (0..<size).map {Int(ptr[$0])}
 	}
 }
 
 extension DGMArray where T: DGMState {
 	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_state_ptr.self, capacity: size)
+		let size = dgmpp_array_get_size(handle)
+		guard size > 0 else {return []}
+		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_state.self, capacity: size)
 		return (0..<size).map {
-			dgmpp_retain(ptr[$0])
-			return T(ptr[$0])
+			return T(ptr[$0], owned: false)
 		}
 	}
 }
 
 extension DGMArray where T == DGMFacility {
 	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_facility_ptr.self, capacity: size)
+		let size = dgmpp_array_get_size(handle)
+		guard size > 0 else {return []}
+		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_facility.self, capacity: size)
 		return (0..<size).map {
-			dgmpp_retain(ptr[$0])
 			return DGMFacility.facility(ptr[$0])
 		}
 	}
@@ -160,8 +157,9 @@ extension DGMArray where T == DGMFacility {
 
 extension DGMArray where T == DGMCommodity {
 	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_commodity.self, capacity: size)
+		let size = dgmpp_array_get_size(handle)
+		guard size > 0 else {return []}
+		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_commodity.self, capacity: size)
 		return (0..<size).map {
 			return T(ptr[$0])
 		}
@@ -170,8 +168,20 @@ extension DGMArray where T == DGMCommodity {
 
 extension DGMArray where T == DGMProductionCycle {
 	var array: [T] {
-		let size = dgmpp_array_get_size(opaque)
-		let ptr = dgmpp_array_get_values(opaque).bindMemory(to: dgmpp_production_cycle.self, capacity: size)
+		let size = dgmpp_array_get_size(handle)
+		guard size > 0 else {return []}
+		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_production_cycle.self, capacity: size)
+		return (0..<size).map {
+			return T(ptr[$0])
+		}
+	}
+}
+
+extension DGMArray where T == DGMRoute {
+	var array: [T] {
+		let size = dgmpp_array_get_size(handle)
+		guard size > 0 else {return []}
+		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_route.self, capacity: size)
 		return (0..<size).map {
 			return T(ptr[$0])
 		}
@@ -266,9 +276,11 @@ extension DGMProductionCycle {
 	}
 }
 
-//extension DGMRoute {
-//	init(_ route: dgmpp_route) {
-//		from
-//	}
-//}
+extension DGMRoute {
+	init(_ route: dgmpp_route) {
+		from = DGMFacility.facility(route.from)
+		to = DGMFacility.facility(route.to)
+		commodity = DGMCommodity(route.commodity)
+	}
+}
 

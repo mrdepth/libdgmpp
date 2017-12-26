@@ -9,24 +9,20 @@ import Foundation
 
 public class DGMGang: DGMType {
 	
-	public required init(_ opaque: dgmpp_attribute_ptr) {
-		super.init(opaque)
+	public convenience init() throws {
+		self.init(dgmpp_gang_create()!, owned: true)
 	}
-	
-	public init() {
-		super.init(dgmpp_gang_create()!)
-	}
-	
+
 	public func add(_ pilot: DGMCharacter) {
-		dgmpp_gang_add_pilot(opaque, pilot.opaque)
+		dgmpp_gang_add_pilot(handle, pilot.handle)
 	}
 	
 	public func remove(_ pilot: DGMCharacter) {
-		dgmpp_gang_remove_pilot(opaque, pilot.opaque)
+		dgmpp_gang_remove_pilot(handle, pilot.handle)
 	}
 	
 	public var pilots: [DGMCharacter] {
-		return DGMArray<DGMCharacter>(dgmpp_gang_get_pilots(opaque)).array
+		return DGMArray<DGMCharacter>(dgmpp_gang_copy_pilots(handle)).array
 	}
 
 }

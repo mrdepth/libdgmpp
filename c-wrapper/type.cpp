@@ -9,49 +9,40 @@
 #include "internal.h"
 
 dgmpp_type_id dgmpp_type_get_type_id (dgmpp_type type) {
-	return static_cast<dgmpp_type_id>(dgmpp_cast<Type>(type).metaInfo().typeID);
+	return static_cast<dgmpp_type_id>(reinterpret_cast<Type*>(type)->metaInfo().typeID);
 }
 
 dgmpp_group_id dgmpp_type_get_group_id (dgmpp_type type) {
-	return static_cast<dgmpp_group_id>(dgmpp_cast<Type>(type).metaInfo().groupID);
+	return static_cast<dgmpp_group_id>(reinterpret_cast<Type*>(type)->metaInfo().groupID);
 }
 
 dgmpp_category_id dgmpp_type_get_category_id (dgmpp_type type) {
-	return static_cast<dgmpp_category_id>(dgmpp_cast<Type>(type).metaInfo().categoryID);
+	return static_cast<dgmpp_category_id>(reinterpret_cast<Type*>(type)->metaInfo().categoryID);
 }
 
-BOOL dgmpp_type_get_parent (dgmpp_type type, dgmpp_type* parent) {
-	if (auto p = dgmpp_cast<Type>(type).parent()) {
-		*parent = dgmpp_handle_impl(p);
-		return true;
-	}
+dgmpp_type dgmpp_type_get_parent (dgmpp_type type) {
+	return reinterpret_cast<Type*>(type)->parent();
+}
+
+dgmpp_attribute dgmpp_type_get_attribute (dgmpp_type type, dgmpp_attribute_id attribute_id) {
+	if (auto a = (*reinterpret_cast<Type*>(type))[static_cast<AttributeID>(attribute_id)])
+		return a.get();
 	else
-		return false;
+		return nullptr;
 }
 
-BOOL dgmpp_type_get_attribute (dgmpp_type type, dgmpp_attribute_id attribute_id, dgmpp_attribute* attribute) {
-	if (auto a = dgmpp_cast<Type>(type)[static_cast<AttributeID>(attribute_id)]) {
-		*attribute = dgmpp_handle_impl(a.get());
-		return true;
-	}
-	else
-		return false;
+dgmpp_array dgmpp_type_copy_affectors (dgmpp_type type) {
+	return dgmpp_make_array<Type*>(reinterpret_cast<Type*>(type)->affectors());
 }
 
-BOOL dgmpp_type_get_affectors (dgmpp_type type, dgmpp_array* affectors) {
-	*affectors = dgmpp_make_array<dgmpp_handle_impl>(dgmpp_cast<Type>(type).affectors());
-	return true;
-}
-
-BOOL dgmpp_type_get_attributes (dgmpp_type type, dgmpp_array* attributes) {
-	*attributes = dgmpp_make_array<dgmpp_handle_impl>(dgmpp_cast<Type>(type).attributes());
-	return true;
+dgmpp_array dgmpp_type_copy_attributes (dgmpp_type type) {
+	return dgmpp_make_array<Attribute*>(reinterpret_cast<Type*>(type)->attributes());
 }
 
 size_t dgmpp_type_get_identifier (dgmpp_type type) {
-	return dgmpp_cast<Type>(type).identifier();
+	return reinterpret_cast<Type*>(type)->identifier();
 }
 
 void dgmpp_type_set_identifier (dgmpp_type type, size_t identifier) {
-	dgmpp_cast<Type>(type).identifier(identifier);
+	reinterpret_cast<Type*>(type)->identifier(identifier);
 }

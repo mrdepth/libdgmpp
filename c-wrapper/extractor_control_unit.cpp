@@ -8,48 +8,48 @@
 #include "extractor_control_unit.h"
 #include "internal.h"
 
-dgmpp_seconds dgmpp_ecu_get_launch_time (dgmpp_facility_ptr facility) {
-	return dgmpp_make_seconds(facility_cast<ExtractorControlUnit*>(facility)->launchTime());
+dgmpp_seconds dgmpp_ecu_get_launch_time (dgmpp_facility facility) {
+	return dgmpp_make_seconds(reinterpret_cast<ExtractorControlUnit*>(facility)->launchTime());
 }
 
-void dgmpp_ecu_set_launch_time (dgmpp_facility_ptr facility, dgmpp_seconds launch_time) {
-	facility_cast<ExtractorControlUnit*>(facility)->launchTime(std::chrono::seconds(std::chrono::seconds::rep(launch_time)));
+void dgmpp_ecu_set_launch_time (dgmpp_facility facility, dgmpp_seconds launch_time) {
+	reinterpret_cast<ExtractorControlUnit*>(facility)->launchTime(std::chrono::seconds(std::chrono::seconds::rep(launch_time)));
 }
 
-dgmpp_seconds dgmpp_ecu_get_install_time (dgmpp_facility_ptr facility) {
-	return dgmpp_make_seconds(facility_cast<ExtractorControlUnit*>(facility)->installTime());
+dgmpp_seconds dgmpp_ecu_get_install_time (dgmpp_facility facility) {
+	return dgmpp_make_seconds(reinterpret_cast<ExtractorControlUnit*>(facility)->installTime());
 }
 
-void dgmpp_ecu_set_install_time (dgmpp_facility_ptr facility, dgmpp_seconds install_time) {
-	facility_cast<ExtractorControlUnit*>(facility)->installTime(std::chrono::seconds(std::chrono::seconds::rep(install_time)));
+void dgmpp_ecu_set_install_time (dgmpp_facility facility, dgmpp_seconds install_time) {
+	reinterpret_cast<ExtractorControlUnit*>(facility)->installTime(std::chrono::seconds(std::chrono::seconds::rep(install_time)));
 }
 
-dgmpp_seconds dgmpp_ecu_get_expiry_time (dgmpp_facility_ptr facility) {
-	return dgmpp_make_seconds(facility_cast<ExtractorControlUnit*>(facility)->expiryTime());
+dgmpp_seconds dgmpp_ecu_get_expiry_time (dgmpp_facility facility) {
+	return dgmpp_make_seconds(reinterpret_cast<ExtractorControlUnit*>(facility)->expiryTime());
 }
 
-void dgmpp_ecu_set_expiry_time (dgmpp_facility_ptr facility, dgmpp_seconds expiry_time) {
-	facility_cast<ExtractorControlUnit*>(facility)->expiryTime(std::chrono::seconds(std::chrono::seconds::rep(expiry_time)));
+void dgmpp_ecu_set_expiry_time (dgmpp_facility facility, dgmpp_seconds expiry_time) {
+	reinterpret_cast<ExtractorControlUnit*>(facility)->expiryTime(std::chrono::seconds(std::chrono::seconds::rep(expiry_time)));
 }
 
-dgmpp_seconds dgmpp_ecu_get_cycle_time (dgmpp_facility_ptr facility) {
-	return dgmpp_make_seconds(facility_cast<ExtractorControlUnit*>(facility)->cycleTime());
+dgmpp_seconds dgmpp_ecu_get_cycle_time (dgmpp_facility facility) {
+	return dgmpp_make_seconds(reinterpret_cast<ExtractorControlUnit*>(facility)->cycleTime());
 }
 
-void dgmpp_ecu_set_cycle_time (dgmpp_facility_ptr facility, dgmpp_seconds cycle_time) {
-	facility_cast<ExtractorControlUnit*>(facility)->cycleTime(std::chrono::seconds(std::chrono::seconds::rep(cycle_time)));
+void dgmpp_ecu_set_cycle_time (dgmpp_facility facility, dgmpp_seconds cycle_time) {
+	reinterpret_cast<ExtractorControlUnit*>(facility)->cycleTime(std::chrono::seconds(std::chrono::seconds::rep(cycle_time)));
 }
 
-size_t dgmpp_ecu_get_quantity_per_cycle (dgmpp_facility_ptr facility) {
-	return facility_cast<ExtractorControlUnit*>(facility)->quantityPerCycle();
+size_t dgmpp_ecu_get_quantity_per_cycle (dgmpp_facility facility) {
+	return reinterpret_cast<ExtractorControlUnit*>(facility)->quantityPerCycle();
 }
 
-void dgmpp_ecu_set_quantity_per_cycle (dgmpp_facility_ptr facility, size_t quantity_per_cycle) {
-	facility_cast<ExtractorControlUnit*>(facility)->quantityPerCycle(quantity_per_cycle);
+void dgmpp_ecu_set_quantity_per_cycle (dgmpp_facility facility, size_t quantity_per_cycle) {
+	reinterpret_cast<ExtractorControlUnit*>(facility)->quantityPerCycle(quantity_per_cycle);
 }
 
-BOOL dgmpp_ecu_get_output (dgmpp_facility_ptr facility, dgmpp_commodity* commodity) {
-	if (auto output = facility_cast<ExtractorControlUnit*>(facility)->output()) {
+BOOL dgmpp_ecu_get_output (dgmpp_facility facility, dgmpp_commodity* commodity) {
+	if (auto output = reinterpret_cast<ExtractorControlUnit*>(facility)->output()) {
 		*commodity = dgmpp_commodity_impl(*output);
 		return true;
 	}
@@ -57,10 +57,10 @@ BOOL dgmpp_ecu_get_output (dgmpp_facility_ptr facility, dgmpp_commodity* commodi
 		return false;
 }
 
-dgmpp_array dgmpp_ecu_get_states (dgmpp_facility_ptr facility) {
-	return dgmpp_make_array<dgmpp_state_impl*>(facility_cast<ExtractorControlUnit*>(facility)->states());
+dgmpp_array dgmpp_ecu_copy_states (dgmpp_facility facility) {
+	return dgmpp_make_array<State*>(reinterpret_cast<ExtractorControlUnit*>(facility)->states());
 }
 
-dgmpp_array dgmpp_ecu_get_cycles (dgmpp_facility_ptr facility) {
-	return dgmpp_make_array<dgmpp_production_cycle_impl>(facility_cast<ExtractorControlUnit*>(facility)->cycles());
+dgmpp_array dgmpp_ecu_copy_cycles (dgmpp_facility facility) {
+	return dgmpp_make_array<dgmpp_production_cycle_impl>(reinterpret_cast<ExtractorControlUnit*>(facility)->cycles());
 }

@@ -9,12 +9,8 @@ import Foundation
 
 public class DGMArea: DGMType {
 	
-	public required init(_ opaque: dgmpp_attribute_ptr) {
-		super.init(opaque)
-	}
-
-	public init(typeID: DGMTypeID) throws {
+	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_area_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		super.init(type)
+		self.init(type, owned: true)
 	}
 }

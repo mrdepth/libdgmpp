@@ -8,12 +8,11 @@
 #include "area.h"
 #include "internal.h"
 
-BOOL dgmpp_area_create (dgmpp_type_id type_id, dgmpp_type* area) {
+dgmpp_type dgmpp_area_create (dgmpp_type_id type_id) {
 	try {
-		*area = dgmpp_handle_impl(Area::Create(static_cast<TypeID>(type_id)), dgmpp_handle_tag::unique_ptr_area);
-		return true;
+		return add_unique_ptr_wrapper(Area::Create(static_cast<TypeID>(type_id)));
 	}
 	catch (...) {
-		return false;
+		return nullptr;
 	}
 }

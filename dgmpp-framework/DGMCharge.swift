@@ -16,16 +16,12 @@ public class DGMCharge: DGMType {
 		case xLarge = 4
 	}
 	
-	public required init(_ opaque: dgmpp_attribute_ptr) {
-		super.init(opaque)
-	}
-	
-	public init(typeID: DGMTypeID) throws {
+	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_charge_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		super.init(type)
+		self.init(type, owned: true)
 	}
-	
+
 	public var size: Size {
-		return Size(dgmpp_charge_get_charge_size(opaque)) ?? .none
+		return Size(dgmpp_charge_get_charge_size(handle)) ?? .none
 	}
 }
