@@ -13,6 +13,8 @@
 
 //struct dgmpp_attribute;
 
+DGMPP_EXTERN DGMPP_TYPE				dgmpp_get_type				(dgmpp_type type);
+
 DGMPP_EXTERN dgmpp_type_id			dgmpp_type_get_type_id		(dgmpp_type type);
 DGMPP_EXTERN dgmpp_group_id			dgmpp_type_get_group_id		(dgmpp_type type);
 DGMPP_EXTERN dgmpp_category_id		dgmpp_type_get_category_id	(dgmpp_type type);

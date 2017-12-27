@@ -9,6 +9,33 @@ import Foundation
 
 public class DGMType: DGMObject {
 	
+	class func type(_ handle: dgmpp_type) -> DGMType {
+		switch dgmpp_get_type(handle) {
+		case DGMPP_TYPE_GANG:
+			return DGMGang(handle)
+		case DGMPP_TYPE_CHARACTER:
+			return DGMCharacter(handle)
+		case DGMPP_TYPE_SKILL:
+			return DGMSkill(handle)
+		case DGMPP_TYPE_BOOSTER:
+			return DGMBooster(handle)
+		case DGMPP_TYPE_IMPLANT:
+			return DGMImplant(handle)
+		case DGMPP_TYPE_SHIP:
+			return DGMShip(handle)
+		case DGMPP_TYPE_STRUCTURE:
+			return DGMStructure(handle)
+		case DGMPP_TYPE_MODULE:
+			return DGMModule(handle)
+		case DGMPP_TYPE_DRONE:
+			return DGMDrone(handle)
+		case DGMPP_TYPE_CHARGE:
+			return DGMCharge(handle)
+		default:
+			return DGMType(handle)
+		}
+	}
+	
 	convenience init(_ handle: dgmpp_type) {
 		self.init(handle, owned: false)
 	}
@@ -27,7 +54,7 @@ public class DGMType: DGMObject {
 	
 	public var parent: DGMType? {
 		guard let parent = dgmpp_type_get_parent(handle) else {return nil}
-		return DGMType(parent)
+		return DGMType.type(parent)
 	}
 	
 	public subscript(attributeID: DGMAttributeID) -> DGMAttribute? {

@@ -608,7 +608,9 @@ namespace dgmpp {
 	RadiansPerSecond Module::angularVelocity(Meter targetSignature, Percent hitChance) {
 		auto signatureResolution = this->signatureResolution();
 		auto accuracyScore = this->accuracyScore();
-		
-		return make_rate(std::sqrt(std::log(hitChance) / std::log(0.5)) * accuracyScore * targetSignature / signatureResolution, 1s);
+		if (signatureResolution > 0 && accuracyScore > 0)
+			return make_rate(std::sqrt(std::log(hitChance) / std::log(0.5)) * accuracyScore * targetSignature / signatureResolution, 1s);
+		else
+			return RadiansPerSecond(0);
 	}
 }

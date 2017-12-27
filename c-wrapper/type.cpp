@@ -8,6 +8,33 @@
 #include "type.h"
 #include "internal.h"
 
+DGMPP_TYPE dgmpp_get_type (dgmpp_type type) {
+	auto base = reinterpret_cast<Type*>(type);
+	if (dynamic_cast<Gang*>(base))
+		return DGMPP_TYPE_GANG;
+	else if (dynamic_cast<Character*>(base))
+		return DGMPP_TYPE_CHARACTER;
+	else if (dynamic_cast<Skill*>(base))
+		return DGMPP_TYPE_SKILL;
+	else if (dynamic_cast<Implant*>(base))
+		return DGMPP_TYPE_IMPLANT;
+	else if (dynamic_cast<Booster*>(base))
+		return DGMPP_TYPE_BOOSTER;
+	else if (dynamic_cast<Structure*>(base))
+		return DGMPP_TYPE_STRUCTURE;
+	else if (dynamic_cast<Ship*>(base))
+		return DGMPP_TYPE_SHIP;
+	else if (dynamic_cast<Module*>(base))
+		return DGMPP_TYPE_MODULE;
+	else if (dynamic_cast<Drone*>(base))
+		return DGMPP_TYPE_DRONE;
+	else if (dynamic_cast<Charge*>(base))
+		return DGMPP_TYPE_CHARGE;
+	else
+		return DGMPP_TYPE_NONE;
+}
+
+
 dgmpp_type_id dgmpp_type_get_type_id (dgmpp_type type) {
 	return static_cast<dgmpp_type_id>(reinterpret_cast<Type*>(type)->metaInfo().typeID);
 }

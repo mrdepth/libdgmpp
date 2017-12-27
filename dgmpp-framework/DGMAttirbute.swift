@@ -18,7 +18,7 @@ public class DGMAttribute: DGMObject {
 	}
 	
 	public var owner: DGMType {
-		return DGMType(dgmpp_attribute_get_owner(handle))
+		return DGMType.type(dgmpp_attribute_get_owner(handle))
 	}
 
 	public var value: Double {

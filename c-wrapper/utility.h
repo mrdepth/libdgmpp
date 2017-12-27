@@ -72,6 +72,20 @@ DGMPP_EXTERN size_t			dgmpp_array_get_size	(dgmpp_array array);
 DGMPP_EXTERN const void*	dgmpp_array_get_values	(dgmpp_array array);
 
 typedef enum {
+	DGMPP_TYPE_NONE,
+	DGMPP_TYPE_GANG,
+	DGMPP_TYPE_CHARACTER,
+	DGMPP_TYPE_SKILL,
+	DGMPP_TYPE_BOOSTER,
+	DGMPP_TYPE_IMPLANT,
+	DGMPP_TYPE_SHIP,
+	DGMPP_TYPE_STRUCTURE,
+	DGMPP_TYPE_MODULE,
+	DGMPP_TYPE_DRONE,
+	DGMPP_TYPE_CHARGE
+} DGMPP_TYPE;
+
+typedef enum {
 	DGMPP_RACE_ID_NONE = 0,
 	DGMPP_RACE_ID_CALDARI = 1,
 	DGMPP_RACE_ID_MINMATAR = 2,
