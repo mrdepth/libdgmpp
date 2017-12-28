@@ -85,6 +85,10 @@ public class DGMCharacter: DGMType {
 		dgmpp_character_set_skill_levels(handle, Int32(level))
 	}
 	
+	public var factorReload: Bool {
+		return dgmpp_character_get_factor_reload(handle)
+	}
+
 	public func add(_ implant: DGMImplant, replace: Bool = false) throws {
 		guard dgmpp_character_add_implant_v2(handle, implant.handle, replace) else { throw DGMError.cannotFit(implant)}
 	}

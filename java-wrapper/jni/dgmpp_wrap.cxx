@@ -2074,7 +2074,7 @@ SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1fail(JNIEnv *jenv, j
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1factorReload_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1factorReload(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
   bool result;
@@ -2086,19 +2086,6 @@ SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1factorReload_1_1SWIG
   result = (bool)((dgmpp::Module const *)arg1)->factorReload();
   jresult = (jboolean)result; 
   return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_Module_1factorReload_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
-  dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
-  bool arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Module **)&jarg1; 
-  arg2 = jarg2 ? true : false; 
-  (arg1)->factorReload(arg2);
 }
 
 
@@ -3890,6 +3877,21 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Ship_1area_1_1SWIG_11(JNIEnv *j
   arg2 = (dgmpp::TypeID)jarg2; 
   result = (dgmpp::Area *)(arg1)->area(arg2);
   *(dgmpp::Area **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1factorReload(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Ship **)&jarg1; 
+  result = (bool)((dgmpp::Ship const *)arg1)->factorReload();
+  jresult = (jboolean)result; 
   return jresult;
 }
 
@@ -5707,6 +5709,21 @@ SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_Character_1setSkillLevels(JNIEnv
   arg1 = *(dgmpp::Character **)&jarg1; 
   arg2 = (int)jarg2; 
   (arg1)->setSkillLevels(arg2);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Character_1factorReload(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  dgmpp::Character *arg1 = (dgmpp::Character *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Character **)&jarg1; 
+  result = (bool)((dgmpp::Character const *)arg1)->factorReload();
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 

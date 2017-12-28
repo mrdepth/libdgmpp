@@ -72,6 +72,8 @@ namespace dgmpp {
 		Area* area() const noexcept;
 		Area* area(TypeID typeID);
 		
+		bool factorReload() const noexcept;
+
 		//Drones
 		size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
 		size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);

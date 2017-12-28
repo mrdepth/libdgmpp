@@ -30,6 +30,7 @@ namespace dgmpp {
 		Structure* structure (TypeID typeID) { return structure(Structure::Create(typeID)); }
 		
 		void setSkillLevels (int level);
+		bool factorReload() const noexcept;
 		
 		Implant* add(std::unique_ptr<Implant>&& implant, bool replace = false);
 		Booster* add(std::unique_ptr<Booster>&& booster, bool replace = false);

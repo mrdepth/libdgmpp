@@ -9,6 +9,7 @@
 #include "SDE.hpp"
 #include <numeric>
 #include "Errors.hpp"
+#include "Character.hpp"
 
 #include <iostream>
 
@@ -289,6 +290,14 @@ namespace dgmpp {
 			area_ = nullptr;
 		return area_.get();
 	}
+	
+	bool Ship::factorReload() const noexcept {
+		if (auto character = dynamic_cast<Character*>(parent()))
+			return character->factorReload();
+			else
+				return false;
+	}
+
 
 	Type* Ship::domain (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {

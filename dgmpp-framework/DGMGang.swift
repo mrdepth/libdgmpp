@@ -24,5 +24,14 @@ public class DGMGang: DGMType {
 	public var pilots: [DGMCharacter] {
 		return DGMArray<DGMCharacter>(dgmpp_gang_copy_pilots(handle)).array
 	}
+	
+	public var factorReload: Bool {
+		get {
+			return dgmpp_gang_get_factor_reload(handle)
+		}
+		set {
+			dgmpp_gang_set_factor_reload(handle, newValue)
+		}
+	}
 
 }

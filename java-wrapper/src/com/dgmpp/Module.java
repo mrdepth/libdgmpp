@@ -123,11 +123,7 @@ public class Module extends Type {
   }
 
   public boolean factorReload() {
-    return dgmppJNI.Module_factorReload__SWIG_0(swigCPtr, this);
-  }
-
-  public void factorReload(boolean factorReload) {
-    dgmppJNI.Module_factorReload__SWIG_1(swigCPtr, this, factorReload);
+    return dgmppJNI.Module_factorReload(swigCPtr, this);
   }
 
   public long charges() {

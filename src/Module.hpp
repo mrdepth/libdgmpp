@@ -78,8 +78,8 @@ namespace dgmpp {
 		bool requireTarget()	const noexcept;
 		bool fail()				const noexcept	{ return flags_.fail; }
 
-		bool factorReload()		const noexcept	{ return flags_.factorReload; }
-		void factorReload (bool factorReload) noexcept { flags_.factorReload = factorReload; }
+		bool factorReload()		const noexcept;//	{ return flags_.factorReload; }
+//		void factorReload (bool factorReload) noexcept { flags_.factorReload = factorReload; }
 
 		//Calculations
 		
@@ -127,7 +127,7 @@ namespace dgmpp {
 			bool canBeActive : 1;
 			bool canBeOverloaded : 1;
 			bool forceReload : 1;
-			bool factorReload : 1;
+//			bool factorReload : 1;
 			bool requireTarget : 1;
 			bool fail : 1;
 		} flags_;

@@ -69,6 +69,8 @@ namespace dgmpp {
 		Area* area(std::unique_ptr<Area>&& area);
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 		
+		bool factorReload() const noexcept;
+		
 		//Drones
 		std::size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
 		std::size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);

@@ -61,7 +61,6 @@ public class DGMShip: DGMType {
 		guard let type = dgmpp_ship_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
 		self.init(type, owned: true)
 	}
-
 	
 	public var name: String {
 		get {
@@ -83,6 +82,10 @@ public class DGMShip: DGMType {
 	
 	public var rigSize: RigSize {
 		return RigSize(dgmpp_ship_get_rig_size(handle)) ?? .none
+	}
+	
+	public var factorReload: Bool {
+		return dgmpp_ship_get_factor_reload(handle)
 	}
 	
 	public var damagePattern: DGMDamageVector {

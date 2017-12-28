@@ -114,6 +114,10 @@ public class Ship extends Type {
     return (cPtr == 0) ? null : new Area(cPtr, false);
   }
 
+  public boolean factorReload() {
+    return dgmppJNI.Ship_factorReload(swigCPtr, this);
+  }
+
   public long totalDroneSquadron(int squadron) {
     return dgmppJNI.Ship_totalDroneSquadron__SWIG_0(swigCPtr, this, squadron);
   }

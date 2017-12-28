@@ -8,6 +8,7 @@
 #include "Character.hpp"
 #include "SDE.hpp"
 #include "Errors.hpp"
+#include "Gang.hpp"
 
 namespace dgmpp {
 	
@@ -75,6 +76,13 @@ namespace dgmpp {
 		}
 		else
 			throw InvalidSkillLevel();
+	}
+	
+	bool Character::factorReload() const noexcept {
+		if (auto gang = dynamic_cast<Gang*>(parent()))
+			return gang->factorReload();
+		else
+			return false;
 	}
 	
 	Implant* Character::add(std::unique_ptr<Implant>&& implant, bool replace) {

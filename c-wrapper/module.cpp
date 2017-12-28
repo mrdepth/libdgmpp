@@ -89,6 +89,10 @@ BOOL dgmpp_module_require_target (dgmpp_type module) {
 	return reinterpret_cast<Module*>(module)->requireTarget();
 }
 
+BOOL dgmpp_module_get_factor_reload (dgmpp_type module) {
+	return reinterpret_cast<Module*>(module)->factorReload();
+}
+
 BOOL dgmpp_module_can_have_state (dgmpp_type module, DGMPP_MODULE_STATE state) {
 	return reinterpret_cast<Module*>(module)->canHaveState(static_cast<Module::State>(state));
 }

@@ -35,6 +35,10 @@ dgmpp_array dgmpp_character_copy_skills (dgmpp_type character) {
 	return dgmpp_make_array<Type*>(reinterpret_cast<Character*>(character)->skills());
 }
 
+BOOL dgmpp_character_get_factor_reload (dgmpp_type character) {
+	return reinterpret_cast<Character*>(character)->factorReload();
+}
+
 BOOL dgmpp_character_add_implant (dgmpp_type character, dgmpp_type implant) {
 	return dgmpp_character_add_implant_v2(character, implant, false);
 }

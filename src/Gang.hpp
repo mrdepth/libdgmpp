@@ -24,11 +24,16 @@ namespace dgmpp {
 		std::vector<Character*> pilots() const;
 		
 		virtual void setEnabled (bool enabled) override;
+		
+		bool factorReload()		const noexcept	{ return factorReload_; }
+		void factorReload (bool factorReload) noexcept { factorReload_ = factorReload; }
+
 	protected:
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
 		
 	private:
 		friend class WarfareBuffEffect;
 		std::list<std::unique_ptr<Character>> pilots_;
+		bool factorReload_;
 	};
 }

@@ -123,8 +123,7 @@ public class dgmppJNI {
   public final static native boolean Module_canBeOverloaded(long jarg1, Module jarg1_);
   public final static native boolean Module_requireTarget(long jarg1, Module jarg1_);
   public final static native boolean Module_fail(long jarg1, Module jarg1_);
-  public final static native boolean Module_factorReload__SWIG_0(long jarg1, Module jarg1_);
-  public final static native void Module_factorReload__SWIG_1(long jarg1, Module jarg1_, boolean jarg2);
+  public final static native boolean Module_factorReload(long jarg1, Module jarg1_);
   public final static native long Module_charges(long jarg1, Module jarg1_);
   public final static native long Module_shots(long jarg1, Module jarg1_);
   public final static native long Module_capUse(long jarg1, Module jarg1_);
@@ -243,6 +242,7 @@ public class dgmppJNI {
   public final static native long Ship_drones(long jarg1, Ship jarg1_);
   public final static native long Ship_area__SWIG_0(long jarg1, Ship jarg1_);
   public final static native long Ship_area__SWIG_1(long jarg1, Ship jarg1_, int jarg2);
+  public final static native boolean Ship_factorReload(long jarg1, Ship jarg1_);
   public final static native long Ship_totalDroneSquadron__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
   public final static native long Ship_totalDroneSquadron__SWIG_1(long jarg1, Ship jarg1_);
   public final static native long Ship_usedDroneSquadron__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
@@ -362,6 +362,7 @@ public class dgmppJNI {
   public final static native long Character_structure__SWIG_0(long jarg1, Character jarg1_);
   public final static native long Character_structure__SWIG_1(long jarg1, Character jarg1_, int jarg2);
   public final static native void Character_setSkillLevels(long jarg1, Character jarg1_, int jarg2);
+  public final static native boolean Character_factorReload(long jarg1, Character jarg1_);
   public final static native long Character_addImplant__SWIG_0(long jarg1, Character jarg1_, int jarg2, boolean jarg3);
   public final static native long Character_addImplant__SWIG_1(long jarg1, Character jarg1_, int jarg2);
   public final static native long Character_addBooster__SWIG_0(long jarg1, Character jarg1_, int jarg2, boolean jarg3);

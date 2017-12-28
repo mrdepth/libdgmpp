@@ -17,7 +17,8 @@ DGMPP_EXTERN void			dgmpp_character_set_name (dgmpp_type character, const char* 
 
 DGMPP_EXTERN BOOL 			dgmpp_character_set_skill_levels	(dgmpp_type character, int skill_levels);
 DGMPP_EXTERN dgmpp_array	dgmpp_character_copy_skills			(dgmpp_type character);
-
+DGMPP_EXTERN BOOL			dgmpp_character_get_factor_reload	(dgmpp_type character);
+	
 DGMPP_EXTERN BOOL			dgmpp_character_add_implant		(dgmpp_type character, dgmpp_type implant);
 DGMPP_EXTERN BOOL			dgmpp_character_add_implant_v2	(dgmpp_type character, dgmpp_type implant, BOOL replace);
 DGMPP_EXTERN BOOL			dgmpp_character_add_booster		(dgmpp_type character, dgmpp_type booster);

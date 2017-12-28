@@ -59,6 +59,10 @@ public class Character extends Type {
     dgmppJNI.Character_setSkillLevels(swigCPtr, this, level);
   }
 
+  public boolean factorReload() {
+    return dgmppJNI.Character_factorReload(swigCPtr, this);
+  }
+
   public Implant addImplant(int typeID, boolean replace) {
     long cPtr = dgmppJNI.Character_addImplant__SWIG_0(swigCPtr, this, typeID, replace);
     return (cPtr == 0) ? null : new Implant(cPtr, false);

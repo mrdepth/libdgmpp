@@ -36,7 +36,7 @@ namespace dgmpp {
 		flags_.fail = false;
 		
 		flags_.forceReload = metaInfo().groupID == GroupID::capacitorBooster;
-		flags_.factorReload = false;
+//		flags_.factorReload = false;
 		
 		if ((*this)[EffectID::loPower])
 			slot_ = Module::Slot::low;
@@ -268,6 +268,14 @@ namespace dgmpp {
 			return false;
 	}
 	
+	bool Module::factorReload() const noexcept {
+		if (auto ship = dynamic_cast<Ship*>(parent()))
+			return ship->factorReload();
+			else
+				return false;
+	}
+
+	
 	void Module::adjustState() {
 		batchUpdates([&] {
 			if (isEnabled() && !flags_.fail) {
@@ -337,7 +345,7 @@ namespace dgmpp {
 			reactivation = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
 		
 		auto speed = rawCycleTime();
-		auto factorReload = flags_.factorReload || flags_.forceReload;
+		auto factorReload = this->factorReload() || flags_.forceReload;
 		
 		if (factorReload && charge() != nullptr) {
 			auto reload = reloadTime();

@@ -65,7 +65,6 @@ namespace dgmpp {
 		bool fail()				const noexcept;
 		
 		bool factorReload()		const noexcept;
-		void factorReload (bool factorReload) noexcept;
 		
 		//Calculations
 		
