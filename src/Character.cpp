@@ -22,6 +22,39 @@ namespace dgmpp {
 		}
 	}
 	
+	Character::Character (const Character& other): Type(other) {
+		for (const auto& i: other.skills_) {
+			auto skill = Skill::Create(*i.second);
+			auto ptr = skill.get();
+			skills_.emplace(ptr->metaInfo().typeID, std::move(skill));
+			ptr->parent(this);
+		}
+		
+		for (const auto& i: other.implants_) {
+			auto implant = Implant::Create(*i);
+			auto ptr = implant.get();
+			implants_.emplace(std::move(implant));
+			ptr->parent(this);
+		}
+
+		for (const auto& i: other.boosters_) {
+			auto booster = Booster::Create(*i);
+			auto ptr = booster.get();
+			boosters_.emplace(std::move(booster));
+			ptr->parent(this);
+		}
+
+		if (auto structure = other.structure()) {
+			ship_ = Structure::Create(*structure);
+			ship_->parent(this);
+		}
+		else if (auto ship = other.ship()) {
+			ship_ = Ship::Create(*ship);
+			ship_->parent(this);
+		}
+		name_ = other.name_;
+	}
+	
 	Ship* Character::ship(std::unique_ptr<Ship>&& ship) {
 		batchUpdates([&]() {
 			auto enabled = isEnabled();

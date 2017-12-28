@@ -62,6 +62,10 @@ public class DGMShip: DGMType {
 		self.init(type, owned: true)
 	}
 	
+	public convenience init(_ other: DGMShip) {
+		self.init(dgmpp_ship_copy(other.handle), owned: true)
+	}
+
 	public var name: String {
 		get {
 			return String(cString: dgmpp_ship_get_name(handle));
@@ -131,16 +135,6 @@ public class DGMShip: DGMType {
 	
 	public func modules(slot: DGMModule.Slot) -> [DGMModule] {
 		return DGMArray<DGMModule>(dgmpp_ship_copy_modules_slot(handle, DGMPP_MODULE_SLOT(slot))).array
-	}
-	
-	public var area: DGMArea? {
-		get {
-			guard let area = dgmpp_ship_get_area(handle) else {return nil}
-			return DGMArea(area)
-		}
-		set {
-			dgmpp_ship_set_area(handle, newValue?.handle)
-		}
 	}
 	
 	public func totalDroneSquadron(_ squadron: DGMDrone.Squadron = .none) -> Int {

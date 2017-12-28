@@ -11,6 +11,7 @@
 #include "type.h"
 
 DGMPP_EXTERN dgmpp_type dgmpp_drone_create (dgmpp_type_id type_id);
+DGMPP_EXTERN dgmpp_type dgmpp_drone_copy (dgmpp_type drone);
 
 DGMPP_EXTERN BOOL					dgmpp_drone_is_active			(dgmpp_type drone);
 DGMPP_EXTERN void					dgmpp_drone_set_active			(dgmpp_type drone, BOOL active);

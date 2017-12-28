@@ -15,6 +15,28 @@
 
 namespace dgmpp {
 	
+	Ship::Ship (const Ship& other): Type(other), capacitor_(*this), heatSimulator_(*this) {
+		damagePattern_ = other.damagePattern_;
+		name_ = other.name_;
+		for (const auto& i: other.modules_) {
+			auto module = Module::Create(*std::get<std::unique_ptr<Module>>(i));
+			auto ptr = module.get();
+			modules_.emplace(ptr->slot(), ptr->socket(), std::move(module));
+			ptr->parent(this);
+		}
+		
+		for (const auto& i: other.drones_) {
+			auto drone = Drone::Create(*std::get<std::unique_ptr<Drone>>(i));
+			auto ptr = drone.get();
+			drones_.emplace(ptr->metaInfo().typeID, ptr->squadronTag(), std::move(drone));
+			ptr->parent(this);
+		}
+		
+		if (auto area = other.area()) {
+			area_ = Area::Create(*area);
+		}
+	}
+	
 	void Ship::setEnabled (bool enabled) {
 		if (isEnabled() == enabled)
 			return Type::setEnabled(enabled);

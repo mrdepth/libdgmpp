@@ -261,4 +261,26 @@ using namespace dgmpp;
 - (void)testShips {
 }
 
+- (void) testCopy {
+	auto gang = Gang::Create();
+	auto pilotA = gang->addPilot();
+	auto pilotB = gang->addPilot();
+	pilotA->setSkillLevels(5);
+	pilotB->setSkillLevels(5);
+	
+	auto shipA = pilotA->ship(TypeID::dominix);
+	auto shipB = pilotB->ship(TypeID::dominix);
+	
+	shipA->addModule(TypeID::heavyEnergyNeutralizerI)->target(shipB);
+	GigaJoulePerSecond capUsed0[] = {shipA->capacitor().use(), shipB->capacitor().use(), shipA->capacitor().recharge(), shipB->capacitor().recharge()};
+	
+	auto gangB = Gang::Create(*gang);
+	auto shipA2 = gangB->pilots()[0]->ship();
+	auto shipB2 = gangB->pilots()[1]->ship();
+	GigaJoulePerSecond capUsed1[] = {shipA2->capacitor().use(), shipB2->capacitor().use(), shipA2->capacitor().recharge(), shipB2->capacitor().recharge()};
+	
+	for (auto i = 0; i < 3; i++)
+		XCTAssertEqual(capUsed0[i], capUsed1[i]);
+}
+
 @end

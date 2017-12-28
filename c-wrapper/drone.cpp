@@ -17,6 +17,15 @@ dgmpp_type dgmpp_drone_create (dgmpp_type_id type_id) {
 	}
 }
 
+dgmpp_type dgmpp_drone_copy (dgmpp_type drone) {
+	try {
+		return add_unique_ptr_wrapper(Drone::Create(*reinterpret_cast<Drone*>(drone)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
 BOOL dgmpp_drone_is_active (dgmpp_type drone) {
 	return reinterpret_cast<Drone*>(drone)->active();
 }

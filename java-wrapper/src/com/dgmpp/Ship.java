@@ -104,16 +104,6 @@ public class Ship extends Type {
     return new Drones(dgmppJNI.Ship_drones(swigCPtr, this), true);
   }
 
-  public Area area() {
-    long cPtr = dgmppJNI.Ship_area__SWIG_0(swigCPtr, this);
-    return (cPtr == 0) ? null : new Area(cPtr, false);
-  }
-
-  public Area area(int typeID) {
-    long cPtr = dgmppJNI.Ship_area__SWIG_1(swigCPtr, this, typeID);
-    return (cPtr == 0) ? null : new Area(cPtr, false);
-  }
-
   public boolean factorReload() {
     return dgmppJNI.Ship_factorReload(swigCPtr, this);
   }

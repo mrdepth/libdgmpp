@@ -20,6 +20,7 @@ namespace dgmpp {
 		};
 
 		static std::unique_ptr<Charge> Create (TypeID typeID) { return std::unique_ptr<Charge>(new Charge(typeID)); }
+		static std::unique_ptr<Charge> Create (const Charge& other) { return std::unique_ptr<Charge>(new Charge(other)); }
 		
 		Size size();
 		
@@ -43,6 +44,7 @@ namespace dgmpp {
 			bool dealsDamage : 1;
 		} flags_;
 		
-		Charge(TypeID typeID);
+		Charge (TypeID typeID);
+		Charge (const Charge& other);
 	};
 }

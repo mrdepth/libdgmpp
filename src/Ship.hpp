@@ -39,6 +39,7 @@ namespace dgmpp {
 		
 		
 		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
+		static std::unique_ptr<Ship> Create (const Ship& other) { return std::unique_ptr<Ship>(new Ship(other)); }
 		
 		const std::string& name() const noexcept { return name_; }
 		template<typename T>
@@ -64,10 +65,6 @@ namespace dgmpp {
 		std::vector<Module*> modules (Module::Slot slot) const;
 		std::vector<Module*> modules () const;// {return modules_;}
 		std::vector<Drone*> drones () const;// {return drones_;}
-		
-		Area* area() const noexcept { return area_.get(); }
-		Area* area(std::unique_ptr<Area>&& area);
-		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 		
 		bool factorReload() const noexcept;
 		
@@ -159,6 +156,7 @@ namespace dgmpp {
 		std::list<Drone*> projectedDrones_;
 
 		Ship (TypeID typeID): Type(typeID), capacitor_(*this), heatSimulator_(*this) {};
+		Ship (const Ship& other);
 		
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
 		virtual void reset() override;
@@ -177,6 +175,7 @@ namespace dgmpp {
 		friend class Capacitor;
 		friend class Module;
 		friend class Drone;
+		friend class Gang;
 		
 		std::unique_ptr<Area> area_;
 		
@@ -184,6 +183,10 @@ namespace dgmpp {
 		HeatSimulator heatSimulator_;
 		DamageVector damagePattern_ = {0.25};
 		std::string name_;
+
+		Area* area() const noexcept { return area_.get(); }
+		Area* area(std::unique_ptr<Area>&& area);
+		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 
 	};
 }

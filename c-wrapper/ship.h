@@ -10,15 +10,14 @@
 
 #include "type.h"
 
-DGMPP_EXTERN dgmpp_type dgmpp_ship_create (dgmpp_type_id type_id);
+DGMPP_EXTERN dgmpp_type dgmpp_ship_create 	(dgmpp_type_id type_id);
+DGMPP_EXTERN dgmpp_type dgmpp_ship_copy		(dgmpp_type ship);
 
 DGMPP_EXTERN const char*	dgmpp_ship_get_name (dgmpp_type ship);
 DGMPP_EXTERN void			dgmpp_ship_set_name (dgmpp_type ship, const char* name);
 
 DGMPP_EXTERN dgmpp_array			dgmpp_ship_copy_supported_drone_categories	(dgmpp_type ship);
 DGMPP_EXTERN DGMPP_RACE_ID			dgmpp_ship_get_race_id						(dgmpp_type ship);
-DGMPP_EXTERN dgmpp_type				dgmpp_ship_get_area							(dgmpp_type ship);
-DGMPP_EXTERN void					dgmpp_ship_set_area							(dgmpp_type ship, dgmpp_type area);
 DGMPP_EXTERN BOOL					dgmpp_ship_get_factor_reload				(dgmpp_type ship);
 DGMPP_EXTERN DGMPP_RIG_SIZE			dgmpp_ship_get_rig_size						(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_damage_vector	dgmpp_ship_get_damage_pattern				(dgmpp_type ship);

@@ -17,6 +17,15 @@ dgmpp_type dgmpp_ship_create (dgmpp_type_id type_id) {
 	}
 }
 
+dgmpp_type dgmpp_ship_copy (dgmpp_type ship) {
+	try {
+		return add_unique_ptr_wrapper(Ship::Create(*reinterpret_cast<Ship*>(ship)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
 const char*	dgmpp_ship_get_name (dgmpp_type ship) {
 	return reinterpret_cast<Ship*>(ship)->name().c_str();
 }
@@ -32,14 +41,6 @@ dgmpp_array dgmpp_ship_copy_supported_drone_categories (dgmpp_type ship) {
 
 DGMPP_RACE_ID dgmpp_ship_get_race_id (dgmpp_type ship) {
 	return static_cast<DGMPP_RACE_ID>(reinterpret_cast<Ship*>(ship)->raceID());
-}
-
-dgmpp_type dgmpp_ship_get_area (dgmpp_type ship) {
-	return reinterpret_cast<Ship*>(ship)->area();
-}
-
-void dgmpp_ship_set_area (dgmpp_type ship, dgmpp_type area) {
-	reinterpret_cast<Ship*>(ship)->area(get_unique_ptr<Area>(area));
 }
 
 BOOL dgmpp_ship_get_factor_reload (dgmpp_type ship) {

@@ -16,6 +16,7 @@ namespace dgmpp {
 	class Character: public Type {
 	public:
 		static std::unique_ptr<Character> Create() { return std::unique_ptr<Character>(new Character); }
+		static std::unique_ptr<Character> Create (const Character& other) { return std::unique_ptr<Character>(new Character(other)); }
 		
 		const std::string& name() const noexcept { return name_; }
 		template<typename T>
@@ -83,6 +84,7 @@ namespace dgmpp {
 		std::string name_;
 		
 		Character();
+		Character (const Character& other);
 	};
 	
 

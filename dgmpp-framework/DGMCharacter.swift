@@ -14,6 +14,10 @@ public class DGMImplant: DGMType {
 		self.init(type, owned: true)
 	}
 
+	public convenience init(_ other: DGMImplant) {
+		self.init(dgmpp_implant_copy(other.handle), owned: true)
+	}
+
 	public var slot: Int {
 		return Int(dgmpp_implant_get_slot(handle))
 	}
@@ -24,6 +28,10 @@ public class DGMBooster: DGMType {
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_booster_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
 		self.init(type, owned: true)
+	}
+
+	public convenience init(_ other: DGMBooster) {
+		self.init(dgmpp_booster_copy(other.handle), owned: true)
 	}
 
 	public var slot: Int {
@@ -48,6 +56,10 @@ public class DGMCharacter: DGMType {
 	
 	public convenience init() throws {
 		self.init(dgmpp_character_create()!, owned: true)
+	}
+
+	public convenience init(_ other: DGMCharacter) {
+		self.init(dgmpp_character_copy(other.handle), owned: true)
 	}
 
 	public var name: String {

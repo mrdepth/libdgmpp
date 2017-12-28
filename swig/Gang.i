@@ -9,5 +9,8 @@ namespace dgmpp {
 		void remove (Character* pilot);
 		std::vector<Character*> pilots() const;
 
+		Area* area() const noexcept;
+		Area* area(TypeID typeID);
+
 	};
 }

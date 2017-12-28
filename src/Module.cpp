@@ -102,6 +102,20 @@ namespace dgmpp {
 		}
 	}
 	
+	Module::Module (const Module& other): Type(other) {
+		flags_ = other.flags_;
+		slot_ = other.slot_;
+		hardpoint_ = other.hardpoint_;
+		chargeGroups_ = other.chargeGroups_;
+		defaultReloadTime_ = other.defaultReloadTime_;
+		preferredState_ = other.preferredState_;
+		state_ = State::unknown;
+		socket_ = other.socket_;
+		if (auto charge = other.charge()) {
+			charge_ = Charge::Create(*charge);
+		}
+	}
+	
 	Module::~Module() {
 		if (target_)
 			target_->removeProjected(this);

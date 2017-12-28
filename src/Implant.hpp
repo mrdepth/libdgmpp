@@ -13,6 +13,7 @@ namespace dgmpp {
 	class Implant: public Type {
 	public:
 		static std::unique_ptr<Implant> Create (TypeID typeID) { return std::unique_ptr<Implant>(new Implant(typeID)); }
+		static std::unique_ptr<Implant> Create (const Implant& other) { return std::unique_ptr<Implant>(new Implant(other)); }
 		
 		using Slot = int;
 		
@@ -24,6 +25,10 @@ namespace dgmpp {
 		
 		Implant (TypeID typeID) : Type(typeID) {
 			slot_ = static_cast<Slot>((*this)[AttributeID::implantness]->value());
+		}
+		
+		Implant (const Implant& other) : Type(other) {
+			slot_ = other.slot_;
 		}
 	};
 }

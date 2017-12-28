@@ -14,6 +14,10 @@ public class DGMStructure: DGMShip {
 		self.init(type, owned: true)
 	}
 
+	public convenience init(_ other: DGMStructure) {
+		self.init(dgmpp_structure_copy(other.handle), owned: true)
+	}
+
 	public var fuelBlockTypeID: DGMTypeID {
 		return DGMTypeID(dgmpp_structure_get_fuel_block_type_id(handle))
 	}

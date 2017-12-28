@@ -13,6 +13,10 @@ public class DGMGang: DGMType {
 		self.init(dgmpp_gang_create()!, owned: true)
 	}
 
+	public convenience init(_ other: DGMGang) {
+		self.init(dgmpp_gang_copy(other.handle), owned: true)
+	}
+
 	public func add(_ pilot: DGMCharacter) {
 		dgmpp_gang_add_pilot(handle, pilot.handle)
 	}
@@ -33,5 +37,16 @@ public class DGMGang: DGMType {
 			dgmpp_gang_set_factor_reload(handle, newValue)
 		}
 	}
+	
+	public var area: DGMArea? {
+		get {
+			guard let area = dgmpp_gang_get_area(handle) else {return nil}
+			return DGMArea(area)
+		}
+		set {
+			dgmpp_gang_set_area(handle, newValue?.handle)
+		}
+	}
+
 
 }

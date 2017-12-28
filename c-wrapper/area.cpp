@@ -16,3 +16,12 @@ dgmpp_type dgmpp_area_create (dgmpp_type_id type_id) {
 		return nullptr;
 	}
 }
+
+dgmpp_type dgmpp_area_copy (dgmpp_type area) {
+	try {
+		return add_unique_ptr_wrapper(Area::Create(*reinterpret_cast<Area*>(area)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}

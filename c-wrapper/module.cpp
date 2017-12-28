@@ -17,6 +17,15 @@ dgmpp_type dgmpp_module_create (dgmpp_type_id type_id) {
 	}
 }
 
+dgmpp_type dgmpp_module_copy (dgmpp_type module) {
+	try {
+		return add_unique_ptr_wrapper(Module::Create(*reinterpret_cast<Module*>(module)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
 DGMPP_MODULE_SLOT dgmpp_module_get_slot (dgmpp_type module) {
 	return static_cast<DGMPP_MODULE_SLOT>(reinterpret_cast<Module*>(module)->slot());
 }

@@ -11,6 +11,7 @@
 #include "type.h"
 
 DGMPP_EXTERN dgmpp_type dgmpp_module_create (dgmpp_type_id type_id);
+DGMPP_EXTERN dgmpp_type dgmpp_module_copy (dgmpp_type module);
 
 DGMPP_EXTERN DGMPP_MODULE_SLOT		dgmpp_module_get_slot				(dgmpp_type module);
 DGMPP_EXTERN DGMPP_MODULE_HARDPOINT	dgmpp_module_get_hardpoint			(dgmpp_type module);

@@ -40,6 +40,10 @@ public class DGMModule: DGMType {
 		self.init(type, owned: true)
 	}
 
+	public convenience init(_ other: DGMModule) {
+		self.init(dgmpp_module_copy(other.handle), owned: true)
+	}
+
 	public func canHaveState(_ state: State) -> Bool {
 		return dgmpp_module_can_have_state(handle, DGMPP_MODULE_STATE(Int32(state.rawValue)))
 	}

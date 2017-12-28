@@ -240,8 +240,6 @@ public class dgmppJNI {
   public final static native long Ship_modules__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
   public final static native long Ship_modules__SWIG_1(long jarg1, Ship jarg1_);
   public final static native long Ship_drones(long jarg1, Ship jarg1_);
-  public final static native long Ship_area__SWIG_0(long jarg1, Ship jarg1_);
-  public final static native long Ship_area__SWIG_1(long jarg1, Ship jarg1_, int jarg2);
   public final static native boolean Ship_factorReload(long jarg1, Ship jarg1_);
   public final static native long Ship_totalDroneSquadron__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
   public final static native long Ship_totalDroneSquadron__SWIG_1(long jarg1, Ship jarg1_);
@@ -380,6 +378,8 @@ public class dgmppJNI {
   public final static native long Gang_addPilot(long jarg1, Gang jarg1_);
   public final static native void Gang_remove(long jarg1, Gang jarg1_, long jarg2, Character jarg2_);
   public final static native long Gang_pilots(long jarg1, Gang jarg1_);
+  public final static native long Gang_area__SWIG_0(long jarg1, Gang jarg1_);
+  public final static native long Gang_area__SWIG_1(long jarg1, Gang jarg1_, int jarg2);
   public final static native void delete_Gang(long jarg1);
   public final static native long Charge_SWIGUpcast(long jarg1);
   public final static native long Module_SWIGUpcast(long jarg1);

@@ -13,6 +13,7 @@ namespace dgmpp {
 	class Booster: public Type {
 	public:
 		static std::unique_ptr<Booster> Create (TypeID typeID) { return std::unique_ptr<Booster>(new Booster(typeID)); }
+		static std::unique_ptr<Booster> Create (const Booster& other) { return std::unique_ptr<Booster>(new Booster(other)); }
 		
 		using Slot = int;
 		
@@ -25,6 +26,11 @@ namespace dgmpp {
 		Booster (TypeID typeID) : Type(typeID) {
 			slot_ = static_cast<Slot>((*this)[AttributeID::boosterness]->value());
 		}
+		
+		Booster (const Booster& other) : Type(other) {
+			slot_ = other.slot_;
+		}
+
 	};
 }
 

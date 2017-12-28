@@ -36,6 +36,10 @@ namespace dgmpp {
 		});
 	}
 	
+	Charge::Charge (const Charge& other): Type(other) {
+		flags_ = other.flags_;
+	}
+
 	Type* Charge::domain (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::other:
@@ -51,4 +55,5 @@ namespace dgmpp {
 		else
 			return Size::none;
 	}
+	
 }

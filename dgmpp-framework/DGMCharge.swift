@@ -21,6 +21,10 @@ public class DGMCharge: DGMType {
 		self.init(type, owned: true)
 	}
 
+	public convenience init(_ other: DGMCharge) {
+		self.init(dgmpp_charge_copy(other.handle), owned: true)
+	}
+
 	public var size: Size {
 		return Size(dgmpp_charge_get_charge_size(handle)) ?? .none
 	}

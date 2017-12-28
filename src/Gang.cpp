@@ -8,6 +8,60 @@
 #include "Gang.hpp"
 
 namespace dgmpp {
+	
+	Gang::Gang(const Gang& other): Type(other)  {
+
+		factorReload_ = other.factorReload_;
+		std::map<Ship*, Ship*> shipsMap;
+		std::map<Module*, Module*> modulesMap;
+		std::map<Drone*, Drone*> dronesMap;
+		
+		for (const auto& i: other.pilots_) {
+			auto pilot = Character::Create(*i);
+			auto ptr = pilot.get();
+			pilots_.emplace_back(std::move(pilot));
+			ptr->parent(this);
+			auto otherShip = i->ship();
+			auto myShip = ptr->ship();
+			if (myShip && otherShip) {
+				shipsMap.emplace(std::make_pair(otherShip,myShip));
+				
+				auto myModules = myShip->modules();
+				auto j = myModules.begin();
+				for (auto m: otherShip->modules()) {
+					modulesMap.emplace(std::make_pair(m,*(j++)));
+				}
+				
+				auto myDrones = myShip->drones();
+				auto k = myDrones.begin();
+				for (auto d: otherShip->drones()) {
+					dronesMap.emplace(std::make_pair(d,*(k++)));
+				}
+
+			}
+		}
+		for (const auto& i: other.pilots_) {
+			if (auto ship = i->ship()) {
+				for (const auto& j: ship->modules()) {
+					if (auto target = j->target()) {
+						modulesMap[j]->target(shipsMap[target]);
+					}
+				}
+				for (const auto& j: ship->drones()) {
+					if (auto target = j->target()) {
+						dronesMap[j]->target(shipsMap[target]);
+					}
+				}
+			}
+		}
+		
+		if (auto area = other.area()) {
+			area_ = Area::Create(*area);
+		}
+
+		setEnabled(other.isEnabled());
+	}
+	
 	Character* Gang::add(std::unique_ptr<Character>&& pilot) {
 		assert(pilot != nullptr);
 		auto ptr = pilot.get();
@@ -51,6 +105,25 @@ namespace dgmpp {
 		});
 	}
 
+	Area* Gang::area(std::unique_ptr<Area>&& area) {
+		if (area_)
+			area_->parent(nullptr);
+		if (area) {
+			area_ = std::move(area);
+			area_->parent(this);
+		}
+		else
+			area_ = nullptr;
+		for (const auto& pilot: pilots_) {
+			if (auto ship = pilot->ship()) {
+				if (area_)
+					ship->area(Area::Create(*area));
+				else
+					ship->area(nullptr);
+			}
+		}
+		return area_.get();
+	}
 }
 
 

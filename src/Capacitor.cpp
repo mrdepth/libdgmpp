@@ -66,11 +66,6 @@ namespace dgmpp {
 			return i->active() && (*i)[EffectID::entityEnergyNeutralizerFalloff] != nullptr;
 		});
 
-		for (const auto& i: owner_.modules_) {
-			if (std::get<std::unique_ptr<Module>>(i)->state() < Module::State::active)
-				continue;
-		}
-		
 		decltype(states_)::container_type states;
 		states.reserve(modules.size() + drones.size());
 		

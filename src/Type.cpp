@@ -44,6 +44,15 @@ namespace dgmpp {
 		}
 	}
 	
+	Type::Type (const Type& other): Type(other.metaInfo_) {
+		for (const auto& i: other.attributes_) {
+			if (i.second && i.second->forcedValue_) {
+				*(*this)[i.second->metaInfo_.attributeID] = *i.second->forcedValue_;
+			}
+		}
+		identifier_ = other.identifier_;
+	}
+	
 	void Type::parent (Type* parent) {
 		if (isEnabled())
 			setEnabled(false);

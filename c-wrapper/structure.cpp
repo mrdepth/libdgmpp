@@ -17,6 +17,15 @@ dgmpp_type dgmpp_structure_create (dgmpp_type_id type_id) {
 	}
 }
 
+dgmpp_type dgmpp_structure_copy (dgmpp_type structure) {
+	try {
+		return add_unique_ptr_wrapper(Structure::Create(*reinterpret_cast<Structure*>(structure)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
 dgmpp_type_id dgmpp_structure_get_fuel_block_type_id (dgmpp_type structure) {
 	return static_cast<dgmpp_type_id>(reinterpret_cast<Structure*>(structure)->fuelBlockTypeID());
 }

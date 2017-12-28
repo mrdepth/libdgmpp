@@ -22,6 +22,10 @@ public class DGMDrone: DGMType {
 		self.init(type, owned: true)
 	}
 
+	public convenience init(_ other: DGMDrone) {
+		self.init(dgmpp_drone_copy(other.handle), owned: true)
+	}
+
 	public var isActive: Bool {
 		get {
 			return dgmpp_drone_is_active(handle)

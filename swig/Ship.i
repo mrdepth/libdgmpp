@@ -69,9 +69,6 @@ namespace dgmpp {
 		std::vector<Module*> modules () const;
 		std::vector<Drone*> drones () const;
 		
-		Area* area() const noexcept;
-		Area* area(TypeID typeID);
-		
 		bool factorReload() const noexcept;
 
 		//Drones

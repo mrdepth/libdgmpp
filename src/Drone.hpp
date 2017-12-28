@@ -26,6 +26,7 @@ namespace dgmpp {
 
 		virtual ~Drone();
 		static std::unique_ptr<Drone> Create (TypeID typeID) { return std::unique_ptr<Drone>(new Drone(typeID)); }
+		static std::unique_ptr<Drone> Create (const Drone& other) { return std::unique_ptr<Drone>(new Drone(other)); }
 		
 		void active (bool active);
 		bool active() const noexcept { return flags_.active; }
@@ -75,6 +76,7 @@ namespace dgmpp {
 		Ship* target_ = nullptr;
 		
 		Drone (TypeID typeID);
+		Drone (const Drone& other);
 		void squadronTag (SquadronTag squadronTag) noexcept { squadronTag_ = squadronTag; }
 		
 		DamageVector droneVolley();

@@ -20,6 +20,7 @@ namespace dgmpp {
 		
 		
 		static std::unique_ptr<Module> Create (TypeID typeID) { return std::unique_ptr<Module>(new Module(typeID)); }
+		static std::unique_ptr<Module> Create (const Module& other) { return std::unique_ptr<Module>(new Module(other)); }
 		
 		enum class State {
 			unknown = -1,
@@ -136,6 +137,7 @@ namespace dgmpp {
 		Ship* target_ = nullptr;
 		
 		Module (TypeID typeID);
+		Module (const Module& other);
 		
 		void socket (Socket socket) noexcept { socket_ = socket; }
 		void adjustState();

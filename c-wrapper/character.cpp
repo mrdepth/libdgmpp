@@ -12,6 +12,15 @@ dgmpp_type dgmpp_character_create() {
 	return add_unique_ptr_wrapper(Character::Create());
 }
 
+dgmpp_type dgmpp_character_copy (dgmpp_type character) {
+	try {
+		return add_unique_ptr_wrapper(Character::Create(*reinterpret_cast<Character*>(character)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
 const char*	dgmpp_character_get_name (dgmpp_type character) {
 	return reinterpret_cast<Character*>(character)->name().c_str();
 }
@@ -134,6 +143,15 @@ dgmpp_type dgmpp_implant_create (dgmpp_type_id type_id) {
 	}
 }
 
+dgmpp_type dgmpp_implant_copy (dgmpp_type implant) {
+	try {
+		return add_unique_ptr_wrapper(Implant::Create(*reinterpret_cast<Implant*>(implant)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
 int dgmpp_implant_get_slot (dgmpp_type implant) {
 	return reinterpret_cast<Implant*>(implant)->slot();
 }
@@ -142,6 +160,15 @@ int dgmpp_implant_get_slot (dgmpp_type implant) {
 dgmpp_type dgmpp_booster_create (dgmpp_type_id type_id) {
 	try {
 		return add_unique_ptr_wrapper(Booster::Create(static_cast<TypeID>(type_id)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
+dgmpp_type dgmpp_booster_copy (dgmpp_type booster) {
+	try {
+		return add_unique_ptr_wrapper(Booster::Create(*reinterpret_cast<Booster*>(booster)));
 	}
 	catch (...) {
 		return nullptr;

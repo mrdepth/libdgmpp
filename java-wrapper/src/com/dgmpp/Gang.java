@@ -52,4 +52,14 @@ public class Gang extends Type {
     return new Characters(dgmppJNI.Gang_pilots(swigCPtr, this), true);
   }
 
+  public Area area() {
+    long cPtr = dgmppJNI.Gang_area__SWIG_0(swigCPtr, this);
+    return (cPtr == 0) ? null : new Area(cPtr, false);
+  }
+
+  public Area area(int typeID) {
+    long cPtr = dgmppJNI.Gang_area__SWIG_1(swigCPtr, this, typeID);
+    return (cPtr == 0) ? null : new Area(cPtr, false);
+  }
+
 }

@@ -18,7 +18,7 @@ namespace dgmpp {
 	class Type {
 	public:
 		virtual ~Type();
-		Type (const Type& other) = delete;
+//		Type (const Type& other) = delete;
 		Type (Type&& other) = delete;
 		Type& operator= (const Type& other) = delete;
 		Type& operator= (Type&& other) = delete;
@@ -64,6 +64,7 @@ namespace dgmpp {
 		
 		Type (TypeID typeID);
 		Type (const MetaInfo::Type& metaInfo);
+		Type (const Type& other);
 
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept;
 		

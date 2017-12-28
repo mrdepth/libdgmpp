@@ -56,6 +56,15 @@ namespace dgmpp {
 		}
 	}
 	
+	Drone::Drone (const Drone& other): Type(other) {
+		flags_ = other.flags_;
+		squadron_ = other.squadron_;
+		squadronTag_ = other.squadronTag_;
+		if (auto charge = other.charge()) {
+			charge_ = Charge::Create(*charge);
+		}
+	}
+	
 	void Drone::active(bool active) {
 		if (flags_.active == active || !isEnabled())
 			return;
@@ -72,6 +81,7 @@ namespace dgmpp {
 			if (charge_ != nullptr)
 				charge_->setEnabled(false);
 		}
+		flags_.active = active;
 	}
 	
 	void Drone::target(Ship* target) {

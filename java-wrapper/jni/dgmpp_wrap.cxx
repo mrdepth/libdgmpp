@@ -3849,38 +3849,6 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Ship_1drones(JNIEnv *jenv, jcla
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Ship_1area_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
-  dgmpp::Area *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Ship **)&jarg1; 
-  result = (dgmpp::Area *)((dgmpp::Ship const *)arg1)->area();
-  *(dgmpp::Area **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Ship_1area_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jlong jresult = 0 ;
-  dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
-  dgmpp::TypeID arg2 ;
-  dgmpp::Area *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Ship **)&jarg1; 
-  arg2 = (dgmpp::TypeID)jarg2; 
-  result = (dgmpp::Area *)(arg1)->area(arg2);
-  *(dgmpp::Area **)&jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1factorReload(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
@@ -5983,6 +5951,38 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Gang_1pilots(JNIEnv *jenv, jcla
   arg1 = *(dgmpp::Gang **)&jarg1; 
   result = ((dgmpp::Gang const *)arg1)->pilots();
   *(std::vector< dgmpp::Character * > **)&jresult = new std::vector< dgmpp::Character * >((const std::vector< dgmpp::Character * > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Gang_1area_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  dgmpp::Gang *arg1 = (dgmpp::Gang *) 0 ;
+  dgmpp::Area *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Gang **)&jarg1; 
+  result = (dgmpp::Area *)((dgmpp::Gang const *)arg1)->area();
+  *(dgmpp::Area **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Gang_1area_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jlong jresult = 0 ;
+  dgmpp::Gang *arg1 = (dgmpp::Gang *) 0 ;
+  dgmpp::TypeID arg2 ;
+  dgmpp::Area *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Gang **)&jarg1; 
+  arg2 = (dgmpp::TypeID)jarg2; 
+  result = (dgmpp::Area *)(arg1)->area(arg2);
+  *(dgmpp::Area **)&jresult = result; 
   return jresult;
 }
 
