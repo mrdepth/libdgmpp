@@ -117,7 +117,7 @@ namespace dgmpp {
 		for (const auto& pilot: pilots_) {
 			if (auto ship = pilot->ship()) {
 				if (area_)
-					ship->area(Area::Create(*area));
+					ship->area(Area::Create(*area_));
 				else
 					ship->area(nullptr);
 			}
