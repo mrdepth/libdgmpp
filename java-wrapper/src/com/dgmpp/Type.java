@@ -65,8 +65,4 @@ public class Type {
     return (cPtr == 0) ? null : new Type(cPtr, false);
   }
 
-  public boolean isDescendant(Type parent) {
-    return dgmppJNI.Type_isDescendant(swigCPtr, this, Type.getCPtr(parent), parent);
-  }
-
 }

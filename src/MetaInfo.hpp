@@ -133,12 +133,12 @@ namespace dgmpp {
 			
 			EffectID	effectID;
 			Category	category;
-			bool		isAssistance;
 			bool		isOffensive;
+			bool		isAssistance;
 			virtual slice<const Modifier* const*> modifiers() const noexcept = 0;
 
-			constexpr Effect(EffectID effectID, Category category, bool isAssistance, bool isOffensive)
-			: effectID(effectID), category(category), isAssistance(isAssistance), isOffensive(isOffensive) {};
+			constexpr Effect(EffectID effectID, Category category, bool isOffensive, bool isAssistance)
+			: effectID(effectID), category(category), isOffensive(isOffensive), isAssistance(isAssistance) {};
 
 			Effect (const Effect& other) = delete;
 			Effect& operator= (const Effect& other) = delete;
@@ -151,8 +151,8 @@ namespace dgmpp {
 		template<typename Modifiers>
 		struct _Effect : public Effect {
 			
-			constexpr _Effect(EffectID effectID, Category category, bool isAssistance, bool isOffensive, const Modifiers& modifiers)
-			: Effect(effectID, category, isAssistance, isOffensive), modifiers_(modifiers) {};
+			constexpr _Effect(EffectID effectID, Category category, bool isOffensive, bool isAssistance, const Modifiers& modifiers)
+			: Effect(effectID, category, isOffensive, isAssistance), modifiers_(modifiers) {};
 			
 			
 			virtual slice<const Modifier* const*> modifiers() const noexcept override {

@@ -32,7 +32,7 @@ namespace dgmpp {
 		});
 
 		flags_.dealsDamage = std::any_of(SDE::chargeDamageAttributes.begin(), SDE::chargeDamageAttributes.end(), [&](auto i) {
-			return static_cast<bool>((*this)[i]);
+			return static_cast<bool>(this->attribute(i));
 		});
 	}
 	
@@ -43,15 +43,15 @@ namespace dgmpp {
 	Type* Charge::domain (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::other:
-				return parent();
+				return parent_();
 			default:
 				return Type::domain(domain);
 		}
 	}
 	
 	Charge::Size Charge::size() {
-		if (auto attribute = (*this)[AttributeID::chargeSize])
-			return static_cast<Size>(static_cast<int>(attribute->value()));
+		if (auto attribute = this->attribute(AttributeID::chargeSize))
+			return static_cast<Size>(static_cast<int>(attribute->value_()));
 		else
 			return Size::none;
 	}

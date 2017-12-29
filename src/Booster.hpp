@@ -24,7 +24,7 @@ namespace dgmpp {
 		friend class Character;
 		
 		Booster (TypeID typeID) : Type(typeID) {
-			slot_ = static_cast<Slot>((*this)[AttributeID::boosterness]->value());
+			slot_ = static_cast<Slot>(attribute(AttributeID::boosterness)->value_());
 		}
 		
 		Booster (const Booster& other) : Type(other) {

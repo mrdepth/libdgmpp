@@ -34,7 +34,7 @@
 }
 
 - (double) value {
-	return _attribute->value();
+	return _attribute->value_();
 }
 
 - (double) initialValue {

@@ -99,7 +99,6 @@ public class dgmppJNI {
   public final static native long Type_affectors(long jarg1, Type jarg1_);
   public final static native long Type_attributes(long jarg1, Type jarg1_);
   public final static native long Type_parent(long jarg1, Type jarg1_);
-  public final static native boolean Type_isDescendant(long jarg1, Type jarg1_, long jarg2, Type jarg2_);
   public final static native int Charge_size(long jarg1, Charge jarg1_);
   public final static native void delete_Charge(long jarg1);
   public final static native int Module_anySocket_get();

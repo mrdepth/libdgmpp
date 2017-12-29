@@ -6,6 +6,9 @@
 //
 
 #pragma once
+
+#define DGMPP_THREADSAFE 1
+
 #include <utility>
 #include <memory>
 #include <string>
@@ -20,6 +23,11 @@
 #include <experimental/optional>
 #include <functional>
 #include <cmath>
+
+#if DGMPP_THREADSAFE
+#include <mutex>
+#include <atomic>
+#endif
 
 #include "AttributeID.hpp"
 #include "CategoryID.hpp"
@@ -37,6 +45,7 @@ namespace std {
 	constexpr auto nullopt = std::experimental::nullopt;
 }
 #endif
+
 
 namespace dgmpp {
 	using Float = double;

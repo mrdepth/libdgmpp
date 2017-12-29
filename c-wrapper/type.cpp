@@ -52,10 +52,7 @@ dgmpp_type dgmpp_type_get_parent (dgmpp_type type) {
 }
 
 dgmpp_attribute dgmpp_type_get_attribute (dgmpp_type type, dgmpp_attribute_id attribute_id) {
-	if (auto a = (*reinterpret_cast<Type*>(type))[static_cast<AttributeID>(attribute_id)])
-		return a.get();
-	else
-		return nullptr;
+	return (*reinterpret_cast<Type*>(type))[static_cast<AttributeID>(attribute_id)];
 }
 
 dgmpp_array dgmpp_type_copy_affectors (dgmpp_type type) {

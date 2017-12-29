@@ -50,8 +50,8 @@ namespace dgmpp {
 		Meter droneControlDistance();
 
 
-		virtual void setEnabled (bool enabled) override;
 	protected:
+		virtual void setEnabled (bool enabled) override;
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
 		virtual void reset() override;
 	private:

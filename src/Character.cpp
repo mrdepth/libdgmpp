@@ -18,7 +18,7 @@ namespace dgmpp {
 			auto skill = Skill::Create(*metaInfo);
 			auto ptr = skill.get();
 			skills_.emplace(metaInfo->typeID, std::move(skill));
-			ptr->parent(this);
+			ptr->parent_(this);
 		}
 	}
 	
@@ -27,30 +27,30 @@ namespace dgmpp {
 			auto skill = Skill::Create(*i.second);
 			auto ptr = skill.get();
 			skills_.emplace(ptr->metaInfo().typeID, std::move(skill));
-			ptr->parent(this);
+			ptr->parent_(this);
 		}
 		
 		for (const auto& i: other.implants_) {
 			auto implant = Implant::Create(*i);
 			auto ptr = implant.get();
 			implants_.emplace(std::move(implant));
-			ptr->parent(this);
+			ptr->parent_(this);
 		}
 
 		for (const auto& i: other.boosters_) {
 			auto booster = Booster::Create(*i);
 			auto ptr = booster.get();
 			boosters_.emplace(std::move(booster));
-			ptr->parent(this);
+			ptr->parent_(this);
 		}
 
 		if (auto structure = other.structure()) {
 			ship_ = Structure::Create(*structure);
-			ship_->parent(this);
+			ship_->parent_(this);
 		}
 		else if (auto ship = other.ship()) {
 			ship_ = Ship::Create(*ship);
-			ship_->parent(this);
+			ship_->parent_(this);
 		}
 		name_ = other.name_;
 	}
@@ -62,13 +62,13 @@ namespace dgmpp {
 				setEnabled(false);
 			
 			if (ship_) {
-				ship_->parent(nullptr);
+				ship_->parent_(nullptr);
 				ship_ = nullptr;
 			}
 			
 			if (ship != nullptr) {
 				ship_ = std::move(ship);
-				ship_->parent(this);
+				ship_->parent_(this);
 			}
 			
 			if (enabled)
@@ -112,7 +112,7 @@ namespace dgmpp {
 	}
 	
 	bool Character::factorReload() const noexcept {
-		if (auto gang = dynamic_cast<Gang*>(parent()))
+		if (auto gang = dynamic_cast<Gang*>(parent_()))
 			return gang->factorReload();
 		else
 			return false;
@@ -122,7 +122,7 @@ namespace dgmpp {
 		auto old = implants_.find(implant->slot());
 		if (old != implants_.end()) {
 			if (replace) {
-				(*old)->parent(nullptr);
+				(*old)->parent_(nullptr);
 				implants_.erase(old);
 			}
 			else
@@ -131,7 +131,7 @@ namespace dgmpp {
 
 		auto ptr = implant.get();
 		implants_.insert(std::move(implant));
-		ptr->parent(this);
+		ptr->parent_(this);
 		
 		return ptr;
 	}
@@ -140,7 +140,7 @@ namespace dgmpp {
 		auto old = boosters_.find(booster->slot());
 		if (old != boosters_.end()) {
 			if (replace) {
-				(*old)->parent(nullptr);
+				(*old)->parent_(nullptr);
 				boosters_.erase(old);
 			}
 			else
@@ -149,7 +149,7 @@ namespace dgmpp {
 		
 		auto ptr = booster.get();
 		boosters_.insert(std::move(booster));
-		ptr->parent(this);
+		ptr->parent_(this);
 		
 		return ptr;
 	}
@@ -157,14 +157,14 @@ namespace dgmpp {
 	void Character::remove(Implant* implant) {
 		auto i = implants_.find(implant);
 		assert(i != implants_.end());
-		(*i)->parent(nullptr);
+		(*i)->parent_(nullptr);
 		implants_.erase(i);
 	}
 	
 	void Character::remove(Booster* booster) {
 		auto i = boosters_.find(booster);
 		assert(i != boosters_.end());
-		(*i)->parent(nullptr);
+		(*i)->parent_(nullptr);
 		boosters_.erase(i);
 	}
 	
@@ -200,7 +200,7 @@ namespace dgmpp {
 	}
 	
 	Meter Character::droneControlDistance() {
-		return (*this)[AttributeID::droneControlDistance]->value();
+		return attribute(AttributeID::droneControlDistance)->value_();
 	}
 
 	

@@ -78,7 +78,7 @@ namespace dgmpp {
 	Attribute::Attribute(const MetaInfo::Attribute& metaInfo, Float initialValue, Type& owner)
 	: metaInfo_(metaInfo), initialValue_(initialValue), owner_(owner) {
 		if (metaInfo.maxAttributeID != AttributeID::none) {
-			maxAttribute_ = owner[metaInfo.maxAttributeID];
+			maxAttribute_ = owner.attribute(metaInfo.maxAttributeID);
 		}
 	}
 	
@@ -116,12 +116,12 @@ namespace dgmpp {
 		return *this;
 	}
 	
-	Float Attribute::value() {
+	Float Attribute::value_() {
 		using namespace std::placeholders;
 		if (forcedValue_)
 			return *forcedValue_;
 		
-		if (!value_) {
+		if (!calculatedValue_) {
 #if DEBUG
 			assert(recursionFlag_ == false);
 			recursionFlag_ = true;
@@ -129,8 +129,16 @@ namespace dgmpp {
 			
 			auto value = initialValue_;
 			auto modifiers = owner().modifiers(metaInfo());
-			bool isDisallowedAssistance = metaInfo().attributeID != AttributeID::disallowAssistance ? owner().isDisallowedAssistance() : false;
-			bool isDisallowedOffense = metaInfo().attributeID != AttributeID::disallowOffensiveModifiers ? owner().isDisallowedOffense() : false;
+			bool isDisallowedAssistance;
+			bool isDisallowedOffense;
+			if (metaInfo().attributeID != AttributeID::disallowAssistance && metaInfo().attributeID != AttributeID::disallowOffensiveModifiers) {
+				isDisallowedAssistance = owner().isDisallowedAssistance();
+				isDisallowedOffense = owner().isDisallowedOffense();
+			}
+			else {
+				isDisallowedAssistance = false;
+				isDisallowedOffense = false;
+			}
 			const bool isStackable = metaInfo().isStackable;
 			const bool highIsGood = metaInfo().highIsGood;
 			
@@ -243,16 +251,16 @@ namespace dgmpp {
 			value = multiply(range, value);
 			
 			if (maxAttribute_) {
-				value = std::min(value, (*maxAttribute_)->value());
+				value = std::min(value, (*maxAttribute_)->value_());
 			}
 //			std::cout << static_cast<int>(metaInfo().attributeID) << ": " << value << std::endl;
-			value_ = value;
+			calculatedValue_ = value;
 			owner_.cache().add(this);
 #if DEBUG
 			recursionFlag_ = false;
 #endif
 		}
 		
-		return *value_;
+		return *calculatedValue_;
 	}
 }

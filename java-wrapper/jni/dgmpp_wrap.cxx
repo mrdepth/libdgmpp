@@ -284,7 +284,7 @@ SWIGINTERN dgmpp::TypeID dgmpp_Type_typeID(dgmpp::Type const *self){ return self
 SWIGINTERN dgmpp::GroupID dgmpp_Type_groupID(dgmpp::Type const *self){ return self->metaInfo().groupID; }
 SWIGINTERN dgmpp::CategoryID dgmpp_Type_categoryID(dgmpp::Type const *self){ return self->metaInfo().categoryID; }
 SWIGINTERN dgmpp::Attribute *dgmpp_Type_attribute(dgmpp::Type *self,dgmpp::AttributeID attributeID){
-				return ((*self)[attributeID]).get();
+				return ((*self)[attributeID]);
 			}
 SWIGINTERN std::vector< dgmpp::Type * > dgmpp_Type_affectors(dgmpp::Type const *self){
 				auto c = self->affectors();
@@ -1707,28 +1707,6 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Type_1parent(JNIEnv *jenv, jcla
   arg1 = *(dgmpp::Type **)&jarg1; 
   result = (dgmpp::Type *)(arg1)->parent();
   *(dgmpp::Type **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Type_1isDescendant(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  jboolean jresult = 0 ;
-  dgmpp::Type *arg1 = (dgmpp::Type *) 0 ;
-  dgmpp::Type *arg2 = 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  arg1 = *(dgmpp::Type **)&jarg1; 
-  arg2 = *(dgmpp::Type **)&jarg2;
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "dgmpp::Type & reference is null");
-    return 0;
-  } 
-  result = (bool)((dgmpp::Type const *)arg1)->isDescendant(*arg2);
-  jresult = (jboolean)result; 
   return jresult;
 }
 

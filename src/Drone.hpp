@@ -41,7 +41,6 @@ namespace dgmpp {
 		Ship* target() const noexcept { return target_; }
 		void target(Ship* target);
 
-		virtual void setEnabled (bool enabled) override;
 		
 		//Calculations
 		std::chrono::milliseconds cycleTime();
@@ -54,6 +53,7 @@ namespace dgmpp {
 		MetersPerSecond velocity();
 
 	protected:
+		virtual void setEnabled (bool enabled) override;
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
 		
 		bool isAssistance() const noexcept	{ return flags_.isAssistance; }

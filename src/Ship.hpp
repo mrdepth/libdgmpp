@@ -144,7 +144,6 @@ namespace dgmpp {
 		Meter probeSize();
 		Millimeter scanResolution();
 		
-		virtual void setEnabled (bool enabled) override;
 	protected:
 		using ModulesContainer = TuplesSet<Module::Slot, Module::Socket, std::unique_ptr<Module>>;
 		using DronesContainer = TuplesSet<TypeID, Drone::SquadronTag, std::unique_ptr<Drone>>;
@@ -158,6 +157,7 @@ namespace dgmpp {
 		Ship (TypeID typeID): Type(typeID), capacitor_(*this), heatSimulator_(*this) {};
 		Ship (const Ship& other);
 		
+		virtual void setEnabled (bool enabled) override;
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
 		virtual void reset() override;
 		
@@ -169,6 +169,9 @@ namespace dgmpp {
 		void removeProjected (Drone* drone);
 
 		slice<ModulesContainer::const_iterator> modulesSlice (Module::Slot slot) const noexcept;
+
+		virtual bool isDisallowedAssistance() override;
+		virtual bool isDisallowedOffense() override;
 
 	private:
 		friend class Character;
@@ -187,6 +190,9 @@ namespace dgmpp {
 		Area* area() const noexcept { return area_.get(); }
 		Area* area(std::unique_ptr<Area>&& area);
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
+		
+		std::optional<bool> isDisallowedAssistanceValue_;
+		std::optional<bool> isDisallowedOffenseValue_;
 
 	};
 }

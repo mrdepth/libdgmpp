@@ -49,7 +49,6 @@ namespace dgmpp {
 		};
 		
 		virtual ~Module();
-		virtual void setEnabled (bool enabled) override;
 		
 		bool canHaveState (State state);
 		std::vector<State> availableStates();
@@ -110,6 +109,7 @@ namespace dgmpp {
 		RadiansPerSecond angularVelocity(Meter targetSignature, Percent hitChance = 0.75);
 
 	protected:
+		virtual void setEnabled (bool enabled) override;
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
 		
 	private:

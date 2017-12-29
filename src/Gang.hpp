@@ -25,7 +25,6 @@ namespace dgmpp {
 		void remove (Character* pilot);
 		std::vector<Character*> pilots() const;
 		
-		virtual void setEnabled (bool enabled) override;
 		
 		bool factorReload()		const noexcept	{ return factorReload_; }
 		void factorReload (bool factorReload) noexcept { factorReload_ = factorReload; }
@@ -35,6 +34,7 @@ namespace dgmpp {
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 
 	protected:
+		virtual void setEnabled (bool enabled) override;
 		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
 		
 	private:

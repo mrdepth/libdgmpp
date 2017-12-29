@@ -14,11 +14,11 @@ namespace dgmpp {
 	using namespace std::chrono_literals;
 	
 	GigaJoule Capacitor::capacity() {
-		return owner_[AttributeID::capacitorCapacity]->value();
+		return owner_.attribute(AttributeID::capacitorCapacity)->value_();
 	}
 	
 	std::chrono::milliseconds Capacitor::rechargeTime() {
-		return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(owner_[AttributeID::rechargeRate]->value()));
+		return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(owner_.attribute(AttributeID::rechargeRate)->value_()));
 	}
 	
 	std::chrono::milliseconds Capacitor::lastsTime() {
@@ -63,7 +63,7 @@ namespace dgmpp {
 		});
 
 		std::copy_if(owner_.projectedDrones().begin(), owner_.projectedDrones().end(), std::back_inserter(drones), [](auto i) {
-			return i->active() && (*i)[EffectID::entityEnergyNeutralizerFalloff] != nullptr;
+			return i->active() && i->effect(EffectID::entityEnergyNeutralizerFalloff) != nullptr;
 		});
 
 		decltype(states_)::container_type states;
@@ -84,19 +84,19 @@ namespace dgmpp {
 			decltype(period_) cycleTime {module->cycleTime()};
 			period_ = decltype(period_)(std::lcm(period_.count(), cycleTime.count()));
 
-			auto isProjected = module->parent() != &owner_;
+			auto isProjected = module->parent_() != &owner_;
 			GigaJoule capNeed;
 			
 			if (isProjected) {
 				GigaJoule value = 0;
-				if ((*module)[EffectID::energyNosferatuFalloff])
-					value = (*module)[AttributeID::powerTransferAmount]->value();
-				else if ((*module)[EffectID::energyNeutralizerFalloff])
-					value = (*module)[AttributeID::energyNeutralizerAmount]->value();
-				else if ((*module)[EffectID::shipModuleRemoteCapacitorTransmitter])
-					value = -(*module)[AttributeID::powerTransferAmount]->value();
+				if (module->effect(EffectID::energyNosferatuFalloff))
+					value = module->attribute(AttributeID::powerTransferAmount)->value_();
+				else if (module->effect(EffectID::energyNeutralizerFalloff))
+					value = module->attribute(AttributeID::energyNeutralizerAmount)->value_();
+				else if (module->effect(EffectID::shipModuleRemoteCapacitorTransmitter))
+					value = -module->attribute(AttributeID::powerTransferAmount)->value_();
 				
-				if ((value > 0 && !isDisallowedAssistance) || (value < 0 && !isDisallowedOffense))
+				if ((value > 0 && !isDisallowedOffense) || (value < 0 && !isDisallowedAssistance))
 					capNeed = value;
 				else
 					continue;
@@ -122,14 +122,14 @@ namespace dgmpp {
 			
 			
 			std::chrono::milliseconds reactivationTime(0);
-			if (auto attribute = (*module)[AttributeID::moduleReactivationDelay])
-				reactivationTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value()));
+			if (auto attribute = module->attribute(AttributeID::moduleReactivationDelay))
+				reactivationTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 			states.emplace_back(module->rawCycleTime() + reactivationTime, capNeed, clipSize);
 		}
 		
 		for (auto drone: drones) {
 			decltype(period_) cycleTime {drone->cycleTime()};
-			auto capNeed = static_cast<GigaJoule>((*drone)[AttributeID::energyNeutralizerAmount]->value());
+			auto capNeed = static_cast<GigaJoule>(drone->attribute(AttributeID::energyNeutralizerAmount)->value_());
 
 			if ((capNeed > 0 && !isDisallowedAssistance) || (capNeed < 0 && !isDisallowedOffense)) {
 				use_ += make_rate(capNeed, cycleTime);

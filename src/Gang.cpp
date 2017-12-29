@@ -20,7 +20,7 @@ namespace dgmpp {
 			auto pilot = Character::Create(*i);
 			auto ptr = pilot.get();
 			pilots_.emplace_back(std::move(pilot));
-			ptr->parent(this);
+			ptr->parent_(this);
 			auto otherShip = i->ship();
 			auto myShip = ptr->ship();
 			if (myShip && otherShip) {
@@ -66,13 +66,13 @@ namespace dgmpp {
 		assert(pilot != nullptr);
 		auto ptr = pilot.get();
 		pilots_.push_back(std::move(pilot));
-		ptr->parent(this);
+		ptr->parent_(this);
 		return ptr;
 	}
 	
 	void Gang::remove(Character* pilot) {
 		assert(pilot != nullptr);
-		pilot->parent(nullptr);
+		pilot->parent_(nullptr);
 //		if (pilot->isEnabled())
 //			pilot->setEnabled(false);
 		pilots_.remove_if([=](const auto& i) { return i.get() == pilot; });
@@ -107,10 +107,10 @@ namespace dgmpp {
 
 	Area* Gang::area(std::unique_ptr<Area>&& area) {
 		if (area_)
-			area_->parent(nullptr);
+			area_->parent_(nullptr);
 		if (area) {
 			area_ = std::move(area);
-			area_->parent(this);
+			area_->parent_(this);
 		}
 		else
 			area_ = nullptr;

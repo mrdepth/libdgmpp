@@ -18,41 +18,20 @@ namespace dgmpp {
 	class Type {
 	public:
 		virtual ~Type();
-//		Type (const Type& other) = delete;
+
 		Type (Type&& other) = delete;
 		Type& operator= (const Type& other) = delete;
 		Type& operator= (Type&& other) = delete;
 
 		const MetaInfo::Type& metaInfo() const { return metaInfo_; }
-		Type* parent() const noexcept { return parent_; }
+		Type* parent() const noexcept { return parent_(); }
 		
-		Attribute::Proxy operator[] (AttributeID attributeID);
-		Effect* operator[] (EffectID effectID) const;
-		
-		virtual bool isDisallowedAssistance() const {
-			if (auto parent = this->parent())
-				return parent->isDisallowedAssistance();
-			else
-				return false;
+		Attribute* operator[] (AttributeID attributeID) {
+			auto i = attributes_.find(attributeID);
+			return i != attributes_.end() ? i->second.get() : nullptr;
 		}
 		
-		virtual bool isDisallowedOffense() const {
-			if (auto parent = this->parent())
-				return parent->isDisallowedOffense();
-			else
-				return false;
-		}
-		
-		bool isDescendant (Type& parent) const noexcept {
-			if (this == &parent)
-				return true;
-			else if (auto myParent = this->parent())
-				return myParent->isDescendant(parent);
-			return false;
-		}
-		
-		virtual bool isEnabled() const noexcept { return enabled_; }
-		virtual void setEnabled (bool enabled);
+		Effect* operator[] (EffectID effectID) const { return effect(effectID); }
 		
 		std::unordered_set<Type*> affectors() const;
 		std::list<Attribute*> attributes() const;
@@ -81,19 +60,58 @@ namespace dgmpp {
 		const std::vector<std::unique_ptr<Effect>>& effects() const noexcept { return effects_; }
 		
 		virtual void reset();
-		void parent (Type* parent);
+		Type* parent_() const noexcept { return parentType_; }
+		void parent_ (Type* parent);
 		void batchUpdates(std::function<void()> updates);
 		void resetCache ();
+		
+		Attribute::Proxy attribute (AttributeID attributeID);
+		Effect* effect (EffectID effectID) const;
+
+		virtual bool isDisallowedAssistance() {
+			if (auto parent = parent_())
+				return parent->isDisallowedAssistance();
+			else
+				return false;
+		}
+		
+		virtual bool isDisallowedOffense() {
+			if (auto parent = parent_())
+				return parent->isDisallowedOffense();
+			else
+				return false;
+		}
+		
+		bool isDescendant (Type& parent) const noexcept {
+			if (this == &parent)
+				return true;
+			else if (auto myParent = parent_())
+				return myParent->isDescendant(parent);
+				return false;
+		}
+
+		virtual bool isEnabled() const noexcept { return enabled_; }
+		virtual void setEnabled (bool enabled);
+
 
 	private:
 		class AttributesCache;
 		
 		friend class AttributeProxy;
 		friend class Attribute;
+		friend class Effect;
 		friend class Modifier;
+		friend class WarfareBuff;
+		friend class WarfareBuffEffect;
+		friend class Drone;
+		friend class HeatSimulator;
+		friend class Capacitor;
+		friend class Ship;
+		friend class Module;
+		friend class Structure;
 		
 		const MetaInfo::Type&					metaInfo_;
-		Type*									parent_ = nullptr;
+		Type*									parentType_ = nullptr;
 		AttributesMap							attributes_;
 		std::vector<std::unique_ptr<Effect>>	effects_;
 //		TypesContainer							children_;

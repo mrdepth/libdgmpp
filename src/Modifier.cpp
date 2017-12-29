@@ -11,7 +11,7 @@
 namespace dgmpp {
 	
 	Modifier::Modifier(const MetaInfo::Modifier& metaInfo, Type& owner, const Effect& effect)
-	: metaInfo_(metaInfo), owner_(owner), effect_(effect), modifyingAttribute_(*owner[metaInfo.modifyingAttributeID]) {
+	: metaInfo_(metaInfo), owner_(owner), effect_(effect), modifyingAttribute_(*owner.attribute(metaInfo.modifyingAttributeID)) {
 		switch (owner.metaInfo().categoryID) {
 			case CategoryID::module:
 			case CategoryID::drone:
@@ -54,23 +54,23 @@ namespace dgmpp {
 				using namespace std::chrono_literals;
 				
 			case MetaInfo::Modifier::Association::postDiv:
-				return 1.0 / modifyingAttribute_.value();
+				return 1.0 / modifyingAttribute_.value_();
 			case MetaInfo::Modifier::Association::postPercent:
-				return 1.0 + modifyingAttribute_.value() / 100.0;
+				return 1.0 + modifyingAttribute_.value_() / 100.0;
 			case MetaInfo::Modifier::Association::addRate:
 			case MetaInfo::Modifier::Association::subRate:
 				std::chrono::duration<Float> duration;
-				if (auto attr = owner_[AttributeID::duration])
-					duration = std::chrono::duration<Float, std::milli>(attr->value());
-				else if (auto attr = owner_[AttributeID::speed]) {
-					duration = std::chrono::duration<Float, std::milli>(attr->value());
+				if (auto attr = owner_.attribute(AttributeID::duration))
+					duration = std::chrono::duration<Float, std::milli>(attr->value_());
+				else if (auto attr = owner_.attribute(AttributeID::speed)) {
+					duration = std::chrono::duration<Float, std::milli>(attr->value_());
 				}
 				else {
 					duration = 1s;
 				}
-				return duration > 0.0s ? modifyingAttribute_.value() / duration.count() : 0.0;
+				return duration > 0.0s ? modifyingAttribute_.value_() / duration.count() : 0.0;
 			default:
-				return modifyingAttribute_.value();
+				return modifyingAttribute_.value_();
 		}
 		return 0;
 	}

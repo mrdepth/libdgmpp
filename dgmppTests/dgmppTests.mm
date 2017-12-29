@@ -248,9 +248,9 @@ using namespace dgmpp;
 	auto ship = pilot->ship(Ship::Create(TypeID::dominix));
 	
 	auto ehp0 = ship->effectiveHitPoints();
-	ship->area(Area::Create(TypeID::wolfRayetEffectBeaconClass6));
+	gang->area(Area::Create(TypeID::wolfRayetEffectBeaconClass6));
 	auto ehp1 = ship->effectiveHitPoints();
-	ship->area(nullptr);
+	gang->area(nullptr);
 	auto ehp2 = ship->effectiveHitPoints();
 	
 	XCTAssertGreaterThan(ehp1.total(), ehp0.total());
@@ -282,5 +282,47 @@ using namespace dgmpp;
 	for (auto i = 0; i < 3; i++)
 		XCTAssertEqual(capUsed0[i], capUsed1[i]);
 }
+
+- (void) testDisallows {
+	auto gang = Gang::Create();
+	auto pilotA = gang->addPilot();
+	auto pilotB = gang->addPilot();
+	auto pilotC = gang->addPilot();
+	pilotA->setSkillLevels(5);
+	pilotB->setSkillLevels(5);
+	pilotC->setSkillLevels(5);
+	
+	auto shipA = pilotA->ship(TypeID::kronos);
+	auto shipB = pilotB->ship(TypeID::dominix);
+	auto shipC = pilotC->ship(TypeID::erebus);
+	
+	auto capUse0 = shipA->capacitor().use();
+	auto tankA0 = shipA->tank();
+	auto tankC0 = shipC->tank();
+	
+	shipB->addModule(TypeID::heavyEnergyNeutralizerI)->target(shipA);
+	shipB->addModule(TypeID::largeRemoteArmorRepairerI)->target(shipA);
+	shipB->addModule(TypeID::largeRemoteArmorRepairerI)->target(shipC);
+	
+	auto capUse1 = shipA->capacitor().use();
+	auto tankA1 = shipA->tank();
+	auto tankC1 = shipC->tank();
+	
+	auto bastion = shipA->addModule(TypeID::bastionModuleI);
+	shipC->addModule(TypeID::jumpPortalGeneratorI);
+
+	auto capUse2 = shipA->capacitor().use();
+	auto tankA2 = shipA->tank();
+	auto tankC2 = shipC->tank();
+
+	XCTAssertGreaterThan(capUse1, capUse0);
+	XCTAssertGreaterThan(tankA1.armorRepair, tankA0.armorRepair);
+	XCTAssertGreaterThan(tankC1.armorRepair, tankC0.armorRepair);
+	
+	XCTAssertEqual(capUse2, bastion->capUse());
+	XCTAssertEqual(tankA2.armorRepair, tankA1.armorRepair);
+	XCTAssertEqual(tankC2.armorRepair, tankC0.armorRepair);
+}
+
 
 @end

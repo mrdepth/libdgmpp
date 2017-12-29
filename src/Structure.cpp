@@ -27,8 +27,8 @@ namespace dgmpp {
 	rate<Float, std::chrono::hours> Structure::fuelUse() {
 		auto use = std::accumulate(modules_.begin(), modules_.end(), Float(0), [](auto sum, const auto& i) {
 			auto& module = std::get<std::unique_ptr<Module>>(i);
-			if (auto attribute = (*module)[AttributeID::serviceModuleFuelAmount])
-				return sum + attribute->value();
+			if (auto attribute = module->attribute(AttributeID::serviceModuleFuelAmount))
+				return sum + attribute->value_();
 			else
 				return sum;
 		});

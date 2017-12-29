@@ -47,17 +47,17 @@ namespace dgmpp {
 	Type::Type (const Type& other): Type(other.metaInfo_) {
 		for (const auto& i: other.attributes_) {
 			if (i.second && i.second->forcedValue_) {
-				*(*this)[i.second->metaInfo_.attributeID] = *i.second->forcedValue_;
+				*attribute(i.second->metaInfo_.attributeID) = *i.second->forcedValue_;
 			}
 		}
 		identifier_ = other.identifier_;
 	}
 	
-	void Type::parent (Type* parent) {
+	void Type::parent_ (Type* parent) {
 		if (isEnabled())
 			setEnabled(false);
 		
-		if (parent_)
+		if (parentType_)
 			cache_ = cache().extract(this);
 		
 		if (parent && cache_) {
@@ -65,7 +65,7 @@ namespace dgmpp {
 			cache_ = nullptr;
 		}
 
-		parent_ = parent;
+		parentType_ = parent;
 		
 		if (parent && parent->isEnabled())
 			setEnabled(true);
@@ -75,11 +75,11 @@ namespace dgmpp {
 		cache().batchUpdates(updates);
 	}
 	
-	Attribute::Proxy Type::operator[] (AttributeID attributeID) {
+	Attribute::Proxy Type::attribute (AttributeID attributeID) {
 		return {*this, attributes_.emplace(attributeID, nullptr).first};
 	}
 
-	Effect* Type::operator[] (EffectID effectID) const {
+	Effect* Type::effect (EffectID effectID) const {
 		auto i = std::find_if(effects_.begin(), effects_.end(), [=](const auto& a) {
 			return a->metaInfo().effectID == effectID;
 		});
@@ -251,7 +251,7 @@ namespace dgmpp {
 	std::list<const Modifier*> Type::modifiers (const MetaInfo::Attribute& attribute) const {
 		std::list<const Modifier*> result;
 		result.splice(result.end(), itemModifiers(attribute));
-		if (auto parent = this->parent()) {
+		if (auto parent = parent_()) {
 			result.splice(result.end(), parent->locationModifiers(attribute));
 			result.splice(result.end(), parent->modifiersMatchingType(attribute, *this));
 		}
@@ -262,7 +262,7 @@ namespace dgmpp {
 		std::list<const Modifier*> result;
 		result.splice(result.end(), locationGroupModifiers(attribute, type));
 		result.splice(result.end(), locationRequiredSkillModifiers(attribute, type));
-		if (auto parent = this->parent()) {
+		if (auto parent = parent_()) {
 			result.splice(result.end(), parent->modifiersMatchingType(attribute, *this));
 		}
 		
@@ -289,7 +289,7 @@ namespace dgmpp {
 			/*std::vector<std::tuple<Float, WarfareBuffID, const WarfareBuff*>> v;
 			v.reserve(buffs_.size());
 			std::transform(buffs_.begin(), buffs_.end(), std::back_inserter(v), [](const auto& i) {
-				return std::tuple_cat(std::make_tuple(std::abs(std::get<const WarfareBuff*>(i)->value())), i);
+				return std::tuple_cat(std::make_tuple(std::abs(std::get<const WarfareBuff*>(i)->value_())), i);
 			});
 			
 			auto i = v.begin();
@@ -383,7 +383,7 @@ namespace dgmpp {
 	Type* Type::domain (MetaInfo::Modifier::Domain domain) noexcept {
 		if (domain == MetaInfo::Modifier::Domain::self)
 			return this;
-		else if (auto parent = this->parent())
+		else if (auto parent = parent_())
 			return parent->domain(domain);
 		else
 			return nullptr;
@@ -392,7 +392,7 @@ namespace dgmpp {
 	Type::AttributesCache& Type::cache() {
 		if (cache_ != nullptr)
 			return *cache_;
-		else if (auto parent = this->parent()) {
+		else if (auto parent = parent_()) {
 			return parent->cache();
 		}
 		else {
