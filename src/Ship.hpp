@@ -66,8 +66,6 @@ namespace dgmpp {
 		std::vector<Module*> modules () const;// {return modules_;}
 		std::vector<Drone*> drones () const;// {return drones_;}
 		
-		bool factorReload() const noexcept;
-		
 		//Drones
 		std::size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
 		std::size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
@@ -193,6 +191,8 @@ namespace dgmpp {
 		
 		std::optional<bool> isDisallowedAssistanceValue_;
 		std::optional<bool> isDisallowedOffenseValue_;
+
+		bool factorReload_() const noexcept;
 
 	};
 }

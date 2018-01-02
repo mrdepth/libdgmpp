@@ -78,9 +78,6 @@ namespace dgmpp {
 		bool requireTarget()	const noexcept;
 		bool fail()				const noexcept	{ return flags_.fail; }
 
-		bool factorReload()		const noexcept;//	{ return flags_.factorReload; }
-//		void factorReload (bool factorReload) noexcept { flags_.factorReload = factorReload; }
-
 		//Calculations
 		
 		std::chrono::milliseconds reloadTime();
@@ -135,7 +132,8 @@ namespace dgmpp {
 		std::vector<GroupID> chargeGroups_;
 		std::unique_ptr<Charge> charge_;
 		Ship* target_ = nullptr;
-		
+		bool factorReload_() const noexcept;
+
 		Module (TypeID typeID);
 		Module (const Module& other);
 		

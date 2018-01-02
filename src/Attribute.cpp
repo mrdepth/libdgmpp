@@ -200,7 +200,7 @@ namespace dgmpp {
 					std::transform(range.first, i, std::back_inserter(values), extract);
 					
 					decltype(values.begin()) j;
-					if (highIsGood)
+					if (!highIsGood)
 						j = std::partition(values.begin(), values.end(),
 										   std::bind(std::less<>(), _1, 1.0));
 					else

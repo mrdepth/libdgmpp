@@ -25,9 +25,9 @@ namespace dgmpp {
 		void remove (Character* pilot);
 		std::vector<Character*> pilots() const;
 		
-		
-		bool factorReload()		const noexcept	{ return factorReload_; }
-		void factorReload (bool factorReload) noexcept { factorReload_ = factorReload; }
+		bool factorReload()		const noexcept	{ return factorReload_(); }
+		void factorReload (bool factorReload) noexcept { factorReload_(factorReload); }
+
 
 		Area* area() const noexcept { return area_.get(); }
 		Area* area(std::unique_ptr<Area>&& area);
@@ -39,8 +39,12 @@ namespace dgmpp {
 		
 	private:
 		friend class WarfareBuffEffect;
+		friend class Character;
 		std::list<std::unique_ptr<Character>> pilots_;
-		bool factorReload_;
+		bool factorReloadValue_;
 		std::unique_ptr<Area> area_;
-	};
+
+		bool factorReload_()		const noexcept	{ return factorReloadValue_; }
+		void factorReload_ (bool factorReload) noexcept;// { factorReloadValue_ = factorReload; }
+};
 }

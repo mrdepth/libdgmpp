@@ -23,15 +23,14 @@ namespace dgmpp {
 		void name (T&& name) noexcept { name_ = std::forward<T>(name); }
 
 		
-		Ship* ship() const { return ship_.get(); }
-		Ship* ship (std::unique_ptr<Ship>&& ship);
-		Ship* ship (TypeID typeID) { return ship(Ship::Create(typeID)); }
-		Structure* structure() const { return dynamic_cast<Structure*>(ship_.get()); }
-		Structure* structure (std::unique_ptr<Structure>&& structure);
-		Structure* structure (TypeID typeID) { return structure(Structure::Create(typeID)); }
-		
+		Ship* ship() const { return ship_(); }
+		Ship* ship (std::unique_ptr<Ship>&& ship) { return ship_(std::move(ship)); }
+		Ship* ship (TypeID typeID) { return ship_(Ship::Create(typeID)); }
+		Structure* structure() const { return structure_(); }
+		Structure* structure (std::unique_ptr<Structure>&& structure) { return structure_(std::move(structure)); }
+		Structure* structure (TypeID typeID) { return structure_(Structure::Create(typeID)); }
+
 		void setSkillLevels (int level);
-		bool factorReload() const noexcept;
 		
 		Implant* add(std::unique_ptr<Implant>&& implant, bool replace = false);
 		Booster* add(std::unique_ptr<Booster>&& booster, bool replace = false);
@@ -76,7 +75,8 @@ namespace dgmpp {
 		};
 		
 		friend class Gang;
-		std::unique_ptr<Ship> ship_;
+		friend class Ship;
+		std::unique_ptr<Ship> shipValue_;
 		std::map<TypeID, std::unique_ptr<Skill>> skills_;
 		
 		std::set<std::unique_ptr<Implant>, SlotCompare> implants_;
@@ -85,6 +85,14 @@ namespace dgmpp {
 		
 		Character();
 		Character (const Character& other);
+		
+		Ship* ship_() const { return shipValue_.get(); }
+		Ship* ship_ (std::unique_ptr<Ship>&& ship);
+		Structure* structure_() const { return dynamic_cast<Structure*>(shipValue_.get()); }
+		Structure* structure_ (std::unique_ptr<Structure>&& structure);
+
+		bool factorReload_() const noexcept;
+
 	};
 	
 

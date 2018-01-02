@@ -28,29 +28,27 @@ namespace dgmpp {
 		static std::unique_ptr<Drone> Create (TypeID typeID) { return std::unique_ptr<Drone>(new Drone(typeID)); }
 		static std::unique_ptr<Drone> Create (const Drone& other) { return std::unique_ptr<Drone>(new Drone(other)); }
 		
-		void active (bool active);
-		bool active() const noexcept { return flags_.active; }
+		void active (bool active) { active_(active); }
+		bool active() const noexcept { return active_(); }
 
 		Charge* charge() const noexcept { return charge_.get(); }
 
-		Squadron squadron() const noexcept { return squadron_; }
-		std::size_t squadronSize();
-
-		SquadronTag squadronTag() const noexcept { return squadronTag_; };
-
-		Ship* target() const noexcept { return target_; }
-		void target(Ship* target);
+		Squadron squadron() const noexcept { return squadron_(); }
+		std::size_t squadronSize() { return squadronSize_(); }
+		SquadronTag squadronTag() const noexcept { return squadronTag_(); };
+		Ship* target() const noexcept { return target_(); }
+		void target(Ship* target) { target_(target); }
 
 		
 		//Calculations
-		std::chrono::milliseconds cycleTime();
-		DamageVector volley();
-		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default());
-		Meter optimal();
-		Meter falloff();
-		Points accuracyScore();
+		std::chrono::milliseconds cycleTime() { return cycleTime_(); }
+		DamageVector volley() { return volley_(); }
+		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default()) { return dps_(target); }
+		Meter optimal() { return optimal_(); }
+		Meter falloff() { return falloff_(); }
+		Points accuracyScore() { return accuracyScore_(); }
+		MetersPerSecond velocity() { return velocity_(); }
 		CubicMeterPerSecond miningYield();
-		MetersPerSecond velocity();
 
 	protected:
 		virtual void setEnabled (bool enabled) override;
@@ -62,6 +60,8 @@ namespace dgmpp {
 
 	private:
 		friend class Ship;
+		friend class Capacitor;
+		friend class Gang;
 		
 		struct {
 			bool active : 1;
@@ -70,14 +70,34 @@ namespace dgmpp {
 			bool dealsDamage : 1;
 		} flags_;
 		
-		SquadronTag squadronTag_ = anySquadronTag;
-		Squadron squadron_;
+		SquadronTag squadronTagValue_ = anySquadronTag;
+		Squadron squadronValue_;
 		std::unique_ptr<Charge> charge_;
-		Ship* target_ = nullptr;
+		Ship* targetValue_ = nullptr;
 		
 		Drone (TypeID typeID);
 		Drone (const Drone& other);
-		void squadronTag (SquadronTag squadronTag) noexcept { squadronTag_ = squadronTag; }
+
+		void active_ (bool active);
+		bool active_() const noexcept { return flags_.active; }
+
+		Squadron squadron_() const noexcept { return squadronValue_; }
+		std::size_t squadronSize_();
+		
+		void squadronTag (SquadronTag squadronTag) noexcept { squadronTagValue_ = squadronTag; }
+		SquadronTag squadronTag_() const noexcept { return squadronTagValue_; };
+		
+		Ship* target_() const noexcept { return targetValue_; }
+		void target_ (Ship* target);
+
+		std::chrono::milliseconds cycleTime_();
+		DamageVector volley_();
+		DamagePerSecond dps_(const HostileTarget& target = HostileTarget::Default());
+		Meter optimal_();
+		Meter falloff_();
+		Points accuracyScore_();
+		MetersPerSecond velocity_();
+
 		
 		DamageVector droneVolley();
 		DamageVector fighterAttackMissileVolley();

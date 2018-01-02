@@ -11,7 +11,7 @@ namespace dgmpp {
 	
 	Gang::Gang(const Gang& other): Type(other)  {
 
-		factorReload_ = other.factorReload_;
+		factorReloadValue_ = other.factorReloadValue_;
 		std::map<Ship*, Ship*> shipsMap;
 		std::map<Module*, Module*> modulesMap;
 		std::map<Drone*, Drone*> dronesMap;
@@ -21,8 +21,8 @@ namespace dgmpp {
 			auto ptr = pilot.get();
 			pilots_.emplace_back(std::move(pilot));
 			ptr->parent_(this);
-			auto otherShip = i->ship();
-			auto myShip = ptr->ship();
+			auto otherShip = i->ship_();
+			auto myShip = ptr->ship_();
 			if (myShip && otherShip) {
 				shipsMap.emplace(std::make_pair(otherShip,myShip));
 				
@@ -41,15 +41,15 @@ namespace dgmpp {
 			}
 		}
 		for (const auto& i: other.pilots_) {
-			if (auto ship = i->ship()) {
+			if (auto ship = i->ship_()) {
 				for (const auto& j: ship->modules()) {
 					if (auto target = j->target()) {
 						modulesMap[j]->target(shipsMap[target]);
 					}
 				}
 				for (const auto& j: ship->drones()) {
-					if (auto target = j->target()) {
-						dronesMap[j]->target(shipsMap[target]);
+					if (auto target = j->target_()) {
+						dronesMap[j]->target_(shipsMap[target]);
 					}
 				}
 			}
@@ -115,7 +115,7 @@ namespace dgmpp {
 		else
 			area_ = nullptr;
 		for (const auto& pilot: pilots_) {
-			if (auto ship = pilot->ship()) {
+			if (auto ship = pilot->ship_()) {
 				if (area_)
 					ship->area(Area::Create(*area_));
 				else
@@ -123,6 +123,12 @@ namespace dgmpp {
 			}
 		}
 		return area_.get();
+	}
+	
+	void Gang::factorReload_(bool factorReload) noexcept {
+		factorReloadValue_ = factorReload;
+		if (isEnabled())
+			resetCache();
 	}
 }
 

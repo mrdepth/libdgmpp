@@ -63,7 +63,7 @@ namespace dgmpp {
 		});
 
 		std::copy_if(owner_.projectedDrones().begin(), owner_.projectedDrones().end(), std::back_inserter(drones), [](auto i) {
-			return i->active() && i->effect(EffectID::entityEnergyNeutralizerFalloff) != nullptr;
+			return i->active_() && i->effect(EffectID::entityEnergyNeutralizerFalloff) != nullptr;
 		});
 
 		decltype(states_)::container_type states;
@@ -128,7 +128,7 @@ namespace dgmpp {
 		}
 		
 		for (auto drone: drones) {
-			decltype(period_) cycleTime {drone->cycleTime()};
+			decltype(period_) cycleTime {drone->cycleTime_()};
 			auto capNeed = static_cast<GigaJoule>(drone->attribute(AttributeID::energyNeutralizerAmount)->value_());
 
 			if ((capNeed > 0 && !isDisallowedAssistance) || (capNeed < 0 && !isDisallowedOffense)) {

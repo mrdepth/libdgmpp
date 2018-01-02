@@ -282,9 +282,9 @@ namespace dgmpp {
 			return false;
 	}
 	
-	bool Module::factorReload() const noexcept {
+	bool Module::factorReload_() const noexcept {
 		if (auto ship = dynamic_cast<Ship*>(parent_()))
-			return ship->factorReload();
+			return ship->factorReload_();
 			else
 				return false;
 	}
@@ -359,7 +359,7 @@ namespace dgmpp {
 			reactivation = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 		
 		auto speed = rawCycleTime();
-		auto factorReload = this->factorReload() || flags_.forceReload;
+		auto factorReload = this->factorReload_() || flags_.forceReload;
 		
 		if (factorReload && charge() != nullptr) {
 			auto reload = reloadTime();
@@ -385,11 +385,12 @@ namespace dgmpp {
 	std::size_t Module::charges() {
 		if (auto charge = this->charge()) {
 			auto volume = charge->attribute(AttributeID::volume)->value_();
-			if (volume > 0)
-				return 0;
-			else {
+			if (volume > 0) {
 				auto capacity = attribute(AttributeID::capacity)->value_();
 				return static_cast<std::size_t>(capacity / volume);
+			}
+			else {
+				return 0;
 			}
 		}
 		else

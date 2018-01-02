@@ -263,7 +263,7 @@ namespace dgmpp {
 		result.splice(result.end(), locationGroupModifiers(attribute, type));
 		result.splice(result.end(), locationRequiredSkillModifiers(attribute, type));
 		if (auto parent = parent_()) {
-			result.splice(result.end(), parent->modifiersMatchingType(attribute, *this));
+			result.splice(result.end(), parent->modifiersMatchingType(attribute, type));
 		}
 		
 		

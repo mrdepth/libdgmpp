@@ -45,40 +45,40 @@ namespace dgmpp {
 		}
 
 		if (auto structure = other.structure()) {
-			ship_ = Structure::Create(*structure);
-			ship_->parent_(this);
+			shipValue_ = Structure::Create(*structure);
+			shipValue_->parent_(this);
 		}
-		else if (auto ship = other.ship()) {
-			ship_ = Ship::Create(*ship);
-			ship_->parent_(this);
+		else if (auto ship = other.ship_()) {
+			shipValue_ = Ship::Create(*ship);
+			shipValue_->parent_(this);
 		}
 		name_ = other.name_;
 	}
 	
-	Ship* Character::ship(std::unique_ptr<Ship>&& ship) {
+	Ship* Character::ship_(std::unique_ptr<Ship>&& ship) {
 		batchUpdates([&]() {
 			auto enabled = isEnabled();
 			if (enabled)
 				setEnabled(false);
 			
-			if (ship_) {
-				ship_->parent_(nullptr);
-				ship_ = nullptr;
+			if (shipValue_) {
+				shipValue_->parent_(nullptr);
+				shipValue_ = nullptr;
 			}
 			
 			if (ship != nullptr) {
-				ship_ = std::move(ship);
-				ship_->parent_(this);
+				shipValue_ = std::move(ship);
+				shipValue_->parent_(this);
 			}
 			
 			if (enabled)
 				setEnabled(true);
 		});
 		
-		return ship_.get();
+		return shipValue_.get();
 	}
 	
-	Structure* Character::structure (std::unique_ptr<Structure>&& structure) {
+	Structure* Character::structure_ (std::unique_ptr<Structure>&& structure) {
 		return dynamic_cast<Structure*>(ship(std::move(structure)));
 	}
 	
@@ -87,15 +87,15 @@ namespace dgmpp {
 			case MetaInfo::Modifier::Domain::character:
 				return this;
 			case MetaInfo::Modifier::Domain::ship:
-				return ship_.get();
+				return shipValue_.get();
 			default:
 				return Type::domain(domain);
 		}
 	}
 	
 	void Character::reset() {
-		if (ship_) {
-			ship_->reset();
+		if (shipValue_) {
+			shipValue_->reset();
 		}
 	}
 	
@@ -111,9 +111,9 @@ namespace dgmpp {
 			throw InvalidSkillLevel();
 	}
 	
-	bool Character::factorReload() const noexcept {
+	bool Character::factorReload_() const noexcept {
 		if (auto gang = dynamic_cast<Gang*>(parent_()))
-			return gang->factorReload();
+			return gang->factorReload_();
 		else
 			return false;
 	}
@@ -220,8 +220,8 @@ namespace dgmpp {
 			std::for_each(boosters_.begin(), boosters_.end(), [enabled](auto& i) {
 				i->setEnabled(enabled);
 			});
-			if (ship_)
-				ship_->setEnabled(enabled);
+			if (shipValue_)
+				shipValue_->setEnabled(enabled);
 		});
 	}
 }

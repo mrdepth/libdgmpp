@@ -28,7 +28,7 @@ namespace dgmpp {
 		for (const auto& i: other.drones_) {
 			auto drone = Drone::Create(*std::get<std::unique_ptr<Drone>>(i));
 			auto ptr = drone.get();
-			drones_.emplace(ptr->metaInfo().typeID, ptr->squadronTag(), std::move(drone));
+			drones_.emplace(ptr->metaInfo().typeID, ptr->squadronTag_(), std::move(drone));
 			ptr->parent_(this);
 		}
 		
@@ -120,7 +120,7 @@ namespace dgmpp {
 							size++;
 						}
 						else {
-							if (size < std::get<std::unique_ptr<Drone>>(*squadron)->squadronSize())
+							if (size < std::get<std::unique_ptr<Drone>>(*squadron)->squadronSize_())
 								break;
 							else {
 								size = 1;
@@ -130,8 +130,8 @@ namespace dgmpp {
 						}
 					}
 					
-					if (size < std::get<std::unique_ptr<Drone>>(*squadron)->squadronSize()) {
-						drone->active(std::get<std::unique_ptr<Drone>>(*squadron)->active());
+					if (size < std::get<std::unique_ptr<Drone>>(*squadron)->squadronSize_()) {
+						drone->active_(std::get<std::unique_ptr<Drone>>(*squadron)->active_());
 					}
 					else
 						squadronTag++;
@@ -164,7 +164,7 @@ namespace dgmpp {
 	
 	void Ship::remove (Drone* drone) {
 		assert(drone != nullptr);
-		auto i = drones_.find(std::make_tuple(drone->metaInfo().typeID, drone->squadronTag(), drone));
+		auto i = drones_.find(std::make_tuple(drone->metaInfo().typeID, drone->squadronTag_(), drone));
 		assert(i != drones_.end());
 		std::get<std::unique_ptr<Drone>>(*i)->parent_(nullptr);
 		drones_.erase(i);
@@ -313,9 +313,9 @@ namespace dgmpp {
 		return area_.get();
 	}
 	
-	bool Ship::factorReload() const noexcept {
+	bool Ship::factorReload_() const noexcept {
 		if (auto character = dynamic_cast<Character*>(parent_()))
-			return character->factorReload();
+			return character->factorReload_();
 			else
 				return false;
 	}
@@ -367,7 +367,7 @@ namespace dgmpp {
 		if (squadron == Drone::Squadron::none) {
 			return std::accumulate(drones_.begin(), drones_.end(), 0, [](auto sum, const auto& i) {
 				auto& drone = std::get<std::unique_ptr<Drone>>(i);
-				if (drone->active() && drone->squadron() == Drone::Squadron::none)
+				if (drone->active_() && drone->squadron_() == Drone::Squadron::none)
 					return sum + 1;
 				else
 					return sum;
@@ -377,8 +377,8 @@ namespace dgmpp {
 			std::set<std::pair<TypeID, Drone::SquadronTag>> squadrons;
 			for (const auto& i: drones_) {
 				auto& drone = std::get<std::unique_ptr<Drone>>(i);
-				if (drone->active() && drone->squadron() == squadron)
-					squadrons.emplace(drone->metaInfo().typeID, drone->squadronTag());
+				if (drone->active_() && drone->squadron_() == squadron)
+					squadrons.emplace(drone->metaInfo().typeID, drone->squadronTag_());
 			}
 			return squadrons.size();
 		}
@@ -393,8 +393,8 @@ namespace dgmpp {
 		std::set<std::pair<TypeID, Drone::SquadronTag>> squadrons;
 		for (const auto& i: drones_) {
 			auto& drone = std::get<std::unique_ptr<Drone>>(i);
-			if (drone->active() && drone->squadron() != Drone::Squadron::none)
-				squadrons.emplace(drone->metaInfo().typeID, drone->squadronTag());
+			if (drone->active_() && drone->squadron_() != Drone::Squadron::none)
+				squadrons.emplace(drone->metaInfo().typeID, drone->squadronTag_());
 		}
 		return squadrons.size();
 	}
@@ -472,7 +472,7 @@ namespace dgmpp {
 	MegabitsPerSecond Ship::usedDroneBandwidth() {
 		return std::accumulate(drones_.begin(), drones_.end(), MegabitsPerSecond(0), [](auto sum, const auto& i) {
 			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
-			return drone.active() ? sum + drone.attribute(AttributeID::droneBandwidthUsed)->value_() : sum;
+			return drone.active_() ? sum + drone.attribute(AttributeID::droneBandwidthUsed)->value_() : sum;
 		});
 	}
 	
@@ -483,7 +483,7 @@ namespace dgmpp {
 	CubicMeter Ship::usedDroneBay() {
 		return std::accumulate(drones_.begin(), drones_.end(), CubicMeter(0), [](auto sum, const auto& i) {
 			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
-			return drone.squadron() == Drone::Squadron::none ? sum + drone.attribute(AttributeID::volume)->value_() : sum;
+			return drone.squadron_() == Drone::Squadron::none ? sum + drone.attribute(AttributeID::volume)->value_() : sum;
 		});
 	}
 	
@@ -494,7 +494,7 @@ namespace dgmpp {
 	CubicMeter Ship::usedFighterHangar() {
 		return std::accumulate(drones_.begin(), drones_.end(), CubicMeter(0), [](auto sum, const auto& i) {
 			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
-			return drone.squadron() != Drone::Squadron::none ? sum + drone.attribute(AttributeID::volume)->value_() : sum;
+			return drone.squadron_() != Drone::Squadron::none ? sum + drone.attribute(AttributeID::volume)->value_() : sum;
 		});
 	}
 	
@@ -678,7 +678,7 @@ namespace dgmpp {
 	
 	DamageVector Ship::dronesVolley() {
 		return std::accumulate(drones_.begin(), drones_.end(), DamageVector(0), [](auto sum, const auto& i) {
-			return sum + std::get<std::unique_ptr<Drone>>(i)->volley();
+			return sum + std::get<std::unique_ptr<Drone>>(i)->volley_();
 		});
 	}
 	
@@ -704,7 +704,7 @@ namespace dgmpp {
 	
 	DamagePerSecond Ship::dronesDPS (const HostileTarget& target) {
 		return std::accumulate(drones_.begin(), drones_.end(), DamagePerSecond(0), [&target](auto sum, const auto& i) {
-			return sum + std::get<std::unique_ptr<Drone>>(i)->dps(target);
+			return sum + std::get<std::unique_ptr<Drone>>(i)->dps_(target);
 		});
 	}
 

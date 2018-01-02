@@ -88,10 +88,6 @@ public class DGMShip: DGMType {
 		return RigSize(dgmpp_ship_get_rig_size(handle)) ?? .none
 	}
 	
-	public var factorReload: Bool {
-		return dgmpp_ship_get_factor_reload(handle)
-	}
-	
 	public var damagePattern: DGMDamageVector {
 		get {
 			return DGMDamageVector(dgmpp_ship_get_damage_pattern(handle))

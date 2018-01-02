@@ -129,10 +129,6 @@ public class DGMModule: DGMType {
 		return dgmpp_module_require_target(handle)
 	}
 
-	public var factorReload: Bool {
-		return dgmpp_module_get_factor_reload(handle)
-	}
-
 	public var reloadTime: TimeInterval {
 		return dgmpp_module_get_reload_time(handle)
 	}

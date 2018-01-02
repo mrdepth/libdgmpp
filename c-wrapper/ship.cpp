@@ -43,10 +43,6 @@ DGMPP_RACE_ID dgmpp_ship_get_race_id (dgmpp_type ship) {
 	return static_cast<DGMPP_RACE_ID>(reinterpret_cast<Ship*>(ship)->raceID());
 }
 
-BOOL dgmpp_ship_get_factor_reload (dgmpp_type ship) {
-	return reinterpret_cast<Ship*>(ship)->factorReload();
-}
-
 DGMPP_RIG_SIZE dgmpp_ship_get_rig_size (dgmpp_type ship) {
 	return static_cast<DGMPP_RIG_SIZE>(reinterpret_cast<Ship*>(ship)->rigSize());
 }
