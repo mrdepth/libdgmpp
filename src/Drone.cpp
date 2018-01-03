@@ -15,44 +15,42 @@ namespace dgmpp {
 	
 	Drone::~Drone() {
 		if (targetValue_)
-			targetValue_->removeProjected(this);
+			targetValue_->removeProjected_(this);
 	}
 	
 	Drone::Drone (TypeID typeID): Type(typeID) {
 		
-		if (attribute(AttributeID::fighterSquadronIsHeavy))
+		if (attribute_(AttributeID::fighterSquadronIsHeavy))
 			squadronValue_ = Squadron::heavy;
-		else if (attribute(AttributeID::fighterSquadronIsLight))
+		else if (attribute_(AttributeID::fighterSquadronIsLight))
 			squadronValue_ = Squadron::light;
-		else if (attribute(AttributeID::fighterSquadronIsSupport))
+		else if (attribute_(AttributeID::fighterSquadronIsSupport))
 			squadronValue_ = Squadron::support;
 		else
 			squadronValue_ = Squadron::none;
 
-		const auto& effects = this->effects();
-
-		flags_.isAssistance = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+		flags_.isAssistance = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			return i->metaInfo().category == MetaInfo::Effect::Category::target && i->metaInfo().isAssistance;
 		});
 		
-		flags_.isOffensive = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+		flags_.isOffensive = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			return i->metaInfo().category == MetaInfo::Effect::Category::target && i->metaInfo().isOffensive;
 		});
 
 		flags_.dealsDamage = std::any_of(SDE::droneDamageAttributes.begin(), SDE::droneDamageAttributes.end(), [&](auto i) {
-			return static_cast<bool>(attribute(i));
+			return static_cast<bool>(attribute_(i));
 		});
 		
 		flags_.active = true;
 		
-		if (auto attribute = this->attribute(AttributeID::entityMissileTypeID)) {
+		if (auto attribute = attribute_(AttributeID::entityMissileTypeID)) {
 			auto typeID = static_cast<TypeID>(static_cast<int>(attribute->value_()));
 			charge_ = Charge::Create(typeID);
 			charge_->parent_(this);
 			
-			flags_.isAssistance = flags_.isAssistance || charge_->isAssistance();
-			flags_.isOffensive = flags_.isOffensive || charge_->isOffensive();
-			flags_.dealsDamage = flags_.dealsDamage || charge_->dealsDamage();
+			flags_.isAssistance = flags_.isAssistance || charge_->flags_.isAssistance;
+			flags_.isOffensive = flags_.isOffensive || charge_->flags_.isOffensive;
+			flags_.dealsDamage = flags_.dealsDamage || charge_->flags_.dealsDamage;
 		}
 	}
 	
@@ -66,69 +64,67 @@ namespace dgmpp {
 	}
 	
 	void Drone::active_(bool active) {
-		if (flags_.active == active || !isEnabled())
+		if (flags_.active == active || !isEnabled_())
 			return;
 		
 		if (active) {
-			activateEffects(MetaInfo::Effect::Category::generic);
-			activateEffects(MetaInfo::Effect::Category::target);
+			activateEffects_(MetaInfo::Effect::Category::generic);
+			activateEffects_(MetaInfo::Effect::Category::target);
 			if (charge_ != nullptr)
-				charge_->setEnabled(true);
+				charge_->setEnabled_(true);
 		}
 		else {
-			deactivateEffects(MetaInfo::Effect::Category::target);
-			deactivateEffects(MetaInfo::Effect::Category::generic);
+			deactivateEffects_(MetaInfo::Effect::Category::target);
+			deactivateEffects_(MetaInfo::Effect::Category::generic);
 			if (charge_ != nullptr)
-				charge_->setEnabled(false);
+				charge_->setEnabled_(false);
 		}
 		flags_.active = active;
 	}
 	
 	void Drone::target_(Ship* target) {
-		batchUpdates([&]() {
-			batchUpdates([&]() {
-				if (targetValue_) {
-					if (active_())
-						deactivateEffects(MetaInfo::Effect::Category::target);
-					targetValue_->removeProjected(this);
-				}
-				targetValue_ = target;
-				if (target) {
-					targetValue_->project(this);
-					if (active_())
-						activateEffects(MetaInfo::Effect::Category::target);
-				}
-			});
+		batchUpdates_([&]() {
+			if (targetValue_) {
+				if (active_())
+					deactivateEffects_(MetaInfo::Effect::Category::target);
+				targetValue_->removeProjected_(this);
+			}
+			targetValue_ = target;
+			if (target) {
+				targetValue_->project_(this);
+				if (active_())
+					activateEffects_(MetaInfo::Effect::Category::target);
+			}
 		});
 	}
 	
-	void Drone::setEnabled (bool enabled) {
-		if (isEnabled() == enabled)
-			return Type::setEnabled(enabled);
+	void Drone::setEnabled_ (bool enabled) {
+		if (isEnabled_() == enabled)
+			return Type::setEnabled_(enabled);
 		else
-			Type::setEnabled(enabled);
+			Type::setEnabled_(enabled);
 		
 
 		if (enabled && active_()) {
-			activateEffects(MetaInfo::Effect::Category::generic);
-			activateEffects(MetaInfo::Effect::Category::target);
+			activateEffects_(MetaInfo::Effect::Category::generic);
+			activateEffects_(MetaInfo::Effect::Category::target);
 			if (charge_ != nullptr)
-				charge_->setEnabled(enabled);
+				charge_->setEnabled_(enabled);
 		}
 		else {
-			deactivateEffects(MetaInfo::Effect::Category::target);
-			deactivateEffects(MetaInfo::Effect::Category::generic);
+			deactivateEffects_(MetaInfo::Effect::Category::target);
+			deactivateEffects_(MetaInfo::Effect::Category::generic);
 			if (charge_ != nullptr)
-				charge_->setEnabled(enabled);
+				charge_->setEnabled_(enabled);
 		}
 	}
 	
-	Type* Drone::domain (MetaInfo::Modifier::Domain domain) noexcept {
+	Type* Drone::domain_ (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::target :
 				return targetValue_;
 			default:
-				return Type::domain(domain);
+				return Type::domain_(domain);
 		}
 	}
 	
@@ -136,7 +132,7 @@ namespace dgmpp {
 		if (squadronValue_ == Squadron::none)
 			return 5;
 		else {
-			auto size = static_cast<std::size_t>(attribute(AttributeID::fighterSquadronMaxSize)->value_());
+			auto size = static_cast<std::size_t>(attribute_(AttributeID::fighterSquadronMaxSize)->value_());
 			return size > 0 ? size : 5;
 		}
 	}
@@ -144,9 +140,9 @@ namespace dgmpp {
 	//Calculations
 	
 	std::chrono::milliseconds Drone::cycleTime_() {
-		if (auto attribute = this->attribute(AttributeID::speed))
+		if (auto attribute = attribute_(AttributeID::speed))
 			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
-		else if (auto attribute = this->attribute(AttributeID::duration))
+		else if (auto attribute = attribute_(AttributeID::duration))
 			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 		else
 			return std::chrono::milliseconds::zero();
@@ -154,14 +150,14 @@ namespace dgmpp {
 	
 	DamageVector Drone::volley_() {
 		if (active_()) {
-			auto volley = droneVolley();
+			auto volley = droneVolley_();
 
-			if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackMissileDuration); attribute && attribute->value_() > 0)
-				volley += fighterAttackMissileVolley();
-			if (auto attribute = this->attribute(AttributeID::fighterAbilityMissilesDuration); attribute && attribute->value_() > 0)
-				volley += fighterMissileVolley();
-			if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackTurretDuration); attribute && attribute->value_() > 0)
-				volley += fighterAttackTurretVolley();
+			if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDuration); attribute && attribute->value_() > 0)
+				volley += fighterAttackMissileVolley_();
+			if (auto attribute = attribute_(AttributeID::fighterAbilityMissilesDuration); attribute && attribute->value_() > 0)
+				volley += fighterMissileVolley_();
+			if (auto attribute = attribute_(AttributeID::fighterAbilityAttackTurretDuration); attribute && attribute->value_() > 0)
+				volley += fighterAttackTurretVolley_();
 			
 			return volley;
 		}
@@ -169,70 +165,70 @@ namespace dgmpp {
 			return {0};
 	}
 	
-	DamageVector Drone::droneVolley() {
+	DamageVector Drone::droneVolley_() {
 		auto volley = DamageVector(0);
 		auto& item = charge_ ? *static_cast<Type*> (charge_.get()) : *static_cast<Type*>(this);
 		
-		if (auto attribute = item.attribute(AttributeID::emDamage))
+		if (auto attribute = item.attribute_(AttributeID::emDamage))
 			volley.em += attribute->value_();
-		if (auto attribute = item.attribute(AttributeID::kineticDamage))
+		if (auto attribute = item.attribute_(AttributeID::kineticDamage))
 			volley.kinetic += attribute->value_();
-		if (auto attribute = item.attribute(AttributeID::thermalDamage))
+		if (auto attribute = item.attribute_(AttributeID::thermalDamage))
 			volley.thermal += attribute->value_();
-		if (auto attribute = item.attribute(AttributeID::explosiveDamage))
+		if (auto attribute = item.attribute_(AttributeID::explosiveDamage))
 			volley.explosive += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::damageMultiplier))
+		if (auto attribute = attribute_(AttributeID::damageMultiplier))
 			volley *= attribute->value_();
 
 		return volley;
 	}
 	
-	DamageVector Drone::fighterAttackMissileVolley() {
+	DamageVector Drone::fighterAttackMissileVolley_() {
 		auto volley = DamageVector(0);
 		
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackMissileDamageEM))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDamageEM))
 			volley.em += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackMissileDamageKin))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDamageKin))
 			volley.kinetic += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackMissileDamageTherm))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDamageTherm))
 			volley.thermal += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackMissileDamageExp))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDamageExp))
 			volley.explosive += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackMissileDamageMultiplier))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDamageMultiplier))
 			volley *= attribute->value_();
 
 		return volley;
 	}
 	
-	DamageVector Drone::fighterAttackTurretVolley() {
+	DamageVector Drone::fighterAttackTurretVolley_() {
 		auto volley = DamageVector(0);
 		
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackTurretDamageEM))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackTurretDamageEM))
 			volley.em += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackTurretDamageKin))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackTurretDamageKin))
 			volley.kinetic += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackTurretDamageTherm))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackTurretDamageTherm))
 			volley.thermal += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackTurretDamageExp))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackTurretDamageExp))
 			volley.explosive += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackTurretDamageMultiplier))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackTurretDamageMultiplier))
 			volley *= attribute->value_();
 		
 		return volley;
 	}
 	
-	DamageVector Drone::fighterMissileVolley() {
+	DamageVector Drone::fighterMissileVolley_() {
 		auto volley = DamageVector(0);
 		
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityMissilesDamageEM))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityMissilesDamageEM))
 			volley.em += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityMissilesDamageKin))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityMissilesDamageKin))
 			volley.kinetic += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityMissilesDamageTherm))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityMissilesDamageTherm))
 			volley.thermal += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityMissilesDamageExp))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityMissilesDamageExp))
 			volley.explosive += attribute->value_();
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityMissilesDamageMultiplier))
+		if (auto attribute = attribute_(AttributeID::fighterAbilityMissilesDamageMultiplier))
 			volley *= attribute->value_();
 		
 		return volley;
@@ -240,21 +236,21 @@ namespace dgmpp {
 
 	DamagePerSecond Drone::dps_(const HostileTarget& target) {
 		if (active_()) {
-			auto dps = rawDPS();
+			auto dps = rawDPS_();
 			
 			if (target.signature > 0) {
 				using namespace std::chrono_literals;
 
 				auto range = Meter(0);
-				if (auto attribute = this->attribute(AttributeID::entityFlyRange); attribute && attribute->value_() > 0)
+				if (auto attribute = attribute_(AttributeID::entityFlyRange); attribute && attribute->value_() > 0)
 					range = attribute->value_();
-				else if (auto attribute = this->attribute(AttributeID::fighterSquadronOrbitRange); attribute && attribute->value_() > 0)
+				else if (auto attribute = attribute_(AttributeID::fighterSquadronOrbitRange); attribute && attribute->value_() > 0)
 					range = attribute->value_();
 				
 				auto orbitVelocity = MetersPerSecond(0);
-				if (auto attribute = this->attribute(AttributeID::entityCruiseSpeed); attribute && attribute->value_() > 0)
+				if (auto attribute = attribute_(AttributeID::entityCruiseSpeed); attribute && attribute->value_() > 0)
 					orbitVelocity = make_rate(attribute->value_(), 1s);
-				else if (auto attribute = this->attribute(AttributeID::maxVelocity); attribute && attribute->value_() > 0)
+				else if (auto attribute = attribute_(AttributeID::maxVelocity); attribute && attribute->value_() > 0)
 					orbitVelocity = make_rate(attribute->value_(), 1s);
 				
 				if (target.velocity.count() > 0) {
@@ -274,7 +270,7 @@ namespace dgmpp {
 						a = angularVelocity * 1s / accuracyScore;
 				}
 				
-				if (auto signatureResolution = attribute(AttributeID::optimalSigRadius); signatureResolution && signatureResolution->value_() > 0)
+				if (auto signatureResolution = attribute_(AttributeID::optimalSigRadius); signatureResolution && signatureResolution->value_() > 0)
 					a = signatureResolution->value_() / target.signature;
 				
 				Float b = 0;
@@ -299,29 +295,29 @@ namespace dgmpp {
 		}
 	}
 	
-	DamagePerSecond Drone::rawDPS() {
+	DamagePerSecond Drone::rawDPS_() {
 		
-		auto dps = make_rate(droneVolley(), cycleTime_());
+		auto dps = make_rate(droneVolley_(), cycleTime_());
 		
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackMissileDuration); attribute && attribute->value_() > 0)
-			dps += make_rate(fighterAttackMissileVolley(), std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_())));
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityMissilesDuration); attribute && attribute->value_() > 0)
-			dps += make_rate(fighterMissileVolley(), std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_())));
-		if (auto attribute = this->attribute(AttributeID::fighterAbilityAttackTurretDuration); attribute && attribute->value_() > 0)
-			dps += make_rate(fighterAttackTurretVolley(), std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_())));
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDuration); attribute && attribute->value_() > 0)
+			dps += make_rate(fighterAttackMissileVolley_(), std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_())));
+		if (auto attribute = attribute_(AttributeID::fighterAbilityMissilesDuration); attribute && attribute->value_() > 0)
+			dps += make_rate(fighterMissileVolley_(), std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_())));
+		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackTurretDuration); attribute && attribute->value_() > 0)
+			dps += make_rate(fighterAttackTurretVolley_(), std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_())));
 		return dps;
 	}
 	
 	Meter Drone::optimal_() {
 		
 		for (auto attributeID: SDE::droneOptimalAttributes) {
-			if (auto attribute = this->attribute(attributeID))
+			if (auto attribute = attribute_(attributeID))
 				return attribute->value_();
 		}
 		
 		if (auto charge = this->charge()) {
-			auto maxVelocity = charge->attribute(AttributeID::maxVelocity);
-			auto explosionDelay = charge->attribute(AttributeID::explosionDelay);
+			auto maxVelocity = charge->attribute_(AttributeID::maxVelocity);
+			auto explosionDelay = charge->attribute_(AttributeID::explosionDelay);
 			
 			if (maxVelocity && explosionDelay) {
 				rate<Meter, std::chrono::milliseconds> mv = MetersPerSecond(maxVelocity->value_());
@@ -334,14 +330,14 @@ namespace dgmpp {
 	
 	Meter Drone::falloff_() {
 		for (auto attributeID: SDE::droneFalloffAttributes) {
-			if (auto attribute = this->attribute(attributeID))
+			if (auto attribute = attribute_(attributeID))
 				return attribute->value_();
 		}
 		return 0;
 	}
 	
 	Points Drone::accuracyScore_() {
-		if (auto attribute = this->attribute(AttributeID::trackingSpeed))
+		if (auto attribute = attribute_(AttributeID::trackingSpeed))
 			return attribute->value_();
 		else
 			return 0;
@@ -350,9 +346,9 @@ namespace dgmpp {
 	CubicMeterPerSecond Drone::miningYield() {
 		if (active_()) {
 			CubicMeter volley = 0;
-			if (auto attribute = this->attribute(AttributeID::specialtyMiningAmount))
+			if (auto attribute = attribute_(AttributeID::specialtyMiningAmount))
 				volley += attribute->value_();
-			if (auto attribute = this->attribute(AttributeID::miningAmount))
+			if (auto attribute = attribute_(AttributeID::miningAmount))
 				volley += attribute->value_();
 			return make_rate(volley, cycleTime_());
 		}
@@ -362,7 +358,7 @@ namespace dgmpp {
 	
 	MetersPerSecond Drone::velocity_() {
 		using namespace std::chrono_literals;
-		return make_rate(attribute(AttributeID::maxVelocity)->value_(), 1s);
+		return make_rate(attribute_(AttributeID::maxVelocity)->value_(), 1s);
 	}
 
 }

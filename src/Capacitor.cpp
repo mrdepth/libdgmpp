@@ -14,11 +14,11 @@ namespace dgmpp {
 	using namespace std::chrono_literals;
 	
 	GigaJoule Capacitor::capacity() {
-		return owner_.attribute(AttributeID::capacitorCapacity)->value_();
+		return owner_.attribute_(AttributeID::capacitorCapacity)->value_();
 	}
 	
 	std::chrono::milliseconds Capacitor::rechargeTime() {
-		return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(owner_.attribute(AttributeID::rechargeRate)->value_()));
+		return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(owner_.attribute_(AttributeID::rechargeRate)->value_()));
 	}
 	
 	std::chrono::milliseconds Capacitor::lastsTime() {
@@ -31,23 +31,23 @@ namespace dgmpp {
 	
 	Percent Capacitor::stableLevel() {
 		if (!flags_.isCalculated_)
-			simulate();
+			simulate_();
 		return stableLevel_;
 	}
 	
 	GigaJoulePerSecond Capacitor::use() {
 		if (!flags_.isCalculated_)
-			simulate();
+			simulate_();
 		return use_;
 	}
 	
 	GigaJoulePerSecond Capacitor::recharge() {
 		if (!flags_.isCalculated_)
-			simulate();
+			simulate_();
 		return recharge_;
 	}
 
-	void Capacitor::prepare() {
+	void Capacitor::prepare_() {
 
 		std::list<Module*> modules;
 		std::list<Drone*> drones;
@@ -58,12 +58,12 @@ namespace dgmpp {
 				modules.push_back(m);
 		}
 
-		std::copy_if(owner_.projectedModules().begin(), owner_.projectedModules().end(), std::back_inserter(modules), [](auto i) {
+		std::copy_if(owner_.projectedModules_.begin(), owner_.projectedModules_.end(), std::back_inserter(modules), [](auto i) {
 			return i->state() >= Module::State::active;
 		});
 
-		std::copy_if(owner_.projectedDrones().begin(), owner_.projectedDrones().end(), std::back_inserter(drones), [](auto i) {
-			return i->active_() && i->effect(EffectID::entityEnergyNeutralizerFalloff) != nullptr;
+		std::copy_if(owner_.projectedDrones_.begin(), owner_.projectedDrones_.end(), std::back_inserter(drones), [](auto i) {
+			return i->active_() && i->effect_(EffectID::entityEnergyNeutralizerFalloff) != nullptr;
 		});
 
 		decltype(states_)::container_type states;
@@ -76,8 +76,8 @@ namespace dgmpp {
 		use_ = decltype(use_)(0);
 		period_ = 1ms;
 		
-		auto isDisallowedOffense = owner_.isDisallowedOffense();
-		auto isDisallowedAssistance = owner_.isDisallowedAssistance();
+		auto isDisallowedOffense = owner_.isDisallowedOffense_();
+		auto isDisallowedAssistance = owner_.isDisallowedAssistance_();
 		auto disablePeriod = false;
 
 		for (auto module: modules) {
@@ -89,12 +89,12 @@ namespace dgmpp {
 			
 			if (isProjected) {
 				GigaJoule value = 0;
-				if (module->effect(EffectID::energyNosferatuFalloff))
-					value = module->attribute(AttributeID::powerTransferAmount)->value_();
-				else if (module->effect(EffectID::energyNeutralizerFalloff))
-					value = module->attribute(AttributeID::energyNeutralizerAmount)->value_();
-				else if (module->effect(EffectID::shipModuleRemoteCapacitorTransmitter))
-					value = -module->attribute(AttributeID::powerTransferAmount)->value_();
+				if (module->effect_(EffectID::energyNosferatuFalloff))
+					value = module->attribute_(AttributeID::powerTransferAmount)->value_();
+				else if (module->effect_(EffectID::energyNeutralizerFalloff))
+					value = module->attribute_(AttributeID::energyNeutralizerAmount)->value_();
+				else if (module->effect_(EffectID::shipModuleRemoteCapacitorTransmitter))
+					value = -module->attribute_(AttributeID::powerTransferAmount)->value_();
 				
 				if ((value > 0 && !isDisallowedOffense) || (value < 0 && !isDisallowedAssistance))
 					capNeed = value;
@@ -122,14 +122,14 @@ namespace dgmpp {
 			
 			
 			std::chrono::milliseconds reactivationTime(0);
-			if (auto attribute = module->attribute(AttributeID::moduleReactivationDelay))
+			if (auto attribute = module->attribute_(AttributeID::moduleReactivationDelay))
 				reactivationTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 			states.emplace_back(module->rawCycleTime() + reactivationTime, capNeed, clipSize);
 		}
 		
 		for (auto drone: drones) {
 			decltype(period_) cycleTime {drone->cycleTime_()};
-			auto capNeed = static_cast<GigaJoule>(drone->attribute(AttributeID::energyNeutralizerAmount)->value_());
+			auto capNeed = static_cast<GigaJoule>(drone->attribute_(AttributeID::energyNeutralizerAmount)->value_());
 
 			if ((capNeed > 0 && !isDisallowedAssistance) || (capNeed < 0 && !isDisallowedOffense)) {
 				use_ += make_rate(capNeed, cycleTime);
@@ -160,8 +160,8 @@ namespace dgmpp {
 	}
 
 	
-	void Capacitor::simulate() {
-		prepare();
+	void Capacitor::simulate_() {
+		prepare_();
 		if (states_.empty()) {
 			stableLevel_ = 1.0;
 			simulationEndTime_ = 0ms;

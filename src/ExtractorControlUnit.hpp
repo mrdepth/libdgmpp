@@ -34,9 +34,9 @@ namespace dgmpp {
 		std::list<std::unique_ptr<ProductionCycle>> cycles_;
 
 		using Facility::Facility;
-		virtual std::optional<std::chrono::seconds> nextUpdateTime() const noexcept override;
-		virtual int priority() const noexcept override { return -1000; }
-		virtual void update(std::chrono::seconds time) override;
+		virtual std::optional<std::chrono::seconds> nextUpdateTime_() const noexcept override;
+		virtual int priority_() const noexcept override { return -1000; }
+		virtual void update_(std::chrono::seconds time) override;
 	private:
 		friend class Planet;
 		
@@ -54,9 +54,9 @@ namespace dgmpp {
 		std::size_t totalYield_ = 0;
 		std::size_t totalWaste_ = 0;
 		
-		std::optional<Commodity> yieldAt(std::chrono::seconds time) const noexcept;
-		void finishCycle(ProductionCycle& cycle, std::chrono::seconds time);
-		ProductionCycle* startCycle(std::chrono::seconds time);
+		std::optional<Commodity> yieldAt_(std::chrono::seconds time) const noexcept;
+		void finishCycle_(ProductionCycle& cycle, std::chrono::seconds time);
+		ProductionCycle* startCycle_(std::chrono::seconds time);
 
 	};
 	

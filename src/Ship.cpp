@@ -32,23 +32,23 @@ namespace dgmpp {
 			ptr->parent_(this);
 		}
 		
-		if (auto area = other.area()) {
-			area_ = Area::Create(*area);
+		if (auto area = other.area_()) {
+			areaValue_ = Area::Create(*area);
 		}
 	}
 	
-	void Ship::setEnabled (bool enabled) {
-		if (isEnabled() == enabled)
-			return Type::setEnabled(enabled);
+	void Ship::setEnabled_ (bool enabled) {
+		if (isEnabled_() == enabled)
+			return Type::setEnabled_(enabled);
 		else
-			Type::setEnabled(enabled);
+			Type::setEnabled_(enabled);
 		
-		batchUpdates([&]() {
+		batchUpdates_([&]() {
 			std::for_each(modules_.begin(), modules_.end(), [enabled](auto& i) {
-				std::get<std::unique_ptr<Module>>(i)->setEnabled(enabled);
+				std::get<std::unique_ptr<Module>>(i)->setEnabled_(enabled);
 			});
 			std::for_each(drones_.begin(), drones_.end(), [enabled](auto& i) {
-				std::get<std::unique_ptr<Drone>>(i)->setEnabled(enabled);
+				std::get<std::unique_ptr<Drone>>(i)->setEnabled_(enabled);
 			});
 		});
 		
@@ -73,10 +73,10 @@ namespace dgmpp {
 			}
 
 			auto ptr = module.get();
-			ptr->socket(socket);
+			ptr->socket_(socket);
 			modules_.emplace_hint(l, module->slot(), socket, std::move(module));
 			
-			batchUpdates([&]() {
+			batchUpdates_([&]() {
 				ptr->parent_(this);
 				
 				if (state == Module::State::unknown) {
@@ -143,7 +143,7 @@ namespace dgmpp {
 				
 			}
 			auto ptr = drone.get();
-			ptr->squadronTag(squadronTag);
+			ptr->squadronTag_(squadronTag);
 			drones_.emplace(ptr->metaInfo().typeID, squadronTag, std::move(drone));
 			ptr->parent_(this);
 			return ptr;
@@ -180,7 +180,7 @@ namespace dgmpp {
 		groups.reserve(SDE::canFitShipGroupAttributes.size());
 		
 		for (auto id: SDE::canFitShipGroupAttributes) {
-			if (auto attribute = module->attribute(id)) {
+			if (auto attribute = module->attribute_(id)) {
 				groups.push_back(static_cast<GroupID>(static_cast<int>(attribute->value_())));
 			}
 		}
@@ -197,7 +197,7 @@ namespace dgmpp {
 		types.clear();
 		
 		for (auto id: SDE::canFitShipTypeAttributes) {
-			if (auto attribute = module->attribute(id)) {
+			if (auto attribute = module->attribute_(id)) {
 				types.push_back(static_cast<TypeID>(static_cast<int>(attribute->value_())));
 			}
 		}
@@ -213,10 +213,10 @@ namespace dgmpp {
 		
 		switch (module->slot()) {
 			case Module::Slot::subsystem: {
-				auto subSystemSlot = static_cast<int>(module->attribute(AttributeID::subSystemSlot)->value_());
-				auto v = modulesSlice(Module::Slot::subsystem);
+				auto subSystemSlot = static_cast<int>(module->attribute_(AttributeID::subSystemSlot)->value_());
+				auto v = modulesSlice_(Module::Slot::subsystem);
 				auto isFull = std::any_of(v.begin(), v.end(), [=](const auto& i) {
-					return static_cast<int>(std::get<std::unique_ptr<Module>>(i)->attribute(AttributeID::subSystemSlot)->value_()) == subSystemSlot;
+					return static_cast<int>(std::get<std::unique_ptr<Module>>(i)->attribute_(AttributeID::subSystemSlot)->value_()) == subSystemSlot;
 				});
 				if (isFull)
 					return false;
@@ -224,7 +224,7 @@ namespace dgmpp {
 			}
 				
 			case Module::Slot::rig: {
-				auto rigSize = static_cast<RigSize>(static_cast<int>(module->attribute(AttributeID::rigSize)->value_()));
+				auto rigSize = static_cast<RigSize>(static_cast<int>(module->attribute_(AttributeID::rigSize)->value_()));
 				if (rigSize != this->rigSize())
 					return false;
 				break;
@@ -233,7 +233,7 @@ namespace dgmpp {
 				break;
 		}
 		
-		if (auto attribute = this->attribute(AttributeID::maxGroupFitted)) {
+		if (auto attribute = attribute_(AttributeID::maxGroupFitted)) {
 			auto max = static_cast<std::size_t>(attribute->value_());
 			auto groupID = module->metaInfo().groupID;
 			for (const auto& i: modules_) {
@@ -244,7 +244,7 @@ namespace dgmpp {
 			}
 		}
 		
-		if (auto attribute = this->attribute(AttributeID::maxTypeFitted)) {
+		if (auto attribute = attribute_(AttributeID::maxTypeFitted)) {
 			auto max = static_cast<std::size_t>(attribute->value_());
 			auto typeID = module->metaInfo().typeID;
 			for (const auto& i: modules_) {
@@ -268,7 +268,7 @@ namespace dgmpp {
 		return false;
 	}
 	
-	slice<Ship::ModulesContainer::const_iterator> Ship::modulesSlice (Module::Slot slot) const noexcept {
+	slice<Ship::ModulesContainer::const_iterator> Ship::modulesSlice_ (Module::Slot slot) const noexcept {
 		return equal_range(modules_, std::make_tuple(slot));
 //		auto first = std::lower_bound(modules_.cbegin(), modules_.cend(), slot, [](auto a, auto b) {
 //			return a->slot() < b;
@@ -280,7 +280,7 @@ namespace dgmpp {
 	}
 	
 	std::vector<Module*> Ship::modules (Module::Slot slot) const {
-		auto s = modulesSlice(slot);
+		auto s = modulesSlice_(slot);
 		std::vector<Module*> result;
 		result.reserve(s.size());
 		std::transform(s.begin(), s.end(), std::back_inserter(result), [](const auto& i) { return std::get<std::unique_ptr<Module>>(i).get(); });
@@ -301,16 +301,16 @@ namespace dgmpp {
 		return result;
 	}
 	
-	Area* Ship::area(std::unique_ptr<Area>&& area) {
-		if (area_)
-			area_->parent_(nullptr);
+	Area* Ship::area_(std::unique_ptr<Area>&& area) {
+		if (areaValue_)
+			areaValue_->parent_(nullptr);
 		if (area) {
-			area_ = std::move(area);
-			area_->parent_(this);
+			areaValue_ = std::move(area);
+			areaValue_->parent_(this);
 		}
 		else
-			area_ = nullptr;
-		return area_.get();
+			areaValue_ = nullptr;
+		return areaValue_.get();
 	}
 	
 	bool Ship::factorReload_() const noexcept {
@@ -321,42 +321,42 @@ namespace dgmpp {
 	}
 
 
-	Type* Ship::domain (MetaInfo::Modifier::Domain domain) noexcept {
+	Type* Ship::domain_ (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::ship :
 				return this;
 			default:
-				return Type::domain(domain);
+				return Type::domain_(domain);
 		}
 	}
 	
 	RaceID Ship::raceID() {
-		return static_cast<RaceID>(static_cast<int>(attribute(AttributeID::raceID)->value_()));
+		return static_cast<RaceID>(static_cast<int>(attribute_(AttributeID::raceID)->value_()));
 	}
 	
 	std::vector<CategoryID> Ship::supportedDroneCategories() {
-		if (attribute(AttributeID::fighterCapacity))
+		if (attribute_(AttributeID::fighterCapacity))
 			return {CategoryID::fighter};
 		else
 			return {CategoryID::drone};
 	}
 	
 	Ship::RigSize Ship::rigSize() {
-		return static_cast<RigSize>(static_cast<int>(attribute(AttributeID::rigSize)->value_()));
+		return static_cast<RigSize>(static_cast<int>(attribute_(AttributeID::rigSize)->value_()));
 	}
 	
 	//Drones
 	std::size_t Ship::totalDroneSquadron (Drone::Squadron squadron) {
 		switch (squadron) {
 			case Drone::Squadron::heavy:
-				return static_cast<std::size_t>(attribute(AttributeID::fighterHeavySlots)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::fighterHeavySlots)->value_());
 			case Drone::Squadron::light:
-				return static_cast<std::size_t>(attribute(AttributeID::fighterLightSlots)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::fighterLightSlots)->value_());
 			case Drone::Squadron::support:
-				return static_cast<std::size_t>(attribute(AttributeID::fighterSupportSlots)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::fighterSupportSlots)->value_());
 			default:
-				if (auto character = domain(MetaInfo::Modifier::Domain::character)) {
-					return static_cast<std::size_t>(character->attribute(AttributeID::maxActiveDrones)->value_());
+				if (auto character = domain_(MetaInfo::Modifier::Domain::character)) {
+					return static_cast<std::size_t>(character->attribute_(AttributeID::maxActiveDrones)->value_());
 				}
 				else
 					return 0;
@@ -386,7 +386,7 @@ namespace dgmpp {
 	}
 	
 	std::size_t Ship::totalFighterLaunchTubes() {
-		return static_cast<std::size_t>(attribute(AttributeID::fighterTubes)->value_());
+		return static_cast<std::size_t>(attribute_(AttributeID::fighterTubes)->value_());
 	}
 	
 	std::size_t Ship::usedFighterLaunchTubes() {
@@ -403,19 +403,19 @@ namespace dgmpp {
 	std::size_t Ship::totalSlots (Module::Slot slot) {
 		switch (slot) {
 			case Module::Slot::hi:
-				return static_cast<std::size_t>(attribute(AttributeID::hiSlots)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::hiSlots)->value_());
 			case Module::Slot::med:
-				return static_cast<std::size_t>(attribute(AttributeID::medSlots)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::medSlots)->value_());
 			case Module::Slot::low:
-				return static_cast<std::size_t>(attribute(AttributeID::lowSlots)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::lowSlots)->value_());
 			case Module::Slot::rig:
-				return static_cast<std::size_t>(attribute(AttributeID::rigSlots)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::rigSlots)->value_());
 			case Module::Slot::subsystem:
-				return static_cast<std::size_t>(attribute(AttributeID::maxSubSystems)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::maxSubSystems)->value_());
 			case Module::Slot::mode:
-				return static_cast<std::size_t>(attribute(AttributeID::tacticalModes)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::tacticalModes)->value_());
 			case Module::Slot::service:
-				return static_cast<std::size_t>(attribute(AttributeID::serviceSlots)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::serviceSlots)->value_());
 			default:
 				return 0;
 		}
@@ -430,9 +430,9 @@ namespace dgmpp {
 			case Module::Hardpoint::none:
 				return std::numeric_limits<std::size_t>::max();
 			case Module::Hardpoint::launcher:
-				return static_cast<std::size_t>(attribute(AttributeID::launcherSlotsLeft)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::launcherSlotsLeft)->value_());
 			case Module::Hardpoint::turret:
-				return static_cast<std::size_t>(attribute(AttributeID::turretSlotsLeft)->value_());
+				return static_cast<std::size_t>(attribute_(AttributeID::turretSlotsLeft)->value_());
 			default:
 				return 0;
 		}
@@ -443,103 +443,103 @@ namespace dgmpp {
 	}
 	
 	CalibrationPoints Ship::usedCalibration() {
-		auto rigs = modulesSlice(Module::Slot::rig);
+		auto rigs = modulesSlice_(Module::Slot::rig);
 		return std::accumulate(rigs.begin(), rigs.end(), CalibrationPoints(0), [](auto sum, const auto& i) {
 			return std::get<std::unique_ptr<Module>>(i)->calibrationUse() + sum;
 		});
 	}
 	
 	CalibrationPoints Ship::totalCalibration() {
-		return attribute(AttributeID::upgradeCapacity)->value_();
+		return attribute_(AttributeID::upgradeCapacity)->value_();
 	}
 	
 	GigaJoule Ship::usedPowerGrid() {
-		return attribute(AttributeID::powerLoad)->value_();
+		return attribute_(AttributeID::powerLoad)->value_();
 	}
 	
 	GigaJoule Ship::totalPowerGrid() {
-		return attribute(AttributeID::powerOutput)->value_();
+		return attribute_(AttributeID::powerOutput)->value_();
 	}
 	
 	Teraflops Ship::usedCPU() {
-		return attribute(AttributeID::cpuLoad)->value_();
+		return attribute_(AttributeID::cpuLoad)->value_();
 	}
 	
 	Teraflops Ship::totalCPU() {
-		return attribute(AttributeID::cpuOutput)->value_();
+		return attribute_(AttributeID::cpuOutput)->value_();
 	}
 	
 	MegabitsPerSecond Ship::usedDroneBandwidth() {
 		return std::accumulate(drones_.begin(), drones_.end(), MegabitsPerSecond(0), [](auto sum, const auto& i) {
 			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
-			return drone.active_() ? sum + drone.attribute(AttributeID::droneBandwidthUsed)->value_() : sum;
+			return drone.active_() ? sum + drone.attribute_(AttributeID::droneBandwidthUsed)->value_() : sum;
 		});
 	}
 	
 	MegabitsPerSecond Ship::totalDroneBandwidth() {
-		return attribute(AttributeID::droneBandwidth)->value_();
+		return attribute_(AttributeID::droneBandwidth)->value_();
 	}
 	
 	CubicMeter Ship::usedDroneBay() {
 		return std::accumulate(drones_.begin(), drones_.end(), CubicMeter(0), [](auto sum, const auto& i) {
 			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
-			return drone.squadron_() == Drone::Squadron::none ? sum + drone.attribute(AttributeID::volume)->value_() : sum;
+			return drone.squadron_() == Drone::Squadron::none ? sum + drone.attribute_(AttributeID::volume)->value_() : sum;
 		});
 	}
 	
 	CubicMeter Ship::totalDroneBay() {
-		return attribute(AttributeID::droneCapacity)->value_();
+		return attribute_(AttributeID::droneCapacity)->value_();
 	}
 	
 	CubicMeter Ship::usedFighterHangar() {
 		return std::accumulate(drones_.begin(), drones_.end(), CubicMeter(0), [](auto sum, const auto& i) {
 			auto& drone = *std::get<std::unique_ptr<Drone>>(i);
-			return drone.squadron_() != Drone::Squadron::none ? sum + drone.attribute(AttributeID::volume)->value_() : sum;
+			return drone.squadron_() != Drone::Squadron::none ? sum + drone.attribute_(AttributeID::volume)->value_() : sum;
 		});
 	}
 	
 	CubicMeter Ship::totalFighterHangar() {
-		return attribute(AttributeID::fighterCapacity)->value_();
+		return attribute_(AttributeID::fighterCapacity)->value_();
 	}
 	
 	CubicMeter Ship::cargoCapacity() {
-		return attribute(AttributeID::capacity)->value_();
+		return attribute_(AttributeID::capacity)->value_();
 	}
 	
 	CubicMeter Ship::oreHoldCapacity() {
-		return attribute(AttributeID::specialOreHoldCapacity)->value_();
+		return attribute_(AttributeID::specialOreHoldCapacity)->value_();
 	}
 	
 	//Tank
 	Resistances Ship::resistances() {
 		Resistances resistances;
-		resistances.armor.em		 = 1.0 - attribute(AttributeID::armorEmDamageResonance)->value_();
-		resistances.armor.explosive = 1.0 - attribute(AttributeID::armorExplosiveDamageResonance)->value_();
-		resistances.armor.kinetic   = 1.0 - attribute(AttributeID::armorKineticDamageResonance)->value_();
-		resistances.armor.thermal   = 1.0 - attribute(AttributeID::armorThermalDamageResonance)->value_();
+		resistances.armor.em		 = 1.0 - attribute_(AttributeID::armorEmDamageResonance)->value_();
+		resistances.armor.explosive = 1.0 - attribute_(AttributeID::armorExplosiveDamageResonance)->value_();
+		resistances.armor.kinetic   = 1.0 - attribute_(AttributeID::armorKineticDamageResonance)->value_();
+		resistances.armor.thermal   = 1.0 - attribute_(AttributeID::armorThermalDamageResonance)->value_();
 		
-		resistances.shield.em		  = 1.0 - attribute(AttributeID::shieldEmDamageResonance)->value_();
-		resistances.shield.explosive = 1.0 - attribute(AttributeID::shieldExplosiveDamageResonance)->value_();
-		resistances.shield.kinetic   = 1.0 - attribute(AttributeID::shieldKineticDamageResonance)->value_();
-		resistances.shield.thermal   = 1.0 - attribute(AttributeID::shieldThermalDamageResonance)->value_();
+		resistances.shield.em		  = 1.0 - attribute_(AttributeID::shieldEmDamageResonance)->value_();
+		resistances.shield.explosive = 1.0 - attribute_(AttributeID::shieldExplosiveDamageResonance)->value_();
+		resistances.shield.kinetic   = 1.0 - attribute_(AttributeID::shieldKineticDamageResonance)->value_();
+		resistances.shield.thermal   = 1.0 - attribute_(AttributeID::shieldThermalDamageResonance)->value_();
 		
-		resistances.hull.em		= 1.0 - attribute(AttributeID::emDamageResonance)->value_();
-		resistances.hull.explosive = 1.0 - attribute(AttributeID::explosiveDamageResonance)->value_();
-		resistances.hull.kinetic   = 1.0 - attribute(AttributeID::kineticDamageResonance)->value_();
-		resistances.hull.thermal   = 1.0 - attribute(AttributeID::thermalDamageResonance)->value_();
+		resistances.hull.em		= 1.0 - attribute_(AttributeID::emDamageResonance)->value_();
+		resistances.hull.explosive = 1.0 - attribute_(AttributeID::explosiveDamageResonance)->value_();
+		resistances.hull.kinetic   = 1.0 - attribute_(AttributeID::kineticDamageResonance)->value_();
+		resistances.hull.thermal   = 1.0 - attribute_(AttributeID::thermalDamageResonance)->value_();
 		return resistances;
 	}
 	
 	Tank Ship::tank() {
 		using namespace std::chrono_literals;
 		
-		auto capacity = attribute(AttributeID::shieldCapacity)->value_();
-		auto rechargeTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute(AttributeID::shieldRechargeRate)->value_()));
+		auto capacity = attribute_(AttributeID::shieldCapacity)->value_();
+		auto rechargeTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute_(AttributeID::shieldRechargeRate)->value_()));
 		
 		auto shieldRecharge  = 10.0 * config::shieldPeakRecharge * (1 - config::shieldPeakRecharge) * capacity;
-		HP armorRepair = fabs(attribute(AttributeID::armorDamage)->value_());
-		HP hullRepair = fabs(attribute(AttributeID::damage)->value_());
-		HP shieldRepair = fabs(attribute(AttributeID::shieldCharge)->value_());
+		HP armorRepair = fabs(attribute_(AttributeID::armorDamage)->value_());
+		HP hullRepair = fabs(attribute_(AttributeID::damage)->value_());
+		HP shieldRepair = fabs(attribute_(AttributeID::shieldCharge)->value_());
 
 		return {make_rate(shieldRecharge, rechargeTime),
 			make_rate(shieldRepair, 1s),
@@ -581,7 +581,7 @@ namespace dgmpp {
 			auto sustainableTank = tank();
 			std::set<Repairer, std::greater<>> repairers;
 			
-			auto me = domain(MetaInfo::Modifier::Domain::character);
+			auto me = domain_(MetaInfo::Modifier::Domain::character);
 			auto capUse = capacitor().use();
 			auto capRecharge = capacitor().recharge();
 			
@@ -592,8 +592,8 @@ namespace dgmpp {
 			};
 			
 			for (auto& i: t) {
-				for (auto modifier: modifiers(attribute(std::get<AttributeID>(i))->metaInfo())) {
-					auto isProjected = me && !modifier->owner().isDescendant(*me);
+				for (auto modifier: modifiers_(attribute_(std::get<AttributeID>(i))->metaInfo())) {
+					auto isProjected = me && !modifier->owner().isDescendant_(*me);
 					if (auto module = dynamic_cast<Module*>(&modifier->owner()); module && !isProjected) {
 						switch (modifier->metaInfo().association) {
 							case MetaInfo::Modifier::Association::addRate:
@@ -645,9 +645,9 @@ namespace dgmpp {
 	
 	HitPoints Ship::hitPoints() {
 		return {
-			attribute(AttributeID::shieldCapacity)->value_(),
-			attribute(AttributeID::armorHP)->value_(),
-			attribute(AttributeID::hp)->value_()
+			attribute_(AttributeID::shieldCapacity)->value_(),
+			attribute_(AttributeID::armorHP)->value_(),
+			attribute_(AttributeID::hp)->value_()
 		};
 	}
 	
@@ -728,8 +728,8 @@ namespace dgmpp {
 	}
 	
 	AstronomicalUnitsPerSecond Ship::warpSpeed() {
-		auto base = AstronomicalUnitsPerSecond(attribute(AttributeID::baseWarpSpeed)->value_());
-		auto multiplier = attribute(AttributeID::warpSpeedMultiplier)->value_();
+		auto base = AstronomicalUnitsPerSecond(attribute_(AttributeID::baseWarpSpeed)->value_());
+		auto multiplier = attribute_(AttributeID::warpSpeedMultiplier)->value_();
 		if (base.count() == 0.0)
 			base = AstronomicalUnitsPerSecond(1);
 		if (multiplier == 0.0)
@@ -740,28 +740,28 @@ namespace dgmpp {
 	
 	AstronomicalUnit Ship::maxWarpDistance() {
 		auto capacity = capacitor().capacity();
-		auto warpCapacitorNeed = attribute(AttributeID::warpCapacitorNeed)->value_();
+		auto warpCapacitorNeed = attribute_(AttributeID::warpCapacitorNeed)->value_();
 		return capacity / (mass() * warpCapacitorNeed);
 	}
 	
 	MetersPerSecond Ship::velocity() {
-		return MetersPerSecond(attribute(AttributeID::maxVelocity)->value_());
+		return MetersPerSecond(attribute_(AttributeID::maxVelocity)->value_());
 	}
 	
 	Meter Ship::signatureRadius() {
-		return attribute(AttributeID::signatureRadius)->value_();
+		return attribute_(AttributeID::signatureRadius)->value_();
 	}
 	
 	Kilogram Ship::mass() {
-		return attribute(AttributeID::mass)->value_();
+		return attribute_(AttributeID::mass)->value_();
 	}
 	
 	CubicMeter Ship::volume() {
-		return attribute(AttributeID::volume)->value_();
+		return attribute_(AttributeID::volume)->value_();
 	}
 	
 	Multiplier Ship::agility() {
-		return attribute(AttributeID::agility)->value_();
+		return attribute_(AttributeID::agility)->value_();
 	}
 	
 	MetersPerSecond Ship::maxVelocityInOrbit(Meter r) {
@@ -807,9 +807,9 @@ namespace dgmpp {
 	
 	//Targeting
 	std::size_t Ship::maxTargets() {
-		auto maxTargets = static_cast<std::size_t>(attribute(AttributeID::maxLockedTargets)->value_());
-		if (auto character = domain(MetaInfo::Modifier::Domain::character)) {
-			auto maxTargets2 = static_cast<std::size_t>(character->attribute(AttributeID::maxLockedTargets)->value_());
+		auto maxTargets = static_cast<std::size_t>(attribute_(AttributeID::maxLockedTargets)->value_());
+		if (auto character = domain_(MetaInfo::Modifier::Domain::character)) {
+			auto maxTargets2 = static_cast<std::size_t>(character->attribute_(AttributeID::maxLockedTargets)->value_());
 			return std::min(maxTargets, maxTargets2);
 		}
 		else
@@ -817,12 +817,12 @@ namespace dgmpp {
 	}
 	
 	Meter Ship::maxTargetRange() {
-		return attribute(AttributeID::maxTargetRange)->value_();
+		return attribute_(AttributeID::maxTargetRange)->value_();
 	}
 	
 	Points Ship::scanStrength() {
 		return std::accumulate(SDE::scanStrengthAttributes.begin(), SDE::scanStrengthAttributes.end(), Points(0), [&] (auto strength, auto attributeID) {
-			return std::max(strength, attribute(attributeID)->value_());
+			return std::max(strength, attribute_(attributeID)->value_());
 		});
 	}
 	
@@ -831,7 +831,7 @@ namespace dgmpp {
 		auto scanType = ScanType::multispectral;
 		
 		for (auto attributeID: SDE::scanStrengthAttributes) {
-			auto strength = attribute(attributeID)->value_();
+			auto strength = attribute_(attributeID)->value_();
 			if (strength > maxStrength) {
 				maxStrength = strength;
 				switch (attributeID) {
@@ -863,14 +863,14 @@ namespace dgmpp {
 	}
 	
 	Millimeter Ship::scanResolution() {
-		return attribute(AttributeID::scanResolution)->value_();
+		return attribute_(AttributeID::scanResolution)->value_();
 	}
 
 	
 	
-	void Ship::reset() {
+	void Ship::reset_() {
 //		std::cout << "reset" << std::endl;
-		Type::reset();
+		Type::reset_();
 		isDisallowedAssistanceValue_ = std::nullopt;
 		isDisallowedOffenseValue_ = std::nullopt;
 		const auto slots = {Module::Slot::hi,
@@ -883,46 +883,46 @@ namespace dgmpp {
 			Module::Slot::starbaseStructure};
 		for (auto slot: slots) {
 			auto n = totalSlots(slot);
-			for (const auto& i: modulesSlice(slot)) {
-				std::get<std::unique_ptr<Module>>(i)->fail(n <= 0);
+			for (const auto& i: modulesSlice_(slot)) {
+				std::get<std::unique_ptr<Module>>(i)->fail_(n <= 0);
 				n--;
 			}
 		}
 		
 		for (const auto& i: modules_) {
-			std::get<std::unique_ptr<Module>>(i)->adjustState();
+			std::get<std::unique_ptr<Module>>(i)->adjustState_();
 		}
-		capacitor_.reset();
-		heatSimulator_.reset();
+		capacitor_.reset_();
+		heatSimulator_.reset_();
 	}
 	
-	void Ship::project(Module* module) {
+	void Ship::project_(Module* module) {
 		assert(std::find(projectedModules_.begin(), projectedModules_.end(), module) == projectedModules_.end());
 		projectedModules_.push_back(module);
 	}
 	
-	void Ship::project(Drone* drone) {
+	void Ship::project_(Drone* drone) {
 		assert(std::find(projectedDrones_.begin(), projectedDrones_.end(), drone) == projectedDrones_.end());
 		projectedDrones_.push_back(drone);
 	}
 	
-	void Ship::removeProjected(Module* module) {
+	void Ship::removeProjected_(Module* module) {
 		projectedModules_.remove(module);
 	}
 	
-	void Ship::removeProjected(Drone* drone) {
+	void Ship::removeProjected_(Drone* drone) {
 		projectedDrones_.remove(drone);
 	}
 
-	bool Ship::isDisallowedAssistance() {
+	bool Ship::isDisallowedAssistance_() {
 		if (!isDisallowedAssistanceValue_){
-			if (auto attribute = this->attribute(AttributeID::disallowAssistance); attribute->value_() != 0)
+			if (auto attribute = attribute_(AttributeID::disallowAssistance); attribute->value_() != 0)
 				isDisallowedAssistanceValue_ = true;
 			else {
 				auto i = std::find_if(modules_.begin(), modules_.end(), [](const auto& i) {
 					auto module = std::get<std::unique_ptr<Module>>(i).get();
 					if (module->state() >= Module::State::active) {
-						if (auto attribute = module->attribute(AttributeID::disallowAssistance); attribute && attribute->value_() != 0)
+						if (auto attribute = module->attribute_(AttributeID::disallowAssistance); attribute && attribute->value_() != 0)
 							return true;
 						if (module->metaInfo().groupID == GroupID::warpDisruptFieldGenerator && module->charge() != nullptr)
 							return true;
@@ -935,17 +935,17 @@ namespace dgmpp {
 		return *isDisallowedAssistanceValue_;
 	}
 	
-	bool Ship::isDisallowedOffense() {
+	bool Ship::isDisallowedOffense_() {
 		if (!isDisallowedOffenseValue_)
 		{
-			if (auto attribute = this->attribute(AttributeID::disallowOffensiveModifiers); attribute->value_() != 0)
+			if (auto attribute = attribute_(AttributeID::disallowOffensiveModifiers); attribute->value_() != 0)
 				isDisallowedOffenseValue_ = true;
 			else
 			{
 				auto i = std::find_if(modules_.begin(), modules_.end(), [](const auto& i) {
 					auto module = std::get<std::unique_ptr<Module>>(i).get();
 					if (module->state() >= Module::State::active) {
-						if (auto attribute = module->attribute(AttributeID::disallowOffensiveModifiers); attribute && attribute->value_() != 0)
+						if (auto attribute = module->attribute_(AttributeID::disallowOffensiveModifiers); attribute && attribute->value_() != 0)
 							return true;
 					}
 					return false;

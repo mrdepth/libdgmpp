@@ -50,9 +50,9 @@ namespace dgmpp {
 
 
 	protected:
-		virtual void setEnabled (bool enabled) override;
-		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
-		virtual void reset() override;
+		virtual void setEnabled_ (bool enabled) override;
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
+		virtual void reset_() override;
 	private:
 		
 		struct SlotCompare {

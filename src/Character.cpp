@@ -56,10 +56,10 @@ namespace dgmpp {
 	}
 	
 	Ship* Character::ship_(std::unique_ptr<Ship>&& ship) {
-		batchUpdates([&]() {
-			auto enabled = isEnabled();
+		batchUpdates_([&]() {
+			auto enabled = isEnabled_();
 			if (enabled)
-				setEnabled(false);
+				setEnabled_(false);
 			
 			if (shipValue_) {
 				shipValue_->parent_(nullptr);
@@ -72,7 +72,7 @@ namespace dgmpp {
 			}
 			
 			if (enabled)
-				setEnabled(true);
+				setEnabled_(true);
 		});
 		
 		return shipValue_.get();
@@ -82,26 +82,26 @@ namespace dgmpp {
 		return dynamic_cast<Structure*>(ship(std::move(structure)));
 	}
 	
-	Type* Character::domain(MetaInfo::Modifier::Domain domain) noexcept {
+	Type* Character::domain_(MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::character:
 				return this;
 			case MetaInfo::Modifier::Domain::ship:
 				return shipValue_.get();
 			default:
-				return Type::domain(domain);
+				return Type::domain_(domain);
 		}
 	}
 	
-	void Character::reset() {
+	void Character::reset_() {
 		if (shipValue_) {
-			shipValue_->reset();
+			shipValue_->reset_();
 		}
 	}
 	
 	void Character::setSkillLevels(int level) {
 		if (level >= 0 && level <= 5) {
-			batchUpdates([&]() {
+			batchUpdates_([&]() {
 				for (const auto& i: skills_) {
 					i.second->level(level);
 				}
@@ -200,28 +200,28 @@ namespace dgmpp {
 	}
 	
 	Meter Character::droneControlDistance() {
-		return attribute(AttributeID::droneControlDistance)->value_();
+		return attribute_(AttributeID::droneControlDistance)->value_();
 	}
 
 	
-	void Character::setEnabled (bool enabled) {
-		if (isEnabled() == enabled)
-			return Type::setEnabled(enabled);
+	void Character::setEnabled_ (bool enabled) {
+		if (isEnabled_() == enabled)
+			return Type::setEnabled_(enabled);
 		else
-			Type::setEnabled(enabled);
+			Type::setEnabled_(enabled);
 	
-		batchUpdates([=]() {
+		batchUpdates_([=]() {
 			std::for_each(skills_.begin(), skills_.end(), [enabled](auto& i) {
-				i.second->setEnabled(enabled);
+				i.second->setEnabled_(enabled);
 			});
 			std::for_each(implants_.begin(), implants_.end(), [enabled](auto& i) {
-				i->setEnabled(enabled);
+				i->setEnabled_(enabled);
 			});
 			std::for_each(boosters_.begin(), boosters_.end(), [enabled](auto& i) {
-				i->setEnabled(enabled);
+				i->setEnabled_(enabled);
 			});
 			if (shipValue_)
-				shipValue_->setEnabled(enabled);
+				shipValue_->setEnabled_(enabled);
 		});
 	}
 }

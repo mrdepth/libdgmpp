@@ -78,7 +78,7 @@ namespace dgmpp {
 	Attribute::Attribute(const MetaInfo::Attribute& metaInfo, Float initialValue, Type& owner)
 	: metaInfo_(metaInfo), initialValue_(initialValue), owner_(owner) {
 		if (metaInfo.maxAttributeID != AttributeID::none) {
-			maxAttribute_ = owner.attribute(metaInfo.maxAttributeID);
+			maxAttribute_ = owner.attribute_(metaInfo.maxAttributeID);
 		}
 	}
 	
@@ -112,7 +112,7 @@ namespace dgmpp {
 	
 	Attribute& Attribute::operator= (std::optional<Float>&& value) noexcept {
 		forcedValue_ = std::move(value);
-		owner().resetCache();
+		owner().resetCache_();
 		return *this;
 	}
 	
@@ -128,12 +128,12 @@ namespace dgmpp {
 #endif
 			
 			auto value = initialValue_;
-			auto modifiers = owner().modifiers(metaInfo());
+			auto modifiers = owner().modifiers_(metaInfo());
 			bool isDisallowedAssistance;
 			bool isDisallowedOffense;
 			if (metaInfo().attributeID != AttributeID::disallowAssistance && metaInfo().attributeID != AttributeID::disallowOffensiveModifiers) {
-				isDisallowedAssistance = owner().isDisallowedAssistance();
-				isDisallowedOffense = owner().isDisallowedOffense();
+				isDisallowedAssistance = owner().isDisallowedAssistance_();
+				isDisallowedOffense = owner().isDisallowedOffense_();
 			}
 			else {
 				isDisallowedAssistance = false;
@@ -142,14 +142,14 @@ namespace dgmpp {
 			const bool isStackable = metaInfo().isStackable;
 			const bool highIsGood = metaInfo().highIsGood;
 			
-			auto character = owner().domain(MetaInfo::Modifier::Domain::character);
+			auto character = owner().domain_(MetaInfo::Modifier::Domain::character);
 			
 			auto begin = modifiers.begin();
 			auto end = modifiers.end();
 			if (character) {
 				end = std::partition(begin, end, [=](const auto modifier) {
 					const auto& affector = modifier->owner();
-					const auto isProjected = !affector.isDescendant(*character);
+					const auto isProjected = !affector.isDescendant_(*character);
 					return !(isProjected &&
 							 ((isDisallowedOffense && modifier->effect().metaInfo().isOffensive) ||
 							  (isDisallowedAssistance && modifier->effect().metaInfo().isAssistance)));
@@ -255,7 +255,7 @@ namespace dgmpp {
 			}
 //			std::cout << static_cast<int>(metaInfo().attributeID) << ": " << value << std::endl;
 			calculatedValue_ = value;
-			owner_.cache().add(this);
+			owner_.cache_().add(this);
 #if DEBUG
 			recursionFlag_ = false;
 #endif

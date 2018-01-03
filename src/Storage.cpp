@@ -9,8 +9,8 @@
 
 namespace dgmpp {
     
-    void Storage::update(std::chrono::seconds time) {
-        Facility::update(time);
+    void Storage::update_(std::chrono::seconds time) {
+        Facility::update_(time);
         
         if (!states_.empty()) {
             const auto& state = states_.back();

@@ -13,7 +13,7 @@ namespace dgmpp {
 	
 	class Gang final: public Type {
 	public:
-		Gang(): Type(TypeID::none) { setEnabled(true); }
+		Gang(): Type(TypeID::none) { setEnabled_(true); }
 		Gang(const Gang& other);
 
 		static std::unique_ptr<Gang> Create() { return std::unique_ptr<Gang>(new Gang); }
@@ -34,8 +34,8 @@ namespace dgmpp {
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 
 	protected:
-		virtual void setEnabled (bool enabled) override;
-		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
+		virtual void setEnabled_ (bool enabled) override;
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
 		
 	private:
 		friend class WarfareBuffEffect;
@@ -44,7 +44,7 @@ namespace dgmpp {
 		bool factorReloadValue_;
 		std::unique_ptr<Area> area_;
 
-		bool factorReload_()		const noexcept	{ return factorReloadValue_; }
+		bool factorReload_() const noexcept	{ return factorReloadValue_; }
 		void factorReload_ (bool factorReload) noexcept;// { factorReloadValue_ = factorReload; }
 };
 }

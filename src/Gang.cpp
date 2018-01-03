@@ -59,7 +59,7 @@ namespace dgmpp {
 			area_ = Area::Create(*area);
 		}
 
-		setEnabled(other.isEnabled());
+		setEnabled_(other.isEnabled_());
 	}
 	
 	Character* Gang::add(std::unique_ptr<Character>&& pilot) {
@@ -74,7 +74,7 @@ namespace dgmpp {
 		assert(pilot != nullptr);
 		pilot->parent_(nullptr);
 //		if (pilot->isEnabled())
-//			pilot->setEnabled(false);
+//			pilot->setEnabled_(false);
 		pilots_.remove_if([=](const auto& i) { return i.get() == pilot; });
 	}
 	
@@ -85,23 +85,23 @@ namespace dgmpp {
 		return result;
 	}
 	
-	Type* Gang::domain(MetaInfo::Modifier::Domain domain) noexcept {
+	Type* Gang::domain_(MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::gang:
 				return this;
 			default:
-				return Type::domain(domain);
+				return Type::domain_(domain);
 		}
 	}
 	
-	void Gang::setEnabled (bool enabled) {
-		if (isEnabled() == enabled)
-			return Type::setEnabled(enabled);
+	void Gang::setEnabled_ (bool enabled) {
+		if (isEnabled_() == enabled)
+			return Type::setEnabled_(enabled);
 		else
-			Type::setEnabled(enabled);
+			Type::setEnabled_(enabled);
 		
 		std::for_each(pilots_.begin(), pilots_.end(), [enabled](auto& i) {
-			i->setEnabled(enabled);
+			i->setEnabled_(enabled);
 		});
 	}
 
@@ -117,9 +117,9 @@ namespace dgmpp {
 		for (const auto& pilot: pilots_) {
 			if (auto ship = pilot->ship_()) {
 				if (area_)
-					ship->area(Area::Create(*area_));
+					ship->area_(Area::Create(*area_));
 				else
-					ship->area(nullptr);
+					ship->area_(nullptr);
 			}
 		}
 		return area_.get();
@@ -127,8 +127,8 @@ namespace dgmpp {
 	
 	void Gang::factorReload_(bool factorReload) noexcept {
 		factorReloadValue_ = factorReload;
-		if (isEnabled())
-			resetCache();
+		if (isEnabled_())
+			resetCache_();
 	}
 }
 

@@ -27,14 +27,14 @@ namespace dgmpp {
 		
 		if (flags_.isCalculated_)
 			return;
-		heatGenerationMultiplier_ = owner_.attribute(AttributeID::heatGenerationMultiplier)->value_();
+		heatGenerationMultiplier_ = owner_.attribute_(AttributeID::heatGenerationMultiplier)->value_();
 		
 		for (auto slot: {Module::Slot::hi, Module::Slot::med, Module::Slot::low})
-			run(slot);
+			run_(slot);
 		flags_.isCalculated_ = true;
 	}
 	
-	void HeatSimulator::run(Module::Slot slot) {
+	void HeatSimulator::run_(Module::Slot slot) {
 		const auto totalSlots = owner_.totalSlots(slot);
 
 		auto modules = owner_.modules(slot);
@@ -48,7 +48,7 @@ namespace dgmpp {
 		const auto onlineModules = std::count_if(modules.begin(), modules.end(), [](auto i) { return i->state() >= Module::State::online; });
 		const auto heatAbsorbtionRateModifier = std::accumulate(modules.begin(), modules.end(), Float(0), [](auto sum, auto i) {
 			return i->state() == Module::State::overloaded
-			? sum + i->attribute(AttributeID::heatAbsorbtionRateModifier)->value_()
+			? sum + i->attribute_(AttributeID::heatAbsorbtionRateModifier)->value_()
 			: sum;
 		});
 		const auto heatGeneration = heatAbsorbtionRateModifier * heatGenerationMultiplier_;
@@ -57,16 +57,16 @@ namespace dgmpp {
 		Float heatAttenuation = 0;
 		switch (slot) {
 			case Module::Slot::hi:
-				heatCapacity = owner_.attribute(AttributeID::heatCapacityHi)->value_() / 100.0;
-				heatAttenuation = owner_.attribute(AttributeID::heatAttenuationHi)->value_();
+				heatCapacity = owner_.attribute_(AttributeID::heatCapacityHi)->value_() / 100.0;
+				heatAttenuation = owner_.attribute_(AttributeID::heatAttenuationHi)->value_();
 				break;
 			case Module::Slot::med:
-				heatCapacity = owner_.attribute(AttributeID::heatCapacityMed)->value_() / 100.0;
-				heatAttenuation = owner_.attribute(AttributeID::heatAttenuationMed)->value_();
+				heatCapacity = owner_.attribute_(AttributeID::heatCapacityMed)->value_() / 100.0;
+				heatAttenuation = owner_.attribute_(AttributeID::heatAttenuationMed)->value_();
 				break;
 			case Module::Slot::low:
-				heatCapacity = owner_.attribute(AttributeID::heatCapacityLow)->value_() / 100.0;
-				heatAttenuation = owner_.attribute(AttributeID::heatAttenuationLow)->value_();
+				heatCapacity = owner_.attribute_(AttributeID::heatCapacityLow)->value_() / 100.0;
+				heatAttenuation = owner_.attribute_(AttributeID::heatAttenuationLow)->value_();
 				break;
 			default:
 				break;
@@ -78,9 +78,9 @@ namespace dgmpp {
 		c.reserve(modules.size());
 
 		for (auto i: modules) {
-			hp[i->socket()] = std::make_pair(i->attribute(AttributeID::hp)->value_(), i);
+			hp[i->socket()] = std::make_pair(i->attribute_(AttributeID::hp)->value_(), i);
 			if (i->state() == Module::State::overloaded) {
-				c.emplace_back(i->rawCycleTime(), i->reloadTime(), i->attribute(AttributeID::heatDamage)->value_(), i->shots(), i->socket());
+				c.emplace_back(i->rawCycleTime(), i->reloadTime(), i->attribute_(AttributeID::heatDamage)->value_(), i->shots(), i->socket());
 			}
 		}
 		if (c.empty())
@@ -103,7 +103,7 @@ namespace dgmpp {
 					auto range = std::abs(i - static_cast<int>(state.socket));
 					hp[i].first -= damageProbability(h, range, onlineModules, totalSlots, heatAttenuation) * state.heatDamage;
 					if (hp[i].first <= 0) {
-						hp[i].second->lifeTime (tNow);
+						hp[i].second->lifeTime_ (tNow);
 						dead++;
 					}
 				}

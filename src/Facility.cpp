@@ -117,7 +117,7 @@ namespace dgmpp {
 //			return std::nullopt;
 	}
 
-	void Facility::update(std::chrono::seconds time) {
+	void Facility::update_ (std::chrono::seconds time) {
 		for (const auto& output: outputs_)
 			output.update(time);
 	}

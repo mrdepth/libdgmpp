@@ -15,7 +15,7 @@ namespace dgmpp {
 		static std::unique_ptr<Area> Create (TypeID typeID) { return std::unique_ptr<Area>(new Area(typeID)); }
 		static std::unique_ptr<Area> Create (const Area& other) { return std::unique_ptr<Area>(new Area(other)); }
 	protected:
-		virtual void setEnabled (bool enabled) override;
+		virtual void setEnabled_ (bool enabled) override;
 	private:
 		friend class Ship;
 		friend class Gang;

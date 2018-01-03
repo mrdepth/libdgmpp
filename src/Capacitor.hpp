@@ -21,7 +21,7 @@ namespace dgmpp {
 		bool factorReload() const noexcept { return flags_.factorReload; }
 		void factorReload (bool factorReload) noexcept {
 			flags_.factorReload = factorReload;
-			reset();
+			reset_();
 		}
 
 		GigaJoule capacity();
@@ -82,8 +82,8 @@ namespace dgmpp {
 			flags_.isCalculated_ = false;
 		}
 		
-		void reset() noexcept { flags_.isCalculated_ = false; }
-		void prepare();
-		void simulate();
+		void reset_() noexcept { flags_.isCalculated_ = false; }
+		void prepare_();
+		void simulate_();
 	};
 }

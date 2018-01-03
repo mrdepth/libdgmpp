@@ -24,7 +24,7 @@ namespace dgmpp {
 		friend class Character;
 		
 		Implant (TypeID typeID) : Type(typeID) {
-			slot_ = static_cast<Slot>(attribute(AttributeID::implantness)->value_());
+			slot_ = static_cast<Slot>(attribute_(AttributeID::implantness)->value_());
 		}
 		
 		Implant (const Implant& other) : Type(other) {

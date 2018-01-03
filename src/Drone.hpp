@@ -51,24 +51,21 @@ namespace dgmpp {
 		CubicMeterPerSecond miningYield();
 
 	protected:
-		virtual void setEnabled (bool enabled) override;
-		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
-		
-		bool isAssistance() const noexcept	{ return flags_.isAssistance; }
-		bool isOffensive() const noexcept	{ return flags_.isOffensive; }
-		bool dealsDamage() const noexcept	{ return flags_.dealsDamage; }
+		virtual void setEnabled_ (bool enabled) override;
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
 
-	private:
-		friend class Ship;
-		friend class Capacitor;
-		friend class Gang;
-		
 		struct {
 			bool active : 1;
 			bool isAssistance : 1;
 			bool isOffensive : 1;
 			bool dealsDamage : 1;
 		} flags_;
+
+	private:
+		friend class Ship;
+		friend class Capacitor;
+		friend class Gang;
+		
 		
 		SquadronTag squadronTagValue_ = anySquadronTag;
 		Squadron squadronValue_;
@@ -84,7 +81,7 @@ namespace dgmpp {
 		Squadron squadron_() const noexcept { return squadronValue_; }
 		std::size_t squadronSize_();
 		
-		void squadronTag (SquadronTag squadronTag) noexcept { squadronTagValue_ = squadronTag; }
+		void squadronTag_ (SquadronTag squadronTag) noexcept { squadronTagValue_ = squadronTag; }
 		SquadronTag squadronTag_() const noexcept { return squadronTagValue_; };
 		
 		Ship* target_() const noexcept { return targetValue_; }
@@ -99,11 +96,11 @@ namespace dgmpp {
 		MetersPerSecond velocity_();
 
 		
-		DamageVector droneVolley();
-		DamageVector fighterAttackMissileVolley();
-		DamageVector fighterAttackTurretVolley();
-		DamageVector fighterMissileVolley();
-		DamagePerSecond rawDPS();
+		DamageVector droneVolley_();
+		DamageVector fighterAttackMissileVolley_();
+		DamageVector fighterAttackTurretVolley_();
+		DamageVector fighterMissileVolley_();
+		DamagePerSecond rawDPS_();
 
 	};
 }

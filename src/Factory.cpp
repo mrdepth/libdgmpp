@@ -17,7 +17,7 @@ namespace dgmpp {
 				return i.commodity.metaInfo().typeID == typeID;
 			});
 			if (isOutputRouted) {
-				auto required = schematic_->inputs();
+				auto required = schematicValue_->inputs();
 				return std::all_of(required.begin(), required.end(), [&](const auto& i) {
 					return std::any_of(inputs_.begin(), inputs_.end(), [typeID = i.first->typeID](const auto& j) {
 						return j.commodity.metaInfo().typeID == typeID;
@@ -29,20 +29,20 @@ namespace dgmpp {
 	}
 	
 	std::optional<Commodity> Factory::output() const {
-		if (schematic_)
-			return {Commodity(*schematic_->output.first, schematic_->output.second)};
+		if (schematicValue_)
+			return {Commodity(*schematicValue_->output.first, schematicValue_->output.second)};
 		else
 			return std::nullopt;
 	}
 	
 	Commodity Factory::free(const Commodity& key) noexcept {
-		if (!schematic_) {
+		if (!schematicValue_) {
 			auto output = key;
 			output = 0;
 			return output;
 		}
 		
-		auto inputs = schematic_->inputs();
+		auto inputs = schematicValue_->inputs();
 		auto i = std::find_if(inputs.begin(), inputs.end(), [typeID = key.metaInfo().typeID](const auto& i) {
 			return i.first->typeID == typeID;
 		});
@@ -58,21 +58,21 @@ namespace dgmpp {
 	}
 	
 	void Factory::schematic(SchematicID schematicID) {
-		schematic_ = &SDE::get(schematicID);
+		schematicValue_ = &SDE::get(schematicID);
 	}
 	
-	int Factory::priority() const noexcept {
-		return schematic_ ? static_cast<int>(schematic_->output.first->tier) : 0;
+	int Factory::priority_() const noexcept {
+		return schematicValue_ ? static_cast<int>(schematicValue_->output.first->tier) : 0;
 	}
 	
 	std::optional<std::chrono::seconds> Factory::cycleTime() const {
-		if (schematic_)
-			return schematic_->cycleTime;
+		if (schematicValue_)
+			return schematicValue_->cycleTime;
 		else
 			return std::nullopt;
 	}
 	
-	std::optional<std::chrono::seconds> Factory::nextUpdateTime() const noexcept {
+	std::optional<std::chrono::seconds> Factory::nextUpdateTime_() const noexcept {
 		if (production_)
 			return production_->end();
 		else if (states_.empty()) {
@@ -85,7 +85,7 @@ namespace dgmpp {
 			return std::nullopt;
 	}
 	
-	void Factory::update(std::chrono::seconds time) {
+	void Factory::update_(std::chrono::seconds time) {
 		if (updating_ || !configured())
 			return;
 		updating_ = true;
@@ -102,7 +102,7 @@ namespace dgmpp {
 		if (production_) {
 			const auto isCycleFinished = production_->end() == time;
 			if (isCycleFinished) {
-				finishCycle(*production_, time);
+				finishCycle_(*production_, time);
 				production_ = nullptr;
 				isStateChanged = true;
 			}
@@ -110,7 +110,7 @@ namespace dgmpp {
 		
 		//Старт нового цикла производства
 		if (!production_) {
-			if (auto cycle = startCycle(time)) {
+			if (auto cycle = startCycle_(time)) {
 				production_ = cycle;
 				isStateChanged = true;
 			}
@@ -134,11 +134,11 @@ namespace dgmpp {
 		updating_ = false;
 	}
 	
-	void Factory::finishCycle(ProductionCycle& cycle, std::chrono::seconds time) {
+	void Factory::finishCycle_(ProductionCycle& cycle, std::chrono::seconds time) {
 		auto product = *output();
 		
 		add(product);
-		Facility::update(time);
+		Facility::update_(time);
 		auto left = (*this)[product];
 		cycle.yield = product - left;
 		cycle.waste = left;
@@ -152,7 +152,7 @@ namespace dgmpp {
 //		states_.emplace_back(new ProductionState(time, std::nullopt, productionTime_ / (time - *startTime_)));
 	}
 	
-	ProductionCycle* Factory::startCycle(std::chrono::seconds time) {
+	ProductionCycle* Factory::startCycle_(std::chrono::seconds time) {
 		if (states_.empty()) {
 			if (launchTime_ + *cycleTime() < planet().lastUpdate()) {
 				if (time != planet().lastUpdate())
@@ -167,7 +167,7 @@ namespace dgmpp {
 			}
 		}
 		
-		auto required = schematic_->inputs();
+		auto required = schematicValue_->inputs();
 		auto available = commodities();
 		
 		auto equal = required.size() == available.size() && std::equal(required.begin(), required.end(), available.begin(), [](const auto& a, const auto& b) {
@@ -183,7 +183,7 @@ namespace dgmpp {
 			
 			//Забрать материалы со склада
 			for (const auto& i: inputs_)
-				i.from->update(time);
+				i.from->update_(time);
 			return cycles_.emplace_back(new ProductionCycle{time, *cycleTime(), product, product}).get();
 		}
 		else

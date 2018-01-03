@@ -31,7 +31,7 @@ namespace dgmpp {
 		struct FacilityCompare {
 			template <typename A, typename B>
 			bool operator() (const A& a, const B& b) const noexcept {
-				return std::make_pair(a->priority(), remove_unique_ptr(a)) < std::make_pair(b->priority(), remove_unique_ptr(b));
+				return std::make_pair(a->priority_(), remove_unique_ptr(a)) < std::make_pair(b->priority_(), remove_unique_ptr(b));
 			}
 			
 			typedef void is_transparent;
@@ -41,7 +41,7 @@ namespace dgmpp {
 		std::chrono::seconds lastUpdate_ = std::chrono::seconds::zero();
 		std::chrono::seconds timestamp_ = std::chrono::seconds::zero();
 		
-		std::optional<std::chrono::seconds> nextCycleTime(const std::set<Facility*, FacilityCompare>& facilities) const noexcept;
+		std::optional<std::chrono::seconds> nextCycleTime_ (const std::set<Facility*, FacilityCompare>& facilities) const noexcept;
 
 	};
 }

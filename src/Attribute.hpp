@@ -83,7 +83,7 @@ namespace dgmpp {
 		
 		Attribute(const MetaInfo::Attribute& metaInfo, Float initialValue, Type& owner);
 		
-		void reset() noexcept {calculatedValue_ = std::nullopt;}
+		void reset_() noexcept {calculatedValue_ = std::nullopt;}
 		
 		Float value_();
 		

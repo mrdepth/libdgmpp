@@ -19,7 +19,7 @@ namespace dgmpp {
 		bool factorReload() const noexcept { return flags_.factorReload; }
 		void factorReload (bool factorReload) noexcept {
 			flags_.factorReload = factorReload;
-			reset();
+			reset_();
 			
 		}
 		void simulate();
@@ -68,8 +68,8 @@ namespace dgmpp {
 			flags_.isCalculated_ = false;
 		}
 		
-		void reset() { flags_.isCalculated_ = false; }
-		void run(Module::Slot slot);
+		void reset_() { flags_.isCalculated_ = false; }
+		void run_ (Module::Slot slot);
 	};
 }
 

@@ -62,7 +62,7 @@ namespace dgmpp {
 		
 		Slot slot() const noexcept				{return slot_;}
 		Hardpoint hardpoint() const noexcept	{return hardpoint_;}
-		Socket socket() const noexcept			{return socket_;}
+		Socket socket() const noexcept			{return socket_();}
 		
 		Charge* charge() const noexcept { return charge_.get(); }
 		Charge* charge (std::unique_ptr<Charge>&& charge);
@@ -101,13 +101,13 @@ namespace dgmpp {
 		Meter optimal();
 		Meter falloff();
 
-		std::optional<std::chrono::milliseconds> lifeTime();
+		std::optional<std::chrono::milliseconds> lifeTime() { return lifeTime_(); }
 		
 		RadiansPerSecond angularVelocity(Meter targetSignature, Percent hitChance = 0.75);
 
 	protected:
-		virtual void setEnabled (bool enabled) override;
-		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
+		virtual void setEnabled_ (bool enabled) override;
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
 		
 	private:
 		friend class Ship;
@@ -116,9 +116,9 @@ namespace dgmpp {
 		State preferredState_ = State::unknown;
 		Slot slot_;
 		Hardpoint hardpoint_;
-		Socket socket_ = anySocket;
+		Socket socketValue_ = anySocket;
 		std::chrono::milliseconds defaultReloadTime_;
-		std::optional<std::chrono::milliseconds> lifeTime_;
+		std::optional<std::chrono::milliseconds> lifeTimeValue_;
 		
 		struct {
 			bool canBeOnline : 1;
@@ -137,9 +137,11 @@ namespace dgmpp {
 		Module (TypeID typeID);
 		Module (const Module& other);
 		
-		void socket (Socket socket) noexcept { socket_ = socket; }
-		void adjustState();
-		void fail(bool fail) noexcept { flags_.fail = fail; }
-		void lifeTime (std::chrono::milliseconds lifeTime) noexcept { lifeTime_ = lifeTime; };
+		void socket_ (Socket socket) noexcept { socketValue_ = socket; }
+		Socket socket_ () const noexcept { return socketValue_; }
+		void adjustState_();
+		void fail_ (bool fail) noexcept { flags_.fail = fail; }
+		std::optional<std::chrono::milliseconds> lifeTime_();
+		void lifeTime_ (std::chrono::milliseconds lifeTime) noexcept { lifeTimeValue_ = lifeTime; };
 	};
 }

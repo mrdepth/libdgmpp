@@ -25,16 +25,7 @@ namespace dgmpp {
 		Size size();
 		
 	protected:
-		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
-		bool canBeActive() const noexcept	{ return flags_.canBeActive; }
-		bool requireTarget() const noexcept	{ return flags_.requireTarget; }
-		bool isAssistance() const noexcept	{ return flags_.isAssistance; }
-		bool isOffensive() const noexcept	{ return flags_.isOffensive; }
-		bool dealsDamage() const noexcept	{ return flags_.dealsDamage; }
-
-	private:
-		friend class Module;
-		friend class Drone;
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
 		
 		struct {
 			bool canBeActive : 1;
@@ -43,6 +34,11 @@ namespace dgmpp {
 			bool isOffensive : 1;
 			bool dealsDamage : 1;
 		} flags_;
+
+	private:
+		friend class Module;
+		friend class Drone;
+		
 		
 		Charge (TypeID typeID);
 		Charge (const Charge& other);

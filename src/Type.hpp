@@ -31,7 +31,7 @@ namespace dgmpp {
 			return i != attributes_.end() ? i->second.get() : nullptr;
 		}
 		
-		Effect* operator[] (EffectID effectID) const { return effect(effectID); }
+//		Effect* operator[] (EffectID effectID) const { return effect_(effectID); }
 		
 		std::unordered_set<Type*> affectors() const;
 		std::list<Attribute*> attributes() const;
@@ -45,53 +45,54 @@ namespace dgmpp {
 		Type (const MetaInfo::Type& metaInfo);
 		Type (const Type& other);
 
-		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept;
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept;
 		
-		std::list<const Modifier*> itemModifiers					(const MetaInfo::Attribute& attribute) const;
-		std::list<const Modifier*> locationModifiers				(const MetaInfo::Attribute& attribute) const;
-		std::list<const Modifier*> locationGroupModifiers			(const MetaInfo::Attribute& attribute, const Type& type) const;
-		std::list<const Modifier*> locationRequiredSkillModifiers	(const MetaInfo::Attribute& attribute, const Type& type) const;
+		std::list<const Modifier*> itemModifiers_					(const MetaInfo::Attribute& attribute) const;
+		std::list<const Modifier*> locationModifiers_				(const MetaInfo::Attribute& attribute) const;
+		std::list<const Modifier*> locationGroupModifiers_			(const MetaInfo::Attribute& attribute, const Type& type) const;
+		std::list<const Modifier*> locationRequiredSkillModifiers_	(const MetaInfo::Attribute& attribute, const Type& type) const;
+		std::vector<std::unique_ptr<Effect>> effects_;
+
+		virtual std::list<const Modifier*> modifiers_ (const MetaInfo::Attribute& attribute) const;
+		virtual std::list<const Modifier*> modifiersMatchingType_ (const MetaInfo::Attribute& attribute, const Type& type) const;
 		
-		virtual std::list<const Modifier*> modifiers (const MetaInfo::Attribute& attribute) const;
-		virtual std::list<const Modifier*> modifiersMatchingType (const MetaInfo::Attribute& attribute, const Type& type) const;
+		void activateEffects_ (MetaInfo::Effect::Category category);
+		void deactivateEffects_ (MetaInfo::Effect::Category category);
 		
-		void activateEffects (MetaInfo::Effect::Category category);
-		void deactivateEffects (MetaInfo::Effect::Category category);
-		const std::vector<std::unique_ptr<Effect>>& effects() const noexcept { return effects_; }
-		
-		virtual void reset();
+		virtual void reset_() {}
 		Type* parent_() const noexcept { return parentType_; }
 		void parent_ (Type* parent);
-		void batchUpdates(std::function<void()> updates);
-		void resetCache ();
+		void batchUpdates_ (std::function<void()> updates);
+		void resetCache_ ();
 		
-		Attribute::Proxy attribute (AttributeID attributeID);
-		Effect* effect (EffectID effectID) const;
+		Attribute::Proxy attribute_ (AttributeID attributeID);
+		Effect* effect_ (EffectID effectID) const;
 
-		virtual bool isDisallowedAssistance() {
+		virtual bool isDisallowedAssistance_() {
 			if (auto parent = parent_())
-				return parent->isDisallowedAssistance();
+				return parent->isDisallowedAssistance_();
 			else
 				return false;
 		}
 		
-		virtual bool isDisallowedOffense() {
+		virtual bool isDisallowedOffense_() {
 			if (auto parent = parent_())
-				return parent->isDisallowedOffense();
+				return parent->isDisallowedOffense_();
 			else
 				return false;
 		}
 		
-		bool isDescendant (Type& parent) const noexcept {
+		bool isDescendant_ (Type& parent) const noexcept {
 			if (this == &parent)
 				return true;
 			else if (auto myParent = parent_())
-				return myParent->isDescendant(parent);
+				return myParent->isDescendant_(parent);
+			else
 				return false;
 		}
 
-		virtual bool isEnabled() const noexcept { return enabled_; }
-		virtual void setEnabled (bool enabled);
+		virtual bool isEnabled_() const noexcept { return enabled_; }
+		virtual void setEnabled_ (bool enabled);
 
 
 	private:
@@ -113,50 +114,51 @@ namespace dgmpp {
 		const MetaInfo::Type&					metaInfo_;
 		Type*									parentType_ = nullptr;
 		AttributesMap							attributes_;
-		std::vector<std::unique_ptr<Effect>>	effects_;
-//		TypesContainer							children_;
 		bool									enabled_ = false;
 		bool									resetFlag_ = false;
 
 
-		TuplesSet<AttributeID, const Modifier*> itemModifiers_;
-		TuplesSet<AttributeID, const Modifier*> locationModifiers_;
-		TuplesSet<AttributeID, GroupID, const Modifier*> locationGroupModifiers_;
-		TuplesSet<AttributeID, TypeID, const Modifier*> locationRequiredSkillModifiers_;
+		TuplesSet<AttributeID, const Modifier*> itemModifiersSet_;
+		TuplesSet<AttributeID, const Modifier*> locationModifiersSet_;
+		TuplesSet<AttributeID, GroupID, const Modifier*> locationGroupModifiersSet_;
+		TuplesSet<AttributeID, TypeID, const Modifier*> locationRequiredSkillModifiersSet_;
 		
-		std::unique_ptr<AttributesCache> cache_;
+		std::unique_ptr<AttributesCache> cacheValue_;
 		std::size_t identifier_ = std::hash<Type*>()(this);
 
-		void addModifier	(const Modifier* modifier);
-		void removeModifier (const Modifier* modifier);
-		std::vector<Effect*> activeEffects() const;
+		void addModifier_	(const Modifier* modifier);
+		void removeModifier_ (const Modifier* modifier);
+		std::vector<Effect*> activeEffects_() const;
 		
-		void activate	(Effect* effect);
-		void deactivate	(Effect* effect);
+		void activate_		(Effect* effect);
+		void deactivate_	(Effect* effect);
 		
-		AttributesCache& cache();
+		AttributesCache& cache_();
 
 		TuplesSet<WarfareBuffID, const WarfareBuff*> buffs_;
 		
-		void addBuff	(const WarfareBuff* buff);
-		void removeBuff	(const WarfareBuff* buff);
+		void addBuff_		(const WarfareBuff* buff);
+		void removeBuff_	(const WarfareBuff* buff);
 
 	};
 	
 	class Type::AttributesCache {
 	public:
+		
 		void add(Attribute* attribute) {
 			attributes_.push_back(attribute);
 		}
+		
 		std::unique_ptr<AttributesCache> extract(Type* type) {
 			auto i = std::partition(attributes_.begin(), attributes_.end(), [=](auto i) {
-				return !i->owner().isDescendant(*type);
+				return !i->owner().isDescendant_(*type);
 			});
 			auto result = std::unique_ptr<AttributesCache>(new AttributesCache);
 			
 			result->attributes_.splice(result->attributes_.begin(), attributes_, i, attributes_.end());
 			return result;
 		}
+		
 		void splice(AttributesCache&& other) {
 			attributes_.splice(attributes_.end(), other.attributes_);
 		}
@@ -167,7 +169,7 @@ namespace dgmpp {
 			
 			std::list<Type*> types;
 			for (auto attribute: attributes_) {
-				attribute->reset();
+				attribute->reset_();
 				auto type = &attribute->owner();
 				if (!type->resetFlag_) {
 					type->resetFlag_ = true;
@@ -176,8 +178,8 @@ namespace dgmpp {
 			}
 			attributes_.clear();
 			for (auto type: types) {
-				if (type->isEnabled())
-					type->reset();
+				if (type->isEnabled_())
+					type->reset_();
 				type->resetFlag_ = false;
 			}
 		}

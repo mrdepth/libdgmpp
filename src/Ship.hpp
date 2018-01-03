@@ -49,7 +49,7 @@ namespace dgmpp {
 		std::vector<CategoryID> supportedDroneCategories();
 		RigSize rigSize();
 		
-		void damagePattern (const DamageVector& pattern) noexcept { damagePattern_ = pattern; resetCache(); }
+		void damagePattern (const DamageVector& pattern) noexcept { damagePattern_ = pattern; resetCache_(); }
 		const DamageVector& damagePattern() const noexcept { return damagePattern_; }
 
 		//Fitting
@@ -76,7 +76,7 @@ namespace dgmpp {
 		//Resources
 		std::size_t totalSlots	(Module::Slot slot);
 		std::size_t freeSlots	(Module::Slot slot) {return totalSlots(slot) - usedSlots(slot);}
-		std::size_t usedSlots	(Module::Slot slot) {return modulesSlice(slot).size();}
+		std::size_t usedSlots	(Module::Slot slot) {return modulesSlice_(slot).size();}
 		
 		std::size_t totalHardpoints	(Module::Hardpoint hardpoint);
 		std::size_t freeHardpoints	(Module::Hardpoint hardpoint);
@@ -155,21 +155,19 @@ namespace dgmpp {
 		Ship (TypeID typeID): Type(typeID), capacitor_(*this), heatSimulator_(*this) {};
 		Ship (const Ship& other);
 		
-		virtual void setEnabled (bool enabled) override;
-		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
-		virtual void reset() override;
+		virtual void setEnabled_ (bool enabled) override;
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
+		virtual void reset_() override;
 		
-		const std::list<Module*>& projectedModules() const noexcept { return projectedModules_; }
-		const std::list<Drone*>& projectedDrones() const noexcept { return projectedDrones_; }
-		void project (Module* module);
-		void project (Drone* drone);
-		void removeProjected (Module* module);
-		void removeProjected (Drone* drone);
+		void project_ (Module* module);
+		void project_ (Drone* drone);
+		void removeProjected_ (Module* module);
+		void removeProjected_ (Drone* drone);
 
-		slice<ModulesContainer::const_iterator> modulesSlice (Module::Slot slot) const noexcept;
+		slice<ModulesContainer::const_iterator> modulesSlice_ (Module::Slot slot) const noexcept;
 
-		virtual bool isDisallowedAssistance() override;
-		virtual bool isDisallowedOffense() override;
+		virtual bool isDisallowedAssistance_() override;
+		virtual bool isDisallowedOffense_() override;
 
 	private:
 		friend class Character;
@@ -178,16 +176,15 @@ namespace dgmpp {
 		friend class Drone;
 		friend class Gang;
 		
-		std::unique_ptr<Area> area_;
+		std::unique_ptr<Area> areaValue_;
 		
 		Capacitor capacitor_;
 		HeatSimulator heatSimulator_;
 		DamageVector damagePattern_ = {0.25};
 		std::string name_;
 
-		Area* area() const noexcept { return area_.get(); }
-		Area* area(std::unique_ptr<Area>&& area);
-		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
+		Area* area_() const noexcept { return areaValue_.get(); }
+		Area* area_(std::unique_ptr<Area>&& area);
 		
 		std::optional<bool> isDisallowedAssistanceValue_;
 		std::optional<bool> isDisallowedOffenseValue_;

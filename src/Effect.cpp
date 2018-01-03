@@ -36,13 +36,13 @@ namespace dgmpp {
 	//	}
 	
 	
-	void WarfareBuffEffect::setActive(bool active) {
-		Effect::setActive(active);
+	void WarfareBuffEffect::setActive_(bool active) {
+		Effect::setActive_(active);
 		if (active) {
 			warfareBuffs_.clear();
 			auto& owner = this->owner();
 			for (auto attributeID: SDE::warfareBuffIDAttributes) {
-				auto attribute = owner.attribute(attributeID);
+				auto attribute = owner.attribute_(attributeID);
 				if (auto value = attribute->value_(); value > 0) {
 					auto buffID = static_cast<WarfareBuffID>(static_cast<int>(value));
 					warfareBuffs_.emplace_back(SDE::get(buffID), owner, *this);

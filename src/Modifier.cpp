@@ -11,7 +11,7 @@
 namespace dgmpp {
 	
 	Modifier::Modifier(const MetaInfo::Modifier& metaInfo, Type& owner, const Effect& effect)
-	: metaInfo_(metaInfo), owner_(owner), effect_(effect), modifyingAttribute_(*owner.attribute(metaInfo.modifyingAttributeID)) {
+	: metaInfo_(metaInfo), owner_(owner), effect_(effect), modifyingAttribute_(*owner.attribute_(metaInfo.modifyingAttributeID)) {
 		switch (owner.metaInfo().categoryID) {
 			case CategoryID::module:
 			case CategoryID::drone:
@@ -26,7 +26,7 @@ namespace dgmpp {
 	}
 	
 	Type* Modifier::domain() const noexcept {
-		return owner().domain(metaInfo().domain);
+		return owner().domain_(metaInfo().domain);
 	}
 	
 	bool Modifier::match(const Type* type) const {
@@ -40,7 +40,7 @@ namespace dgmpp {
 			case MetaInfo::Modifier::ModifierType::ownerRequiredSkill:
 				return type->metaInfo().requireSkill(metaInfo_.require.typeID);
 			case MetaInfo::Modifier::ModifierType::locationRequiredDomainSkill:
-				if (auto type = owner_.domain(metaInfo_.domain))
+				if (auto type = owner_.domain_(metaInfo_.domain))
 					return type->metaInfo().requireSkill(type->metaInfo().typeID);
 				else
 					return false;
@@ -60,9 +60,9 @@ namespace dgmpp {
 			case MetaInfo::Modifier::Association::addRate:
 			case MetaInfo::Modifier::Association::subRate:
 				std::chrono::duration<Float> duration;
-				if (auto attr = owner_.attribute(AttributeID::duration))
+				if (auto attr = owner_.attribute_(AttributeID::duration))
 					duration = std::chrono::duration<Float, std::milli>(attr->value_());
-				else if (auto attr = owner_.attribute(AttributeID::speed)) {
+				else if (auto attr = owner_.attribute_(AttributeID::speed)) {
 					duration = std::chrono::duration<Float, std::milli>(attr->value_());
 				}
 				else {

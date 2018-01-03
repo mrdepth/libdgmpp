@@ -20,9 +20,8 @@ namespace dgmpp {
 
 		using Facility::Facility;
 		
-		virtual int priority() const noexcept override { return -900; }
-        virtual void update(std::chrono::seconds time) override;
-	public:
+		virtual int priority_() const noexcept override { return -900; }
+        virtual void update_ (std::chrono::seconds time) override;
 		friend class Planet;
 	};
 	

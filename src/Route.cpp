@@ -17,7 +17,7 @@ namespace dgmpp {
 		if (c.quantity() > 0) {
 			from->extract(c);
 			to->add(c);
-			to->update(time);
+			to->update_(time);
 		}
 	}
 }

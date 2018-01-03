@@ -12,8 +12,8 @@ namespace dgmpp {
 	
 	class Skill: public Type {
 	public:
-		int level() { return static_cast<int>(this->attribute(AttributeID::skillLevel)->value_()); }
-		void level (int level) { *this->attribute(AttributeID::skillLevel) = static_cast<Float>(level); }
+		int level() { return static_cast<int>(attribute_(AttributeID::skillLevel)->value_()); }
+		void level (int level) { *attribute_(AttributeID::skillLevel) = static_cast<Float>(level); }
 	protected:
 	private:
 		friend class Character;

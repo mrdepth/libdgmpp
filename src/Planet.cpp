@@ -87,10 +87,10 @@ namespace dgmpp {
 		route.to->inputs_.erase(route);
 	}
 	
-	std::optional<std::chrono::seconds> Planet::nextCycleTime(const std::set<Facility*, FacilityCompare>& facilities) const noexcept {
+	std::optional<std::chrono::seconds> Planet::nextCycleTime_(const std::set<Facility*, FacilityCompare>& facilities) const noexcept {
 		std::optional<std::chrono::seconds> next = std::nullopt;
 		for (auto& facility: facilities) {
-			if (auto time = facility->nextUpdateTime(); time && *time >= timestamp_)
+			if (auto time = facility->nextUpdateTime_(); time && *time >= timestamp_)
 				next = next ? std::min(*next, *time) : time;
 		}
 		return next;
@@ -110,10 +110,10 @@ namespace dgmpp {
 		while(true) {
 			if (timestamp_.count() == 442800)
 				assert(1);
-			if (auto next = nextCycleTime(facilities); next && next->count() >= 0) {
+			if (auto next = nextCycleTime_(facilities); next && next->count() >= 0) {
 				timestamp_ = *next;
 				for (auto& i: facilities)
-					i->update(timestamp_);
+					i->update_(timestamp_);
 				endTime = *next;
 			}
 			else

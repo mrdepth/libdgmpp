@@ -46,9 +46,9 @@ namespace dgmpp {
 	protected:
 		Facility(const MetaInfo::Facility& metaInfo, Planet& planet, Identifier identifier);
 
-		virtual std::optional<std::chrono::seconds> nextUpdateTime() const noexcept { return std::nullopt; }
-		virtual int priority() const noexcept { return 0; }
-        virtual void update (std::chrono::seconds time);
+		virtual std::optional<std::chrono::seconds> nextUpdateTime_() const noexcept { return std::nullopt; }
+		virtual int priority_() const noexcept { return 0; }
+        virtual void update_ (std::chrono::seconds time);
 
 		std::unordered_set<Route> inputs_;
 		std::unordered_set<Route> outputs_;

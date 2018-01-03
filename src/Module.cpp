@@ -16,20 +16,18 @@ namespace dgmpp {
 	const Module::Socket Module::anySocket = -1;
 	
 	Module::Module (TypeID typeID) : Type(typeID) {
-		const auto& effects = this->effects();
+
+		flags_.canBeOnline = effect_(EffectID::online) != nullptr || effect_(EffectID::onlineForStructures);
 		
-		
-		flags_.canBeOnline = effect(EffectID::online) != nullptr || effect(EffectID::onlineForStructures);
-		
-		flags_.canBeOverloaded = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+		flags_.canBeOverloaded = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			return i->metaInfo().category == MetaInfo::Effect::Category::overloaded;
 		});
 		
-		flags_.requireTarget = std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+		flags_.requireTarget = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			return i->metaInfo().category == MetaInfo::Effect::Category::target;
 		});
 		
-		flags_.canBeActive = flags_.canBeOverloaded || flags_.requireTarget || std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+		flags_.canBeActive = flags_.canBeOverloaded || flags_.requireTarget || std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			return i->metaInfo().category == MetaInfo::Effect::Category::active;
 		});
 		
@@ -38,34 +36,34 @@ namespace dgmpp {
 		flags_.forceReload = metaInfo().groupID == GroupID::capacitorBooster;
 //		flags_.factorReload = false;
 		
-		if (effect(EffectID::loPower))
+		if (effect_(EffectID::loPower))
 			slot_ = Module::Slot::low;
-		else if (effect(EffectID::medPower))
+		else if (effect_(EffectID::medPower))
 			slot_ = Module::Slot::med;
-		else if (effect(EffectID::hiPower))
+		else if (effect_(EffectID::hiPower))
 			slot_ = Module::Slot::hi;
-		else if (effect(EffectID::rigSlot))
+		else if (effect_(EffectID::rigSlot))
 			slot_ = Module::Slot::rig;
-		else if (effect(EffectID::subSystem))
+		else if (effect_(EffectID::subSystem))
 			slot_ = Module::Slot::subsystem;
-		else if (effect(EffectID::tacticalMode))
+		else if (effect_(EffectID::tacticalMode))
 			slot_ = Module::Slot::mode;
 		else if (metaInfo().categoryID == CategoryID::starbase)
 			slot_ = Module::Slot::starbaseStructure;
-		else if (effect(EffectID::serviceSlot))
+		else if (effect_(EffectID::serviceSlot))
 			slot_ = Module::Slot::service;
 		else
 			slot_ = Module::Slot::none;
 		
-		if (effect(EffectID::turretFitted))
+		if (effect_(EffectID::turretFitted))
 			hardpoint_ = Module::Hardpoint::turret;
-		else if (effect(EffectID::launcherFitted))
+		else if (effect_(EffectID::launcherFitted))
 			hardpoint_ = Module::Hardpoint::launcher;
 		else
 			hardpoint_ = Module::Hardpoint::none;
 		
 		for (auto attributeID : SDE::chargeGroupAttributeIDs) {
-			if (auto groupIDAttribute = attribute(attributeID)) {
+			if (auto groupIDAttribute = attribute_(attributeID)) {
 				GroupID groupID = static_cast<GroupID>(static_cast<int>(groupIDAttribute->value_()));
 				if (groupID != GroupID::none) {
 					chargeGroups_.push_back(groupID);
@@ -77,7 +75,7 @@ namespace dgmpp {
 		chargeGroups_.shrink_to_fit();
 		std::sort(chargeGroups_.begin(), chargeGroups_.end());
 		
-		if (std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+		if (std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			switch (i->metaInfo().effectID) {
 				case EffectID::miningLaser:
 				case EffectID::targetAttack:
@@ -89,7 +87,7 @@ namespace dgmpp {
 		})) {
 			defaultReloadTime_ = std::chrono::seconds(1);
 		}
-		else if (std::any_of(effects.begin(), effects.end(), [](const auto& i) {
+		else if (std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			switch (i->metaInfo().effectID) {
 				case EffectID::powerBooster:
 				case EffectID::projectileFired:
@@ -110,7 +108,7 @@ namespace dgmpp {
 		defaultReloadTime_ = other.defaultReloadTime_;
 		preferredState_ = other.preferredState_;
 		state_ = State::unknown;
-		socket_ = other.socket_;
+		socketValue_ = other.socketValue_;
 		if (auto charge = other.charge()) {
 			charge_ = Charge::Create(*charge);
 		}
@@ -118,22 +116,22 @@ namespace dgmpp {
 	
 	Module::~Module() {
 		if (target_)
-			target_->removeProjected(this);
+			target_->removeProjected_(this);
 	}
 	
-	void Module::setEnabled (bool enabled) {
-		if (isEnabled() == enabled)
-			return Type::setEnabled(enabled);
+	void Module::setEnabled_ (bool enabled) {
+		if (isEnabled_() == enabled)
+			return Type::setEnabled_(enabled);
 		else
-			Type::setEnabled(enabled);
+			Type::setEnabled_(enabled);
 		if (charge_ != nullptr)
-			charge_->setEnabled(enabled);
-		adjustState();
+			charge_->setEnabled_(enabled);
+		adjustState_();
 	}
 	
 	void Module::state (dgmpp::Module::State state) {
 		preferredState_ = state;
-		adjustState();
+		adjustState_();
 	}
 	
 	bool Module::canHaveState (State state) {
@@ -142,7 +140,7 @@ namespace dgmpp {
 	}
 	
 	std::vector<Module::State> Module::availableStates() {
-		if (isEnabled()) {
+		if (isEnabled_()) {
 			std::vector<Module::State> states;
 			states.reserve(4);
 			states.push_back(Module::State::offline);
@@ -153,10 +151,10 @@ namespace dgmpp {
 				bool canBeActive = this->canBeActive();
 				
 				if (canBeActive) {
-					if (attribute(AttributeID::activationBlocked)->value_() > 0)
+					if (attribute_(AttributeID::activationBlocked)->value_() > 0)
 						canBeActive = false;
 					else if (auto ship = dynamic_cast<Ship*>(parent_())) {
-						if (auto attribute = this->attribute(AttributeID::maxGroupActive)) {
+						if (auto attribute = attribute_(AttributeID::maxGroupActive)) {
 							auto maxGroupActive = static_cast<std::size_t>(attribute->value_());
 							auto groupID = metaInfo().groupID;
 							
@@ -191,37 +189,37 @@ namespace dgmpp {
 	}
 	
 	void Module::target(Ship* target) {
-		batchUpdates([&]() {
+		batchUpdates_([&]() {
 			if (target_) {
 				if (state() >= State::active)
-					deactivateEffects(MetaInfo::Effect::Category::target);
-				target_->removeProjected(this);
+					deactivateEffects_(MetaInfo::Effect::Category::target);
+				target_->removeProjected_(this);
 			}
 			target_ = target;
 			if (target) {
-				assert(!isDescendant(*target));
+				assert(!isDescendant_(*target));
 				
-				target_->project(this);
+				target_->project_(this);
 				if (state() >= State::active)
-					activateEffects(MetaInfo::Effect::Category::target);
+					activateEffects_(MetaInfo::Effect::Category::target);
 			}
 		});
 	}
 	
-	Type* Module::domain (MetaInfo::Modifier::Domain domain) noexcept {
+	Type* Module::domain_ (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::target :
 				return target_;
 			default:
-				return Type::domain(domain);
+				return Type::domain_(domain);
 		}
 	}
 	
 	Charge* Module::charge (std::unique_ptr<Charge>&& charge) {
-		batchUpdates([&]() {
-			auto enabled = isEnabled();
+		batchUpdates_([&]() {
+			auto enabled = isEnabled_();
 			
-			setEnabled(false);
+			setEnabled_(false);
 			if (auto currentCharge = this->charge()) {
 				currentCharge->parent_(nullptr);
 				charge_ = nullptr;
@@ -235,14 +233,14 @@ namespace dgmpp {
 					throw CannotFit<Charge>(std::move(charge));
 			}
 			if (enabled)
-				setEnabled(true);
+				setEnabled_(true);
 		});
 		return charge_.get();
 	}
 	
 	bool Module::canFit(Charge* charge) {
-		auto capacity = attribute(AttributeID::capacity)->value_();
-		if (capacity > 0 && charge->attribute(AttributeID::volume)->value_() > capacity)
+		auto capacity = attribute_(AttributeID::capacity)->value_();
+		if (capacity > 0 && charge->attribute_(AttributeID::volume)->value_() > capacity)
 			return false;
 		
 		auto chargeSize = this->chargeSize();
@@ -258,7 +256,7 @@ namespace dgmpp {
 	}
 	
 	Charge::Size Module::chargeSize() {
-		if (auto attribute = this->attribute(AttributeID::chargeSize))
+		if (auto attribute = attribute_(AttributeID::chargeSize))
 			return static_cast<Charge::Size>(static_cast<int>(attribute->value_()));
 		else
 			return Charge::Size::none;
@@ -268,7 +266,7 @@ namespace dgmpp {
 		if (flags_.canBeActive)
 			return true;
 		else if (auto charge = this->charge())
-			return charge->canBeActive();
+			return charge->flags_.canBeActive;
 		else
 			return false;
 	}
@@ -277,7 +275,7 @@ namespace dgmpp {
 		if (flags_.requireTarget)
 			return true;
 		else if (auto charge = this->charge())
-			return charge->requireTarget();
+			return charge->flags_.requireTarget;
 		else
 			return false;
 	}
@@ -290,9 +288,9 @@ namespace dgmpp {
 	}
 
 	
-	void Module::adjustState() {
-		batchUpdates([&] {
-			if (isEnabled() && !flags_.fail) {
+	void Module::adjustState_() {
+		batchUpdates_([&] {
+			if (isEnabled_() && !flags_.fail) {
 				auto availableStates = this->availableStates();
 				auto i = std::lower_bound(availableStates.begin(), availableStates.end(), preferredState_);
 				auto state = i != availableStates.end() ? *i : availableStates.back();
@@ -300,43 +298,43 @@ namespace dgmpp {
 				if (state != state_) {
 					if (state < state_) {
 						if (state_ >= State::overloaded	&& state < State::overloaded)
-							deactivateEffects(MetaInfo::Effect::Category::overloaded);
+							deactivateEffects_(MetaInfo::Effect::Category::overloaded);
 						
 						if (state_ >= State::active		&& state < State::active) {
-							deactivateEffects(MetaInfo::Effect::Category::active);
+							deactivateEffects_(MetaInfo::Effect::Category::active);
 							if (target())
-								deactivateEffects(MetaInfo::Effect::Category::target);
+								deactivateEffects_(MetaInfo::Effect::Category::target);
 						}
 						
 						if (state_ >= State::online		&& state < State::online)
-							deactivateEffects(MetaInfo::Effect::Category::passive);
+							deactivateEffects_(MetaInfo::Effect::Category::passive);
 					}
 					else if (state > state_) {
 						if (state_ < State::online		&& state >= State::online)
-							activateEffects(MetaInfo::Effect::Category::passive);
+							activateEffects_(MetaInfo::Effect::Category::passive);
 						
 						if (state_ < State::active		&& state >= State::active) {
-							activateEffects(MetaInfo::Effect::Category::active);
+							activateEffects_(MetaInfo::Effect::Category::active);
 							if (target())
-								activateEffects(MetaInfo::Effect::Category::target);
+								activateEffects_(MetaInfo::Effect::Category::target);
 						}
 						
 						if (state_ < State::overloaded	&& state >= State::overloaded)
-							activateEffects(MetaInfo::Effect::Category::overloaded);
+							activateEffects_(MetaInfo::Effect::Category::overloaded);
 					}
 					state_ = state;
 				}
 			}
 			else {
 				if (state_ >= State::overloaded)
-					deactivateEffects(MetaInfo::Effect::Category::overloaded);
+					deactivateEffects_(MetaInfo::Effect::Category::overloaded);
 				if (state_ >= State::active) {
-					deactivateEffects(MetaInfo::Effect::Category::active);
+					deactivateEffects_(MetaInfo::Effect::Category::active);
 					if (target())
-						deactivateEffects(MetaInfo::Effect::Category::target);
+						deactivateEffects_(MetaInfo::Effect::Category::target);
 				}
 				if (state_ >= State::online)
-					deactivateEffects(MetaInfo::Effect::Category::passive);
+					deactivateEffects_(MetaInfo::Effect::Category::passive);
                 state_ = Module::State::offline;
 			}
 		});
@@ -345,7 +343,7 @@ namespace dgmpp {
 	//Calculations
 	
 	std::chrono::milliseconds Module::reloadTime() {
-		if (auto attribute = this->attribute(AttributeID::reloadTime))
+		if (auto attribute = attribute_(AttributeID::reloadTime))
 			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 		else
 			return defaultReloadTime_;
@@ -355,7 +353,7 @@ namespace dgmpp {
 	std::chrono::milliseconds Module::cycleTime() {
 		auto reactivation = 0ms;
 		
-		if (auto attribute = this->attribute(AttributeID::moduleReactivationDelay))
+		if (auto attribute = attribute_(AttributeID::moduleReactivationDelay))
 			reactivation = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 		
 		auto speed = rawCycleTime();
@@ -376,7 +374,7 @@ namespace dgmpp {
 	
 	std::chrono::milliseconds Module::rawCycleTime() {
 		for (auto attributeID: SDE::moduleCycleTimeAttributes) {
-			if (auto attribute = this->attribute(attributeID); attribute && attribute->value_() > 0)
+			if (auto attribute = attribute_(attributeID); attribute && attribute->value_() > 0)
 				return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 		}
 		return 0ms;
@@ -384,9 +382,9 @@ namespace dgmpp {
 	
 	std::size_t Module::charges() {
 		if (auto charge = this->charge()) {
-			auto volume = charge->attribute(AttributeID::volume)->value_();
+			auto volume = charge->attribute_(AttributeID::volume)->value_();
 			if (volume > 0) {
-				auto capacity = attribute(AttributeID::capacity)->value_();
+				auto capacity = attribute_(AttributeID::capacity)->value_();
 				return static_cast<std::size_t>(capacity / volume);
 			}
 			else {
@@ -401,15 +399,15 @@ namespace dgmpp {
 		if (auto charge = this->charge()) {
 			auto charges = this->charges();
 			if (charges > 0) {
-				if (auto attribute = this->attribute(AttributeID::chargeRate)) {
+				if (auto attribute = attribute_(AttributeID::chargeRate)) {
 					auto rate = attribute->value_();
 					if (rate > 0)
 						return static_cast<std::size_t>(charges / rate);
 				}
-				else if (auto attribute = this->attribute(AttributeID::crystalsGetDamaged)) {
-					auto hp = charge->attribute(AttributeID::hp)->value_();
-					auto chance = charge->attribute(AttributeID::crystalVolatilityChance)->value_();
-					auto damage = charge->attribute(AttributeID::crystalVolatilityDamage)->value_();
+				else if (auto attribute = attribute_(AttributeID::crystalsGetDamaged)) {
+					auto hp = charge->attribute_(AttributeID::hp)->value_();
+					auto chance = charge->attribute_(AttributeID::crystalVolatilityChance)->value_();
+					auto damage = charge->attribute_(AttributeID::crystalVolatilityDamage)->value_();
 					return static_cast<std::size_t>(charges * hp / (damage * chance));
 				}
 			}
@@ -420,38 +418,38 @@ namespace dgmpp {
 	GigaJoulePerSecond Module::capUse() {
 		if (state() >= State::active) {
 			GigaJoule capNeed = 0.0;
-			if (auto attribute = this->attribute(AttributeID::capacitorNeed))
+			if (auto attribute = attribute_(AttributeID::capacitorNeed))
 				capNeed = static_cast<GigaJoule>(attribute->value_());
-			if (capNeed == 0.0 && effect(EffectID::energyNosferatuFalloff) != nullptr)
-				capNeed -= static_cast<GigaJoule>(attribute(AttributeID::powerTransferAmount)->value_());
-			if (capNeed == 0.0 && effect(EffectID::powerBooster) != nullptr)
-				capNeed -= static_cast<GigaJoule>(attribute(AttributeID::capacitorBonus)->value_());
+			if (capNeed == 0.0 && effect_(EffectID::energyNosferatuFalloff) != nullptr)
+				capNeed -= static_cast<GigaJoule>(attribute_(AttributeID::powerTransferAmount)->value_());
+			if (capNeed == 0.0 && effect_(EffectID::powerBooster) != nullptr)
+				capNeed -= static_cast<GigaJoule>(attribute_(AttributeID::capacitorBonus)->value_());
 			return make_rate(capNeed, cycleTime());
 		}
 		return GigaJoulePerSecond(0);
 	}
 
 	Teraflops Module::cpuUse() {
-		return attribute(AttributeID::cpu)->value_();
+		return attribute_(AttributeID::cpu)->value_();
 	}
 	
 	MegaWatts Module::powerGridUse() {
-		return attribute(AttributeID::power)->value_();
+		return attribute_(AttributeID::power)->value_();
 	}
 	
 	CalibrationPoints Module::calibrationUse() {
-		return attribute(AttributeID::upgradeCost)->value_();
+		return attribute_(AttributeID::upgradeCost)->value_();
 	}
 
 	Points Module::accuracyScore() {
-		if (auto attribute = this->attribute(AttributeID::trackingSpeed))
+		if (auto attribute = attribute_(AttributeID::trackingSpeed))
 			return attribute->value_();
 		else
 			return 0;
 	}
 	
 	Meter Module::signatureResolution() {
-		if (auto attribute = this->attribute(AttributeID::optimalSigRadius))
+		if (auto attribute = attribute_(AttributeID::optimalSigRadius))
 			return attribute->value_();
 		else
 			return 0;
@@ -460,9 +458,9 @@ namespace dgmpp {
 	CubicMeterPerSecond Module::miningYield() {
 		if (state() >= State::active) {
 			CubicMeter volley = 0;
-			if (auto attribute = this->attribute(AttributeID::specialtyMiningAmount))
+			if (auto attribute = attribute_(AttributeID::specialtyMiningAmount))
 				volley += attribute->value_();
-			if (auto attribute = this->attribute(AttributeID::miningAmount))
+			if (auto attribute = attribute_(AttributeID::miningAmount))
 				volley += attribute->value_();
 			return make_rate(volley, cycleTime());
 		}
@@ -475,18 +473,18 @@ namespace dgmpp {
 			auto volley = DamageVector(0);
 			auto& item = charge_ ? *static_cast<Type*> (charge_.get()) : *static_cast<Type*>(this);
 			
-			if (auto attribute = item.attribute(AttributeID::emDamage))
+			if (auto attribute = item.attribute_(AttributeID::emDamage))
 				volley.em += attribute->value_();
-			if (auto attribute = item.attribute(AttributeID::kineticDamage))
+			if (auto attribute = item.attribute_(AttributeID::kineticDamage))
 				volley.kinetic += attribute->value_();
-			if (auto attribute = item.attribute(AttributeID::thermalDamage))
+			if (auto attribute = item.attribute_(AttributeID::thermalDamage))
 				volley.thermal += attribute->value_();
-			if (auto attribute = item.attribute(AttributeID::explosiveDamage))
+			if (auto attribute = item.attribute_(AttributeID::explosiveDamage))
 				volley.explosive += attribute->value_();
 			
-			if (auto attribute = this->attribute(AttributeID::damageMultiplier))
+			if (auto attribute = attribute_(AttributeID::damageMultiplier))
 				volley *= attribute->value_();
-			else if (auto attribute = this->attribute(AttributeID::missileDamageMultiplier))
+			else if (auto attribute = attribute_(AttributeID::missileDamageMultiplier))
 				volley *= attribute->value_();
 			
 			return volley;
@@ -537,9 +535,9 @@ namespace dgmpp {
 					if (target.velocity.count() > 0) {
 						Float missileEntityVelocityMultiplier = 1;
 						
-						if (auto attribute = this->attribute(AttributeID::missileEntityVelocityMultiplier))
+						if (auto attribute = attribute_(AttributeID::missileEntityVelocityMultiplier))
 							missileEntityVelocityMultiplier = attribute->value_();
-						auto maxVelocity = MetersPerSecond(charge->attribute(AttributeID::maxVelocity)->value_() * missileEntityVelocityMultiplier);
+						auto maxVelocity = MetersPerSecond(charge->attribute_(AttributeID::maxVelocity)->value_() * missileEntityVelocityMultiplier);
 
 						if (maxVelocity < target.velocity)
 							return DamagePerSecond(0);
@@ -547,14 +545,14 @@ namespace dgmpp {
 					
 					Float a = 1;
 					if (target.signature > 0) {
-						auto e = charge->attribute(AttributeID::aoeCloudSize)->value_();
+						auto e = charge->attribute_(AttributeID::aoeCloudSize)->value_();
 						a = e != 0.0 ? target.signature / e : 1;
 					}
 					Float b = 1;
 					if (target.velocity.count() > 0) {
-						auto v = charge->attribute(AttributeID::aoeCloudSize)->value_();
-						auto drf = charge->attribute(AttributeID::aoeDamageReductionFactor)->value_();
-						auto drs = charge->attribute(AttributeID::aoeDamageReductionSensitivity)->value_();
+						auto v = charge->attribute_(AttributeID::aoeCloudSize)->value_();
+						auto drf = charge->attribute_(AttributeID::aoeDamageReductionFactor)->value_();
+						auto drs = charge->attribute_(AttributeID::aoeDamageReductionSensitivity)->value_();
 						if (drf > 0 && drs > 0 && v > 0)
 							b = std::pow(a * v / (target.velocity * 1s), std::log(drf)/std::log(drs));
 					}
@@ -573,22 +571,22 @@ namespace dgmpp {
 	Meter Module::optimal() {
 		
 		for (auto attributeID: SDE::moduleOptimalAttributes) {
-			if (auto attribute = this->attribute(attributeID))
+			if (auto attribute = attribute_(attributeID))
 				return attribute->value_();
 		}
 		
 		if (auto charge = this->charge()) {
-			auto maxVelocity = charge->attribute(AttributeID::maxVelocity);
-			auto explosionDelay = charge->attribute(AttributeID::explosionDelay);
-			auto mass = charge->attribute(AttributeID::mass);
-			auto agility = charge->attribute(AttributeID::agility);
+			auto maxVelocity = charge->attribute_(AttributeID::maxVelocity);
+			auto explosionDelay = charge->attribute_(AttributeID::explosionDelay);
+			auto mass = charge->attribute_(AttributeID::mass);
+			auto agility = charge->attribute_(AttributeID::agility);
 			if (maxVelocity && explosionDelay && mass && agility) {
 				Float missileEntityVelocityMultiplier = 1;
 				Float missileEntityFlightTimeMultiplier = 1;
 				
-				if (auto attribute = this->attribute(AttributeID::missileEntityVelocityMultiplier))
+				if (auto attribute = attribute_(AttributeID::missileEntityVelocityMultiplier))
 					missileEntityVelocityMultiplier = attribute->value_();
-				if (auto attribute = this->attribute(AttributeID::missileEntityFlightTimeMultiplier))
+				if (auto attribute = attribute_(AttributeID::missileEntityFlightTimeMultiplier))
 					missileEntityFlightTimeMultiplier = attribute->value_();
 
 				if (missileEntityVelocityMultiplier == 0)
@@ -613,19 +611,19 @@ namespace dgmpp {
 	
 	Meter Module::falloff() {
 		for (auto attributeID: SDE::moduleFalloffAttributes) {
-			if (auto attribute = this->attribute(attributeID); attribute && attribute->value_() > 0)
+			if (auto attribute = attribute_(attributeID); attribute && attribute->value_() > 0)
 				return attribute->value_();
 		}
 		return 0;
 	}
 
-	std::optional<std::chrono::milliseconds> Module::lifeTime() {
-		if (!lifeTime_) {
+	std::optional<std::chrono::milliseconds> Module::lifeTime_() {
+		if (!lifeTimeValue_) {
 			if (auto ship = dynamic_cast<Ship*>(parent_())) {
 				ship->heatSimulator_.simulate();
 			}
 		}
-		return lifeTime_;
+		return lifeTimeValue_;
 	}
 
 	RadiansPerSecond Module::angularVelocity(Meter targetSignature, Percent hitChance) {
