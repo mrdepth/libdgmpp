@@ -18,19 +18,13 @@ namespace dgmpp {
 	
 	class Capacitor {
 	public:
-		bool factorReload() const noexcept { return flags_.factorReload; }
-		void factorReload (bool factorReload) noexcept {
-			flags_.factorReload = factorReload;
-			reset_();
-		}
-
-		GigaJoule capacity();
-		std::chrono::milliseconds rechargeTime();
-		std::chrono::milliseconds lastsTime();
-		bool isStable();
-		Percent stableLevel();
-		GigaJoulePerSecond use();
-		GigaJoulePerSecond recharge();
+		GigaJoule capacity() { return capacity_(); }
+		std::chrono::milliseconds rechargeTime() { return rechargeTime_(); }
+		std::chrono::milliseconds lastsTime() { return lastsTime_(); }
+		bool isStable() { return isStable_(); }
+		Percent stableLevel() { return stableLevel_(); }
+		GigaJoulePerSecond use() { return use_(); }
+		GigaJoulePerSecond recharge() { return recharge_(); }
 	private:
 		friend class Ship;
 		Ship& owner_;
@@ -65,25 +59,35 @@ namespace dgmpp {
 		};
 		
 		struct {
-			bool factorReload: 1;
 			bool isCalculated_: 1;
 		} flags_;
-		GigaJoule capacity_;
-		std::chrono::milliseconds rechargeTime_;
-		rate<GigaJoule, std::chrono::milliseconds> use_;
-		rate<GigaJoule, std::chrono::milliseconds> recharge_;
+		GigaJoule capacityValue_;
+		std::chrono::milliseconds rechargeTimeValue_;
+		rate<GigaJoule, std::chrono::milliseconds> useValue_;
+		rate<GigaJoule, std::chrono::milliseconds> rechargeValue_;
 		std::priority_queue<State, std::vector<State>, std::greater<>> states_;
 		std::chrono::milliseconds period_;
 		std::chrono::milliseconds simulationEndTime_;
-		Percent stableLevel_;
+		Percent stableLevelValue_;
 		
 		Capacitor(Ship& owner) : owner_(owner) {
-			flags_.factorReload = false;
 			flags_.isCalculated_ = false;
 		}
 		
 		void reset_() noexcept { flags_.isCalculated_ = false; }
 		void prepare_();
 		void simulate_();
+		
+		bool factorReload_() const noexcept;
+
+		
+		GigaJoule capacity_();
+		std::chrono::milliseconds rechargeTime_();
+		std::chrono::milliseconds lastsTime_();
+		bool isStable_();
+		Percent stableLevel_();
+		GigaJoulePerSecond use_();
+		GigaJoulePerSecond recharge_();
+
 	};
 }

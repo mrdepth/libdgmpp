@@ -12,8 +12,8 @@ namespace dgmpp {
 	
 	class Skill: public Type {
 	public:
-		int level() { return static_cast<int>(attribute_(AttributeID::skillLevel)->value_()); }
-		void level (int level) { *attribute_(AttributeID::skillLevel) = static_cast<Float>(level); }
+		int level() { return level_(); }
+		void level (int level) { level_(level); }
 	protected:
 	private:
 		friend class Character;
@@ -21,5 +21,9 @@ namespace dgmpp {
 		static std::unique_ptr<Skill> Create (const Skill& other) { return std::unique_ptr<Skill>(new Skill(other)); }
 		Skill (const MetaInfo::Type& metaInfo) : Type(metaInfo) {};
 		Skill (const Skill& other) : Type(other) {};
+		
+		int level_() { return static_cast<int>(attribute_(AttributeID::skillLevel)->value_()); }
+		void level_ (int level) { *attribute_(AttributeID::skillLevel) = static_cast<Float>(level); }
+
 	};
 }

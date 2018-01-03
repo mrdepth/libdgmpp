@@ -49,11 +49,11 @@ namespace dgmpp {
 		}
 	}
 	
-	Charge::Size Charge::size() {
-		if (auto attribute = this->attribute_(AttributeID::chargeSize))
-			return static_cast<Size>(static_cast<int>(attribute->value_()));
-		else
-			return Size::none;
-	}
+//	Charge::Size Charge::size_() {
+//		if (auto attribute = attribute_(AttributeID::chargeSize))
+//			return static_cast<Size>(static_cast<int>(attribute->value_()));
+//		else
+//			return Size::none;
+//	}
 	
 }

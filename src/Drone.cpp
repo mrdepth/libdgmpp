@@ -20,15 +20,6 @@ namespace dgmpp {
 	
 	Drone::Drone (TypeID typeID): Type(typeID) {
 		
-		if (attribute_(AttributeID::fighterSquadronIsHeavy))
-			squadronValue_ = Squadron::heavy;
-		else if (attribute_(AttributeID::fighterSquadronIsLight))
-			squadronValue_ = Squadron::light;
-		else if (attribute_(AttributeID::fighterSquadronIsSupport))
-			squadronValue_ = Squadron::support;
-		else
-			squadronValue_ = Squadron::none;
-
 		flags_.isAssistance = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			return i->metaInfo().category == MetaInfo::Effect::Category::target && i->metaInfo().isAssistance;
 		});
@@ -43,24 +34,29 @@ namespace dgmpp {
 		
 		flags_.active = true;
 		
-		if (auto attribute = attribute_(AttributeID::entityMissileTypeID)) {
-			auto typeID = static_cast<TypeID>(static_cast<int>(attribute->value_()));
-			charge_ = Charge::Create(typeID);
-			charge_->parent_(this);
-			
+		if (charge_) {
 			flags_.isAssistance = flags_.isAssistance || charge_->flags_.isAssistance;
 			flags_.isOffensive = flags_.isOffensive || charge_->flags_.isOffensive;
 			flags_.dealsDamage = flags_.dealsDamage || charge_->flags_.dealsDamage;
 		}
 	}
 	
-	Drone::Drone (const Drone& other): Type(other) {
+	Drone::Drone (const Drone& other):
+		Type(other),
+		squadron_(other.squadron_),
+		squadronSize_(other.squadronSize_),
+		charge_ ([this, &other]() -> std::unique_ptr<Charge> {
+			if (auto charge = other.charge_.get()) {
+				auto myCharge = Charge::Create(*charge);
+				myCharge->parent_(this);
+				return myCharge;
+			}
+			else
+				return nullptr;
+		}())
+	{
 		flags_ = other.flags_;
-		squadronValue_ = other.squadronValue_;
 		squadronTagValue_ = other.squadronTagValue_;
-		if (auto charge = other.charge()) {
-			charge_ = Charge::Create(*charge);
-		}
 	}
 	
 	void Drone::active_(bool active) {
@@ -128,14 +124,14 @@ namespace dgmpp {
 		}
 	}
 	
-	std::size_t Drone::squadronSize_() {
-		if (squadronValue_ == Squadron::none)
-			return 5;
-		else {
-			auto size = static_cast<std::size_t>(attribute_(AttributeID::fighterSquadronMaxSize)->value_());
-			return size > 0 ? size : 5;
-		}
-	}
+//	std::size_t Drone::squadronSize_() {
+//		if (squadron_ == Squadron::none)
+//			return 5;
+//		else {
+//			auto size = static_cast<std::size_t>(attribute_(AttributeID::fighterSquadronMaxSize)->value_());
+//			return size > 0 ? size : 5;
+//		}
+//	}
 	
 	//Calculations
 	
@@ -315,9 +311,9 @@ namespace dgmpp {
 				return attribute->value_();
 		}
 		
-		if (auto charge = this->charge()) {
-			auto maxVelocity = charge->attribute_(AttributeID::maxVelocity);
-			auto explosionDelay = charge->attribute_(AttributeID::explosionDelay);
+		if (charge_) {
+			auto maxVelocity = charge_->attribute_(AttributeID::maxVelocity);
+			auto explosionDelay = charge_->attribute_(AttributeID::explosionDelay);
 			
 			if (maxVelocity && explosionDelay) {
 				rate<Meter, std::chrono::milliseconds> mv = MetersPerSecond(maxVelocity->value_());
@@ -343,7 +339,7 @@ namespace dgmpp {
 			return 0;
 	}
 	
-	CubicMeterPerSecond Drone::miningYield() {
+	CubicMeterPerSecond Drone::miningYield_() {
 		if (active_()) {
 			CubicMeter volley = 0;
 			if (auto attribute = attribute_(AttributeID::specialtyMiningAmount))

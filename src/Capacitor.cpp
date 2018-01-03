@@ -13,38 +13,38 @@ namespace dgmpp {
 	
 	using namespace std::chrono_literals;
 	
-	GigaJoule Capacitor::capacity() {
+	GigaJoule Capacitor::capacity_() {
 		return owner_.attribute_(AttributeID::capacitorCapacity)->value_();
 	}
 	
-	std::chrono::milliseconds Capacitor::rechargeTime() {
+	std::chrono::milliseconds Capacitor::rechargeTime_() {
 		return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(owner_.attribute_(AttributeID::rechargeRate)->value_()));
 	}
 	
-	std::chrono::milliseconds Capacitor::lastsTime() {
-		return isStable() ? std::chrono::milliseconds::max() : simulationEndTime_;
+	std::chrono::milliseconds Capacitor::lastsTime_() {
+		return isStable_() ? std::chrono::milliseconds::max() : simulationEndTime_;
 	}
 
-	bool Capacitor::isStable() {
-		return stableLevel() > 0;
+	bool Capacitor::isStable_() {
+		return stableLevel_() > 0;
 	}
 	
-	Percent Capacitor::stableLevel() {
+	Percent Capacitor::stableLevel_() {
 		if (!flags_.isCalculated_)
 			simulate_();
-		return stableLevel_;
+		return stableLevelValue_;
 	}
 	
-	GigaJoulePerSecond Capacitor::use() {
+	GigaJoulePerSecond Capacitor::use_() {
 		if (!flags_.isCalculated_)
 			simulate_();
-		return use_;
+		return useValue_;
 	}
 	
-	GigaJoulePerSecond Capacitor::recharge() {
+	GigaJoulePerSecond Capacitor::recharge_() {
 		if (!flags_.isCalculated_)
 			simulate_();
-		return recharge_;
+		return rechargeValue_;
 	}
 
 	void Capacitor::prepare_() {
@@ -52,14 +52,14 @@ namespace dgmpp {
 		std::list<Module*> modules;
 		std::list<Drone*> drones;
 		
-		for (const auto& i: owner_.modules_) {
+		for (const auto& i: owner_.modulesSet_) {
 			auto m = std::get<std::unique_ptr<Module>>(i).get();
-			if (m->state() >= Module::State::active)
+			if (m->state_() >= Module::State::active)
 				modules.push_back(m);
 		}
 
 		std::copy_if(owner_.projectedModules_.begin(), owner_.projectedModules_.end(), std::back_inserter(modules), [](auto i) {
-			return i->state() >= Module::State::active;
+			return i->state_() >= Module::State::active;
 		});
 
 		std::copy_if(owner_.projectedDrones_.begin(), owner_.projectedDrones_.end(), std::back_inserter(drones), [](auto i) {
@@ -69,19 +69,20 @@ namespace dgmpp {
 		decltype(states_)::container_type states;
 		states.reserve(modules.size() + drones.size());
 		
-		capacity_ = capacity();
-		rechargeTime_ = rechargeTime();
-		recharge_ = make_rate(10.0 * config::capacitorPeakRecharge * (1.0 - config::capacitorPeakRecharge) * capacity_, rechargeTime_);
+		capacityValue_ = capacity_();
+		rechargeTimeValue_ = rechargeTime_();
+		rechargeValue_ = make_rate(10.0 * config::capacitorPeakRecharge * (1.0 - config::capacitorPeakRecharge) * capacityValue_, rechargeTimeValue_);
 		
-		use_ = decltype(use_)(0);
+		useValue_ = decltype(useValue_)(0);
 		period_ = 1ms;
 		
 		auto isDisallowedOffense = owner_.isDisallowedOffense_();
 		auto isDisallowedAssistance = owner_.isDisallowedAssistance_();
 		auto disablePeriod = false;
+		auto factorReload = factorReload_();
 
 		for (auto module: modules) {
-			decltype(period_) cycleTime {module->cycleTime()};
+			decltype(period_) cycleTime {module->cycleTime_()};
 			period_ = decltype(period_)(std::lcm(period_.count(), cycleTime.count()));
 
 			auto isProjected = module->parent_() != &owner_;
@@ -102,17 +103,17 @@ namespace dgmpp {
 					continue;
 			}
 			else
-				capNeed = module->capUse() * cycleTime;
+				capNeed = module->capUse_() * cycleTime;
 			
-			auto clipSize = module->shots();
-			
+			auto clipSize = module->shots_();
+
 			if (capNeed > 0) {
-				use_ += make_rate(capNeed, cycleTime);
-				if (!flags_.factorReload)
+				useValue_ += make_rate(capNeed, cycleTime);
+				if (!factorReload)
 					clipSize = 0;
 			}
 			else if (capNeed < 0)
-				recharge_ -= make_rate(capNeed, cycleTime);
+				rechargeValue_ -= make_rate(capNeed, cycleTime);
 			else
 				continue;
 
@@ -124,7 +125,7 @@ namespace dgmpp {
 			std::chrono::milliseconds reactivationTime(0);
 			if (auto attribute = module->attribute_(AttributeID::moduleReactivationDelay))
 				reactivationTime = std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
-			states.emplace_back(module->rawCycleTime() + reactivationTime, capNeed, clipSize);
+			states.emplace_back(module->rawCycleTime_() + reactivationTime, capNeed, clipSize);
 		}
 		
 		for (auto drone: drones) {
@@ -132,7 +133,7 @@ namespace dgmpp {
 			auto capNeed = static_cast<GigaJoule>(drone->attribute_(AttributeID::energyNeutralizerAmount)->value_());
 
 			if ((capNeed > 0 && !isDisallowedAssistance) || (capNeed < 0 && !isDisallowedOffense)) {
-				use_ += make_rate(capNeed, cycleTime);
+				useValue_ += make_rate(capNeed, cycleTime);
 				period_ = decltype(period_)(std::lcm(period_.count(), cycleTime.count()));
 				states.emplace_back(cycleTime, capNeed, 0);
 			}
@@ -163,15 +164,15 @@ namespace dgmpp {
 	void Capacitor::simulate_() {
 		prepare_();
 		if (states_.empty()) {
-			stableLevel_ = 1.0;
+			stableLevelValue_ = 1.0;
 			simulationEndTime_ = 0ms;
 		}
 		else {
-			const auto tau = rechargeTime_.count() / 5.0;
-			auto capWrap = capacity_;
-			auto capLowest = capacity_;
-			auto capLowestPre = capacity_;
-			auto cap = capacity_;
+			const auto tau = rechargeTimeValue_.count() / 5.0;
+			auto capWrap = capacityValue_;
+			auto capLowest = capacityValue_;
+			auto capLowestPre = capacityValue_;
+			auto cap = capacityValue_;
 			auto tWrap = period_;
 			auto tNow = 0ms;
 			auto tLast = 0ms;
@@ -184,8 +185,8 @@ namespace dgmpp {
 				if (tNow > config::capacitorSimulationMaxTime)
 					break;
 				
-				auto s = ((1.0 + (std::sqrt(cap / capacity_) - 1.0) * std::exp((tLast.count() - tNow.count()) / tau)));
-				cap = std::pow(s, 2) * capacity_;
+				auto s = ((1.0 + (std::sqrt(cap / capacityValue_) - 1.0) * std::exp((tLast.count() - tNow.count()) / tau)));
+				cap = std::pow(s, 2) * capacityValue_;
 				
 				if (tNow != tLast) {
 					if (cap < capLowestPre)
@@ -199,7 +200,7 @@ namespace dgmpp {
 				}
 				
 				cap -= state.capNeed;
-				cap = std::min(cap, capacity_);
+				cap = std::min(cap, capacityValue_);
 
 				tLast = tNow;
 				
@@ -224,12 +225,16 @@ namespace dgmpp {
 			
 			simulationEndTime_ = tLast;
 			if (cap > 0.0)
-				stableLevel_ = std::min((capLowest + capLowestPre) / (2 * capacity_), 1.0);
+				stableLevelValue_ = std::min((capLowest + capLowestPre) / (2 * capacityValue_), 1.0);
 			else
-				stableLevel_ = 0;
+				stableLevelValue_ = 0;
 
 		}
 		flags_.isCalculated_ = true;
 	}
-	
+
+	bool Capacitor::factorReload_() const noexcept {
+		return owner_.factorReload_();
+	}
+
 }

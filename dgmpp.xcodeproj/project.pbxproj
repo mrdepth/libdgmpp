@@ -7,16 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1223D9D21FF834620027D53C /* area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE894A1FE2836A00854893 /* area.cpp */; };
-		1223D9D31FF834620027D53C /* attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89201FE2660A00854893 /* attribute.cpp */; };
-		1223D9D41FF834620027D53C /* character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE892C1FE26ADD00854893 /* character.cpp */; };
-		1223D9D51FF834620027D53C /* charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89441FE2831E00854893 /* charge.cpp */; };
-		1223D9D61FF834620027D53C /* drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE893E1FE2819800854893 /* drone.cpp */; };
-		1223D9D71FF834620027D53C /* gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89261FE26A0700854893 /* gang.cpp */; };
-		1223D9D81FF834620027D53C /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89381FE27D5800854893 /* module.cpp */; };
-		1223D9D91FF834620027D53C /* ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89321FE270B900854893 /* ship.cpp */; };
-		1223D9DA1FF834620027D53C /* structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89521FE283DA00854893 /* structure.cpp */; };
-		1223D9DB1FF834620027D53C /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
 		123BEF071FBD9E4F00AC8EB1 /* SDE.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FA1FBD97F80072D4E4 /* SDE.hpp */; };
 		123BEF081FBD9E4F00AC8EB1 /* SDE.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330FA1FBD97F80072D4E4 /* SDE.hpp */; };
 		123BEF091FBD9E5F00AC8EB1 /* Attributes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F61FBD97F80072D4E4 /* Attributes.hpp */; };
@@ -179,6 +169,43 @@
 		128CA3C91FECF064006E0989 /* production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.cpp */; };
 		128CA3CA1FECF064006E0989 /* storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.cpp */; };
 		128CA3CB1FECF064006E0989 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
+		12AFFDF81FFD2A1900B32307 /* area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE894A1FE2836A00854893 /* area.cpp */; };
+		12AFFDF91FFD2A1900B32307 /* attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89201FE2660A00854893 /* attribute.cpp */; };
+		12AFFDFA1FFD2A1900B32307 /* character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE892C1FE26ADD00854893 /* character.cpp */; };
+		12AFFDFB1FFD2A1900B32307 /* charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89441FE2831E00854893 /* charge.cpp */; };
+		12AFFDFC1FFD2A1900B32307 /* drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE893E1FE2819800854893 /* drone.cpp */; };
+		12AFFDFD1FFD2A1900B32307 /* gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89261FE26A0700854893 /* gang.cpp */; };
+		12AFFDFE1FFD2A1900B32307 /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89381FE27D5800854893 /* module.cpp */; };
+		12AFFDFF1FFD2A1900B32307 /* ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89321FE270B900854893 /* ship.cpp */; };
+		12AFFE001FFD2A1900B32307 /* structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89521FE283DA00854893 /* structure.cpp */; };
+		12AFFE011FFD2A1900B32307 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
+		12AFFE021FFD2A1900B32307 /* extractor_control_unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89651FE2864F00854893 /* extractor_control_unit.cpp */; };
+		12AFFE031FFD2A1900B32307 /* facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE896B1FE2865C00854893 /* facility.cpp */; };
+		12AFFE041FFD2A1900B32307 /* factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89711FE2866F00854893 /* factory.cpp */; };
+		12AFFE051FFD2A1900B32307 /* planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89771FE2867A00854893 /* planet.cpp */; };
+		12AFFE061FFD2A1900B32307 /* production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.cpp */; };
+		12AFFE071FFD2A1900B32307 /* storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.cpp */; };
+		12AFFE081FFD2A1900B32307 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
+		12AFFE091FFD2A2500B32307 /* DGMObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF4D5A1FF27743005E5255 /* DGMObject.swift */; };
+		12AFFE0A1FFD2A2500B32307 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
+		12AFFE0B1FFD2A2500B32307 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
+		12AFFE0C1FFD2A2500B32307 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
+		12AFFE0D1FFD2A2500B32307 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
+		12AFFE0E1FFD2A2500B32307 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
+		12AFFE0F1FFD2A2500B32307 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
+		12AFFE101FFD2A2500B32307 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
+		12AFFE111FFD2A2500B32307 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
+		12AFFE121FFD2A2500B32307 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
+		12AFFE131FFD2A2500B32307 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
+		12AFFE141FFD2A2500B32307 /* DGMPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E118D1FE9632D0057EB0D /* DGMPlanet.swift */; };
+		12AFFE151FFD2A2500B32307 /* DGMFacility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11931FE963460057EB0D /* DGMFacility.swift */; };
+		12AFFE161FFD2A2500B32307 /* DGMExtractorControlUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11961FE9685E0057EB0D /* DGMExtractorControlUnit.swift */; };
+		12AFFE171FFD2A2500B32307 /* DGMFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11991FE968690057EB0D /* DGMFactory.swift */; };
+		12AFFE181FFD2A2500B32307 /* DGMStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119C1FE968740057EB0D /* DGMStorage.swift */; };
+		12AFFE191FFD2A2500B32307 /* DGMProductionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119F1FE968810057EB0D /* DGMProductionState.swift */; };
+		12AFFE1A1FFD2A2500B32307 /* dgm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29A1FE0213C00AD4ED3 /* dgm.swift */; };
+		12AFFE1B1FFD2A2500B32307 /* DGMRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* DGMRate.swift */; };
+		12AFFE1C1FFD2A2500B32307 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F91FE2CBDC0045BD84 /* Utility.swift */; };
 		12B0A30C1C0EEC8400194715 /* Dgmpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* Dgmpp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12B331061FBD98F50072D4E4 /* AttributeID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F21FBD97F80072D4E4 /* AttributeID.hpp */; };
 		12B331071FBD98F50072D4E4 /* CategoryID.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12B330F81FBD97F80072D4E4 /* CategoryID.hpp */; };
@@ -215,7 +242,6 @@
 		12BE89141FE25BB100854893 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89121FE25BB100854893 /* utility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12BE89151FE25BB100854893 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89121FE25BB100854893 /* utility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12BE89161FE25BB100854893 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
-		12BE89171FE25BB100854893 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
 		12BE891A1FE260CA00854893 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
 		12BE891C1FE260CA00854893 /* type.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89191FE260CA00854893 /* type.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12BE891D1FE260CA00854893 /* type.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BE89191FE260CA00854893 /* type.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -285,57 +311,31 @@
 		12EC66531FBECD840083DBB8 /* Capacitor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12EC66501FBECD840083DBB8 /* Capacitor.hpp */; };
 		12EC66541FBECD840083DBB8 /* Capacitor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 12EC66501FBECD840083DBB8 /* Capacitor.hpp */; };
 		12FF4D441FF274AB005E5255 /* facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE896B1FE2865C00854893 /* facility.cpp */; };
-		12FF4D451FF274AC005E5255 /* facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE896B1FE2865C00854893 /* facility.cpp */; };
 		12FF4D461FF274CE005E5255 /* extractor_control_unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89651FE2864F00854893 /* extractor_control_unit.cpp */; };
-		12FF4D471FF274CE005E5255 /* extractor_control_unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89651FE2864F00854893 /* extractor_control_unit.cpp */; };
-		12FF4D481FF275C5005E5255 /* factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89711FE2866F00854893 /* factory.cpp */; };
 		12FF4D491FF275C5005E5255 /* factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89711FE2866F00854893 /* factory.cpp */; };
-		12FF4D4A1FF275F8005E5255 /* planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89771FE2867A00854893 /* planet.cpp */; };
 		12FF4D4B1FF275F9005E5255 /* planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89771FE2867A00854893 /* planet.cpp */; };
 		12FF4D4C1FF27659005E5255 /* production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.cpp */; };
-		12FF4D4D1FF2765A005E5255 /* production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.cpp */; };
-		12FF4D4E1FF276CE005E5255 /* storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.cpp */; };
 		12FF4D4F1FF276CF005E5255 /* storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.cpp */; };
-		12FF4D521FF276E6005E5255 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F91FE2CBDC0045BD84 /* Utility.swift */; };
 		12FF4D531FF276E7005E5255 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F91FE2CBDC0045BD84 /* Utility.swift */; };
 		12FF4D541FF276ED005E5255 /* DGMRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* DGMRate.swift */; };
-		12FF4D551FF276ED005E5255 /* DGMRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* DGMRate.swift */; };
 		12FF4D561FF276F3005E5255 /* dgm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29A1FE0213C00AD4ED3 /* dgm.swift */; };
-		12FF4D571FF276F4005E5255 /* dgm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29A1FE0213C00AD4ED3 /* dgm.swift */; };
 		12FF4D581FF27701005E5255 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
-		12FF4D591FF27702005E5255 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
 		12FF4D5B1FF27743005E5255 /* DGMObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF4D5A1FF27743005E5255 /* DGMObject.swift */; };
-		12FF4D5C1FF27743005E5255 /* DGMObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF4D5A1FF27743005E5255 /* DGMObject.swift */; };
-		12FF4D5D1FF27832005E5255 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
 		12FF4D5E1FF27833005E5255 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
-		12FF4D5F1FF27939005E5255 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
 		12FF4D601FF2793A005E5255 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
 		12FF4D611FF27955005E5255 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
-		12FF4D621FF27955005E5255 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
-		12FF4D631FF27992005E5255 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
 		12FF4D641FF27993005E5255 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
 		12FF4D651FF279F4005E5255 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
-		12FF4D661FF279F5005E5255 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
-		12FF4D671FF27A1F005E5255 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
 		12FF4D681FF27A20005E5255 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
 		12FF4D691FF27A41005E5255 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
-		12FF4D6A1FF27A41005E5255 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
 		12FF4D6B1FF27B13005E5255 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
-		12FF4D6C1FF27B13005E5255 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
 		12FF4D6D1FF27B40005E5255 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
-		12FF4D6E1FF27B40005E5255 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
 		12FF4D6F1FF27B7C005E5255 /* DGMPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E118D1FE9632D0057EB0D /* DGMPlanet.swift */; };
 		12FF4D701FF27B7C005E5255 /* DGMFacility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11931FE963460057EB0D /* DGMFacility.swift */; };
 		12FF4D711FF27B7C005E5255 /* DGMExtractorControlUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11961FE9685E0057EB0D /* DGMExtractorControlUnit.swift */; };
 		12FF4D721FF27B7C005E5255 /* DGMFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11991FE968690057EB0D /* DGMFactory.swift */; };
 		12FF4D731FF27B7C005E5255 /* DGMStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119C1FE968740057EB0D /* DGMStorage.swift */; };
 		12FF4D741FF27B7C005E5255 /* DGMProductionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119F1FE968810057EB0D /* DGMProductionState.swift */; };
-		12FF4D751FF27B7D005E5255 /* DGMPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E118D1FE9632D0057EB0D /* DGMPlanet.swift */; };
-		12FF4D761FF27B7D005E5255 /* DGMFacility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11931FE963460057EB0D /* DGMFacility.swift */; };
-		12FF4D771FF27B7D005E5255 /* DGMExtractorControlUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11961FE9685E0057EB0D /* DGMExtractorControlUnit.swift */; };
-		12FF4D781FF27B7D005E5255 /* DGMFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11991FE968690057EB0D /* DGMFactory.swift */; };
-		12FF4D791FF27B7D005E5255 /* DGMStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119C1FE968740057EB0D /* DGMStorage.swift */; };
-		12FF4D7A1FF27B7D005E5255 /* DGMProductionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119F1FE968810057EB0D /* DGMProductionState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1290,72 +1290,72 @@
 			buildActionMask = 2147483647;
 			files = (
 				123CC8E01FCEA30500C34372 /* ProductionCycle.cpp in Sources */,
-				1223D9D81FF834620027D53C /* module.cpp in Sources */,
 				12B3311D1FBD99B40072D4E4 /* Attribute.cpp in Sources */,
-				1223D9D71FF834620027D53C /* gang.cpp in Sources */,
-				12FF4D621FF27955005E5255 /* DGMModule.swift in Sources */,
+				12AFFE101FFD2A2500B32307 /* DGMModule.swift in Sources */,
+				12AFFE0A1FFD2A2500B32307 /* DGMArea.swift in Sources */,
+				12AFFE1B1FFD2A2500B32307 /* DGMRate.swift in Sources */,
+				12AFFE041FFD2A1900B32307 /* factory.cpp in Sources */,
+				12AFFE0D1FFD2A2500B32307 /* DGMCharge.swift in Sources */,
+				12AFFDFD1FFD2A1900B32307 /* gang.cpp in Sources */,
+				12AFFE011FFD2A1900B32307 /* type.cpp in Sources */,
+				12AFFE081FFD2A1900B32307 /* utility.cpp in Sources */,
+				12AFFE0E1FFD2A2500B32307 /* DGMDrone.swift in Sources */,
 				123BEF2A1FBDA58700AC8EB1 /* Character.cpp in Sources */,
-				12FF4D5F1FF27939005E5255 /* DGMArea.swift in Sources */,
+				12AFFE1A1FFD2A2500B32307 /* dgm.swift in Sources */,
+				12AFFDFC1FFD2A1900B32307 /* drone.cpp in Sources */,
+				12AFFDFB1FFD2A1900B32307 /* charge.cpp in Sources */,
 				123BEF421FBDB59200AC8EB1 /* Charge.cpp in Sources */,
 				123CC8C11FCD9B6B00C34372 /* Commodity.cpp in Sources */,
 				12E864F81FC8650000C9C4BD /* Booster.cpp in Sources */,
-				12FF4D571FF276F4005E5255 /* dgm.swift in Sources */,
-				12FF4D661FF279F5005E5255 /* DGMDrone.swift in Sources */,
 				123CC8DA1FCEA2FA00C34372 /* ProductionState.cpp in Sources */,
-				12FF4D4D1FF2765A005E5255 /* production_state.cpp in Sources */,
-				12FF4D771FF27B7D005E5255 /* DGMExtractorControlUnit.swift in Sources */,
+				12AFFDF81FFD2A1900B32307 /* area.cpp in Sources */,
+				12AFFE0B1FFD2A2500B32307 /* DGMAttirbute.swift in Sources */,
+				12AFFE171FFD2A2500B32307 /* DGMFactory.swift in Sources */,
+				12AFFE1C1FFD2A2500B32307 /* Utility.swift in Sources */,
+				12AFFE031FFD2A1900B32307 /* facility.cpp in Sources */,
 				12B53FFC1FCAD48500631067 /* WarfareBuff.cpp in Sources */,
 				123BEF161FBDA20F00AC8EB1 /* Modifier.cpp in Sources */,
-				12FF4D5D1FF27832005E5255 /* DGMAttirbute.swift in Sources */,
+				12AFFE131FFD2A2500B32307 /* DGMType.swift in Sources */,
+				12AFFDFF1FFD2A1900B32307 /* ship.cpp in Sources */,
 				123BEF481FBDB5D200AC8EB1 /* Drone.cpp in Sources */,
-				12FF4D451FF274AC005E5255 /* facility.cpp in Sources */,
+				12AFFDFA1FFD2A1900B32307 /* character.cpp in Sources */,
 				123BEF361FBDB40800AC8EB1 /* Ship.cpp in Sources */,
-				12FF4D781FF27B7D005E5255 /* DGMFactory.swift in Sources */,
-				12FF4D551FF276ED005E5255 /* DGMRate.swift in Sources */,
+				12AFFE0F1FFD2A2500B32307 /* DGMGang.swift in Sources */,
 				123CC8BB1FCD9B5300C34372 /* Facility.cpp in Sources */,
+				12AFFE111FFD2A2500B32307 /* DGMShip.swift in Sources */,
 				123CC8D41FCEA29700C34372 /* Route.cpp in Sources */,
 				123BEF1C1FBDA2A900AC8EB1 /* Effect.cpp in Sources */,
-				12FF4D4A1FF275F8005E5255 /* planet.cpp in Sources */,
-				12FF4D631FF27992005E5255 /* DGMShip.swift in Sources */,
-				12BE89171FE25BB100854893 /* utility.cpp in Sources */,
+				12AFFE0C1FFD2A2500B32307 /* DGMCharacter.swift in Sources */,
+				12AFFE151FFD2A2500B32307 /* DGMFacility.swift in Sources */,
+				12AFFE141FFD2A2500B32307 /* DGMPlanet.swift in Sources */,
 				123BEF241FBDA52500AC8EB1 /* Gang.cpp in Sources */,
-				12FF4D481FF275C5005E5255 /* factory.cpp in Sources */,
-				12FF4D751FF27B7D005E5255 /* DGMPlanet.swift in Sources */,
 				123CC8EC1FCEA33700C34372 /* Storage.cpp in Sources */,
 				12B331171FBD99150072D4E4 /* Type.cpp in Sources */,
+				12AFFDF91FFD2A1900B32307 /* attribute.cpp in Sources */,
+				12AFFE051FFD2A1900B32307 /* planet.cpp in Sources */,
 				127442B71FD9835400B70A3A /* HeatSimulator.cpp in Sources */,
-				1223D9DB1FF834620027D53C /* type.cpp in Sources */,
-				12FF4D6A1FF27A41005E5255 /* DGMCharacter.swift in Sources */,
-				12FF4D761FF27B7D005E5255 /* DGMFacility.swift in Sources */,
-				1223D9D41FF834620027D53C /* character.cpp in Sources */,
 				123CC8B51FCD9B4100C34372 /* Planet.cpp in Sources */,
-				12FF4D6E1FF27B40005E5255 /* DGMGang.swift in Sources */,
+				12AFFE121FFD2A2500B32307 /* DGMStructure.swift in Sources */,
+				12AFFE001FFD2A1900B32307 /* structure.cpp in Sources */,
+				12AFFDFE1FFD2A1900B32307 /* module.cpp in Sources */,
 				12E864F21FC864F600C9C4BD /* Implant.cpp in Sources */,
-				1223D9DA1FF834620027D53C /* structure.cpp in Sources */,
+				12AFFE181FFD2A2500B32307 /* DGMStorage.swift in Sources */,
 				123CC8A71FCD659200C34372 /* Area.cpp in Sources */,
 				123CC8F21FCEA34E00C34372 /* Factory.cpp in Sources */,
-				1223D9D31FF834620027D53C /* attribute.cpp in Sources */,
-				12FF4D6C1FF27B13005E5255 /* DGMStructure.swift in Sources */,
+				12AFFE161FFD2A2500B32307 /* DGMExtractorControlUnit.swift in Sources */,
+				12AFFE191FFD2A2500B32307 /* DGMProductionState.swift in Sources */,
 				12B331191FBD999F0072D4E4 /* SDE.cpp in Sources */,
 				123CC8F81FCEA35B00C34372 /* ExtractorControlUnit.cpp in Sources */,
+				12AFFE061FFD2A1900B32307 /* production_state.cpp in Sources */,
 				123CC8E61FCEA32F00C34372 /* CommandCenter.cpp in Sources */,
-				12FF4D7A1FF27B7D005E5255 /* DGMProductionState.swift in Sources */,
-				12FF4D591FF27702005E5255 /* DGMType.swift in Sources */,
+				12AFFE021FFD2A1900B32307 /* extractor_control_unit.cpp in Sources */,
+				12AFFE091FFD2A2500B32307 /* DGMObject.swift in Sources */,
 				123BEF3C1FBDB4A200AC8EB1 /* Module.cpp in Sources */,
-				1223D9D51FF834620027D53C /* charge.cpp in Sources */,
+				12AFFE071FFD2A1900B32307 /* storage.cpp in Sources */,
 				123CC8FF1FCEA39000C34372 /* Spaceport.cpp in Sources */,
-				12FF4D791FF27B7D005E5255 /* DGMStorage.swift in Sources */,
-				1223D9D61FF834620027D53C /* drone.cpp in Sources */,
 				123BEF301FBDB3AB00AC8EB1 /* Skill.cpp in Sources */,
 				12EC66521FBECD840083DBB8 /* Capacitor.cpp in Sources */,
 				12649A181FCD5E77007B22CD /* Structure.cpp in Sources */,
-				1223D9D91FF834620027D53C /* ship.cpp in Sources */,
-				12FF4D5C1FF27743005E5255 /* DGMObject.swift in Sources */,
-				12FF4D521FF276E6005E5255 /* Utility.swift in Sources */,
-				12FF4D471FF274CE005E5255 /* extractor_control_unit.cpp in Sources */,
-				12FF4D671FF27A1F005E5255 /* DGMCharge.swift in Sources */,
-				1223D9D21FF834620027D53C /* area.cpp in Sources */,
-				12FF4D4E1FF276CE005E5255 /* storage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

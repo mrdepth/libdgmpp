@@ -32,7 +32,7 @@ namespace dgmpp {
 	Type::Type (const MetaInfo::Type& metaInfo): metaInfo_(metaInfo) {
 		
 		for (const auto& i: metaInfo.attributes())
-			attributes_.emplace(i.first->attributeID, new Attribute(*i.first, i.second, *this));
+			attributesMap_.emplace(i.first->attributeID, new Attribute(*i.first, i.second, *this));
 		
 		effects_.reserve(metaInfo.effects().size());
 		
@@ -45,12 +45,12 @@ namespace dgmpp {
 	}
 	
 	Type::Type (const Type& other): Type(other.metaInfo_) {
-		for (const auto& i: other.attributes_) {
+		for (const auto& i: other.attributesMap_) {
 			if (i.second && i.second->forcedValue_) {
 				*attribute_(i.second->metaInfo_.attributeID) = *i.second->forcedValue_;
 			}
 		}
-		identifier_ = other.identifier_;
+		identifierValue_ = other.identifierValue_;
 	}
 	
 	void Type::parent_ (Type* parent) {
@@ -76,7 +76,7 @@ namespace dgmpp {
 	}
 	
 	Attribute::Proxy Type::attribute_ (AttributeID attributeID) {
-		return {*this, attributes_.emplace(attributeID, nullptr).first};
+		return {*this, attributesMap_.emplace(attributeID, nullptr).first};
 	}
 
 	Effect* Type::effect_ (EffectID effectID) const {
@@ -410,9 +410,9 @@ namespace dgmpp {
 		buffs_.erase(key);
 	}
 
-	std::unordered_set<Type*> Type::affectors() const {
+	std::unordered_set<Type*> Type::affectors_() const {
 		std::unordered_set<Type*> types;
-		for (const auto& i: attributes_) {
+		for (const auto& i: attributesMap_) {
 			for (const auto& j: modifiers_(i.second->metaInfo())) {
 				types.insert(&j->owner());
 			}
@@ -420,9 +420,9 @@ namespace dgmpp {
 		return types;
 	}
 	
-	std::list<Attribute*> Type::attributes() const {
+	std::list<Attribute*> Type::attributes_() const {
 		std::list<Attribute*> attributes;
-		for (const auto& i: attributes_) {
+		for (const auto& i: attributesMap_) {
 			if (i.second) {
 				attributes.push_back(i.second.get());
 			}

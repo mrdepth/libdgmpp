@@ -104,10 +104,6 @@ public class Ship extends Type {
     return new Drones(dgmppJNI.Ship_drones(swigCPtr, this), true);
   }
 
-  public boolean factorReload() {
-    return dgmppJNI.Ship_factorReload(swigCPtr, this);
-  }
-
   public long totalDroneSquadron(int squadron) {
     return dgmppJNI.Ship_totalDroneSquadron__SWIG_0(swigCPtr, this, squadron);
   }

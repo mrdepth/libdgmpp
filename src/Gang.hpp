@@ -19,18 +19,17 @@ namespace dgmpp {
 		static std::unique_ptr<Gang> Create() { return std::unique_ptr<Gang>(new Gang); }
 		static std::unique_ptr<Gang> Create(const Gang& other) { return std::unique_ptr<Gang>(new Gang(other)); }
 		
-		Character* add (std::unique_ptr<Character>&& pilot);
+		Character* add (std::unique_ptr<Character>&& pilot) { return add_(std::move(pilot)); }
 		Character* addPilot() { return add(Character::Create()); }
 		
-		void remove (Character* pilot);
-		std::vector<Character*> pilots() const;
+		void remove (Character* pilot) { remove_(pilot); }
+		std::vector<Character*> pilots() const { return pilots_(); }
 		
 		bool factorReload()		const noexcept	{ return factorReload_(); }
 		void factorReload (bool factorReload) noexcept { factorReload_(factorReload); }
 
-
-		Area* area() const noexcept { return area_.get(); }
-		Area* area(std::unique_ptr<Area>&& area);
+		Area* area() const noexcept { return area_(); }
+		Area* area(std::unique_ptr<Area>&& area) { return area_(std::move(area)); }
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 
 	protected:
@@ -40,11 +39,20 @@ namespace dgmpp {
 	private:
 		friend class WarfareBuffEffect;
 		friend class Character;
-		std::list<std::unique_ptr<Character>> pilots_;
+		std::list<std::unique_ptr<Character>> pilotsList_;
 		bool factorReloadValue_;
-		std::unique_ptr<Area> area_;
+		std::unique_ptr<Area> areaValue_;
+
+		Character* add_ (std::unique_ptr<Character>&& pilot);
+		
+		void remove_ (Character* pilot);
+		std::vector<Character*> pilots_() const;
 
 		bool factorReload_() const noexcept	{ return factorReloadValue_; }
 		void factorReload_ (bool factorReload) noexcept;// { factorReloadValue_ = factorReload; }
+		
+		Area* area_() const noexcept { return areaValue_.get(); }
+		Area* area_(std::unique_ptr<Area>&& area);
+
 };
 }

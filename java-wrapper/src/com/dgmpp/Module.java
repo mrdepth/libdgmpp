@@ -102,28 +102,12 @@ public class Module extends Type {
     return dgmppJNI.Module_chargeSize(swigCPtr, this);
   }
 
-  public boolean canBeOnline() {
-    return dgmppJNI.Module_canBeOnline(swigCPtr, this);
-  }
-
-  public boolean canBeActive() {
-    return dgmppJNI.Module_canBeActive(swigCPtr, this);
-  }
-
-  public boolean canBeOverloaded() {
-    return dgmppJNI.Module_canBeOverloaded(swigCPtr, this);
-  }
-
   public boolean requireTarget() {
     return dgmppJNI.Module_requireTarget(swigCPtr, this);
   }
 
   public boolean fail() {
     return dgmppJNI.Module_fail(swigCPtr, this);
-  }
-
-  public boolean factorReload() {
-    return dgmppJNI.Module_factorReload(swigCPtr, this);
   }
 
   public long charges() {

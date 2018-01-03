@@ -9,6 +9,9 @@ namespace dgmpp {
 		void remove (Character* pilot);
 		std::vector<Character*> pilots() const;
 
+		bool factorReload() const noexcept;
+		void factorReload (bool factorReload) noexcept;
+
 		Area* area() const noexcept;
 		Area* area(TypeID typeID);
 

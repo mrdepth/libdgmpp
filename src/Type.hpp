@@ -27,17 +27,15 @@ namespace dgmpp {
 		Type* parent() const noexcept { return parent_(); }
 		
 		Attribute* operator[] (AttributeID attributeID) {
-			auto i = attributes_.find(attributeID);
-			return i != attributes_.end() ? i->second.get() : nullptr;
+			auto i = attributesMap_.find(attributeID);
+			return i != attributesMap_.end() ? i->second.get() : nullptr;
 		}
 		
-//		Effect* operator[] (EffectID effectID) const { return effect_(effectID); }
+		std::unordered_set<Type*> affectors() const { return affectors_(); }
+		std::list<Attribute*> attributes() const { return attributes_(); }
 		
-		std::unordered_set<Type*> affectors() const;
-		std::list<Attribute*> attributes() const;
-		
-		std::size_t identifier() const noexcept { return identifier_; }
-		void identifier (std::size_t identifier) noexcept { identifier_ = identifier; }
+		std::size_t identifier() const noexcept { return identifier_(); }
+		void identifier (std::size_t identifier) noexcept { identifier_(identifier); }
 		
 	protected:
 		
@@ -113,7 +111,7 @@ namespace dgmpp {
 		
 		const MetaInfo::Type&					metaInfo_;
 		Type*									parentType_ = nullptr;
-		AttributesMap							attributes_;
+		AttributesMap							attributesMap_;
 		bool									enabled_ = false;
 		bool									resetFlag_ = false;
 
@@ -124,7 +122,7 @@ namespace dgmpp {
 		TuplesSet<AttributeID, TypeID, const Modifier*> locationRequiredSkillModifiersSet_;
 		
 		std::unique_ptr<AttributesCache> cacheValue_;
-		std::size_t identifier_ = std::hash<Type*>()(this);
+		std::size_t identifierValue_ = std::hash<Type*>()(this);
 
 		void addModifier_	(const Modifier* modifier);
 		void removeModifier_ (const Modifier* modifier);
@@ -139,6 +137,12 @@ namespace dgmpp {
 		
 		void addBuff_		(const WarfareBuff* buff);
 		void removeBuff_	(const WarfareBuff* buff);
+
+		std::unordered_set<Type*> affectors_() const;
+		std::list<Attribute*> attributes_() const;
+		
+		std::size_t identifier_() const noexcept { return identifierValue_; }
+		void identifier_ (std::size_t identifier) noexcept { identifierValue_ = identifier; }
 
 	};
 	

@@ -16,38 +16,38 @@ namespace dgmpp {
 		std::map<Module*, Module*> modulesMap;
 		std::map<Drone*, Drone*> dronesMap;
 		
-		for (const auto& i: other.pilots_) {
+		for (const auto& i: other.pilotsList_) {
 			auto pilot = Character::Create(*i);
 			auto ptr = pilot.get();
-			pilots_.emplace_back(std::move(pilot));
+			pilotsList_.emplace_back(std::move(pilot));
 			ptr->parent_(this);
 			auto otherShip = i->ship_();
 			auto myShip = ptr->ship_();
 			if (myShip && otherShip) {
 				shipsMap.emplace(std::make_pair(otherShip,myShip));
 				
-				auto myModules = myShip->modules();
+				auto myModules = myShip->modules_();
 				auto j = myModules.begin();
-				for (auto m: otherShip->modules()) {
+				for (auto m: otherShip->modules_()) {
 					modulesMap.emplace(std::make_pair(m,*(j++)));
 				}
 				
-				auto myDrones = myShip->drones();
+				auto myDrones = myShip->drones_();
 				auto k = myDrones.begin();
-				for (auto d: otherShip->drones()) {
+				for (auto d: otherShip->drones_()) {
 					dronesMap.emplace(std::make_pair(d,*(k++)));
 				}
 
 			}
 		}
-		for (const auto& i: other.pilots_) {
+		for (const auto& i: other.pilotsList_) {
 			if (auto ship = i->ship_()) {
-				for (const auto& j: ship->modules()) {
-					if (auto target = j->target()) {
-						modulesMap[j]->target(shipsMap[target]);
+				for (const auto& j: ship->modules_()) {
+					if (auto target = j->target_()) {
+						modulesMap[j]->target_(shipsMap[target]);
 					}
 				}
-				for (const auto& j: ship->drones()) {
+				for (const auto& j: ship->drones_()) {
 					if (auto target = j->target_()) {
 						dronesMap[j]->target_(shipsMap[target]);
 					}
@@ -55,33 +55,33 @@ namespace dgmpp {
 			}
 		}
 		
-		if (auto area = other.area()) {
-			area_ = Area::Create(*area);
+		if (auto area = other.area_()) {
+			areaValue_ = Area::Create(*area);
 		}
 
 		setEnabled_(other.isEnabled_());
 	}
 	
-	Character* Gang::add(std::unique_ptr<Character>&& pilot) {
+	Character* Gang::add_(std::unique_ptr<Character>&& pilot) {
 		assert(pilot != nullptr);
 		auto ptr = pilot.get();
-		pilots_.push_back(std::move(pilot));
+		pilotsList_.push_back(std::move(pilot));
 		ptr->parent_(this);
 		return ptr;
 	}
 	
-	void Gang::remove(Character* pilot) {
+	void Gang::remove_(Character* pilot) {
 		assert(pilot != nullptr);
 		pilot->parent_(nullptr);
 //		if (pilot->isEnabled())
 //			pilot->setEnabled_(false);
-		pilots_.remove_if([=](const auto& i) { return i.get() == pilot; });
+		pilotsList_.remove_if([=](const auto& i) { return i.get() == pilot; });
 	}
 	
-	std::vector<Character*> Gang::pilots() const {
+	std::vector<Character*> Gang::pilots_() const {
 		std::vector<Character*> result;
-		result.reserve(pilots_.size());
-		std::transform(pilots_.begin(), pilots_.end(), std::back_inserter(result), [](const auto& i) { return i.get(); });
+		result.reserve(pilotsList_.size());
+		std::transform(pilotsList_.begin(), pilotsList_.end(), std::back_inserter(result), [](const auto& i) { return i.get(); });
 		return result;
 	}
 	
@@ -100,29 +100,29 @@ namespace dgmpp {
 		else
 			Type::setEnabled_(enabled);
 		
-		std::for_each(pilots_.begin(), pilots_.end(), [enabled](auto& i) {
+		std::for_each(pilotsList_.begin(), pilotsList_.end(), [enabled](auto& i) {
 			i->setEnabled_(enabled);
 		});
 	}
 
-	Area* Gang::area(std::unique_ptr<Area>&& area) {
-		if (area_)
-			area_->parent_(nullptr);
+	Area* Gang::area_(std::unique_ptr<Area>&& area) {
+		if (areaValue_)
+			areaValue_->parent_(nullptr);
 		if (area) {
-			area_ = std::move(area);
-			area_->parent_(this);
+			areaValue_ = std::move(area);
+			areaValue_->parent_(this);
 		}
 		else
-			area_ = nullptr;
-		for (const auto& pilot: pilots_) {
+			areaValue_ = nullptr;
+		for (const auto& pilot: pilotsList_) {
 			if (auto ship = pilot->ship_()) {
-				if (area_)
-					ship->area_(Area::Create(*area_));
+				if (areaValue_)
+					ship->area_(Area::Create(*areaValue_));
 				else
 					ship->area_(nullptr);
 			}
 		}
-		return area_.get();
+		return areaValue_.get();
 	}
 	
 	void Gang::factorReload_(bool factorReload) noexcept {

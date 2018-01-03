@@ -18,35 +18,35 @@ namespace dgmpp {
 		static std::unique_ptr<Character> Create() { return std::unique_ptr<Character>(new Character); }
 		static std::unique_ptr<Character> Create (const Character& other) { return std::unique_ptr<Character>(new Character(other)); }
 		
-		const std::string& name() const noexcept { return name_; }
+		const std::string& name() const noexcept { return name_(); }
 		template<typename T>
-		void name (T&& name) noexcept { name_ = std::forward<T>(name); }
+		void name (T&& name) noexcept { name_(std::forward<T>(name)); }
 
 		
 		Ship* ship() const { return ship_(); }
 		Ship* ship (std::unique_ptr<Ship>&& ship) { return ship_(std::move(ship)); }
-		Ship* ship (TypeID typeID) { return ship_(Ship::Create(typeID)); }
+		Ship* ship (TypeID typeID) { return ship(Ship::Create(typeID)); }
 		Structure* structure() const { return structure_(); }
 		Structure* structure (std::unique_ptr<Structure>&& structure) { return structure_(std::move(structure)); }
-		Structure* structure (TypeID typeID) { return structure_(Structure::Create(typeID)); }
+		Structure* structure (TypeID typeID) { return structure(Structure::Create(typeID)); }
 
-		void setSkillLevels (int level);
+		void setSkillLevels (int level) { setSkillLevels_(level); }
 		
-		Implant* add(std::unique_ptr<Implant>&& implant, bool replace = false);
-		Booster* add(std::unique_ptr<Booster>&& booster, bool replace = false);
+		Implant* add(std::unique_ptr<Implant>&& implant, bool replace = false) { return add_(std::move(implant), replace); }
+		Booster* add(std::unique_ptr<Booster>&& booster, bool replace = false) { return add_(std::move(booster), replace); }
 		Implant* addImplant(TypeID typeID, bool replace = false) { return add(Implant::Create(typeID), replace); }
 		Booster* addBooster(TypeID typeID, bool replace = false) { return add(Booster::Create(typeID), replace); }
-		void remove(Implant* implant);
-		void remove(Booster* booster);
+		void remove(Implant* implant) { remove_(implant); }
+		void remove(Booster* booster) { remove_(booster); }
 		
-		std::vector<Skill*> skills() const;
-		std::vector<Implant*> implants() const;
-		std::vector<Booster*> boosters() const;
+		std::vector<Skill*> skills() const { return skills_(); }
+		std::vector<Implant*> implants() const { return implants_(); }
+		std::vector<Booster*> boosters() const { return boosters_(); }
 		
-		Implant* implant (Implant::Slot slot) const noexcept;
-		Booster* booster (Booster::Slot slot) const noexcept;
+		Implant* implant (Implant::Slot slot) const noexcept { return implant_(slot); }
+		Booster* booster (Booster::Slot slot) const noexcept { return booster_(slot); }
 		
-		Meter droneControlDistance();
+		Meter droneControlDistance() { return droneControlDistance_(); }
 
 
 	protected:
@@ -77,22 +77,44 @@ namespace dgmpp {
 		friend class Gang;
 		friend class Ship;
 		std::unique_ptr<Ship> shipValue_;
-		std::map<TypeID, std::unique_ptr<Skill>> skills_;
+		std::map<TypeID, std::unique_ptr<Skill>> skillsMap_;
 		
-		std::set<std::unique_ptr<Implant>, SlotCompare> implants_;
-		std::set<std::unique_ptr<Booster>, SlotCompare> boosters_;
-		std::string name_;
+		std::set<std::unique_ptr<Implant>, SlotCompare> implantsSet_;
+		std::set<std::unique_ptr<Booster>, SlotCompare> boostersSet_;
+		std::string nameValue_;
 		
 		Character();
 		Character (const Character& other);
+		
+
+		bool factorReload_() const noexcept;
+
+		
+		const std::string& name_() const noexcept { return nameValue_; }
+		template<typename T>
+		void name_ (T&& name) noexcept { nameValue_ = std::forward<T>(name); }
+		
 		
 		Ship* ship_() const { return shipValue_.get(); }
 		Ship* ship_ (std::unique_ptr<Ship>&& ship);
 		Structure* structure_() const { return dynamic_cast<Structure*>(shipValue_.get()); }
 		Structure* structure_ (std::unique_ptr<Structure>&& structure);
 
-		bool factorReload_() const noexcept;
-
+		void setSkillLevels_ (int level);
+		
+		Implant* add_(std::unique_ptr<Implant>&& implant, bool replace = false);
+		Booster* add_(std::unique_ptr<Booster>&& booster, bool replace = false);
+		void remove_(Implant* implant);
+		void remove_(Booster* booster);
+		
+		std::vector<Skill*> skills_() const;
+		std::vector<Implant*> implants_() const;
+		std::vector<Booster*> boosters_() const;
+		
+		Implant* implant_ (Implant::Slot slot) const noexcept;
+		Booster* booster_ (Booster::Slot slot) const noexcept;
+		
+		Meter droneControlDistance_();
 	};
 	
 

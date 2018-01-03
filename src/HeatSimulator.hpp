@@ -16,14 +16,8 @@ namespace dgmpp {
 	
 	class HeatSimulator {
 	public:
-		bool factorReload() const noexcept { return flags_.factorReload; }
-		void factorReload (bool factorReload) noexcept {
-			flags_.factorReload = factorReload;
-			reset_();
-			
-		}
 		void simulate();
-
+		
 	private:
 		friend class Ship;
 		Ship& owner_;
@@ -58,18 +52,19 @@ namespace dgmpp {
 		};
 		
 		struct {
-			bool factorReload: 1;
 			bool isCalculated_: 1;
 		} flags_;
 		Float heatGenerationMultiplier_;
 		
 		HeatSimulator(Ship& owner) : owner_(owner) {
-			flags_.factorReload = false;
 			flags_.isCalculated_ = false;
 		}
 		
 		void reset_() { flags_.isCalculated_ = false; }
 		void run_ (Module::Slot slot);
+		
+		bool factorReload_() const noexcept;
+
 	};
 }
 

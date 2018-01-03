@@ -69,7 +69,7 @@ namespace dgmpp {
 		std::vector<Module*> modules () const;
 		std::vector<Drone*> drones () const;
 		
-		bool factorReload() const noexcept;
+//		bool factorReload() const noexcept;
 
 		//Drones
 		size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);

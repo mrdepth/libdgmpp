@@ -35,7 +35,7 @@ namespace dgmpp {
 		Structure* structure (TypeID typeID);
 		
 		void setSkillLevels (int level);
-		bool factorReload() const noexcept;
+//		bool factorReload() const noexcept;
 		
 		Implant* addImplant(TypeID typeID, bool replace = false);
 		Booster* addBooster(TypeID typeID, bool replace = false);

@@ -20,16 +20,14 @@ namespace dgmpp {
 		Slot slot() const noexcept { return slot_; }
 	protected:
 	private:
-		Slot slot_;
+		const Slot slot_ {static_cast<Slot>(attribute_(AttributeID::boosterness)->value_())};
 		friend class Character;
 		
-		Booster (TypeID typeID) : Type(typeID) {
-			slot_ = static_cast<Slot>(attribute_(AttributeID::boosterness)->value_());
-		}
+		Booster (TypeID typeID)
+		: Type(typeID) {}
 		
-		Booster (const Booster& other) : Type(other) {
-			slot_ = other.slot_;
-		}
+		Booster (const Booster& other)
+		: Type(other), slot_(other.slot_) {}
 
 	};
 }

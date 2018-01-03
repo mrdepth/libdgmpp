@@ -58,13 +58,13 @@ namespace dgmpp {
 		
 		Charge::Size chargeSize();
 		
-		bool canBeOnline()		const noexcept;
-		bool canBeActive()		const noexcept;
-		bool canBeOverloaded()	const noexcept;
+//		bool canBeOnline()		const noexcept;
+//		bool canBeActive()		const noexcept;
+//		bool canBeOverloaded()	const noexcept;
 		bool requireTarget()	const noexcept;
 		bool fail()				const noexcept;
 		
-		bool factorReload()		const noexcept;
+//		bool factorReload()		const noexcept;
 		
 		//Calculations
 		

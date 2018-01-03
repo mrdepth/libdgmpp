@@ -1977,51 +1977,6 @@ SWIGEXPORT jint JNICALL Java_com_dgmpp_dgmppJNI_Module_1chargeSize(JNIEnv *jenv,
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1canBeOnline(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Module **)&jarg1; 
-  result = (bool)((dgmpp::Module const *)arg1)->canBeOnline();
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1canBeActive(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Module **)&jarg1; 
-  result = (bool)((dgmpp::Module const *)arg1)->canBeActive();
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1canBeOverloaded(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Module **)&jarg1; 
-  result = (bool)((dgmpp::Module const *)arg1)->canBeOverloaded();
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1requireTarget(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
@@ -2047,21 +2002,6 @@ SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1fail(JNIEnv *jenv, j
   (void)jarg1_;
   arg1 = *(dgmpp::Module **)&jarg1; 
   result = (bool)((dgmpp::Module const *)arg1)->fail();
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1factorReload(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Module **)&jarg1; 
-  result = (bool)((dgmpp::Module const *)arg1)->factorReload();
   jresult = (jboolean)result; 
   return jresult;
 }
@@ -3823,21 +3763,6 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Ship_1drones(JNIEnv *jenv, jcla
   arg1 = *(dgmpp::Ship **)&jarg1; 
   result = ((dgmpp::Ship const *)arg1)->drones();
   *(std::vector< dgmpp::Drone * > **)&jresult = new std::vector< dgmpp::Drone * >((const std::vector< dgmpp::Drone * > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1factorReload(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Ship **)&jarg1; 
-  result = (bool)((dgmpp::Ship const *)arg1)->factorReload();
-  jresult = (jboolean)result; 
   return jresult;
 }
 
@@ -5658,21 +5583,6 @@ SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_Character_1setSkillLevels(JNIEnv
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Character_1factorReload(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  dgmpp::Character *arg1 = (dgmpp::Character *) 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Character **)&jarg1; 
-  result = (bool)((dgmpp::Character const *)arg1)->factorReload();
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Character_1addImplant_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jboolean jarg3) {
   jlong jresult = 0 ;
   dgmpp::Character *arg1 = (dgmpp::Character *) 0 ;
@@ -5930,6 +5840,34 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Gang_1pilots(JNIEnv *jenv, jcla
   result = ((dgmpp::Gang const *)arg1)->pilots();
   *(std::vector< dgmpp::Character * > **)&jresult = new std::vector< dgmpp::Character * >((const std::vector< dgmpp::Character * > &)result); 
   return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Gang_1factorReload_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  dgmpp::Gang *arg1 = (dgmpp::Gang *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Gang **)&jarg1; 
+  result = (bool)((dgmpp::Gang const *)arg1)->factorReload();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_Gang_1factorReload_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  dgmpp::Gang *arg1 = (dgmpp::Gang *) 0 ;
+  bool arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Gang **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->factorReload(arg2);
 }
 
 

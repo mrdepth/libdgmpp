@@ -52,6 +52,14 @@ public class Gang extends Type {
     return new Characters(dgmppJNI.Gang_pilots(swigCPtr, this), true);
   }
 
+  public boolean factorReload() {
+    return dgmppJNI.Gang_factorReload__SWIG_0(swigCPtr, this);
+  }
+
+  public void factorReload(boolean factorReload) {
+    dgmppJNI.Gang_factorReload__SWIG_1(swigCPtr, this, factorReload);
+  }
+
   public Area area() {
     long cPtr = dgmppJNI.Gang_area__SWIG_0(swigCPtr, this);
     return (cPtr == 0) ? null : new Area(cPtr, false);

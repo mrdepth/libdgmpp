@@ -22,7 +22,7 @@ namespace dgmpp {
 		static std::unique_ptr<Charge> Create (TypeID typeID) { return std::unique_ptr<Charge>(new Charge(typeID)); }
 		static std::unique_ptr<Charge> Create (const Charge& other) { return std::unique_ptr<Charge>(new Charge(other)); }
 		
-		Size size();
+		Size size() const noexcept { return size_; }
 		
 	protected:
 		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
@@ -42,5 +42,12 @@ namespace dgmpp {
 		
 		Charge (TypeID typeID);
 		Charge (const Charge& other);
+		
+		const Size size_ { [this]{
+			if (auto attribute = attribute_(AttributeID::chargeSize))
+				return static_cast<Size>(static_cast<int>(attribute->value_()));
+			else
+				return Size::none;
+		}()};
 	};
 }

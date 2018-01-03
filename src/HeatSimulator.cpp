@@ -35,19 +35,19 @@ namespace dgmpp {
 	}
 	
 	void HeatSimulator::run_(Module::Slot slot) {
-		const auto totalSlots = owner_.totalSlots(slot);
+		const auto totalSlots = owner_.totalSlots_(slot);
 
-		auto modules = owner_.modules(slot);
+		auto modules = owner_.modules_(slot);
 		modules.erase(std::remove_if(modules.begin(), modules.end(), [totalSlots](auto i) {
-			return i->socket() >= totalSlots;
+			return i->socket_() >= totalSlots;
 		}), modules.end());
 		
 		if (modules.empty())
 			return;
 		
-		const auto onlineModules = std::count_if(modules.begin(), modules.end(), [](auto i) { return i->state() >= Module::State::online; });
+		const auto onlineModules = std::count_if(modules.begin(), modules.end(), [](auto i) { return i->state_() >= Module::State::online; });
 		const auto heatAbsorbtionRateModifier = std::accumulate(modules.begin(), modules.end(), Float(0), [](auto sum, auto i) {
-			return i->state() == Module::State::overloaded
+			return i->state_() == Module::State::overloaded
 			? sum + i->attribute_(AttributeID::heatAbsorbtionRateModifier)->value_()
 			: sum;
 		});
@@ -78,9 +78,9 @@ namespace dgmpp {
 		c.reserve(modules.size());
 
 		for (auto i: modules) {
-			hp[i->socket()] = std::make_pair(i->attribute_(AttributeID::hp)->value_(), i);
-			if (i->state() == Module::State::overloaded) {
-				c.emplace_back(i->rawCycleTime(), i->reloadTime(), i->attribute_(AttributeID::heatDamage)->value_(), i->shots(), i->socket());
+			hp[i->socket_()] = std::make_pair(i->attribute_(AttributeID::hp)->value_(), i);
+			if (i->state_() == Module::State::overloaded) {
+				c.emplace_back(i->rawCycleTime_(), i->reloadTime_(), i->attribute_(AttributeID::heatDamage)->value_(), i->shots_(), i->socket_());
 			}
 		}
 		if (c.empty())
@@ -127,4 +127,9 @@ namespace dgmpp {
 			states.push(state);
 		}
 	}
+	
+	bool HeatSimulator::factorReload_() const noexcept {
+		return owner_.factorReload_();
+	}
+	
 }

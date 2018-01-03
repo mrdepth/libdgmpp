@@ -33,8 +33,8 @@ namespace dgmpp {
 
 		Charge* charge() const noexcept { return charge_.get(); }
 
-		Squadron squadron() const noexcept { return squadron_(); }
-		std::size_t squadronSize() { return squadronSize_(); }
+		Squadron squadron() const noexcept { return squadron_; }
+		std::size_t squadronSize() { return squadronSize_; }
 		SquadronTag squadronTag() const noexcept { return squadronTag_(); };
 		Ship* target() const noexcept { return target_(); }
 		void target(Ship* target) { target_(target); }
@@ -48,7 +48,7 @@ namespace dgmpp {
 		Meter falloff() { return falloff_(); }
 		Points accuracyScore() { return accuracyScore_(); }
 		MetersPerSecond velocity() { return velocity_(); }
-		CubicMeterPerSecond miningYield();
+		CubicMeterPerSecond miningYield() { return miningYield_(); }
 
 	protected:
 		virtual void setEnabled_ (bool enabled) override;
@@ -67,19 +67,45 @@ namespace dgmpp {
 		friend class Gang;
 		
 		
-		SquadronTag squadronTagValue_ = anySquadronTag;
-		Squadron squadronValue_;
-		std::unique_ptr<Charge> charge_;
-		Ship* targetValue_ = nullptr;
+		SquadronTag squadronTagValue_ {anySquadronTag};
+		const Squadron squadron_ {[this]() {
+			if (attribute_(AttributeID::fighterSquadronIsHeavy))
+				return Squadron::heavy;
+			else if (attribute_(AttributeID::fighterSquadronIsLight))
+				return Squadron::light;
+			else if (attribute_(AttributeID::fighterSquadronIsSupport))
+				return Squadron::support;
+			else
+				return Squadron::none;
+		}()};
+		
+		const std::size_t squadronSize_ {[this]() -> std::size_t {
+			if (squadron_ == Squadron::none)
+				return 5;
+			else {
+				auto size = static_cast<std::size_t>(attribute_(AttributeID::fighterSquadronMaxSize)->value_());
+				return size > 0 ? size : 5;
+			}
+		}()};
+
+		const std::unique_ptr<Charge> charge_ {[this]() -> std::unique_ptr<Charge> {
+			if (auto attribute = attribute_(AttributeID::entityMissileTypeID)) {
+				auto typeID = static_cast<TypeID>(static_cast<int>(attribute->value_()));
+				auto charge = Charge::Create(typeID);
+				charge->parent_(this);
+				return charge;
+			}
+			else
+				return nullptr;
+		}()};
+		
+		Ship* targetValue_ {nullptr};
 		
 		Drone (TypeID typeID);
 		Drone (const Drone& other);
 
 		void active_ (bool active);
 		bool active_() const noexcept { return flags_.active; }
-
-		Squadron squadron_() const noexcept { return squadronValue_; }
-		std::size_t squadronSize_();
 		
 		void squadronTag_ (SquadronTag squadronTag) noexcept { squadronTagValue_ = squadronTag; }
 		SquadronTag squadronTag_() const noexcept { return squadronTagValue_; };
@@ -94,7 +120,7 @@ namespace dgmpp {
 		Meter falloff_();
 		Points accuracyScore_();
 		MetersPerSecond velocity_();
-
+		CubicMeterPerSecond miningYield_();
 		
 		DamageVector droneVolley_();
 		DamageVector fighterAttackMissileVolley_();

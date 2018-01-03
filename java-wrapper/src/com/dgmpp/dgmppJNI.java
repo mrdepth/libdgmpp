@@ -117,12 +117,8 @@ public class dgmppJNI {
   public final static native boolean Module_canFit(long jarg1, Module jarg1_, long jarg2, Charge jarg2_);
   public final static native long Module_chargeGroups(long jarg1, Module jarg1_);
   public final static native int Module_chargeSize(long jarg1, Module jarg1_);
-  public final static native boolean Module_canBeOnline(long jarg1, Module jarg1_);
-  public final static native boolean Module_canBeActive(long jarg1, Module jarg1_);
-  public final static native boolean Module_canBeOverloaded(long jarg1, Module jarg1_);
   public final static native boolean Module_requireTarget(long jarg1, Module jarg1_);
   public final static native boolean Module_fail(long jarg1, Module jarg1_);
-  public final static native boolean Module_factorReload(long jarg1, Module jarg1_);
   public final static native long Module_charges(long jarg1, Module jarg1_);
   public final static native long Module_shots(long jarg1, Module jarg1_);
   public final static native long Module_capUse(long jarg1, Module jarg1_);
@@ -239,7 +235,6 @@ public class dgmppJNI {
   public final static native long Ship_modules__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
   public final static native long Ship_modules__SWIG_1(long jarg1, Ship jarg1_);
   public final static native long Ship_drones(long jarg1, Ship jarg1_);
-  public final static native boolean Ship_factorReload(long jarg1, Ship jarg1_);
   public final static native long Ship_totalDroneSquadron__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
   public final static native long Ship_totalDroneSquadron__SWIG_1(long jarg1, Ship jarg1_);
   public final static native long Ship_usedDroneSquadron__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
@@ -359,7 +354,6 @@ public class dgmppJNI {
   public final static native long Character_structure__SWIG_0(long jarg1, Character jarg1_);
   public final static native long Character_structure__SWIG_1(long jarg1, Character jarg1_, int jarg2);
   public final static native void Character_setSkillLevels(long jarg1, Character jarg1_, int jarg2);
-  public final static native boolean Character_factorReload(long jarg1, Character jarg1_);
   public final static native long Character_addImplant__SWIG_0(long jarg1, Character jarg1_, int jarg2, boolean jarg3);
   public final static native long Character_addImplant__SWIG_1(long jarg1, Character jarg1_, int jarg2);
   public final static native long Character_addBooster__SWIG_0(long jarg1, Character jarg1_, int jarg2, boolean jarg3);
@@ -377,6 +371,8 @@ public class dgmppJNI {
   public final static native long Gang_addPilot(long jarg1, Gang jarg1_);
   public final static native void Gang_remove(long jarg1, Gang jarg1_, long jarg2, Character jarg2_);
   public final static native long Gang_pilots(long jarg1, Gang jarg1_);
+  public final static native boolean Gang_factorReload__SWIG_0(long jarg1, Gang jarg1_);
+  public final static native void Gang_factorReload__SWIG_1(long jarg1, Gang jarg1_, boolean jarg2);
   public final static native long Gang_area__SWIG_0(long jarg1, Gang jarg1_);
   public final static native long Gang_area__SWIG_1(long jarg1, Gang jarg1_, int jarg2);
   public final static native void delete_Gang(long jarg1);
