@@ -12,8 +12,8 @@ namespace dgmpp {
 	
 	class Skill: public Type {
 	public:
-		int level() { return level_(); }
-		void level (int level) { level_(level); }
+		int level() { LOCK(this); return level_(); }
+		void level (int level) { LOCK(this); level_(level); }
 	protected:
 	private:
 		friend class Character;

@@ -9,7 +9,7 @@
 #include <numeric>
 
 namespace dgmpp {
-	rate<Float, std::chrono::hours> Structure::fuelUse() {
+	rate<Float, std::chrono::hours> Structure::fuelUse_() {
 		auto use = std::accumulate(modulesSet_.begin(), modulesSet_.end(), Float(0), [](auto sum, const auto& i) {
 			auto& module = std::get<std::unique_ptr<Module>>(i);
 			if (auto attribute = module->attribute_(AttributeID::serviceModuleFuelAmount))

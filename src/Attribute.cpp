@@ -116,6 +116,11 @@ namespace dgmpp {
 		return *this;
 	}
 	
+	Float Attribute::value() {
+		LOCK(&owner_);
+		return value_();
+	}
+	
 	Float Attribute::value_() {
 		using namespace std::placeholders;
 		if (forcedValue_)

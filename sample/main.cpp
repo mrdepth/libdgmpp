@@ -20,12 +20,16 @@ int main(int argc, const char * argv[]) {
 	auto gang = Gang::Create();
 	auto pilot = gang->addPilot();
 	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(TypeID::dominix);
-		
-	auto ab = ship->add(Module::Create(TypeID::_100MNAfterburnerII));
-	ab->state(Module::State::overloaded);
+	auto ship = pilot->ship(TypeID::scorpionNavyIssue);
 	
-	std::cout << "Velocity: " << ship->velocity().count() << " m/s" << std::endl;
+	for (int i = 0; i < 3; i++)
+		ship->add(Module::Create(TypeID::caldariNavyBallisticControlSystem));
+	
+	for (int i = 0; i < 6; i++)
+		ship->add(Module::Create(TypeID::cruiseMissileLauncherII))->charge(Charge::Create(TypeID::scourgeFuryCruiseMissile));
+	
+	
+	std::cout << "DPS: " << (ship->launchersDPS() * 1s).total() << std::endl;
 	
 	handle h;
 	*reinterpret_cast<std::unique_ptr<A>*>(&h.handle) = std::unique_ptr<A>(new A());

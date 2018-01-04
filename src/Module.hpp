@@ -52,55 +52,56 @@ namespace dgmpp {
 		Slot slot() const noexcept				{return slot_;}
 		Hardpoint hardpoint() const noexcept	{return hardpoint_;}
 
-		bool canHaveState (State state) { return canHaveState_(state); }
-		std::vector<State> availableStates() { return availableStates_(); }
-
-		State state() const noexcept {return state_();}
-		State preferredState() const noexcept {return preferredState_();}
-		void state (State state) { state_(state); }
-
-		Ship* target() const noexcept { return target_(); }
-		void target(Ship* target) { target_(target); }
-		
-		Socket socket() const noexcept {return socket_();}
-		
-		Charge* charge() const noexcept { return charge_(); }
-		Charge* charge (std::unique_ptr<Charge>&& charge) { return charge_(std::move(charge)); }
-		Charge* charge (TypeID typeID) { return charge(Charge::Create(typeID)); }
-		bool canFit (Charge* charge) { return canFit_(charge); }
-
 		const std::vector<GroupID>& chargeGroups() const noexcept { return chargeGroups_; };
 		Charge::Size chargeSize() const noexcept { return chargeSize_; }
+
+		bool canHaveState (State state) { LOCK(this); return canHaveState_(state); }
+		std::vector<State> availableStates() { LOCK(this); return availableStates_(); }
+
+		State state() const noexcept { LOCK(this); return state_(); }
+		State preferredState() const noexcept { LOCK(this); return preferredState_(); }
+		void state (State state) { LOCK(this); state_(state); }
+
+		Ship* target() const noexcept { LOCK(this); return target_(); }
+		void target(Ship* target) { LOCK(this); target_(target); }
 		
-		bool requireTarget()	const noexcept { return requireTarget_(); }
-		bool fail()				const noexcept { return fail_(); }
+		Socket socket() const noexcept { LOCK(this); return socket_(); }
+		
+		Charge* charge() const noexcept { LOCK(this); return charge_(); }
+		Charge* charge (std::unique_ptr<Charge>&& charge) { LOCK(this); return charge_(std::move(charge)); }
+		Charge* charge (TypeID typeID) { LOCK(this); return charge(Charge::Create(typeID)); }
+		bool canFit (Charge* charge) { LOCK(this); return canFit_(charge); }
+
+		
+		bool requireTarget()	const noexcept { LOCK(this); return requireTarget_(); }
+		bool fail()				const noexcept { LOCK(this); return fail_(); }
 
 		//Calculations
 		
-		std::chrono::milliseconds reloadTime() { return reloadTime_(); }
-		std::chrono::milliseconds cycleTime() { return cycleTime_(); }
-		std::chrono::milliseconds rawCycleTime() { return rawCycleTime_(); }
+		std::chrono::milliseconds reloadTime() { LOCK(this); return reloadTime_(); }
+		std::chrono::milliseconds cycleTime() { LOCK(this); return cycleTime_(); }
+		std::chrono::milliseconds rawCycleTime() { LOCK(this); return rawCycleTime_(); }
 
-		std::size_t charges() { return charges_(); }
-		std::size_t shots() { return shots_(); }
+		std::size_t charges() { LOCK(this); return charges_(); }
+		std::size_t shots() { LOCK(this); return shots_(); }
 
-		GigaJoulePerSecond capUse() { return capUse_(); }
-		Teraflops cpuUse() { return cpuUse_(); }
-		MegaWatts powerGridUse() { return powerGridUse_(); }
-		CalibrationPoints calibrationUse() { return calibrationUse_(); }
+		GigaJoulePerSecond capUse() { LOCK(this); return capUse_(); }
+		Teraflops cpuUse() { LOCK(this); return cpuUse_(); }
+		MegaWatts powerGridUse() { LOCK(this); return powerGridUse_(); }
+		CalibrationPoints calibrationUse() { LOCK(this); return calibrationUse_(); }
 
-		Points accuracyScore() { return accuracyScore_(); }
-		Meter signatureResolution() { return signatureResolution_(); }
-		CubicMeterPerSecond miningYield() { return miningYield_(); }
+		Points accuracyScore() { LOCK(this); return accuracyScore_(); }
+		Meter signatureResolution() { LOCK(this); return signatureResolution_(); }
+		CubicMeterPerSecond miningYield() { LOCK(this); return miningYield_(); }
 
-		DamageVector volley() { return volley_(); }
-		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default()) { return dps_(target); }
-		Meter optimal() { return optimal_(); }
-		Meter falloff() { return falloff_(); }
+		DamageVector volley() { LOCK(this); return volley_(); }
+		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default()) { LOCK(this); return dps_(target); }
+		Meter optimal() { LOCK(this); return optimal_(); }
+		Meter falloff() { LOCK(this); return falloff_(); }
 
-		std::optional<std::chrono::milliseconds> lifeTime() { return lifeTime_(); }
+		std::optional<std::chrono::milliseconds> lifeTime() { LOCK(this); return lifeTime_(); }
 
-		RadiansPerSecond angularVelocity(Meter targetSignature, Percent hitChance = 0.75) { return angularVelocity_(targetSignature, hitChance); }
+		RadiansPerSecond angularVelocity(Meter targetSignature, Percent hitChance = 0.75) { LOCK(this); return angularVelocity_(targetSignature, hitChance); }
 
 	protected:
 		virtual void setEnabled_ (bool enabled) override;

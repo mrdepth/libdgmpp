@@ -60,9 +60,15 @@ namespace dgmpp {
 		if (parentType_)
 			cacheValue_ = cache_().extract(this);
 		
-		if (parent && cacheValue_) {
-			parent->cache_().splice(std::move(*cacheValue_));
-			cacheValue_ = nullptr;
+		if (parent) {
+			if (cacheValue_) {
+				parent->cache_().splice(std::move(*cacheValue_));
+				cacheValue_ = nullptr;
+			}
+#if DGMPP_THREADSAFE
+			if (mutexValue_)
+				mutexValue_ = nullptr;
+#endif
 		}
 
 		parentType_ = parent;
@@ -429,4 +435,17 @@ namespace dgmpp {
 		}
 		return attributes;
 	}
+	
+#if DGMPP_THREADSAFE
+	std::mutex& Type::mutex_() const noexcept {
+		if (mutexValue_ != nullptr)
+			return *mutexValue_;
+		else if (auto parent = parent_())
+			return parent->mutex_();
+		else {
+			mutexValue_ = std::unique_ptr<std::mutex>(new std::mutex);
+			return *mutexValue_;
+		}
+	}
+#endif
 }

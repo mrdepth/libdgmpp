@@ -11,6 +11,12 @@
 #include "Effect.hpp"
 #include <unordered_set>
 
+#if DGMPP_THREADSAFE
+#define LOCK(what) std::lock_guard<std::mutex> lock((what)->mutex_());
+#else
+#define LOCK(what)
+#endif
+
 namespace dgmpp {
 	class Effect;
 	class Modifier;
@@ -24,18 +30,19 @@ namespace dgmpp {
 		Type& operator= (Type&& other) = delete;
 
 		const MetaInfo::Type& metaInfo() const { return metaInfo_; }
-		Type* parent() const noexcept { return parent_(); }
+		Type* parent() const noexcept { LOCK(this); return parent_(); }
 		
 		Attribute* operator[] (AttributeID attributeID) {
+			LOCK(this);
 			auto i = attributesMap_.find(attributeID);
 			return i != attributesMap_.end() ? i->second.get() : nullptr;
 		}
 		
-		std::unordered_set<Type*> affectors() const { return affectors_(); }
-		std::list<Attribute*> attributes() const { return attributes_(); }
+		std::unordered_set<Type*> affectors() const { LOCK(this); return affectors_(); }
+		std::list<Attribute*> attributes() const { LOCK(this); return attributes_(); }
 		
-		std::size_t identifier() const noexcept { return identifier_(); }
-		void identifier (std::size_t identifier) noexcept { identifier_(identifier); }
+		std::size_t identifier() const noexcept { LOCK(this); return identifier_(); }
+		void identifier (std::size_t identifier) noexcept { LOCK(this); identifier_(identifier); }
 		
 	protected:
 		
@@ -92,6 +99,10 @@ namespace dgmpp {
 		virtual bool isEnabled_() const noexcept { return enabled_; }
 		virtual void setEnabled_ (bool enabled);
 
+#if DGMPP_THREADSAFE
+		mutable std::unique_ptr<std::mutex> mutexValue_;
+		std::mutex& mutex_() const noexcept;
+#endif
 
 	private:
 		class AttributesCache;
@@ -132,6 +143,7 @@ namespace dgmpp {
 		void deactivate_	(Effect* effect);
 		
 		AttributesCache& cache_();
+		
 
 		TuplesSet<WarfareBuffID, const WarfareBuff*> buffs_;
 		

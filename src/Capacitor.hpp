@@ -18,13 +18,13 @@ namespace dgmpp {
 	
 	class Capacitor {
 	public:
-		GigaJoule capacity() { return capacity_(); }
-		std::chrono::milliseconds rechargeTime() { return rechargeTime_(); }
-		std::chrono::milliseconds lastsTime() { return lastsTime_(); }
-		bool isStable() { return isStable_(); }
-		Percent stableLevel() { return stableLevel_(); }
-		GigaJoulePerSecond use() { return use_(); }
-		GigaJoulePerSecond recharge() { return recharge_(); }
+		GigaJoule capacity();
+		std::chrono::milliseconds rechargeTime();
+		std::chrono::milliseconds lastsTime();
+		bool isStable();
+		Percent stableLevel();
+		GigaJoulePerSecond use();
+		GigaJoulePerSecond recharge();
 	private:
 		friend class Ship;
 		Ship& owner_;

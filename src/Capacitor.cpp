@@ -13,6 +13,42 @@ namespace dgmpp {
 	
 	using namespace std::chrono_literals;
 	
+	GigaJoule Capacitor::capacity() {
+		LOCK(&owner_);
+		return capacity_();
+	}
+	
+	std::chrono::milliseconds Capacitor::rechargeTime() {
+		LOCK(&owner_);
+		return rechargeTime_();
+	}
+	
+	std::chrono::milliseconds Capacitor::lastsTime() {
+		LOCK(&owner_);
+		return lastsTime_();
+	}
+	
+	bool Capacitor::isStable() {
+		LOCK(&owner_);
+		return isStable_();
+	}
+	
+	Percent Capacitor::stableLevel() {
+		LOCK(&owner_);
+		return stableLevel_();
+	}
+	
+	GigaJoulePerSecond Capacitor::use() {
+		LOCK(&owner_);
+		return use_();
+	}
+	
+	GigaJoulePerSecond Capacitor::recharge() {
+		LOCK(&owner_);
+		return recharge_();
+	}
+
+	
 	GigaJoule Capacitor::capacity_() {
 		return owner_.attribute_(AttributeID::capacitorCapacity)->value_();
 	}

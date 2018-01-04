@@ -28,27 +28,27 @@ namespace dgmpp {
 		static std::unique_ptr<Drone> Create (TypeID typeID) { return std::unique_ptr<Drone>(new Drone(typeID)); }
 		static std::unique_ptr<Drone> Create (const Drone& other) { return std::unique_ptr<Drone>(new Drone(other)); }
 		
-		void active (bool active) { active_(active); }
-		bool active() const noexcept { return active_(); }
+		void active (bool active) { LOCK(this); active_(active); }
+		bool active() const noexcept { LOCK(this); return active_(); }
 
 		Charge* charge() const noexcept { return charge_.get(); }
 
 		Squadron squadron() const noexcept { return squadron_; }
 		std::size_t squadronSize() { return squadronSize_; }
-		SquadronTag squadronTag() const noexcept { return squadronTag_(); };
-		Ship* target() const noexcept { return target_(); }
-		void target(Ship* target) { target_(target); }
+		SquadronTag squadronTag() const noexcept { LOCK(this); return squadronTag_(); };
+		Ship* target() const noexcept { LOCK(this); return target_(); }
+		void target(Ship* target) { LOCK(this); target_(target); }
 
 		
 		//Calculations
-		std::chrono::milliseconds cycleTime() { return cycleTime_(); }
-		DamageVector volley() { return volley_(); }
-		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default()) { return dps_(target); }
-		Meter optimal() { return optimal_(); }
-		Meter falloff() { return falloff_(); }
-		Points accuracyScore() { return accuracyScore_(); }
-		MetersPerSecond velocity() { return velocity_(); }
-		CubicMeterPerSecond miningYield() { return miningYield_(); }
+		std::chrono::milliseconds cycleTime() { LOCK(this); return cycleTime_(); }
+		DamageVector volley() { LOCK(this); return volley_(); }
+		DamagePerSecond dps(const HostileTarget& target = HostileTarget::Default()) { LOCK(this); return dps_(target); }
+		Meter optimal() { LOCK(this); return optimal_(); }
+		Meter falloff() { LOCK(this); return falloff_(); }
+		Points accuracyScore() { LOCK(this); return accuracyScore_(); }
+		MetersPerSecond velocity() { LOCK(this); return velocity_(); }
+		CubicMeterPerSecond miningYield() { LOCK(this); return miningYield_(); }
 
 	protected:
 		virtual void setEnabled_ (bool enabled) override;

@@ -63,7 +63,7 @@ namespace dgmpp {
 			if (socket == Module::anySocket)
 				socket = Module::Socket(0);
 			else
-				socket = std::min(socket, static_cast<Module::Socket>(totalSlots_(module->slot())) - 1);
+				socket = std::min(socket, std::max(static_cast<Module::Socket>(totalSlots_(module->slot())) - 1, 0));
 			
 			auto l = modulesSet_.lower_bound(std::make_tuple(module->slot(), socket));
 			auto u = modulesSet_.upper_bound(std::make_tuple(module->slot()));

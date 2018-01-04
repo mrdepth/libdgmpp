@@ -15,7 +15,7 @@ namespace dgmpp {
 		static std::unique_ptr<Structure> Create (const Structure& other) { return std::unique_ptr<Structure>(new Structure(other)); }
 		
 		TypeID fuelBlockTypeID() { return fuelBlockTypeID_; }
-		rate<Float, std::chrono::hours> fuelUse();
+		rate<Float, std::chrono::hours> fuelUse() { LOCK(this); return fuelUse_(); }
 	private:
 		
 		Structure(TypeID typeID) : Ship(typeID) {}
@@ -35,5 +35,7 @@ namespace dgmpp {
 					return TypeID::none;
 			}
 		}()};
+		
+		rate<Float, std::chrono::hours> fuelUse_();
 	};
 }

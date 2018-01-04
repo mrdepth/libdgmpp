@@ -7,7 +7,7 @@
 
 #pragma once
 
-#define DGMPP_THREADSAFE 1
+//#define DGMPP_THREADSAFE 1
 
 #include <utility>
 #include <memory>
@@ -26,7 +26,6 @@
 
 #if DGMPP_THREADSAFE
 #include <mutex>
-#include <atomic>
 #endif
 
 #include "AttributeID.hpp"

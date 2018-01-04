@@ -18,35 +18,35 @@ namespace dgmpp {
 		static std::unique_ptr<Character> Create() { return std::unique_ptr<Character>(new Character); }
 		static std::unique_ptr<Character> Create (const Character& other) { return std::unique_ptr<Character>(new Character(other)); }
 		
-		const std::string& name() const noexcept { return name_(); }
+		const std::string& name() const noexcept { LOCK(this); return name_(); }
 		template<typename T>
-		void name (T&& name) noexcept { name_(std::forward<T>(name)); }
+		void name (T&& name) noexcept { LOCK(this); name_(std::forward<T>(name)); }
 
 		
-		Ship* ship() const { return ship_(); }
-		Ship* ship (std::unique_ptr<Ship>&& ship) { return ship_(std::move(ship)); }
+		Ship* ship() const { LOCK(this); return ship_(); }
+		Ship* ship (std::unique_ptr<Ship>&& ship) { LOCK(this); return ship_(std::move(ship)); }
 		Ship* ship (TypeID typeID) { return ship(Ship::Create(typeID)); }
-		Structure* structure() const { return structure_(); }
-		Structure* structure (std::unique_ptr<Structure>&& structure) { return structure_(std::move(structure)); }
+		Structure* structure() const { LOCK(this); return structure_(); }
+		Structure* structure (std::unique_ptr<Structure>&& structure) { LOCK(this); return structure_(std::move(structure)); }
 		Structure* structure (TypeID typeID) { return structure(Structure::Create(typeID)); }
 
-		void setSkillLevels (int level) { setSkillLevels_(level); }
+		void setSkillLevels (int level) { LOCK(this); setSkillLevels_(level); }
 		
-		Implant* add(std::unique_ptr<Implant>&& implant, bool replace = false) { return add_(std::move(implant), replace); }
-		Booster* add(std::unique_ptr<Booster>&& booster, bool replace = false) { return add_(std::move(booster), replace); }
+		Implant* add(std::unique_ptr<Implant>&& implant, bool replace = false) { LOCK(this); return add_(std::move(implant), replace); }
+		Booster* add(std::unique_ptr<Booster>&& booster, bool replace = false) { LOCK(this); return add_(std::move(booster), replace); }
 		Implant* addImplant(TypeID typeID, bool replace = false) { return add(Implant::Create(typeID), replace); }
 		Booster* addBooster(TypeID typeID, bool replace = false) { return add(Booster::Create(typeID), replace); }
-		void remove(Implant* implant) { remove_(implant); }
-		void remove(Booster* booster) { remove_(booster); }
+		void remove(Implant* implant) { LOCK(this); remove_(implant); }
+		void remove(Booster* booster) { LOCK(this); remove_(booster); }
 		
-		std::vector<Skill*> skills() const { return skills_(); }
-		std::vector<Implant*> implants() const { return implants_(); }
-		std::vector<Booster*> boosters() const { return boosters_(); }
+		std::vector<Skill*> skills() const { LOCK(this); return skills_(); }
+		std::vector<Implant*> implants() const { LOCK(this); return implants_(); }
+		std::vector<Booster*> boosters() const { LOCK(this); return boosters_(); }
 		
-		Implant* implant (Implant::Slot slot) const noexcept { return implant_(slot); }
-		Booster* booster (Booster::Slot slot) const noexcept { return booster_(slot); }
+		Implant* implant (Implant::Slot slot) const noexcept { LOCK(this); return implant_(slot); }
+		Booster* booster (Booster::Slot slot) const noexcept { LOCK(this); return booster_(slot); }
 		
-		Meter droneControlDistance() { return droneControlDistance_(); }
+		Meter droneControlDistance() { LOCK(this); return droneControlDistance_(); }
 
 
 	protected:

@@ -19,17 +19,17 @@ namespace dgmpp {
 		static std::unique_ptr<Gang> Create() { return std::unique_ptr<Gang>(new Gang); }
 		static std::unique_ptr<Gang> Create(const Gang& other) { return std::unique_ptr<Gang>(new Gang(other)); }
 		
-		Character* add (std::unique_ptr<Character>&& pilot) { return add_(std::move(pilot)); }
+		Character* add (std::unique_ptr<Character>&& pilot) { LOCK(this); return add_(std::move(pilot)); }
 		Character* addPilot() { return add(Character::Create()); }
 		
-		void remove (Character* pilot) { remove_(pilot); }
-		std::vector<Character*> pilots() const { return pilots_(); }
+		void remove (Character* pilot) { LOCK(this); remove_(pilot); }
+		std::vector<Character*> pilots() const { LOCK(this); return pilots_(); }
 		
-		bool factorReload()		const noexcept	{ return factorReload_(); }
-		void factorReload (bool factorReload) noexcept { factorReload_(factorReload); }
+		bool factorReload()		const noexcept	{ LOCK(this); return factorReload_(); }
+		void factorReload (bool factorReload) noexcept { LOCK(this); factorReload_(factorReload); }
 
-		Area* area() const noexcept { return area_(); }
-		Area* area(std::unique_ptr<Area>&& area) { return area_(std::move(area)); }
+		Area* area() const noexcept { LOCK(this); return area_(); }
+		Area* area(std::unique_ptr<Area>&& area) { LOCK(this); return area_(std::move(area)); }
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
 
 	protected:

@@ -26,7 +26,7 @@ namespace dgmpp {
 		const MetaInfo::Attribute& metaInfo() const noexcept {return metaInfo_;}
 		Type& owner() const noexcept {return owner_;}
 		
-		Float value() { return value_(); }
+		Float value();
 		Float initialValue() const { return initialValue_; }
 		
 	private:

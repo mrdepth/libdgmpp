@@ -45,102 +45,102 @@ namespace dgmpp {
 		std::vector<CategoryID> supportedDroneCategories() const noexcept { return supportedDroneCategories_; }
 		RigSize rigSize() const noexcept { return rigSize_; }
 
-		const std::string& name() const noexcept { return name_(); }
+		const std::string& name() const noexcept { LOCK(this); return name_(); }
 		template<typename T>
-		void name (T&& name) noexcept { name_(name); }
+		void name (T&& name) noexcept { LOCK(this); name_(name); }
 
-		void damagePattern (const DamageVector& pattern) noexcept { damagePattern_(pattern); }
-		const DamageVector& damagePattern() const noexcept { return damagePattern_(); }
+		void damagePattern (const DamageVector& pattern) noexcept { LOCK(this); damagePattern_(pattern); }
+		const DamageVector& damagePattern() const noexcept { LOCK(this); return damagePattern_(); }
 
 		//Fitting
-		Module* add (std::unique_ptr<Module>&& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { return add_(std::move(module), socket, ignoringRequirements); }
-		Drone* add (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add_(std::move(drone), squadronTag); }
+		Module* add (std::unique_ptr<Module>&& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { LOCK(this); return add_(std::move(module), socket, ignoringRequirements); }
+		Drone* add (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { LOCK(this); return add_(std::move(drone), squadronTag); }
 		Module* addModule (TypeID typeID, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket) { return add(Module::Create(typeID), ignoringRequirements, socket); }
 		Drone* addDrone (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add(Drone::Create(typeID), squadronTag); }
 
-		void remove (Module* module) { remove_(module); }
-		void remove (Drone* drone) { remove_(drone); }
-		bool canFit (Module* module) { return canFit_(module); }
-		bool canFit (Drone* drone) { return canFit_(drone); }
-		std::vector<Module*> modules (Module::Slot slot) const { return modules_(slot); }
-		std::vector<Module*> modules () const { return modules_(); }
-		std::vector<Drone*> drones () const { return drones_(); }
+		void remove (Module* module) { LOCK(this); remove_(module); }
+		void remove (Drone* drone) { LOCK(this); remove_(drone); }
+		bool canFit (Module* module) { LOCK(this); return canFit_(module); }
+		bool canFit (Drone* drone) { LOCK(this); return canFit_(drone); }
+		std::vector<Module*> modules (Module::Slot slot) const { LOCK(this); return modules_(slot); }
+		std::vector<Module*> modules () const { LOCK(this); return modules_(); }
+		std::vector<Drone*> drones () const { LOCK(this); return drones_(); }
 		
 		//Drones
-		std::size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none) { return totalDroneSquadron_(squadron); }
-		std::size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none) { return usedDroneSquadron_(squadron); }
-		std::size_t totalFighterLaunchTubes() { return totalFighterLaunchTubes_(); }
-		std::size_t usedFighterLaunchTubes() { return usedFighterLaunchTubes_(); }
+		std::size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none) { LOCK(this); return totalDroneSquadron_(squadron); }
+		std::size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none) { LOCK(this); return usedDroneSquadron_(squadron); }
+		std::size_t totalFighterLaunchTubes() { LOCK(this); return totalFighterLaunchTubes_(); }
+		std::size_t usedFighterLaunchTubes() { LOCK(this); return usedFighterLaunchTubes_(); }
 
 
 		//Resources
-		std::size_t totalSlots	(Module::Slot slot) { return totalSlots_(slot); }
-		std::size_t freeSlots	(Module::Slot slot) { return freeSlots_(slot); }
-		std::size_t usedSlots	(Module::Slot slot) { return usedSlots_(slot); }
+		std::size_t totalSlots	(Module::Slot slot) { LOCK(this); return totalSlots_(slot); }
+		std::size_t freeSlots	(Module::Slot slot) { LOCK(this); return freeSlots_(slot); }
+		std::size_t usedSlots	(Module::Slot slot) { LOCK(this); return usedSlots_(slot); }
 
-		std::size_t totalHardpoints	(Module::Hardpoint hardpoint) { return totalHardpoints_(hardpoint); }
-		std::size_t freeHardpoints	(Module::Hardpoint hardpoint) { return freeHardpoints_(hardpoint); }
-		std::size_t usedHardpoints	(Module::Hardpoint hardpoint) { return usedHardpoints_(hardpoint); }
+		std::size_t totalHardpoints	(Module::Hardpoint hardpoint) { LOCK(this); return totalHardpoints_(hardpoint); }
+		std::size_t freeHardpoints	(Module::Hardpoint hardpoint) { LOCK(this); return freeHardpoints_(hardpoint); }
+		std::size_t usedHardpoints	(Module::Hardpoint hardpoint) { LOCK(this); return usedHardpoints_(hardpoint); }
 		
 		Capacitor& capacitor() noexcept { return capacitor_; }
 
-		CalibrationPoints	usedCalibration()		{ return usedCalibration_(); }
-		CalibrationPoints	totalCalibration()		{ return totalCalibration_(); }
-		GigaJoule			usedPowerGrid()			{ return usedPowerGrid_(); }
-		GigaJoule			totalPowerGrid()		{ return totalPowerGrid_(); }
-		Teraflops			usedCPU()				{ return usedCPU_(); }
-		Teraflops			totalCPU()				{ return totalCPU_(); }
-		MegabitsPerSecond	usedDroneBandwidth()	{ return usedDroneBandwidth_(); }
-		MegabitsPerSecond	totalDroneBandwidth()	{ return totalDroneBandwidth_(); }
-		CubicMeter			usedDroneBay()			{ return usedDroneBay_(); }
-		CubicMeter			totalDroneBay()			{ return totalDroneBay_(); }
-		CubicMeter			usedFighterHangar()		{ return usedFighterHangar_(); }
-		CubicMeter			totalFighterHangar()	{ return totalFighterHangar_(); }
-		CubicMeter			cargoCapacity()			{ return cargoCapacity_(); }
-		CubicMeter			oreHoldCapacity()		{ return oreHoldCapacity_(); }
+		CalibrationPoints	usedCalibration()		{ LOCK(this); return usedCalibration_(); }
+		CalibrationPoints	totalCalibration()		{ LOCK(this); return totalCalibration_(); }
+		GigaJoule			usedPowerGrid()			{ LOCK(this); return usedPowerGrid_(); }
+		GigaJoule			totalPowerGrid()		{ LOCK(this); return totalPowerGrid_(); }
+		Teraflops			usedCPU()				{ LOCK(this); return usedCPU_(); }
+		Teraflops			totalCPU()				{ LOCK(this); return totalCPU_(); }
+		MegabitsPerSecond	usedDroneBandwidth()	{ LOCK(this); return usedDroneBandwidth_(); }
+		MegabitsPerSecond	totalDroneBandwidth()	{ LOCK(this); return totalDroneBandwidth_(); }
+		CubicMeter			usedDroneBay()			{ LOCK(this); return usedDroneBay_(); }
+		CubicMeter			totalDroneBay()			{ LOCK(this); return totalDroneBay_(); }
+		CubicMeter			usedFighterHangar()		{ LOCK(this); return usedFighterHangar_(); }
+		CubicMeter			totalFighterHangar()	{ LOCK(this); return totalFighterHangar_(); }
+		CubicMeter			cargoCapacity()			{ LOCK(this); return cargoCapacity_(); }
+		CubicMeter			oreHoldCapacity()		{ LOCK(this); return oreHoldCapacity_(); }
 
 		//Tank
-		Resistances resistances()	{ return resistances_(); }
-		Tank tank()	{ return tank_(); }
-		Tank effectiveTank()	{ return effectiveTank_(); }
-		Tank sustainableTank()	{ return sustainableTank_(); }
-		Tank effectiveSustainableTank()	{ return effectiveSustainableTank_(); }
+		Resistances resistances()	{ LOCK(this); return resistances_(); }
+		Tank tank()	{ LOCK(this); return tank_(); }
+		Tank effectiveTank()	{ LOCK(this); return effectiveTank_(); }
+		Tank sustainableTank()	{ LOCK(this); return sustainableTank_(); }
+		Tank effectiveSustainableTank()	{ LOCK(this); return effectiveSustainableTank_(); }
 
-		HitPoints hitPoints()	{ return hitPoints_(); }
-		HitPoints effectiveHitPoints()	{ return effectiveHitPoints_(); }
+		HitPoints hitPoints()	{ LOCK(this); return hitPoints_(); }
+		HitPoints effectiveHitPoints()	{ LOCK(this); return effectiveHitPoints_(); }
 
 		//DPS
-		DamageVector	turretsVolley()	{ return turretsVolley_(); }
-		DamageVector	launchersVolley()	{ return launchersVolley_(); }
-		DamageVector	dronesVolley()	{ return dronesVolley_(); }
-		DamagePerSecond	turretsDPS		(const HostileTarget& target = HostileTarget::Default())	{ return turretsDPS_(target); }
-		DamagePerSecond	launchersDPS	(const HostileTarget& target = HostileTarget::Default())	{ return launchersDPS_(target); }
-		DamagePerSecond dronesDPS		(const HostileTarget& target = HostileTarget::Default())	{ return dronesDPS_(target); }
+		DamageVector	turretsVolley()	{ LOCK(this); return turretsVolley_(); }
+		DamageVector	launchersVolley()	{ LOCK(this); return launchersVolley_(); }
+		DamageVector	dronesVolley()	{ LOCK(this); return dronesVolley_(); }
+		DamagePerSecond	turretsDPS		(const HostileTarget& target = HostileTarget::Default())	{ LOCK(this); return turretsDPS_(target); }
+		DamagePerSecond	launchersDPS	(const HostileTarget& target = HostileTarget::Default())	{ LOCK(this); return launchersDPS_(target); }
+		DamagePerSecond dronesDPS		(const HostileTarget& target = HostileTarget::Default())	{ LOCK(this); return dronesDPS_(target); }
 
 		//Mining
-		CubicMeterPerSecond minerYield()	{ return minerYield_(); }
-		CubicMeterPerSecond droneYield()	{ return droneYield_(); }
+		CubicMeterPerSecond minerYield()	{ LOCK(this); return minerYield_(); }
+		CubicMeterPerSecond droneYield()	{ LOCK(this); return droneYield_(); }
 
 		//Mobility
-		std::chrono::milliseconds alignTime()	{ return alignTime_(); }
-		AstronomicalUnitsPerSecond warpSpeed()	{ return warpSpeed_(); }
-		AstronomicalUnit maxWarpDistance()	{ return maxWarpDistance_(); }
-		MetersPerSecond velocity()	{ return velocity_(); }
-		Meter signatureRadius()	{ return signatureRadius_(); }
-		Kilogram mass()	{ return mass_(); }
-		CubicMeter volume()	{ return volume_(); }
-		Multiplier agility()	{ return agility_(); }
-		MetersPerSecond maxVelocityInOrbit (Meter r)	{ return maxVelocityInOrbit_(r); }
-		Meter orbitRadiusWithTransverseVelocity (MetersPerSecond v)	{ return orbitRadiusWithTransverseVelocity_(v); }
-		Meter orbitRadiusWithAngularVelocity (RadiansPerSecond v)	{ return orbitRadiusWithAngularVelocity_(v); }
+		std::chrono::milliseconds alignTime()	{ LOCK(this); return alignTime_(); }
+		AstronomicalUnitsPerSecond warpSpeed()	{ LOCK(this); return warpSpeed_(); }
+		AstronomicalUnit maxWarpDistance()	{ LOCK(this); return maxWarpDistance_(); }
+		MetersPerSecond velocity()	{ LOCK(this); return velocity_(); }
+		Meter signatureRadius()	{ LOCK(this); return signatureRadius_(); }
+		Kilogram mass()	{ LOCK(this); return mass_(); }
+		CubicMeter volume()	{ LOCK(this); return volume_(); }
+		Multiplier agility()	{ LOCK(this); return agility_(); }
+		MetersPerSecond maxVelocityInOrbit (Meter r)	{ LOCK(this); return maxVelocityInOrbit_(r); }
+		Meter orbitRadiusWithTransverseVelocity (MetersPerSecond v)	{ LOCK(this); return orbitRadiusWithTransverseVelocity_(v); }
+		Meter orbitRadiusWithAngularVelocity (RadiansPerSecond v)	{ LOCK(this); return orbitRadiusWithAngularVelocity_(v); }
 
 		//Targeting
-		std::size_t maxTargets()	{ return maxTargets_(); }
-		Meter maxTargetRange()	{ return maxTargetRange_(); }
-		Points scanStrength()	{ return scanStrength_(); }
-		ScanType scanType()	{ return scanType_(); }
-		Meter probeSize()	{ return probeSize_(); }
-		Millimeter scanResolution()	{ return scanResolution_(); }
+		std::size_t maxTargets()	{ LOCK(this); return maxTargets_(); }
+		Meter maxTargetRange()	{ LOCK(this); return maxTargetRange_(); }
+		Points scanStrength()	{ LOCK(this); return scanStrength_(); }
+		ScanType scanType()	{ LOCK(this); return scanType_(); }
+		Meter probeSize()	{ LOCK(this); return probeSize_(); }
+		Millimeter scanResolution()	{ LOCK(this); return scanResolution_(); }
 		
 	protected:
 		using ModulesContainer = TuplesSet<Module::Slot, Module::Socket, std::unique_ptr<Module>>;
