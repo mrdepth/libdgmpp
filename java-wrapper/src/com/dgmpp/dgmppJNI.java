@@ -231,6 +231,7 @@ public class dgmppJNI {
   public final static native long Ship_addDrone__SWIG_1(long jarg1, Ship jarg1_, int jarg2);
   public final static native void Ship_remove__SWIG_0(long jarg1, Ship jarg1_, long jarg2, Module jarg2_);
   public final static native void Ship_remove__SWIG_1(long jarg1, Ship jarg1_, long jarg2, Drone jarg2_);
+  public final static native boolean Ship_isModuleAllowed(long jarg1, Ship jarg1_, long jarg2, Module jarg2_);
   public final static native int Ship_canFit__SWIG_0(long jarg1, Ship jarg1_, long jarg2, Module jarg2_);
   public final static native int Ship_canFit__SWIG_1(long jarg1, Ship jarg1_, long jarg2, Drone jarg2_);
   public final static native long Ship_modules__SWIG_0(long jarg1, Ship jarg1_, int jarg2);

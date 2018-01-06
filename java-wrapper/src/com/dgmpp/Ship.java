@@ -84,6 +84,10 @@ public class Ship extends Type {
     dgmppJNI.Ship_remove__SWIG_1(swigCPtr, this, Drone.getCPtr(drone), drone);
   }
 
+  public boolean isModuleAllowed(Module module) {
+    return dgmppJNI.Ship_isModuleAllowed(swigCPtr, this, Module.getCPtr(module), module);
+  }
+
   public int canFit(Module module) {
     return dgmppJNI.Ship_canFit__SWIG_0(swigCPtr, this, Module.getCPtr(module), module);
   }
@@ -360,14 +364,12 @@ public class Ship extends Type {
     public final static int ok = 0;
     public final static int no_slots = 1;
     public final static int no_hardpoints = 2;
-    public final static int no_power = 3;
-    public final static int no_cpu = 4;
     public final static int invalid_grouptype = 4;
-    public final static int wrong_rig_size = 5;
+    public final static int subsystem_used = 5;
+    public final static int wrong_rig_size = 6;
     public final static int max_group_fitted = 6;
     public final static int max_type_fitted = 7;
     public final static int drone_not_supported = 8;
-    public final static int subsystem_used = 9;
   }
 
 }

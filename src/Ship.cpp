@@ -170,15 +170,9 @@ namespace dgmpp {
 		dronesSet_.erase(i);
 	}
 	
-	Ship::CanFitResult Ship::canFit_(Module* module) {
+	bool Ship::isModuleAllowed_(Module* module) {
 		assert(module != nullptr);
-		
-		if (freeSlots_(module->slot()) <= 0)
-			return CanFitResult::no_slots;
 
-		if (freeHardpoints_(module->hardpoint()) <= 0)
-			return CanFitResult::no_hardpoints;
-		
 		std::vector<GroupID> groups;
 		groups.reserve(SDE::canFitShipGroupAttributes.size());
 		
@@ -211,8 +205,23 @@ namespace dgmpp {
 			matchType = std::any_of(types.begin(), types.end(), [=](auto i) {return i == typeID;}) ? 0 : -1;
 		}
 		
-		if ((matchType == -1 && matchGroup == -1) || matchType * matchGroup < 0)
+		if ((matchType == 1 && matchGroup == 1) || (matchType == 0 || matchGroup == 0))
+			return true;
+
+		return false;		
+	}
+	Ship::CanFitResult Ship::canFit_(Module* module) {
+		assert(module != nullptr);
+		
+		if (freeSlots_(module->slot()) <= 0)
+			return CanFitResult::no_slots;
+
+		if (freeHardpoints_(module->hardpoint()) <= 0)
+			return CanFitResult::no_hardpoints;
+		
+		if (!isModuleAllowed_(module)) {
 			return CanFitResult::invalid_grouptype;
+		}
 		
 		switch (module->slot()) {
 			case Module::Slot::subsystem: {

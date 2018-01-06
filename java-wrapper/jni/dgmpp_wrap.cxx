@@ -3699,6 +3699,24 @@ SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_Ship_1remove_1_1SWIG_11(JNIEnv *
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1isModuleAllowed(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jboolean jresult = 0 ;
+  dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
+  dgmpp::Module *arg2 = (dgmpp::Module *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(dgmpp::Ship **)&jarg1; 
+  arg2 = *(dgmpp::Module **)&jarg2; 
+  result = (bool)(arg1)->isModuleAllowed(arg2);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_com_dgmpp_dgmppJNI_Ship_1canFit_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jint jresult = 0 ;
   dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
