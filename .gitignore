@@ -4,3 +4,7 @@
 *.v11.suo
 *.sdf
 *.suo
+android/.externalNativeBuild/
+android/.gradle/
+android/build/android-profile/profile-2017-12-20-13-12-34-035.json
+android/build/
