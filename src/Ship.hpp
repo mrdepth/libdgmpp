@@ -36,7 +36,17 @@ namespace dgmpp {
 			xLarge = 4
 		};
 
-		
+		enum class CanFitResult {
+			ok = 0,
+			no_slots = 1,
+			no_hardpoints = 2,			
+			invalid_grouptype = 4,
+			subsystem_used = 5,
+			wrong_rig_size = 6,
+			max_group_fitted = 6,
+			max_type_fitted = 7,
+			drone_not_supported = 8			
+		};
 		
 		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
 		static std::unique_ptr<Ship> Create (const Ship& other) { return std::unique_ptr<Ship>(new Ship(other)); }
@@ -60,8 +70,10 @@ namespace dgmpp {
 
 		void remove (Module* module) { LOCK(this); remove_(module); }
 		void remove (Drone* drone) { LOCK(this); remove_(drone); }
-		bool canFit (Module* module) { LOCK(this); return canFit_(module); }
-		bool canFit (Drone* drone) { LOCK(this); return canFit_(drone); }
+		
+		bool isModuleAllowed(Module* module) { LOCK(this); return isModuleAllowed_(module); }
+		CanFitResult canFit (Module* module) { LOCK(this); return canFit_(module); }
+		CanFitResult canFit (Drone* drone) { LOCK(this); return canFit_(drone); }
 		std::vector<Module*> modules (Module::Slot slot) const { LOCK(this); return modules_(slot); }
 		std::vector<Module*> modules () const { LOCK(this); return modules_(); }
 		std::vector<Drone*> drones () const { LOCK(this); return drones_(); }
@@ -222,8 +234,11 @@ namespace dgmpp {
 
 		void remove_ (Module* module);
 		void remove_ (Drone* drone);
-		bool canFit_ (Module* module);
-		bool canFit_ (Drone* drone);
+		CanFitResult canFit_ (Module* module);		
+		CanFitResult canFit_ (Drone* drone);
+
+		bool isModuleAllowed_(Module* module);
+		
 		std::vector<Module*> modules_ (Module::Slot slot) const;
 		std::vector<Module*> modules_ () const;
 		std::vector<Drone*> drones_ () const;

@@ -1,5 +1,8 @@
+%include "std_unique_ptr.i"
 %include "Type.i"
 %include "Charge.i"
+
+%unique_ptr(dgmpp::Module)
 
 namespace dgmpp {
 	class Ship;
@@ -36,6 +39,8 @@ namespace dgmpp {
 			launcher,
 			turret
 		};
+		
+		static std::unique_ptr<Module> Create (TypeID typeID);
 		
 		bool canHaveState (State state);
 		std::vector<State> availableStates();

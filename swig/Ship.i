@@ -50,6 +50,18 @@ namespace dgmpp {
 			large = 3,
 			xLarge = 4
 		};
+
+		enum class CanFitResult {
+			ok = 0,
+			no_slots = 1,
+			no_hardpoints = 2,			
+			invalid_grouptype = 4,
+			subsystem_used = 5,
+			wrong_rig_size = 6,
+			max_group_fitted = 6,
+			max_type_fitted = 7,
+			drone_not_supported = 8			
+		};
 		
 		std::vector<CategoryID> supportedDroneCategories();
 		RigSize rigSize();
@@ -63,8 +75,11 @@ namespace dgmpp {
 		
 		void remove (Module* module);
 		void remove (Drone* drone);
-		bool canFit (Module* module);
-		bool canFit (Drone* drone);
+
+		bool isModuleAllowed(Module* module);
+
+		CanFitResult canFit (Module* module);
+		CanFitResult canFit (Drone* drone);
 		std::vector<Module*> modules (Module::Slot slot) const;
 		std::vector<Module*> modules () const;
 		std::vector<Drone*> drones () const;

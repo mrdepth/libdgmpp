@@ -57,7 +57,7 @@ namespace dgmpp {
 	Module* Ship::add_ (std::unique_ptr<Module>&& module, Module::Socket socket, bool ignoringRequirements) {
 		assert(module != nullptr);
 		
-		if (ignoringRequirements || canFit_(module.get())) {
+		if (ignoringRequirements || canFit_(module.get()) == CanFitResult::ok) {
 			auto state = module->preferredState_();
 			module->state_(dgmpp::Module::State::unknown);
 			if (socket == Module::anySocket)
@@ -101,7 +101,7 @@ namespace dgmpp {
 	Drone* Ship::add_ (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag) {
 		assert(drone != nullptr);
 		
-		if (canFit(drone.get())) {
+		if (canFit(drone.get()) == CanFitResult::ok) {
 			
 			if (squadronTag == Drone::anySquadronTag) {
 				auto range = equal_range(dronesSet_, std::make_tuple(drone->metaInfo().typeID));
@@ -170,12 +170,9 @@ namespace dgmpp {
 		dronesSet_.erase(i);
 	}
 	
-	bool Ship::canFit_(Module* module) {
+	bool Ship::isModuleAllowed_(Module* module) {
 		assert(module != nullptr);
-		
-		if (freeSlots_(module->slot()) <= 0 || freeHardpoints_(module->hardpoint()) <= 0)
-			return false;
-		
+
 		std::vector<GroupID> groups;
 		groups.reserve(SDE::canFitShipGroupAttributes.size());
 		
@@ -208,8 +205,23 @@ namespace dgmpp {
 			matchType = std::any_of(types.begin(), types.end(), [=](auto i) {return i == typeID;}) ? 0 : -1;
 		}
 		
-		if ((matchType == -1 && matchGroup == -1) || matchType * matchGroup < 0)
-			return false;
+		if ((matchType == 1 && matchGroup == 1) || (matchType == 0 || matchGroup == 0))
+			return true;
+
+		return false;		
+	}
+	Ship::CanFitResult Ship::canFit_(Module* module) {
+		assert(module != nullptr);
+		
+		if (freeSlots_(module->slot()) <= 0)
+			return CanFitResult::no_slots;
+
+		if (freeHardpoints_(module->hardpoint()) <= 0)
+			return CanFitResult::no_hardpoints;
+		
+		if (!isModuleAllowed_(module)) {
+			return CanFitResult::invalid_grouptype;
+		}
 		
 		switch (module->slot()) {
 			case Module::Slot::subsystem: {
@@ -219,14 +231,14 @@ namespace dgmpp {
 					return static_cast<int>(std::get<std::unique_ptr<Module>>(i)->attribute_(AttributeID::subSystemSlot)->value_()) == subSystemSlot;
 				});
 				if (isFull)
-					return false;
+					return CanFitResult::subsystem_used;
 				break;
 			}
 				
 			case Module::Slot::rig: {
 				auto rigSize = static_cast<RigSize>(static_cast<int>(module->attribute_(AttributeID::rigSize)->value_()));
 				if (rigSize != this->rigSize())
-					return false;
+					return CanFitResult::wrong_rig_size;
 				break;
 			}
 			default:
@@ -240,7 +252,7 @@ namespace dgmpp {
 				if (std::get<std::unique_ptr<Module>>(i)->metaInfo().groupID == groupID)
 					max--;
 				if (max <= 0)
-					return false;
+					return CanFitResult::max_group_fitted;
 			}
 		}
 		
@@ -251,21 +263,21 @@ namespace dgmpp {
 				if (std::get<std::unique_ptr<Module>>(i)->metaInfo().typeID == typeID)
 					max--;
 				if (max <= 0)
-					return false;
+					return CanFitResult::max_type_fitted;
 			}
 		}
 		
-		return true;
+		return CanFitResult::ok;
 	}
 	
-	bool Ship::canFit_(Drone* drone) {
+	Ship::CanFitResult Ship::canFit_(Drone* drone) {
 		assert(drone != nullptr);
 		auto categoryID = drone->metaInfo().categoryID;
 		for (auto i: supportedDroneCategories()) {
 			if (i == categoryID)
-				return true;
+				return CanFitResult::ok;
 		}
-		return false;
+		return CanFitResult::drone_not_supported;
 	}
 	
 	slice<Ship::ModulesContainer::const_iterator> Ship::modulesSlice_ (Module::Slot slot) const noexcept {
