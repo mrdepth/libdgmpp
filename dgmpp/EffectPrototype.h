@@ -8,14 +8,14 @@
 namespace dgmpp {
 	class EffectPrototype {
 	public:
-		static std::shared_ptr<EffectPrototype> getEffectPrototype(std::shared_ptr<Engine> const& engine, TypeID effectID);
+		static std::shared_ptr<EffectPrototype> getEffectPrototype(std::shared_ptr<Engine> const& engine, EffectID effectID);
 
 		class ModifierPrototype {
 		public:
 			Modifier::Domain domain;
 			Modifier::Type type;
-			int32_t modifiedAttributeID;
-			int32_t modifyingAttributeID;
+			AttributeID modifiedAttributeID;
+			AttributeID modifyingAttributeID;
 			Modifier::Association association;
 			int32_t requiredID;
 		};
@@ -26,10 +26,10 @@ namespace dgmpp {
 			return modifierPrototypes_;
 		};
 
-		EffectPrototype(std::shared_ptr<Engine> const& engine, TypeID effectID);
+		EffectPrototype(std::shared_ptr<Engine> const& engine, EffectID effectID);
 		virtual ~EffectPrototype();
 		
-		TypeID getEffectID() const {return effectID_;};
+		EffectID getEffectID() const {return effectID_;};
 		Effect::Category getCategory() const {return category_;};
 		const char* getEffectName() const {return effectName_.c_str();};
 		bool isAssistance() const {return isAssistance_;};
@@ -40,7 +40,7 @@ namespace dgmpp {
 		ModifierPrototypesList modifierPrototypes_;
 		
 		Effect::Category category_;
-		TypeID effectID_;
+		EffectID effectID_;
 		std::string effectName_;
 		bool isAssistance_;
 		bool isOffensive_;

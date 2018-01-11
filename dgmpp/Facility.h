@@ -15,7 +15,7 @@ namespace dgmpp {
 
 		TypeID getTypeID() const {return typeID_;};
 		const std::string& getTypeName() const  {return typeName_;};
-		virtual TypeID getGroupID() const {return 0;};
+		virtual GroupID getGroupID() const {return GroupID::none;};
 		int64_t getIdentifier() const {return identifier_;};
 		std::string getFacilityName() const;
 		std::shared_ptr<Planet> getOwner() const {return owner_.lock();};

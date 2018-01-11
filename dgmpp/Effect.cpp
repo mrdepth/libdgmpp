@@ -33,7 +33,7 @@
 
 using namespace dgmpp;
 
-const TypeID dgmpp::ONLINE_EFFECT_ID = 16;
+/*const TypeID dgmpp::ONLINE_EFFECT_ID = 16;
 const TypeID dgmpp::LO_POWER_EFFECT_ID = 11;
 const TypeID dgmpp::HI_POWER_EFFECT_ID = 12;
 const TypeID dgmpp::MED_POWER_EFFECT_ID = 13;
@@ -75,11 +75,12 @@ const TypeID dgmpp::TACTICAL_MODE_EFFECT_ID = 10002;
 
 const TypeID dgmpp::SERVICE_SLOT_EFFECT_ID = 6306;
 
-const TypeID dgmpp::GANG_BOOST_EFFECT_ID = 10004;
+const TypeID dgmpp::GANG_BOOST_EFFECT_ID = 10004;*/
 
-std::shared_ptr<dgmpp::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, TypeID effectID, std::shared_ptr<Item> const& owner)
+std::shared_ptr<dgmpp::Effect> Effect::getEffect(std::shared_ptr<Engine> const& engine, EffectID effectID, std::shared_ptr<Item> const& owner)
 {
-	if (effectID == GANG_BOOST_EFFECT_ID) {
+	
+	if (effectID == EffectID::gangBoost) {
 		return std::make_shared<GangBoostEffect>(engine, EffectPrototype::getEffectPrototype(engine, effectID), owner);
 	}
 	else {
@@ -94,8 +95,8 @@ Effect::Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectProt
 	for (const auto& modifierPrototype: prototype->getModifierPrototypes()) {
 		std::shared_ptr<Modifier> modifier;
 		switch (modifierPrototype->type) {
-			case Modifier::ITEM_MODIFIER:
-			case Modifier::LOCATION_MODIFIER:
+			case Modifier::Type::item:
+			case Modifier::Type::location:
 				modifier = std::make_shared<Modifier>(modifierPrototype->domain,
 													  modifierPrototype->modifiedAttributeID,
 													  modifierPrototype->association,
@@ -104,28 +105,28 @@ Effect::Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectProt
 													  isOffensive(),
 													  dynamic_cast<Character*>(env->character()));
 				break;
-			case Modifier::LOCATION_GROUP_MODIFIER:
+			case Modifier::Type::locationGroup:
 				modifier = std::make_shared<LocationGroupModifier>(modifierPrototype->domain,
 																   modifierPrototype->modifiedAttributeID,
 																   modifierPrototype->association,
 																   env->self()->getAttribute(modifierPrototype->modifyingAttributeID),
-																   modifierPrototype->requiredID,
+																   static_cast<GroupID>(modifierPrototype->requiredID),
 																   isAssistance(),
 																   isOffensive(),
 																   dynamic_cast<Character*>(env->character()));
 				break;
-			case Modifier::LOCATION_REQUIRED_SKILL_MODIFIER:
-			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
+			case Modifier::Type::locationRequiredSkill:
+			case Modifier::Type::ownerRequiredSkill:
 				modifier = std::make_shared<LocationRequiredSkillModifier>(modifierPrototype->domain,
 																		   modifierPrototype->modifiedAttributeID,
 																		   modifierPrototype->association,
 																		   env->self()->getAttribute(modifierPrototype->modifyingAttributeID),
-																		   modifierPrototype->requiredID,
+																		   static_cast<TypeID>(modifierPrototype->requiredID),
 																		   isAssistance(),
 																		   isOffensive(),
 																		   dynamic_cast<Character*>(env->character()));
 				break;
-			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
+			case Modifier::Type::locationRequiredDomainSkill:
 				modifier = std::make_shared<LocationRequiredSkillModifier>(modifierPrototype->domain,
 																		   modifierPrototype->modifiedAttributeID,
 																		   modifierPrototype->association,
@@ -152,30 +153,30 @@ bool Effect::addEffect(Environment* env)
 {
 	for (const auto& i: modifiers_) {
 		switch (i.first) {
-			case Modifier::ITEM_MODIFIER:
+			case Modifier::Type::item:
 				for (const auto& modifier: i.second) {
 					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->addItemModifier(modifier);
 				}
 				break;
-			case Modifier::LOCATION_MODIFIER:
+			case Modifier::Type::location:
 				for (const auto& modifier: i.second) {
 					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->addLocationModifier(modifier);
 				}
 				break;
-			case Modifier::LOCATION_GROUP_MODIFIER:
+			case Modifier::Type::locationGroup:
 				for (const auto& modifier: i.second) {
 					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->addLocationGroupModifier(std::dynamic_pointer_cast<LocationGroupModifier> (modifier));
 				}
 				break;
-			case Modifier::LOCATION_REQUIRED_SKILL_MODIFIER:
-			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
-			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
+			case Modifier::Type::locationRequiredSkill:
+			case Modifier::Type::locationRequiredDomainSkill:
+			case Modifier::Type::ownerRequiredSkill:
 				for (const auto& modifier: i.second) {
 					auto item = (*env)[modifier->getDomain()];
 					if (item)
@@ -193,30 +194,30 @@ bool Effect::removeEffect(Environment* env)
 {
 	for (const auto& i: modifiers_) {
 		switch (i.first) {
-			case Modifier::ITEM_MODIFIER:
+			case Modifier::Type::item:
 				for (const auto& modifier: i.second) {
 					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->removeItemModifier(modifier);
 				}
 				break;
-			case Modifier::LOCATION_MODIFIER:
+			case Modifier::Type::location:
 				for (const auto& modifier: i.second) {
 					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->removeLocationModifier(modifier);
 				}
 				break;
-			case Modifier::LOCATION_GROUP_MODIFIER:
+			case Modifier::Type::locationGroup:
 				for (const auto& modifier: i.second) {
 					auto item = (*env)[modifier->getDomain()];
 					if (item)
 						item->removeLocationGroupModifier(std::dynamic_pointer_cast<LocationGroupModifier> (modifier));
 				}
 				break;
-			case Modifier::LOCATION_REQUIRED_SKILL_MODIFIER:
-			case Modifier::LOCATION_REQUIRED_DOMAIN_SKILL_MODIFIER:
-			case Modifier::OWNER_REQUIRED_SKILL_MODIFIER:
+			case Modifier::Type::locationRequiredSkill:
+			case Modifier::Type::locationRequiredDomainSkill:
+			case Modifier::Type::ownerRequiredSkill:
 				for (const auto& modifier: i.second) {
 					auto item = (*env)[modifier->getDomain()];
 					if (item)
@@ -230,7 +231,7 @@ bool Effect::removeEffect(Environment* env)
 	return true;
 }
 
-TypeID Effect::getEffectID() const
+EffectID Effect::getEffectID() const
 {
 	return prototype_->getEffectID();
 }
@@ -255,6 +256,6 @@ bool Effect::isOffensive() const {
 
 std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Effect& effect)
 {
-	os << "{\"effectName\":\"" << effect.getEffectName()<< "\", \"effectID\":\"" << effect.getEffectID() << "\"}";
+	os << "{\"effectName\":\"" << effect.getEffectName()<< "\", \"effectID\":\"" << static_cast<int>(effect.getEffectID()) << "\"}";
 	return os;
 }

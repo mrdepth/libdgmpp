@@ -5,7 +5,7 @@
 
 using namespace dgmpp;
 
-LocationGroupModifier::LocationGroupModifier(Domain domain, TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, TypeID groupID, bool isAssistance, bool isOffensive, Character* character) : Modifier(domain, attributeID, association, modifier, isAssistance, isOffensive, character), groupID_(groupID)
+LocationGroupModifier::LocationGroupModifier(Domain domain, AttributeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, GroupID groupID, bool isAssistance, bool isOffensive, Character* character) : Modifier(domain, attributeID, association, modifier, isAssistance, isOffensive, character), groupID_(groupID)
 {
 	
 }
@@ -21,9 +21,9 @@ bool LocationGroupModifier::isMatch(Item* item) const
 
 std::string LocationGroupModifier::print() {
 	std::stringstream s;
-	s << "{\"groupID\":\"" << groupID_
+	s << "{\"groupID\":\"" << static_cast<int>(groupID_)
 	<< "\", \"association\":\"" << getAssociationName()
-	<< "\", \"attributeID\":\"" << getAttributeID()
+	<< "\", \"attributeID\":\"" << static_cast<int>(getAttributeID())
 	<< "\", \"modifier\":" << *getModifier() << "}";
 	return s.str();
 }

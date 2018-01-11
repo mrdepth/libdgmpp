@@ -21,37 +21,40 @@ Structure::~Structure()
 	
 }
 
-std::vector<TypeID> Structure::getSupportedModuleCategories() const {
-	return {STRUCTURE_MODULE_CATEGORY_ID};
+std::vector<CategoryID> Structure::getSupportedModuleCategories() const {
+	return {CategoryID::structureModule};
 }
 
-std::vector<TypeID> Structure::getSupportedDroneCategories() const {
-	return {FIGHTER_CATEGORY_ID};
+std::vector<CategoryID> Structure::getSupportedDroneCategories() const {
+	return {CategoryID::fighter};
 }
 
 Float Structure::getTotalDroneBay() {
-	return getAttribute(FIGHTER_CAPACITY_ATTRIBUTE_ID)->getValue();
+	return getAttribute(AttributeID::fighterCapacity)->getValue();
 }
 
 TypeID Structure::getFuelBlockTypeID() {
-	TypeID raceID = getAttribute(RACE_ID_ATTRIBUTE_ID)->getValue();
-	if (raceID == CALDARI_RACE_ID)
-		return NITROGEN_FUEL_BLOCK_TYPE_ID;
-	else if (raceID == MINMATAR_RACE_ID)
-		return HYDROGEN_FUEL_BLOCK_TYPE_ID;
-	else if (raceID == AMARR_RACE_ID)
-		return HELIUM_FUEL_BLOCK_TYPE_ID;
-	else if (raceID == GALLENTE_RACE_ID)
-		return OXYGEN_FUEL_BLOCK_TYPE_ID;
-	else
-		return 0;
+	RaceID raceID = static_cast<RaceID>(getAttribute(AttributeID::raceID)->getValue());
+	
+	switch (raceID) {
+		case RaceID::caldari:
+			return TypeID::nitrogenFuelBlock;
+		case RaceID::minmatar:
+			return TypeID::hydrogenFuelBlock;
+		case RaceID::amarr:
+			return TypeID::heliumFuelBlock;
+		case RaceID::gallente:
+			return TypeID::oxygenFuelBlock;
+		default:
+			return TypeID::none;
+	}
 }
 
 Float Structure::getCycleFuelNeed() {
 	Float fuel = 0;
 	for (const auto& module: getModules())
-		if (module->hasAttribute(SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID))
-			fuel += module->getAttribute(SERVICE_MODULE_FUEL_AMOUNT_ATTRIBUTE_ID)->getValue();
+		if (module->hasAttribute(AttributeID::serviceModuleFuelAmount))
+			fuel += module->getAttribute(AttributeID::serviceModuleFuelAmount)->getValue();
 	return fuel;
 }
 

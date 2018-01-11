@@ -6,7 +6,7 @@
 
 namespace dgmpp {
 
-	extern const TypeID ONLINE_EFFECT_ID;
+	/*extern const TypeID ONLINE_EFFECT_ID;
 	extern const TypeID LO_POWER_EFFECT_ID;
 	extern const TypeID HI_POWER_EFFECT_ID;
 	extern const TypeID MED_POWER_EFFECT_ID;
@@ -50,7 +50,7 @@ namespace dgmpp {
 
 	extern const TypeID SERVICE_SLOT_EFFECT_ID;
 	
-	extern const TypeID GANG_BOOST_EFFECT_ID;
+	extern const TypeID GANG_BOOST_EFFECT_ID;*/
 
 	class EffectPrototype;
 	
@@ -58,24 +58,24 @@ namespace dgmpp {
 	{
 
 	public:
-		enum Category
+		enum class Category
 		{
-			CATEGORY_GENERIC			= 0,
-			CATEGORY_ACTIVE			= 1, //also online effect
-			CATEGORY_TARGET			= 2,
-			CATEGORY_PASSIVE			= 4,
-			CATEGORY_OVERLOADED		= 5,
-			CATEGORY_DUNGEON			= 6,
-			CATEGORY_SYSTEM			= 7
+			generic = 0,
+			active = 1, //also online effect
+			target = 2,
+			passive = 4,
+			overloaded = 5,
+			dungeon = 6,
+			system = 7
 		};
 		
-		static std::shared_ptr<Effect> getEffect(std::shared_ptr<Engine> const& engine, TypeID effectID, std::shared_ptr<Item> const& owner);
+		static std::shared_ptr<Effect> getEffect(std::shared_ptr<Engine> const& engine, EffectID effectID, std::shared_ptr<Item> const& owner);
 		
 		Effect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectPrototype> const& prototype, std::shared_ptr<Item> const& owner);
 		virtual ~Effect(void);
 		virtual bool addEffect(Environment* environment);
 		virtual bool removeEffect(Environment* environment);
-		TypeID getEffectID() const;
+		EffectID getEffectID() const;
 		Category getCategory() const;
 		const char* getEffectName() const;
 		friend std::ostream& operator<<(std::ostream& os, Effect& effect);

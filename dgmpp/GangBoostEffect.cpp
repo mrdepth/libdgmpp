@@ -10,8 +10,10 @@ using namespace dgmpp;
 GangBoostEffect::GangBoostEffect(std::shared_ptr<Engine> const& engine, std::shared_ptr<EffectPrototype> const& prototype, std::shared_ptr<Item> const& owner): Effect(engine, prototype, owner) {
 	auto self = owner.get();
 	
-	static AttributeID ids[] = {WARFARE_BUFF1_ID_ATTRIBUTE_ID, WARFARE_BUFF2_ID_ATTRIBUTE_ID, WARFARE_BUFF3_ID_ATTRIBUTE_ID, WARFARE_BUFF4_ID_ATTRIBUTE_ID};
-	static AttributeID values[] = {WARFARE_BUFF1_VALUE_ATTRIBUTE_ID, WARFARE_BUFF2_VALUE_ATTRIBUTE_ID, WARFARE_BUFF3_VALUE_ATTRIBUTE_ID, WARFARE_BUFF4_VALUE_ATTRIBUTE_ID};
+	
+	
+	static AttributeID ids[] = {AttributeID::warfareBuff1ID, AttributeID::warfareBuff2ID, AttributeID::warfareBuff3ID, AttributeID::warfareBuff4ID};
+	static AttributeID values[] = {AttributeID::warfareBuff1Value, AttributeID::warfareBuff2Value, AttributeID::warfareBuff3Value, AttributeID::warfareBuff4Value};
 	
 	std::list<std::shared_ptr<GangBoost>> boosters;
 	

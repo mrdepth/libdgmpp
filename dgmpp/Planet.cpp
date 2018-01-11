@@ -30,28 +30,28 @@ std::shared_ptr<Facility> Planet::addFacility(TypeID typeID, int64_t identifier)
 	auto engine = getEngine();
 	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT groupID, capacity, typeName FROM invTypes WHERE typeID = ? LIMIT 1");
 	
-	stmt->bindInt(1, typeID);
+	stmt->bindInt(1, static_cast<int>(typeID));
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 	if (result->next()) {
-		TypeID groupID = result->getInt(0);
+		GroupID groupID = static_cast<GroupID>(result->getInt(0));
 		double capacity = result->getDouble(1);
 		std::string typeName = result->getText(2);
 		std::shared_ptr<Facility> facility;
 		
 		switch (groupID) {
-			case CommandCenter::GROUP_ID:
+			case CommandCenter::groupID:
 				facility = std::make_shared<CommandCenter>(typeID, typeName, capacity, shared_from_this(), identifier);
 				break;
-			case IndustryFacility::GROUP_ID:
+			case IndustryFacility::groupID:
 				facility = std::make_shared<IndustryFacility>(typeID, typeName, capacity, shared_from_this(), identifier);
 				break;
-			case StorageFacility::GROUP_ID:
+			case StorageFacility::groupID:
 				facility = std::make_shared<StorageFacility>(typeID, typeName, capacity, shared_from_this(), identifier);
 				break;
-			case Spaceport::GROUP_ID:
+			case Spaceport::groupID:
 				facility = std::make_shared<Spaceport>(typeID, typeName, capacity, shared_from_this(), identifier);
 				break;
-			case ExtractorControlUnit::GROUP_ID:
+			case ExtractorControlUnit::groupID:
 				facility = std::make_shared<ExtractorControlUnit>(typeID, typeName, capacity, shared_from_this(), identifier);
 				break;
 			default:
@@ -62,7 +62,7 @@ std::shared_ptr<Facility> Planet::addFacility(TypeID typeID, int64_t identifier)
 		return facility;
 	}
 	else {
-		throw Item::UnknownTypeIDException(std::to_string(typeID));
+		throw Item::UnknownTypeIDException(std::to_string(static_cast<int>(typeID)));
 	}
 
 }

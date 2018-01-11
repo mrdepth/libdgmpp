@@ -6,7 +6,7 @@
 
 using namespace dgmpp;
 
-Modifier::Modifier(Domain domain, TypeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character) : domain_(domain), attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
+Modifier::Modifier(Domain domain, AttributeID attributeID, Association association, std::shared_ptr<Attribute> const& modifier, bool isAssistance, bool isOffensive, Character* character) : domain_(domain), attributeID_(attributeID), association_(association), modifier_(modifier), isAssistance_(isAssistance), isOffensive_(isOffensive), character_(character)
 {
 }
 
@@ -23,7 +23,7 @@ Modifier::Domain Modifier::getDomain() {
 	return domain_;
 }
 
-TypeID Modifier::getAttributeID() const
+AttributeID Modifier::getAttributeID() const
 {
 	return attributeID_;
 }
@@ -46,20 +46,21 @@ Float Modifier::getValue() const
 		return 0;
 	
 	Float value = modifier->getValue();
-	if (association_ == ASSOCIATION_POST_DIV)
+	if (association_ == Association::postDiv)
 		return static_cast<Float>(1.0 / value);
-	else if (association_ == ASSOCIATION_POST_PERCENT)
+	else if (association_ == Association::postPercent)
 		return static_cast<Float>(1.0 + value / 100.0);
-	else if (association_ == ASSOCIATION_ADD_RATE || association_ == ASSOCIATION_SUB_RATE)
+	else if (association_ == Association::addRate || association_ == Association::subRate)
 	{
 		std::shared_ptr<Item> item = modifier->getOwner();
 		if (!item)
 			return 0;
 		Float duration;
-		if (item->hasAttribute(DURATION_ATTRIBUTE_ID))
-			duration = static_cast<Float>(item->getAttribute(DURATION_ATTRIBUTE_ID)->getValue() / 1000.0);
-		else if (item->hasAttribute(SPEED_ATTRIBUTE_ID))
-			duration = static_cast<Float>(item->getAttribute(SPEED_ATTRIBUTE_ID)->getValue() / 1000.0);
+		
+		if (item->hasAttribute(AttributeID::duration))
+			duration = static_cast<Float>(item->getAttribute(AttributeID::duration)->getValue() / 1000.0);
+		else if (item->hasAttribute(AttributeID::speed))
+			duration = static_cast<Float>(item->getAttribute(AttributeID::speed)->getValue() / 1000.0);
 		else
 			duration = 1;
 		return duration > 0.0 ? static_cast<Float>(value / duration) : 0.0;
@@ -93,29 +94,29 @@ bool Modifier::isAssistance()
 std::string Modifier::getAssociationName()
 {
 	switch (association_) {
-		case ASSOCIATION_PRE_ASSIGNMENT:
+		case Association::preAssignment:
 			return "PreAssignment";
-		case ASSOCIATION_MOD_ADD:
+		case Association::modAdd:
 			return "ModAdd";
-		case ASSOCIATION_MOD_SUB:
+		case Association::modSub:
 			return "ModSub";
-		case ASSOCIATION_PRE_DIV:
+		case Association::preDiv:
 			return "PreDiv";
-		case ASSOCIATION_PRE_MUL:
+		case Association::preMul:
 			return "PreMul";
-		case ASSOCIATION_POST_PERCENT:
+		case Association::postPercent:
 			return "PostPercent";
-		case ASSOCIATION_POST_DIV:
+		case Association::postDiv:
 			return "PostDiv";
-		case ASSOCIATION_POST_MUL:
+		case Association::postMul:
 			return "PostMul";
-		case ASSOCIATION_POST_ASSIGNMENT:
+		case Association::postAssignment:
 			return "PostAssignment";
-		case ASSOCIATION_SKILL_TIME:
+		case Association::skillTime:
 			return "SkillTime";
-		case ASSOCIATION_ADD_RATE:
+		case Association::addRate:
 			return "AddRate";
-		case ASSOCIATION_SUB_RATE:
+		case Association::subRate:
 			return "SubRate";
 		default:
 			return "Unknown";
@@ -125,7 +126,7 @@ std::string Modifier::getAssociationName()
 std::string Modifier::print() {
 	std::stringstream s;
 	s << "{\"association\":\"" << getAssociationName()
-	<< "\", \"attributeID\":\"" << attributeID_
+	<< "\", \"attributeID\":\"" << static_cast<int>(attributeID_)
 	<< "\", \"modifier\":" << *modifier_.lock() << "}";
 	return s.str();
 }

@@ -5,7 +5,7 @@
 
 namespace dgmpp {
 
-	extern const TypeID IS_ONLINE_ATTRIBUTE_ID;
+	/*extern const TypeID IS_ONLINE_ATTRIBUTE_ID;
 	extern const TypeID MASS_ATTRIBUTE_ID;
 	extern const TypeID CAPACITY_ATTRIBUTE_ID;
 	extern const TypeID VOLUME_ATTRIBUTE_ID;
@@ -300,12 +300,12 @@ namespace dgmpp {
 	extern const TypeID SIGNATURE_RADIUS_BONUS_ATTRIBUTE_ID;
 	extern const TypeID SENSOR_DAMPENER_RESISTANCE_ATTRIBUTE_ID;
 	extern const TypeID WEAPON_DISRUPTION_RESISTANCE_ATTRIBUTE_ID;
-	extern const TypeID SPEED_FACTOR_ATTRIBUTE_ID;
+	extern const TypeID SPEED_FACTOR_ATTRIBUTE_ID;*/
 	
 	class Attribute : public std::enable_shared_from_this<Attribute>
 	{
 	public:
-		static std::shared_ptr<Attribute> getAttribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute = false, Float value = std::numeric_limits<Float>::quiet_NaN());
+		static std::shared_ptr<Attribute> getAttribute(std::shared_ptr<Engine> const& engine, AttributeID attributeID, std::shared_ptr<Item> const& owner, bool isFakeAttribute = false, Float value = std::numeric_limits<Float>::quiet_NaN());
 
 		Attribute(std::shared_ptr<Engine> const& engine, std::shared_ptr<AttributePrototype> const& prototype, std::shared_ptr<Item> const& owner, bool isFakeAttribute, Float value);
 		
@@ -313,7 +313,7 @@ namespace dgmpp {
 //		Attribute(std::shared_ptr<Engine> const& engine, TypeID attributeID, std::shared_ptr<Item> const& owner = nullptr, bool isFakeAttribute = false);
 		virtual ~Attribute(void);
 		std::shared_ptr<Item> getOwner() const;
-		TypeID getAttributeID() const;
+		AttributeID getAttributeID() const;
 		bool isFakeAttribute() const;
 
 		virtual Float getValue();

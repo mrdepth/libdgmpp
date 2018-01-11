@@ -49,7 +49,7 @@ void Area::addEffectsToShip(std::shared_ptr<Item> const&ship)
 	AreaEnvironment environment(this, ship.get());
 
 	for (const auto& i: effects_)
-		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
+		if (i->getCategory() == Effect::Category::system)
 			i->addEffect(&environment);
 }
 
@@ -58,7 +58,7 @@ void Area::removeEffectsFromShip(std::shared_ptr<Item> const& ship)
 	AreaEnvironment environment(this, ship.get());
 
 	for (const auto& i: effects_)
-		if (i->getCategory() == Effect::CATEGORY_SYSTEM)
+		if (i->getCategory() == Effect::Category::system)
 			i->removeEffect(&environment);
 }
 
@@ -68,7 +68,7 @@ void Area::addEffects(Effect::Category category)
 	if (!engine)
 		return;
 	loadIfNeeded();
-	if (category == Effect::CATEGORY_SYSTEM)
+	if (category == Effect::Category::system)
 	{
 		for (const auto& i: engine->getGang()->getPilots())
 			addEffectsToShip(i->getShip());
@@ -84,7 +84,7 @@ void Area::removeEffects(Effect::Category category)
 	if (!engine)
 		return;
 	loadIfNeeded();
-	if (category == Effect::CATEGORY_SYSTEM)
+	if (category == Effect::Category::system)
 	{
 		for (const auto& i: engine->getGang()->getPilots())
 			removeEffectsFromShip(i->getShip());

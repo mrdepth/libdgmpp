@@ -16,9 +16,7 @@
 
 using namespace dgmpp;
 
-static const TypeID CHARACTER_TYPE_ID = 1381;
-
-Character::Character(std::shared_ptr<Engine> const& engine, std::shared_ptr<Gang> const& owner, const char* characterName) : Item(engine, CHARACTER_TYPE_ID, owner), characterName_(characterName), ship_(nullptr)
+Character::Character(std::shared_ptr<Engine> const& engine, std::shared_ptr<Gang> const& owner, const char* characterName) : Item(engine, TypeID::characterStatic, owner), characterName_(characterName), ship_(nullptr)
 {
 }
 
@@ -43,11 +41,11 @@ std::shared_ptr<Ship> Character::setShip(TypeID typeID)
 		std::shared_ptr<Ship> ship = std::make_shared<Ship>(engine, typeID, shared_from_this());
 		
 		if (ship_)
-			removeEffects(Effect::CATEGORY_GENERIC);
+			removeEffects(Effect::Category::generic);
 		ship_ = ship;
 		
 		if (ship_)
-			addEffects(Effect::CATEGORY_GENERIC);
+			addEffects(Effect::Category::generic);
 		engine->reset();
 		return ship;
 	}
@@ -69,10 +67,10 @@ std::shared_ptr<Structure> Character::setStructure(TypeID typeID)
 
 		std::shared_ptr<Structure> structure = std::make_shared<Structure>(engine, typeID, shared_from_this());
 		if (structure_)
-			removeEffects(Effect::CATEGORY_GENERIC);
+			removeEffects(Effect::Category::generic);
 		structure_ = structure;
 		if (structure_)
-			addEffects(Effect::CATEGORY_GENERIC);
+			addEffects(Effect::Category::generic);
 		
 		engine->reset();
 		return structure_;
@@ -117,7 +115,7 @@ std::shared_ptr<Skill> Character::addSkill(TypeID typeID, int skillLevel, bool i
 		skills_[typeID] = skill;
 //	if (getOwner() && ship_ != nullptr)
 		if (ship_ || structure_)
-			skill->addEffects(Effect::CATEGORY_GENERIC);
+			skill->addEffects(Effect::Category::generic);
 		return skill;
 	}
 	catch(Item::UnknownTypeIDException)
@@ -130,7 +128,7 @@ void Character::removeSkill(std::shared_ptr<Skill> const& skill)
 {
 //	if (getOwner() && ship_ != NULL)
 	if (ship_ || structure_)
-		skill->removeEffects(Effect::CATEGORY_GENERIC);
+		skill->removeEffects(Effect::Category::generic);
 	skills_.erase(skill->getTypeID());
 }
 
@@ -187,7 +185,7 @@ std::shared_ptr<Implant> Character::addImplant(TypeID typeID, bool forced)
 		}
 		implants_.push_back(implant);
 		if (ship_)
-			implant->addEffects(Effect::CATEGORY_GENERIC);
+			implant->addEffects(Effect::Category::generic);
 		engine->reset();
 		return implant;
 
@@ -216,7 +214,7 @@ std::shared_ptr<Booster> Character::addBooster(TypeID typeID, bool forced)
 		}
 		boosters_.push_back(booster);
 		if (ship_)
-			booster->addEffects(Effect::CATEGORY_GENERIC);
+			booster->addEffects(Effect::Category::generic);
 		engine->reset();
 		return booster;
 	}
@@ -231,7 +229,7 @@ void Character::removeImplant(std::shared_ptr<Implant> const& implant)
 	if (implant != NULL)
 	{
 		if (ship_)
-			implant->removeEffects(Effect::CATEGORY_GENERIC);
+			implant->removeEffects(Effect::Category::generic);
 		//implants_.remove(implant);
 		implants_.erase(std::find(implants_.begin(), implants_.end(), implant));
 
@@ -246,7 +244,7 @@ void Character::removeBooster(std::shared_ptr<Booster> const& booster)
 	if (booster != NULL)
 	{
 		if (ship_)
-			booster->removeEffects(Effect::CATEGORY_GENERIC);
+			booster->removeEffects(Effect::Category::generic);
 		//boosters_.remove(booster);
 		boosters_.erase(std::find(boosters_.begin(), boosters_.end(), booster));
 
@@ -271,19 +269,19 @@ void Character::addEffects(Effect::Category category)
 	if (ship_ || structure_)
 	{
 		Item::addEffects(category);
-		if (category == Effect::CATEGORY_GENERIC)
+		if (category == Effect::Category::generic)
 		{
 			if (ship_)
-				ship_->addEffects(Effect::CATEGORY_GENERIC);
+				ship_->addEffects(Effect::Category::generic);
 			if (structure_)
-				structure_->addEffects(Effect::CATEGORY_GENERIC);
+				structure_->addEffects(Effect::Category::generic);
 
 			for (const auto& i: skills_)
-				i.second->addEffects(Effect::CATEGORY_GENERIC);
+				i.second->addEffects(Effect::Category::generic);
 			for (const auto& i: implants_)
-				i->addEffects(Effect::CATEGORY_GENERIC);
+				i->addEffects(Effect::Category::generic);
 			for (const auto& i: boosters_)
-				i->addEffects(Effect::CATEGORY_GENERIC);
+				i->addEffects(Effect::Category::generic);
 		}
 	}
 }
@@ -293,19 +291,19 @@ void Character::removeEffects(Effect::Category category)
 	if (ship_ || structure_)
 	{
 		Item::removeEffects(category);
-		if (category == Effect::CATEGORY_GENERIC)
+		if (category == Effect::Category::generic)
 		{
 			if (ship_)
-				ship_->removeEffects(Effect::CATEGORY_GENERIC);
+				ship_->removeEffects(Effect::Category::generic);
 			if (structure_)
-				structure_->removeEffects(Effect::CATEGORY_GENERIC);
+				structure_->removeEffects(Effect::Category::generic);
 
 			for (const auto& i: skills_)
-				i.second->removeEffects(Effect::CATEGORY_GENERIC);
+				i.second->removeEffects(Effect::Category::generic);
 			for (const auto& i: implants_)
-				i->removeEffects(Effect::CATEGORY_GENERIC);
+				i->removeEffects(Effect::Category::generic);
 			for (const auto& i: boosters_)
-				i->removeEffects(Effect::CATEGORY_GENERIC);
+				i->removeEffects(Effect::Category::generic);
 		}
 	}
 }
@@ -352,7 +350,7 @@ void Character::setAllSkillsLevel(int level)
 }
 
 Float Character::getDroneControlDistance() {
-	return getAttribute(DRONE_CONTROL_DISTANCE_ATTRIBUTE_ID)->getValue();
+	return getAttribute(AttributeID::droneControlDistance)->getValue();
 }
 
 std::insert_iterator<ModifiersList> Character::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
@@ -380,7 +378,7 @@ void Character::lazyLoad() {
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 	while (result->next())
 	{
-		TypeID skillID = result->getInt(0);
+		TypeID skillID = static_cast<TypeID>(result->getInt(0));
 		addSkill(skillID, 0, false);
 	}
 }

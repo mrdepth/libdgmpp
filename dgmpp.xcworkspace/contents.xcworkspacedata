@@ -5,15 +5,18 @@
       location = "group:dgmpp.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:modifiersdump.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dgmppDemo.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:compiler.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:dbpatch.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:modifiersdump.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:dgmppDemo.xcodeproj">
+      location = "group:idsdump/idsdump.xcodeproj">
    </FileRef>
 </Workspace>

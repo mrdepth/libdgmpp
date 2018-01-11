@@ -25,7 +25,7 @@ std::shared_ptr<Facility> Route::getDestination() const {
 }
 
 void Route::update(double time) const {
-	if (commodity_.getTypeID()) {
+	if (commodity_.getTypeID() != TypeID::none) {
 		uint32_t quantity = std::min(getSource()->getCommodity(commodity_).getQuantity(), getDestination()->getFreeStorage(commodity_));
 		if (quantity > 0) {
 			auto product = Commodity(commodity_, quantity);

@@ -18,7 +18,7 @@
 
 using namespace dgmpp;
 
-const TypeID dgmpp::ANY_GROUP_ID = std::numeric_limits<TypeID>::max();
+/*const TypeID dgmpp::ANY_GROUP_ID = std::numeric_limits<TypeID>::max();
 const TypeID dgmpp::CHARACTER_GROUP_ID = 1;
 const TypeID dgmpp::WARP_DISRUPT_FIELD_GENERATOR_GROUP_ID = 899;
 const TypeID dgmpp::CAPACITOR_BOOSTER_GROUP_ID = 76;
@@ -63,7 +63,7 @@ const TypeID dgmpp::ICE_HARVESTING_TYPE_ID = 16281;
 const TypeID dgmpp::GAS_CLOUD_HARVESTING_TYPE_ID = 25544;
 const TypeID dgmpp::CPU_MANAGEMENT_TYPE_ID = 3426;
 const TypeID dgmpp::ENERGY_WEAPON_GROUP_ID = 53;
-const TypeID dgmpp::HYBRID_WEAPON_GROUP_ID = 74;
+const TypeID dgmpp::HYBRID_WEAPON_GROUP_ID = 74;*/
 
 
 
@@ -120,7 +120,7 @@ private:
 };*/
 
 
-Item::Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(0), loaded_(false)
+Item::Item(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner) : engine_(engine), owner_(owner), typeID_(typeID), groupID_(GroupID::none), loaded_(false)
 {
 }
 
@@ -138,9 +138,9 @@ std::shared_ptr<Item> Item::getOwner() const
 	return owner_.lock();
 }
 
-std::shared_ptr<Attribute> Item::getAttribute(TypeID attributeID)
+std::shared_ptr<Attribute> Item::getAttribute(AttributeID attributeID)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return nullptr;
 	
 	loadIfNeeded();
@@ -163,9 +163,9 @@ const AttributesMap &Item::getAttributes()
 	return attributes_;
 }
 
-bool Item::hasAttribute(TypeID attributeID)
+bool Item::hasAttribute(AttributeID attributeID)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return false;
 	
 	loadIfNeeded();
@@ -176,21 +176,21 @@ bool Item::hasAttribute(TypeID attributeID)
 		return false;
 }
 
-std::shared_ptr<Effect> Item::getEffect(TypeID effectID)
+std::shared_ptr<Effect> Item::getEffect(EffectID effectID)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return nullptr;
 
 	loadIfNeeded();
 	for (const auto& i: effects_)
 		if (i->getEffectID() == effectID)
 			return i;
-    throw EffectDidNotFoundException(std::to_string(effectID));
+    throw EffectDidNotFoundException(std::to_string(static_cast<int>(effectID)));
 }
 
 bool Item::requireSkill(TypeID skillID)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return false;
 
 	loadIfNeeded();
@@ -222,9 +222,9 @@ const std::vector<TypeID>& Item::requiredSkills() {
 }
 
 
-bool Item::hasEffect(TypeID effectID)
+bool Item::hasEffect(EffectID effectID)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return false;
 
 	loadIfNeeded();
@@ -240,13 +240,13 @@ TypeID Item::getTypeID()
 	return typeID_;
 }
 
-TypeID Item::getGroupID()
+GroupID Item::getGroupID()
 {
 	loadIfNeeded();
 	return groupID_;
 }
 
-TypeID Item::getCategoryID()
+CategoryID Item::getCategoryID()
 {
 	loadIfNeeded();
 	return categoryID_;
@@ -281,7 +281,7 @@ void Item::reset()
 
 std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return outIterator;
 
 	auto i = itemModifiers_.find(attribute->getAttributeID());
@@ -299,7 +299,7 @@ std::insert_iterator<ModifiersList> Item::getModifiers(Attribute* attribute, std
 
 std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return outIterator;
 
 	auto i = locationModifiers_.find(attribute->getAttributeID());
@@ -310,7 +310,7 @@ std::insert_iterator<ModifiersList> Item::getLocationModifiers(Attribute* attrib
 
 std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, Attribute* attribute, std::insert_iterator<ModifiersList> outIterator)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return outIterator;
 
 	auto i = locationGroupModifiers_.find(item->getGroupID());
@@ -338,35 +338,35 @@ std::insert_iterator<ModifiersList> Item::getModifiersMatchingItem(Item* item, A
 
 void Item::addItemModifier(std::shared_ptr<Modifier> const& modifier)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	itemModifiers_[modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationModifier(std::shared_ptr<Modifier> const& modifier)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	locationModifiers_[modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	locationGroupModifiers_[modifier->getGroupID()][modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::addLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	locationRequiredSkillModifiers_[modifier->getSkillID()][modifier->getAttributeID()].push_back(modifier);
 }
 
 void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	auto& list = itemModifiers_[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
@@ -378,7 +378,7 @@ void Item::removeItemModifier(std::shared_ptr<Modifier> const& modifier)
 
 void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	auto& list = locationModifiers_[modifier->getAttributeID()];
 	auto i = std::find(list.begin(), list.end(), modifier);
@@ -390,7 +390,7 @@ void Item::removeLocationModifier(std::shared_ptr<Modifier> const& modifier)
 
 void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> const& modifier)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	auto& map = locationGroupModifiers_[modifier->getGroupID()];
 	auto& list = map[modifier->getAttributeID()];
@@ -407,7 +407,7 @@ void Item::removeLocationGroupModifier(std::shared_ptr<LocationGroupModifier> co
 
 void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredSkillModifier> const& modifier)
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	auto& map = locationRequiredSkillModifiers_[modifier->getSkillID()];
 	auto& list = map[modifier->getAttributeID()];
@@ -418,13 +418,13 @@ void Item::removeLocationRequiredSkillModifier(std::shared_ptr<LocationRequiredS
 	if (list.size() == 0) {
 		map.erase(modifier->getAttributeID());
 		if (map.size() == 0)
-			locationGroupModifiers_.erase(modifier->getSkillID());
+			locationRequiredSkillModifiers_.erase(modifier->getSkillID());
 	}
 }
 
 const char* Item::getTypeName()
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return "<dummy>";
 	loadIfNeeded();
 	if (typeName_.size() == 0)
@@ -434,7 +434,7 @@ const char* Item::getTypeName()
 		auto engine = getEngine();
 		if (engine) {
 			auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT typeName FROM invTypes WHERE typeID = ?");
-			stmt->bindInt(1, typeID_);
+			stmt->bindInt(1, static_cast<int>(typeID_));
 
 			std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 			if (result->next()) {
@@ -447,7 +447,7 @@ const char* Item::getTypeName()
 
 const char* Item::getGroupName()
 {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return "<dummy>";
 
 	loadIfNeeded();
@@ -458,7 +458,7 @@ const char* Item::getGroupName()
 		auto engine = getEngine();
 		if (engine) {
 			auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT groupName FROM invTypes AS A, invGroups AS B WHERE A.groupID=B.groupID AND typeID = ?");
-			stmt->bindInt(1, typeID_);
+			stmt->bindInt(1, static_cast<int>(typeID_));
 
 			std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 			if (result->next()) {
@@ -469,8 +469,8 @@ const char* Item::getGroupName()
 	return groupName_.c_str();
 }
 
-std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, Float value) {
-	if (typeID_ == 0)
+std::shared_ptr<Attribute> Item::addExtraAttribute(AttributeID attributeID, Float value) {
+	if (typeID_ == TypeID::none)
 		return nullptr;
 
 	auto engine = getEngine();
@@ -483,7 +483,7 @@ std::shared_ptr<Attribute> Item::addExtraAttribute(TypeID attributeID, Float val
 void Item::lazyLoad() {
 //	assert(loaded_ == false);
 	loaded_ = true;
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return;
 	auto engine = getEngine();
 	if (!engine)
@@ -492,36 +492,36 @@ void Item::lazyLoad() {
 	//std::stringstream sql;
 	//sql << "SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = " << typeID_;
 	auto stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT invTypes.groupID, radius, mass, volume, capacity, raceID, categoryID, typeName FROM invTypes, invGroups WHERE invTypes.groupID=invGroups.groupID AND typeID = ? LIMIT 1");
-	stmt->bindInt(1, typeID_);
+	stmt->bindInt(1, static_cast<int>(typeID_));
 	
 	std::shared_ptr<FetchResult> result = engine->getSqlConnector()->exec(stmt);
 	if (result->next())
 	{
-		groupID_ = result->getInt(0);
+		groupID_ = static_cast<GroupID>(result->getInt(0));
 		Float radius = static_cast<Float>(result->getDouble(1));
 		Float mass = static_cast<Float>(result->getDouble(2));
 		Float volume = static_cast<Float>(result->getDouble(3));
 		Float capacity = static_cast<Float>(result->getDouble(4));
-		int raceID = result->getInt(5);
-		categoryID_ = result->getInt(6);
+		RaceID raceID = static_cast<RaceID>(result->getInt(5));
+		categoryID_ = static_cast<CategoryID>(result->getInt(6));
 		
 		typeName_ = result->getText(7);
-		attributes_[RADIUS_ATTRIBUTE_ID] = Attribute::getAttribute(engine, RADIUS_ATTRIBUTE_ID,  shared_from_this(), false, radius);
-		attributes_[MASS_ATTRIBUTE_ID] = Attribute::getAttribute(engine, MASS_ATTRIBUTE_ID,  shared_from_this(), false, mass);
-		attributes_[VOLUME_ATTRIBUTE_ID] = Attribute::getAttribute(engine, VOLUME_ATTRIBUTE_ID,  shared_from_this(), false, volume);
-		attributes_[CAPACITY_ATTRIBUTE_ID] = Attribute::getAttribute(engine, CAPACITY_ATTRIBUTE_ID,  shared_from_this(), false, capacity);
-		attributes_[RACE_ID_ATTRIBUTE_ID] = Attribute::getAttribute(engine, RACE_ID_ATTRIBUTE_ID,  shared_from_this(), false, static_cast<Float>(raceID));
+		attributes_[AttributeID::radius] = Attribute::getAttribute(engine, AttributeID::radius,  shared_from_this(), false, radius);
+		attributes_[AttributeID::mass] = Attribute::getAttribute(engine, AttributeID::mass,  shared_from_this(), false, mass);
+		attributes_[AttributeID::volume] = Attribute::getAttribute(engine, AttributeID::volume,  shared_from_this(), false, volume);
+		attributes_[AttributeID::capacity] = Attribute::getAttribute(engine, AttributeID::capacity,  shared_from_this(), false, capacity);
+		attributes_[AttributeID::raceID] = Attribute::getAttribute(engine, AttributeID::raceID,  shared_from_this(), false, static_cast<Float>(raceID));
 		
 		//sql.str(std::string());
 		//sql << "SELECT dgmTypeAttributes.attributeID, maxAttributeID, stackable, value, highIsGood, attributeName FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID WHERE typeID = "
 		//<< typeID_;
 		stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT attributeID, value FROM dgmTypeAttributes WHERE typeID = ?");
-		stmt->bindInt(1, typeID_);
+		stmt->bindInt(1, static_cast<int>(typeID_));
 		result = engine->getSqlConnector()->exec(stmt);
 		
 		while (result->next())
 		{
-			TypeID attributeID = static_cast<TypeID>(result->getInt(0));
+			AttributeID attributeID = static_cast<AttributeID>(result->getInt(0));
 			Float value = static_cast<Float>(result->getDouble(1));
 			attributes_[attributeID] = Attribute::getAttribute(engine, attributeID, shared_from_this(), false, value);
 		}
@@ -529,30 +529,30 @@ void Item::lazyLoad() {
 		//sql.str(std::string());
 		//sql << "SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = " << typeID_;
 		stmt = engine->getSqlConnector()->getReusableFetchRequest("SELECT effectID FROM dgmTypeEffects WHERE dgmTypeEffects.typeID = ?");
-		stmt->bindInt(1, typeID_);
+		stmt->bindInt(1, static_cast<int>(typeID_));
 		result = engine->getSqlConnector()->exec(stmt);
 
 		while (result->next())
 		{
-			TypeID effectID = static_cast<TypeID>(result->getInt(0));
+			EffectID effectID = static_cast<EffectID>(result->getInt(0));
 			effects_.push_back(Effect::getEffect(engine, effectID, shared_from_this()));
 		}
 		result = nullptr;
 		
 		static const auto requirements = {
-			REQUIRED_SKILL1_ATTRIBUTE_ID,
-			REQUIRED_SKILL2_ATTRIBUTE_ID,
-			REQUIRED_SKILL3_ATTRIBUTE_ID,
-			REQUIRED_SKILL4_ATTRIBUTE_ID,
-			REQUIRED_SKILL5_ATTRIBUTE_ID,
-			REQUIRED_SKILL6_ATTRIBUTE_ID};
+			AttributeID::requiredSkill1,
+			AttributeID::requiredSkill2,
+			AttributeID::requiredSkill3,
+			AttributeID::requiredSkill4,
+			AttributeID::requiredSkill5,
+			AttributeID::requiredSkill6};
 		
-		for (TypeID attributeID: requirements)
+		for (auto attributeID: requirements)
 		{
 			auto i = attributes_.find(attributeID);
 			if (i != attributes_.end()) {
-				TypeID skillID = i->second->getInitialValue();
-				if (skillID > 0)
+				TypeID skillID = static_cast<TypeID>(i->second->getInitialValue());
+				if (skillID != TypeID::none)
 					requiredSkills_.push_back(skillID);
 			}
 
@@ -561,13 +561,13 @@ void Item::lazyLoad() {
 	}
 	else
 	{
-		throw UnknownTypeIDException(std::to_string(typeID_));
+		throw UnknownTypeIDException(std::to_string(static_cast<int>(typeID_)));
 	}
 }
 
 
 std::set<std::shared_ptr<Item>> Item::getAffectors() {
-	if (typeID_ == 0)
+	if (typeID_ == TypeID::none)
 		return std::set<std::shared_ptr<Item>>();
 	
 	ModifiersList modifiers;
@@ -605,7 +605,7 @@ Item* Item::area() {
 
 std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::Item& item)
 {
-	os << "{\"typeName\":\"" << item.getTypeName() << "\", \"typeID\":\"" << item.typeID_ << "\", \"groupID\":\"" << item.groupID_ << "\", \"attributes\":[";
+	os << "{\"typeName\":\"" << item.getTypeName() << "\", \"typeID\":\"" << static_cast<int>(item.typeID_) << "\", \"groupID\":\"" << static_cast<int>(item.groupID_) << "\", \"attributes\":[";
 	
 	if (item.attributes_.size() > 0)
 	{

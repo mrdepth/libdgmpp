@@ -33,11 +33,11 @@ std::shared_ptr<StarbaseStructure> ControlTower::addStructure(TypeID typeID)
 		std::shared_ptr<StarbaseStructure> structure = std::make_shared<StarbaseStructure>(engine, typeID, shared_from_this());
 		structures_.push_back(structure);
 		
-		structure->addEffects(Effect::CATEGORY_GENERIC);
-		if (structure->canHaveState(StarbaseStructure::STATE_ACTIVE))
-			structure->setState(StarbaseStructure::STATE_ACTIVE);
-		else if (structure->canHaveState(StarbaseStructure::STATE_ONLINE))
-			structure->setState(StarbaseStructure::STATE_ONLINE);
+		structure->addEffects(Effect::Category::generic);
+		if (structure->canHaveState(StarbaseStructure::State::active))
+			structure->setState(StarbaseStructure::State::active);
+		else if (structure->canHaveState(StarbaseStructure::State::online))
+			structure->setState(StarbaseStructure::State::online);
 		engine->reset();
 		return structure;
 	}
@@ -49,8 +49,8 @@ std::shared_ptr<StarbaseStructure> ControlTower::addStructure(TypeID typeID)
 
 void ControlTower::removeStructure(std::shared_ptr<StarbaseStructure> const& structure)
 {
-	structure->setState(StarbaseStructure::STATE_OFFLINE);
-	structure->removeEffects(Effect::CATEGORY_GENERIC);
+	structure->setState(StarbaseStructure::State::offline);
+	structure->removeEffects(Effect::Category::generic);
 	
 	//structures_.remove(structure);
 	structures_.erase(std::find(structures_.begin(), structures_.end(), structure));
@@ -66,9 +66,10 @@ const StarbaseStructuresList& ControlTower::getStructures()
 
 bool ControlTower::canFit(std::shared_ptr<StarbaseStructure> const& structure)
 {
-	if (structure->getSlot() != StarbaseStructure::SLOT_STARBASE_STRUCTURE)
+	if (structure->getSlot() != StarbaseStructure::Slot::starbaseStructure)
 		return false;
-	if (structure->getCategoryID() == STARBASE_CATEGORY_ID && structure->getGroupID() != CONTROL_TOWER_GROUP_ID)
+	
+	if (structure->getCategoryID() == CategoryID::starbase && structure->getGroupID() != GroupID::controlTower)
 		return true;
 	else
 		return false;
@@ -100,10 +101,10 @@ void ControlTower::reset()
 void ControlTower::addEffects(Effect::Category category)
 {
 	Item::addEffects(category);
-	if (category == Effect::CATEGORY_GENERIC)
+	if (category == Effect::Category::generic)
 	{
 		for (const auto& i: structures_)
-			i->addEffects(Effect::CATEGORY_GENERIC);
+			i->addEffects(Effect::Category::generic);
 //		std::shared_ptr<Area> area = engine_->getArea();
 //		if (area != nullptr)
 //			area->addEffectsToShip(this);
@@ -113,10 +114,10 @@ void ControlTower::addEffects(Effect::Category category)
 void ControlTower::removeEffects(Effect::Category category)
 {
 	Item::removeEffects(category);
-	if (category == Effect::CATEGORY_GENERIC)
+	if (category == Effect::Category::generic)
 	{
 		for (const auto& i: structures_)
-			i->removeEffects(Effect::CATEGORY_GENERIC);
+			i->removeEffects(Effect::Category::generic);
 //		std::shared_ptr<Area> area = engine_->getArea();
 //		if (area != nullptr)
 //			area->removeEffectsFromShip(this);
@@ -145,8 +146,8 @@ Float ControlTower::getPowerGridUsed()
 		powerGridUsed_ = 0;
 		for (const auto& i: structures_)
 		{
-			if (i->getState() >= Module::STATE_ONLINE)
-				powerGridUsed_ += i->getAttribute(POWER_ATTRIBUTE_ID)->getValue();
+			if (i->getState() >= Module::State::online)
+				powerGridUsed_ += i->getAttribute(AttributeID::power)->getValue();
 		}
 	}
 	return powerGridUsed_;
@@ -154,7 +155,7 @@ Float ControlTower::getPowerGridUsed()
 
 Float ControlTower::getTotalPowerGrid()
 {
-	return getAttribute(POWER_OUTPUT_ATTRIBUTE_ID)->getValue();
+	return getAttribute(AttributeID::powerOutput)->getValue();
 }
 
 Float ControlTower::getCpuUsed()
@@ -164,8 +165,8 @@ Float ControlTower::getCpuUsed()
 		cpuUsed_ = 0;
 		for (const auto& i: structures_)
 		{
-			if (i->getState() >= Module::STATE_ONLINE)
-				cpuUsed_ += i->getAttribute(CPU_ATTRIBUTE_ID)->getValue();
+			if (i->getState() >= Module::State::online)
+				cpuUsed_ += i->getAttribute(AttributeID::cpu)->getValue();
 		}
 	}
 	return cpuUsed_;
@@ -173,7 +174,7 @@ Float ControlTower::getCpuUsed()
 
 Float ControlTower::getTotalCpu()
 {
-	return getAttribute(CPU_OUTPUT_ATTRIBUTE_ID)->getValue();
+	return getAttribute(AttributeID::cpuOutput)->getValue();
 }
 
 //Tank 8-033-3376391
@@ -182,20 +183,20 @@ const Resistances& ControlTower::getResistances()
 {
 	if (resistances_.armor.em < 0.0)
 	{
-		resistances_.armor.em		 = 1.0 - getAttribute(ARMOR_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.explosive = 1.0 - getAttribute(ARMOR_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.kinetic   = 1.0 - getAttribute(ARMOR_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.armor.thermal   = 1.0 - getAttribute(ARMOR_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.armor.em		 = 1.0 - getAttribute(AttributeID::armorEmDamageResonance)->getValue();
+		resistances_.armor.explosive = 1.0 - getAttribute(AttributeID::armorExplosiveDamageResonance)->getValue();
+		resistances_.armor.kinetic   = 1.0 - getAttribute(AttributeID::armorKineticDamageResonance)->getValue();
+		resistances_.armor.thermal   = 1.0 - getAttribute(AttributeID::armorThermalDamageResonance)->getValue();
 		
-		resistances_.shield.em		  = 1.0 - getAttribute(SHIELD_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.explosive = 1.0 - getAttribute(SHIELD_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.kinetic   = 1.0 - getAttribute(SHIELD_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.shield.thermal   = 1.0 - getAttribute(SHIELD_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.shield.em		  = 1.0 - getAttribute(AttributeID::shieldEmDamageResonance)->getValue();
+		resistances_.shield.explosive = 1.0 - getAttribute(AttributeID::shieldExplosiveDamageResonance)->getValue();
+		resistances_.shield.kinetic   = 1.0 - getAttribute(AttributeID::shieldKineticDamageResonance)->getValue();
+		resistances_.shield.thermal   = 1.0 - getAttribute(AttributeID::shieldThermalDamageResonance)->getValue();
 		
-		resistances_.hull.em		= 1.0 - getAttribute(HULL_EM_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.explosive = 1.0 - getAttribute(HULL_EXPLOSIVE_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.kinetic   = 1.0 - getAttribute(HULL_KINETIC_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
-		resistances_.hull.thermal   = 1.0 - getAttribute(HULL_THERMAL_DAMAGE_RESONANCE_ATTRIBUTE_ID)->getValue();
+		resistances_.hull.em		= 1.0 - getAttribute(AttributeID::emDamageResonance)->getValue();
+		resistances_.hull.explosive = 1.0 - getAttribute(AttributeID::explosiveDamageResonance)->getValue();
+		resistances_.hull.kinetic   = 1.0 - getAttribute(AttributeID::kineticDamageResonance)->getValue();
+		resistances_.hull.thermal   = 1.0 - getAttribute(AttributeID::thermalDamageResonance)->getValue();
 	}
 	return resistances_;
 }
@@ -204,9 +205,9 @@ const Tank& ControlTower::getTank()
 {
 	if (tank_.armorRepair < 0.0)
 	{
-		tank_.armorRepair = fabs(getAttribute(ARMOR_DAMAGE_ATTRIBUTE_ID)->getValue());
-		tank_.hullRepair = fabs(getAttribute(DAMAGE_ATTRIBUTE_ID)->getValue());
-		tank_.shieldRepair = fabs(getAttribute(SHIELD_CHARGE_ATTRIBUTE_ID)->getValue());
+		tank_.armorRepair = fabs(getAttribute(AttributeID::armorDamage)->getValue());
+		tank_.hullRepair = fabs(getAttribute(AttributeID::damage)->getValue());
+		tank_.shieldRepair = fabs(getAttribute(AttributeID::shieldCharge)->getValue());
 		tank_.passiveShield = getShieldRecharge();
 	}
 	return tank_;
@@ -223,9 +224,9 @@ const HitPoints& ControlTower::getHitPoints()
 {
 	if (hitPoints_.armor < 0.0)
 	{
-		hitPoints_.armor = getAttribute(ARMOR_HP_ATTRIBUTE_ID)->getValue();
-		hitPoints_.hull = getAttribute(HP_ATTRIBUTE_ID)->getValue();
-		hitPoints_.shield = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
+		hitPoints_.armor = getAttribute(AttributeID::armorHP)->getValue();
+		hitPoints_.hull = getAttribute(AttributeID::hp)->getValue();
+		hitPoints_.shield = getAttribute(AttributeID::shieldCapacity)->getValue();
 	}
 	return hitPoints_;
 }
@@ -241,8 +242,8 @@ Float ControlTower::getShieldRecharge()
 {
 	if (shieldRecharge_ < 0.0)
 	{
-		Float capacity = getAttribute(SHIELD_CAPACITY_ATTRIBUTE_ID)->getValue();
-		Float rechargeRate = getAttribute(SHIELD_RECHARGE_RATE_ATTRIBUTE_ID)->getValue();
+		Float capacity = getAttribute(AttributeID::shieldCapacity)->getValue();
+		Float rechargeRate = getAttribute(AttributeID::shieldRechargeRate)->getValue();
 		shieldRecharge_ = 10.0 / (rechargeRate / 1000.0) * SHIELD_PEAK_RECHARGE * (1 - SHIELD_PEAK_RECHARGE) * capacity;
 	}
 	return shieldRecharge_;
@@ -281,7 +282,7 @@ Item* ControlTower::ship() {
 
 std::ostream& dgmpp::operator<<(std::ostream& os, dgmpp::ControlTower& controlTower)
 {
-	os << "{\"typeName\":\"" << controlTower.getTypeName() << "\", \"typeID\":\"" << controlTower.typeID_ << "\", \"groupID\":\"" << controlTower.groupID_ << "\", \"attributes\":[";
+	os << "{\"typeName\":\"" << controlTower.getTypeName() << "\", \"typeID\":\"" << static_cast<int>(controlTower.typeID_) << "\", \"groupID\":\"" << static_cast<int>(controlTower.groupID_) << "\", \"attributes\":[";
 	
 	if (controlTower.attributes_.size() > 0)
 	{

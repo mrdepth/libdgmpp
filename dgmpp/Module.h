@@ -9,44 +9,44 @@ namespace dgmpp {
 	{
 	public:
 
-		enum Slot
+		enum class Slot
 		{
-			SLOT_UNKNOWN = -1,
-			SLOT_NONE = 0,
-			SLOT_HI,
-			SLOT_MED,
-			SLOT_LOW,
-			SLOT_RIG,
-			SLOT_SUBSYSTEM,
-			SLOT_MODE,
-			SLOT_SERVICE,
-			SLOT_STARBASE_STRUCTURE
+			unknown = -1,
+			none,
+			hi,
+			med,
+			low,
+			rig,
+			subsystem,
+			mode,
+			service,
+			starbaseStructure
 		};
 
-		enum State
+		enum class State
 		{
-			STATE_UNKNOWN = -1,
-			STATE_OFFLINE,
-			STATE_ONLINE,
-			STATE_ACTIVE,
-			STATE_OVERLOADED
+			unknown = -1,
+			offline,
+			online,
+			active,
+			overloaded
 		};
 		
-		enum Hardpoint
+		enum class Hardpoint
 		{
-			HARDPOINT_NONE = 0,
-			HARDPOINT_LAUNCHER,
-			HARDPOINT_TURRET
+			none,
+			launcher,
+			turret
 		};
 		
 		static std::shared_ptr<Module> dummy(std::shared_ptr<Engine> const& engine, std::shared_ptr<Item> const& owner, Module::Slot slot) {
-			auto module = std::make_shared<Module>(engine, 0, owner);
+			auto module = std::make_shared<Module>(engine, TypeID::none, owner);
 			module->slot_ = slot;
 			return module;
 		}
 		
 		bool isDummy() {
-			return getTypeID() == 0;
+			return getTypeID() == TypeID::none;
 		}
 
 		Module(std::shared_ptr<Engine> const& engine, TypeID typeID, std::shared_ptr<Item> const& owner = std::shared_ptr<Item>(nullptr));
@@ -81,7 +81,7 @@ namespace dgmpp {
 		std::shared_ptr<Charge> setCharge(TypeID typeID);
 		void clearCharge();
 		std::shared_ptr<Charge> getCharge();
-		const std::vector<TypeID>& getChargeGroups();
+		const std::vector<GroupID>& getChargeGroups();
 		int getChargeSize();
 		bool canFit(std::shared_ptr<Charge> const& charge);
 		bool requireTarget();
@@ -145,7 +145,7 @@ namespace dgmpp {
 		Slot slot_;
 		Hardpoint hardpoint_;
 		std::shared_ptr<Charge> charge_;
-		std::vector<TypeID> chargeGroups_;
+		std::vector<GroupID> chargeGroups_;
 		std::weak_ptr<Ship> target_;
 		Float reloadTime_;
 		int shots_;

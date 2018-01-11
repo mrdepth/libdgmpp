@@ -690,9 +690,9 @@ int patch(const char* databasePath) {
 		   DefEnv("Ship").attr("shieldCharge").assoc("AddRate").RIM("shieldBonus"));
 	
 
-//	update("structureRepair",
-//		   DefEnv("Ship").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
-//		   DefEnv("Ship").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
+	update("structureRepair",
+		   DefEnv("Ship").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
+		   DefEnv("Ship").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
 //	update("remoteHullRepair",
 //		   DefEnv("Target").attr("damage").assoc("SubRate").AIM("structureDamageAmount"),
 //		   DefEnv("Target").attr("damage").assoc("SubRate").RIM("structureDamageAmount"));
@@ -730,10 +730,10 @@ int patch(const char* databasePath) {
 
 
 	//Energy Transfers
-	update("energyTransfer",
+	update("shipModuleRemoteCapacitorTransmitter",
 		   DefEnv("Target").attr("charge").assoc("AddRate").AIM("powerTransferAmount"),
 		   DefEnv("Target").attr("charge").assoc("AddRate").RIM("powerTransferAmount"));
-	update("energyDestabilizationNew",
+	update("energyNeutralizerFalloff",
 		   DefEnv("Target").attr("charge").assoc("SubRate").AIM("powerTransferAmount"),
 		   DefEnv("Target").attr("charge").assoc("SubRate").RIM("powerTransferAmount"));
 	update("energyNosferatuFalloff",

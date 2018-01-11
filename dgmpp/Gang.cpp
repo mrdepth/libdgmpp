@@ -32,7 +32,7 @@ namespace std {
 class GangModifierMatchFunction : public std::unary_function<std::shared_ptr<Modifier> const&, bool>
 {
 public:
-	GangModifierMatchFunction(TypeID attributeID, Character* fleetBooster, Character* wingBooster, Character* squadBooster) : attributeID_(attributeID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
+	GangModifierMatchFunction(AttributeID attributeID, Character* fleetBooster, Character* wingBooster, Character* squadBooster) : attributeID_(attributeID), fleetBooster_(fleetBooster), wingBooster_(wingBooster), squadBooster_(squadBooster) {}
 	bool operator() (std::shared_ptr<Modifier> const& modifier)
 	{
 		Character* character = modifier->getCharacter();
@@ -40,7 +40,7 @@ public:
 		return (modifier->getAttributeID() == attributeID_ && isBooster);
 	}
 private:
-	TypeID attributeID_;
+	AttributeID attributeID_;
 	Character* fleetBooster_;
 	Character* wingBooster_;
 	Character* squadBooster_;
@@ -91,7 +91,7 @@ public:
 		return modifier->getAttributeID() == attributeID_ && modifier->getAssociation() == association_ && modifier->getModifier() == modifier_;
 	}
 private:
-	TypeID attributeID_;
+	AttributeID attributeID_;
 	std::shared_ptr<Attribute> modifier_;
 	Modifier::Association association_;
 };
@@ -118,7 +118,7 @@ private:
 	bool highIsGood_;
 };
 
-Gang::Gang(std::shared_ptr<Engine> const& engine) : Item(engine, 0, nullptr)
+Gang::Gang(std::shared_ptr<Engine> const& engine) : Item(engine, TypeID::none, nullptr)
 {
 }
 
@@ -138,9 +138,9 @@ std::shared_ptr<Character> Gang::addPilot()
 		return nullptr;
 
 	std::shared_ptr<Character> character = std::make_shared<Character>(engine, shared_from_this());
-//	character->removeEffects(Effect::CATEGORY_GENERIC);
+//	character->removeEffects(Effect::Category::generic);
 	pilots_.push_back(character);
-	character->addEffects(Effect::CATEGORY_GENERIC);
+	character->addEffects(Effect::Category::generic);
 	engine->reset();
 	return character;
 }
@@ -151,7 +151,7 @@ void Gang::removePilot(std::shared_ptr<Character> const& character)
 	auto engine = getEngine();
 	if (!engine)
 		return;
-	character->removeEffects(Effect::CATEGORY_GENERIC);
+	character->removeEffects(Effect::Category::generic);
 	//pilots_.remove(character);
 	pilots_.erase(std::find(pilots_.begin(), pilots_.end(), character));
 	engine->reset();
