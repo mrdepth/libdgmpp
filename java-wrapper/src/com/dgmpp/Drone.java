@@ -47,6 +47,18 @@ public class Drone extends Type {
     return dgmppJNI.Drone_active__SWIG_1(swigCPtr, this);
   }
 
+  public boolean hasKamikazeAbility() {
+    return dgmppJNI.Drone_hasKamikazeAbility(swigCPtr, this);
+  }
+
+  public void kamikaze(boolean kamikaze) {
+    dgmppJNI.Drone_kamikaze__SWIG_0(swigCPtr, this, kamikaze);
+  }
+
+  public boolean kamikaze() {
+    return dgmppJNI.Drone_kamikaze__SWIG_1(swigCPtr, this);
+  }
+
   public Charge charge() {
     long cPtr = dgmppJNI.Drone_charge(swigCPtr, this);
     return (cPtr == 0) ? null : new Charge(cPtr, false);

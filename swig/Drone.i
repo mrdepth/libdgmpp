@@ -16,7 +16,10 @@ namespace dgmpp {
 		
 		void active (bool active);
 		bool active() const noexcept;
-		
+		bool hasKamikazeAbility() const noexcept;
+		void kamikaze (bool kamikaze);
+		bool kamikaze() const noexcept;
+
 		Charge* charge() const noexcept;
 		
 		Squadron squadron() const noexcept;

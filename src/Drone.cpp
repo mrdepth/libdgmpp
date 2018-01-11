@@ -32,7 +32,12 @@ namespace dgmpp {
 			return static_cast<bool>(attribute_(i));
 		});
 		
+		flags_.hasKamikazeAbility = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
+			return i->metaInfo().effectID == EffectID::fighterAbilityKamikaze;
+		});
+		
 		flags_.active = true;
+		flags_.kamikaze = false;
 		
 		if (charge_) {
 			flags_.isAssistance = flags_.isAssistance || charge_->flags_.isAssistance;
@@ -63,19 +68,25 @@ namespace dgmpp {
 		if (flags_.active == active || !isEnabled_())
 			return;
 		
-		if (active) {
-			activateEffects_(MetaInfo::Effect::Category::generic);
-			activateEffects_(MetaInfo::Effect::Category::target);
-			if (charge_ != nullptr)
+		batchUpdates_([&]() {
+			if (active) {
+				activateEffects_(MetaInfo::Effect::Category::generic);
+				activateEffects_(MetaInfo::Effect::Category::target);
+				if (charge_ != nullptr)
 				charge_->setEnabled_(true);
-		}
-		else {
-			deactivateEffects_(MetaInfo::Effect::Category::target);
-			deactivateEffects_(MetaInfo::Effect::Category::generic);
-			if (charge_ != nullptr)
+			}
+			else {
+				deactivateEffects_(MetaInfo::Effect::Category::target);
+				deactivateEffects_(MetaInfo::Effect::Category::generic);
+				if (charge_ != nullptr)
 				charge_->setEnabled_(false);
-		}
-		flags_.active = active;
+			}
+			flags_.active = active;
+		});
+	}
+	
+	void Drone::kamikaze_ (bool kamikaze) {
+		flags_.kamikaze = kamikaze;
 	}
 	
 	void Drone::target_(Ship* target) {
@@ -140,6 +151,8 @@ namespace dgmpp {
 			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 		else if (auto attribute = attribute_(AttributeID::duration))
 			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
+		else if (auto attribute = attribute_(AttributeID::fighterAbilityLaunchBombDuration))
+			return std::chrono::milliseconds(static_cast<std::chrono::milliseconds::rep>(attribute->value_()));
 		else
 			return std::chrono::milliseconds::zero();
 	}
@@ -154,7 +167,8 @@ namespace dgmpp {
 				volley += fighterMissileVolley_();
 			if (auto attribute = attribute_(AttributeID::fighterAbilityAttackTurretDuration); attribute && attribute->value_() > 0)
 				volley += fighterAttackTurretVolley_();
-			
+			if (kamikaze_())
+				volley += fighterKamikazeVolley_();
 			return volley;
 		}
 		else
@@ -230,6 +244,21 @@ namespace dgmpp {
 		return volley;
 	}
 
+	DamageVector Drone::fighterKamikazeVolley_() {
+		auto volley = DamageVector(0);
+		
+		if (auto attribute = attribute_(AttributeID::fighterAbilityKamikazeDamageEM))
+			volley.em += attribute->value_();
+		if (auto attribute = attribute_(AttributeID::fighterAbilityKamikazeDamageKin))
+			volley.kinetic += attribute->value_();
+		if (auto attribute = attribute_(AttributeID::fighterAbilityKamikazeDamageTherm))
+			volley.thermal += attribute->value_();
+		if (auto attribute = attribute_(AttributeID::fighterAbilityKamikazeDamageExp))
+			volley.explosive += attribute->value_();
+		
+		return volley;
+	}
+	
 	DamagePerSecond Drone::dps_(const HostileTarget& target) {
 		if (active_()) {
 			auto dps = rawDPS_();

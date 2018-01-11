@@ -31,7 +31,19 @@ BOOL dgmpp_drone_is_active (dgmpp_type drone) {
 }
 
 void dgmpp_drone_set_active (dgmpp_type drone, BOOL active) {
-	return reinterpret_cast<Drone*>(drone)->active(active);
+	reinterpret_cast<Drone*>(drone)->active(active);
+}
+
+BOOL dgmpp_drone_has_kamikaze_ability (dgmpp_type drone) {
+	return reinterpret_cast<Drone*>(drone)->hasKamikazeAbility();
+}
+
+BOOL dgmpp_drone_is_kamikaze (dgmpp_type drone) {
+	return reinterpret_cast<Drone*>(drone)->kamikaze();
+}
+
+void dgmpp_drone_set_kamikaze (dgmpp_type drone, BOOL kamikaze) {
+	reinterpret_cast<Drone*>(drone)->kamikaze(kamikaze);
 }
 
 dgmpp_type dgmpp_drone_get_charge (dgmpp_type drone) {

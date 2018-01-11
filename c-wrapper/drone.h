@@ -13,12 +13,15 @@
 DGMPP_EXTERN dgmpp_type dgmpp_drone_create (dgmpp_type_id type_id);
 DGMPP_EXTERN dgmpp_type dgmpp_drone_copy (dgmpp_type drone);
 
-DGMPP_EXTERN BOOL					dgmpp_drone_is_active			(dgmpp_type drone);
-DGMPP_EXTERN void					dgmpp_drone_set_active			(dgmpp_type drone, BOOL active);
-DGMPP_EXTERN dgmpp_type				dgmpp_drone_get_charge			(dgmpp_type drone);
-DGMPP_EXTERN DGMPP_DRONE_SQUADRON	dgmpp_drone_get_squadron		(dgmpp_type drone);
-DGMPP_EXTERN size_t					dgmpp_drone_get_squadron_size	(dgmpp_type drone);
-DGMPP_EXTERN int					dgmpp_drone_get_squadron_tag	(dgmpp_type drone);
+DGMPP_EXTERN BOOL					dgmpp_drone_is_active				(dgmpp_type drone);
+DGMPP_EXTERN void					dgmpp_drone_set_active				(dgmpp_type drone, BOOL active);
+DGMPP_EXTERN BOOL					dgmpp_drone_has_kamikaze_ability	(dgmpp_type drone);
+DGMPP_EXTERN BOOL					dgmpp_drone_is_kamikaze				(dgmpp_type drone);
+DGMPP_EXTERN void					dgmpp_drone_set_kamikaze			(dgmpp_type drone, BOOL kamikaze);
+DGMPP_EXTERN dgmpp_type				dgmpp_drone_get_charge				(dgmpp_type drone);
+DGMPP_EXTERN DGMPP_DRONE_SQUADRON	dgmpp_drone_get_squadron			(dgmpp_type drone);
+DGMPP_EXTERN size_t					dgmpp_drone_get_squadron_size		(dgmpp_type drone);
+DGMPP_EXTERN int					dgmpp_drone_get_squadron_tag		(dgmpp_type drone);
 
 DGMPP_EXTERN dgmpp_type	dgmpp_drone_get_target	(dgmpp_type drone);
 DGMPP_EXTERN BOOL		dgmpp_drone_set_target	(dgmpp_type drone, dgmpp_type target);

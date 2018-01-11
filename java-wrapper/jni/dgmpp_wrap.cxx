@@ -2648,6 +2648,49 @@ SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Drone_1active_1_1SWIG_11(JNI
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Drone_1hasKamikazeAbility(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  dgmpp::Drone *arg1 = (dgmpp::Drone *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Drone **)&jarg1; 
+  result = (bool)((dgmpp::Drone const *)arg1)->hasKamikazeAbility();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_Drone_1kamikaze_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  dgmpp::Drone *arg1 = (dgmpp::Drone *) 0 ;
+  bool arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Drone **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->kamikaze(arg2);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Drone_1kamikaze_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  dgmpp::Drone *arg1 = (dgmpp::Drone *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Drone **)&jarg1; 
+  result = (bool)((dgmpp::Drone const *)arg1)->kamikaze();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Drone_1charge(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   dgmpp::Drone *arg1 = (dgmpp::Drone *) 0 ;

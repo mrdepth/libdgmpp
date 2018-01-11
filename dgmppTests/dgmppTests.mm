@@ -323,6 +323,30 @@ using namespace dgmpp;
 	XCTAssertEqual(tankA2.armorRepair, tankA1.armorRepair);
 	XCTAssertEqual(tankC2.armorRepair, tankC0.armorRepair);
 }
+	
+- (void) testKamikaze {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::nyx));
+	
+	auto volley0 = ship->dronesVolley();
+	
+	for (int i = 0; i < 6 * 3; i++)
+		ship->add(Drone::Create(TypeID::shadow));
+	
+	auto volley1 = ship->dronesVolley();
+	
+	for (auto drone: ship->drones()) {
+		XCTAssertTrue(drone->hasKamikazeAbility());
+		drone->kamikaze(true);
+	}
+	
+	auto volley2 = ship->dronesVolley();
+	
+	XCTAssertGreaterThan(volley1.total(), volley0.total());
+	XCTAssertGreaterThan(volley2.total(), volley1.total());
+}
 
 
 @end

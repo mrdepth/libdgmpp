@@ -30,6 +30,9 @@ namespace dgmpp {
 		
 		void active (bool active) { LOCK(this); active_(active); }
 		bool active() const noexcept { LOCK(this); return active_(); }
+		bool hasKamikazeAbility() const noexcept { LOCK(this); return hasKamikazeAbility_(); }
+		void kamikaze (bool kamikaze) { LOCK(this); kamikaze_(kamikaze); }
+		bool kamikaze() const noexcept { LOCK(this); return kamikaze_(); }
 
 		Charge* charge() const noexcept { return charge_.get(); }
 
@@ -56,9 +59,11 @@ namespace dgmpp {
 
 		struct {
 			bool active : 1;
+			bool kamikaze: 1;
 			bool isAssistance : 1;
 			bool isOffensive : 1;
 			bool dealsDamage : 1;
+			bool hasKamikazeAbility : 1;
 		} flags_;
 
 	private:
@@ -95,6 +100,12 @@ namespace dgmpp {
 				charge->parent_(this);
 				return charge;
 			}
+			else if (auto attribute = attribute_(AttributeID::fighterAbilityLaunchBombType)) {
+				auto typeID = static_cast<TypeID>(static_cast<int>(attribute->value_()));
+				auto charge = Charge::Create(typeID);
+				charge->parent_(this);
+				return charge;
+			}
 			else
 				return nullptr;
 		}()};
@@ -106,6 +117,11 @@ namespace dgmpp {
 
 		void active_ (bool active);
 		bool active_() const noexcept { return flags_.active; }
+		void kamikaze_ (bool kamikaze);
+		bool kamikaze_() const noexcept { return flags_.kamikaze; }
+
+		
+		bool hasKamikazeAbility_() const noexcept { return flags_.hasKamikazeAbility; }
 		
 		void squadronTag_ (SquadronTag squadronTag) noexcept { squadronTagValue_ = squadronTag; }
 		SquadronTag squadronTag_() const noexcept { return squadronTagValue_; };
@@ -126,6 +142,7 @@ namespace dgmpp {
 		DamageVector fighterAttackMissileVolley_();
 		DamageVector fighterAttackTurretVolley_();
 		DamageVector fighterMissileVolley_();
+		DamageVector fighterKamikazeVolley_();
 		DamagePerSecond rawDPS_();
 
 	};

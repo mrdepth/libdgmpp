@@ -35,6 +35,19 @@ public class DGMDrone: DGMType {
 		}
 	}
 	
+	public var hasKamikazeAbility: Bool {
+		return dgmpp_drone_has_kamikaze_ability(handle)
+	}
+
+	public var isKamikaze: Bool {
+		get {
+			return dgmpp_drone_is_kamikaze(handle)
+		}
+		set {
+			dgmpp_drone_set_kamikaze(handle, newValue)
+		}
+	}
+
 	public var charge: DGMCharge? {
 		guard let charge = dgmpp_drone_get_charge(handle) else {return nil}
 		return DGMCharge(charge)

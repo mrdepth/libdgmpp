@@ -162,6 +162,9 @@ public class dgmppJNI {
   public final static native int Drone_anySquadronTag_get();
   public final static native void Drone_active__SWIG_0(long jarg1, Drone jarg1_, boolean jarg2);
   public final static native boolean Drone_active__SWIG_1(long jarg1, Drone jarg1_);
+  public final static native boolean Drone_hasKamikazeAbility(long jarg1, Drone jarg1_);
+  public final static native void Drone_kamikaze__SWIG_0(long jarg1, Drone jarg1_, boolean jarg2);
+  public final static native boolean Drone_kamikaze__SWIG_1(long jarg1, Drone jarg1_);
   public final static native long Drone_charge(long jarg1, Drone jarg1_);
   public final static native int Drone_squadron(long jarg1, Drone jarg1_);
   public final static native long Drone_squadronSize(long jarg1, Drone jarg1_);
