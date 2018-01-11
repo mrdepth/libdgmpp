@@ -262,7 +262,7 @@ public class DGMShip: DGMType {
 	}
 	
 	public var turretsVolley: DGMDamageVector {
-		return DGMDamageVector(dgmpp_ship_get_turrets_dps(handle))
+		return DGMDamageVector(dgmpp_ship_get_turrets_volley(handle))
 	}
 	
 	public var launchersVolley: DGMDamageVector {
