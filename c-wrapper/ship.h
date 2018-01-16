@@ -63,7 +63,7 @@ DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_total_drone_bay			(dgmpp_type sh
 DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_used_fighter_hangar		(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_total_fighter_hangar		(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_cargo_capacity			(dgmpp_type ship);
-DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_ore_hold_capacity		(dgmpp_type ship);
+DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_special_hold_capacity	(dgmpp_type ship);
 
 DGMPP_EXTERN dgmpp_resistances	dgmpp_ship_get_resistances					(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_tank			dgmpp_ship_get_tank							(dgmpp_type ship);

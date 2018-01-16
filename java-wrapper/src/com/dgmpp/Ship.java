@@ -208,8 +208,8 @@ public class Ship extends Type {
     return dgmppJNI.Ship_cargoCapacity(swigCPtr, this);
   }
 
-  public double oreHoldCapacity() {
-    return dgmppJNI.Ship_oreHoldCapacity(swigCPtr, this);
+  public double specialHoldCapacity() {
+    return dgmppJNI.Ship_specialHoldCapacity(swigCPtr, this);
   }
 
   public Resistances resistances() {

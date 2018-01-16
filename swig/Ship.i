@@ -102,7 +102,7 @@ namespace dgmpp {
 		CubicMeter			usedFighterHangar();
 		CubicMeter			totalFighterHangar();
 		CubicMeter			cargoCapacity();
-		CubicMeter			oreHoldCapacity();
+		CubicMeter			specialHoldCapacity();
 		
 		//Tank
 		Resistances resistances();

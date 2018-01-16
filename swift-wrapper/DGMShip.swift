@@ -229,8 +229,8 @@ public class DGMShip: DGMType {
 		return dgmpp_ship_get_cargo_capacity(handle)
 	}
 	
-	public var oreHoldCapacity: DGMCubicMeter {
-		return dgmpp_ship_get_ore_hold_capacity(handle)
+	public var specialHoldCapacity: DGMCubicMeter {
+		return dgmpp_ship_get_special_hold_capacity(handle)
 	}
 	
 	public var resistances: DGMResistances {

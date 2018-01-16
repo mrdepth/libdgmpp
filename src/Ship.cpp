@@ -491,8 +491,12 @@ namespace dgmpp {
 		return attribute_(AttributeID::capacity)->value_();
 	}
 	
-	CubicMeter Ship::oreHoldCapacity_() {
-		return attribute_(AttributeID::specialOreHoldCapacity)->value_();
+	CubicMeter Ship::specialHoldCapacity_() {
+		for (auto attributeID: SDE::specialHoldCapacityAttributes) {
+			if (auto attribute = attribute_(attributeID))
+				return attribute->value();
+		}
+		return 0;
 	}
 	
 	//Tank

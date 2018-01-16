@@ -208,8 +208,8 @@ dgmpp_cubic_meter dgmpp_ship_get_cargo_capacity (dgmpp_type ship) {
 	return reinterpret_cast<Ship*>(ship)->cargoCapacity();
 }
 
-dgmpp_cubic_meter dgmpp_ship_get_ore_hold_capacity (dgmpp_type ship) {
-	return reinterpret_cast<Ship*>(ship)->oreHoldCapacity();
+dgmpp_cubic_meter dgmpp_ship_get_special_hold_capacity (dgmpp_type ship) {
+	return reinterpret_cast<Ship*>(ship)->specialHoldCapacity();
 }
 
 dgmpp_resistances dgmpp_ship_get_resistances (dgmpp_type ship) {

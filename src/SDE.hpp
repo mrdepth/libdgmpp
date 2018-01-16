@@ -142,6 +142,14 @@ namespace dgmpp {
 			AttributeID::warfareBuff3ID,
 			AttributeID::warfareBuff4ID
 		};
+		
+		const auto specialHoldCapacityAttributes = {
+			AttributeID::specialOreHoldCapacity,
+			AttributeID::specialMineralHoldCapacity,
+			AttributeID::specialPlanetaryCommoditiesHoldCapacity
+		};
+
+		
 		/*const auto warfareBuffValueAttributes = {
 			AttributeID::warfareBuff1Value,
 			AttributeID::warfareBuff2Value,

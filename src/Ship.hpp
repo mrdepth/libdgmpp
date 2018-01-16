@@ -97,7 +97,7 @@ namespace dgmpp {
 		CubicMeter			usedFighterHangar()		{ LOCK(this); return usedFighterHangar_(); }
 		CubicMeter			totalFighterHangar()	{ LOCK(this); return totalFighterHangar_(); }
 		CubicMeter			cargoCapacity()			{ LOCK(this); return cargoCapacity_(); }
-		CubicMeter			oreHoldCapacity()		{ LOCK(this); return oreHoldCapacity_(); }
+		CubicMeter			specialHoldCapacity()	{ LOCK(this); return specialHoldCapacity_(); }
 
 		//Tank
 		Resistances resistances()	{ LOCK(this); return resistances_(); }
@@ -257,7 +257,7 @@ namespace dgmpp {
 		CubicMeter			usedFighterHangar_();
 		CubicMeter			totalFighterHangar_();
 		CubicMeter			cargoCapacity_();
-		CubicMeter			oreHoldCapacity_();
+		CubicMeter			specialHoldCapacity_();
 		
 		//Tank
 		Resistances resistances_();

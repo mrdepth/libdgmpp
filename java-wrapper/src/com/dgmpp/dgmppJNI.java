@@ -264,7 +264,7 @@ public class dgmppJNI {
   public final static native double Ship_usedFighterHangar(long jarg1, Ship jarg1_);
   public final static native double Ship_totalFighterHangar(long jarg1, Ship jarg1_);
   public final static native double Ship_cargoCapacity(long jarg1, Ship jarg1_);
-  public final static native double Ship_oreHoldCapacity(long jarg1, Ship jarg1_);
+  public final static native double Ship_specialHoldCapacity(long jarg1, Ship jarg1_);
   public final static native long Ship_resistances(long jarg1, Ship jarg1_);
   public final static native long Ship_tank(long jarg1, Ship jarg1_);
   public final static native long Ship_effectiveTank(long jarg1, Ship jarg1_);

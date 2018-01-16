@@ -4216,7 +4216,7 @@ SWIGEXPORT jdouble JNICALL Java_com_dgmpp_dgmppJNI_Ship_1cargoCapacity(JNIEnv *j
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_com_dgmpp_dgmppJNI_Ship_1oreHoldCapacity(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jdouble JNICALL Java_com_dgmpp_dgmppJNI_Ship_1specialHoldCapacity(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jdouble jresult = 0 ;
   dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
   dgmpp::CubicMeter result;
@@ -4225,7 +4225,7 @@ SWIGEXPORT jdouble JNICALL Java_com_dgmpp_dgmppJNI_Ship_1oreHoldCapacity(JNIEnv 
   (void)jcls;
   (void)jarg1_;
   arg1 = *(dgmpp::Ship **)&jarg1; 
-  result = (dgmpp::CubicMeter)(arg1)->oreHoldCapacity();
+  result = (dgmpp::CubicMeter)(arg1)->specialHoldCapacity();
   jresult = (jdouble)result; 
   return jresult;
 }
