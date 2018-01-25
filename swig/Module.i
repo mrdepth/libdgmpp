@@ -1,88 +1,115 @@
-%include "Item.i"
+%include "Type.i"
 %include "Charge.i"
 
-%shared_ptr(dgmpp::Module);
-%shared_ptr(dgmpp::Ship);
-
 namespace dgmpp {
-
-	%nodefaultctor Module;
-
-	class Module : public Item
-	{
+	class Ship;
+	class Module : public Type {
 	public:
-		enum Slot
-		{
-			SLOT_UNKNOWN = -1,
-			SLOT_NONE = 0,
-			SLOT_HI,
-			SLOT_MED,
-			SLOT_LOW,
-			SLOT_RIG,
-			SLOT_SUBSYSTEM,
-			SLOT_STRUCTURE,
-			SLOT_MODE
-			
+		typedef int Socket;
+		static const Socket anySocket;
+		
+		
+		enum class State {
+			unknown = -1,
+			offline,
+			online,
+			active,
+			overloaded
 		};
 		
-		enum State
+		enum class Slot
 		{
-			STATE_UNKNOWN = -1,
-			STATE_OFFLINE,
-			STATE_ONLINE,
-			STATE_ACTIVE,
-			STATE_OVERLOADED
-			
+			none,
+			hi,
+			med,
+			low,
+			rig,
+			subsystem,
+			mode,
+			service,
+			starbaseStructure
 		};
 		
-		enum Hardpoint
+		enum class Hardpoint
 		{
-			HARDPOINT_NONE = 0,
-			HARDPOINT_LAUNCHER,
-			HARDPOINT_TURRET
+			none,
+			launcher,
+			turret
 		};
 		
-		Slot getSlot();
-		Hardpoint getHardpoint();
-		virtual bool canHaveState(State state);
-		State getState();
-		State getPreferredState();
-		%extend {
-			void setState(State state) {
-				$self->setPreferredState(state);
-			}
-		}
+		bool canHaveState (State state);
+		std::vector<State> availableStates();
 		
-		std::shared_ptr<dgmpp::Charge> setCharge(dgmpp::TypeID typeID);
-		void clearCharge();
-		std::shared_ptr<dgmpp::Charge> getCharge();
-		const std::vector<dgmpp::TypeID>& getChargeGroups();
-		int getChargeSize();
+		State state() const noexcept;
+		State preferredState() const noexcept;
+		void state (State state);
 		
-		bool requireTarget();
-		void setTarget(const std::shared_ptr<dgmpp::Ship>& target = NULL);
-		void clearTarget();
-		std::shared_ptr<dgmpp::Ship> getTarget();
-		float getReloadTime();
+		Ship* target() const noexcept;
+		void target(Ship* target);
+		
+		Slot slot() const noexcept;
+		Hardpoint hardpoint() const noexcept;
+		Socket socket() const noexcept;
+		
+		Charge* charge() const noexcept;
+		Charge* charge (TypeID typeID);
+		bool canFit (Charge* charge);
+		const std::vector<GroupID>& chargeGroups() const noexcept;
+		
+		Charge::Size chargeSize();
+		
+//		bool canBeOnline()		const noexcept;
+//		bool canBeActive()		const noexcept;
+//		bool canBeOverloaded()	const noexcept;
+		bool requireTarget()	const noexcept;
+		bool fail()				const noexcept;
+		
+//		bool factorReload()		const noexcept;
 		
 		//Calculations
 		
-		float getCycleTime();
-		float getRawCycleTime();
-		bool factorReload();
-		void setFactorReload(bool factorReload);
+		
+		size_t charges();
+		size_t shots();
+		
+		GigaJoulePerSecond capUse();
+		Teraflops cpuUse();
+		MegaWatts powerGridUse();
+		CalibrationPoints calibrationUse();
+		
+		Points accuracyScore();
+		Meter signatureResolution();
+		CubicMeterPerSecond miningYield();
+		
+		DamageVector volley();
+		DamagePerSecond dps();
+		Meter optimal();
+		Meter falloff();
+		
+		%extend {
+			Seconds reloadTime() {
+				return dgmpp::MakeSeconds($self->reloadTime());
+			}
+			
+			Seconds cycleTime() {
+				return dgmpp::MakeSeconds($self->cycleTime());
+			}
+			
+			Seconds rawCycleTime() {
+				return dgmpp::MakeSeconds($self->rawCycleTime());
+			}
 
-		int getCharges();
-		int getShots();
-		float getCapUse();
-		
-		dgmpp::DamageVector getVolley();
-		dgmpp::DamageVector getDps();
-		float getMaxRange();
-		float getFalloff();
-		float getTrackingSpeed();
-		
-		float getLifeTime();
-		void setLifeTime(float lifeTime);
+			Seconds lifeTime() {
+				if (auto lifeTime = $self->lifeTime())
+					return dgmpp::MakeSeconds(*lifeTime);
+				else
+					return -1;
+			}
+		}
 	};
+}
+
+namespace std {
+	%template(GroupIDs) vector<dgmpp::GroupID>;
+	%template(States) vector<dgmpp::Module::State>;
 }

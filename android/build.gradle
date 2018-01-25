@@ -1,0 +1,74 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+group = 'libdgmpp'
+version = '2.0'
+
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
+    defaultConfig {
+        compileSdkVersion 27
+        buildToolsVersion '27.0.0'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    defaultConfig {
+        externalNativeBuild {
+            ndk {
+                abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+            }
+        }
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path "src/main/Android.mk"
+        }
+    }
+    sourceSets {
+        main {
+            java.srcDirs = ['../java-wrapper']
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+android.libraryVariants
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact bundleRelease
+        }
+    }
+}
+
+dependencies {
+
+}

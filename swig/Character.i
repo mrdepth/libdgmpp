@@ -1,51 +1,54 @@
-%include "Item.i"
-%include "Booster.i"
-%include "Implant.i"
-%include "Skill.i"
-%include "Ship.i"
-%include <std_map.i>
+%include "Type.i"
+%include "Structure.i"
 
 namespace std {
-	%template(SkillLevelsMap) map<dgmpp::TypeID, int>;
+	%template(Characters) vector<dgmpp::Character*>;
+	%template(Implants) vector<dgmpp::Implant*>;
+	%template(Boosters) vector<dgmpp::Booster*>;
+	%template(Skills) vector<dgmpp::Skill*>;
 }
 
-%shared_ptr(dgmpp::Character);
-
 namespace dgmpp {
-
-	%nodefaultctor Character;
-
-	class Character : public dgmpp::Item
-	{
+	class Implant: public Type {
 	public:
-		std::shared_ptr<dgmpp::Ship> getShip();
-		std::shared_ptr<dgmpp::Ship> setShip(dgmpp::TypeID typeID);
-		
-		std::shared_ptr<dgmpp::Skill> getSkill(dgmpp::TypeID typeID);
-		
-		bool emptyImplantSlot(int slot);
-		bool emptyBoosterSlot(int slot);
-		std::shared_ptr<dgmpp::Implant> getImplant(int slot);
-		std::shared_ptr<dgmpp::Booster> getBooster(int slot);
-		std::shared_ptr<dgmpp::Implant> addImplant(dgmpp::TypeID typeID);
-		std::shared_ptr<dgmpp::Booster> addBooster(dgmpp::TypeID typeID);
-		void removeImplant(const std::shared_ptr<dgmpp::Implant>& implant);
-		void removeBooster(const std::shared_ptr<dgmpp::Booster>& booster);
-		%extend {
-			std::vector<std::shared_ptr<dgmpp::Implant>> getImplants() {
-				const dgmpp::ImplantsList& implants = $self->getImplants();
-				return std::vector<std::shared_ptr<dgmpp::Implant>>(implants.begin(), implants.end());
-			}
+		typedef int Slot;
+		Slot slot() const noexcept;
+	};
 
-			std::vector<std::shared_ptr<dgmpp::Booster>> getBoosters() {
-				const dgmpp::BoostersList& boosters = $self->getBoosters();
-				return std::vector<std::shared_ptr<dgmpp::Booster>>(boosters.begin(), boosters.end());
-			}
-		}
+	class Booster: public Type {
+	public:
+		typedef int Slot;
+		Slot slot() const noexcept;
+	};
+
+	class Skill: public Type {
+	public:
+		int level();
+		void level (int level);
+	};
+
+	class Character : public Type {
+	public:
+		Ship* ship() const;
+		Ship* ship (TypeID typeID);
+		Structure* structure();
+		Structure* structure (TypeID typeID);
 		
-		void setCharacterName(const char* characterName = "");
-		const char* getCharacterName();
-		void setSkillLevels(const std::map<dgmpp::TypeID, int>& levels);
-		void setAllSkillsLevel(int level);
+		void setSkillLevels (int level);
+//		bool factorReload() const noexcept;
+		
+		Implant* addImplant(TypeID typeID, bool replace = false);
+		Booster* addBooster(TypeID typeID, bool replace = false);
+		void remove(Implant* implant);
+		void remove(Booster* booster);
+		
+		std::vector<Skill*> skills() const;
+		std::vector<Implant*> implants() const;
+		std::vector<Booster*> boosters() const;
+		
+		Implant* implant (Implant::Slot slot) const noexcept;
+		Booster* booster (Booster::Slot slot) const noexcept;
+		
+		Meter droneControlDistance();
 	};
 }

@@ -1,36 +1,49 @@
-%include "Item.i"
-%include "Charge.i"
-%include "DamageVector.i"
-
-%shared_ptr(dgmpp::Drone);
-%shared_ptr(dgmpp::Ship);
+%include "Type.i"
 
 namespace dgmpp {
-
-	%nodefaultctor Drone;
-
-	class Drone : public dgmpp::Item
-	{
+	class Ship;
+	class Drone: public Type {
 	public:
-		void setTarget(const std::shared_ptr<dgmpp::Ship>& target = NULL);
-		void clearTarget();
-		std::shared_ptr<dgmpp::Ship> getTarget();
+		typedef int SquadronTag;
+		static const SquadronTag anySquadronTag;
 		
-		bool dealsDamage();
-		std::shared_ptr<dgmpp::Charge> getCharge();
+		enum class Squadron {
+			none,
+			heavy,
+			light,
+			support
+		};
 		
-		void setActive(bool active);
-		bool isActive();
+		void active (bool active);
+		bool active() const noexcept;
+		bool hasKamikazeAbility() const noexcept;
+		void kamikaze (bool kamikaze);
+		bool kamikaze() const noexcept;
+
+		Charge* charge() const noexcept;
+		
+		Squadron squadron() const noexcept;
+		size_t squadronSize();
+		
+		SquadronTag squadronTag() const noexcept;
+		
+		Ship* target() const noexcept;
+		void target(Ship* target);
 		
 		//Calculations
+		DamageVector volley();
+		DamagePerSecond dps();
+		Meter optimal();
+		Meter falloff();
+		Points accuracyScore();
+		CubicMeterPerSecond miningYield();
+		MetersPerSecond velocity();
 		
-		float getCycleTime();
-		
-		dgmpp::DamageVector getVolley();
-		dgmpp::DamageVector getDps();
-		float getMaxRange();
-		float getFalloff();
-		float getTrackingSpeed();
+		%extend {
+			Seconds cycleTime() {
+				return dgmpp::MakeSeconds($self->cycleTime());
+			}
+		}
 	};
-	
 }
+

@@ -1,141 +1,154 @@
-%include "Item.i"
-%include "DamagePattern.i"
+%include "Type.i"
 %include "Module.i"
 %include "Drone.i"
+%include "Area.i"
 
-%shared_ptr(dgmpp::Ship);
-%shared_ptr(dgmpp::Character);
+namespace std {
+	%template(CategoryIDs) vector<dgmpp::CategoryID>;
+	%template(Modules) vector<dgmpp::Module*>;
+	%template(Drones) vector<dgmpp::Drone*>;
+}
+
 
 namespace dgmpp {
-
-	%nodefaultctor Ship;
 	
-	class Ship : public dgmpp::Item
-	{
+	%nodefaultctor Capacitor;
+	class Capacitor {
 	public:
-		enum ScanType
-		{
-			SCAN_TYPE_RADAR,
-			SCAN_TYPE_LADAR,
-			SCAN_TYPE_MAGNETOMETRIC,
-			SCAN_TYPE_GRAVIMETRIC,
-			SCAN_TYPE_MULTISPECTRAL
-		};
-		
-		std::shared_ptr<dgmpp::Module> addModule(dgmpp::TypeID typeID);
-		void removeModule(std::shared_ptr<dgmpp::Module> module);
-		std::shared_ptr<dgmpp::Drone> addDrone(dgmpp::TypeID typeID);
-		void removeDrone(std::shared_ptr<dgmpp::Drone> drone);
-		
+		GigaJoule capacity();
+		bool isStable();
+		Percent stableLevel();
 		%extend {
-			std::vector<std::shared_ptr<dgmpp::Module>> getModules() {
-				const dgmpp::ModulesList& modules = $self->getModules();
-				return std::vector<std::shared_ptr<dgmpp::Module>>(modules.begin(), modules.end());
-			}
-
-			std::vector<std::shared_ptr<dgmpp::Drone>> getDrones() {
-				const dgmpp::DronesList& drones = $self->getDrones();
-				return std::vector<std::shared_ptr<dgmpp::Drone>>(drones.begin(), drones.end());
-			}
-
-			std::vector<std::shared_ptr<dgmpp::Module>> getProjectedModules() {
-				std::vector<std::shared_ptr<dgmpp::Module>> modules;
-				for (auto module: $self->getProjectedModules())
-					modules.push_back(module.lock());
-				return modules;
+			
+			dgmpp::Seconds rechargeTime() {
+				return dgmpp::MakeSeconds($self->rechargeTime());
 			}
 			
-			std::vector<std::shared_ptr<dgmpp::Drone>> getProjectedDrones() {
-				std::vector<std::shared_ptr<dgmpp::Drone>> drones;
-				for (auto drone: $self->getProjectedDrones())
-					drones.push_back(drone.lock());
-				return drones;
+			dgmpp::Seconds lastsTime() {
+				return dgmpp::MakeSeconds($self->lastsTime());
 			}
-		}
+		};
+		GigaJoulePerSecond use();
+		GigaJoulePerSecond recharge();
 
-		bool isDisallowedAssistance();
-		bool isDisallowedOffensiveModifiers();
+	};
+	
+	class Ship: public Type {
+	public:
+		enum class ScanType {
+			radar,
+			ladar,
+			magnetometric,
+			gravimetric,
+			multispectral
+		};
 		
-		void addProjectedModule(std::shared_ptr<dgmpp::Module> module);
-		void removeProjectedModule(std::shared_ptr<dgmpp::Module> module);
-		void addProjectedDrone(std::shared_ptr<dgmpp::Drone> drone);
-		void removeProjectedDrone(std::shared_ptr<dgmpp::Drone> drone);
+		enum class RigSize {
+			none = 0,
+			small = 1,
+			medium = 2,
+			large = 3,
+			xLarge = 4
+		};
 		
-		const dgmpp::DamagePattern& getDamagePattern();
-		void setDamagePattern(const dgmpp::DamagePattern& damagePattern);
+		std::vector<CategoryID> supportedDroneCategories();
+		RigSize rigSize();
 		
-		//Calculations
+		void damagePattern (const DamageVector& pattern) noexcept;
+		const DamageVector& damagePattern() const noexcept;
 		
-		int getNumberOfSlots(dgmpp::Module::Slot slot);
-		int getFreeSlots(dgmpp::Module::Slot slot);
-		int getUsedSlots(dgmpp::Module::Slot slot);
-		int getNumberOfHardpoints(dgmpp::Module::Hardpoint hardpoint);
-		int getFreeHardpoints(dgmpp::Module::Hardpoint hardpoint);
-		int getUsedHardpoints(dgmpp::Module::Hardpoint hardpoint);
+		//Fitting
+		Module* addModule (TypeID typeID, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket);
+		Drone* addDrone (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
 		
-		float getCalibrationUsed();
-		float getTotalCalibration();
-		float getPowerGridUsed();
-		float getTotalPowerGrid();
-		float getCpuUsed();
-		float getTotalCpu();
-		float getDroneBandwidthUsed();
-		float getTotalDroneBandwidth();
-		float getDroneBayUsed();
-		float getTotalDroneBay();
+		void remove (Module* module);
+		void remove (Drone* drone);
+		bool canFit (Module* module);
+		bool canFit (Drone* drone);
+		std::vector<Module*> modules (Module::Slot slot) const;
+		std::vector<Module*> modules () const;
+		std::vector<Drone*> drones () const;
+		
+//		bool factorReload() const noexcept;
+
+		//Drones
+		size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
+		size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
+		size_t totalFighterLaunchTubes();
+		size_t usedFighterLaunchTubes();
 		
 		
-		//Capacitor
-		float getCapCapacity();
-		bool isCapStable();
-		float getCapLastsTime();
-		float getCapStableLevel();
-		float getCapUsed();
-		float getCapRecharge();
+		//Resources
+		size_t totalSlots	(Module::Slot slot);
+		size_t freeSlots	(Module::Slot slot);
+		size_t usedSlots	(Module::Slot slot);
+		
+		size_t totalHardpoints	(Module::Hardpoint hardpoint);
+		size_t freeHardpoints	(Module::Hardpoint hardpoint);
+		size_t usedHardpoints	(Module::Hardpoint hardpoint);
+		
+		Capacitor& capacitor() noexcept;
+		
+		CalibrationPoints	usedCalibration();
+		CalibrationPoints	totalCalibration();
+		GigaJoule			usedPowerGrid();
+		GigaJoule			totalPowerGrid();
+		Teraflops			usedCPU();
+		Teraflops			totalCPU();
+		MegabitsPerSecond	usedDroneBandwidth();
+		MegabitsPerSecond	totalDroneBandwidth();
+		CubicMeter			usedDroneBay();
+		CubicMeter			totalDroneBay();
+		CubicMeter			usedFighterHangar();
+		CubicMeter			totalFighterHangar();
+		CubicMeter			cargoCapacity();
+		CubicMeter			specialHoldCapacity();
 		
 		//Tank
-		const dgmpp::Resistances& getResistances();
-		const dgmpp::Tank& getTank();
-		const dgmpp::Tank& getEffectiveTank();
-		const dgmpp::Tank& getSustainableTank();
-		const dgmpp::Tank& getEffectiveSustainableTank();
+		Resistances resistances();
+		Tank tank();
+		Tank effectiveTank();
+		Tank sustainableTank();
+		Tank effectiveSustainableTank();
 		
-		const dgmpp::HitPoints& getHitPoints();
-		const dgmpp::HitPoints& getEffectiveHitPoints();
-		
-		float getShieldRecharge();
+		HitPoints hitPoints();
+		HitPoints effectiveHitPoints();
 		
 		//DPS
-		dgmpp::DamageVector getWeaponDps();
-		dgmpp::DamageVector getWeaponVolley();
-		dgmpp::DamageVector getDroneDps();
-		dgmpp::DamageVector getDroneVolley();
+		DamageVector	turretsVolley();
+		DamageVector	launchersVolley();
+		DamageVector	dronesVolley();
+		DamagePerSecond	turretsDPS		();
+		DamagePerSecond	launchersDPS	();
+		DamagePerSecond dronesDPS		();
+		
+		//Mining
+		CubicMeterPerSecond minerYield();
+		CubicMeterPerSecond droneYield();
 		
 		//Mobility
-		float getAlignTime();
-		float getWarpSpeed();
-		float getMaxWarpDistance();
-		float getVelocity();
-		float getSignatureRadius();
-		float getMass();
-		float getVolume();
-		float getAgility();
-		float getMaxVelocityInOrbit(float r);
-		float getOrbitRadiusWithTransverseVelocity(float v);
-		float getOrbitRadiusWithAngularVelocity(float v);
-		
+		%extend {
+			Seconds alignTime() {
+				return dgmpp::MakeSeconds($self->alignTime());
+			}
+		}
+		AstronomicalUnitsPerSecond warpSpeed();
+		AstronomicalUnit maxWarpDistance();
+		MetersPerSecond velocity();
+		Meter signatureRadius();
+		Kilogram mass();
+		CubicMeter volume();
+		Multiplier agility();
+		MetersPerSecond maxVelocityInOrbit (Meter r);
+		Meter orbitRadiusWithTransverseVelocity (MetersPerSecond v);
+		Meter orbitRadiusWithAngularVelocity (RadiansPerSecond v);
 		
 		//Targeting
-		int getMaxTargets();
-		float getMaxTargetRange();
-		float getScanStrength();
-		dgmpp::Ship::ScanType getScanType();
-		float getProbeSize();
-		float getScanResolution();
-		
-		//Drones
-		int getMaxActiveDrones();
-		int getActiveDrones();
-		
+		size_t maxTargets();
+		Meter maxTargetRange();
+		Points scanStrength();
+		ScanType scanType();
+		Meter probeSize();
+		Millimeter scanResolution();
 	};
 }
