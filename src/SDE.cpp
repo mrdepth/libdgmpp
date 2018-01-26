@@ -6,10 +6,10 @@
 //
 
 #include "SDE.hpp"
-#include "Skills.hpp"
-#include "WarfareBuffs.hpp"
-#include "Schematics.hpp"
-#include "Facilities.hpp"
+#include "SDE/Skills.hpp"
+#include "SDE/WarfareBuffs.hpp"
+#include "SDE/Schematics.hpp"
+#include "SDE/Facilities.hpp"
 
 namespace dgmpp {
 	namespace SDE {

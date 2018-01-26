@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import cwrapper
 
 public class DGMFacility: DGMObject {
 	

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import cwrapper
 
 public enum DGMError: Error {
 	case typeNotFound(DGMTypeID)

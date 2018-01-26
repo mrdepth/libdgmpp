@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		122E116F1FE7FB760057EB0D /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BE89001FE17D9300854893 /* Dgmpp.framework */; };
 		1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1248DB3E1F1DE90E009625EC /* QuartzCore.framework */; };
-		12791CA01F9F843600577188 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 12791C9F1F9F843600577188 /* libsqlite3.tbd */; };
-		12AFFE271FFE266E00B32307 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DBEAA71E1D3B0E0088A486 /* main.cpp */; };
+		1285E8C8201B2E0000AAC231 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29E1FE0248600AD4ED3 /* main.swift */; };
+		1285E8CB201B300100AAC231 /* cwrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1285E8CC201B300100AAC231 /* cwrapper.framework */; };
 		12BE88E01FE17B0F00854893 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE888B1FE17B0F00854893 /* WarfareBuff.cpp */; };
 		12BE88E11FE17B0F00854893 /* Gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE888E1FE17B0F00854893 /* Gang.cpp */; };
 		12BE88E21FE17B0F00854893 /* Facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88941FE17B0F00854893 /* Facility.cpp */; };
@@ -58,6 +58,7 @@
 /* Begin PBXFileReference section */
 		1248DB3E1F1DE90E009625EC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		12791C9F1F9F843600577188 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		1285E8CC201B300100AAC231 /* cwrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cwrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		128AA29E1FE0248600AD4ED3 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		128AA2A41FE02A1500AD4ED3 /* Dgm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Dgm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12BE888B1FE17B0F00854893 /* WarfareBuff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WarfareBuff.cpp; sourceTree = "<group>"; };
@@ -155,8 +156,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1285E8CB201B300100AAC231 /* cwrapper.framework in Frameworks */,
 				122E116F1FE7FB760057EB0D /* Dgmpp.framework in Frameworks */,
-				12791CA01F9F843600577188 /* libsqlite3.tbd in Frameworks */,
 				1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,6 +295,7 @@
 		12DBEAA91E1D3B160088A486 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1285E8CC201B300100AAC231 /* cwrapper.framework */,
 				12BE89041FE17DFA00854893 /* Dgmpp.framework */,
 				12BE89001FE17D9300854893 /* Dgmpp.framework */,
 				128AA2A41FE02A1500AD4ED3 /* Dgm.framework */,
@@ -374,6 +376,7 @@
 				12BE88EA1FE17B0F00854893 /* Capacitor.cpp in Sources */,
 				12BE88F31FE17B0F00854893 /* Attribute.cpp in Sources */,
 				12BE88FD1FE17B0F00854893 /* Planet.cpp in Sources */,
+				1285E8C8201B2E0000AAC231 /* main.swift in Sources */,
 				12BE88E71FE17B0F00854893 /* Character.cpp in Sources */,
 				12BE88F41FE17B0F00854893 /* Skill.cpp in Sources */,
 				12BE88FC1FE17B0F00854893 /* CommandCenter.cpp in Sources */,
@@ -391,7 +394,6 @@
 				12BE88E41FE17B0F00854893 /* Implant.cpp in Sources */,
 				12BE88F81FE17B0F00854893 /* ProductionCycle.cpp in Sources */,
 				12BE88E61FE17B0F00854893 /* Structure.cpp in Sources */,
-				12AFFE271FFE266E00B32307 /* main.cpp in Sources */,
 				12BE88F11FE17B0F00854893 /* Effect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

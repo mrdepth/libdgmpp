@@ -280,4 +280,3 @@ struct dgmpp_route_impl: public dgmpp_route {
 		dgmpp_commodity_impl(route.commodity)} {}
 };
 
-
