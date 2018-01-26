@@ -325,6 +325,7 @@
 		1285E89B201B289E00AAC231 /* cwrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = cwrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1285E89C201B289F00AAC231 /* cwrapper iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cwrapper iOS copy-Info.plist"; path = "/Users/shimanski/Documents/git/EVEUniverse/ThirdParty/dgmpp/XCode/cwrapper iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		1285E8C9201B2F8800AAC231 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		1285EB28201B755F00AAC231 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		128AA29A1FE0213C00AD4ED3 /* dgm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dgm.swift; sourceTree = "<group>"; };
 		128AA2A01FE024FD00AD4ED3 /* Dgmpp - Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Dgmpp - Info.plist"; sourceTree = "<group>"; };
 		12A3C6B1177C283E0067E00C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -576,7 +577,7 @@
 			path = "../c-wrapper";
 			sourceTree = "<group>";
 		};
-		1285E85F201B272800AAC231 /* Include */ = {
+		1285E85F201B272800AAC231 /* include */ = {
 			isa = PBXGroup;
 			children = (
 				12BE89491FE2836A00854893 /* area.h */,
@@ -597,7 +598,7 @@
 				12BE89881FE2873800854893 /* storage.h */,
 				12BE89121FE25BB100854893 /* utility.h */,
 			);
-			path = Include;
+			path = include;
 			sourceTree = "<group>";
 		};
 		128AA1F01FDEB45100AD4ED3 /* swift-wrapper */ = {
@@ -609,6 +610,7 @@
 				12C457DE1FE2CB210045BD84 /* DGMRate.swift */,
 				12C457F91FE2CBDC0045BD84 /* Utility.swift */,
 				128AA2A01FE024FD00AD4ED3 /* Dgmpp - Info.plist */,
+				1285EB28201B755F00AAC231 /* Package.swift */,
 			);
 			name = "swift-wrapper";
 			path = "../swift-wrapper";
@@ -677,7 +679,7 @@
 		12BE89051FE25B1E00854893 /* c-wrapper */ = {
 			isa = PBXGroup;
 			children = (
-				1285E85F201B272800AAC231 /* Include */,
+				1285E85F201B272800AAC231 /* include */,
 				12BE89501FE283B800854893 /* Fitting */,
 				12BE89571FE285FA00854893 /* PI */,
 				12BE891E1FE2616400854893 /* internal.h */,
