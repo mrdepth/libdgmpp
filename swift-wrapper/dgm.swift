@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import cwrapper
 
 extension DGMModule.State {
 	init?(_ state: DGMPP_MODULE_STATE) {

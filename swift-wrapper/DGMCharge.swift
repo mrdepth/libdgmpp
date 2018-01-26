@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import cwrapper
 
 public class DGMCharge: DGMType {
 	public enum Size: Int {

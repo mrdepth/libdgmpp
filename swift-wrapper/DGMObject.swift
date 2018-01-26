@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import cwrapper
 
 public class DGMObject {
 	var handle: dgmpp_handle

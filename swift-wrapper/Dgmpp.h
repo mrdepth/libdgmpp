@@ -45,7 +45,7 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <Dgmpp/DGMRoute.h>*/
 
 
-#include <Dgmpp/area.h>
+/*#include <Dgmpp/area.h>
 #include <Dgmpp/attribute.h>
 #include <Dgmpp/character.h>
 #include <Dgmpp/charge.h>
@@ -61,4 +61,4 @@ FOUNDATION_EXPORT const unsigned char dgmppVersionString[];
 #include <Dgmpp/factory.h>
 #include <Dgmpp/planet.h>
 #include <Dgmpp/production_state.h>
-#include <Dgmpp/storage.h>
+#include <Dgmpp/storage.h>*/

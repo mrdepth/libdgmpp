@@ -28,14 +28,14 @@
 #include <mutex>
 #endif
 
-#include "AttributeID.hpp"
-#include "CategoryID.hpp"
-#include "GroupID.hpp"
-#include "TypeID.hpp"
-#include "EffectID.hpp"
-#include "WarfareBuffID.hpp"
+#include "SDE/AttributeID.hpp"
+#include "SDE/CategoryID.hpp"
+#include "SDE/GroupID.hpp"
+#include "SDE/TypeID.hpp"
+#include "SDE/EffectID.hpp"
+#include "SDE/WarfareBuffID.hpp"
+#include "SDE/SchematicID.hpp"
 #include "Rate.hpp"
-#include "SchematicID.hpp"
 
 #if !defined(_LIBCPP_OPTIONAL) && !defined(_GLIBCXX_OPTIONAL)
 namespace std {
