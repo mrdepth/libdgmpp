@@ -32,7 +32,8 @@ let package = Package(
 		.target(
 				name: "cwrapper",
 				dependencies: ["cpp"],
-				path: "c-wrapper"
+				path: "c-wrapper",
+				publicHeadersPath: "include"
 		),
     ],
 	cxxLanguageStandard: .gnucxx1z
