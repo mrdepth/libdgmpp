@@ -2395,6 +2395,12 @@ namespace dgmpp {
 		stealthBomberLauncherCPU = 2732,
 		npcStructureStasisWebificationBonus = 2735,
 		npcStructureEnergyWarfareBonus = 2736,
+		fighterStandupLightSlots = 2737,
+		fighterStandupSupportSlots = 2738,
+		fighterStandupHeavySlots = 2739,
+		fighterSquadronIsStandupLight = 2740,
+		fighterSquadronIsStandupSupport = 2741,
+		fighterSquadronIsStandupHeavy = 2742,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
 	};
