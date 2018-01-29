@@ -23,7 +23,7 @@ public class DGMCapacitor: DGMObject {
 	}
 
 	public var isStable: Bool {
-		return dgmpp_capacitor_is_stable(handle)
+		return dgmpp_capacitor_is_stable(handle) != 0
 	}
 
 	public var stableLevel: DGMPercent {
@@ -99,11 +99,11 @@ public class DGMShip: DGMType {
 	}
 	
 	public func add(_ module: DGMModule, socket: Int = -1, ignoringRequirements: Bool = false) throws {
-		guard dgmpp_ship_add_module_v2(handle, module.handle, Int32(socket), ignoringRequirements) else { throw DGMError.cannotFit(module)}
+		guard dgmpp_ship_add_module_v2(handle, module.handle, Int32(socket), ignoringRequirements ? 1 : 0) != 0 else { throw DGMError.cannotFit(module)}
 	}
 	
 	public func add(_ drone: DGMDrone, squadronTag: Int = -1) throws {
-		guard dgmpp_ship_add_drone_v2(handle, drone.handle, Int32(squadronTag)) else { throw DGMError.cannotFit(drone)}
+		guard dgmpp_ship_add_drone_v2(handle, drone.handle, Int32(squadronTag)) != 0 else { throw DGMError.cannotFit(drone)}
 	}
 	
 	public func remove(_ module: DGMModule) {
@@ -115,11 +115,11 @@ public class DGMShip: DGMType {
 	}
 
 	public func canFit(_ module: DGMModule) -> Bool {
-		return dgmpp_ship_can_fit_module(handle, module.handle)
+		return dgmpp_ship_can_fit_module(handle, module.handle) != 0
 	}
 	
 	public func canFit(_ drone: DGMDrone) -> Bool {
-		return dgmpp_ship_can_fit_drone(handle, drone.handle)
+		return dgmpp_ship_can_fit_drone(handle, drone.handle) != 0
 	}
 	
 	public var modules: [DGMModule] {

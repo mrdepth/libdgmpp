@@ -15,7 +15,7 @@ dgmpp_schematic_id dgmpp_factory_get_schematic_id (dgmpp_facility facility) {
 		return static_cast<dgmpp_schematic_id>(SchematicID::none);
 }
 
-BOOL dgmpp_factory_set_schematic_id (dgmpp_facility facility, dgmpp_schematic_id schematic_id) {
+dgmpp_bool dgmpp_factory_set_schematic_id (dgmpp_facility facility, dgmpp_schematic_id schematic_id) {
 	try {
 		reinterpret_cast<Factory*>(facility)->schematic(static_cast<SchematicID>(schematic_id));
 		return true;
@@ -40,7 +40,7 @@ dgmpp_seconds dgmpp_factory_get_cycle_time (dgmpp_facility facility) {
 		return 0;
 }
 
-BOOL dgmpp_factory_get_output (dgmpp_facility facility, dgmpp_commodity* commodity) {
+dgmpp_bool dgmpp_factory_get_output (dgmpp_facility facility, dgmpp_commodity* commodity) {
 	if (auto output = reinterpret_cast<Factory*>(facility)->output()) {
 		*commodity = dgmpp_commodity_impl(*output);
 		return true;

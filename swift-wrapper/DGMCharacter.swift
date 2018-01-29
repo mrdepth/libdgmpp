@@ -99,11 +99,11 @@ public class DGMCharacter: DGMType {
 	}
 	
 	public func add(_ implant: DGMImplant, replace: Bool = false) throws {
-		guard dgmpp_character_add_implant_v2(handle, implant.handle, replace) else { throw DGMError.cannotFit(implant)}
+		guard dgmpp_character_add_implant_v2(handle, implant.handle, replace ? 1 : 0) != 0 else { throw DGMError.cannotFit(implant)}
 	}
 	
 	public func add(_ booster: DGMBooster, replace: Bool = false) throws {
-		guard dgmpp_character_add_booster_v2(handle, booster.handle, replace) else { throw DGMError.cannotFit(booster)}
+		guard dgmpp_character_add_booster_v2(handle, booster.handle, replace ? 1 : 0) != 0 else { throw DGMError.cannotFit(booster)}
 	}
 	
 	public func remove(_ implant: DGMImplant) {

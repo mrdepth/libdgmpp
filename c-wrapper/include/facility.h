@@ -22,7 +22,7 @@ DGMPP_EXTERN dgmpp_cubic_meter	dgmpp_facility_get_used_volume	(dgmpp_facility fa
 
 DGMPP_EXTERN dgmpp_commodity	dgmpp_facility_get_free				(dgmpp_facility facility, dgmpp_type_id commodity_id);
 DGMPP_EXTERN void				dgmpp_facility_add_commodity		(dgmpp_facility facility, dgmpp_commodity commodity);
-DGMPP_EXTERN BOOL				dgmpp_facility_extract_commodity	(dgmpp_facility facility, dgmpp_commodity commodity);
+DGMPP_EXTERN dgmpp_bool				dgmpp_facility_extract_commodity	(dgmpp_facility facility, dgmpp_commodity commodity);
 
 DGMPP_EXTERN dgmpp_array		dgmpp_facility_copy_commodities	(dgmpp_facility facility);
 DGMPP_EXTERN dgmpp_commodity	dgmpp_facility_get_commodity	(dgmpp_facility facility, dgmpp_type_id commodity_id);
@@ -30,7 +30,7 @@ DGMPP_EXTERN dgmpp_commodity	dgmpp_facility_get_income		(dgmpp_facility facility
 DGMPP_EXTERN dgmpp_array		dgmpp_facility_copy_inputs		(dgmpp_facility facility);
 DGMPP_EXTERN dgmpp_array		dgmpp_facility_copy_outputs		(dgmpp_facility facility);
 
-DGMPP_EXTERN BOOL dgmpp_facility_is_configured (dgmpp_facility facility);
+DGMPP_EXTERN dgmpp_bool dgmpp_facility_is_configured (dgmpp_facility facility);
 
 DGMPP_EXTERN const char* dgmpp_facility_get_name (dgmpp_facility facility);
 

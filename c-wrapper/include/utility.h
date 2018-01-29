@@ -16,10 +16,8 @@
 #define DGMPP_EXTERN
 #endif
 
+typedef int8_t dgmpp_bool;
 
-#ifndef OBJC_BOOL_DEFINED
-typedef signed char BOOL;
-#endif
 typedef int dgmpp_type_id;
 typedef int dgmpp_group_id;
 typedef int dgmpp_category_id;

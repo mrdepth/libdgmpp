@@ -28,7 +28,7 @@ public class DGMProductionState: DGMState {
 
 	public var cycle: DGMProductionCycle? {
 		var cycle = dgmpp_production_cycle()
-		guard dgmpp_production_state_get_cycle(handle, &cycle) else {return nil}
+		guard dgmpp_production_state_get_cycle(handle, &cycle) != 0 else {return nil}
 		return DGMProductionCycle(cycle)
 	}
 	

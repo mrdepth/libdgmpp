@@ -23,7 +23,7 @@ DGMPP_EXTERN void			dgmpp_ecu_set_cycle_time	(dgmpp_facility facility, dgmpp_sec
 DGMPP_EXTERN size_t	dgmpp_ecu_get_quantity_per_cycle (dgmpp_facility facility);
 DGMPP_EXTERN void	dgmpp_ecu_set_quantity_per_cycle (dgmpp_facility facility, size_t quantity_per_cycle);
 
-DGMPP_EXTERN BOOL	dgmpp_ecu_get_output (dgmpp_facility facility, dgmpp_commodity* commodity);
+DGMPP_EXTERN dgmpp_bool	dgmpp_ecu_get_output (dgmpp_facility facility, dgmpp_commodity* commodity);
 
 DGMPP_EXTERN dgmpp_array dgmpp_ecu_copy_states (dgmpp_facility facility);
 DGMPP_EXTERN dgmpp_array dgmpp_ecu_copy_cycles (dgmpp_facility facility);
