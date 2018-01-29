@@ -26,23 +26,23 @@ dgmpp_type dgmpp_drone_copy (dgmpp_type drone) {
 	}
 }
 
-BOOL dgmpp_drone_is_active (dgmpp_type drone) {
+dgmpp_bool dgmpp_drone_is_active (dgmpp_type drone) {
 	return reinterpret_cast<Drone*>(drone)->active();
 }
 
-void dgmpp_drone_set_active (dgmpp_type drone, BOOL active) {
+void dgmpp_drone_set_active (dgmpp_type drone, dgmpp_bool active) {
 	reinterpret_cast<Drone*>(drone)->active(active);
 }
 
-BOOL dgmpp_drone_has_kamikaze_ability (dgmpp_type drone) {
+dgmpp_bool dgmpp_drone_has_kamikaze_ability (dgmpp_type drone) {
 	return reinterpret_cast<Drone*>(drone)->hasKamikazeAbility();
 }
 
-BOOL dgmpp_drone_is_kamikaze (dgmpp_type drone) {
+dgmpp_bool dgmpp_drone_is_kamikaze (dgmpp_type drone) {
 	return reinterpret_cast<Drone*>(drone)->kamikaze();
 }
 
-void dgmpp_drone_set_kamikaze (dgmpp_type drone, BOOL kamikaze) {
+void dgmpp_drone_set_kamikaze (dgmpp_type drone, dgmpp_bool kamikaze) {
 	reinterpret_cast<Drone*>(drone)->kamikaze(kamikaze);
 }
 
@@ -66,7 +66,7 @@ dgmpp_type dgmpp_drone_get_target (dgmpp_type drone) {
 	return reinterpret_cast<Drone*>(drone)->target();
 }
 
-BOOL dgmpp_drone_set_target (dgmpp_type drone, dgmpp_type target) {
+dgmpp_bool dgmpp_drone_set_target (dgmpp_type drone, dgmpp_type target) {
 	try {
 		if (target)
 			reinterpret_cast<Drone*>(drone)->target(reinterpret_cast<Ship*>(target));

@@ -58,7 +58,7 @@ dgmpp_type dgmpp_module_get_target (dgmpp_type module) {
 	return reinterpret_cast<Module*>(module)->target();
 }
 
-BOOL dgmpp_module_set_target (dgmpp_type module, dgmpp_type target) {
+dgmpp_bool dgmpp_module_set_target (dgmpp_type module, dgmpp_type target) {
 	try {
 		reinterpret_cast<Module*>(module)->target(reinterpret_cast<Ship*>(target));
 		return true;
@@ -72,7 +72,7 @@ dgmpp_type dgmpp_module_get_charge (dgmpp_type module) {
 	return reinterpret_cast<Module*>(module)->charge();
 }
 
-BOOL dgmpp_module_set_charge (dgmpp_type module, dgmpp_type charge) {
+dgmpp_bool dgmpp_module_set_charge (dgmpp_type module, dgmpp_type charge) {
 	try {
 		reinterpret_cast<Module*>(module)->charge(get_unique_ptr<Charge>(charge));
 		return true;
@@ -90,19 +90,19 @@ DGMPP_CHARGE_SIZE dgmpp_module_get_charge_size (dgmpp_type module) {
 	return static_cast<DGMPP_CHARGE_SIZE>(reinterpret_cast<Module*>(module)->chargeSize());
 }
 
-BOOL dgmpp_module_is_fail (dgmpp_type module) {
+dgmpp_bool dgmpp_module_is_fail (dgmpp_type module) {
 	return reinterpret_cast<Module*>(module)->fail();
 }
 
-BOOL dgmpp_module_require_target (dgmpp_type module) {
+dgmpp_bool dgmpp_module_require_target (dgmpp_type module) {
 	return reinterpret_cast<Module*>(module)->requireTarget();
 }
 
-BOOL dgmpp_module_can_have_state (dgmpp_type module, DGMPP_MODULE_STATE state) {
+dgmpp_bool dgmpp_module_can_have_state (dgmpp_type module, DGMPP_MODULE_STATE state) {
 	return reinterpret_cast<Module*>(module)->canHaveState(static_cast<Module::State>(state));
 }
 
-BOOL dgmpp_module_can_fit_charge (dgmpp_type module, dgmpp_type charge) {
+dgmpp_bool dgmpp_module_can_fit_charge (dgmpp_type module, dgmpp_type charge) {
 	return reinterpret_cast<Module*>(module)->canFit(reinterpret_cast<Charge*>(charge));
 }
 

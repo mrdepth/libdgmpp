@@ -21,16 +21,16 @@ DGMPP_EXTERN void					dgmpp_module_set_state				(dgmpp_type module, DGMPP_MODULE
 DGMPP_EXTERN DGMPP_MODULE_STATE		dgmpp_module_get_preferred_state	(dgmpp_type module);
 DGMPP_EXTERN dgmpp_array			dgmpp_module_copy_available_states	(dgmpp_type module);
 DGMPP_EXTERN dgmpp_type				dgmpp_module_get_target				(dgmpp_type module);
-DGMPP_EXTERN BOOL					dgmpp_module_set_target				(dgmpp_type module, dgmpp_type target);
+DGMPP_EXTERN dgmpp_bool					dgmpp_module_set_target				(dgmpp_type module, dgmpp_type target);
 DGMPP_EXTERN dgmpp_type				dgmpp_module_get_charge				(dgmpp_type module);
-DGMPP_EXTERN BOOL					dgmpp_module_set_charge				(dgmpp_type module, dgmpp_type charge);
+DGMPP_EXTERN dgmpp_bool					dgmpp_module_set_charge				(dgmpp_type module, dgmpp_type charge);
 DGMPP_EXTERN dgmpp_array			dgmpp_module_copy_charge_groups		(dgmpp_type module);
 DGMPP_EXTERN DGMPP_CHARGE_SIZE		dgmpp_module_get_charge_size		(dgmpp_type module);
-DGMPP_EXTERN BOOL 					dgmpp_module_is_fail				(dgmpp_type module);
-DGMPP_EXTERN BOOL 					dgmpp_module_require_target			(dgmpp_type module);
+DGMPP_EXTERN dgmpp_bool 					dgmpp_module_is_fail				(dgmpp_type module);
+DGMPP_EXTERN dgmpp_bool 					dgmpp_module_require_target			(dgmpp_type module);
 
-DGMPP_EXTERN BOOL dgmpp_module_can_have_state (dgmpp_type module, DGMPP_MODULE_STATE state);
-DGMPP_EXTERN BOOL dgmpp_module_can_fit_charge (dgmpp_type module, dgmpp_type charge);
+DGMPP_EXTERN dgmpp_bool dgmpp_module_can_have_state (dgmpp_type module, DGMPP_MODULE_STATE state);
+DGMPP_EXTERN dgmpp_bool dgmpp_module_can_fit_charge (dgmpp_type module, dgmpp_type charge);
 
 DGMPP_EXTERN dgmpp_seconds					dgmpp_module_get_reload_time			(dgmpp_type module);
 DGMPP_EXTERN dgmpp_seconds					dgmpp_module_get_cycle_time				(dgmpp_type module);

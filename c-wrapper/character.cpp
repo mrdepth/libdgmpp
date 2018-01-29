@@ -30,7 +30,7 @@ void dgmpp_character_set_name (dgmpp_type character, const char* name) {
 }
 
 
-BOOL dgmpp_character_set_skill_levels (dgmpp_type character, int skill_levels) {
+dgmpp_bool dgmpp_character_set_skill_levels (dgmpp_type character, int skill_levels) {
 	try {
 		reinterpret_cast<Character*>(character)->setSkillLevels(skill_levels);
 		return true;
@@ -44,11 +44,11 @@ dgmpp_array dgmpp_character_copy_skills (dgmpp_type character) {
 	return dgmpp_make_array<Type*>(reinterpret_cast<Character*>(character)->skills());
 }
 
-BOOL dgmpp_character_add_implant (dgmpp_type character, dgmpp_type implant) {
+dgmpp_bool dgmpp_character_add_implant (dgmpp_type character, dgmpp_type implant) {
 	return dgmpp_character_add_implant_v2(character, implant, false);
 }
 
-BOOL dgmpp_character_add_implant_v2 (dgmpp_type character, dgmpp_type implant, BOOL replace) {
+dgmpp_bool dgmpp_character_add_implant_v2 (dgmpp_type character, dgmpp_type implant, dgmpp_bool replace) {
 	try {
 		reinterpret_cast<Character*>(character)->add(get_unique_ptr<Implant>(implant));
 		return true;
@@ -58,11 +58,11 @@ BOOL dgmpp_character_add_implant_v2 (dgmpp_type character, dgmpp_type implant, B
 	}
 }
 
-BOOL dgmpp_character_add_booster (dgmpp_type character, dgmpp_type booster) {
+dgmpp_bool dgmpp_character_add_booster (dgmpp_type character, dgmpp_type booster) {
 	return dgmpp_character_add_booster_v2(character, booster, false);
 }
 
-BOOL dgmpp_character_add_booster_v2 (dgmpp_type character, dgmpp_type booster, BOOL replace) {
+dgmpp_bool dgmpp_character_add_booster_v2 (dgmpp_type character, dgmpp_type booster, dgmpp_bool replace) {
 	try {
 		reinterpret_cast<Character*>(character)->add(get_unique_ptr<Booster>(booster));
 		return true;
@@ -119,7 +119,7 @@ int dgmpp_skill_get_level (dgmpp_type skill) {
 	return reinterpret_cast<Skill*>(skill)->level();
 }
 
-BOOL dgmpp_skill_set_level (dgmpp_type skill, int level) {
+dgmpp_bool dgmpp_skill_set_level (dgmpp_type skill, int level) {
 	try {
 		reinterpret_cast<Skill*>(skill)->level(level);
 		return true;

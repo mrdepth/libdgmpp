@@ -55,11 +55,11 @@ void dgmpp_ship_set_damage_pattern (dgmpp_type ship, dgmpp_damage_vector damage_
 	reinterpret_cast<Ship*>(ship)->damagePattern(damage_vector_make(damage_pattern));
 }
 
-BOOL dgmpp_ship_add_module (dgmpp_type ship, dgmpp_type module) {
+dgmpp_bool dgmpp_ship_add_module (dgmpp_type ship, dgmpp_type module) {
 	return dgmpp_ship_add_module_v2(ship, module, -1, false);
 }
 
-BOOL dgmpp_ship_add_module_v2 (dgmpp_type ship, dgmpp_type module, int socket, BOOL ignoring_requirements) {
+dgmpp_bool dgmpp_ship_add_module_v2 (dgmpp_type ship, dgmpp_type module, int socket, dgmpp_bool ignoring_requirements) {
 	try {
 		reinterpret_cast<Ship*>(ship)->add(get_unique_ptr<Module>(module), socket, ignoring_requirements);
 		return true;
@@ -69,11 +69,11 @@ BOOL dgmpp_ship_add_module_v2 (dgmpp_type ship, dgmpp_type module, int socket, B
 	}
 }
 
-BOOL dgmpp_ship_add_drone (dgmpp_type ship, dgmpp_type drone) {
+dgmpp_bool dgmpp_ship_add_drone (dgmpp_type ship, dgmpp_type drone) {
 	return dgmpp_ship_add_drone_v2(ship, drone, -1);
 }
 
-BOOL dgmpp_ship_add_drone_v2 (dgmpp_type ship, dgmpp_type drone, int squadron_tag) {
+dgmpp_bool dgmpp_ship_add_drone_v2 (dgmpp_type ship, dgmpp_type drone, int squadron_tag) {
 	try {
 		reinterpret_cast<Ship*>(ship)->add(get_unique_ptr<Drone>(drone), squadron_tag);
 		return true;
@@ -91,11 +91,11 @@ void dgmpp_ship_remove_drone (dgmpp_type ship, dgmpp_type drone) {
 	reinterpret_cast<Ship*>(ship)->remove(reinterpret_cast<Drone*>(drone));
 }
 
-BOOL dgmpp_ship_can_fit_module (dgmpp_type ship, dgmpp_type module) {
+dgmpp_bool dgmpp_ship_can_fit_module (dgmpp_type ship, dgmpp_type module) {
 	return reinterpret_cast<Ship*>(ship)->canFit(reinterpret_cast<Module*>(module));
 }
 
-BOOL dgmpp_ship_can_fit_drone (dgmpp_type ship, dgmpp_type drone) {
+dgmpp_bool dgmpp_ship_can_fit_drone (dgmpp_type ship, dgmpp_type drone) {
 	return reinterpret_cast<Ship*>(ship)->canFit(reinterpret_cast<Drone*>(drone));
 }
 
@@ -364,7 +364,7 @@ dgmpp_seconds dgmpp_capacitor_get_lasts_time (dgmpp_capacitor capacitor) {
 	return dgmpp_make_seconds(reinterpret_cast<Capacitor*>(capacitor)->lastsTime());
 }
 
-BOOL dgmpp_capacitor_is_stable (dgmpp_capacitor capacitor) {
+dgmpp_bool dgmpp_capacitor_is_stable (dgmpp_capacitor capacitor) {
 	return reinterpret_cast<Capacitor*>(capacitor)->isStable();
 }
 

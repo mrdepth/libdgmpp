@@ -46,7 +46,7 @@ public class DGMModule: DGMType {
 	}
 
 	public func canHaveState(_ state: State) -> Bool {
-		return dgmpp_module_can_have_state(handle, DGMPP_MODULE_STATE(Int32(state.rawValue)))
+		return dgmpp_module_can_have_state(handle, DGMPP_MODULE_STATE(Int32(state.rawValue))) != 0
 	}
 	
 	public var availableStates: [State] {
@@ -103,7 +103,7 @@ public class DGMModule: DGMType {
 	
 	public func setCharge(_ charge: DGMCharge?) throws {
 		if let charge = charge {
-			guard dgmpp_module_set_charge(handle, charge.handle) else {throw DGMError.cannotFit(charge)}
+			guard dgmpp_module_set_charge(handle, charge.handle) != 0 else {throw DGMError.cannotFit(charge)}
 		}
 		else {
 			dgmpp_module_set_charge(handle, nil)
@@ -111,7 +111,7 @@ public class DGMModule: DGMType {
 	}
 	
 	public func canFit(_ charge: DGMCharge) -> Bool {
-		return dgmpp_module_can_fit_charge(handle, charge.handle)
+		return dgmpp_module_can_fit_charge(handle, charge.handle) != 0
 	}
 	
 	public var chargeGroups: [DGMGroupID] {
@@ -123,11 +123,11 @@ public class DGMModule: DGMType {
 	}
 	
 	public var isFail: Bool {
-		return dgmpp_module_is_fail(handle)
+		return dgmpp_module_is_fail(handle) != 0
 	}
 
 	public var requireTarget: Bool {
-		return dgmpp_module_require_target(handle)
+		return dgmpp_module_require_target(handle) != 0
 	}
 
 	public var reloadTime: TimeInterval {

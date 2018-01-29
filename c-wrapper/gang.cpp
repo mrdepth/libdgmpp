@@ -33,11 +33,11 @@ dgmpp_array dgmpp_gang_copy_pilots (dgmpp_type gang) {
 	return dgmpp_make_array<Character*>(reinterpret_cast<Gang*>(gang)->pilots());
 }
 
-BOOL dgmpp_gang_get_factor_reload (dgmpp_type gang) {
+dgmpp_bool dgmpp_gang_get_factor_reload (dgmpp_type gang) {
 	return reinterpret_cast<Gang*>(gang)->factorReload();
 }
 
-void dgmpp_gang_set_factor_reload (dgmpp_type gang, BOOL factor_reload) {
+void dgmpp_gang_set_factor_reload (dgmpp_type gang, dgmpp_bool factor_reload) {
 	reinterpret_cast<Gang*>(gang)->factorReload(factor_reload);
 }
 

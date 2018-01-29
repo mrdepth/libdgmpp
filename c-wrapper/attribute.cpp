@@ -24,10 +24,10 @@ double dgmpp_attribute_get_initial_value (dgmpp_attribute attribute) {
 	return reinterpret_cast<Attribute*>(attribute)->initialValue();
 }
 
-BOOL dgmpp_attribute_is_stackable (dgmpp_attribute attribute) {
+dgmpp_bool dgmpp_attribute_is_stackable (dgmpp_attribute attribute) {
 	return reinterpret_cast<Attribute*>(attribute)->metaInfo().isStackable;
 }
 
-BOOL dgmpp_attribute_high_is_good (dgmpp_attribute attribute) {
+dgmpp_bool dgmpp_attribute_high_is_good (dgmpp_attribute attribute) {
 	return reinterpret_cast<Attribute*>(attribute)->metaInfo().highIsGood;
 }
