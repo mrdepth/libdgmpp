@@ -10,6 +10,7 @@
 #include "SDE/WarfareBuffs.hpp"
 #include "SDE/Schematics.hpp"
 #include "SDE/Facilities.hpp"
+#include "SDE/Version.hpp"
 
 namespace dgmpp {
 	namespace SDE {

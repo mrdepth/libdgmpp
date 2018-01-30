@@ -259,6 +259,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1219AC2F202085A700338669 /* Version.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Version.hpp; sourceTree = "<group>"; };
 		122E118D1FE9632D0057EB0D /* DGMPlanet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMPlanet.swift; sourceTree = "<group>"; };
 		122E11931FE963460057EB0D /* DGMFacility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMFacility.swift; sourceTree = "<group>"; };
 		122E11961FE9685E0057EB0D /* DGMExtractorControlUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMExtractorControlUnit.swift; sourceTree = "<group>"; };
@@ -671,6 +672,7 @@
 				123CC8C81FCE940400C34372 /* Facilities.hpp */,
 				123CC8CB1FCE94F400C34372 /* SchematicID.hpp */,
 				123CC8CE1FCE99CE00C34372 /* Schematics.hpp */,
+				1219AC2F202085A700338669 /* Version.hpp */,
 			);
 			path = SDE;
 			sourceTree = "<group>";

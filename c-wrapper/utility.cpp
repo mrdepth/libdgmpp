@@ -32,3 +32,7 @@ const void* dgmpp_array_get_values (dgmpp_array array) {
 dgmpp_commodity dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity) {
 	return dgmpp_commodity_impl(Commodity(static_cast<TypeID>(type_id), quantity));
 }
+
+dgmpp_version dgmpp_get_version () {
+	return {dgmpp::version.build, dgmpp::version.version};
+}

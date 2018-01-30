@@ -10,4 +10,4 @@
 .read ./planetSchematics.sql
 .read ./planetSchematicsPinMap.sql
 .read ./planetSchematicsTypeMap.sql
---.read ./version.sql
+.read ./version.sql

@@ -8,7 +8,7 @@ SQL=${PWD}/sql
 T+=${PWD}/tmp
 SDE=${PWD}/../src/SDE
 
-all: dgm.sqlite AttributeID.hpp Attributes.hpp CategoryID.hpp EffectID.hpp Effects.hpp GroupID.hpp Modifiers.hpp Skills.hpp TypeID.hpp Types.hpp WarfareBuffID.hpp WarfareBuffs.hpp Commodities.hpp Facilities.hpp SchematicID.hpp Schematics.hpp
+all: dgm.sqlite AttributeID.hpp Attributes.hpp CategoryID.hpp EffectID.hpp Effects.hpp GroupID.hpp Modifiers.hpp Skills.hpp TypeID.hpp Types.hpp WarfareBuffID.hpp WarfareBuffs.hpp Commodities.hpp Facilities.hpp SchematicID.hpp Schematics.hpp Version.hpp
 
 dgm-tool: tmp
 	$(CC) $(CFLAGS) ../tools/dgm-tool/src/Compiler.cpp ../tools/dgm-tool/src/main.cpp ../tools/dgm-tool/src/modifiersdump.cpp ../tools/dgm-tool/src/SQLiteDatabase.cpp -o $(T)/$@ -lsqlite3
@@ -109,3 +109,7 @@ SchematicID.hpp: dgm-tool dgm.sqlite
 Schematics.hpp: dgm-tool dgm.sqlite
 	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --schematics > ${T}/Schematics.hpp
 	cp -rf ${T}/Schematics.hpp $(SDE)/Schematics.hpp
+
+Version.hpp: dgm-tool dgm.sqlite
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --version > ${T}/Version.hpp
+	cp -rf ${T}/Version.hpp $(SDE)/Version.hpp

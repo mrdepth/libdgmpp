@@ -121,4 +121,5 @@ namespace dgmpp {
 		HP armor;
 		HP hull;
 	};
+	
 }
