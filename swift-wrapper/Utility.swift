@@ -191,3 +191,11 @@ public struct DGMRoute {
 	}
 }
 
+public struct DGMVersion {
+	var build: Int
+	var version: String
+	static let current: DGMVersion = {
+		let version = dgmpp_get_version()
+		return DGMVersion(build: version.build, version: String(cString: version.version))
+	}()
+}

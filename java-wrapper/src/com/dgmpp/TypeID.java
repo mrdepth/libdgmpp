@@ -9628,7 +9628,7 @@ public final class TypeID {
   public final static int standupVariableSpectrumECMI = 35940;
   public final static int standupRemoteSensorDampenerI = 35941;
   public final static int standupStasisWebifierI = 35943;
-  public final static int structureEnergyNeutralizationBurstProjector = 35944;
+  public final static int standupEnergyNeutralizationBurstProjector = 35944;
   public final static int standupWeaponDisruptorI = 35945;
   public final static int standupTargetPainterI = 35947;
   public final static int standupWarpScramblerI = 35949;
@@ -10684,6 +10684,33 @@ public final class TypeID {
   public final static int recoveredRadioactiveMaterials = 47026;
   public final static int biomechanicalInterfaceData = 47027;
   public final static int neuralLaceBlackglassNetIntrusion92040 = 47028;
+  public final static int standupTemplarI = 47035;
+  public final static int standupGramI = 47036;
+  public final static int standupSirenI = 47037;
+  public final static int standupMantisI = 47038;
+  public final static int standupGungnirI = 47039;
   public final static int newEdenGenomeAmalgam = 47041;
+  public final static int standupGravitationalTransportationFieldOscillator = 47068;
+  public final static int standupECMJammerBurstProjector = 47069;
+  public final static int standupSensorDampeningBurstProjector = 47070;
+  public final static int standupStasisWebificationBurstProjector = 47071;
+  public final static int standupTargetIlluminationBurstProjector = 47072;
+  public final static int standupWarpDisruptionBurstProjector = 47073;
+  public final static int standupWeaponDisruptionBurstProjector = 47074;
+  public final static int standupMalleusI = 47116;
+  public final static int standupCyclopsI = 47117;
+  public final static int standupTyrfingI = 47118;
+  public final static int standupMalleusII = 47119;
+  public final static int standupMantisII = 47120;
+  public final static int standupCyclopsII = 47121;
+  public final static int standupTyrfingII = 47122;
+  public final static int standupShadow = 47123;
+  public final static int standupAmetatI = 47124;
+  public final static int standupTermiteI = 47125;
+  public final static int standupAntaeusI = 47126;
+  public final static int standupAmetatII = 47127;
+  public final static int standupTermiteII = 47128;
+  public final static int standupAntaeusII = 47129;
+  public final static int standupGungnirII = 47130;
 }
 

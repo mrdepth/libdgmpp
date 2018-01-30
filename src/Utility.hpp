@@ -84,6 +84,14 @@ namespace dgmpp {
 		const std::chrono::milliseconds capacitorSimulationMaxTime = std::chrono::hours(6);
 	}
 	
+	struct Version {
+		size_t build;
+		const char* version;
+	};
+	
+	extern const Version version;
+	
+	
 	enum class RaceID {
 		none = 0,
 		caldari = 1,
