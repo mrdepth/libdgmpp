@@ -348,5 +348,37 @@ using namespace dgmpp;
 	XCTAssertGreaterThan(volley2.total(), volley1.total());
 }
 
+- (void) testCapBooster {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::loki));
+	
+	ship->addModule(TypeID::lokiCoreImmobilityDrivers);
+	ship->addModule(TypeID::lokiDefensiveCovertReconfiguration);
+	ship->addModule(TypeID::lokiOffensiveProjectileScopingArray);
+	ship->addModule(TypeID::lokiPropulsionWakeLimiter);
+	
+	ship->addModule(TypeID::gyrostabilizerII);
+	ship->addModule(TypeID::gyrostabilizerII);
+
+	ship->addModule(TypeID::adaptiveInvulnerabilityFieldII);
+	ship->addModule(TypeID::pithXTypeLargeShieldBooster);
+	ship->addModule(TypeID::_100MNYS8CompactAfterburner);
+	auto capBooster = ship->addModule(TypeID::ammatarNavyMediumCapacitorBooster);
+	capBooster->charge(TypeID::navyCapBooster800);
+	ship->addModule(TypeID::caldariNavyStasisWebifier);
+	ship->addModule(TypeID::caldariNavyWarpDisruptor);
+	ship->addModule(TypeID::caldariNavyStasisWebifier);
+	
+	for (int i = 0; i < 5; i++)
+		ship->addModule(TypeID::_425mmAutoCannonII)->charge(TypeID::republicFleetEMPM);
+	
+	auto lasts0 = ship->capacitor().lastsTime().count();
+	capBooster->state(Module::State::offline);
+	auto lasts1 = ship->capacitor().lastsTime().count();
+	XCTAssertGreaterThan(lasts0, lasts1);
+}
+
 
 @end

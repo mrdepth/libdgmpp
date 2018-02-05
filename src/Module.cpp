@@ -389,8 +389,8 @@ namespace dgmpp {
 				capNeed = static_cast<GigaJoule>(attribute->value_());
 			if (capNeed == 0.0 && effect_(EffectID::energyNosferatuFalloff) != nullptr)
 				capNeed -= static_cast<GigaJoule>(attribute_(AttributeID::powerTransferAmount)->value_());
-			if (capNeed == 0.0 && effect_(EffectID::powerBooster) != nullptr)
-				capNeed -= static_cast<GigaJoule>(attribute_(AttributeID::capacitorBonus)->value_());
+			if (auto charge = charge_(); charge != nullptr && capNeed == 0.0 && effect_(EffectID::powerBooster) != nullptr)
+				capNeed -= static_cast<GigaJoule>(charge->attribute_(AttributeID::capacitorBonus)->value_());
 			return make_rate(capNeed, cycleTime_());
 		}
 		return GigaJoulePerSecond(0);
