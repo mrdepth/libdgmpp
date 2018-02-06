@@ -103,6 +103,18 @@ namespace dgmpp {
 		
 		if (canFit(drone.get())) {
 			
+			auto squadron = drone->squadron();
+			auto active = false;
+			
+			if (totalDroneSquadron(squadron) - usedDroneSquadron(squadron) > 0) {
+				if (squadron == Drone::Squadron::none) {
+					active = true;
+				}
+				else if (totalFighterLaunchTubes() - usedFighterLaunchTubes() > 0) {
+					active = true;
+				}
+			}
+			
 			if (squadronTag == Drone::anySquadronTag) {
 				auto range = equal_range(dronesSet_, std::make_tuple(drone->metaInfo().typeID));
 				
@@ -131,7 +143,7 @@ namespace dgmpp {
 					}
 					
 					if (size < std::get<std::unique_ptr<Drone>>(*squadron)->squadronSize_) {
-						drone->active_(std::get<std::unique_ptr<Drone>>(*squadron)->active_());
+						active = std::get<std::unique_ptr<Drone>>(*squadron)->active_();
 					}
 					else
 						squadronTag++;
@@ -142,6 +154,7 @@ namespace dgmpp {
 				}
 				
 			}
+			drone->active(active);
 			auto ptr = drone.get();
 			ptr->squadronTag_(squadronTag);
 			dronesSet_.emplace(ptr->metaInfo().typeID, squadronTag, std::move(drone));

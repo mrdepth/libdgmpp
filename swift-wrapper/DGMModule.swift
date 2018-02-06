@@ -8,9 +8,9 @@
 import Foundation
 import cwrapper
 
-public class DGMModule: DGMType {
+public class DGMModule: DGMType, Codable {
 	
-	public enum State: Int {
+	public enum State: Int, Codable {
 		case unknown = -1
 		case offline
 		case online
@@ -18,7 +18,7 @@ public class DGMModule: DGMType {
 		case overloaded
 	}
 	
-	public enum Slot: Int {
+	public enum Slot: Int, Codable {
 		case none = 0
 		case hi
 		case med
@@ -200,6 +200,40 @@ public class DGMModule: DGMType {
 
 	public func angularVelocity(targetSignature: DGMMeter, hitChance: DGMPercent = 0.75) -> DGMRadiansPerSecond {
 		return DGMRadiansPerSecond(dgmpp_module_get_angular_velocity(handle, targetSignature, hitChance))
+	}
+
+	
+	public required init(_ handle: dgmpp_handle, owned: Bool) {
+		super.init(handle, owned: owned)
+	}
+	
+	public convenience required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
+		
+		try self.init(typeID: typeID)
+
+		state = try container.decode(State.self, forKey: .state)
+		try setCharge(try container.decodeIfPresent(DGMCharge.self, forKey: .charge))
+		
+		if let identifier = try container.decodeIfPresent(Int.self, forKey: .identifier) {
+			self.identifier = identifier
+		}
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(typeID, forKey: .typeID)
+		try container.encode(state, forKey: .state)
+		try container.encodeIfPresent(charge, forKey: .charge)
+		try container.encode(identifier, forKey: .identifier)
+	}
+	
+	enum CodingKeys: String, CodingKey {
+		case typeID
+		case state
+		case charge
+		case identifier
 	}
 
 }

@@ -12,7 +12,8 @@ public enum DGMError: Error {
 	case typeNotFound(DGMTypeID)
 	case cannotFit(DGMType)
 	case invalidFacility(DGMTypeID)
-	case NotEnoughCommodities
+	case notEnoughCommodities
+	case invalidFormat
 }
 
 public typealias DGMTypeID = Int
@@ -199,3 +200,74 @@ public struct DGMVersion {
 		return DGMVersion(build: version.build, version: String(cString: version.version))
 	}()
 }
+
+extension DGMShip {
+	public convenience init(uniformString: String) throws {
+		
+		let components = uniformString.components(separatedBy: "|")
+		guard components.count == 3 else {throw DGMError.invalidFormat}
+		guard let typeID = Int(components[0]) else {throw DGMError.invalidFormat}
+		
+		try self.init(typeID: DGMTypeID(typeID))
+		
+		var modules = [DGMModule.Slot: [DGMModule]]()
+		
+		try components[1].components(separatedBy: ";").forEach { row in
+			let components = row.components(separatedBy: ":")
+			guard components.count == 3 else {return}
+			guard let typeID = Int(components[0]) else {return}
+			
+			let chargeID = Int(components[1])
+			let count = Int(components[2]) ?? 1
+			
+			for _ in 0..<count {
+				let module = try DGMModule(typeID: typeID)
+				if let chargeID = chargeID {
+					try module.setCharge(DGMCharge(typeID: chargeID))
+				}
+				modules[module.slot, default : []].append(module)
+			}
+		}
+		try modules.sorted { $0.key.rawValue > $1.key.rawValue }.forEach {
+			try $0.value.forEach { i in
+				try add(i)
+				i.state = .active
+				
+			}
+		}
+		
+		try components[2].components(separatedBy: ";").forEach { row in
+			let components = row.components(separatedBy: ":")
+			guard components.count == 2 else {return}
+			guard let typeID = Int(components[0]) else {return}
+			let count = Int(components[1]) ?? 1
+			for _ in 0..<count {
+				try add(DGMDrone(typeID: typeID))
+			}
+		}
+	}
+	
+	public var uniformString: String {
+		var string = "\(typeID)|"
+		var modulesMap = [DGMTypeID: [DGMTypeID: Int]]()
+		
+		for module in modules {
+			modulesMap[module.typeID, default: [:]][module.charge?.typeID ?? 0, default: 0] += 1
+		}
+		string += modulesMap.sorted { $0.key < $1.key }
+			.map { (key, value) -> [String] in
+				return value.sorted {$0.key < $1.key } .map { $0.key == 0 ? "\(key)::\($0.value)" : "\(key):\($0.key):\($0.value)" }
+			}.joined().joined(separator: ";")
+//		string += modulesMap.map {"\($0.key):\($0.value)"}.sorted().joined(separator: ";")
+		
+		var dronesMap = [DGMTypeID: Int]()
+		drones.filter {$0.isActive}.forEach {
+			dronesMap[$0.typeID, default: 0] += 1
+		}
+		
+		string += "|" + dronesMap.sorted {$0.key < $1.key}.map {"\($0.key):\($0.value)"}.joined(separator: ";")
+		return string
+	}
+}
+
+

@@ -114,17 +114,17 @@ namespace dgmpp {
 	}
 	
 	std::vector<Module::State> Module::availableStates_() {
-		if (isEnabled_()) {
-			std::vector<Module::State> states;
-			states.reserve(4);
-			states.push_back(Module::State::offline);
+		std::vector<Module::State> states;
+		states.reserve(4);
+		states.push_back(Module::State::offline);
+		
+		if (canBeOnline_()) {
+			states.push_back(Module::State::online);
 			
-			if (canBeOnline_()) {
-				states.push_back(Module::State::online);
-				
-				bool canBeActive = canBeActive_();
-				
-				if (canBeActive) {
+			bool canBeActive = canBeActive_();
+			
+			if (canBeActive) {
+				if (isEnabled_()) {
 					if (attribute_(AttributeID::activationBlocked)->value_() > 0)
 						canBeActive = false;
 					else if (auto ship = dynamic_cast<Ship*>(parent_())) {
@@ -146,20 +146,18 @@ namespace dgmpp {
 							}
 						}
 					}
-					
-					if (canBeActive) {
-						states.push_back(Module::State::active);
-						if (canBeOverloaded_())
-							states.push_back(Module::State::overloaded);
-					}
+				}
+				
+				if (canBeActive) {
+					states.push_back(Module::State::active);
+					if (canBeOverloaded_())
+						states.push_back(Module::State::overloaded);
 				}
 			}
-			
-			
-			return states;
 		}
-		else
-			return {};
+		
+		
+		return states;
 	}
 	
 	void Module::target_(Ship* target) {
