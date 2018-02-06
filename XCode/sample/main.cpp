@@ -27,8 +27,6 @@ int main(int argc, const char * argv[]) {
 		ship->addDrone(TypeID::termiteII);
 	}
 	
-	
-	
 	std::cout << "DPS: " << (ship->dronesDPS() * 1s).total() << std::endl;
 	std::cout << "Volley: " << ship->dronesVolley().total() << std::endl;
 	

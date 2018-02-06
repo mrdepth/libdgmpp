@@ -8,7 +8,7 @@
 import Foundation
 import cwrapper
 
-public class DGMImplant: DGMType {
+public class DGMImplant: DGMType, Codable {
 	
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_implant_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
@@ -22,9 +22,27 @@ public class DGMImplant: DGMType {
 	public var slot: Int {
 		return Int(dgmpp_implant_get_slot(handle))
 	}
+	
+	public required init(_ handle: dgmpp_handle, owned: Bool) {
+		super.init(handle, owned: owned)
+	}
+	
+	public convenience required init(from decoder: Decoder) throws {
+		let typeID = try decoder.container(keyedBy: CodingKeys.self).decode(DGMTypeID.self, forKey: .typeID)
+		try self.init(typeID: typeID)
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(typeID, forKey: .typeID)
+	}
+	
+	enum CodingKeys: String, CodingKey {
+		case typeID
+	}
 }
 
-public class DGMBooster: DGMType {
+public class DGMBooster: DGMType, Codable {
 	
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_booster_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
@@ -37,6 +55,24 @@ public class DGMBooster: DGMType {
 
 	public var slot: Int {
 		return Int(dgmpp_booster_get_slot(handle))
+	}
+	
+	public required init(_ handle: dgmpp_handle, owned: Bool) {
+		super.init(handle, owned: owned)
+	}
+	
+	public convenience required init(from decoder: Decoder) throws {
+		let typeID = try decoder.container(keyedBy: CodingKeys.self).decode(DGMTypeID.self, forKey: .typeID)
+		try self.init(typeID: typeID)
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(typeID, forKey: .typeID)
+	}
+	
+	enum CodingKeys: String, CodingKey {
+		case typeID
 	}
 }
 
@@ -53,7 +89,7 @@ public class DGMSkill: DGMType {
 	
 }
 
-public class DGMCharacter: DGMType {
+public class DGMCharacter: DGMType, Codable {
 	
 	public convenience init() throws {
 		self.init(dgmpp_character_create()!, owned: true)
@@ -130,4 +166,35 @@ public class DGMCharacter: DGMType {
 		return dgmpp_character_get_drone_control_distance(handle)
 	}
 
+	public required init(_ handle: dgmpp_handle, owned: Bool) {
+		super.init(handle, owned: owned)
+	}
+	
+	public convenience required init(from decoder: Decoder) throws {
+		try self.init()
+
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		try container.decode([DGMImplant].self, forKey: .implants).forEach { try add($0) }
+		try container.decode([DGMImplant].self, forKey: .boosters).forEach { try add($0) }
+		ship = try container.decodeIfPresent(DGMShip.self, forKey: .ship)
+		
+		if let identifier = try container.decodeIfPresent(Int.self, forKey: .identifier) {
+			self.identifier = identifier
+		}
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(implants, forKey: .implants)
+		try container.encode(boosters, forKey: .boosters)
+		try container.encodeIfPresent(ship, forKey: .ship)
+		try container.encode(identifier, forKey: .identifier)
+	}
+	
+	enum CodingKeys: String, CodingKey {
+		case implants
+		case boosters
+		case ship
+		case identifier
+	}
 }

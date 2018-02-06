@@ -40,7 +40,7 @@ public class DGMCapacitor: DGMObject {
 
 }
 
-public class DGMShip: DGMType {
+public class DGMShip: DGMType, Codable {
 	
 	public enum ScanType: Int {
 		case radar
@@ -363,4 +363,115 @@ public class DGMShip: DGMType {
 	}
 	
 
+	public required init(_ handle: dgmpp_handle, owned: Bool) {
+		super.init(handle, owned: owned)
+	}
+	
+	public convenience required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
+
+		try self.init(typeID: typeID)
+
+		
+		let modules = try container.nestedContainer(keyedBy: DGMModule.Slot.self, forKey: .modules)
+		try modules.allKeys.sorted {$0.rawValue > $1.rawValue}.map { slot -> [(DGMModule, Int)] in
+			let array = try modules.nestedContainer(keyedBy: DGMSocketKey.self, forKey: slot)
+			return try array.allKeys.map { (socket) -> (DGMModule, Int) in
+				return (try array.decode(DGMModule.self, forKey: socket), socket.intValue!)
+			}
+			}.joined().forEach { (module, socket) in
+				try add(module, socket: socket)
+		}
+
+		var drones = try container.nestedUnkeyedContainer(forKey: .drones)
+
+		for _ in (0..<(drones.count ?? 0)) {
+			do {
+				let c = try drones.nestedContainer(keyedBy: AdditionalDroneKeys.self)
+				let count = try c.decode(Int.self, forKey: .count)
+				let squadronTag = try c.decode(Int.self, forKey: .squadronTag)
+				for _ in 0..<count {
+					try add(c.decode(DGMDrone.self, forKey: .drone), squadronTag: squadronTag)
+				}
+			}
+			catch {
+			}
+		}
+		if let identifier = try container.decodeIfPresent(Int.self, forKey: .identifier) {
+			self.identifier = identifier
+		}
+		
+
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(typeID, forKey: .typeID)
+		
+		var modulesMap: [DGMModule.Slot: [DGMModule]] = [:]
+		
+		for module in self.modules {
+			modulesMap[module.slot, default: []].append(module)
+		}
+
+		var modules = container.nestedContainer(keyedBy: DGMModule.Slot.self, forKey: .modules)
+		for (key, value) in modulesMap {
+			var array = modules.nestedContainer(keyedBy: DGMSocketKey.self, forKey: key)
+			for module in value {
+				try array.encode(module, forKey: DGMSocketKey(intValue: module.socket)!)
+			}
+		}
+		
+		
+		var drones = container.nestedUnkeyedContainer(forKey: .drones)
+		var dronesMap = [DGMTypeID: [Int: [DGMDrone]]]()
+		self.drones.forEach { i in
+			dronesMap[i.typeID, default: [:]][i.squadronTag, default: []].append(i)
+		}
+		try dronesMap.values.forEach {
+			try $0.forEach { i in
+				guard let drone = i.value.first else {return}
+				var c = drones.nestedContainer(keyedBy: AdditionalDroneKeys.self)
+				try c.encode(i.key, forKey: .squadronTag)
+				try c.encode(i.value.count, forKey: .count)
+				try c.encode(drone, forKey: .drone)
+			}
+		}
+		
+		try container.encode(identifier, forKey: .identifier)
+	}
+	
+	enum CodingKeys: String, CodingKey {
+		case typeID
+		case modules
+		case drones
+		case identifier
+	}
+	
+	enum AdditionalDroneKeys: String, CodingKey {
+		case drone
+		case squadronTag
+		case count
+	}
+
+}
+
+extension DGMModule.Slot: CodingKey {
+}
+
+struct DGMSocketKey: CodingKey {
+	var intValue: Int?
+	var stringValue: String
+	
+	init?(intValue: Int) {
+		self.intValue = intValue
+		self.stringValue = "\(intValue)"
+	}
+	
+	init?(stringValue: String) {
+		guard let i = Int(stringValue) else {return nil}
+		intValue = i
+		self.stringValue = stringValue
+	}
 }

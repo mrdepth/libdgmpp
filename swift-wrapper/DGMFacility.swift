@@ -69,7 +69,7 @@ public class DGMFacility: DGMObject {
 	}
 
 	public func extract(_ commodity: DGMCommodity) throws {
-		guard dgmpp_facility_extract_commodity(handle, dgmpp_commodity(commodity)) != 0 else {throw DGMError.NotEnoughCommodities}
+		guard dgmpp_facility_extract_commodity(handle, dgmpp_commodity(commodity)) != 0 else {throw DGMError.notEnoughCommodities}
 	}
 	
 	public var isConfigured: Bool {
