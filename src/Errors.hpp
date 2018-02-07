@@ -34,6 +34,11 @@ namespace dgmpp {
 	struct InvalidRoute: public std::invalid_argument {
 		InvalidRoute() : std::invalid_argument("Missing source or destination") {}
 	};
+	
+	struct InvalidCategoryID: public std::logic_error {
+		InvalidCategoryID(CategoryID categoryID): categoryID(categoryID), std::logic_error("Invalid categoryID") {};
+		CategoryID categoryID;
+	};
 
 //	struct DifferentCommodities: public std::runtime_error {
 //		DifferentCommodities(TypeID a, TypeID b) : std::runtime_error(std::to_string(static_cast<int>(a)) + " != " + std::to_string(static_cast<int>(b))) {}

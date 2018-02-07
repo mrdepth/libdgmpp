@@ -11,6 +11,10 @@
 namespace dgmpp {
 	
 	Charge::Charge (TypeID typeID): Type(typeID) {
+		if (!std::any_of(SDE::chargeCategories.begin(), SDE::chargeCategories.end(), [categoryID = metaInfo().categoryID](const auto& i) { return categoryID == i; })) {
+			throw InvalidCategoryID(metaInfo().categoryID);
+		}
+
 		const auto& effects = this->effects_;
 		flags_.requireTarget = std::any_of(effects.begin(), effects.end(), [](const auto& i) {return i->metaInfo().category == MetaInfo::Effect::Category::target;});
 		

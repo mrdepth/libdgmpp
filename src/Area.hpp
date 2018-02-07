@@ -19,7 +19,7 @@ namespace dgmpp {
 	private:
 		friend class Ship;
 		friend class Gang;
-		Area (TypeID typeID) : Type(typeID) {}
+		Area (TypeID typeID);
 		Area (const Area& other) : Type(other) {}
 	};
 }
