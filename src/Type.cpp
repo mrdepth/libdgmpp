@@ -206,7 +206,7 @@ namespace dgmpp {
 		resetCache_();
 	}
 
-	std::list<const Modifier*> Type::itemModifiers_ (const MetaInfo::Attribute& attribute) const {
+	std::list<const Modifier*> Type::itemModifiers_ (const MetaInfo::Attribute& attribute) {
 		auto key = std::make_tuple(attribute.attributeID);
 		auto range = equal_range(itemModifiersSet_, key);
 		std::list<const Modifier*> result;
@@ -214,7 +214,7 @@ namespace dgmpp {
 		return result;
 	}
 
-	std::list<const Modifier*> Type::locationModifiers_ (const MetaInfo::Attribute& attribute) const {
+	std::list<const Modifier*> Type::locationModifiers_ (const MetaInfo::Attribute& attribute) {
 		auto key = std::make_tuple(attribute.attributeID);
 		auto range = equal_range(locationModifiersSet_, key);
 		std::list<const Modifier*> result;
@@ -222,7 +222,7 @@ namespace dgmpp {
 		return result;
 	}
 	
-	std::list<const Modifier*> Type::locationGroupModifiers_ (const MetaInfo::Attribute& attribute, const Type& type) const {
+	std::list<const Modifier*> Type::locationGroupModifiers_ (const MetaInfo::Attribute& attribute, Type& type) {
 		auto key = std::make_tuple(attribute.attributeID, type.metaInfo().groupID);
 		auto range = equal_range(locationGroupModifiersSet_, key);
 
@@ -231,7 +231,7 @@ namespace dgmpp {
 		return result;
 	}
 	
-	std::list<const Modifier*> Type::locationRequiredSkillModifiers_ (const MetaInfo::Attribute& attribute, const Type& type) const {
+	std::list<const Modifier*> Type::locationRequiredSkillModifiers_ (const MetaInfo::Attribute& attribute, Type& type) {
 		auto attributeID = attribute.attributeID;
 		auto key = std::make_tuple(attributeID);
 		auto range = equal_range(locationRequiredSkillModifiersSet_, key);
@@ -254,17 +254,17 @@ namespace dgmpp {
 		return {};
 	}
 	
-	std::list<const Modifier*> Type::modifiers_ (const MetaInfo::Attribute& attribute) const {
+	std::list<const Modifier*> Type::modifiers_ (const MetaInfo::Attribute& attribute) {
 		std::list<const Modifier*> result;
 		result.splice(result.end(), itemModifiers_(attribute));
-		if (auto parent = parent_()) {
+		if (auto parent = owner_()) {
 			result.splice(result.end(), parent->locationModifiers_(attribute));
 			result.splice(result.end(), parent->modifiersMatchingType_(attribute, *this));
 		}
 		return result;
 	}
 	
-	std::list<const Modifier*> Type::modifiersMatchingType_ (const MetaInfo::Attribute& attribute, const Type& type) const {
+	std::list<const Modifier*> Type::modifiersMatchingType_ (const MetaInfo::Attribute& attribute, Type& type) {
 		std::list<const Modifier*> result;
 		result.splice(result.end(), locationGroupModifiers_(attribute, type));
 		result.splice(result.end(), locationRequiredSkillModifiers_(attribute, type));
@@ -416,7 +416,7 @@ namespace dgmpp {
 		buffs_.erase(key);
 	}
 
-	std::unordered_set<Type*> Type::affectors_() const {
+	std::unordered_set<Type*> Type::affectors_() {
 		std::unordered_set<Type*> types;
 		for (const auto& i: attributesMap_) {
 			for (const auto& j: modifiers_(i.second->metaInfo())) {

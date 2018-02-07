@@ -27,7 +27,7 @@ namespace dgmpp {
 		Type* domain() const noexcept;
 		const Effect& effect() const noexcept { return effect_; }
 		
-		bool match(const Type* type) const;
+		bool match(Type* type) const;
 		Float value() const;
 		operator Float() const { return value(); }
 		bool needsStackingCheck() const noexcept { return needsStackingCheck_; }
