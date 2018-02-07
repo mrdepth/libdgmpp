@@ -29,6 +29,11 @@ namespace dgmpp {
 		Float value();
 		Float initialValue() const { return initialValue_; }
 		
+#if DEBUG
+		void dumpAffectors();
+#endif
+		
+		
 	private:
 		class Proxy {
 		public:
