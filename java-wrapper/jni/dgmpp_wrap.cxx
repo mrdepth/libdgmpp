@@ -286,7 +286,7 @@ SWIGINTERN dgmpp::CategoryID dgmpp_Type_categoryID(dgmpp::Type const *self){ ret
 SWIGINTERN dgmpp::Attribute *dgmpp_Type_attribute(dgmpp::Type *self,dgmpp::AttributeID attributeID){
 				return ((*self)[attributeID]);
 			}
-SWIGINTERN std::vector< dgmpp::Type * > dgmpp_Type_affectors(dgmpp::Type const *self){
+SWIGINTERN std::vector< dgmpp::Type * > dgmpp_Type_affectors(dgmpp::Type *self){
 				auto c = self->affectors();
 				return {c.begin(), c.end()};
 			}
@@ -1675,7 +1675,7 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Type_1affectors(JNIEnv *jenv, j
   (void)jcls;
   (void)jarg1_;
   arg1 = *(dgmpp::Type **)&jarg1; 
-  result = dgmpp_Type_affectors((dgmpp::Type const *)arg1);
+  result = dgmpp_Type_affectors(arg1);
   *(std::vector< dgmpp::Type * > **)&jresult = new std::vector< dgmpp::Type * >((const std::vector< dgmpp::Type * > &)result); 
   return jresult;
 }

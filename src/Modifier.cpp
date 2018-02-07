@@ -29,14 +29,20 @@ namespace dgmpp {
 		return owner().domain_(metaInfo().domain);
 	}
 	
-	bool Modifier::match(const Type* type) const {
+	bool Modifier::match(Type* type) const {
 		switch (metaInfo_.type) {
 			case MetaInfo::Modifier::ModifierType::item:
 			case MetaInfo::Modifier::ModifierType::location:
 				return true;
 			case MetaInfo::Modifier::ModifierType::locationGroup:
 				return type->metaInfo().groupID == metaInfo_.require.groupID;
-			case MetaInfo::Modifier::ModifierType::locationRequiredSkill:
+			case MetaInfo::Modifier::ModifierType::locationRequiredSkill: {
+				auto owner = type->owner_();
+				auto domain = owner_.domain_(metaInfo().domain);
+				if (!owner || !domain || !owner->isDescendant_(*domain))
+					return false;
+				return type->metaInfo().requireSkill(metaInfo_.require.typeID);
+			}
 			case MetaInfo::Modifier::ModifierType::ownerRequiredSkill:
 				return type->metaInfo().requireSkill(metaInfo_.require.typeID);
 			case MetaInfo::Modifier::ModifierType::locationRequiredDomainSkill:

@@ -15,6 +15,12 @@
 
 namespace dgmpp {
 	
+	Ship::Ship (TypeID typeID): Type(typeID), capacitor_(*this), heatSimulator_(*this) {
+		if (!std::any_of(SDE::shipCategories.begin(), SDE::shipCategories.end(), [categoryID = metaInfo().categoryID](const auto& i) { return categoryID == i; })) {
+			throw InvalidCategoryID(metaInfo().categoryID);
+		}
+	}
+	
 	Ship::Ship (const Ship& other): Type(other), capacitor_(*this), heatSimulator_(*this) {
 		damagePatternValue_ = other.damagePatternValue_;
 		nameValue_ = other.nameValue_;

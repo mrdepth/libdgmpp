@@ -6,8 +6,15 @@
 //
 
 #include "Area.hpp"
+#include "SDE.hpp"
 
 namespace dgmpp {
+	
+	Area::Area (TypeID typeID) : Type(typeID) {
+		if (!std::any_of(SDE::areaCategories.begin(), SDE::areaCategories.end(), [categoryID = metaInfo().categoryID](const auto& i) { return categoryID == i; })) {
+			throw InvalidCategoryID(metaInfo().categoryID);
+		}
+	}
 	
 	void Area::setEnabled_(bool enabled) {
 		if (isEnabled_() == enabled)

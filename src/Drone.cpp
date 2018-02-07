@@ -19,6 +19,9 @@ namespace dgmpp {
 	}
 	
 	Drone::Drone (TypeID typeID): Type(typeID) {
+		if (!std::any_of(SDE::droneCategories.begin(), SDE::droneCategories.end(), [categoryID = metaInfo().categoryID](const auto& i) { return categoryID == i; })) {
+			throw InvalidCategoryID(metaInfo().categoryID);
+		}
 		
 		flags_.isAssistance = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
 			return i->metaInfo().category == MetaInfo::Effect::Category::target && i->metaInfo().isAssistance;

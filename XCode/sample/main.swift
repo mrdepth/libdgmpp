@@ -37,7 +37,9 @@ do {
 	gang.add(pilot)
 	pilot.setSkillLevels(5)
 	
-	let ship = try DGMShip(uniformString: "587|438::1;448::1;1183::1;1306::1;2048::1;2881:12625:3;4025::1;31668::1;31680::1|2488:10")
+//	let ship = try DGMShip(uniformString: "587|438::1;448::1;1183::1;1306::1;2048::1;2881:12625:3;4025::1;31668::1;31680::1|2488:10")
+	let ship = try DGMShip(dna: "28661:21740;228:2446;3:26302;2:15895;2:14170;3:33400;1:2048;1:3578;1:32014;6:18851;2:3186;4:17559;1:15770;1:20353;2:3244;1::")
+	let dna = ship.dna
 	pilot.ship = ship
 	
 	let form = ship.uniformString

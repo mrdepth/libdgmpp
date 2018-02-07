@@ -160,7 +160,7 @@ namespace dgmpp {
 			return static_cast<RaceID>(static_cast<int>(attribute_(AttributeID::raceID)->value_()));
 		}()};
 
-		Ship (TypeID typeID): Type(typeID), capacitor_(*this), heatSimulator_(*this) {};
+		Ship (TypeID typeID);
 		Ship (const Ship& other);
 		
 		virtual void setEnabled_ (bool enabled) override;

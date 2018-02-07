@@ -56,7 +56,7 @@ namespace dgmpp {
 	protected:
 		virtual void setEnabled_ (bool enabled) override;
 		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
-
+		virtual Type* owner_() const noexcept override { return parent_() ? parent_()->parent_() : nullptr; }
 		struct {
 			bool active : 1;
 			bool kamikaze: 1;

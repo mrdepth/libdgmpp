@@ -24,7 +24,7 @@ namespace dgmpp {
 				return ((*$self)[attributeID]);
 			}
 			
-			std::vector<Type*> affectors() const {
+			std::vector<Type*> affectors() {
 				auto c = $self->affectors();
 				return {c.begin(), c.end()};
 			}

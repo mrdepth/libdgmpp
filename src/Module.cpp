@@ -17,6 +17,10 @@ namespace dgmpp {
 	
 	Module::Module (TypeID typeID) : Type(typeID),
 	chargeGroups_ ([this]() -> std::vector<GroupID> {
+		if (!std::any_of(SDE::moduleCategories.begin(), SDE::moduleCategories.end(), [categoryID = metaInfo().categoryID](const auto& i) { return categoryID == i; })) {
+			throw InvalidCategoryID(metaInfo().categoryID);
+		}
+
 		std::vector<GroupID> chargeGroups;
 		
 		for (auto attributeID : SDE::chargeGroupAttributeIDs) {

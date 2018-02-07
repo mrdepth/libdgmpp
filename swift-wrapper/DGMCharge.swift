@@ -36,19 +36,13 @@ public class DGMCharge: DGMType, Codable {
 	}
 	
 	public convenience required init(from decoder: Decoder) throws {
-		let typeID = try decoder.container(keyedBy: CodingKeys.self).decode(DGMTypeID.self, forKey: .typeID)
+		let typeID = try decoder.singleValueContainer().decode(DGMTypeID.self)
 		try self.init(typeID: typeID)
 	}
 	
 	public func encode(to encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(typeID, forKey: .typeID)
+		var container = encoder.singleValueContainer()
+		try container.encode(typeID)
 	}
-	
-	enum CodingKeys: String, CodingKey {
-		case typeID
-	}
-	
-	
 	
 }
