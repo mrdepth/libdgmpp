@@ -2401,6 +2401,15 @@ namespace dgmpp {
 		fighterSquadronIsStandupLight = 2740,
 		fighterSquadronIsStandupSupport = 2741,
 		fighterSquadronIsStandupHeavy = 2742,
+		structureFullPowerStateHitpointMultiplier = 2743,
+		serviceModuleFullPowerStateHitpointMultiplier = 2744,
+		durationTargetWarpableBeacon = 2745,
+		resistanceMultiplier = 2746,
+		stasisWebRangeBonus = 2747,
+		structureRigMaxTargetRangeBonus = 2748,
+		structureAoERoFRoleBonus = 2749,
+		hiddenMissileDamageMultiplier = 2750,
+		hiddenArmorHPMultiplier = 2751,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
 	};
