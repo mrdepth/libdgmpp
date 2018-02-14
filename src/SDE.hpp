@@ -21,7 +21,7 @@ namespace dgmpp {
 		extern const MetaInfo::Facility& facility (TypeID typeID);
 
 		extern const MetaInfo::Type* const *skills;
-		extern const size_t skillsCount;
+		extern const std::size_t skillsCount;
 		
 		
 		const auto canFitShipGroupAttributes = {
@@ -142,6 +142,14 @@ namespace dgmpp {
 			AttributeID::warfareBuff3ID,
 			AttributeID::warfareBuff4ID
 		};
+		
+		const auto specialHoldCapacityAttributes = {
+			AttributeID::specialOreHoldCapacity,
+			AttributeID::specialMineralHoldCapacity,
+			AttributeID::specialPlanetaryCommoditiesHoldCapacity
+		};
+
+		
 		/*const auto warfareBuffValueAttributes = {
 			AttributeID::warfareBuff1Value,
 			AttributeID::warfareBuff2Value,

@@ -69,9 +69,8 @@ namespace dgmpp {
 		std::vector<Module*> modules () const;
 		std::vector<Drone*> drones () const;
 		
-		Area* area() const noexcept;
-		Area* area(TypeID typeID);
-		
+//		bool factorReload() const noexcept;
+
 		//Drones
 		size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
 		size_t usedDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none);
@@ -103,7 +102,7 @@ namespace dgmpp {
 		CubicMeter			usedFighterHangar();
 		CubicMeter			totalFighterHangar();
 		CubicMeter			cargoCapacity();
-		CubicMeter			oreHoldCapacity();
+		CubicMeter			specialHoldCapacity();
 		
 		//Tank
 		Resistances resistances();

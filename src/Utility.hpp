@@ -6,6 +6,9 @@
 //
 
 #pragma once
+
+//#define DGMPP_THREADSAFE 1
+
 #include <utility>
 #include <memory>
 #include <string>
@@ -18,21 +21,30 @@
 #include <algorithm>
 #include <cassert>
 #include <experimental/optional>
+#include <functional>
+#include <cmath>
 
-#include "AttributeID.hpp"
-#include "CategoryID.hpp"
-#include "GroupID.hpp"
-#include "TypeID.hpp"
-#include "EffectID.hpp"
-#include "WarfareBuffID.hpp"
+#if DGMPP_THREADSAFE
+#include <mutex>
+#endif
+
+#include "SDE/AttributeID.hpp"
+#include "SDE/CategoryID.hpp"
+#include "SDE/GroupID.hpp"
+#include "SDE/TypeID.hpp"
+#include "SDE/EffectID.hpp"
+#include "SDE/WarfareBuffID.hpp"
+#include "SDE/SchematicID.hpp"
 #include "Rate.hpp"
-#include "SchematicID.hpp"
 
+#if !defined(_LIBCPP_OPTIONAL) && !defined(_GLIBCXX_OPTIONAL)
 namespace std {
 	template<typename T>
 	using optional = std::experimental::optional<T>;
 	constexpr auto nullopt = std::experimental::nullopt;
 }
+#endif
+
 
 namespace dgmpp {
 	using Float = double;
@@ -48,7 +60,6 @@ namespace dgmpp {
 	using Teraflops = Float;
 	using MegaWatts = Float;
 	using CalibrationPoints = Float;
-//	using MeterPerSecond = Float;
 	using CubicMeter = Float;
 	using Meter = Float;
 	using Millimeter = Float;
@@ -99,7 +110,7 @@ namespace dgmpp {
 			return lhs < rhs;
 		}
 		
-		template <typename... Args2, size_t... Is>
+		template <typename... Args2, std::size_t... Is>
 		std::tuple<Args2...> get(const Key& lhs, std::index_sequence<Is...>) const noexcept {
 			return std::make_tuple(remove_unique_ptr(std::get<Is>(lhs))...);
 		}
@@ -140,7 +151,7 @@ namespace dgmpp {
 			return to_;
 		}
 		
-		size_t size() const noexcept {
+		std::size_t size() const noexcept {
 			return std::distance(from_, to_);
 		}
 		
@@ -167,23 +178,17 @@ namespace dgmpp {
 			};
 		};
 
-		union {
-			struct {
-				Layer shield;
-				Layer armor;
-				Layer hull;
-			};
-			Layer layers[3];
-		};
+		Layer shield;
+		Layer armor;
+		Layer hull;
 	};
 	
 	struct HostileTarget {
-		rate<Radians, std::chrono::seconds> angularVelocity = rate<Radians, std::chrono::seconds>(0);
-		rate<Meter, std::chrono::seconds> velocity = rate<Meter, std::chrono::seconds>(0);
+		RadiansPerSecond angularVelocity = RadiansPerSecond(0);
+		MetersPerSecond velocity = MetersPerSecond(0);
 		Meter signature = 0;
 		Meter range = 0;
 		static HostileTarget Default() noexcept { return HostileTarget(); }
-//		const static HostileTarget defaultTarget;
 	};
 	
 	template<typename T, typename... Tail>
@@ -217,22 +222,6 @@ namespace dgmpp {
 		return sum.count() > 0 ? static_cast<Percent>(value.count()) / static_cast<Percent>(sum.count()) : 0;
 	}
 
-//	template <typename T>
-//	constexpr T sum(T first) noexcept {
-//		return first;
-//	}
-//
-//	template <typename T, typename... Tail>
-//	constexpr T sum(T first, Tail... args) noexcept {
-//		return first + sum(args...);
-//	}
-//
-//	template<typename T, typename... Tail>
-//	constexpr Percent percentage(T first, Tail... args) noexcept {
-//		auto s = static_cast<Percent> (sum(first, args...));
-//		return s > 0 ? first / s : 0;
-//	}
-
 };
 
 namespace std {
@@ -244,7 +233,6 @@ namespace std {
 		template<size_t... I>
 		constexpr result_type hashValue(const argument_type& value, std::index_sequence<I...>) const noexcept {
 			return dgmpp::hashValue(std::get<I>(value)...);
-//			return dgmpp::hash_combine<Args...>::value(std::get<I>(value)...);
 		}
 		
 		constexpr result_type operator()(const argument_type& value) const noexcept {

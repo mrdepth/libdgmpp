@@ -16,19 +16,14 @@ namespace dgmpp {
 		Tank(HPPerSecond passiveShield,
 			 HPPerSecond shieldRepair,
 			 HPPerSecond armorRepair,
-			 HPPerSecond hullRepair)
-		: passiveShield(passiveShield), shieldRepair(shieldRepair), armorRepair(armorRepair), hullRepair(hullRepair) {}
+			 HPPerSecond hullRepair):
+		passiveShield(passiveShield), shieldRepair(shieldRepair), armorRepair(armorRepair), hullRepair(hullRepair) {}
 		
-		union {
-			struct {
-				HPPerSecond passiveShield;
-				HPPerSecond shieldRepair;
-				HPPerSecond armorRepair;
-				HPPerSecond hullRepair;
-			};
-			HPPerSecond layers[4];
-		};
-		
+		HPPerSecond passiveShield;
+		HPPerSecond shieldRepair;
+		HPPerSecond armorRepair;
+		HPPerSecond hullRepair;
+
 		Tank effective (const Resistances& resistances, const DamageVector damagePattern) const noexcept {
 			return {
 				passiveShield * damagePattern.effectivity(resistances.shield),

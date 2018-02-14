@@ -8,9 +8,18 @@
 #include "area.h"
 #include "internal.h"
 
-dgmpp_type_ptr dgmpp_area_create (dgmpp_type_id type_id) {
+dgmpp_type dgmpp_area_create (dgmpp_type_id type_id) {
 	try {
-		return reinterpret_cast<dgmpp_type_ptr>(new dgmpp_area_impl(static_cast<TypeID>(type_id)));
+		return add_unique_ptr_wrapper(Area::Create(static_cast<TypeID>(type_id)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
+dgmpp_type dgmpp_area_copy (dgmpp_type area) {
+	try {
+		return add_unique_ptr_wrapper(Area::Create(*reinterpret_cast<Area*>(area)));
 	}
 	catch (...) {
 		return nullptr;

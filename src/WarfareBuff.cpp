@@ -17,7 +17,7 @@ namespace dgmpp {
 	}
 	
 	Float WarfareBuff::value() const {
-		return owner_[metaInfo_.modifyingAttributeID]->value();
+		return owner_.attribute_(metaInfo_.modifyingAttributeID)->value_();
 	}
 	
 }

@@ -14,11 +14,9 @@ namespace dgmpp {
 	public:
 		virtual bool configured() const override;
 
-		const MetaInfo::Schematic* schematic() const noexcept { return schematic_; }
+		const MetaInfo::Schematic* schematic() const noexcept { return schematicValue_; }
 		void schematic(SchematicID schematicID);
-		
-		
-		
+
 		std::chrono::seconds launchTime() const noexcept { return launchTime_; }
 		void launchTime (std::chrono::seconds value) noexcept { launchTime_ = value; }
 		std::optional<std::chrono::seconds> cycleTime() const;
@@ -34,13 +32,13 @@ namespace dgmpp {
 		std::list<std::unique_ptr<ProductionCycle>> cycles_;
 		
 		using Facility::Facility;
-		virtual std::optional<std::chrono::seconds> nextUpdateTime() const noexcept override;
-		virtual int priority() const noexcept override;
-		virtual void update(std::chrono::seconds time) override;
+		virtual std::optional<std::chrono::seconds> nextUpdateTime_() const noexcept override;
+		virtual int priority_() const noexcept override;
+		virtual void update_ (std::chrono::seconds time) override;
 
 	private:
 		friend class Planet;
-		const MetaInfo::Schematic* schematic_ = nullptr;
+		const MetaInfo::Schematic* schematicValue_ = nullptr;
 		
 		std::chrono::seconds launchTime_ = std::chrono::seconds::zero();
 		std::chrono::seconds startTime_ = std::chrono::seconds::zero();
@@ -49,9 +47,9 @@ namespace dgmpp {
 		
 		ProductionCycle* production_ = nullptr;
 		
-		void schematic(const MetaInfo::Schematic* schematic) noexcept { schematic_ = schematic; }
-		void finishCycle(ProductionCycle& cycle, std::chrono::seconds time);
-		ProductionCycle* startCycle(std::chrono::seconds time);
+		void schematic_ (const MetaInfo::Schematic* schematic) noexcept { schematicValue_ = schematic; }
+		void finishCycle_ (ProductionCycle& cycle, std::chrono::seconds time);
+		ProductionCycle* startCycle_ (std::chrono::seconds time);
 	};
 	
 }

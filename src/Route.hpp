@@ -17,11 +17,8 @@ namespace dgmpp {
 		Facility* const from;
 		Facility* const to;
 		const Commodity commodity;
-//		const int64_t identifier;
-
 		
 		bool operator== (const Route& other) const noexcept {
-//			return from == other.from && to == other.to && commodity == other.commodity && identifier == other.identifier;
 			return from == other.from && to == other.to && commodity == other.commodity;
 		}
 		

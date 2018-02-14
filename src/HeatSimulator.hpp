@@ -16,14 +16,8 @@ namespace dgmpp {
 	
 	class HeatSimulator {
 	public:
-		bool factorReload() const noexcept { return flags_.factorReload; }
-		void factorReload (bool factorReload) noexcept {
-			flags_.factorReload = factorReload;
-			reset();
-			
-		}
 		void simulate();
-
+		
 	private:
 		friend class Ship;
 		Ship& owner_;
@@ -33,11 +27,11 @@ namespace dgmpp {
 			std::chrono::milliseconds cycleTime = 0ms;
 			std::chrono::milliseconds reloadTime = 0ms;
 			HP heatDamage = 0;
-			size_t shot = 0;
-			size_t clipSize = 0;
+			std::size_t shot = 0;
+			std::size_t clipSize = 0;
 			Module::Socket socket = 0;
 			
-			State (std::chrono::milliseconds cycleTime, std::chrono::milliseconds reloadTime, HP heatDamage, size_t clipSize, Module::Socket socket)
+			State (std::chrono::milliseconds cycleTime, std::chrono::milliseconds reloadTime, HP heatDamage, std::size_t clipSize, Module::Socket socket)
 			: cycleTime(cycleTime), reloadTime(reloadTime), heatDamage(heatDamage), clipSize(clipSize), socket(socket) {}
 			
 			bool operator< (const State& other) const noexcept {
@@ -58,18 +52,19 @@ namespace dgmpp {
 		};
 		
 		struct {
-			bool factorReload: 1;
 			bool isCalculated_: 1;
 		} flags_;
 		Float heatGenerationMultiplier_;
 		
 		HeatSimulator(Ship& owner) : owner_(owner) {
-			flags_.factorReload = false;
 			flags_.isCalculated_ = false;
 		}
 		
-		void reset() { flags_.isCalculated_ = false; }
-		void run(Module::Slot slot);
+		void reset_() { flags_.isCalculated_ = false; }
+		void run_ (Module::Slot slot);
+		
+		bool factorReload_() const noexcept;
+
 	};
 }
 

@@ -14,6 +14,11 @@ using namespace std::chrono_literals;
 	}
 
 %}
-
+%include "enumtypeunsafe.swg"
+%javaconst(1);
+%include "SDE/TypeID.hpp"
+%include "SDE/GroupID.hpp"
+%include "SDE/CategoryID.hpp"
+%include "SDE/AttributeID.hpp"
 %include "Utility.i"
 %include "Gang.i"

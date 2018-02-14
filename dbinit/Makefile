@@ -47,65 +47,65 @@ clean:
 	rm -f *.sqlite
 
 AttributeID.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --attributeIDs > ${T}/AttributeID.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --attributeIDs > ${T}/AttributeID.hpp
 	cp -rf ${T}/AttributeID.hpp $(SDE)/AttributeID.hpp
 
 TypeID.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --typeIDs > ${T}/TypeID.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --typeIDs > ${T}/TypeID.hpp
 	cp -rf ${T}/TypeID.hpp $(SDE)/TypeID.hpp
 
 GroupID.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --groupIDs > ${T}/GroupID.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --groupIDs > ${T}/GroupID.hpp
 	cp -rf ${T}/GroupID.hpp $(SDE)/GroupID.hpp
 
 CategoryID.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --categoryIDs > ${T}/CategoryID.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --categoryIDs > ${T}/CategoryID.hpp
 	cp -rf ${T}/CategoryID.hpp $(SDE)/CategoryID.hpp
 
 EffectID.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --effectIDs > ${T}/EffectID.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --effectIDs > ${T}/EffectID.hpp
 	cp -rf ${T}/EffectID.hpp $(SDE)/EffectID.hpp
 
 WarfareBuffID.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --warfareBuffIDs > ${T}/WarfareBuffID.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --warfareBuffIDs > ${T}/WarfareBuffID.hpp
 	cp -rf ${T}/WarfareBuffID.hpp $(SDE)/WarfareBuffID.hpp
 
 Attributes.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --attributes > ${T}/Attributes.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --attributes > ${T}/Attributes.hpp
 	cp -rf ${T}/Attributes.hpp $(SDE)/Attributes.hpp
 
 Types.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --types > ${T}/Types.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --types > ${T}/Types.hpp
 	cp -rf ${T}/Types.hpp $(SDE)/Types.hpp
 
 Modifiers.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --modifiers > ${T}/Modifiers.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --modifiers > ${T}/Modifiers.hpp
 	cp -rf ${T}/Modifiers.hpp $(SDE)/Modifiers.hpp
 
 Effects.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --effects > ${T}/Effects.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --effects > ${T}/Effects.hpp
 	cp -rf ${T}/Effects.hpp $(SDE)/Effects.hpp
 
 WarfareBuffs.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --warfareBuffs > ${T}/WarfareBuffs.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --warfareBuffs > ${T}/WarfareBuffs.hpp
 	cp -rf ${T}/WarfareBuffs.hpp $(SDE)/WarfareBuffs.hpp
 
 Skills.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --skills > ${T}/Skills.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --skills > ${T}/Skills.hpp
 	cp -rf ${T}/Skills.hpp $(SDE)/Skills.hpp
 
 Commodities.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --commodities > ${T}/Commodities.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --commodities > ${T}/Commodities.hpp
 	cp -rf ${T}/Commodities.hpp $(SDE)/Commodities.hpp
 
 Facilities.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --facilities > ${T}/Facilities.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --facilities > ${T}/Facilities.hpp
 	cp -rf ${T}/Facilities.hpp $(SDE)/Facilities.hpp
 
 SchematicID.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --schematicIDs > ${T}/SchematicID.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --schematicIDs > ${T}/SchematicID.hpp
 	cp -rf ${T}/SchematicID.hpp $(SDE)/SchematicID.hpp
 
 Schematics.hpp: dgm-tool dgm.sqlite
-	$(T)/dgm-tool dgm.sqlite --schematics > ${T}/Schematics.hpp
+	$(T)/dgm-tool $(OUTPUT_DIR)/dgm.sqlite --schematics > ${T}/Schematics.hpp
 	cp -rf ${T}/Schematics.hpp $(SDE)/Schematics.hpp

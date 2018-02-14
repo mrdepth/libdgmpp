@@ -1,4 +1,5 @@
 %include "std_vector.i"
+%include ""
 
 namespace std {
 	template <intmax_t _Num, intmax_t _Den = 1>
@@ -54,10 +55,10 @@ namespace dgmpp {
 	};
 	
 	typedef double Float;
-	typedef enum TypeID;
-	typedef enum GroupID;
-	typedef enum CategoryID;
-	typedef enum AttributeID;
+//	typedef enum TypeID;
+//	typedef enum GroupID;
+//	typedef enum CategoryID;
+//	typedef enum AttributeID;
 	typedef Float GigaJoule;
 	typedef Float Teraflops;
 	typedef Float MegaWatts;

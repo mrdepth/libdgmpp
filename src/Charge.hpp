@@ -20,20 +20,12 @@ namespace dgmpp {
 		};
 
 		static std::unique_ptr<Charge> Create (TypeID typeID) { return std::unique_ptr<Charge>(new Charge(typeID)); }
+		static std::unique_ptr<Charge> Create (const Charge& other) { return std::unique_ptr<Charge>(new Charge(other)); }
 		
-		Size size();
+		Size size() const noexcept { return size_; }
 		
 	protected:
-		virtual Type* domain (MetaInfo::Modifier::Domain domain) noexcept override;
-		bool canBeActive() const noexcept	{ return flags_.canBeActive; }
-		bool requireTarget() const noexcept	{ return flags_.requireTarget; }
-		bool isAssistance() const noexcept	{ return flags_.isAssistance; }
-		bool isOffensive() const noexcept	{ return flags_.isOffensive; }
-		bool dealsDamage() const noexcept	{ return flags_.dealsDamage; }
-
-	private:
-		friend class Module;
-		friend class Drone;
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
 		
 		struct {
 			bool canBeActive : 1;
@@ -42,7 +34,20 @@ namespace dgmpp {
 			bool isOffensive : 1;
 			bool dealsDamage : 1;
 		} flags_;
+
+	private:
+		friend class Module;
+		friend class Drone;
 		
-		Charge(TypeID typeID);
+		
+		Charge (TypeID typeID);
+		Charge (const Charge& other);
+		
+		const Size size_ { [this]{
+			if (auto attribute = attribute_(AttributeID::chargeSize))
+				return static_cast<Size>(static_cast<int>(attribute->value_()));
+			else
+				return Size::none;
+		}()};
 	};
 }

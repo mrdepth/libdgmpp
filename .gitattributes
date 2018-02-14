@@ -1,0 +1,9 @@
+android/* linguist-vendored
+c-wrapper/* linguist-vendored
+dbinit/* linguist-vendored
+java-wrapper/* linguist-vendored
+swift-wrapper/* linguist-vendored
+swig/* linguist-vendored
+tests/* linguist-vendored
+tools/* linguist-vendored
+XCode/* linguist-vendored

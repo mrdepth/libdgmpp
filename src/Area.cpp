@@ -9,15 +9,15 @@
 
 namespace dgmpp {
 	
-	void Area::setEnabled(bool enabled) {
-		if (isEnabled() == enabled)
-			return Type::setEnabled(enabled);
+	void Area::setEnabled_(bool enabled) {
+		if (isEnabled_() == enabled)
+			return Type::setEnabled_(enabled);
 		else
-			Type::setEnabled(enabled);
+			Type::setEnabled_(enabled);
 		
 		if (enabled)
-			activateEffects(MetaInfo::Effect::Category::system);
+			activateEffects_(MetaInfo::Effect::Category::system);
 		else
-			deactivateEffects(MetaInfo::Effect::Category::system);
+			deactivateEffects_(MetaInfo::Effect::Category::system);
 	}
 }

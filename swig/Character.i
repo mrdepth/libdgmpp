@@ -35,6 +35,7 @@ namespace dgmpp {
 		Structure* structure (TypeID typeID);
 		
 		void setSkillLevels (int level);
+//		bool factorReload() const noexcept;
 		
 		Implant* addImplant(TypeID typeID, bool replace = false);
 		Booster* addBooster(TypeID typeID, bool replace = false);
@@ -47,5 +48,7 @@ namespace dgmpp {
 		
 		Implant* implant (Implant::Slot slot) const noexcept;
 		Booster* booster (Booster::Slot slot) const noexcept;
+		
+		Meter droneControlDistance();
 	};
 }

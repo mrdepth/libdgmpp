@@ -21,7 +21,7 @@ namespace dgmpp {
 			CategoryID categoryID() const { return $self->metaInfo().categoryID; }
 			
 			Attribute* attribute (AttributeID attributeID) {
-				return ((*$self)[attributeID]).get();
+				return ((*$self)[attributeID]);
 			}
 			
 			std::vector<Type*> affectors() const {
@@ -36,7 +36,7 @@ namespace dgmpp {
 		}
 		
 		Type* parent();
-		bool isDescendant (Type& parent) const noexcept;
+//		bool isDescendant (Type& parent) const noexcept;
 	};
 	
 }

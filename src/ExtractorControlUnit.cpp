@@ -21,7 +21,7 @@ namespace dgmpp {
 			return std::nullopt;
 	}
 	
-	std::optional<Commodity> ExtractorControlUnit::yieldAt(std::chrono::seconds time) const noexcept {
+	std::optional<Commodity> ExtractorControlUnit::yieldAt_(std::chrono::seconds time) const noexcept {
 		auto product = *output();
 
 		if (time >= expiryTime_ || time < installTime_)
@@ -50,7 +50,7 @@ namespace dgmpp {
 		return product;
 	}
 	
-	std::optional<std::chrono::seconds> ExtractorControlUnit::nextUpdateTime() const noexcept {
+	std::optional<std::chrono::seconds> ExtractorControlUnit::nextUpdateTime_() const noexcept {
 		if (!cycles_.empty()) {
 			if (extraction_)
 				return extraction_->end();
@@ -61,13 +61,13 @@ namespace dgmpp {
 			return std::max(launchTime_, installTime_);
 	}
 	
-	void ExtractorControlUnit::update(std::chrono::seconds time) {
+	void ExtractorControlUnit::update_(std::chrono::seconds time) {
 		if (updating_ || !configured())
 			return;
 		updating_ = true;
 		
 		if (cycles_.empty()) {
-			if (auto cycle = startCycle(time)) {
+			if (auto cycle = startCycle_(time)) {
 				extraction_ = cycle;
 				states_.emplace_back(new ProductionState(time, cycle, percentage(totalYield_, totalYield_ + totalWaste_)));
 			}
@@ -77,8 +77,8 @@ namespace dgmpp {
 			const auto isCycleFinished = cycle.end() == time;
 			
 			if (isCycleFinished) {
-				finishCycle(cycle, time);
-				extraction_ = startCycle(time);
+				finishCycle_(cycle, time);
+				extraction_ = startCycle_(time);
 				states_.emplace_back(new ProductionState(time, extraction_, percentage(totalYield_, totalYield_ + totalWaste_)));
 			}
 		}
@@ -86,11 +86,11 @@ namespace dgmpp {
 		updating_ = false;
 	}
 	
-	void ExtractorControlUnit::finishCycle(ProductionCycle& cycle, std::chrono::seconds time) {
-		auto product = *yieldAt(cycle.start);
+	void ExtractorControlUnit::finishCycle_(ProductionCycle& cycle, std::chrono::seconds time) {
+		auto product = *yieldAt_(cycle.start);
 		
 		add(product);
-		Facility::update(time);
+		Facility::update_(time);
 		const auto left = (*this)[product];
 		cycle.yield = product - left;
 		cycle.waste = left;
@@ -100,7 +100,7 @@ namespace dgmpp {
 		totalWaste_ = cycle.waste.quantity();
 	}
 	
-	ProductionCycle* ExtractorControlUnit::startCycle(std::chrono::seconds time) {
+	ProductionCycle* ExtractorControlUnit::startCycle_(std::chrono::seconds time) {
 		if ((!cycles_.empty() && time <= expiryTime_ - cycleTime_) ||
 			(time == std::max(launchTime_, installTime_))) {
 			

@@ -15,13 +15,20 @@ Fitting engine for EVE Online written on C++
 -------------------------------------------------------------------------------
 
 ## Usage
-	auto gang = Gang::Create();
-	auto pilot = gang->addPilot();
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(TypeID::dominix);
+	#include <iostream>
+	#include "dgmpp.hpp"
 
-	auto ab = ship->addModule(TypeID::_100MNAfterburnerII);
-	ab->state(Module::State::overloaded);
-
-	std::cout << "Velocity: " << ship->velocity().count() << " m/s" << std::endl;
+	using namespace dgmpp;
+	
+	void main() {
+		auto gang = Gang::Create();
+		auto pilot = gang->addPilot();
+		pilot->setSkillLevels(5);
+		auto ship = pilot->ship(TypeID::dominix);
+	
+		auto ab = ship->addModule(TypeID::_100MNAfterburnerII);
+		ab->state(Module::State::overloaded);
+	
+		std::cout << "Velocity: " << ship->velocity().count() << " m/s" << std::endl;
+	}
 

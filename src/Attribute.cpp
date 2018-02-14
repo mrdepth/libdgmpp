@@ -78,7 +78,7 @@ namespace dgmpp {
 	Attribute::Attribute(const MetaInfo::Attribute& metaInfo, Float initialValue, Type& owner)
 	: metaInfo_(metaInfo), initialValue_(initialValue), owner_(owner) {
 		if (metaInfo.maxAttributeID != AttributeID::none) {
-			maxAttribute_ = owner[metaInfo.maxAttributeID];
+			maxAttribute_ = owner.attribute_(metaInfo.maxAttributeID);
 		}
 	}
 	
@@ -112,36 +112,49 @@ namespace dgmpp {
 	
 	Attribute& Attribute::operator= (std::optional<Float>&& value) noexcept {
 		forcedValue_ = std::move(value);
-		owner().resetCache();
+		owner().resetCache_();
 		return *this;
 	}
 	
 	Float Attribute::value() {
+		LOCK(&owner_);
+		return value_();
+	}
+	
+	Float Attribute::value_() {
 		using namespace std::placeholders;
 		if (forcedValue_)
 			return *forcedValue_;
 		
-		if (!value_) {
+		if (!calculatedValue_) {
 #if DEBUG
 			assert(recursionFlag_ == false);
 			recursionFlag_ = true;
 #endif
 			
 			auto value = initialValue_;
-			auto modifiers = owner().modifiers(metaInfo());
-			bool isDisallowedAssistance = metaInfo().attributeID != AttributeID::disallowAssistance ? owner().isDisallowedAssistance() : false;
-			bool isDisallowedOffense = metaInfo().attributeID != AttributeID::disallowOffensiveModifiers ? owner().isDisallowedOffense() : false;
+			auto modifiers = owner().modifiers_(metaInfo());
+			bool isDisallowedAssistance;
+			bool isDisallowedOffense;
+			if (metaInfo().attributeID != AttributeID::disallowAssistance && metaInfo().attributeID != AttributeID::disallowOffensiveModifiers) {
+				isDisallowedAssistance = owner().isDisallowedAssistance_();
+				isDisallowedOffense = owner().isDisallowedOffense_();
+			}
+			else {
+				isDisallowedAssistance = false;
+				isDisallowedOffense = false;
+			}
 			const bool isStackable = metaInfo().isStackable;
 			const bool highIsGood = metaInfo().highIsGood;
 			
-			auto character = owner().domain(MetaInfo::Modifier::Domain::character);
+			auto character = owner().domain_(MetaInfo::Modifier::Domain::character);
 			
 			auto begin = modifiers.begin();
 			auto end = modifiers.end();
 			if (character) {
 				end = std::partition(begin, end, [=](const auto modifier) {
 					const auto& affector = modifier->owner();
-					const auto isProjected = !affector.isDescendant(*character);
+					const auto isProjected = !affector.isDescendant_(*character);
 					return !(isProjected &&
 							 ((isDisallowedOffense && modifier->effect().metaInfo().isOffensive) ||
 							  (isDisallowedAssistance && modifier->effect().metaInfo().isAssistance)));
@@ -192,7 +205,7 @@ namespace dgmpp {
 					std::transform(range.first, i, std::back_inserter(values), extract);
 					
 					decltype(values.begin()) j;
-					if (highIsGood)
+					if (!highIsGood)
 						j = std::partition(values.begin(), values.end(),
 										   std::bind(std::less<>(), _1, 1.0));
 					else
@@ -243,16 +256,16 @@ namespace dgmpp {
 			value = multiply(range, value);
 			
 			if (maxAttribute_) {
-				value = std::min(value, (*maxAttribute_)->value());
+				value = std::min(value, (*maxAttribute_)->value_());
 			}
 //			std::cout << static_cast<int>(metaInfo().attributeID) << ": " << value << std::endl;
-			value_ = value;
-			owner_.cache().add(this);
+			calculatedValue_ = value;
+			owner_.cache_().add(this);
 #if DEBUG
 			recursionFlag_ = false;
 #endif
 		}
 		
-		return *value_;
+		return *calculatedValue_;
 	}
 }

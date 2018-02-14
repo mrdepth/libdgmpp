@@ -8,15 +8,24 @@
 #include "charge.h"
 #include "internal.h"
 
-dgmpp_type_ptr dgmpp_charge_create (dgmpp_type_id type_id) {
+dgmpp_type dgmpp_charge_create (dgmpp_type_id type_id) {
 	try {
-		return reinterpret_cast<dgmpp_type_ptr>(new dgmpp_charge_impl(static_cast<TypeID>(type_id)));
+		return add_unique_ptr_wrapper(Charge::Create(static_cast<TypeID>(type_id)));
 	}
 	catch (...) {
 		return nullptr;
 	}
 }
 
-DGMPP_CHARGE_SIZE dgmpp_charge_get_charge_size (dgmpp_type_ptr charge) {
-	return static_cast<DGMPP_CHARGE_SIZE>(type_cast<Charge*>(charge)->size());
+dgmpp_type dgmpp_charge_copy (dgmpp_type charge) {
+	try {
+		return add_unique_ptr_wrapper(Charge::Create(*reinterpret_cast<Charge*>(charge)));
+	}
+	catch (...) {
+		return nullptr;
+	}
+}
+
+DGMPP_CHARGE_SIZE dgmpp_charge_get_charge_size (dgmpp_type charge) {
+	return static_cast<DGMPP_CHARGE_SIZE>(reinterpret_cast<Charge*>(charge)->size());
 }

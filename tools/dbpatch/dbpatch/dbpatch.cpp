@@ -534,7 +534,8 @@ int patch(const char* databasePath) {
 	sqlite3_exec(db, "delete from dgmTypeAttributes where attributeID >= 10000", NULL, NULL, NULL);
 	
 	addEffect(10000, "characterDamageMissiles", 0, 0, 0);
-	addItemEffect("CharacterStatic", getEffectID("characterDamageMissiles"));
+//	addItemEffect("CharacterStatic", getEffectID("characterDamageMissiles"));
+	addEffectGroup(1, getEffectID("characterDamageMissiles"));
 	
 	sqlite3_exec(db, "DELETE FROM dgmTypeEffects WHERE effectID=3461;", NULL, NULL, NULL);
 	addEffectGroup(899, 3461);

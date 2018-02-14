@@ -9,172 +9,207 @@
 
 #include "dgmpp.hpp"
 #include "type.h"
+#include "attribute.h"
+#include <type_traits>
+#include <functional>
 
 using namespace dgmpp;
 
-struct dgmpp_type_impl {
-	Type* type;
-	dgmpp_type_impl (Type* type) : type(type) {}
-	virtual ~dgmpp_type_impl() {}
+struct unique_ptr_wrapper_base {
+	virtual ~unique_ptr_wrapper_base() {}
 };
 
-inline dgmpp_type_ptr dgmpp_make_type(Type* type) {
-	return type ? reinterpret_cast<dgmpp_type_ptr>(new dgmpp_type_impl{type}) : nullptr;
+template <typename T>
+struct unique_ptr_wrapper: public unique_ptr_wrapper_base {
+	std::unique_ptr<T> ptr;
+	unique_ptr_wrapper(std::unique_ptr<T>&& ptr): ptr(std::move(ptr)) {}
+	virtual ~unique_ptr_wrapper() {}
+};
+
+extern std::map<dgmpp_handle, std::unique_ptr<unique_ptr_wrapper_base>> unique_pointers;
+
+template <typename T>
+T* add_unique_ptr_wrapper(std::unique_ptr<T>&& ptr) {
+	auto key = ptr.get();
+	unique_pointers.emplace(key, std::unique_ptr<unique_ptr_wrapper<T>>{new unique_ptr_wrapper<T>{std::move(ptr)}});
+	return key;
 }
 
-struct dgmpp_attribute_impl {
-	Attribute* attribute;
+template <typename T>
+std::unique_ptr<T> get_unique_ptr(dgmpp_handle h) {
+	auto i = unique_pointers.find(h);
+	if (i == unique_pointers.end())
+		return nullptr;
+	return std::move(dynamic_cast<unique_ptr_wrapper<T>*>(i->second.get())->ptr);
+}
+
+
+enum class dgmpp_handle_tag: char {
+	invalid = -1,
+	ptr,
+	unique_ptr_gang,
+	unique_ptr_character,
+	unique_ptr_booster,
+	unique_ptr_implant,
+	unique_ptr_ship,
+	unique_ptr_structure,
+	unique_ptr_module,
+	unique_ptr_drone,
+	unique_ptr_charge,
+	unique_ptr_area,
+	unique_ptr_planet,
+	unique_ptr_array
+};
+	
+struct dgmpp_array_impl_base {
+	size_t size;
+	dgmpp_array_impl_base (size_t size): size(size) {}
+	virtual const void* ptr() const = 0;
 };
 
 
-struct dgmpp_types_array_impl : public dgmpp_types_array {
-	template <typename C>
-	dgmpp_types_array_impl(const C& container) {
-		count = std::size(container);
-		if (count > 0) {
-			types = new dgmpp_type_ptr[count];
-			auto ptr = types;
-			for (auto i: container) {
-				*ptr = dgmpp_make_type(i);
-			}
+/*struct dgmpp_handle_impl: public dgmpp_handle {
+	void destroy() {
+		switch (static_cast<dgmpp_handle_tag>(tag)) {
+			case dgmpp_handle_tag::unique_ptr_gang:
+				delete reinterpret_cast<std::unique_ptr<Gang>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_character:
+				delete reinterpret_cast<std::unique_ptr<Character>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_booster:
+				delete reinterpret_cast<std::unique_ptr<Booster>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_implant:
+				delete reinterpret_cast<std::unique_ptr<Implant>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_ship:
+				delete reinterpret_cast<std::unique_ptr<Ship>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_structure:
+				delete reinterpret_cast<std::unique_ptr<Structure>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_module:
+				delete reinterpret_cast<std::unique_ptr<Module>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_drone:
+				delete reinterpret_cast<std::unique_ptr<Drone>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_charge:
+				delete reinterpret_cast<std::unique_ptr<Charge>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_area:
+				delete reinterpret_cast<std::unique_ptr<Area>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_planet:
+				delete reinterpret_cast<std::unique_ptr<Planet>*>(handle);
+				break;
+			case dgmpp_handle_tag::unique_ptr_array:
+				delete reinterpret_cast<std::unique_ptr<dgmpp_array_impl_base>*>(handle);
+				break;
+			default:
+				break;
 		}
-		else
-			types = nullptr;
+		tag = static_cast<char>(dgmpp_handle_tag::invalid);
 	}
 	
-	~dgmpp_types_array_impl() {
-		if (types) {
-			auto ptr = types;
-			for (int i = 0; i < count; i++, ptr++)
-				delete reinterpret_cast<dgmpp_type_impl*>(*ptr);
-			delete[] types;
-		}
-	}
-};
-
-struct dgmpp_attributes_array_impl : public dgmpp_attributes_array {
-	template <typename C>
-	dgmpp_attributes_array_impl(const C& container) {
-		count = std::size(container);
-		if (count > 0) {
-			attributes = new dgmpp_attribute_ptr[count];
-			auto ptr = attributes;
-			for (auto i: container) {
-				*ptr = reinterpret_cast<dgmpp_attribute_ptr>(new dgmpp_attribute_impl{i});
-			}
-		}
+	template<typename T> T* get() const {
+		if (static_cast<dgmpp_handle_tag>(tag) == dgmpp_handle_tag::ptr)
+			return reinterpret_cast<T*>(handle);
 		else
-			attributes = nullptr;
+			return reinterpret_cast<std::unique_ptr<T>*>(handle)->get();
+	};
+	
+	template<typename T> std::unique_ptr<T>&& move() {
+		return std::move(*reinterpret_cast<std::unique_ptr<T>*>(handle));
 	}
 
-	~dgmpp_attributes_array_impl() {
-		if (attributes) {
-			auto ptr = attributes;
-			for (int i = 0; i < count; i++, ptr++)
-				delete reinterpret_cast<dgmpp_attribute_impl*>(*ptr);
-			delete[] attributes;
-		}
-	}
-};
-
-struct dgmpp_ints_array_impl : public dgmpp_ints_array {
-	template <typename C>
-	dgmpp_ints_array_impl(const C& container) {
-		count = std::size(container);
-		if (count > 0) {
-			values = new int[count];
-			auto ptr = values;
-			for (auto i: container) {
-				*ptr = static_cast<int>(i);
-			}
-		}
-		else
-			values = nullptr;
+	
+	template<typename T> operator T* () const {
+		return get<T>();
+	};
+	
+	template<typename T> dgmpp_handle_impl(std::unique_ptr<T>&& ptr, dgmpp_handle_tag tag) : dgmpp_handle{static_cast<char>(tag), nullptr} {
+		*reinterpret_cast<std::unique_ptr<T>**>(&handle) = new std::unique_ptr<T>(std::move(ptr));
 	}
 	
-	~dgmpp_ints_array_impl() {
-		if (values) {
-			delete[] values;
+	template<typename T> dgmpp_handle_impl(T* ptr) : dgmpp_handle{static_cast<char>(dgmpp_handle_tag::ptr), ptr} {}
+	
+	template<typename T>
+	void reset(T ptr) {
+		switch (static_cast<dgmpp_handle_tag>(tag)) {
+			case dgmpp_handle_tag::invalid:
+			case dgmpp_handle_tag::ptr:
+				break;
+			default:
+				destroy();
+				break;
 		}
+		handle = reinterpret_cast<void*>(ptr);
+		tag = static_cast<char>(dgmpp_handle_tag::ptr);
+	}
+
+	void reset(std::nullptr_t) {
+		switch (static_cast<dgmpp_handle_tag>(tag)) {
+			case dgmpp_handle_tag::invalid:
+			case dgmpp_handle_tag::ptr:
+				break;
+			default:
+				destroy();
+				break;
+		}
+		handle = nullptr;
+		tag = static_cast<char>(dgmpp_handle_tag::ptr);
+	}
+
+};*/
+
+
+template<typename T> dgmpp_handle dgmpp_make_handle(T* ptr) {
+	return dgmpp_handle{dgmpp_handle_tag::ptr, ptr};
+}
+
+/*template<typename T>
+T& dgmpp_cast(dgmpp_handle handle) {
+	return *reinterpret_cast<dgmpp_handle_impl*>(&handle)->get<T>();
+}
+
+template<typename T>
+std::unique_ptr<T>&& dgmpp_move(dgmpp_handle& handle) {
+	return reinterpret_cast<dgmpp_handle_impl*>(&handle)->move<T>();
+}
+
+template<typename T>
+void dgmpp_reset(dgmpp_handle& handle, T value) {
+	reinterpret_cast<dgmpp_handle_impl*>(&handle)->reset<T>(value);
+}
+
+template<>
+void dgmpp_reset<std::nullptr_t>(dgmpp_handle& handle, std::nullptr_t) {
+	reinterpret_cast<dgmpp_handle_impl*>(&handle)->reset<void*>(nullptr);
+}*/
+
+template <typename T, typename = void>
+struct dgmpp_array_impl: public dgmpp_array_impl_base {
+	std::vector<T> values;
+	
+	template <typename C, typename Constructor = T>
+	dgmpp_array_impl(const C& c): dgmpp_array_impl_base (std::size(c)) {
+		values.reserve(size);
+		std::transform(c.begin(), c.end(), std::back_inserter(values), [](const auto& i) {
+			return Constructor(remove_unique_ptr(i));
+		});
+	}
+	
+	virtual const void* ptr() const override {
+		return reinterpret_cast<const void*>(&values[0]);
 	}
 };
 
-struct dgmpp_gang_impl : public dgmpp_type_impl {
-	std::unique_ptr<Gang> gang;
-	dgmpp_gang_impl() : dgmpp_type_impl(nullptr) {
-		type = gang.get();
-	}
-};
 
-struct dgmpp_character_impl : public dgmpp_type_impl {
-	std::unique_ptr<Character> character;
-	dgmpp_character_impl() : dgmpp_type_impl(nullptr) {
-		type = character.get();
-	}
-};
-
-struct dgmpp_implant_impl : public dgmpp_type_impl {
-	std::unique_ptr<Implant> implant;
-	dgmpp_implant_impl(TypeID typeID) : dgmpp_type_impl(nullptr), implant(Implant::Create(typeID)) {
-		type = implant.get();
-	}
-};
-
-struct dgmpp_booster_impl : public dgmpp_type_impl {
-	std::unique_ptr<Booster> booster;
-	dgmpp_booster_impl(TypeID typeID) : dgmpp_type_impl(nullptr), booster(Booster::Create(typeID)) {
-		type = booster.get();
-	}
-};
-
-struct dgmpp_ship_impl : public dgmpp_type_impl {
-	std::unique_ptr<Ship> ship;
-	dgmpp_ship_impl(TypeID typeID) : dgmpp_type_impl(nullptr), ship(Ship::Create(typeID)) {
-		type = ship.get();
-	}
-};
-
-struct dgmpp_structure_impl : public dgmpp_type_impl {
-	std::unique_ptr<Structure> structure;
-	dgmpp_structure_impl(TypeID typeID) : dgmpp_type_impl(nullptr), structure(Structure::Create(typeID)) {
-		type = structure.get();
-	}
-};
-
-struct dgmpp_module_impl : public dgmpp_type_impl {
-	std::unique_ptr<Module> module;
-	dgmpp_module_impl(TypeID typeID) : dgmpp_type_impl(nullptr), module(Module::Create(typeID)) {
-		type = module.get();
-	}
-};
-
-struct dgmpp_charge_impl : public dgmpp_type_impl {
-	std::unique_ptr<Charge> charge;
-	dgmpp_charge_impl(TypeID typeID) : dgmpp_type_impl(nullptr), charge(Charge::Create(typeID)) {
-		type = charge.get();
-	}
-};
-
-struct dgmpp_drone_impl : public dgmpp_type_impl {
-	std::unique_ptr<Drone> drone;
-	dgmpp_drone_impl(TypeID typeID) : dgmpp_type_impl(nullptr), drone(Drone::Create(typeID)) {
-		type = drone.get();
-	}
-};
-
-struct dgmpp_area_impl : public dgmpp_type_impl {
-	std::unique_ptr<Area> area;
-	dgmpp_area_impl(TypeID typeID) : dgmpp_type_impl(nullptr), area(Area::Create(typeID)) {
-		type = area.get();
-	}
-};
-
-struct dgmpp_capacitor_impl {
-	Capacitor* capacitor;
-};
-
-template <typename T> T type_cast(dgmpp_type_ptr type) {
-	return type ? reinterpret_cast<T>(reinterpret_cast<dgmpp_type_impl*>(type)->type) : nullptr;
+template<typename T, typename C>
+dgmpp_array dgmpp_make_array(const C& c) {
+	return add_unique_ptr_wrapper(std::unique_ptr<dgmpp_array_impl<T>>(new dgmpp_array_impl<T>(c)));
 }
 
 template<typename Rep, typename Ratio>
@@ -213,3 +248,35 @@ inline dgmpp_resistances dgmpp_resistances_make(const Resistances& v) {
 inline HostileTarget hostile_target_make(const dgmpp_hostile_target& v) {
 	return {make_rate(v.angular_velocity, 1s), make_rate(v.velocity, 1s), v.signature, v.range};
 }
+
+struct dgmpp_commodity_impl: public dgmpp_commodity {
+	dgmpp_commodity_impl(const Commodity& c)
+	: dgmpp_commodity{
+		static_cast<dgmpp_type_id>(c.metaInfo().typeID),
+		static_cast<DGMPP_COMMODITY_TIER>(c.metaInfo().tier),
+		c.metaInfo().volume,
+		c.quantity()} {}
+};
+
+struct dgmpp_production_cycle_impl: public dgmpp_production_cycle {
+	dgmpp_production_cycle_impl(const ProductionCycle& c)
+	: dgmpp_production_cycle{
+		dgmpp_make_seconds(c.start),
+		dgmpp_make_seconds(c.duration),
+		dgmpp_commodity_impl(c.yield),
+		dgmpp_commodity_impl(c.waste)} {}
+
+	
+	dgmpp_production_cycle_impl(const ProductionCycle* c)
+	: dgmpp_production_cycle_impl(*c) {}
+};
+
+
+struct dgmpp_route_impl: public dgmpp_route {
+	dgmpp_route_impl (const Route& route)
+	: dgmpp_route{
+		route.from,
+		route.to,
+		dgmpp_commodity_impl(route.commodity)} {}
+};
+

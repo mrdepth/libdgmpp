@@ -31,7 +31,7 @@ namespace dgmpp {
 		std::list<WarfareBuff> warfareBuffs_;
 		
 		Effect (const MetaInfo::Effect& metaInfo, Type& owner);
-		virtual void setActive (bool active) { active_ = active; }
+		virtual void setActive_ (bool active) { active_ = active; }
 
 	private:
 		friend class Type;
@@ -48,7 +48,7 @@ namespace dgmpp {
 		
 		WarfareBuffEffect (const MetaInfo::Effect& metaInfo, Type& owner) : Effect(metaInfo, owner) {}
 		
-		virtual void setActive (bool active) override;
+		virtual void setActive_ (bool active) override;
 	};
 }
 

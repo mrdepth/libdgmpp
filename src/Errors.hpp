@@ -28,7 +28,7 @@ namespace dgmpp {
 	};
 	
 	struct NotEnoughCommodities: public std::logic_error {
-		NotEnoughCommodities(size_t quantity) : std::logic_error(std::to_string(quantity)) {}
+		NotEnoughCommodities(std::size_t quantity) : std::logic_error(std::to_string(quantity)) {}
 	};
 
 	struct InvalidRoute: public std::invalid_argument {
