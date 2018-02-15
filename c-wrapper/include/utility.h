@@ -209,7 +209,7 @@ typedef struct {
 	size_t quantity;
 } dgmpp_commodity;
 
-DGMPP_EXTERN dgmpp_commodity dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity);
+DGMPP_EXTERN dgmpp_bool dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity, dgmpp_commodity* commodity);
 
 typedef struct {
 	dgmpp_seconds start;
