@@ -21,7 +21,10 @@ namespace dgmpp {
 			none,
 			heavy,
 			light,
-			support
+			support,
+			standupHeavy,
+			standupLight,
+			standupSupport
 		};
 
 		virtual ~Drone();
@@ -71,7 +74,6 @@ namespace dgmpp {
 		friend class Capacitor;
 		friend class Gang;
 		
-		
 		SquadronTag squadronTagValue_ {anySquadronTag};
 		const Squadron squadron_ {[this]() {
 			if (attribute_(AttributeID::fighterSquadronIsHeavy))
@@ -80,6 +82,12 @@ namespace dgmpp {
 				return Squadron::light;
 			else if (attribute_(AttributeID::fighterSquadronIsSupport))
 				return Squadron::support;
+			else if (attribute_(AttributeID::fighterSquadronIsStandupHeavy))
+				return Squadron::standupHeavy;
+			else if (attribute_(AttributeID::fighterSquadronIsStandupLight))
+				return Squadron::standupLight;
+			else if (attribute_(AttributeID::fighterSquadronIsStandupSupport))
+				return Squadron::standupSupport;
 			else
 				return Squadron::none;
 		}()};

@@ -29,8 +29,14 @@ const void* dgmpp_array_get_values (dgmpp_array array) {
 	return reinterpret_cast<dgmpp_array_impl_base*>(array)->ptr();
 }
 
-dgmpp_commodity dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity) {
-	return dgmpp_commodity_impl(Commodity(static_cast<TypeID>(type_id), quantity));
+dgmpp_bool dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity, dgmpp_commodity* commodity) {
+	try {
+		*commodity = dgmpp_commodity_impl(Commodity(static_cast<TypeID>(type_id), quantity));
+		return true;
+	}
+	catch (...) {
+		return false;
+	}
 }
 
 dgmpp_version dgmpp_get_version () {

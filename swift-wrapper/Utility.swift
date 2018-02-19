@@ -164,8 +164,10 @@ public struct DGMCommodity {
 		return volume * DGMCubicMeter(quantity)
 	}
 	
-	public init(typeID: DGMTypeID, quantity: Int) {
-		self.init(dgmpp_commodity_create(dgmpp_type_id(typeID), quantity))
+	public init(typeID: DGMTypeID, quantity: Int) throws {
+		var commodity = dgmpp_commodity()
+		guard dgmpp_commodity_create(dgmpp_type_id(typeID), quantity, &commodity) != 0 else { throw DGMError.typeNotFound(typeID)}
+		self.init(commodity)
 	}
 }
 

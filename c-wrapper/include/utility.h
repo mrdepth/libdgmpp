@@ -130,7 +130,11 @@ typedef enum {
 	DGMPP_DRONE_SQUADRON_NONE = 0,
 	DGMPP_DRONE_SQUADRON_HEAVY,
 	DGMPP_DRONE_SQUADRON_LIGHT,
-	DGMPP_DRONE_SQUADRON_SUPPORT
+	DGMPP_DRONE_SQUADRON_SUPPORT,
+	DGMPP_DRONE_SQUADRON_STANDUP_HEAVY,
+	DGMPP_DRONE_SQUADRON_STANDUP_LIGHT,
+	DGMPP_DRONE_SQUADRON_STANDUP_SUPPORT
+
 } DGMPP_DRONE_SQUADRON;
 
 typedef enum {
@@ -209,7 +213,7 @@ typedef struct {
 	size_t quantity;
 } dgmpp_commodity;
 
-DGMPP_EXTERN dgmpp_commodity dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity);
+DGMPP_EXTERN dgmpp_bool dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity, dgmpp_commodity* commodity);
 
 typedef struct {
 	dgmpp_seconds start;

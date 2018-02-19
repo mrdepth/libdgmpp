@@ -120,15 +120,15 @@ public class DGMCharacter: DGMType, Codable {
 		}
 	}
 	
-	public var structure: DGMStructure? {
-		get {
-			guard let structure = dgmpp_character_get_structure(handle) else {return nil}
-			return DGMStructure(structure)
-		}
-		set {
-			dgmpp_character_set_structure(handle, newValue?.handle)
-		}
-	}
+//	public var structure: DGMStructure? {
+//		get {
+//			guard let structure = dgmpp_character_get_structure(handle) else {return nil}
+//			return DGMStructure(structure)
+//		}
+//		set {
+//			dgmpp_character_set_structure(handle, newValue?.handle)
+//		}
+//	}
 	
 	public func setSkillLevels(_ level: Int) {
 		dgmpp_character_set_skill_levels(handle, Int32(level))

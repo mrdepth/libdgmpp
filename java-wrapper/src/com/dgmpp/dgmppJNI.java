@@ -298,6 +298,7 @@ public class dgmppJNI {
   public final static native double Ship_probeSize(long jarg1, Ship jarg1_);
   public final static native double Ship_scanResolution(long jarg1, Ship jarg1_);
   public final static native void delete_Ship(long jarg1);
+  public final static native long new_Structure(int jarg1);
   public final static native int Structure_fuelBlockTypeID(long jarg1, Structure jarg1_);
   public final static native long Structure_fuelUse(long jarg1, Structure jarg1_);
   public final static native void delete_Structure(long jarg1);
@@ -354,8 +355,6 @@ public class dgmppJNI {
   public final static native void delete_Skill(long jarg1);
   public final static native long Character_ship__SWIG_0(long jarg1, Character jarg1_);
   public final static native long Character_ship__SWIG_1(long jarg1, Character jarg1_, int jarg2);
-  public final static native long Character_structure__SWIG_0(long jarg1, Character jarg1_);
-  public final static native long Character_structure__SWIG_1(long jarg1, Character jarg1_, int jarg2);
   public final static native void Character_setSkillLevels(long jarg1, Character jarg1_, int jarg2);
   public final static native long Character_addImplant__SWIG_0(long jarg1, Character jarg1_, int jarg2, boolean jarg3);
   public final static native long Character_addImplant__SWIG_1(long jarg1, Character jarg1_, int jarg2);

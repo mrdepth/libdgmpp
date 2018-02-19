@@ -258,9 +258,6 @@ using namespace dgmpp;
 
 }
 
-- (void)testShips {
-}
-
 - (void) testCopy {
 	auto gang = Gang::Create();
 	auto pilotA = gang->addPilot();
@@ -378,6 +375,30 @@ using namespace dgmpp;
 	capBooster->state(Module::State::offline);
 	auto lasts1 = ship->capacitor().lastsTime().count();
 	XCTAssertGreaterThan(lasts0, lasts1);
+}
+
+- (void) testStructure {
+	auto structure = Structure::Create(TypeID::astrahus);
+	auto hi0 = structure->freeSlots(Module::Slot::hi);
+	auto med0 = structure->freeSlots(Module::Slot::med);
+	auto low0 = structure->freeSlots(Module::Slot::low);
+	auto pg0 = structure->usedPowerGrid();
+	auto cpu0 = structure->usedCPU();
+	structure->add(Module::Create(TypeID::standupXLEnergyNeutralizerII));
+	structure->add(Module::Create(TypeID::standupCapBatteryII));
+	structure->add(Module::Create(TypeID::standupCapacitorPowerRelayII));
+	
+	auto hi1 = structure->freeSlots(Module::Slot::hi);
+	auto med1 = structure->freeSlots(Module::Slot::med);
+	auto low1 = structure->freeSlots(Module::Slot::low);
+	auto pg1 = structure->usedPowerGrid();
+	auto cpu1 = structure->usedCPU();
+
+	XCTAssertEqual(hi0, hi1 + 1);
+	XCTAssertEqual(med0, med1 + 1);
+	XCTAssertEqual(low0, low1 + 1);
+	XCTAssertLessThan(pg0, pg1);
+	XCTAssertLessThan(cpu0, cpu1);
 }
 
 

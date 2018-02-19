@@ -35,6 +35,10 @@ public class Structure extends Ship {
     super.delete();
   }
 
+  public Structure(int typeID) {
+    this(dgmppJNI.new_Structure(typeID), true);
+  }
+
   public int fuelBlockTypeID() {
     return dgmppJNI.Structure_fuelBlockTypeID(swigCPtr, this);
   }

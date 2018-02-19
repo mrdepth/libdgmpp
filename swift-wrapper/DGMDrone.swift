@@ -15,6 +15,9 @@ public class DGMDrone: DGMType, Codable {
 		case heavy
 		case light
 		case support
+		case standupHeavy
+		case standupLight
+		case standupSupport
 	}
 
 	

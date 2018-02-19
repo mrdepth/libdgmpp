@@ -33,3 +33,10 @@ dgmpp_type_id dgmpp_structure_get_fuel_block_type_id (dgmpp_type structure) {
 dgmpp_fuel_units_per_hour dgmpp_structure_get_fuel_use (dgmpp_type structure) {
 	return reinterpret_cast<Structure*>(structure)->fuelUse() * 1h;
 }
+
+dgmpp_type dgmpp_structure_get_area (dgmpp_type structure) {
+	return reinterpret_cast<Structure*>(structure)->area();
+}
+void dgmpp_structure_set_area (dgmpp_type structure, dgmpp_type area) {
+	reinterpret_cast<Structure*>(structure)->area(get_unique_ptr<Area>(area));
+}
