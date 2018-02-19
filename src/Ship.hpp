@@ -177,6 +177,9 @@ namespace dgmpp {
 		virtual bool isDisallowedAssistance_() override;
 		virtual bool isDisallowedOffense_() override;
 
+		Area* area_() const noexcept { return areaValue_.get(); }
+		Area* area_(std::unique_ptr<Area>&& area);
+
 	private:
 		friend class Character;
 		friend class Capacitor;
@@ -200,8 +203,6 @@ namespace dgmpp {
 				return {CategoryID::drone};
 		}()};
 		
-		Area* area_() const noexcept { return areaValue_.get(); }
-		Area* area_(std::unique_ptr<Area>&& area);
 		
 		std::optional<bool> isDisallowedAssistanceValue_;
 		std::optional<bool> isDisallowedOffenseValue_;

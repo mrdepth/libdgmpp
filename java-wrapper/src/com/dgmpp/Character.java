@@ -45,16 +45,6 @@ public class Character extends Type {
     return (cPtr == 0) ? null : new Ship(cPtr, false);
   }
 
-  public Structure structure() {
-    long cPtr = dgmppJNI.Character_structure__SWIG_0(swigCPtr, this);
-    return (cPtr == 0) ? null : new Structure(cPtr, false);
-  }
-
-  public Structure structure(int typeID) {
-    long cPtr = dgmppJNI.Character_structure__SWIG_1(swigCPtr, this, typeID);
-    return (cPtr == 0) ? null : new Structure(cPtr, false);
-  }
-
   public void setSkillLevels(int level) {
     dgmppJNI.Character_setSkillLevels(swigCPtr, this, level);
   }

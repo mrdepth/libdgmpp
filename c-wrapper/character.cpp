@@ -93,9 +93,9 @@ dgmpp_type dgmpp_character_get_ship (dgmpp_type character) {
 	return reinterpret_cast<Character*>(character)->ship();
 }
 
-dgmpp_type dgmpp_character_get_structure (dgmpp_type character) {
-	return reinterpret_cast<Character*>(character)->structure();
-}
+//dgmpp_type dgmpp_character_get_structure (dgmpp_type character) {
+//	return reinterpret_cast<Character*>(character)->structure();
+//}
 
 void dgmpp_character_set_ship (dgmpp_type character, dgmpp_type ship) {
 	if (ship)
@@ -104,12 +104,12 @@ void dgmpp_character_set_ship (dgmpp_type character, dgmpp_type ship) {
 		reinterpret_cast<Character*>(character)->ship(nullptr);
 }
 
-void dgmpp_character_set_structure (dgmpp_type character, dgmpp_type structure) {
-	if (structure)
-		reinterpret_cast<Character*>(character)->structure(get_unique_ptr<Structure>(structure));
-	else
-		reinterpret_cast<Character*>(character)->structure(nullptr);
-}
+//void dgmpp_character_set_structure (dgmpp_type character, dgmpp_type structure) {
+//	if (structure)
+//		reinterpret_cast<Character*>(character)->structure(get_unique_ptr<Structure>(structure));
+//	else
+//		reinterpret_cast<Character*>(character)->structure(nullptr);
+//}
 
 dgmpp_meter dgmpp_character_get_drone_control_distance (dgmpp_type character) {
 	return reinterpret_cast<Character*>(character)->droneControlDistance();

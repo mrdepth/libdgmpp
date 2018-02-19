@@ -31,8 +31,8 @@ namespace dgmpp {
 	public:
 		Ship* ship() const;
 		Ship* ship (TypeID typeID);
-		Structure* structure();
-		Structure* structure (TypeID typeID);
+//		Structure* structure();
+//		Structure* structure (TypeID typeID);
 		
 		void setSkillLevels (int level);
 //		bool factorReload() const noexcept;

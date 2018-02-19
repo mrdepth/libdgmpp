@@ -15,4 +15,8 @@ DGMPP_EXTERN dgmpp_type dgmpp_structure_copy (dgmpp_type structure);
 
 DGMPP_EXTERN dgmpp_type_id 				dgmpp_structure_get_fuel_block_type_id	(dgmpp_type structure);
 DGMPP_EXTERN dgmpp_fuel_units_per_hour	dgmpp_structure_get_fuel_use			(dgmpp_type structure);
+
+DGMPP_EXTERN dgmpp_type		dgmpp_structure_get_area				(dgmpp_type structure);
+DGMPP_EXTERN void			dgmpp_structure_set_area				(dgmpp_type structure, dgmpp_type area);
+
 #endif /* structure_h */
