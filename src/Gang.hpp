@@ -40,7 +40,7 @@ namespace dgmpp {
 		friend class WarfareBuffEffect;
 		friend class Character;
 		std::list<std::unique_ptr<Character>> pilotsList_;
-		bool factorReloadValue_;
+		bool factorReloadValue_ = false;
 		std::unique_ptr<Area> areaValue_;
 
 		Character* add_ (std::unique_ptr<Character>&& pilot);
@@ -54,5 +54,5 @@ namespace dgmpp {
 		Area* area_() const noexcept { return areaValue_.get(); }
 		Area* area_(std::unique_ptr<Area>&& area);
 
-};
+	};
 }

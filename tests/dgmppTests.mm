@@ -238,7 +238,7 @@ using namespace dgmpp;
 
 	XCTAssertGreaterThan(dps1.total(), dps0.total());
 	XCTAssertEqual(dps2.total(), dps0.total());
-	
+	XCTAssertEqualWithAccuracy(dps1.total(), 475, 0.5);
 }
 
 - (void) testArea {
@@ -399,6 +399,120 @@ using namespace dgmpp;
 	XCTAssertEqual(low0, low1 + 1);
 	XCTAssertLessThan(pg0, pg1);
 	XCTAssertLessThan(cpu0, cpu1);
+}
+
+- (void) testVindicator1 {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+
+	auto skills = pilot->skills();
+	(*std::find_if(skills.begin(), skills.end(), [](auto i) { return i->metaInfo().typeID == TypeID::armorRigging; }))->level(4);
+
+	(*std::find_if(skills.begin(), skills.end(), [](auto i) { return i->metaInfo().typeID == TypeID::largeBlasterSpecialization; }))->level(4);
+
+	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+	
+	ship->addModule(TypeID::expandedCargoholdII);
+	ship->addModule(TypeID::expandedCargoholdI);
+	ship->addModule(TypeID::overdriveInjectorSystemI);
+	ship->addModule(TypeID::overdriveInjectorSystemII);
+	ship->addModule(TypeID::largeAntiKineticPumpI);
+	ship->addModule(TypeID::largeAntiThermalPumpII);
+	ship->addModule(TypeID::_500MNMicrowarpdriveII);
+	ship->addModule(TypeID::magneticFieldStabilizerI);
+	ship->addModule(TypeID::magneticFieldStabilizerII);
+	ship->addModule(TypeID::magneticFieldStabilizerII);
+	auto res0 = ship->resistances();
+	ship->addModule(TypeID::largeAntiExplosivePumpII);
+	auto res1 = ship->resistances();
+	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
+	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
+	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
+	auto dps = ship->turretsDPS() * 1s;
+	
+	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
+	XCTAssertEqualWithAccuracy(ship->velocity() * 1s, 890.1, 0.05);
+	XCTAssertEqualWithAccuracy(dps.total(), 351.1, 0.05);
+	
+}
+
+- (void) testVindicator2 {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	
+	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+	
+//	ship->addModule(TypeID::capitalFlexArmorHardenerII)->charge(TypeID::armorExplosiveResistanceScript);
+	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
+	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
+	ship->addModule(TypeID::armorExplosiveHardenerII);
+	auto res0 = ship->resistances();
+	ship->addModule(TypeID::largeAntiExplosivePumpII);
+	auto res1 = ship->resistances();
+	
+	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
+	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.782, 0.0005);
+}
+
+- (void) testVindicator3 {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	
+	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+	
+	ship->addModule(TypeID::reinforcedBulkheadsII);
+	ship->addModule(TypeID::reinforcedBulkheadsII);
+	ship->addModule(TypeID::reinforcedBulkheadsI);
+	ship->addModule(TypeID::inertialStabilizersII);
+	ship->addModule(TypeID::inertialStabilizersII);
+	ship->addModule(TypeID::inertialStabilizersI);
+	ship->addModule(TypeID::_500MNMicrowarpdriveII);
+	ship->addModule(TypeID::expandedCargoholdII);
+
+	auto alignTime = ship->alignTime();
+	
+	XCTAssertEqualWithAccuracy(alignTime.count() / 1000.0, 8.03, 0.005);
+	XCTAssertEqualWithAccuracy(ship->cargoCapacity(), 604.4, 0.05);
+}
+
+- (void) testVindicator4 {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	
+	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+	
+	ship->addModule(TypeID::shieldPowerRelayII);
+	ship->addModule(TypeID::shieldPowerRelayII);
+	ship->addModule(TypeID::shieldPowerRelayI);
+	ship->addModule(TypeID::capacitorFluxCoilII);
+	ship->addModule(TypeID::capacitorFluxCoilII);
+	ship->addModule(TypeID::capacitorFluxCoilI);
+	
+	auto rechargeTime = ship->capacitor().rechargeTime();
+	
+	XCTAssertEqualWithAccuracy(rechargeTime.count() / 1000.0, 488, 0.5);
+}
+
+- (void) testNyx {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::nyx));
+	
+	ship->addModule(TypeID::capitalFlexArmorHardenerII)->charge(TypeID::armorExplosiveResistanceScript);
+	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
+	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
+	ship->addModule(TypeID::armorExplosiveHardenerII);
+	auto res0 = ship->resistances();
+	ship->addModule(TypeID::capitalAntiExplosivePumpII);
+	auto res1 = ship->resistances();
+	
+	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
+	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.856, 0.0005);
 }
 
 
