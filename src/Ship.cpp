@@ -281,8 +281,9 @@ namespace dgmpp {
 		assert(drone != nullptr);
 		auto categoryID = drone->metaInfo().categoryID;
 		for (auto i: supportedDroneCategories()) {
-			if (i == categoryID)
-				return totalDroneSquadron_(drone->squadron()) > 0;
+			if (i == categoryID) {
+				return drone->squadron() == Drone::Squadron::none || totalDroneSquadron_(drone->squadron()) > 0;
+			}
 		}
 		
 		return false;
@@ -388,7 +389,7 @@ namespace dgmpp {
 					return static_cast<std::size_t>(character->attribute_(AttributeID::maxActiveDrones)->value_());
 				}
 				else
-					return 0;
+					return 5;
 		}
 	}
 	
