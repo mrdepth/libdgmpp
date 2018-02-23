@@ -384,21 +384,26 @@ using namespace dgmpp;
 	auto low0 = structure->freeSlots(Module::Slot::low);
 	auto pg0 = structure->usedPowerGrid();
 	auto cpu0 = structure->usedCPU();
+	auto ehp0 = structure->effectiveHitPoints();
+
 	structure->add(Module::Create(TypeID::standupXLEnergyNeutralizerII));
 	structure->add(Module::Create(TypeID::standupCapBatteryII));
 	structure->add(Module::Create(TypeID::standupCapacitorPowerRelayII));
-	
+	structure->add(Module::Create(TypeID::standupLayeredArmorPlatingI));
+
 	auto hi1 = structure->freeSlots(Module::Slot::hi);
 	auto med1 = structure->freeSlots(Module::Slot::med);
 	auto low1 = structure->freeSlots(Module::Slot::low);
 	auto pg1 = structure->usedPowerGrid();
 	auto cpu1 = structure->usedCPU();
+	auto ehp1 = structure->effectiveHitPoints();
 
 	XCTAssertEqual(hi0, hi1 + 1);
 	XCTAssertEqual(med0, med1 + 1);
-	XCTAssertEqual(low0, low1 + 1);
+	XCTAssertEqual(low0, low1 + 2);
 	XCTAssertLessThan(pg0, pg1);
 	XCTAssertLessThan(cpu0, cpu1);
+	XCTAssertLessThan(ehp0.armor, ehp1.armor);
 }
 
 - (void) testVindicator1 {
@@ -514,6 +519,5 @@ using namespace dgmpp;
 	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
 	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.856, 0.0005);
 }
-
 
 @end

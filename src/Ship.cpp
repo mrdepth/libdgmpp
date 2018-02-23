@@ -344,7 +344,7 @@ namespace dgmpp {
 
 	Type* Ship::domain_ (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
-			case MetaInfo::Modifier::Domain::ship :
+			case MetaInfo::Modifier::Domain::ship:
 				return this;
 			default:
 				return Type::domain_(domain);

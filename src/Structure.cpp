@@ -20,4 +20,13 @@ namespace dgmpp {
 		return make_rate(use, 1h);
 	}
 
+	Type* Structure::domain_ (MetaInfo::Modifier::Domain domain) noexcept {
+		switch (domain) {
+			case MetaInfo::Modifier::Domain::structure:
+				return this;
+			default:
+				return Ship::domain_(domain);
+		}
+	}
+
 }

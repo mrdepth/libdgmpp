@@ -23,7 +23,8 @@ namespace dgmpp {
 		Area* area() const noexcept { LOCK(this); return area_(); }
 		Area* area(std::unique_ptr<Area>&& area) { LOCK(this); return area_(std::move(area)); }
 		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
-
+	protected:
+		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
 	private:
 		
 		
