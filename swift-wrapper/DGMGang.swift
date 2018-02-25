@@ -32,10 +32,11 @@ public class DGMGang: DGMType {
 	
 	public var factorReload: Bool {
 		get {
-			return dgmpp_gang_get_factor_reload(handle)
+			return dgmpp_gang_get_factor_reload(handle) != 0
 		}
 		set {
-			dgmpp_gang_set_factor_reload(handle, newValue)
+			
+			dgmpp_gang_set_factor_reload(handle, newValue ? 1 : 0)
 		}
 	}
 	

@@ -16,10 +16,8 @@
 #define DGMPP_EXTERN
 #endif
 
+typedef int8_t dgmpp_bool;
 
-#ifndef OBJC_BOOL_DEFINED
-typedef signed char BOOL;
-#endif
 typedef int dgmpp_type_id;
 typedef int dgmpp_group_id;
 typedef int dgmpp_category_id;
@@ -132,7 +130,11 @@ typedef enum {
 	DGMPP_DRONE_SQUADRON_NONE = 0,
 	DGMPP_DRONE_SQUADRON_HEAVY,
 	DGMPP_DRONE_SQUADRON_LIGHT,
-	DGMPP_DRONE_SQUADRON_SUPPORT
+	DGMPP_DRONE_SQUADRON_SUPPORT,
+	DGMPP_DRONE_SQUADRON_STANDUP_HEAVY,
+	DGMPP_DRONE_SQUADRON_STANDUP_LIGHT,
+	DGMPP_DRONE_SQUADRON_STANDUP_SUPPORT
+
 } DGMPP_DRONE_SQUADRON;
 
 typedef enum {
@@ -211,7 +213,7 @@ typedef struct {
 	size_t quantity;
 } dgmpp_commodity;
 
-DGMPP_EXTERN dgmpp_commodity dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity);
+DGMPP_EXTERN dgmpp_bool dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity, dgmpp_commodity* commodity);
 
 typedef struct {
 	dgmpp_seconds start;
@@ -234,5 +236,12 @@ typedef enum {
 	DGMPP_FACILITY_CATEGORY_COMMAND_CENTER,
 	DGMPP_FACILITY_CATEGORY_SPACEPORT
 } DGMPP_FACILITY_CATEGORY;
+
+typedef struct {
+	size_t build;
+	const char* version;
+} dgmpp_version;
+
+DGMPP_EXTERN dgmpp_version dgmpp_get_version ();
 
 #endif /* utility_h */

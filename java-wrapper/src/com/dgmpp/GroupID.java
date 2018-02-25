@@ -438,7 +438,7 @@ public final class GroupID {
   public final static int structureStargateServiceModule = 1324;
   public final static int structureAdministrationServiceModule = 1325;
   public final static int structureAdvertisementServiceModule = 1326;
-  public final static int structureAXLMissileLauncher = 1327;
+  public final static int structureXLMissileLauncher = 1327;
   public final static int structureGuidedBombLauncher = 1328;
   public final static int structureEnergyNeutralizer = 1329;
   public final static int structureAreaDenialModule = 1330;
@@ -475,7 +475,7 @@ public final class GroupID {
   public final static int structureStasisWebifierScript = 1550;
   public final static int structureWarpDisruptorScript = 1551;
   public final static int structureResistanceSwitcherScript = 1559;
-  public final static int structureASMLMissileLauncher = 1562;
+  public final static int structureMultiroleMissileLauncher = 1562;
   public final static int guidanceDisruptionScript = 1569;
   public final static int structureAssemblyRigMSmallTechIShip = 1570;
   public final static int structureAssemblyRigMMediumTechIShip = 1579;
@@ -520,14 +520,14 @@ public final class GroupID {
   public final static int structureCombatRigMEWprojection = 1619;
   public final static int structureCombatRigMEWCapReduction = 1620;
   public final static int structureCombatRigMMaxTargets = 1621;
-  public final static int structureCombatRigMSensorResolution = 1622;
+  public final static int structureCombatRigMBoostedSensors = 1622;
   public final static int structureCombatRigLMissileApplicationandProjection = 1629;
   public final static int structureCombatRigLEnergyNeutralizerProjectionandCapReduction = 1630;
   public final static int structureCitadelRigLDroneHitpointsandSpeed = 1631;
   public final static int structureCombatRigLEWProjectionandCapReduction = 1632;
   public final static int structureCombatRigLAoELauncherApplicationandProjection = 1633;
   public final static int structureCombatRigLPointDefenseBatteryApplicationandProjection = 1634;
-  public final static int structureCombatRigLMaxTargetsandSensorResolution = 1635;
+  public final static int structureCombatRigLMaxTargetsandSensorBoosting = 1635;
   public final static int structureCombatRigXLMissileandAoEMissile = 1639;
   public final static int structureCitadelRigXLDroneandPDB = 1640;
   public final static int structureCombatRigXLEnergyNeutralizerandEW = 1641;
@@ -639,5 +639,9 @@ public final class GroupID {
   public final static int structureResourceRigMMoonOreReprocessing = 1943;
   public final static int structureResourceRigLReprocessing = 1944;
   public final static int structureResourceRigXLReprocessing = 1945;
+  public final static int structureQAModules = 1962;
+  public final static int structureCapacitorBattery = 1966;
+  public final static int structureCapacitorPowerRelay = 1967;
+  public final static int structureArmorReinforcer = 1968;
 }
 

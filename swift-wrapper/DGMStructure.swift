@@ -26,4 +26,15 @@ public class DGMStructure: DGMShip {
 	public var fuelUse: DGMFuelUnitsPerHour {
 		return DGMFuelUnitsPerHour(dgmpp_structure_get_fuel_use(handle))
 	}
+	
+	public var area: DGMArea? {
+		get {
+			guard let area = dgmpp_structure_get_area(handle) else {return nil}
+			return DGMArea(area)
+		}
+		set {
+			dgmpp_structure_set_area(handle, newValue?.handle)
+		}
+	}
+
 }

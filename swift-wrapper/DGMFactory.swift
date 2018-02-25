@@ -37,7 +37,7 @@ public class DGMFactory: DGMFacility {
 	
 	public var output: DGMCommodity? {
 		var commodity = dgmpp_commodity()
-		guard dgmpp_factory_get_output(handle, &commodity) else {return nil}
+		guard dgmpp_factory_get_output(handle, &commodity) != 0 else {return nil}
 		return DGMCommodity(commodity)
 	}
 	

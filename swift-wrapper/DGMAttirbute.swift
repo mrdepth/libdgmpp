@@ -30,4 +30,9 @@ public class DGMAttribute: DGMObject {
 		return dgmpp_attribute_get_initial_value(handle)
 	}
 
+	#if DEBUG
+	public func dumpAffectors() {
+		dgmpp_attribute_dump_affectors(handle)
+	}
+	#endif
 }

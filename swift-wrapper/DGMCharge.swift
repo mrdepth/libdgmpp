@@ -8,7 +8,7 @@
 import Foundation
 import cwrapper
 
-public class DGMCharge: DGMType {
+public class DGMCharge: DGMType, Codable {
 	public enum Size: Int {
 		case none = 0
 		case small = 1
@@ -29,4 +29,20 @@ public class DGMCharge: DGMType {
 	public var size: Size {
 		return Size(dgmpp_charge_get_charge_size(handle)) ?? .none
 	}
+	
+	
+	public required init(_ handle: dgmpp_handle, owned: Bool) {
+		super.init(handle, owned: owned)
+	}
+	
+	public convenience required init(from decoder: Decoder) throws {
+		let typeID = try decoder.singleValueContainer().decode(DGMTypeID.self)
+		try self.init(typeID: typeID)
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.singleValueContainer()
+		try container.encode(typeID)
+	}
+	
 }

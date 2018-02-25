@@ -21,7 +21,10 @@ namespace dgmpp {
 			none,
 			heavy,
 			light,
-			support
+			support,
+			standupHeavy,
+			standupLight,
+			standupSupport
 		};
 
 		virtual ~Drone();
@@ -56,7 +59,7 @@ namespace dgmpp {
 	protected:
 		virtual void setEnabled_ (bool enabled) override;
 		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
-
+		virtual Type* owner_() const noexcept override { return parent_() ? parent_()->parent_() : nullptr; }
 		struct {
 			bool active : 1;
 			bool kamikaze: 1;
@@ -71,7 +74,6 @@ namespace dgmpp {
 		friend class Capacitor;
 		friend class Gang;
 		
-		
 		SquadronTag squadronTagValue_ {anySquadronTag};
 		const Squadron squadron_ {[this]() {
 			if (attribute_(AttributeID::fighterSquadronIsHeavy))
@@ -80,6 +82,12 @@ namespace dgmpp {
 				return Squadron::light;
 			else if (attribute_(AttributeID::fighterSquadronIsSupport))
 				return Squadron::support;
+			else if (attribute_(AttributeID::fighterSquadronIsStandupHeavy))
+				return Squadron::standupHeavy;
+			else if (attribute_(AttributeID::fighterSquadronIsStandupLight))
+				return Squadron::standupLight;
+			else if (attribute_(AttributeID::fighterSquadronIsStandupSupport))
+				return Squadron::standupSupport;
 			else
 				return Squadron::none;
 		}()};

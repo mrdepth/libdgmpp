@@ -99,6 +99,13 @@ CREATE TABLE dgmpp.planetSchematicsTypeMap (
 PRIMARY KEY ("schematicID","typeID")
 );
 
+DROP TABLE IF EXISTS dgmpp.version;
+CREATE TABLE dgmpp.version (
+"build"  INTEGER NOT NULL,
+"version"  TEXT,
+PRIMARY KEY ("build")
+);
+
 INSERT INTO dgmpp.invGroups SELECT groupID, categoryID, groupName  FROM invGroups;
 INSERT INTO dgmpp.invTypes SELECT typeID, groupID, typeName, radius, mass, volume, capacity, portionSize, raceID, published FROM invTypes;
 INSERT INTO dgmpp.dgmAttributeTypes SELECT attributeID, attributeName, displayName, maxAttributeID, defaultValue, stackable, highIsGood, categoryID FROM dgmAttributeTypes ORDER BY attributeID;
@@ -109,6 +116,7 @@ INSERT INTO dgmpp.dgmEffects SELECT effectID, effectName, effectCategory, isOffe
 INSERT INTO dgmpp.planetSchematics SELECT * FROM planetSchematics;
 INSERT INTO dgmpp.planetSchematicsPinMap SELECT * FROM planetSchematicsPinMap;
 INSERT INTO dgmpp.planetSchematicsTypeMap SELECT * FROM planetSchematicsTypeMap;
+INSERT INTO dgmpp.version SELECT * FROM version;
 
 CREATE INDEX dgmpp.invGroups_categoryID ON "invGroups" ("categoryID" ASC);
 CREATE INDEX dgmpp.invTypes_groupID_published ON "invTypes" ("groupID" ASC, "published" ASC);

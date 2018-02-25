@@ -20,7 +20,7 @@ dgmpp_cubic_meter dgmpp_state_get_volume (dgmpp_state state) {
 	return reinterpret_cast<State*>(state)->volume();
 }
 
-BOOL dgmpp_production_state_get_cycle (dgmpp_state state, dgmpp_production_cycle* cycle) {
+dgmpp_bool dgmpp_production_state_get_cycle (dgmpp_state state, dgmpp_production_cycle* cycle) {
 	if (auto c = reinterpret_cast<ProductionState*>(state)->cycle) {
 		*cycle = dgmpp_production_cycle_impl(*c);
 		return true;

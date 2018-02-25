@@ -58,7 +58,7 @@ void dgmpp_facility_add_commodity (dgmpp_facility facility, dgmpp_commodity comm
 	reinterpret_cast<Facility*>(facility)->add(dgmpp::Commodity(static_cast<TypeID>(commodity.type_id), commodity.quantity));
 }
 
-BOOL dgmpp_facility_extract_commodity (dgmpp_facility facility, dgmpp_commodity commodity) {
+dgmpp_bool dgmpp_facility_extract_commodity (dgmpp_facility facility, dgmpp_commodity commodity) {
 	try {
 		reinterpret_cast<Facility*>(facility)->extract(dgmpp::Commodity(static_cast<TypeID>(commodity.type_id), commodity.quantity));
 		return true;
@@ -89,7 +89,7 @@ dgmpp_array dgmpp_facility_copy_outputs (dgmpp_facility facility) {
 }
 
 
-BOOL dgmpp_facility_is_configured (dgmpp_facility facility) {
+dgmpp_bool dgmpp_facility_is_configured (dgmpp_facility facility) {
 	return reinterpret_cast<Facility*>(facility)->configured();
 }
 

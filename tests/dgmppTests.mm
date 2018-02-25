@@ -258,9 +258,6 @@ using namespace dgmpp;
 
 }
 
-- (void)testShips {
-}
-
 - (void) testCopy {
 	auto gang = Gang::Create();
 	auto pilotA = gang->addPilot();
@@ -346,6 +343,62 @@ using namespace dgmpp;
 	
 	XCTAssertGreaterThan(volley1.total(), volley0.total());
 	XCTAssertGreaterThan(volley2.total(), volley1.total());
+}
+
+- (void) testCapBooster {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::loki));
+	
+	ship->addModule(TypeID::lokiCoreImmobilityDrivers);
+	ship->addModule(TypeID::lokiDefensiveCovertReconfiguration);
+	ship->addModule(TypeID::lokiOffensiveProjectileScopingArray);
+	ship->addModule(TypeID::lokiPropulsionWakeLimiter);
+	
+	ship->addModule(TypeID::gyrostabilizerII);
+	ship->addModule(TypeID::gyrostabilizerII);
+
+	ship->addModule(TypeID::adaptiveInvulnerabilityFieldII);
+	ship->addModule(TypeID::pithXTypeLargeShieldBooster);
+	ship->addModule(TypeID::_100MNYS8CompactAfterburner);
+	auto capBooster = ship->addModule(TypeID::ammatarNavyMediumCapacitorBooster);
+	capBooster->charge(TypeID::navyCapBooster800);
+	ship->addModule(TypeID::caldariNavyStasisWebifier);
+	ship->addModule(TypeID::caldariNavyWarpDisruptor);
+	ship->addModule(TypeID::caldariNavyStasisWebifier);
+	
+	for (int i = 0; i < 5; i++)
+		ship->addModule(TypeID::_425mmAutoCannonII)->charge(TypeID::republicFleetEMPM);
+	
+	auto lasts0 = ship->capacitor().lastsTime().count();
+	capBooster->state(Module::State::offline);
+	auto lasts1 = ship->capacitor().lastsTime().count();
+	XCTAssertGreaterThan(lasts0, lasts1);
+}
+
+- (void) testStructure {
+	auto structure = Structure::Create(TypeID::astrahus);
+	auto hi0 = structure->freeSlots(Module::Slot::hi);
+	auto med0 = structure->freeSlots(Module::Slot::med);
+	auto low0 = structure->freeSlots(Module::Slot::low);
+	auto pg0 = structure->usedPowerGrid();
+	auto cpu0 = structure->usedCPU();
+	structure->add(Module::Create(TypeID::standupXLEnergyNeutralizerII));
+	structure->add(Module::Create(TypeID::standupCapBatteryII));
+	structure->add(Module::Create(TypeID::standupCapacitorPowerRelayII));
+	
+	auto hi1 = structure->freeSlots(Module::Slot::hi);
+	auto med1 = structure->freeSlots(Module::Slot::med);
+	auto low1 = structure->freeSlots(Module::Slot::low);
+	auto pg1 = structure->usedPowerGrid();
+	auto cpu1 = structure->usedCPU();
+
+	XCTAssertEqual(hi0, hi1 + 1);
+	XCTAssertEqual(med0, med1 + 1);
+	XCTAssertEqual(low0, low1 + 1);
+	XCTAssertLessThan(pg0, pg1);
+	XCTAssertLessThan(cpu0, cpu1);
 }
 
 

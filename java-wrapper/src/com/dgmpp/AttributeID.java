@@ -2402,6 +2402,21 @@ public final class AttributeID {
   public final static int stealthBomberLauncherCPU = 2732;
   public final static int npcStructureStasisWebificationBonus = 2735;
   public final static int npcStructureEnergyWarfareBonus = 2736;
+  public final static int fighterStandupLightSlots = 2737;
+  public final static int fighterStandupSupportSlots = 2738;
+  public final static int fighterStandupHeavySlots = 2739;
+  public final static int fighterSquadronIsStandupLight = 2740;
+  public final static int fighterSquadronIsStandupSupport = 2741;
+  public final static int fighterSquadronIsStandupHeavy = 2742;
+  public final static int structureFullPowerStateHitpointMultiplier = 2743;
+  public final static int serviceModuleFullPowerStateHitpointMultiplier = 2744;
+  public final static int durationTargetWarpableBeacon = 2745;
+  public final static int resistanceMultiplier = 2746;
+  public final static int stasisWebRangeBonus = 2747;
+  public final static int structureRigMaxTargetRangeBonus = 2748;
+  public final static int structureAoERoFRoleBonus = 2749;
+  public final static int hiddenMissileDamageMultiplier = 2750;
+  public final static int hiddenArmorHPMultiplier = 2751;
   public final static int tacticalModes = 10000;
   public final static int chargedArmorDamageMultiplierPostDiv = 10002;
 }

@@ -8,13 +8,16 @@
 import Foundation
 import cwrapper
 
-public class DGMDrone: DGMType {
+public class DGMDrone: DGMType, Codable {
 	
 	public enum Squadron: Int {
 		case none
 		case heavy
 		case light
 		case support
+		case standupHeavy
+		case standupLight
+		case standupSupport
 	}
 
 	
@@ -29,23 +32,23 @@ public class DGMDrone: DGMType {
 
 	public var isActive: Bool {
 		get {
-			return dgmpp_drone_is_active(handle)
+			return dgmpp_drone_is_active(handle) != 0
 		}
 		set {
-			dgmpp_drone_set_active(handle, newValue)
+			dgmpp_drone_set_active(handle, newValue ? 1 : 0)
 		}
 	}
 	
 	public var hasKamikazeAbility: Bool {
-		return dgmpp_drone_has_kamikaze_ability(handle)
+		return dgmpp_drone_has_kamikaze_ability(handle) != 0
 	}
 
 	public var isKamikaze: Bool {
 		get {
-			return dgmpp_drone_is_kamikaze(handle)
+			return dgmpp_drone_is_kamikaze(handle) != 0
 		}
 		set {
-			dgmpp_drone_set_kamikaze(handle, newValue)
+			dgmpp_drone_set_kamikaze(handle, newValue ? 1 : 0)
 		}
 	}
 
@@ -106,6 +109,41 @@ public class DGMDrone: DGMType {
 
 	public var velocity: DGMMetersPerSecond {
 		return DGMCubicMeterPerSecond(dgmpp_drone_get_velocity(handle))
+	}
+
+	
+	public required init(_ handle: dgmpp_handle, owned: Bool) {
+		super.init(handle, owned: owned)
+	}
+	
+	public convenience required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
+		
+		try self.init(typeID: typeID)
+
+		isActive = try container.decode(Bool.self, forKey: .isActive)
+		isKamikaze = try container.decode(Bool.self, forKey: .isKamikaze)
+		
+		if let identifier = try container.decodeIfPresent(Int.self, forKey: .identifier) {
+			self.identifier = identifier
+		}
+
+	}
+	
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(typeID, forKey: .typeID)
+		try container.encode(isActive, forKey: .isActive)
+		try container.encode(isKamikaze, forKey: .isKamikaze)
+		try container.encode(identifier, forKey: .identifier)
+	}
+	
+	enum CodingKeys: String, CodingKey {
+		case typeID
+		case isActive
+		case isKamikaze
+		case identifier
 	}
 
 }

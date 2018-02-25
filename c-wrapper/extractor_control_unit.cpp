@@ -48,7 +48,7 @@ void dgmpp_ecu_set_quantity_per_cycle (dgmpp_facility facility, size_t quantity_
 	reinterpret_cast<ExtractorControlUnit*>(facility)->quantityPerCycle(quantity_per_cycle);
 }
 
-BOOL dgmpp_ecu_get_output (dgmpp_facility facility, dgmpp_commodity* commodity) {
+dgmpp_bool dgmpp_ecu_get_output (dgmpp_facility facility, dgmpp_commodity* commodity) {
 	if (auto output = reinterpret_cast<ExtractorControlUnit*>(facility)->output()) {
 		*commodity = dgmpp_commodity_impl(*output);
 		return true;

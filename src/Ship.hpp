@@ -160,7 +160,7 @@ namespace dgmpp {
 			return static_cast<RaceID>(static_cast<int>(attribute_(AttributeID::raceID)->value_()));
 		}()};
 
-		Ship (TypeID typeID): Type(typeID), capacitor_(*this), heatSimulator_(*this) {};
+		Ship (TypeID typeID);
 		Ship (const Ship& other);
 		
 		virtual void setEnabled_ (bool enabled) override;
@@ -176,6 +176,9 @@ namespace dgmpp {
 
 		virtual bool isDisallowedAssistance_() override;
 		virtual bool isDisallowedOffense_() override;
+
+		Area* area_() const noexcept { return areaValue_.get(); }
+		Area* area_(std::unique_ptr<Area>&& area);
 
 	private:
 		friend class Character;
@@ -200,8 +203,6 @@ namespace dgmpp {
 				return {CategoryID::drone};
 		}()};
 		
-		Area* area_() const noexcept { return areaValue_.get(); }
-		Area* area_(std::unique_ptr<Area>&& area);
 		
 		std::optional<bool> isDisallowedAssistanceValue_;
 		std::optional<bool> isDisallowedOffenseValue_;

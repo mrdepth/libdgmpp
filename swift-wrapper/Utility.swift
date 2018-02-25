@@ -12,7 +12,8 @@ public enum DGMError: Error {
 	case typeNotFound(DGMTypeID)
 	case cannotFit(DGMType)
 	case invalidFacility(DGMTypeID)
-	case NotEnoughCommodities
+	case notEnoughCommodities
+	case invalidFormat
 }
 
 public typealias DGMTypeID = Int
@@ -163,8 +164,10 @@ public struct DGMCommodity {
 		return volume * DGMCubicMeter(quantity)
 	}
 	
-	public init(typeID: DGMTypeID, quantity: Int) {
-		self.init(dgmpp_commodity_create(dgmpp_type_id(typeID), quantity))
+	public init(typeID: DGMTypeID, quantity: Int) throws {
+		var commodity = dgmpp_commodity()
+		guard dgmpp_commodity_create(dgmpp_type_id(typeID), quantity, &commodity) != 0 else { throw DGMError.typeNotFound(typeID)}
+		self.init(commodity)
 	}
 }
 
@@ -190,4 +193,161 @@ public struct DGMRoute {
 		self.commodity = commodity
 	}
 }
+
+public struct DGMVersion {
+	var build: Int
+	var version: String
+	static let current: DGMVersion = {
+		let version = dgmpp_get_version()
+		return DGMVersion(build: version.build, version: String(cString: version.version))
+	}()
+}
+
+extension DGMShip {
+	public convenience init(uniformString: String) throws {
+		
+		let components = uniformString.components(separatedBy: "|")
+		guard components.count == 3 else {throw DGMError.invalidFormat}
+		guard let typeID = DGMTypeID(components[0]) else {throw DGMError.invalidFormat}
+		
+		try self.init(typeID: typeID)
+		
+		var modules = [DGMModule.Slot: [DGMModule]]()
+		
+		try components[1].components(separatedBy: ";").forEach { row in
+			let components = row.components(separatedBy: ":")
+			guard components.count == 3 else {return}
+			guard let typeID = Int(components[0]) else {return}
+			
+			let chargeID = Int(components[1])
+			let count = Int(components[2]) ?? 1
+			
+			for _ in 0..<count {
+				let module = try DGMModule(typeID: typeID)
+				if let chargeID = chargeID {
+					try module.setCharge(DGMCharge(typeID: chargeID))
+				}
+				modules[module.slot, default : []].append(module)
+			}
+		}
+		try modules.sorted { $0.key.rawValue > $1.key.rawValue }.forEach {
+			try $0.value.forEach { i in
+				try add(i)
+				i.state = .active
+				
+			}
+		}
+		
+		try components[2].components(separatedBy: ";").forEach { row in
+			let components = row.components(separatedBy: ":")
+			guard components.count == 2 else {return}
+			guard let typeID = Int(components[0]) else {return}
+			let count = Int(components[1]) ?? 1
+			for _ in 0..<count {
+				try add(DGMDrone(typeID: typeID))
+			}
+		}
+	}
+	
+	public var uniformString: String {
+		var string = "\(typeID)|"
+		var modulesMap = [DGMTypeID: [DGMTypeID: Int]]()
+		
+		for module in modules {
+			modulesMap[module.typeID, default: [:]][module.charge?.typeID ?? 0, default: 0] += 1
+		}
+		string += modulesMap.sorted { $0.key < $1.key }
+			.map { (key, value) -> [String] in
+				return value.sorted {$0.key < $1.key } .map { $0.key == 0 ? "\(key)::\($0.value)" : "\(key):\($0.key):\($0.value)" }
+			}.joined().joined(separator: ";")
+		
+		var dronesMap = [DGMTypeID: Int]()
+		drones.filter {$0.isActive}.forEach {
+			dronesMap[$0.typeID, default: 0] += 1
+		}
+		
+		string += "|" + dronesMap.sorted {$0.key < $1.key}.map {"\($0.key):\($0.value)"}.joined(separator: ";")
+		return string
+	}
+	
+	public convenience init(dna: String) throws {
+		let components = dna.components(separatedBy: ":")
+		guard !components.isEmpty else {throw DGMError.invalidFormat}
+		guard let typeID = DGMTypeID(components[0]) else {throw DGMError.invalidFormat}
+		
+		try self.init(typeID: typeID)
+
+		var modules = [DGMModule]()
+		var charges = [DGMCharge]()
+
+		components.suffix(from: 1).forEach { line in
+			let c = line.components(separatedBy: ";")
+			guard !c.isEmpty else {return}
+			guard let typeID = DGMTypeID(c[0]) else {return}
+			let count = c.count > 1 ? Int(c[1]) ?? 1 : 1
+			
+			
+			do {
+				for _ in 0..<count {
+					let module = try DGMModule(typeID: typeID)
+					try add(module)
+					if !module.chargeGroups.isEmpty {
+						modules.append(module)
+					}
+				}
+			}
+			catch {
+				do {
+					for _ in 0..<count {
+						let drone = try DGMDrone(typeID: typeID)
+						try add(drone)
+					}
+				}
+				catch {
+					do {
+						charges.append(try DGMCharge(typeID: typeID))
+					}
+					catch {
+						
+					}
+				}
+			}
+		}
+		
+		for module in modules {
+			for charge in charges {
+				do {
+					try module.setCharge(DGMCharge(charge))
+					break
+				}
+				catch {
+					
+				}
+			}
+		}
+
+	}
+	
+	public var dna: String {
+		var modules = [DGMModule.Slot: [DGMTypeID: Int]]()
+		var charges = Set<DGMTypeID>()
+		var drones = [DGMTypeID: Int]()
+		
+		self.modules.forEach {
+			modules[$0.slot, default: [:]][$0.typeID, default: 0] += 1
+			if let charge = $0.charge {
+				charges.insert(charge.typeID)
+			}
+		}
+		self.drones.forEach { drones[$0.typeID, default: 0] += 1 }
+		
+		let slots: [DGMModule.Slot] = [.subsystem, .hi, .med, .low, .rig, .service]
+		var array = slots.flatMap { modules[$0] }.joined().map {"\($0.key);\($0.value)"}
+		array.append(contentsOf: drones.map {"\($0.key);\($0.value)"})
+		array.append(contentsOf: charges.map {"\($0);1"})
+		
+		return "\(typeID):\(array.joined(separator: ":")):"
+	}
+}
+
 

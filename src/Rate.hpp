@@ -19,7 +19,7 @@ namespace dgmpp {
 		
 		template<typename Period2>
 		constexpr operator rate<Rep, Period2> () noexcept {
-			using r = std::ratio_divide<typename Period::period::ratio, typename Period2::period::ratio>;
+			using r = std::ratio_divide<typename Period::period::ratio::type, typename Period2::period::ratio::type>;
 			return rate<Rep, Period2>{rep_ * r::den / r::num};
 		};
 		

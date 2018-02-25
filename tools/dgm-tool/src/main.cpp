@@ -1058,6 +1058,25 @@ void dumpSchematics(SQLiteDatabase& database) {
 	
 }
 
+void dumpVersion(SQLiteDatabase& database) {
+	auto result = database.fetch<int, std::string>("select build, version from version");
+	
+	std::cout
+	<< "#pragma once" << std::endl
+	<< "namespace dgmpp {" << std::endl;
+	
+	std::list<std::string> names;
+	
+	if (auto row = result.next()) {
+		auto build = row.get<0>();
+		auto version = row.get<1>();
+		std::cout << "\t" << "const auto version = Version({" << build << ", \"" << version << "\"});" << std::endl;
+	}
+	
+	std::cout << "}" << std::endl;
+	
+}
+
 int main(int argc, const char * argv[]) {
 	if (argc == 3) {
 		std::cout << std::boolalpha;
@@ -1136,6 +1155,10 @@ int main(int argc, const char * argv[]) {
 		}
 		else if (action == "--schematics") {
 			dumpSchematics(database);
+			return 0;
+		}
+		else if (action == "--version") {
+			dumpVersion(database);
 			return 0;
 		}
 	}

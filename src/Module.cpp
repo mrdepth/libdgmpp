@@ -17,6 +17,10 @@ namespace dgmpp {
 	
 	Module::Module (TypeID typeID) : Type(typeID),
 	chargeGroups_ ([this]() -> std::vector<GroupID> {
+		if (!std::any_of(SDE::moduleCategories.begin(), SDE::moduleCategories.end(), [categoryID = metaInfo().categoryID](const auto& i) { return categoryID == i; })) {
+			throw InvalidCategoryID(metaInfo().categoryID);
+		}
+
 		std::vector<GroupID> chargeGroups;
 		
 		for (auto attributeID : SDE::chargeGroupAttributeIDs) {
@@ -114,17 +118,17 @@ namespace dgmpp {
 	}
 	
 	std::vector<Module::State> Module::availableStates_() {
-		if (isEnabled_()) {
-			std::vector<Module::State> states;
-			states.reserve(4);
-			states.push_back(Module::State::offline);
+		std::vector<Module::State> states;
+		states.reserve(4);
+		states.push_back(Module::State::offline);
+		
+		if (canBeOnline_()) {
+			states.push_back(Module::State::online);
 			
-			if (canBeOnline_()) {
-				states.push_back(Module::State::online);
-				
-				bool canBeActive = canBeActive_();
-				
-				if (canBeActive) {
+			bool canBeActive = canBeActive_();
+			
+			if (canBeActive) {
+				if (isEnabled_()) {
 					if (attribute_(AttributeID::activationBlocked)->value_() > 0)
 						canBeActive = false;
 					else if (auto ship = dynamic_cast<Ship*>(parent_())) {
@@ -146,20 +150,18 @@ namespace dgmpp {
 							}
 						}
 					}
-					
-					if (canBeActive) {
-						states.push_back(Module::State::active);
-						if (canBeOverloaded_())
-							states.push_back(Module::State::overloaded);
-					}
+				}
+				
+				if (canBeActive) {
+					states.push_back(Module::State::active);
+					if (canBeOverloaded_())
+						states.push_back(Module::State::overloaded);
 				}
 			}
-			
-			
-			return states;
 		}
-		else
-			return {};
+		
+		
+		return states;
 	}
 	
 	void Module::target_(Ship* target) {
@@ -389,8 +391,8 @@ namespace dgmpp {
 				capNeed = static_cast<GigaJoule>(attribute->value_());
 			if (capNeed == 0.0 && effect_(EffectID::energyNosferatuFalloff) != nullptr)
 				capNeed -= static_cast<GigaJoule>(attribute_(AttributeID::powerTransferAmount)->value_());
-			if (capNeed == 0.0 && effect_(EffectID::powerBooster) != nullptr)
-				capNeed -= static_cast<GigaJoule>(attribute_(AttributeID::capacitorBonus)->value_());
+			if (auto charge = charge_(); charge != nullptr && capNeed == 0.0 && effect_(EffectID::powerBooster) != nullptr)
+				capNeed -= static_cast<GigaJoule>(charge->attribute_(AttributeID::capacitorBonus)->value_());
 			return make_rate(capNeed, cycleTime_());
 		}
 		return GigaJoulePerSecond(0);

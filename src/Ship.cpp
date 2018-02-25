@@ -15,6 +15,12 @@
 
 namespace dgmpp {
 	
+	Ship::Ship (TypeID typeID): Type(typeID), capacitor_(*this), heatSimulator_(*this) {
+		if (!std::any_of(SDE::shipCategories.begin(), SDE::shipCategories.end(), [categoryID = metaInfo().categoryID](const auto& i) { return categoryID == i; })) {
+			throw InvalidCategoryID(metaInfo().categoryID);
+		}
+	}
+	
 	Ship::Ship (const Ship& other): Type(other), capacitor_(*this), heatSimulator_(*this) {
 		damagePatternValue_ = other.damagePatternValue_;
 		nameValue_ = other.nameValue_;
@@ -103,6 +109,18 @@ namespace dgmpp {
 		
 		if (canFit(drone.get())) {
 			
+			auto squadron = drone->squadron();
+			auto active = false;
+			
+			if (totalDroneSquadron(squadron) - usedDroneSquadron(squadron) > 0) {
+				if (squadron == Drone::Squadron::none) {
+					active = true;
+				}
+				else if (totalFighterLaunchTubes() - usedFighterLaunchTubes() > 0) {
+					active = true;
+				}
+			}
+			
 			if (squadronTag == Drone::anySquadronTag) {
 				auto range = equal_range(dronesSet_, std::make_tuple(drone->metaInfo().typeID));
 				
@@ -131,7 +149,7 @@ namespace dgmpp {
 					}
 					
 					if (size < std::get<std::unique_ptr<Drone>>(*squadron)->squadronSize_) {
-						drone->active_(std::get<std::unique_ptr<Drone>>(*squadron)->active_());
+						active = std::get<std::unique_ptr<Drone>>(*squadron)->active_();
 					}
 					else
 						squadronTag++;
@@ -142,6 +160,7 @@ namespace dgmpp {
 				}
 				
 			}
+			drone->active(active);
 			auto ptr = drone.get();
 			ptr->squadronTag_(squadronTag);
 			dronesSet_.emplace(ptr->metaInfo().typeID, squadronTag, std::move(drone));
@@ -263,8 +282,9 @@ namespace dgmpp {
 		auto categoryID = drone->metaInfo().categoryID;
 		for (auto i: supportedDroneCategories()) {
 			if (i == categoryID)
-				return true;
+				return totalDroneSquadron_(drone->squadron()) > 0;
 		}
+		
 		return false;
 	}
 	
@@ -334,11 +354,35 @@ namespace dgmpp {
 	std::size_t Ship::totalDroneSquadron_ (Drone::Squadron squadron) {
 		switch (squadron) {
 			case Drone::Squadron::heavy:
-				return static_cast<std::size_t>(attribute_(AttributeID::fighterHeavySlots)->value_());
+				if (auto attribute = attribute_(AttributeID::fighterHeavySlots))
+					return attribute->value();
+				else
+					return 0;
 			case Drone::Squadron::light:
-				return static_cast<std::size_t>(attribute_(AttributeID::fighterLightSlots)->value_());
+				if (auto attribute = attribute_(AttributeID::fighterLightSlots))
+					return attribute->value();
+				else
+					return 0;
 			case Drone::Squadron::support:
-				return static_cast<std::size_t>(attribute_(AttributeID::fighterSupportSlots)->value_());
+				if (auto attribute = attribute_(AttributeID::fighterSupportSlots))
+					return attribute->value();
+				else
+					return 0;
+			case Drone::Squadron::standupHeavy:
+				if (auto attribute = attribute_(AttributeID::fighterStandupHeavySlots))
+					return attribute->value();
+				else
+					return 0;
+			case Drone::Squadron::standupLight:
+				if (auto attribute = attribute_(AttributeID::fighterStandupLightSlots))
+					return attribute->value();
+				else
+					return 0;
+			case Drone::Squadron::standupSupport:
+				if (auto attribute = attribute_(AttributeID::fighterStandupSupportSlots))
+					return attribute->value();
+				else
+					return 0;
 			default:
 				if (auto character = domain_(MetaInfo::Modifier::Domain::character)) {
 					return static_cast<std::size_t>(character->attribute_(AttributeID::maxActiveDrones)->value_());
