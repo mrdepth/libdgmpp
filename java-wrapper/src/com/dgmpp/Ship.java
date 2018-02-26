@@ -51,13 +51,13 @@ public class Ship extends Type {
     return new DamageVector(dgmppJNI.Ship_damagePattern__SWIG_1(swigCPtr, this), false);
   }
 
-  public Module addModule(int typeID, boolean ignoringRequirements, int socket) {
-    long cPtr = dgmppJNI.Ship_addModule__SWIG_0(swigCPtr, this, typeID, ignoringRequirements, socket);
+  public Module addModule(int typeID, int socket, boolean ignoringRequirements) {
+    long cPtr = dgmppJNI.Ship_addModule__SWIG_0(swigCPtr, this, typeID, socket, ignoringRequirements);
     return (cPtr == 0) ? null : new Module(cPtr, false);
   }
 
-  public Module addModule(int typeID, boolean ignoringRequirements) {
-    long cPtr = dgmppJNI.Ship_addModule__SWIG_1(swigCPtr, this, typeID, ignoringRequirements);
+  public Module addModule(int typeID, int socket) {
+    long cPtr = dgmppJNI.Ship_addModule__SWIG_1(swigCPtr, this, typeID, socket);
     return (cPtr == 0) ? null : new Module(cPtr, false);
   }
 
@@ -84,12 +84,16 @@ public class Ship extends Type {
     dgmppJNI.Ship_remove__SWIG_1(swigCPtr, this, Drone.getCPtr(drone), drone);
   }
 
+  public boolean canFit(int typeID) {
+    return dgmppJNI.Ship_canFit__SWIG_0(swigCPtr, this, typeID);
+  }
+
   public boolean canFit(Module module) {
-    return dgmppJNI.Ship_canFit__SWIG_0(swigCPtr, this, Module.getCPtr(module), module);
+    return dgmppJNI.Ship_canFit__SWIG_1(swigCPtr, this, Module.getCPtr(module), module);
   }
 
   public boolean canFit(Drone drone) {
-    return dgmppJNI.Ship_canFit__SWIG_1(swigCPtr, this, Drone.getCPtr(drone), drone);
+    return dgmppJNI.Ship_canFit__SWIG_2(swigCPtr, this, Drone.getCPtr(drone), drone);
   }
 
   public Modules modules(int slot) {

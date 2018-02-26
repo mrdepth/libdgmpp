@@ -58,11 +58,12 @@ namespace dgmpp {
 		const DamageVector& damagePattern() const noexcept;
 		
 		//Fitting
-		Module* addModule (TypeID typeID, bool ignoringRequirements = false, Module::Socket socket = Module::anySocket);
+		Module* addModule (TypeID typeID, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false);
 		Drone* addDrone (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
 		
 		void remove (Module* module);
 		void remove (Drone* drone);
+	    bool canFit (TypeID typeID);
 		bool canFit (Module* module);
 		bool canFit (Drone* drone);
 		std::vector<Module*> modules (Module::Slot slot) const;
