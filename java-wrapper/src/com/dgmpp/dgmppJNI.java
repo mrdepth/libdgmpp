@@ -226,8 +226,8 @@ public class dgmppJNI {
   public final static native int Ship_rigSize(long jarg1, Ship jarg1_);
   public final static native void Ship_damagePattern__SWIG_0(long jarg1, Ship jarg1_, long jarg2, DamageVector jarg2_);
   public final static native long Ship_damagePattern__SWIG_1(long jarg1, Ship jarg1_);
-  public final static native long Ship_addModule__SWIG_0(long jarg1, Ship jarg1_, int jarg2, boolean jarg3, int jarg4);
-  public final static native long Ship_addModule__SWIG_1(long jarg1, Ship jarg1_, int jarg2, boolean jarg3);
+  public final static native long Ship_addModule__SWIG_0(long jarg1, Ship jarg1_, int jarg2, int jarg3, boolean jarg4);
+  public final static native long Ship_addModule__SWIG_1(long jarg1, Ship jarg1_, int jarg2, int jarg3);
   public final static native long Ship_addModule__SWIG_2(long jarg1, Ship jarg1_, int jarg2);
   public final static native long Ship_addDrone__SWIG_0(long jarg1, Ship jarg1_, int jarg2, int jarg3);
   public final static native long Ship_addDrone__SWIG_1(long jarg1, Ship jarg1_, int jarg2);

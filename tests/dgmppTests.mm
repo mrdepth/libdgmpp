@@ -63,10 +63,10 @@ using namespace dgmpp;
 	XCTAssertEqual(low0, low2);
 	XCTAssertEqual(turrets0, turrets2);
 
-	auto launchers0 = ship->freeHardpoints(Module::Hardpoint::launcher);
-	ship->addModule(TypeID::lightMissileLauncherII);
-	auto launchers1 = ship->freeHardpoints(Module::Hardpoint::launcher);
-	XCTAssertEqual(launchers0, launchers1 + 1);
+//	auto launchers0 = ship->freeHardpoints(Module::Hardpoint::launcher);
+//	ship->addModule(TypeID::lightMissileLauncherII);
+//	auto launchers1 = ship->freeHardpoints(Module::Hardpoint::launcher);
+//	XCTAssertEqual(launchers0, launchers1 + 1);
 
 }
 
@@ -518,6 +518,22 @@ using namespace dgmpp;
 	
 	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
 	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.856, 0.0005);
+}
+
+- (void) testCyno {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::drake));
+	try {
+		ship->addModule(TypeID::covertCynosuralFieldGeneratorI);
+		XCTFail("Error");
+	}
+	catch(...) {
+	}
+	ship = pilot->ship(TypeID::sin);
+	ship->addModule(TypeID::covertCynosuralFieldGeneratorI);
+
 }
 
 @end
