@@ -107,4 +107,6 @@ namespace dgmpp {
 			return *get<TypeID>(facilities, typeID);
 		}
 	}
+	
+	const auto version = Version({2, 0, sdeVersion});
 }

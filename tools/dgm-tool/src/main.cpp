@@ -1070,7 +1070,7 @@ void dumpVersion(SQLiteDatabase& database) {
 	if (auto row = result.next()) {
 		auto build = row.get<0>();
 		auto version = row.get<1>();
-		std::cout << "\t" << "const auto version = Version({" << build << ", \"" << version << "\"});" << std::endl;
+		std::cout << "\t" << "const auto sdeVersion = SDEVersion({" << build << ", \"" << version << "\"});" << std::endl;
 	}
 	
 	std::cout << "}" << std::endl;
