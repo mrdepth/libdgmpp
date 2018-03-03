@@ -536,4 +536,50 @@ using namespace dgmpp;
 
 }
 
+- (void) testProteus {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::proteus));
+	auto modules = {
+		ship->addModule(TypeID::_10MNAfterburnerI, Module::anySocket, true),
+		ship->addModule(TypeID::mediumShieldBoosterII, Module::anySocket, true),
+		ship->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true),
+		ship->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true)
+	};
+	for (auto module: modules) {
+		XCTAssertEqual(module->fail(), true);
+	}
+	
+	ship->addModule(TypeID::proteusCoreAugmentedFusionReactor);
+	ship->addModule(TypeID::proteusDefensiveAugmentedPlating);
+	ship->addModule(TypeID::proteusOffensiveDroneSynthesisProjector);
+	ship->addModule(TypeID::proteusPropulsionHyperspatialOptimization);
+	
+	for (auto module: modules) {
+		XCTAssertEqual(module->fail(), false);
+	}
+	
+	auto ship2 = Ship::Create(TypeID::proteus);
+	
+	ship2->addModule(TypeID::proteusCoreAugmentedFusionReactor);
+	ship2->addModule(TypeID::proteusDefensiveAugmentedPlating);
+	ship2->addModule(TypeID::proteusOffensiveDroneSynthesisProjector);
+	ship2->addModule(TypeID::proteusPropulsionHyperspatialOptimization);
+
+	modules = {
+		ship2->addModule(TypeID::_10MNAfterburnerI, Module::anySocket, true),
+		ship2->addModule(TypeID::mediumShieldBoosterII, Module::anySocket, true),
+		ship2->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true),
+		ship2->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true)
+	};
+	
+	pilot->ship(std::move(ship2));
+	
+	for (auto module: modules) {
+		XCTAssertEqual(module->fail(), false);
+	}
+
+}
+
 @end

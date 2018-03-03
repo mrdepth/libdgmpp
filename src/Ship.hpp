@@ -238,7 +238,7 @@ namespace dgmpp {
 		
 		//Resources
 		std::size_t totalSlots_	(Module::Slot slot);
-		std::size_t freeSlots_	(Module::Slot slot) {return totalSlots_(slot) - usedSlots_(slot);}
+		std::size_t freeSlots_	(Module::Slot slot) {return static_cast<std::size_t>(std::fdim(totalSlots_(slot), usedSlots_(slot)));}
 		std::size_t usedSlots_	(Module::Slot slot) {return modulesSlice_(slot).size();}
 		
 		std::size_t totalHardpoints_	(Module::Hardpoint hardpoint);
@@ -302,5 +302,7 @@ namespace dgmpp {
 		ScanType scanType_();
 		Meter probeSize_();
 		Millimeter scanResolution_();
+		
+		void updateSlots_();
 	};
 }

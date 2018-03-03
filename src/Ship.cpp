@@ -56,20 +56,20 @@ namespace dgmpp {
 			std::for_each(dronesSet_.begin(), dronesSet_.end(), [enabled](auto& i) {
 				std::get<std::unique_ptr<Drone>>(i)->setEnabled_(enabled);
 			});
+			updateSlots_();
 		});
 		
 	}
 	
 	Module* Ship::add_ (std::unique_ptr<Module>&& module, Module::Socket socket, bool ignoringRequirements) {
 		assert(module != nullptr);
-		
 		if (ignoringRequirements || canFit_(module.get())) {
 			auto state = module->preferredState_();
 			module->state_(dgmpp::Module::State::unknown);
 			if (socket == Module::anySocket)
 				socket = Module::Socket(0);
 			else
-				socket = std::min(socket, std::max(static_cast<Module::Socket>(totalSlots_(module->slot())) - 1, 0));
+				socket = std::min(socket, std::max(static_cast<Module::Socket>(static_cast<int>(totalSlots_(module->slot()))) - 1, 0));
 			
 			auto l = modulesSet_.lower_bound(std::make_tuple(module->slot(), socket));
 			auto u = modulesSet_.upper_bound(std::make_tuple(module->slot()));
@@ -81,7 +81,6 @@ namespace dgmpp {
 			auto ptr = module.get();
 			ptr->socket_(socket);
 			modulesSet_.emplace_hint(l, module->slot(), socket, std::move(module));
-			
 			batchUpdates_([&]() {
 				ptr->parent_(this);
 				
@@ -97,6 +96,7 @@ namespace dgmpp {
 					ptr->state_(state);
 			});
 			
+			updateSlots_();
 //			resetCache();
 			return ptr;
 		}
@@ -112,11 +112,11 @@ namespace dgmpp {
 			auto squadron = drone->squadron();
 			auto active = false;
 			
-			if (totalDroneSquadron(squadron) - usedDroneSquadron(squadron) > 0) {
+			if (std::fdim(totalDroneSquadron(squadron), usedDroneSquadron(squadron)) > 0) {
 				if (squadron == Drone::Squadron::none) {
 					active = true;
 				}
-				else if (totalFighterLaunchTubes() - usedFighterLaunchTubes() > 0) {
+				else if (std::fdim(totalFighterLaunchTubes(), usedFighterLaunchTubes()) > 0) {
 					active = true;
 				}
 			}
@@ -907,25 +907,7 @@ namespace dgmpp {
 		Type::reset_();
 		isDisallowedAssistanceValue_ = std::nullopt;
 		isDisallowedOffenseValue_ = std::nullopt;
-		const auto slots = {Module::Slot::hi,
-			Module::Slot::med,
-			Module::Slot::low,
-			Module::Slot::rig,
-			Module::Slot::subsystem,
-			Module::Slot::mode,
-			Module::Slot::service,
-			Module::Slot::starbaseStructure};
-		for (auto slot: slots) {
-			auto n = totalSlots_(slot);
-			for (const auto& i: modulesSlice_(slot)) {
-				std::get<std::unique_ptr<Module>>(i)->fail_(n <= 0);
-				n--;
-			}
-		}
-		
-		for (const auto& i: modulesSet_) {
-			std::get<std::unique_ptr<Module>>(i)->adjustState_();
-		}
+		updateSlots_();
 		capacitor_.reset_();
 		heatSimulator_.reset_();
 	}
@@ -990,4 +972,26 @@ namespace dgmpp {
 		return *isDisallowedOffenseValue_;
 	}
 
+	void Ship::updateSlots_() {
+		const auto slots = {Module::Slot::hi,
+			Module::Slot::med,
+			Module::Slot::low,
+			Module::Slot::rig,
+			Module::Slot::subsystem,
+			Module::Slot::mode,
+			Module::Slot::service,
+			Module::Slot::starbaseStructure};
+		for (auto slot: slots) {
+			auto n = static_cast<int>(totalSlots_(slot));
+			for (const auto& i: modulesSlice_(slot)) {
+				std::get<std::unique_ptr<Module>>(i)->fail_(n <= 0);
+				n--;
+			}
+		}
+		
+		
+		for (const auto& i: modulesSet_) {
+			std::get<std::unique_ptr<Module>>(i)->adjustState_();
+		}
+	}
 }

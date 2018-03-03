@@ -29,7 +29,7 @@ namespace dgmpp {
 		
 		Commodity operator- (std::size_t value) const {
 			if (quantity_ < value)
-				throw NotEnoughCommodities(quantity_ - value);
+				throw NotEnoughCommodities(value - quantity_);
 			auto other = Commodity(*this);
 			other.quantity_ -= value;
 			return other;
@@ -42,7 +42,7 @@ namespace dgmpp {
 		
 		Commodity& operator-= (std::size_t value) {
 			if (quantity_ < value)
-				throw NotEnoughCommodities(quantity_ - value);
+				throw NotEnoughCommodities(value - quantity_);
 			quantity_ -= value;
 			return *this;
 		}
@@ -70,7 +70,7 @@ namespace dgmpp {
             assert(metaInfo_.typeID == other.metaInfo_.typeID);
 
             if (quantity_ < other.quantity_)
-                throw NotEnoughCommodities(quantity_ - other.quantity_);
+                throw NotEnoughCommodities(other.quantity_ - quantity_);
             auto result = Commodity(*this);
             result.quantity_ -= other.quantity_;
             return result;
@@ -86,7 +86,7 @@ namespace dgmpp {
 			assert(metaInfo_.typeID == other.metaInfo_.typeID);
 			
 			if (quantity_ < other.quantity_)
-				throw NotEnoughCommodities(quantity_ - other.quantity_);
+				throw NotEnoughCommodities(other.quantity_ - quantity_);
 			quantity_ -= other.quantity_;
 			return *this;
 		}
