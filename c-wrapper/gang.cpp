@@ -23,6 +23,7 @@ dgmpp_type dgmpp_gang_copy (dgmpp_type gang) {
 
 void dgmpp_gang_add_pilot (dgmpp_type gang, dgmpp_type pilot) {
 	reinterpret_cast<Gang*>(gang)->add(get_unique_ptr<Character>(pilot));
+	dgmpp_free(pilot);
 }
 
 void dgmpp_gang_remove_pilot (dgmpp_type gang, dgmpp_type pilot) {
@@ -47,4 +48,5 @@ dgmpp_type dgmpp_gang_get_area (dgmpp_type gang) {
 
 void dgmpp_gang_set_area (dgmpp_type gang, dgmpp_type area) {
 	reinterpret_cast<Gang*>(gang)->area(get_unique_ptr<Area>(area));
+	dgmpp_free(area);
 }

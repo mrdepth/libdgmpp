@@ -39,4 +39,5 @@ dgmpp_type dgmpp_structure_get_area (dgmpp_type structure) {
 }
 void dgmpp_structure_set_area (dgmpp_type structure, dgmpp_type area) {
 	reinterpret_cast<Structure*>(structure)->area(get_unique_ptr<Area>(area));
+	dgmpp_free(area);
 }

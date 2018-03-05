@@ -75,6 +75,7 @@ dgmpp_type dgmpp_module_get_charge (dgmpp_type module) {
 dgmpp_bool dgmpp_module_set_charge (dgmpp_type module, dgmpp_type charge) {
 	try {
 		reinterpret_cast<Module*>(module)->charge(get_unique_ptr<Charge>(charge));
+		dgmpp_free(charge);
 		return true;
 	}
 	catch(...) {
