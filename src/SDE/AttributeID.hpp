@@ -1462,7 +1462,7 @@ namespace dgmpp {
 		ecuOverlapFactor = 1685,
 		systemEffectDamageReduction = 1686,
 		ecuNoiseFactor = 1687,
-		shipBonusPirateFaction2 = 1688,
+		shipBonusRole8 = 1688,
 		ecuAreaOfInfluence = 1689,
 		ecuExtractorHeadCPU = 1690,
 		ecuExtractorHeadPower = 1691,
@@ -2410,6 +2410,13 @@ namespace dgmpp {
 		structureAoERoFRoleBonus = 2749,
 		hiddenMissileDamageMultiplier = 2750,
 		hiddenArmorHPMultiplier = 2751,
+		eliteBonusFlagCruisers1 = 2752,
+		flagCruiserFittingBonusPropMods = 2753,
+		entosisAssistanceImpedanceMultiplier = 2754,
+		targetPainterStrengthModifierFlagCruisers = 2755,
+		targetPainterRangeModifierFlagCruisers = 2756,
+		flagCruiserFittingBonusPainterProbes = 2757,
+		canFitShipType11 = 2758,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
 	};
