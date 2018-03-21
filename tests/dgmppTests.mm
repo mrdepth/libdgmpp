@@ -480,7 +480,7 @@ using namespace dgmpp;
 	auto alignTime = ship->alignTime();
 	
 	XCTAssertEqualWithAccuracy(alignTime.count() / 1000.0, 8.03, 0.005);
-	XCTAssertEqualWithAccuracy(ship->cargoCapacity(), 604.4, 0.05);
+	XCTAssertEqualWithAccuracy(ship->cargoCapacity(), 772.59, 0.05);
 }
 
 - (void) testVindicator4 {
@@ -579,6 +579,23 @@ using namespace dgmpp;
 	for (auto module: modules) {
 		XCTAssertEqual(module->fail(), false);
 	}
+}
+
+- (void) testMonitor {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::monitor));
+	
+	ship->addModule(TypeID::_50MNMicrowarpdriveII);
+	ship->addModule(TypeID::targetPainterII);
+	ship->addModule(TypeID::sistersExpandedProbeLauncher);
+
+	
+	XCTAssertGreaterThan(ship->totalCPU(), ship->usedCPU());
+	XCTAssertGreaterThan(ship->totalPowerGrid(), ship->usedPowerGrid());
+	ship->addModule(TypeID::smallShieldBoosterI);
+	XCTAssertLessThan(ship->totalCPU(), ship->usedCPU());
 
 }
 
