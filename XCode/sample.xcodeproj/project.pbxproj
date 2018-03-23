@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		122E116F1FE7FB760057EB0D /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BE89001FE17D9300854893 /* Dgmpp.framework */; };
+		1246C465203C2D28000E0406 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DBEAA71E1D3B0E0088A486 /* main.cpp */; };
 		1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1248DB3E1F1DE90E009625EC /* QuartzCore.framework */; };
 		1285E8CB201B300100AAC231 /* cwrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1285E8CC201B300100AAC231 /* cwrapper.framework */; };
-		12A2DE4A202B365E00ADF0D6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29E1FE0248600AD4ED3 /* main.swift */; };
 		12BE88E01FE17B0F00854893 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE888B1FE17B0F00854893 /* WarfareBuff.cpp */; };
 		12BE88E11FE17B0F00854893 /* Gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE888E1FE17B0F00854893 /* Gang.cpp */; };
 		12BE88E21FE17B0F00854893 /* Facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88941FE17B0F00854893 /* Facility.cpp */; };
@@ -374,7 +374,6 @@
 				12BE88FB1FE17B0F00854893 /* Type.cpp in Sources */,
 				12BE88E51FE17B0F00854893 /* SDE.cpp in Sources */,
 				12BE88EA1FE17B0F00854893 /* Capacitor.cpp in Sources */,
-				12A2DE4A202B365E00ADF0D6 /* main.swift in Sources */,
 				12BE88F31FE17B0F00854893 /* Attribute.cpp in Sources */,
 				12BE88FD1FE17B0F00854893 /* Planet.cpp in Sources */,
 				12BE88E71FE17B0F00854893 /* Character.cpp in Sources */,
@@ -394,6 +393,7 @@
 				12BE88E41FE17B0F00854893 /* Implant.cpp in Sources */,
 				12BE88F81FE17B0F00854893 /* ProductionCycle.cpp in Sources */,
 				12BE88E61FE17B0F00854893 /* Structure.cpp in Sources */,
+				1246C465203C2D28000E0406 /* main.cpp in Sources */,
 				12BE88F11FE17B0F00854893 /* Effect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

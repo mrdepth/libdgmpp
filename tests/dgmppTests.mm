@@ -63,10 +63,10 @@ using namespace dgmpp;
 	XCTAssertEqual(low0, low2);
 	XCTAssertEqual(turrets0, turrets2);
 
-	auto launchers0 = ship->freeHardpoints(Module::Hardpoint::launcher);
-	ship->addModule(TypeID::lightMissileLauncherII);
-	auto launchers1 = ship->freeHardpoints(Module::Hardpoint::launcher);
-	XCTAssertEqual(launchers0, launchers1 + 1);
+//	auto launchers0 = ship->freeHardpoints(Module::Hardpoint::launcher);
+//	ship->addModule(TypeID::lightMissileLauncherII);
+//	auto launchers1 = ship->freeHardpoints(Module::Hardpoint::launcher);
+//	XCTAssertEqual(launchers0, launchers1 + 1);
 
 }
 
@@ -238,7 +238,7 @@ using namespace dgmpp;
 
 	XCTAssertGreaterThan(dps1.total(), dps0.total());
 	XCTAssertEqual(dps2.total(), dps0.total());
-	
+	XCTAssertEqualWithAccuracy(dps1.total(), 475, 0.5);
 }
 
 - (void) testArea {
@@ -384,22 +384,219 @@ using namespace dgmpp;
 	auto low0 = structure->freeSlots(Module::Slot::low);
 	auto pg0 = structure->usedPowerGrid();
 	auto cpu0 = structure->usedCPU();
+	auto ehp0 = structure->effectiveHitPoints();
+
 	structure->add(Module::Create(TypeID::standupXLEnergyNeutralizerII));
 	structure->add(Module::Create(TypeID::standupCapBatteryII));
 	structure->add(Module::Create(TypeID::standupCapacitorPowerRelayII));
-	
+	structure->add(Module::Create(TypeID::standupLayeredArmorPlatingI));
+
 	auto hi1 = structure->freeSlots(Module::Slot::hi);
 	auto med1 = structure->freeSlots(Module::Slot::med);
 	auto low1 = structure->freeSlots(Module::Slot::low);
 	auto pg1 = structure->usedPowerGrid();
 	auto cpu1 = structure->usedCPU();
+	auto ehp1 = structure->effectiveHitPoints();
 
 	XCTAssertEqual(hi0, hi1 + 1);
 	XCTAssertEqual(med0, med1 + 1);
-	XCTAssertEqual(low0, low1 + 1);
+	XCTAssertEqual(low0, low1 + 2);
 	XCTAssertLessThan(pg0, pg1);
 	XCTAssertLessThan(cpu0, cpu1);
+	XCTAssertLessThan(ehp0.armor, ehp1.armor);
 }
 
+- (void) testVindicator1 {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+
+	auto skills = pilot->skills();
+	(*std::find_if(skills.begin(), skills.end(), [](auto i) { return i->metaInfo().typeID == TypeID::armorRigging; }))->level(4);
+
+	(*std::find_if(skills.begin(), skills.end(), [](auto i) { return i->metaInfo().typeID == TypeID::largeBlasterSpecialization; }))->level(4);
+
+	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+	
+	ship->addModule(TypeID::expandedCargoholdII);
+	ship->addModule(TypeID::expandedCargoholdI);
+	ship->addModule(TypeID::overdriveInjectorSystemI);
+	ship->addModule(TypeID::overdriveInjectorSystemII);
+	ship->addModule(TypeID::largeAntiKineticPumpI);
+	ship->addModule(TypeID::largeAntiThermalPumpII);
+	ship->addModule(TypeID::_500MNMicrowarpdriveII);
+	ship->addModule(TypeID::magneticFieldStabilizerI);
+	ship->addModule(TypeID::magneticFieldStabilizerII);
+	ship->addModule(TypeID::magneticFieldStabilizerII);
+	auto res0 = ship->resistances();
+	ship->addModule(TypeID::largeAntiExplosivePumpII);
+	auto res1 = ship->resistances();
+	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
+	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
+	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
+	auto dps = ship->turretsDPS() * 1s;
+	
+	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
+	XCTAssertEqualWithAccuracy(ship->velocity() * 1s, 890.1, 0.05);
+	XCTAssertEqualWithAccuracy(dps.total(), 351.1, 0.05);
+	
+}
+
+- (void) testVindicator2 {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	
+	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+	
+//	ship->addModule(TypeID::capitalFlexArmorHardenerII)->charge(TypeID::armorExplosiveResistanceScript);
+	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
+	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
+	ship->addModule(TypeID::armorExplosiveHardenerII);
+	auto res0 = ship->resistances();
+	ship->addModule(TypeID::largeAntiExplosivePumpII);
+	auto res1 = ship->resistances();
+	
+	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
+	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.782, 0.0005);
+}
+
+- (void) testVindicator3 {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	
+	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+	
+	ship->addModule(TypeID::reinforcedBulkheadsII);
+	ship->addModule(TypeID::reinforcedBulkheadsII);
+	ship->addModule(TypeID::reinforcedBulkheadsI);
+	ship->addModule(TypeID::inertialStabilizersII);
+	ship->addModule(TypeID::inertialStabilizersII);
+	ship->addModule(TypeID::inertialStabilizersI);
+	ship->addModule(TypeID::_500MNMicrowarpdriveII);
+	ship->addModule(TypeID::expandedCargoholdII);
+
+	auto alignTime = ship->alignTime();
+	
+	XCTAssertEqualWithAccuracy(alignTime.count() / 1000.0, 8.03, 0.005);
+	XCTAssertEqualWithAccuracy(ship->cargoCapacity(), 772.59, 0.05);
+}
+
+- (void) testVindicator4 {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	
+	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+	
+	ship->addModule(TypeID::shieldPowerRelayII);
+	ship->addModule(TypeID::shieldPowerRelayII);
+	ship->addModule(TypeID::shieldPowerRelayI);
+	ship->addModule(TypeID::capacitorFluxCoilII);
+	ship->addModule(TypeID::capacitorFluxCoilII);
+	ship->addModule(TypeID::capacitorFluxCoilI);
+	
+	auto rechargeTime = ship->capacitor().rechargeTime();
+	
+	XCTAssertEqualWithAccuracy(rechargeTime.count() / 1000.0, 488, 0.5);
+}
+
+- (void) testNyx {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::nyx));
+	
+	ship->addModule(TypeID::capitalFlexArmorHardenerII)->charge(TypeID::armorExplosiveResistanceScript);
+	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
+	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
+	ship->addModule(TypeID::armorExplosiveHardenerII);
+	auto res0 = ship->resistances();
+	ship->addModule(TypeID::capitalAntiExplosivePumpII);
+	auto res1 = ship->resistances();
+	
+	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
+	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.856, 0.0005);
+}
+
+- (void) testCyno {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::drake));
+	try {
+		ship->addModule(TypeID::covertCynosuralFieldGeneratorI);
+		XCTFail("Error");
+	}
+	catch(...) {
+	}
+	ship = pilot->ship(TypeID::sin);
+	ship->addModule(TypeID::covertCynosuralFieldGeneratorI);
+
+}
+
+- (void) testProteus {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::proteus));
+	auto modules = {
+		ship->addModule(TypeID::_10MNAfterburnerI, Module::anySocket, true),
+		ship->addModule(TypeID::mediumShieldBoosterII, Module::anySocket, true),
+		ship->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true),
+		ship->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true)
+	};
+	for (auto module: modules) {
+		XCTAssertEqual(module->fail(), true);
+	}
+	
+	ship->addModule(TypeID::proteusCoreAugmentedFusionReactor);
+	ship->addModule(TypeID::proteusDefensiveAugmentedPlating);
+	ship->addModule(TypeID::proteusOffensiveDroneSynthesisProjector);
+	ship->addModule(TypeID::proteusPropulsionHyperspatialOptimization);
+	
+	for (auto module: modules) {
+		XCTAssertEqual(module->fail(), false);
+	}
+	
+	auto ship2 = Ship::Create(TypeID::proteus);
+	
+	ship2->addModule(TypeID::proteusCoreAugmentedFusionReactor);
+	ship2->addModule(TypeID::proteusDefensiveAugmentedPlating);
+	ship2->addModule(TypeID::proteusOffensiveDroneSynthesisProjector);
+	ship2->addModule(TypeID::proteusPropulsionHyperspatialOptimization);
+
+	modules = {
+		ship2->addModule(TypeID::_10MNAfterburnerI, Module::anySocket, true),
+		ship2->addModule(TypeID::mediumShieldBoosterII, Module::anySocket, true),
+		ship2->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true),
+		ship2->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true)
+	};
+	
+	pilot->ship(std::move(ship2));
+	
+	for (auto module: modules) {
+		XCTAssertEqual(module->fail(), false);
+	}
+}
+
+- (void) testMonitor {
+	auto gang = Gang::Create();
+	auto pilot = gang->add(Character::Create());
+	pilot->setSkillLevels(5);
+	auto ship = pilot->ship(Ship::Create(TypeID::monitor));
+	
+	ship->addModule(TypeID::_50MNMicrowarpdriveII);
+	ship->addModule(TypeID::targetPainterII);
+	ship->addModule(TypeID::sistersExpandedProbeLauncher);
+
+	
+	XCTAssertGreaterThan(ship->totalCPU(), ship->usedCPU());
+	XCTAssertGreaterThan(ship->totalPowerGrid(), ship->usedPowerGrid());
+	ship->addModule(TypeID::smallShieldBoosterI);
+	XCTAssertLessThan(ship->totalCPU(), ship->usedCPU());
+
+}
 
 @end
