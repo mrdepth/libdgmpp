@@ -62,6 +62,7 @@ dgmpp_bool dgmpp_ship_add_module (dgmpp_type ship, dgmpp_type module) {
 dgmpp_bool dgmpp_ship_add_module_v2 (dgmpp_type ship, dgmpp_type module, int socket, dgmpp_bool ignoring_requirements) {
 	try {
 		reinterpret_cast<Ship*>(ship)->add(get_unique_ptr<Module>(module), socket, ignoring_requirements);
+		dgmpp_free(module);
 		return true;
 	}
 	catch(...) {
@@ -76,6 +77,7 @@ dgmpp_bool dgmpp_ship_add_drone (dgmpp_type ship, dgmpp_type drone) {
 dgmpp_bool dgmpp_ship_add_drone_v2 (dgmpp_type ship, dgmpp_type drone, int squadron_tag) {
 	try {
 		reinterpret_cast<Ship*>(ship)->add(get_unique_ptr<Drone>(drone), squadron_tag);
+		dgmpp_free(drone);
 		return true;
 	}
 	catch(...) {

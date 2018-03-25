@@ -59,6 +59,7 @@ namespace dgmpp {
 			AttributeID::canFitShipType8,
 			AttributeID::canFitShipType9,
 			AttributeID::canFitShipType10,
+			AttributeID::canFitShipType11,
 		};
 		
 		const auto chargeGroupAttributeIDs = {

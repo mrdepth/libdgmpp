@@ -493,6 +493,7 @@ namespace dgmpp {
 			&Types::uncommonMoonOreProcessing,
 			&Types::rareMoonOreProcessing,
 			&Types::exceptionalMoonOreProcessing,
+			&Types::flagCruisers,
 		};
 	}
 }

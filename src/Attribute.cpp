@@ -19,39 +19,26 @@ namespace dgmpp {
 
 	namespace {
 		constexpr std::size_t sfCount = 10;
-		constexpr int expIterations = 10;
 		
-		constexpr double pow(double x, int y) {
-			return y == 0 ? 1.0 : x * pow(x, y-1);
-		}
-		
-		constexpr int factorial(int x) {
-			return x == 0 ? 1 : x * factorial(x-1);
-		}
-		
-		constexpr Float exp(Float x, int n = expIterations) {
-			return n == 0 ? 1 : exp(x, n-1) + pow(x,n) / factorial(n);
-		};
-		
-		constexpr Float sf(int n) {
-			return exp(-static_cast<Float>(n * n) / 7.1289);
+		Float sf(int n) {
+			return std::exp(-static_cast<Float>(std::pow(n, 2.0)) / 7.1289);
 		}
 		
 		template<class Function, std::size_t... Indices>
-		constexpr auto make_array_helper(Function f, std::index_sequence<Indices...>)
+		auto make_array_helper(Function f, std::index_sequence<Indices...>)
 		-> std::array<typename std::result_of<Function(std::size_t)>::type, sizeof...(Indices)>
 		{
 			return {{ f(Indices)... }};
 		}
 		
 		template<int N, class Function>
-		constexpr auto make_array(Function f)
+		auto make_array(Function f)
 		-> std::array<typename std::result_of<Function(std::size_t)>::type, N>
 		{
 			return make_array_helper(f, std::make_index_sequence<N>{});
 		}
 		
-		constexpr auto stackingFactor = make_array<sfCount>(sf);
+		auto stackingFactor = make_array<sfCount>(sf);
 		
 		template <typename... Args>
 		struct _AssociationComparer {
@@ -68,13 +55,6 @@ namespace dgmpp {
 			return _AssociationComparer<Args...>(std::forward<Args>(args)...);
 		}
 	}
-	
-	//	struct ModifierAssociationPredicate {
-	//		std::vector<MetaInfo::Modifier::Association> associations;
-	//		bool operator ()(const Modifier* modifier) {
-	//			return std::find(associations.begin(), associations.end(), modifier->metaInfo().association) != associations.end();
-	//		}
-	//	};
 	
 	Attribute::Attribute(const MetaInfo::Attribute& metaInfo, Float initialValue, Type& owner)
 	: metaInfo_(metaInfo), initialValue_(initialValue), owner_(owner) {
@@ -204,16 +184,10 @@ namespace dgmpp {
 					values.clear();
 					std::transform(range.first, i, std::back_inserter(values), extract);
 					
-					decltype(values.begin()) j;
-					if (!highIsGood)
-						j = std::partition(values.begin(), values.end(),
-										   std::bind(std::less<>(), _1, 1.0));
-					else
-						j = std::partition(values.begin(), values.end(),
-										   std::bind(std::greater<>(), _1, 1.0));
-					
-					std::sort(values.begin(), j, std::greater<>());
-					std::sort(j, values.end(), std::less<>());
+					auto j = std::partition(values.begin(), values.end(), std::bind(std::less<>(), _1, 1.0));
+
+					std::sort(values.begin(), j, std::less<>());
+					std::sort(j, values.end(), std::greater<>());
 					
 					v = std::inner_product(values.begin(), std::min(j, values.begin() + sfCount), stackingFactor.begin(), v, std::multiplies<>(), [](auto a, auto b) {
 						return 1.0 + (a - 1.0) * b;
@@ -249,11 +223,14 @@ namespace dgmpp {
 			auto range = partition(AssociationComparer(MetaInfo::Modifier::Association::postMul));
 			value = multiply(range, value);
 			
+
 			range = partition(AssociationComparer(MetaInfo::Modifier::Association::postDiv));
 			value = multiply(range, value);
-			
+
 			range = partition(AssociationComparer(MetaInfo::Modifier::Association::postPercent));
 			value = multiply(range, value);
+			
+			
 			
 			if (maxAttribute_) {
 				value = std::min(value, (*maxAttribute_)->value_());
@@ -398,13 +375,6 @@ namespace dgmpp {
 		range = partition(AssociationComparer(MetaInfo::Modifier::Association::postPercent));
 		value = multiply(range, value);
 		std::cout << std::endl;
-
-		if (maxAttribute_) {
-			value = std::min(value, (*maxAttribute_)->value_());
-		}
-		
-		calculatedValue_ = value;
-		owner_.cache_().add(this);
 	}
 #endif
 }

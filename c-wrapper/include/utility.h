@@ -240,7 +240,14 @@ typedef enum {
 typedef struct {
 	size_t build;
 	const char* version;
+} dgmpp_sde_version;
+
+typedef struct {
+	size_t major;
+	size_t minor;
+	dgmpp_sde_version sde;
 } dgmpp_version;
+
 
 DGMPP_EXTERN dgmpp_version dgmpp_get_version ();
 

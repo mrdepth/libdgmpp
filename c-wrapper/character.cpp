@@ -51,6 +51,7 @@ dgmpp_bool dgmpp_character_add_implant (dgmpp_type character, dgmpp_type implant
 dgmpp_bool dgmpp_character_add_implant_v2 (dgmpp_type character, dgmpp_type implant, dgmpp_bool replace) {
 	try {
 		reinterpret_cast<Character*>(character)->add(get_unique_ptr<Implant>(implant));
+		dgmpp_free(implant);
 		return true;
 	}
 	catch(...) {
@@ -65,6 +66,7 @@ dgmpp_bool dgmpp_character_add_booster (dgmpp_type character, dgmpp_type booster
 dgmpp_bool dgmpp_character_add_booster_v2 (dgmpp_type character, dgmpp_type booster, dgmpp_bool replace) {
 	try {
 		reinterpret_cast<Character*>(character)->add(get_unique_ptr<Booster>(booster));
+		dgmpp_free(booster);
 		return true;
 	}
 	catch(...) {
@@ -98,8 +100,10 @@ dgmpp_type dgmpp_character_get_ship (dgmpp_type character) {
 //}
 
 void dgmpp_character_set_ship (dgmpp_type character, dgmpp_type ship) {
-	if (ship)
+	if (ship) {
 		reinterpret_cast<Character*>(character)->ship(get_unique_ptr<Ship>(ship));
+		dgmpp_free(ship);
+	}
 	else
 		reinterpret_cast<Character*>(character)->ship(nullptr);
 }

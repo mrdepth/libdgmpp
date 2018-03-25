@@ -633,8 +633,14 @@ namespace dgmpp {
 		structureResourceRigLReprocessing = 1944,
 		structureResourceRigXLReprocessing = 1945,
 		structureQAModules = 1962,
+		kalliPLACEHOLDER = 1964,
 		structureCapacitorBattery = 1966,
 		structureCapacitorPowerRelay = 1967,
-		structureArmorReinforcer = 1968
+		structureArmorReinforcer = 1968,
+		dynamicPLACEHOLDER = 1969,
+		flagCruiser = 1972,
+		structureFestivalLauncher = 1974,
+		structureFestivalCharges = 1976,
+		trinaryDataVaults = 1977
 	};
 }

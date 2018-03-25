@@ -55,11 +55,11 @@ namespace dgmpp {
 		//Fitting
 		Module* add (std::unique_ptr<Module>&& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { LOCK(this); return add_(std::move(module), socket, ignoringRequirements); }
 		Drone* add (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { LOCK(this); return add_(std::move(drone), squadronTag); }
-        Module* addModule (TypeID typeID, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { return add(Module::Create(typeID), socket, ignoringRequirements); }		Drone* addDrone (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add(Drone::Create(typeID), squadronTag); }
+		Module* addModule (TypeID typeID, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { return add(Module::Create(typeID), socket, ignoringRequirements); }
+		Drone* addDrone (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add(Drone::Create(typeID), squadronTag); }
 
 		void remove (Module* module) { LOCK(this); remove_(module); }
 		void remove (Drone* drone) { LOCK(this); remove_(drone); }
-    	bool canFit (TypeID typeID) { LOCK(this); return canFit_(Module::Create(typeID).get()); }
 		bool canFit (Module* module) { LOCK(this); return canFit_(module); }
 		bool canFit (Drone* drone) { LOCK(this); return canFit_(drone); }
 		std::vector<Module*> modules (Module::Slot slot) const { LOCK(this); return modules_(slot); }
@@ -238,7 +238,7 @@ namespace dgmpp {
 		
 		//Resources
 		std::size_t totalSlots_	(Module::Slot slot);
-		std::size_t freeSlots_	(Module::Slot slot) {return totalSlots_(slot) - usedSlots_(slot);}
+		std::size_t freeSlots_	(Module::Slot slot) {return static_cast<std::size_t>(std::fdim(totalSlots_(slot), usedSlots_(slot)));}
 		std::size_t usedSlots_	(Module::Slot slot) {return modulesSlice_(slot).size();}
 		
 		std::size_t totalHardpoints_	(Module::Hardpoint hardpoint);
@@ -302,5 +302,7 @@ namespace dgmpp {
 		ScanType scanType_();
 		Meter probeSize_();
 		Millimeter scanResolution_();
+		
+		void updateSlots_();
 	};
 }
