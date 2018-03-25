@@ -640,8 +640,14 @@ public final class GroupID {
   public final static int structureResourceRigLReprocessing = 1944;
   public final static int structureResourceRigXLReprocessing = 1945;
   public final static int structureQAModules = 1962;
+  public final static int kalliPLACEHOLDER = 1964;
   public final static int structureCapacitorBattery = 1966;
   public final static int structureCapacitorPowerRelay = 1967;
   public final static int structureArmorReinforcer = 1968;
+  public final static int dynamicPLACEHOLDER = 1969;
+  public final static int flagCruiser = 1972;
+  public final static int structureFestivalLauncher = 1974;
+  public final static int structureFestivalCharges = 1976;
+  public final static int trinaryDataVaults = 1977;
 }
 
