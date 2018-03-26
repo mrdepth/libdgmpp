@@ -24,5 +24,6 @@ DGMPP_EXTERN dgmpp_array			dgmpp_type_copy_affectors	(dgmpp_type type);
 DGMPP_EXTERN dgmpp_array			dgmpp_type_copy_attributes	(dgmpp_type type);
 DGMPP_EXTERN size_t					dgmpp_type_get_identifier	(dgmpp_type type);
 DGMPP_EXTERN void					dgmpp_type_set_identifier	(dgmpp_type type, size_t identifier);
-
+DGMPP_EXTERN DGMPP_META_GROUP		dgmpp_type_get_meta_group	(dgmpp_type type);
+DGMPP_EXTERN size_t					dgmpp_type_get_meta_level	(dgmpp_type type);
 #endif /* type_h */

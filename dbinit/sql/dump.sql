@@ -7,6 +7,7 @@
 .read ./invCategories.sql
 .read ./invGroups.sql
 .read ./invTypes.sql
+.read ./invMetaTypes.sql
 .read ./planetSchematics.sql
 .read ./planetSchematicsPinMap.sql
 .read ./planetSchematicsTypeMap.sql

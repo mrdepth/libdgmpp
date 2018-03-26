@@ -10,6 +10,24 @@ import cwrapper
 
 public class DGMType: DGMObject {
 	
+	public enum MetaGroup: Int, Codable {
+		case none
+		case techI
+		case techII
+		case storyline
+		case faction
+		case officer
+		case deadspace
+		case frigates
+		case eliteFrigates
+		case commanderFrigates
+		case destroyer
+		case cruiser
+		case eliteCruiser
+		case commanderCruiser
+		case techIII
+	}
+	
 	class func type(_ handle: dgmpp_type) -> DGMType {
 		switch dgmpp_get_type(handle) {
 		case DGMPP_TYPE_GANG:
@@ -51,6 +69,10 @@ public class DGMType: DGMObject {
 
 	public var categoryID: DGMCategoryID {
 		return DGMCategoryID(dgmpp_type_get_category_id(handle))
+	}
+	
+	public var metaGruop: MetaGroup {
+		return MetaGroup(dgmpp_type_get_meta_group(handle)) ?? .none
 	}
 	
 	public var parent: DGMType? {
