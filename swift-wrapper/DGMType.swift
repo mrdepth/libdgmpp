@@ -71,10 +71,14 @@ public class DGMType: DGMObject {
 		return DGMCategoryID(dgmpp_type_get_category_id(handle))
 	}
 	
-	public var metaGruop: MetaGroup {
+	public var metaGroup: MetaGroup {
 		return MetaGroup(dgmpp_type_get_meta_group(handle)) ?? .none
 	}
 	
+	public var metaLevel: Int {
+		return dgmpp_type_get_meta_level(handle)
+	}
+
 	public var parent: DGMType? {
 		guard let parent = dgmpp_type_get_parent(handle) else {return nil}
 		return DGMType.type(parent)
