@@ -86,6 +86,8 @@ def dump(table, header, lines):
 		f.append("DROP TABLE IF EXISTS planetSchematicsTypeMap;\nCREATE TABLE planetSchematicsTypeMap (\n \"schematicID\" integer NOT NULL,\n \"typeID\" integer NOT NULL,\n \"quantity\" integer DEFAULT NULL,\n \"isInput\" integer DEFAULT NULL,\n PRIMARY KEY (\"schematicID\",\"typeID\"));");
 	elif (table == "invMarketGroups"):
 		f.append("DROP TABLE IF EXISTS invMarketGroups;\nCREATE TABLE invMarketGroups (\n \"parentGroupID\" integer DEFAULT NULL,\n \"marketGroupID\" integer NOT NULL,\n \"marketGroupName\" varchar(100) DEFAULT NULL,\n \"description\" varchar(3000) DEFAULT NULL,\n \"graphicID\" integer DEFAULT NULL,\n  \"hasTypes\" integer DEFAULT NULL,\n \"iconID\" integer DEFAULT NULL,\n  \"dataID\" integer DEFAULT NULL,\n  \"marketGroupNameID\" integer DEFAULT NULL,\n  \"descriptionID\" integer DEFAULT NULL,\n  PRIMARY KEY (\"marketGroupID\"));");
+	elif (table == "invMetaTypes"):
+		f.append("DROP TABLE IF EXISTS invMetaTypes;\nCREATE TABLE invMetaTypes (\n \"typeID\" integer DEFAULT NULL,\n \"parentTypeID\" integer DEFAULT NULL,\n \"metaGroupID\" integer DEFAULT NULL,\n  PRIMARY KEY (\"typeID\"));");
 	f.append("")
 
 	name = table
@@ -152,6 +154,7 @@ invTypeAttributes = [r for rows in cfg.dgmtypeattribs.values() for r in rows]
 invTypeEffects = [r for rows in cfg.dgmtypeeffects.values() for r in rows]
 planetSchematicsPinMap = [r for rows in cfg.schematicspinmap.items.values() for r in rows]
 planetSchematicsTypeMap = [r for rows in cfg.schematicstypemap.items.values() for r in rows]
+invMetaTypes = [r for rows in cfg.invmetatypes.items.values() for r in rows]
 
 dump ("invMarketGroups", invMarketGroupsHeader, invMarketGroups)
 dump ("dgmOperands", dgmOperandsHeader, dgmOperands)
@@ -166,3 +169,4 @@ dump ("dgmTypeAttributes", invTypeAttributesHeader, invTypeAttributes)
 dump ("planetSchematics", planetSchematicsHeader, cfg.schematics.values())
 dump ("planetSchematicsPinMap", cfg.schematicspinmap.header, planetSchematicsPinMap)
 dump ("planetSchematicsTypeMap", cfg.schematicstypemap.header, planetSchematicsTypeMap)
+dump ("invMetaTypes", cfg.invmetatypes.header, invMetaTypes)

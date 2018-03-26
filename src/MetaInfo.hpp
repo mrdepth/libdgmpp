@@ -190,16 +190,36 @@ namespace dgmpp {
 		};
 		
 		struct Type {
+			enum class MetaGroup {
+				none,
+				techI,
+				techII,
+				storyline,
+				faction,
+				officer,
+				deadspace,
+				frigates,
+				eliteFrigates,
+				commanderFrigates,
+				destroyer,
+				cruiser,
+				eliteCruiser,
+				commanderCruiser,
+				techIII
+			};
+			
 			TypeID		typeID;
 			GroupID		groupID;
 			CategoryID	categoryID;
+			MetaGroup 	metaGroup;
+			MetaLevel	metaLevel;
 			
 			virtual slice<const std::pair<const Attribute*, Float>*> attributes() const noexcept = 0;
 			virtual slice<const Effect* const*> effects() const noexcept = 0;
 			virtual slice<const TypeID*> requiredSkills() const noexcept = 0;
 
-			constexpr Type(TypeID typeID, GroupID groupID, CategoryID categoryID)
-			: typeID(typeID), groupID(groupID), categoryID(categoryID) {}
+			constexpr Type(TypeID typeID, GroupID groupID, CategoryID categoryID, MetaGroup metaGroup, MetaLevel metaLevel)
+			: typeID(typeID), groupID(groupID), categoryID(categoryID), metaGroup(metaGroup), metaLevel(metaLevel)  {}
 			Type (const Type& other) = delete;
 			Type& operator= (const Type& other) = delete;
 			Type& operator= (Type&& other) = delete;
@@ -217,8 +237,8 @@ namespace dgmpp {
 		template <typename Attributes, typename Effects, typename RequiredSkills>
 		struct _Type : public Type {
 			
-			constexpr _Type(TypeID typeID, GroupID groupID, CategoryID categoryID, const Attributes& attributes, const Effects& effects, const RequiredSkills& requiredSkills)
-			: Type(typeID, groupID, categoryID), attributes_(attributes), effects_(effects), requiredSkills_(requiredSkills) {}
+			constexpr _Type(TypeID typeID, GroupID groupID, CategoryID categoryID, MetaGroup metaGroup, MetaLevel metaLevel, const Attributes& attributes, const Effects& effects, const RequiredSkills& requiredSkills)
+			: Type(typeID, groupID, categoryID, metaGroup, metaLevel), attributes_(attributes), effects_(effects), requiredSkills_(requiredSkills) {}
 			
 			virtual slice<const std::pair<const Attribute*, Float>*> attributes() const noexcept override {
 				return { attributes_.data(), attributes_.data() + attributes_.size() };
@@ -303,11 +323,11 @@ namespace dgmpp {
 		}
 		
 		template <typename Attributes, typename Effects, typename RequiredSkills>
-		constexpr _Type<Attributes, Effects, RequiredSkills> MakeType(TypeID typeID, GroupID groupID, CategoryID categoryID,
+		constexpr _Type<Attributes, Effects, RequiredSkills> MakeType(TypeID typeID, GroupID groupID, CategoryID categoryID, Type::MetaGroup metaGroup, MetaLevel metaLevel,
 																	  const Attributes& attributes,
 																	  const Effects& effects,
 																	  const RequiredSkills& requiredSkills) {
-			return { typeID, groupID, categoryID, attributes, effects, requiredSkills };
+			return { typeID, groupID, categoryID, metaGroup, metaLevel, attributes, effects, requiredSkills };
 		}
 
 		template <typename Modifiers>

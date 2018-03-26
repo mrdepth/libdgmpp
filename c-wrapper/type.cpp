@@ -70,3 +70,11 @@ size_t dgmpp_type_get_identifier (dgmpp_type type) {
 void dgmpp_type_set_identifier (dgmpp_type type, size_t identifier) {
 	reinterpret_cast<Type*>(type)->identifier(identifier);
 }
+
+DGMPP_META_GROUP dgmpp_type_get_meta_group (dgmpp_type type) {
+	return static_cast<DGMPP_META_GROUP>(reinterpret_cast<Type*>(type)->metaInfo().metaGroup);
+}
+
+size_t dgmpp_type_get_meta_level (dgmpp_type type) {
+	return reinterpret_cast<Type*>(type)->metaInfo().metaLevel;
+}
