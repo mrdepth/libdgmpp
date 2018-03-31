@@ -11,7 +11,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0'
     }
 }
 
@@ -23,10 +23,10 @@ repositories {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "3.0.1"
+    buildToolsVersion "27.0.3"
     defaultConfig {
         compileSdkVersion 27
-        buildToolsVersion '27.0.0'
+        buildToolsVersion '27.0.3'
     }
     buildTypes {
         release {
@@ -37,7 +37,7 @@ android {
     defaultConfig {
         externalNativeBuild {
             ndk {
-                abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+                //abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
             }
         }
     }
