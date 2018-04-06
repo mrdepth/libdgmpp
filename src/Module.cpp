@@ -190,7 +190,20 @@ namespace dgmpp {
 				return Type::domain_(domain);
 		}
 	}
-	
+
+	void Module::clearCharge() {
+		batchUpdates_([&]() {
+			auto enabled = isEnabled_();
+			setEnabled_(false);
+			if (auto currentCharge = charge_()) {
+				currentCharge->parent_(nullptr);
+				chargeValue_ = nullptr;
+			}
+			if (enabled)
+				setEnabled_(true);
+		});
+	}
+
 	Charge* Module::charge_ (std::unique_ptr<Charge>&& charge) {
 		batchUpdates_([&]() {
 			auto enabled = isEnabled_();

@@ -70,6 +70,8 @@ namespace dgmpp {
 		Charge* charge() const noexcept { LOCK(this); return charge_(); }
 		Charge* charge (std::unique_ptr<Charge>&& charge) { LOCK(this); return charge_(std::move(charge)); }
 		Charge* charge (TypeID typeID) { LOCK(this); return charge(Charge::Create(typeID)); }
+		void  clearCharge();
+
 		bool canFit (Charge* charge) { LOCK(this); return canFit_(charge); }
 
 		
