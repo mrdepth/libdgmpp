@@ -114,6 +114,7 @@ public class dgmppJNI {
   public final static native int Module_socket(long jarg1, Module jarg1_);
   public final static native long Module_charge__SWIG_0(long jarg1, Module jarg1_);
   public final static native long Module_charge__SWIG_1(long jarg1, Module jarg1_, int jarg2);
+  public final static native void Module_clearCharge(long jarg1, Module jarg1_);
   public final static native boolean Module_canFit(long jarg1, Module jarg1_, long jarg2, Charge jarg2_);
   public final static native long Module_chargeGroups(long jarg1, Module jarg1_);
   public final static native int Module_chargeSize(long jarg1, Module jarg1_);
@@ -233,9 +234,8 @@ public class dgmppJNI {
   public final static native long Ship_addDrone__SWIG_1(long jarg1, Ship jarg1_, int jarg2);
   public final static native void Ship_remove__SWIG_0(long jarg1, Ship jarg1_, long jarg2, Module jarg2_);
   public final static native void Ship_remove__SWIG_1(long jarg1, Ship jarg1_, long jarg2, Drone jarg2_);
-  public final static native boolean Ship_canFit__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
-  public final static native boolean Ship_canFit__SWIG_1(long jarg1, Ship jarg1_, long jarg2, Module jarg2_);
-  public final static native boolean Ship_canFit__SWIG_2(long jarg1, Ship jarg1_, long jarg2, Drone jarg2_);
+  public final static native boolean Ship_canFit__SWIG_0(long jarg1, Ship jarg1_, long jarg2, Module jarg2_);
+  public final static native boolean Ship_canFit__SWIG_1(long jarg1, Ship jarg1_, long jarg2, Drone jarg2_);
   public final static native long Ship_modules__SWIG_0(long jarg1, Ship jarg1_, int jarg2);
   public final static native long Ship_modules__SWIG_1(long jarg1, Ship jarg1_);
   public final static native long Ship_drones(long jarg1, Ship jarg1_);
@@ -299,10 +299,6 @@ public class dgmppJNI {
   public final static native double Ship_probeSize(long jarg1, Ship jarg1_);
   public final static native double Ship_scanResolution(long jarg1, Ship jarg1_);
   public final static native void delete_Ship(long jarg1);
-  public final static native long new_Structure(int jarg1);
-  public final static native int Structure_fuelBlockTypeID(long jarg1, Structure jarg1_);
-  public final static native long Structure_fuelUse(long jarg1, Structure jarg1_);
-  public final static native void delete_Structure(long jarg1);
   public final static native long new_Characters__SWIG_0();
   public final static native long new_Characters__SWIG_1(long jarg1);
   public final static native long Characters_size(long jarg1, Characters jarg1_);
@@ -384,7 +380,6 @@ public class dgmppJNI {
   public final static native long Drone_SWIGUpcast(long jarg1);
   public final static native long Area_SWIGUpcast(long jarg1);
   public final static native long Ship_SWIGUpcast(long jarg1);
-  public final static native long Structure_SWIGUpcast(long jarg1);
   public final static native long Implant_SWIGUpcast(long jarg1);
   public final static native long Booster_SWIGUpcast(long jarg1);
   public final static native long Skill_SWIGUpcast(long jarg1);

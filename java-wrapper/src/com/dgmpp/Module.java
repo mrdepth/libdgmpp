@@ -90,6 +90,10 @@ public class Module extends Type {
     return (cPtr == 0) ? null : new Charge(cPtr, false);
   }
 
+  public void clearCharge() {
+    dgmppJNI.Module_clearCharge(swigCPtr, this);
+  }
+
   public boolean canFit(Charge charge) {
     return dgmppJNI.Module_canFit(swigCPtr, this, Charge.getCPtr(charge), charge);
   }

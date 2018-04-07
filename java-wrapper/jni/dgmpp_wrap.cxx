@@ -1926,6 +1926,17 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Module_1charge_1_1SWIG_11(JNIEn
 }
 
 
+SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_Module_1clearCharge(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(dgmpp::Module **)&jarg1; 
+  (arg1)->clearCharge();
+}
+
+
 SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Module_1canFit(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jboolean jresult = 0 ;
   dgmpp::Module *arg1 = (dgmpp::Module *) 0 ;
@@ -3724,24 +3735,7 @@ SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_Ship_1remove_1_1SWIG_11(JNIEnv *
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1canFit_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jboolean jresult = 0 ;
-  dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
-  dgmpp::TypeID arg2 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Ship **)&jarg1; 
-  arg2 = (dgmpp::TypeID)jarg2; 
-  result = (bool)(arg1)->canFit(arg2);
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1canFit_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1canFit_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jboolean jresult = 0 ;
   dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
   dgmpp::Module *arg2 = (dgmpp::Module *) 0 ;
@@ -3759,7 +3753,7 @@ SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1canFit_1_1SWIG_11(JNIE
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1canFit_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jboolean JNICALL Java_com_dgmpp_dgmppJNI_Ship_1canFit_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jboolean jresult = 0 ;
   dgmpp::Ship *arg1 = (dgmpp::Ship *) 0 ;
   dgmpp::Drone *arg2 = (dgmpp::Drone *) 0 ;
@@ -4751,60 +4745,6 @@ SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_delete_1Ship(JNIEnv *jenv, jclas
   (void)jenv;
   (void)jcls;
   arg1 = *(dgmpp::Ship **)&jarg1; 
-  delete arg1;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_new_1Structure(JNIEnv *jenv, jclass jcls, jint jarg1) {
-  jlong jresult = 0 ;
-  dgmpp::TypeID arg1 ;
-  dgmpp::Structure *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = (dgmpp::TypeID)jarg1; 
-  result = (dgmpp::Structure *)new dgmpp::Structure(arg1);
-  *(dgmpp::Structure **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_dgmpp_dgmppJNI_Structure_1fuelBlockTypeID(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jint jresult = 0 ;
-  dgmpp::Structure *arg1 = (dgmpp::Structure *) 0 ;
-  dgmpp::TypeID result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Structure **)&jarg1; 
-  result = (dgmpp::TypeID)(arg1)->fuelBlockTypeID();
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Structure_1fuelUse(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  dgmpp::Structure *arg1 = (dgmpp::Structure *) 0 ;
-  dgmpp::rate< dgmpp::Float,std::chrono::hours > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(dgmpp::Structure **)&jarg1; 
-  result = (arg1)->fuelUse();
-  *(dgmpp::rate< dgmpp::Float,std::chrono::hours > **)&jresult = new dgmpp::rate< dgmpp::Float,std::chrono::hours >((const dgmpp::rate< dgmpp::Float,std::chrono::hours > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_dgmpp_dgmppJNI_delete_1Structure(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  dgmpp::Structure *arg1 = (dgmpp::Structure *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(dgmpp::Structure **)&jarg1; 
   delete arg1;
 }
 
@@ -5989,14 +5929,6 @@ SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Ship_1SWIGUpcast(JNIEnv *jenv, 
     (void)jenv;
     (void)jcls;
     *(dgmpp::Type **)&baseptr = *(dgmpp::Ship **)&jarg1;
-    return baseptr;
-}
-
-SWIGEXPORT jlong JNICALL Java_com_dgmpp_dgmppJNI_Structure_1SWIGUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-    jlong baseptr = 0;
-    (void)jenv;
-    (void)jcls;
-    *(dgmpp::Ship **)&baseptr = *(dgmpp::Structure **)&jarg1;
     return baseptr;
 }
 

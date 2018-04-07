@@ -84,16 +84,12 @@ public class Ship extends Type {
     dgmppJNI.Ship_remove__SWIG_1(swigCPtr, this, Drone.getCPtr(drone), drone);
   }
 
-  public boolean canFit(int typeID) {
-    return dgmppJNI.Ship_canFit__SWIG_0(swigCPtr, this, typeID);
-  }
-
   public boolean canFit(Module module) {
-    return dgmppJNI.Ship_canFit__SWIG_1(swigCPtr, this, Module.getCPtr(module), module);
+    return dgmppJNI.Ship_canFit__SWIG_0(swigCPtr, this, Module.getCPtr(module), module);
   }
 
   public boolean canFit(Drone drone) {
-    return dgmppJNI.Ship_canFit__SWIG_2(swigCPtr, this, Drone.getCPtr(drone), drone);
+    return dgmppJNI.Ship_canFit__SWIG_1(swigCPtr, this, Drone.getCPtr(drone), drone);
   }
 
   public Modules modules(int slot) {
