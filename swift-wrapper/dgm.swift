@@ -285,3 +285,9 @@ extension DGMRoute {
 	}
 }
 
+extension DGMType.MetaGroup {
+	init?(_ metaGroup: DGMPP_META_GROUP) {
+		guard let value = DGMType.MetaGroup(rawValue: Int(metaGroup.rawValue)) else {return nil}
+		self = value
+	}
+}

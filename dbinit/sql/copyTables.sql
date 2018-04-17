@@ -106,8 +106,18 @@ CREATE TABLE dgmpp.version (
 PRIMARY KEY ("build")
 );
 
+
+DROP TABLE IF EXISTS dgmpp.invMetaTypes;
+CREATE TABLE dgmpp.invMetaTypes (
+"typeID" integer DEFAULT NULL,
+"parentTypeID" integer DEFAULT NULL,
+"metaGroupID" integer DEFAULT NULL,
+PRIMARY KEY ("typeID")
+);
+
 INSERT INTO dgmpp.invGroups SELECT groupID, categoryID, groupName  FROM invGroups;
 INSERT INTO dgmpp.invTypes SELECT typeID, groupID, typeName, radius, mass, volume, capacity, portionSize, raceID, published FROM invTypes;
+INSERT INTO dgmpp.invMetaTypes SELECT * FROM invMetaTypes;
 INSERT INTO dgmpp.dgmAttributeTypes SELECT attributeID, attributeName, displayName, maxAttributeID, defaultValue, stackable, highIsGood, categoryID FROM dgmAttributeTypes ORDER BY attributeID;
 INSERT INTO dgmpp.dgmTypeAttributes SELECT * FROM dgmTypeAttributes;
 INSERT INTO dgmpp.dgmTypeEffects SELECT * FROM dgmTypeEffects;

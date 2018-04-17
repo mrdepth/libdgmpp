@@ -149,7 +149,7 @@ auto dumpItemRequiredSkills(SQLiteDatabase& database, int typeID) {
 }
 
 void dumpItems(SQLiteDatabase& database) {
-	auto result = database.fetch<int, std::string, std::string, std::string, Optional<double>, Optional<double>, Optional<double>, Optional<double>, Optional<int>>("select typeID, typeName, b.groupName, c.categoryName, radius, mass, volume, capacity, raceID from invTypes as a, invGroups as b, invCategories as c where a.groupID=b.groupID and b.categoryID=c.categoryID order by typeID");
+	auto result = database.fetch<int, std::string, std::string, std::string, Optional<double>, Optional<double>, Optional<double>, Optional<double>, Optional<int>, Optional<int>, Optional<int>, Optional<int>>("select a.typeID, typeName, b.groupName, c.categoryName, radius, mass, volume, capacity, raceID, metaGroupID, e.value, f.value from invTypes as a, invGroups as b, invCategories as c left join invMetaTypes as d on a.typeID=d.typeID left join dgmTypeAttributes as e on a.typeID = e.typeID and e.attributeID=633 left join dgmTypeAttributes as f on a.typeID = f.typeID and f.attributeID=1692 where a.groupID=b.groupID and b.categoryID=c.categoryID order by a.typeID");
 
 	std::cout
 	<< "#pragma once" << std::endl
@@ -163,7 +163,7 @@ void dumpItems(SQLiteDatabase& database) {
 //	<< "		constexpr MetaInfo::Type types[] {" << std::endl;
 
 	std::cout << "\t\t\t"
-	<< "constexpr auto none = MakeType(TypeID::none, GroupID::corporation, CategoryID::owner, _attributes(), _effects(), _typeIDs());" << std::endl;
+	<< "constexpr auto none = MakeType(TypeID::none, GroupID::corporation, CategoryID::owner, MetaInfo::Type::MetaGroup::none, 0, _attributes(), _effects(), _typeIDs());" << std::endl;
 
 	
 	auto radiusID = database.fetch<int>("select rowid from dgmAttributeTypes where attributeName == \"radius\"").next().get<0>();
@@ -193,6 +193,9 @@ void dumpItems(SQLiteDatabase& database) {
 		auto volume = row.get<6>();
 		auto capacity = row.get<7>();
 		auto raceID = row.get<8>();
+		auto metaGroupID = row.get<9>();
+		auto metaLevel = row.get<10>();
+		auto metaGroupIDAttribute = row.get<11>();
 		auto attributes = dumpItemAttributes(database, typeID);
 		
 		auto typeName = base;
@@ -212,9 +215,59 @@ void dumpItems(SQLiteDatabase& database) {
 			attributes.push_front(attribute(Name("capacity"), *capacity, capacityID));
 		if (raceID && *raceID > 0)
 			attributes.push_front(attribute(Name("raceID"), *raceID, raceIDID));
+		std::string metaGroupS;
+		switch (metaGroupID ? *metaGroupID : metaGroupIDAttribute ? *metaGroupIDAttribute : 0) {
+				case 0:
+				metaGroupS = "none";
+				break;
+				case 1:
+				metaGroupS = "techI";
+				break;
+				case 2:
+				metaGroupS = "techII";
+				break;
+				case 3:
+				metaGroupS = "storyline";
+				break;
+				case 4:
+				metaGroupS = "faction";
+				break;
+				case 5:
+				metaGroupS = "officer";
+				break;
+				case 6:
+				metaGroupS = "deadspace";
+				break;
+				case 7:
+				metaGroupS = "frigates";
+				break;
+				case 8:
+				metaGroupS = "eliteFrigates";
+				break;
+				case 9:
+				metaGroupS = "commanderFrigates";
+				break;
+				case 10:
+				metaGroupS = "destroyer";
+				break;
+				case 11:
+				metaGroupS = "cruiser";
+				break;
+				case 12:
+				metaGroupS = "eliteCruiser";
+				break;
+				case 13:
+				metaGroupS = "commanderCruiser";
+				break;
+				case 14:
+				metaGroupS = "techIII";
+				break;
+			default:
+				metaGroupS = "none";
+		}
 
 		std::cout << "\t\t\t"
-		<< "constexpr auto " << typeName << " = MakeType(TypeID::" << typeName << ", GroupID::" << groupName << ", CategoryID::" << categoryName;
+		<< "constexpr auto " << typeName << " = MakeType(TypeID::" << typeName << ", GroupID::" << groupName << ", CategoryID::" << categoryName << ", MetaInfo::Type::MetaGroup::" << metaGroupS << ", " << (metaLevel ? *metaLevel : 0) ;
 		
 		std::cout << ",\n				_attributes(";
 		bool isFirst = true;

@@ -77,6 +77,7 @@ namespace dgmpp {
 	using MetersPerSecond		= rate<Meter, std::chrono::seconds>;
 	using AstronomicalUnitsPerSecond = rate<Meter, std::chrono::seconds>;
 	using HPPerSecond = rate<HP, std::chrono::seconds>;
+	using MetaLevel = int;
 	
 	namespace config {
 		const Percent capacitorPeakRecharge = 0.5; //sqrt(0.25)
