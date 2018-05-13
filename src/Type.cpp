@@ -419,8 +419,10 @@ namespace dgmpp {
 	std::unordered_set<Type*> Type::affectors_() {
 		std::unordered_set<Type*> types;
 		for (const auto& i: attributesMap_) {
-			for (const auto& j: modifiers_(i.second->metaInfo())) {
-				types.insert(&j->owner());
+			if (i.second) {
+				for (const auto& j: modifiers_(i.second->metaInfo())) {
+					types.insert(&j->owner());
+				}
 			}
 		}
 		return types;

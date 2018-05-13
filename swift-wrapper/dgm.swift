@@ -108,8 +108,9 @@ extension DGMArray where T: DGMType {
 		let size = dgmpp_array_get_size(handle)
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_type.self, capacity: size)
-		return (0..<size).map {
-			return T(ptr[$0], owned: false)
+		return (0..<size).compactMap {
+			return T.type(ptr[$0]) as? T
+//			return T(ptr[$0], owned: false)
 		}
 	}
 }
