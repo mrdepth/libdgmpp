@@ -82,11 +82,14 @@ namespace dgmpp {
 	typedef rate<Meter, std::chrono::seconds> AstronomicalUnitsPerSecond;
 	typedef rate<HP, std::chrono::seconds> HPPerSecond;
 	
-	struct DamageVector {
-		HP em;
-		HP thermal;
-		HP kinetic;
-		HP explosive;
+	class DamageVector {
+	    public:
+		    HP em;
+		    HP thermal;
+		    HP kinetic;
+		    HP explosive;
+
+		    HP total();
 	};
 	
 	typedef rate<DamageVector, std::chrono::seconds> DamagePerSecond;
