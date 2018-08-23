@@ -201,10 +201,10 @@ extension DGMDamageVector {
 
 extension dgmpp_damage_vector {
 	init(_ damageVector: DGMDamageVector) {
-		em = damageVector.em
-		thermal = damageVector.thermal
-		kinetic = damageVector.kinetic
-		explosive = damageVector.explosive
+		self.init(em: damageVector.em,
+				  thermal: damageVector.thermal,
+				  kinetic: damageVector.kinetic,
+				  explosive: damageVector.explosive)
 	}
 }
 
@@ -219,10 +219,10 @@ extension DGMHostileTarget {
 
 extension dgmpp_hostile_target {
 	init(_ target: DGMHostileTarget) {
-		angular_velocity = target.angularVelocity.value
-		velocity = target.velocity.value
-		signature = target.signature
-		range = target.range
+		self.init(angular_velocity: target.angularVelocity.value,
+				  velocity: target.velocity.value,
+				  signature: target.signature,
+				  range: target.range)
 	}
 }
 
@@ -262,10 +262,10 @@ extension DGMCommodity {
 
 extension dgmpp_commodity {
 	init(_ commodity: DGMCommodity) {
-		type_id = dgmpp_type_id(commodity.typeID)
-		tier = DGMPP_COMMODITY_TIER(Int32(commodity.tier.rawValue))
-		volume = commodity.volume
-		quantity = commodity.quantity
+		self.init(type_id: dgmpp_type_id(commodity.typeID),
+				  tier: DGMPP_COMMODITY_TIER(Int32(commodity.tier.rawValue)),
+				  volume: commodity.volume,
+				  quantity: commodity.quantity)
 	}
 }
 
