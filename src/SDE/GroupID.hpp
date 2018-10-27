@@ -445,7 +445,7 @@ namespace dgmpp {
 		laboratory = 1405,
 		refinery = 1406,
 		observatoryArray = 1407,
-		stargate = 1408,
+		navigationStructures = 1408,
 		administrationHub = 1409,
 		advertisementCenter = 1410,
 		structureEngineeringServiceModule = 1415,
@@ -649,6 +649,11 @@ namespace dgmpp {
 		entropicRadiationSink = 1988,
 		advancedExoticPlasmaCharge = 1989,
 		triglavianData = 1995,
-		abyssalMaterials = 1996
+		abyssalMaterials = 1996,
+		citizenShips = 2001,
+		triglavianDatastreams = 2002,
+		citizenModules = 2003,
+		citizenMiningLaser = 2004,
+		massEntanglers = 2008
 	};
 }

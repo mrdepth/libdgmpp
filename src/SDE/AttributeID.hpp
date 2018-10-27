@@ -2447,6 +2447,12 @@ namespace dgmpp {
 		npcDroneCapacity = 2784,
 		npcDroneBandwidth = 2785,
 		npcBehaviorMaximumCombatOrbitRange = 2786,
+		monumentAllianceID = 2787,
+		panicDuration = 2788,
+		shipRoleBonusWarpSpeed = 2789,
+		cargoDeliveryRange = 2790,
+		cannotBeUnfit = 2791,
+		preFitServiceSlot0 = 2792,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
 	};
