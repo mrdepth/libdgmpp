@@ -217,7 +217,7 @@ namespace dgmpp {
 		commodities = 526,
 		artifactsandPrototypes = 528,
 		materialsandCompounds = 530,
-		stationComponents = 536,
+		structureComponents = 536,
 		dataMiners = 538,
 		commandShip = 540,
 		interdictor = 541,
@@ -428,7 +428,7 @@ namespace dgmpp {
 		structureCitadelServiceModule = 1321,
 		structureResourceProcessingServiceModule = 1322,
 		structureObservatoryServiceModule = 1323,
-		structureStargateServiceModule = 1324,
+		structureNavigationServiceModule = 1324,
 		structureAdministrationServiceModule = 1325,
 		structureAdvertisementServiceModule = 1326,
 		structureXLMissileLauncher = 1327,
@@ -445,7 +445,7 @@ namespace dgmpp {
 		laboratory = 1405,
 		refinery = 1406,
 		observatoryArray = 1407,
-		navigationStructures = 1408,
+		upwellJumpGate = 1408,
 		administrationHub = 1409,
 		advertisementCenter = 1410,
 		structureEngineeringServiceModule = 1415,
@@ -654,6 +654,11 @@ namespace dgmpp {
 		triglavianDatastreams = 2002,
 		citizenModules = 2003,
 		citizenMiningLaser = 2004,
-		massEntanglers = 2008
+		massEntanglers = 2008,
+		stasisNullifiers = 2013,
+		upwellMonument = 2015,
+		upwellCynoJammer = 2016,
+		upwellCynoBeacon = 2017,
+		mutadaptiveRemoteArmorRepairer = 2018
 	};
 }

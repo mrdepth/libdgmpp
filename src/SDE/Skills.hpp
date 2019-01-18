@@ -503,6 +503,8 @@ namespace dgmpp {
 			&Types::smallDisintegratorSpecialization,
 			&Types::mediumDisintegratorSpecialization,
 			&Types::largeDisintegratorSpecialization,
+			&Types::precursorDestroyer,
+			&Types::precursorBattlecruiser,
 		};
 	}
 }
