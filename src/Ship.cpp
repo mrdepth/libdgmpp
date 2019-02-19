@@ -101,7 +101,8 @@ namespace dgmpp {
 			return ptr;
 		}
 		else
-			throw CannotFit<Module>(std::move(module));
+			//throw CannotFit<Module>(std::move(module));
+			return nullptr;
 	}
 	
 	Drone* Ship::add_ (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag) {
@@ -168,7 +169,8 @@ namespace dgmpp {
 			return ptr;
 		}
 		else
-			throw CannotFit<Drone>(std::move(drone));
+			//throw CannotFit<Drone>(std::move(drone));
+			return nullptr;
 	}
 	
 	void Ship::remove_ (Module* module) {

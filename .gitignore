@@ -7,4 +7,6 @@
 android/.externalNativeBuild/
 android/.gradle/
 android/build/
+java-wrapper/
+
 
