@@ -73,7 +73,7 @@ namespace dgmpp {
 		void  clearCharge();
 
 		bool canFit (Charge* charge) { LOCK(this); return canFit_(charge); }
-
+		bool canFit (TypeID typeID) { return canFit(Charge::Create(typeID).get()); }
 		
 		bool requireTarget()	const noexcept { LOCK(this); return requireTarget_(); }
 		bool fail()				const noexcept { LOCK(this); return fail_(); }

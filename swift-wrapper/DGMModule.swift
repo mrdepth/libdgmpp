@@ -50,7 +50,7 @@ public class DGMModule: DGMType, Codable {
 	}
 	
 	public var availableStates: [State] {
-		return DGMArray<Int>(dgmpp_module_copy_available_states(handle)).array.flatMap {State(rawValue: $0)}
+		return DGMArray<Int>(dgmpp_module_copy_available_states(handle)).array.compactMap {State(rawValue: $0)}
 	}
 	
 	public var state: State {

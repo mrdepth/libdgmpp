@@ -7,7 +7,6 @@
 
 #pragma once
 #include "Skill.hpp"
-#include "Structure.hpp"
 #include "Ship.hpp"
 #include "Implant.hpp"
 #include "Booster.hpp"
@@ -26,9 +25,6 @@ namespace dgmpp {
 		Ship* ship() const { LOCK(this); return ship_(); }
 		Ship* ship (std::unique_ptr<Ship>&& ship) { LOCK(this); return ship_(std::move(ship)); }
 		Ship* ship (TypeID typeID) { return ship(Ship::Create(typeID)); }
-//		Structure* structure() const { LOCK(this); return structure_(); }
-//		Structure* structure (std::unique_ptr<Structure>&& structure) { LOCK(this); return structure_(std::move(structure)); }
-//		Structure* structure (TypeID typeID) { return structure(Structure::Create(typeID)); }
 
 		void setSkillLevels (int level) { LOCK(this); setSkillLevels_(level); }
 		
@@ -97,8 +93,6 @@ namespace dgmpp {
 		
 		Ship* ship_() const { return shipValue_.get(); }
 		Ship* ship_ (std::unique_ptr<Ship>&& ship);
-//		Structure* structure_() const { return dynamic_cast<Structure*>(shipValue_.get()); }
-//		Structure* structure_ (std::unique_ptr<Structure>&& structure);
 
 		void setSkillLevels_ (int level);
 		

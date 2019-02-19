@@ -494,6 +494,15 @@ namespace dgmpp {
 			&Types::rareMoonOreProcessing,
 			&Types::exceptionalMoonOreProcessing,
 			&Types::flagCruisers,
+			&Types::precursorFrigate,
+			&Types::precursorCruiser,
+			&Types::precursorBattleship,
+			&Types::smallPrecursorWeapon,
+			&Types::mediumPrecursorWeapon,
+			&Types::largePrecursorWeapon,
+			&Types::smallDisintegratorSpecialization,
+			&Types::mediumDisintegratorSpecialization,
+			&Types::largeDisintegratorSpecialization,
 		};
 	}
 }

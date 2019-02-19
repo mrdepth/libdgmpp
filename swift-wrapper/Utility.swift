@@ -350,7 +350,7 @@ extension DGMShip {
 		self.drones.forEach { drones[$0.typeID, default: 0] += 1 }
 		
 		let slots: [DGMModule.Slot] = [.subsystem, .hi, .med, .low, .rig, .service]
-		var array = slots.flatMap { modules[$0] }.joined().map {"\($0.key);\($0.value)"}
+		var array = slots.compactMap { modules[$0] }.joined().map {"\($0.key);\($0.value)"}
 		array.append(contentsOf: drones.map {"\($0.key);\($0.value)"})
 		array.append(contentsOf: charges.map {"\($0);1"})
 		

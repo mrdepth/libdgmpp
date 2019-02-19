@@ -20,5 +20,6 @@ using namespace std::chrono_literals;
 %include "SDE/GroupID.hpp"
 %include "SDE/CategoryID.hpp"
 %include "SDE/AttributeID.hpp"
+%include "Ship.i"
 %include "Utility.i"
 %include "Gang.i"

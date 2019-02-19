@@ -77,10 +77,7 @@ namespace dgmpp {
 		
 		return shipValue_.get();
 	}
-	
-//	Structure* Character::structure_ (std::unique_ptr<Structure>&& structure) {
-//		return dynamic_cast<Structure*>(ship_(std::move(structure)));
-//	}
+
 	
 	Type* Character::domain_(MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
