@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven-publish'
+
 
 group = 'libdgmpp'
 version = '2.0'
@@ -11,7 +11,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
     }
 }
 
@@ -24,10 +24,10 @@ repositories {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.2"
+    buildToolsVersion "28.0.3"
     defaultConfig {
         compileSdkVersion 28
-        buildToolsVersion '28.0.2'
+        buildToolsVersion '28.0.3'
     }
     buildTypes {
         release {
@@ -58,15 +58,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-
-android.libraryVariants
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifact bundleRelease
-        }
     }
 }
 
