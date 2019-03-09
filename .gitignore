@@ -10,3 +10,6 @@ android/build/
 java-wrapper/
 
 
+cmake-build-debug/
+.idea/
+CMakeLists.txt

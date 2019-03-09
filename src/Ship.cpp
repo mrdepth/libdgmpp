@@ -207,7 +207,7 @@ namespace dgmpp {
 		}
 		
 		auto groupID = metaInfo().groupID;
-		char matchGroup = 1;
+		int matchGroup = 1;
 		if (!groups.empty()) {
 			matchGroup = std::any_of(groups.begin(), groups.end(), [=](auto i) {return i == groupID;}) ? 0 : -1;
 		}
@@ -224,12 +224,12 @@ namespace dgmpp {
 		}
 		
 		auto typeID = metaInfo().typeID;
-		char matchType = 1;
+		int matchType = 1;
 		if (!types.empty()) {
 			matchType = std::any_of(types.begin(), types.end(), [=](auto i) {return i == typeID;}) ? 0 : -1;
 		}
 		
-		if ((matchType == -1 && matchGroup == -1) || matchType * matchGroup < 0)
+		if ((matchType == -1 && matchGroup == -1) || (matchType * matchGroup < 0))
 			return false;
 		
 		switch (module->slot()) {
