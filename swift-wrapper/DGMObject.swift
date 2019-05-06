@@ -28,8 +28,8 @@ public class DGMObject {
 
 extension DGMObject: Hashable {
 	
-	public var hashValue: Int {
-		return handle.hashValue
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(handle)
 	}
 	
 	public static func ==(lhs: DGMObject, rhs: DGMObject) -> Bool {
