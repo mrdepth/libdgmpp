@@ -1,4 +1,4 @@
 #pragma once
 namespace dgmpp {
-	const auto sdeVersion = SDEVersion({1438831, "16.10"});
+	const auto sdeVersion = SDEVersion({1506886, "17.04"});
 }

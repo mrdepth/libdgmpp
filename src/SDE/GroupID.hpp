@@ -250,7 +250,7 @@ namespace dgmpp {
 		advancedHeavyMissile = 655,
 		advancedCruiseMissile = 656,
 		advancedTorpedo = 657,
-		cynosuralField = 658,
+		cynosuralFieldGenerator = 658,
 		supercarrier = 659,
 		energyVampireSlayer = 660,
 		mercoxitMiningCrystal = 663,
@@ -659,6 +659,7 @@ namespace dgmpp {
 		upwellMonument = 2015,
 		upwellCynoJammer = 2016,
 		upwellCynoBeacon = 2017,
-		mutadaptiveRemoteArmorRepairer = 2018
+		mutadaptiveRemoteArmorRepairer = 2018,
+		triglavianArtifacts = 2026
 	};
 }

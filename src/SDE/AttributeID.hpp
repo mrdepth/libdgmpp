@@ -2467,6 +2467,13 @@ namespace dgmpp {
 		serviceModuleFullPowerStateArmorPlatingMultiplier = 2804,
 		structurePowerStateArmorPlatingMultiplier = 2805,
 		nonDiminishingSkillInjectorUses = 2806,
+		reactivationDelayBonus = 2807,
+		totalArmorRepairOnTarget = 2808,
+		totalShieldRepairOnTarget = 2809,
+		totalHullRepairOnTarget = 2810,
+		totalCapTransferOnTarget = 2811,
+		siegeHAWTurretDamageBonus = 2820,
+		siegeHAWMissileROFBonus = 2821,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
 	};
