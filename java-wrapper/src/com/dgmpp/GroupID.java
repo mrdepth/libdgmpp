@@ -257,7 +257,7 @@ public final class GroupID {
   public final static int advancedHeavyMissile = 655;
   public final static int advancedCruiseMissile = 656;
   public final static int advancedTorpedo = 657;
-  public final static int cynosuralField = 658;
+  public final static int cynosuralFieldGenerator = 658;
   public final static int supercarrier = 659;
   public final static int energyVampireSlayer = 660;
   public final static int mercoxitMiningCrystal = 663;
@@ -667,5 +667,6 @@ public final class GroupID {
   public final static int upwellCynoJammer = 2016;
   public final static int upwellCynoBeacon = 2017;
   public final static int mutadaptiveRemoteArmorRepairer = 2018;
+  public final static int triglavianArtifacts = 2026;
 }
 

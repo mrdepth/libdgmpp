@@ -2474,6 +2474,13 @@ public final class AttributeID {
   public final static int serviceModuleFullPowerStateArmorPlatingMultiplier = 2804;
   public final static int structurePowerStateArmorPlatingMultiplier = 2805;
   public final static int nonDiminishingSkillInjectorUses = 2806;
+  public final static int reactivationDelayBonus = 2807;
+  public final static int totalArmorRepairOnTarget = 2808;
+  public final static int totalShieldRepairOnTarget = 2809;
+  public final static int totalHullRepairOnTarget = 2810;
+  public final static int totalCapTransferOnTarget = 2811;
+  public final static int siegeHAWTurretDamageBonus = 2820;
+  public final static int siegeHAWMissileROFBonus = 2821;
   public final static int tacticalModes = 10000;
   public final static int chargedArmorDamageMultiplierPostDiv = 10002;
 }
