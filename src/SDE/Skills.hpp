@@ -505,6 +505,8 @@ namespace dgmpp {
 			&Types::largeDisintegratorSpecialization,
 			&Types::precursorDestroyer,
 			&Types::precursorBattlecruiser,
+			&Types::triglavianQuantumEngineering,
+			&Types::triglavianEncryptionMethods,
 		};
 	}
 }

@@ -389,6 +389,7 @@ using namespace dgmpp;
 	structure->add(Module::Create(TypeID::standupXLEnergyNeutralizerII));
 	structure->add(Module::Create(TypeID::standupCapBatteryII));
 	structure->add(Module::Create(TypeID::standupCapacitorPowerRelayII));
+	structure->add(Module::Create(TypeID::standupHyasyodaResearchLab));
 	structure->add(Module::Create(TypeID::standupLayeredArmorPlatingI));
 
 	auto hi1 = structure->freeSlots(Module::Slot::hi);

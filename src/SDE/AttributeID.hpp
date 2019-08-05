@@ -2472,8 +2472,15 @@ namespace dgmpp {
 		totalShieldRepairOnTarget = 2809,
 		totalHullRepairOnTarget = 2810,
 		totalCapTransferOnTarget = 2811,
+		behaviorSmartBombDuration = 2812,
+		behaviorSmartBombDischarge = 2814,
+		behaviorMicroJumpAttackDischarge = 2815,
+		behaviorMicroJumpAttackRange = 2816,
+		behaviorMicroJumpAttackJumpDistance = 2818,
+		behaviorMicroJumpAttackDuration = 2819,
 		siegeHAWTurretDamageBonus = 2820,
 		siegeHAWMissileROFBonus = 2821,
+		ecmJamDuration = 2822,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
 	};

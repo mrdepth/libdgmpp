@@ -252,7 +252,7 @@ namespace dgmpp {
 				break;
 		}
 		
-		if (auto attribute = attribute_(AttributeID::maxGroupFitted)) {
+		if (auto attribute = module->attribute_(AttributeID::maxGroupFitted)) {
 			auto max = static_cast<std::size_t>(attribute->value_());
 			auto groupID = module->metaInfo().groupID;
 			for (const auto& i: modulesSet_) {
@@ -263,7 +263,7 @@ namespace dgmpp {
 			}
 		}
 		
-		if (auto attribute = attribute_(AttributeID::maxTypeFitted)) {
+		if (auto attribute = module->attribute_(AttributeID::maxTypeFitted)) {
 			auto max = static_cast<std::size_t>(attribute->value_());
 			auto typeID = module->metaInfo().typeID;
 			for (const auto& i: modulesSet_) {
