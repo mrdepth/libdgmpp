@@ -33,6 +33,7 @@ public class DGMStructure: DGMShip {
 			return DGMArea(area)
 		}
 		set {
+            willChange()
 			dgmpp_structure_set_area(handle, newValue?.handle)
 		}
 	}

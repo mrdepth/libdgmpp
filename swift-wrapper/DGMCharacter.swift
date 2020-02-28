@@ -83,6 +83,7 @@ public class DGMSkill: DGMType {
 			return Int(dgmpp_skill_get_level(handle))
 		}
 		set {
+            willChange()
 			dgmpp_skill_set_level(handle, Int32(newValue))
 		}
 	}
@@ -105,6 +106,7 @@ public class DGMCharacter: DGMType, Codable {
 		}
 		set {
 			guard let string = newValue.cString(using: .utf8) else {return}
+            willChange()
 			dgmpp_character_set_name(handle, string)
 		}
 	}
@@ -116,6 +118,7 @@ public class DGMCharacter: DGMType, Codable {
 			return DGMShip(ship)
 		}
 		set {
+            willChange()
 			dgmpp_character_set_ship(handle, newValue?.handle)
 		}
 	}
@@ -131,22 +134,27 @@ public class DGMCharacter: DGMType, Codable {
 //	}
 	
 	public func setSkillLevels(_ level: Int) {
+        willChange()
 		dgmpp_character_set_skill_levels(handle, Int32(level))
 	}
 	
 	public func add(_ implant: DGMImplant, replace: Bool = false) throws {
+        willChange()
 		guard dgmpp_character_add_implant_v2(handle, implant.handle, replace ? 1 : 0) != 0 else { throw DGMError.cannotFit(implant)}
 	}
 	
 	public func add(_ booster: DGMBooster, replace: Bool = false) throws {
+        willChange()
 		guard dgmpp_character_add_booster_v2(handle, booster.handle, replace ? 1 : 0) != 0 else { throw DGMError.cannotFit(booster)}
 	}
 	
 	public func remove(_ implant: DGMImplant) {
+        willChange()
 		dgmpp_character_remove_implant(handle, implant.handle)
 	}
 
 	public func remove(_ booster: DGMBooster) {
+        willChange()
 		dgmpp_character_remove_booster(handle, booster.handle)
 	}
 	
@@ -197,4 +205,9 @@ public class DGMCharacter: DGMType, Codable {
 		case ship
 		case identifier
 	}
+    
+    override func sendChange() {
+        super.sendChange()
+        ship?.sendChange()
+    }
 }

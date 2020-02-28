@@ -35,6 +35,7 @@ public class DGMDrone: DGMType, Codable {
 			return dgmpp_drone_is_active(handle) != 0
 		}
 		set {
+            willChange()
 			dgmpp_drone_set_active(handle, newValue ? 1 : 0)
 		}
 	}
@@ -48,6 +49,7 @@ public class DGMDrone: DGMType, Codable {
 			return dgmpp_drone_is_kamikaze(handle) != 0
 		}
 		set {
+            willChange()
 			dgmpp_drone_set_kamikaze(handle, newValue ? 1 : 0)
 		}
 	}
@@ -75,6 +77,7 @@ public class DGMDrone: DGMType, Codable {
 			return DGMShip(target)
 		}
 		set {
+            willChange()
 			dgmpp_drone_set_target(handle, newValue?.handle)
 		}
 	}

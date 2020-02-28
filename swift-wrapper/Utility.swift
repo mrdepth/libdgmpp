@@ -85,6 +85,7 @@ public struct DGMDamageVector: Scalable {
 	}
 
 	public static let omni = DGMDamageVector(em: 0.25, thermal: 0.25, kinetic: 0.25, explosive: 0.25)
+    public static let zero = DGMDamageVector(em: 0.0, thermal: 0.0, kinetic: 0.0, explosive: 0.0)
 	
 }
 

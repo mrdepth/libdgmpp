@@ -73,6 +73,7 @@ public class DGMShip: DGMType, Codable {
 		}
 		set {
 			guard let string = newValue.cString(using: .utf8) else {return}
+            willChange()
 			dgmpp_ship_set_name(handle, string)
 		}
 	}
@@ -94,23 +95,28 @@ public class DGMShip: DGMType, Codable {
 			return DGMDamageVector(dgmpp_ship_get_damage_pattern(handle))
 		}
 		set {
+            willChange()
 			dgmpp_ship_set_damage_pattern(handle, dgmpp_damage_vector(newValue))
 		}
 	}
 	
 	public func add(_ module: DGMModule, socket: Int = -1, ignoringRequirements: Bool = false) throws {
+        willChange()
 		guard dgmpp_ship_add_module_v2(handle, module.handle, Int32(socket), ignoringRequirements ? 1 : 0) != 0 else { throw DGMError.cannotFit(module)}
 	}
 	
 	public func add(_ drone: DGMDrone, squadronTag: Int = -1) throws {
+        willChange()
 		guard dgmpp_ship_add_drone_v2(handle, drone.handle, Int32(squadronTag)) != 0 else { throw DGMError.cannotFit(drone)}
 	}
 	
 	public func remove(_ module: DGMModule) {
+        willChange()
 		dgmpp_ship_remove_module(handle, module.handle)
 	}
 	
 	public func remove(_ drone: DGMDrone) {
+        willChange()
 		dgmpp_ship_remove_drone(handle, drone.handle)
 	}
 
@@ -454,6 +460,16 @@ public class DGMShip: DGMType, Codable {
 		case squadronTag
 		case count
 	}
+    
+    override func sendChange() {
+        super.sendChange()
+        modules.forEach{
+            $0.sendChange()
+        }
+        drones.forEach {
+            $0.sendChange()
+        }
+    }
 
 }
 

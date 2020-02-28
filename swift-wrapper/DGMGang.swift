@@ -19,10 +19,12 @@ public class DGMGang: DGMType {
 	}
 
 	public func add(_ pilot: DGMCharacter) {
+        willChange()
 		dgmpp_gang_add_pilot(handle, pilot.handle)
 	}
 	
 	public func remove(_ pilot: DGMCharacter) {
+        willChange()
 		dgmpp_gang_remove_pilot(handle, pilot.handle)
 	}
 	
@@ -35,7 +37,7 @@ public class DGMGang: DGMType {
 			return dgmpp_gang_get_factor_reload(handle) != 0
 		}
 		set {
-			
+			willChange()
 			dgmpp_gang_set_factor_reload(handle, newValue ? 1 : 0)
 		}
 	}
@@ -46,9 +48,14 @@ public class DGMGang: DGMType {
 			return DGMArea(area)
 		}
 		set {
+            willChange()
 			dgmpp_gang_set_area(handle, newValue?.handle)
 		}
 	}
 
+    override func sendChange() {
+        super.sendChange()
+        pilots.forEach{$0.sendChange()}
+    }
 
 }

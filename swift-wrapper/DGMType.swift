@@ -7,8 +7,15 @@
 
 import Foundation
 import cwrapper
+import Combine
 
-public class DGMType: DGMObject {
+fileprivate struct WeakReference<Value: AnyObject> {
+    weak var value: Value?
+}
+
+fileprivate var handles: [dgmpp_type: WeakReference<DGMType>] = [:]
+
+public class DGMType: DGMObject, ObservableObject {
 	
 	public enum MetaGroup: Int, Codable {
 		case none
@@ -29,6 +36,15 @@ public class DGMType: DGMObject {
 	}
 	
 	class func type(_ handle: dgmpp_type) -> DGMType {
+        if let type = handles[handle] {
+            if let value = type.value {
+                return value
+            }
+            else {
+                handles[handle] = nil
+            }
+        }
+        
 		switch dgmpp_get_type(handle) {
 		case DGMPP_TYPE_GANG:
 			return DGMGang(handle)
@@ -58,7 +74,12 @@ public class DGMType: DGMObject {
 	convenience init(_ handle: dgmpp_type) {
 		self.init(handle, owned: false)
 	}
-
+    
+    required init(_ handle: dgmpp_handle, owned: Bool) {
+        super.init(handle, owned: owned)
+        handles[handle] = WeakReference(value: self)
+    }
+    
 	public var typeID: DGMTypeID {
 		return DGMTypeID(dgmpp_type_get_type_id(handle))
 	}
@@ -80,9 +101,9 @@ public class DGMType: DGMObject {
 	}
 
 	public var parent: DGMType? {
-		guard let parent = dgmpp_type_get_parent(handle) else {return nil}
-		return DGMType.type(parent)
-	}
+        guard let parent = dgmpp_type_get_parent(handle) else {return nil}
+        return DGMType.type(parent)
+    }
 	
 	public subscript(attributeID: DGMAttributeID) -> DGMAttribute? {
 		guard let attribute = dgmpp_type_get_attribute(handle, dgmpp_attribute_id(attributeID)) else {return nil}
@@ -102,8 +123,18 @@ public class DGMType: DGMObject {
 			return dgmpp_type_get_identifier(handle)
 		}
 		set {
+            willChange()
 			dgmpp_type_set_identifier(handle, newValue)
 		}
 	}
+    
+    public var objectWillChange = ObservableObjectPublisher()
 
+    func willChange() {
+        parent?.willChange()
+    }
+    
+    func sendChange() {
+        objectWillChange.send()
+    }
 }

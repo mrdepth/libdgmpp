@@ -10,7 +10,7 @@ import cwrapper
 
 public class DGMModule: DGMType, Codable {
 	
-	public enum State: Int, Codable {
+	public enum State: Int, Codable, CaseIterable {
 		case unknown = -1
 		case offline
 		case online
@@ -18,7 +18,7 @@ public class DGMModule: DGMType, Codable {
 		case overloaded
 	}
 	
-	public enum Slot: Int, Codable {
+	public enum Slot: Int, Codable, CaseIterable {
 		case none = 0
 		case hi
 		case med
@@ -30,7 +30,7 @@ public class DGMModule: DGMType, Codable {
 		case starbaseStructure
 	}
 	
-	public enum Hardpoint: Int {
+	public enum Hardpoint: Int, CaseIterable {
 		case none
 		case launcher
 		case turret
@@ -58,6 +58,7 @@ public class DGMModule: DGMType, Codable {
 			return State(dgmpp_module_get_state(handle)) ?? .unknown
 		}
 		set {
+            willChange()
 			dgmpp_module_set_state(handle, DGMPP_MODULE_STATE(newValue))
 		}
 	}
@@ -74,6 +75,7 @@ public class DGMModule: DGMType, Codable {
 			return DGMShip(target)
 		}
 		set {
+            willChange()
 			dgmpp_module_set_target(handle, newValue?.handle)
 		}
 	}
@@ -102,6 +104,7 @@ public class DGMModule: DGMType, Codable {
 	}
 	
 	public func setCharge(_ charge: DGMCharge?) throws {
+        willChange()
 		if let charge = charge {
 			guard dgmpp_module_set_charge(handle, charge.handle) != 0 else {throw DGMError.cannotFit(charge)}
 		}
