@@ -192,7 +192,7 @@ namespace dgmpp {
 		
 		Capacitor capacitor_;
 		HeatSimulator heatSimulator_;
-		DamageVector damagePatternValue_{0.25};
+		DamageVector damagePatternValue_{ 0.25 };
 		std::string nameValue_;
 		
 		

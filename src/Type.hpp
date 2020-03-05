@@ -21,7 +21,7 @@ namespace dgmpp {
 	class Effect;
 	class Modifier;
 	
-	class Type {
+	class Type: std::enable_shared_from_this<Type> {
 	public:
 		virtual ~Type();
 

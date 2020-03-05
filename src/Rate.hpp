@@ -111,6 +111,6 @@ namespace dgmpp {
 	template<typename Rep, typename Period>
 	auto make_rate(const Rep& value, const Period& period) noexcept {
 		auto c = period.count();
-		return rate<Rep, Period> (c > 0 ? value / Rep(c) : Rep(0));
+		return rate<Rep, Period> (c > 0 ? value / static_cast<Rep>(c) : Rep(0));
 	}
 }
