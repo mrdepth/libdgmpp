@@ -52,7 +52,7 @@ public class DGMGang: DGMType {
 			dgmpp_gang_set_area(handle, newValue?.handle)
 		}
 	}
-
+    
     override func sendChange() {
         super.sendChange()
         pilots.forEach{$0.sendChange()}

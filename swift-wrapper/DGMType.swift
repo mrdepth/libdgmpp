@@ -131,7 +131,12 @@ public class DGMType: DGMObject, ObservableObject {
     public var objectWillChange = ObservableObjectPublisher()
 
     func willChange() {
-        parent?.willChange()
+        if let parent = parent {
+            parent.willChange()
+        }
+        else {
+            sendChange()
+        }
     }
     
     func sendChange() {

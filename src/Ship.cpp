@@ -991,7 +991,9 @@ namespace dgmpp {
 		
 		
 		for (const auto& i: modulesSet_) {
-			std::get<std::unique_ptr<Module>>(i)->adjustState_();
+            const auto& module = std::get<std::unique_ptr<Module>>(i);
+            module->adjustState_();
+            module->lifeTimeValue_.reset();
 		}
 	}
 }
