@@ -108,8 +108,6 @@ namespace dgmpp {
 		}
 		
 		while(true) {
-			if (timestamp_.count() == 442800)
-				assert(1);
 			if (auto next = nextCycleTime_(facilities); next && next->count() >= 0) {
 				timestamp_ = *next;
 				for (auto& i: facilities)

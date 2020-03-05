@@ -179,11 +179,11 @@ namespace dgmpp {
 			return volley;
 		}
 		else
-			return {0};
+			return DamageVector{0};
 	}
 	
 	DamageVector Drone::droneVolley_() {
-		auto volley = DamageVector(0);
+		auto volley = DamageVector{ 0 };
 		auto& item = charge_ ? *static_cast<Type*> (charge_.get()) : *static_cast<Type*>(this);
 		
 		if (auto attribute = item.attribute_(AttributeID::emDamage))
@@ -288,7 +288,7 @@ namespace dgmpp {
 				if (target.velocity.count() > 0) {
 					auto velocity = this->velocity_();
 					if (velocity < target.velocity)
-						return DamagePerSecond(0);
+						return DamagePerSecond(0.0);
 					
 					decltype(velocity) v {std::sqrt(velocity.count() * velocity.count() - target.velocity.count() * target.velocity.count())};
 					orbitVelocity = std::min(orbitVelocity, v);
@@ -328,7 +328,6 @@ namespace dgmpp {
 	}
 	
 	DamagePerSecond Drone::rawDPS_() {
-		
 		auto dps = make_rate(droneVolley_(), cycleTime_());
 		
 		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDuration); attribute && attribute->value_() > 0)

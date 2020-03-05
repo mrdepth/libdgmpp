@@ -37,14 +37,13 @@
 #include "SDE/SchematicID.hpp"
 #include "Rate.hpp"
 
-#if !defined(_LIBCPP_OPTIONAL) && !defined(_GLIBCXX_OPTIONAL)
+#if !defined(_LIBCPP_OPTIONAL) && !defined(_GLIBCXX_OPTIONAL) && !defined(_OPTIONAL_)
 namespace std {
 	template<typename T>
 	using optional = std::experimental::optional<T>;
 	constexpr auto nullopt = std::experimental::nullopt;
 }
 #endif
-
 
 namespace dgmpp {
 	using Float = double;
@@ -97,7 +96,7 @@ namespace dgmpp {
 	};
 
 	extern const SDEVersion sdeVersion;
-	extern const Version version;
+	Version version();
 	
 	
 	
@@ -201,8 +200,8 @@ namespace dgmpp {
 	};
 	
 	struct HostileTarget {
-		RadiansPerSecond angularVelocity = RadiansPerSecond(0);
-		MetersPerSecond velocity = MetersPerSecond(0);
+		RadiansPerSecond angularVelocity = RadiansPerSecond(0.0);
+		MetersPerSecond velocity = MetersPerSecond(0.0);
 		Meter signature = 0;
 		Meter range = 0;
 		static HostileTarget Default() noexcept { return HostileTarget(); }

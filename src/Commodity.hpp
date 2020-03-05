@@ -121,7 +121,7 @@ namespace dgmpp {
 
 
 	private:
-		friend class std::hash<Commodity>;
+		friend struct std::hash<Commodity>;
 		const MetaInfo::Commodity& metaInfo_;
 		std::size_t quantity_;
 	};

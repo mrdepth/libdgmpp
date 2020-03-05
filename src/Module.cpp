@@ -459,7 +459,7 @@ namespace dgmpp {
 			return volley;
 		}
 		else
-			return {0};
+			return DamageVector{0};
 	}
 	
 	DamagePerSecond Module::dps_(const HostileTarget& target) {

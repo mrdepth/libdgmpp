@@ -108,5 +108,7 @@ namespace dgmpp {
 		}
 	}
 	
-	const auto version = Version({2, 0, sdeVersion});
+	Version version() {
+		return Version{ 2, 0, sdeVersion };
+	}
 }

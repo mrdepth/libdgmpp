@@ -8,3 +8,6 @@ android/.externalNativeBuild/
 android/.gradle/
 android/build/
 
+/VisualStudio/.vs/dgmpp/v16
+/VisualStudio/x64/Debug
+/.vs

@@ -356,32 +356,32 @@ namespace dgmpp {
 		switch (squadron) {
 			case Drone::Squadron::heavy:
 				if (auto attribute = attribute_(AttributeID::fighterHeavySlots))
-					return attribute->value();
+					return  static_cast<size_t>(attribute->value());
 				else
 					return 0;
 			case Drone::Squadron::light:
 				if (auto attribute = attribute_(AttributeID::fighterLightSlots))
-					return attribute->value();
+					return  static_cast<size_t>(attribute->value());
 				else
 					return 0;
 			case Drone::Squadron::support:
 				if (auto attribute = attribute_(AttributeID::fighterSupportSlots))
-					return attribute->value();
+					return  static_cast<size_t>(attribute->value());
 				else
 					return 0;
 			case Drone::Squadron::standupHeavy:
 				if (auto attribute = attribute_(AttributeID::fighterStandupHeavySlots))
-					return attribute->value();
+					return  static_cast<size_t>(attribute->value());
 				else
 					return 0;
 			case Drone::Squadron::standupLight:
 				if (auto attribute = attribute_(AttributeID::fighterStandupLightSlots))
-					return attribute->value();
+					return  static_cast<size_t>(attribute->value());
 				else
 					return 0;
 			case Drone::Squadron::standupSupport:
 				if (auto attribute = attribute_(AttributeID::fighterStandupSupportSlots))
-					return attribute->value();
+					return  static_cast<size_t>(attribute->value());
 				else
 					return 0;
 			default:
@@ -801,7 +801,6 @@ namespace dgmpp {
 	MetersPerSecond Ship::maxVelocityInOrbit_(Meter r) {
 		using namespace std::chrono_literals;
 		
-		std::pow(1, 1);
 		auto i = agility_();
 		auto m = mass_() / 1'000'000.0;
 		auto v = velocity_();

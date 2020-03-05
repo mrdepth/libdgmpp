@@ -58,7 +58,7 @@ namespace dgmpp {
 	private:
 		friend class Planet;
 		friend class Factory;
-		friend class Route;
+		friend struct Route;
 		const MetaInfo::Facility& metaInfo_;
 		Planet& planet_;
 		Identifier identifier_;

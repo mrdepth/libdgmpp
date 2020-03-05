@@ -7,13 +7,19 @@
 
 #pragma once
 #include "Utility.hpp"
+#include <type_traits>
 
 namespace dgmpp {
 	
 	class DamageVector {
 	public:
+
 		DamageVector (HP value = 0)
 		: em(value), thermal(value), kinetic(value), explosive(value) {}
+
+		//template<typename T, std::enable_if_t<std::is_arithmetic_v<std::decay_t<T>>>>
+		//DamageVector(T value)
+		//	: em(value), thermal(value), kinetic(value), explosive(value) {}
 		
 		DamageVector (HP em, HP thermal, HP kinetic, HP explosive)
 		: em(em), thermal(thermal), kinetic(kinetic), explosive(explosive) {}
@@ -151,5 +157,11 @@ namespace dgmpp {
 	};
 	
 	using DamagePerSecond = rate<DamageVector, std::chrono::seconds>;
+
+	template<typename Period>
+	auto make_rate(const DamageVector& value, const Period& period) noexcept {
+		auto c = period.count();
+		return rate<DamageVector, Period>(c > 0 ? value / static_cast<HP>(c) : DamageVector(0.0));
+	}
 }
 

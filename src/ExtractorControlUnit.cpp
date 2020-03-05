@@ -44,7 +44,7 @@ namespace dgmpp {
 			auto sins = std::max((sina + sinb + sinc) / 3.0, 0.0);
 			auto h = decay * (1 + noiseFactor * sins);
 			auto yield = w_.count() * h;
-			product = std::trunc(yield);
+			product = static_cast<size_t>(std::trunc(yield));
 		}
 		
 		return product;

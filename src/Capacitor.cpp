@@ -109,7 +109,7 @@ namespace dgmpp {
 		rechargeTimeValue_ = rechargeTime_();
 		rechargeValue_ = make_rate(10.0 * config::capacitorPeakRecharge * (1.0 - config::capacitorPeakRecharge) * capacityValue_, rechargeTimeValue_);
 		
-		useValue_ = decltype(useValue_)(0);
+		useValue_ = decltype(useValue_)(0.0);
 		period_ = 1ms;
 		
 		auto isDisallowedOffense = owner_.isDisallowedOffense_();

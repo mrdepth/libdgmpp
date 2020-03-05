@@ -52,6 +52,7 @@ namespace dgmpp {
 					return false;
 			default:
 				assert(!"Invalid MetaInfo::Modifier::ModifierType value");
+				return false;
 		}
 	}
 	
