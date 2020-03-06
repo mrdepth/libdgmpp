@@ -39,43 +39,16 @@
 		1285E84B201B26EB00AAC231 /* ProductionState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8D71FCEA2FA00C34372 /* ProductionState.cpp */; };
 		1285E84C201B26EB00AAC231 /* ProductionCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8DD1FCEA30500C34372 /* ProductionCycle.cpp */; };
 		1285E84D201B26EB00AAC231 /* SDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B330F71FBD97F80072D4E4 /* SDE.cpp */; };
-		1285E84E201B26EB00AAC231 /* area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE894A1FE2836A00854893 /* area.cpp */; };
-		1285E84F201B26EB00AAC231 /* attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89201FE2660A00854893 /* attribute.cpp */; };
-		1285E850201B26EB00AAC231 /* character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE892C1FE26ADD00854893 /* character.cpp */; };
-		1285E851201B26EB00AAC231 /* charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89441FE2831E00854893 /* charge.cpp */; };
-		1285E852201B26EB00AAC231 /* drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE893E1FE2819800854893 /* drone.cpp */; };
-		1285E853201B26EB00AAC231 /* gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89261FE26A0700854893 /* gang.cpp */; };
-		1285E854201B26EB00AAC231 /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89381FE27D5800854893 /* module.cpp */; };
-		1285E855201B26EB00AAC231 /* ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89321FE270B900854893 /* ship.cpp */; };
-		1285E856201B26EB00AAC231 /* structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89521FE283DA00854893 /* structure.cpp */; };
-		1285E857201B26EB00AAC231 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
-		1285E858201B26EB00AAC231 /* extractor_control_unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89651FE2864F00854893 /* extractor_control_unit.cpp */; };
-		1285E859201B26EB00AAC231 /* facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE896B1FE2865C00854893 /* facility.cpp */; };
-		1285E85A201B26EB00AAC231 /* factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89711FE2866F00854893 /* factory.cpp */; };
-		1285E85B201B26EB00AAC231 /* planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89771FE2867A00854893 /* planet.cpp */; };
-		1285E85C201B26EB00AAC231 /* production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.cpp */; };
-		1285E85D201B26EB00AAC231 /* storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.cpp */; };
-		1285E85E201B26EB00AAC231 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
 		1285E865201B289E00AAC231 /* HeatSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 127442B41FD9835400B70A3A /* HeatSimulator.cpp */; };
 		1285E866201B289E00AAC231 /* Commodity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8BE1FCD9B6B00C34372 /* Commodity.cpp */; };
-		1285E867201B289E00AAC231 /* factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89711FE2866F00854893 /* factory.cpp */; };
-		1285E868201B289E00AAC231 /* gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89261FE26A0700854893 /* gang.cpp */; };
-		1285E869201B289E00AAC231 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
-		1285E86A201B289E00AAC231 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
 		1285E86B201B289E00AAC231 /* Skill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF2D1FBDB3AB00AC8EB1 /* Skill.cpp */; };
-		1285E86C201B289E00AAC231 /* drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE893E1FE2819800854893 /* drone.cpp */; };
-		1285E86D201B289E00AAC231 /* charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89441FE2831E00854893 /* charge.cpp */; };
 		1285E86E201B289E00AAC231 /* Factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8EF1FCEA34E00C34372 /* Factory.cpp */; };
 		1285E86F201B289E00AAC231 /* ProductionState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8D71FCEA2FA00C34372 /* ProductionState.cpp */; };
 		1285E870201B289E00AAC231 /* ExtractorControlUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8F51FCEA35B00C34372 /* ExtractorControlUnit.cpp */; };
 		1285E871201B289E00AAC231 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF391FBDB4A200AC8EB1 /* Module.cpp */; };
-		1285E872201B289E00AAC231 /* area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE894A1FE2836A00854893 /* area.cpp */; };
-		1285E873201B289E00AAC231 /* facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE896B1FE2865C00854893 /* facility.cpp */; };
 		1285E874201B289E00AAC231 /* Area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8A41FCD659200C34372 /* Area.cpp */; };
 		1285E875201B289E00AAC231 /* Gang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF211FBDA52500AC8EB1 /* Gang.cpp */; };
-		1285E876201B289E00AAC231 /* ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89321FE270B900854893 /* ship.cpp */; };
 		1285E877201B289E00AAC231 /* Facility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8B81FCD9B5300C34372 /* Facility.cpp */; };
-		1285E878201B289E00AAC231 /* character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE892C1FE26ADD00854893 /* character.cpp */; };
 		1285E879201B289E00AAC231 /* Drone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF451FBDB5D200AC8EB1 /* Drone.cpp */; };
 		1285E87A201B289E00AAC231 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8B21FCD9B4100C34372 /* Planet.cpp */; };
 		1285E87B201B289E00AAC231 /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8E91FCEA33700C34372 /* Storage.cpp */; };
@@ -83,22 +56,15 @@
 		1285E87D201B289E00AAC231 /* Spaceport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8FC1FCEA39000C34372 /* Spaceport.cpp */; };
 		1285E87E201B289E00AAC231 /* CommandCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8E31FCEA32F00C34372 /* CommandCenter.cpp */; };
 		1285E87F201B289E00AAC231 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF271FBDA58700AC8EB1 /* Character.cpp */; };
-		1285E880201B289E00AAC231 /* attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89201FE2660A00854893 /* attribute.cpp */; };
-		1285E881201B289E00AAC231 /* planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89771FE2867A00854893 /* planet.cpp */; };
 		1285E882201B289E00AAC231 /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF191FBDA2A900AC8EB1 /* Effect.cpp */; };
 		1285E883201B289E00AAC231 /* SDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B330F71FBD97F80072D4E4 /* SDE.cpp */; };
-		1285E884201B289E00AAC231 /* structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89521FE283DA00854893 /* structure.cpp */; };
-		1285E885201B289E00AAC231 /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89381FE27D5800854893 /* module.cpp */; };
 		1285E886201B289E00AAC231 /* ProductionCycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8DD1FCEA30500C34372 /* ProductionCycle.cpp */; };
 		1285E887201B289E00AAC231 /* Structure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12649A151FCD5E77007B22CD /* Structure.cpp */; };
 		1285E888201B289E00AAC231 /* Attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12B3311A1FBD99B40072D4E4 /* Attribute.cpp */; };
 		1285E889201B289E00AAC231 /* Route.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123CC8D11FCEA29700C34372 /* Route.cpp */; };
 		1285E88A201B289E00AAC231 /* Capacitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EC664F1FBECD840083DBB8 /* Capacitor.cpp */; };
-		1285E88B201B289E00AAC231 /* production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.cpp */; };
 		1285E88C201B289E00AAC231 /* Booster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E864F51FC8650000C9C4BD /* Booster.cpp */; };
-		1285E88D201B289E00AAC231 /* extractor_control_unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89651FE2864F00854893 /* extractor_control_unit.cpp */; };
 		1285E88E201B289E00AAC231 /* Charge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF3F1FBDB59200AC8EB1 /* Charge.cpp */; };
-		1285E88F201B289E00AAC231 /* storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.cpp */; };
 		1285E890201B289E00AAC231 /* Implant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E864EF1FC864F600C9C4BD /* Implant.cpp */; };
 		1285E891201B289E00AAC231 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF331FBDB40800AC8EB1 /* Ship.cpp */; };
 		1285E892201B289E00AAC231 /* Modifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123BEF131FBDA20F00AC8EB1 /* Modifier.cpp */; };
@@ -945,7 +911,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = DGM;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					12564B8D1B84AF15000F68D8 = {
 						CreatedOnToolsVersion = 6.4;
@@ -1060,24 +1026,14 @@
 			files = (
 				1285E838201B26EB00AAC231 /* HeatSimulator.cpp in Sources */,
 				1285E849201B26EB00AAC231 /* Commodity.cpp in Sources */,
-				1285E85A201B26EB00AAC231 /* factory.cpp in Sources */,
-				1285E853201B26EB00AAC231 /* gang.cpp in Sources */,
-				1285E857201B26EB00AAC231 /* type.cpp in Sources */,
-				1285E85E201B26EB00AAC231 /* utility.cpp in Sources */,
 				1285E840201B26EB00AAC231 /* Skill.cpp in Sources */,
-				1285E852201B26EB00AAC231 /* drone.cpp in Sources */,
-				1285E851201B26EB00AAC231 /* charge.cpp in Sources */,
 				1285E845201B26EB00AAC231 /* Factory.cpp in Sources */,
 				1285E84B201B26EB00AAC231 /* ProductionState.cpp in Sources */,
 				1285E843201B26EB00AAC231 /* ExtractorControlUnit.cpp in Sources */,
 				1285E83E201B26EB00AAC231 /* Module.cpp in Sources */,
-				1285E84E201B26EB00AAC231 /* area.cpp in Sources */,
-				1285E859201B26EB00AAC231 /* facility.cpp in Sources */,
 				1285E835201B26EB00AAC231 /* Area.cpp in Sources */,
 				1285E83C201B26EB00AAC231 /* Gang.cpp in Sources */,
-				1285E855201B26EB00AAC231 /* ship.cpp in Sources */,
 				1285E844201B26EB00AAC231 /* Facility.cpp in Sources */,
-				1285E850201B26EB00AAC231 /* character.cpp in Sources */,
 				1285E83B201B26EB00AAC231 /* Drone.cpp in Sources */,
 				1285E848201B26EB00AAC231 /* Planet.cpp in Sources */,
 				1285E847201B26EB00AAC231 /* Storage.cpp in Sources */,
@@ -1085,22 +1041,15 @@
 				1285E846201B26EB00AAC231 /* Spaceport.cpp in Sources */,
 				1285E842201B26EB00AAC231 /* CommandCenter.cpp in Sources */,
 				1285E839201B26EB00AAC231 /* Character.cpp in Sources */,
-				1285E84F201B26EB00AAC231 /* attribute.cpp in Sources */,
-				1285E85B201B26EB00AAC231 /* planet.cpp in Sources */,
 				1285E831201B26EB00AAC231 /* Effect.cpp in Sources */,
 				1285E84D201B26EB00AAC231 /* SDE.cpp in Sources */,
-				1285E856201B26EB00AAC231 /* structure.cpp in Sources */,
-				1285E854201B26EB00AAC231 /* module.cpp in Sources */,
 				1285E84C201B26EB00AAC231 /* ProductionCycle.cpp in Sources */,
 				1285E841201B26EB00AAC231 /* Structure.cpp in Sources */,
 				1285E830201B26EB00AAC231 /* Attribute.cpp in Sources */,
 				1285E84A201B26EB00AAC231 /* Route.cpp in Sources */,
 				1285E837201B26EB00AAC231 /* Capacitor.cpp in Sources */,
-				1285E85C201B26EB00AAC231 /* production_state.cpp in Sources */,
 				1285E836201B26EB00AAC231 /* Booster.cpp in Sources */,
-				1285E858201B26EB00AAC231 /* extractor_control_unit.cpp in Sources */,
 				1285E83A201B26EB00AAC231 /* Charge.cpp in Sources */,
-				1285E85D201B26EB00AAC231 /* storage.cpp in Sources */,
 				1285E83D201B26EB00AAC231 /* Implant.cpp in Sources */,
 				1285E83F201B26EB00AAC231 /* Ship.cpp in Sources */,
 				1285E832201B26EB00AAC231 /* Modifier.cpp in Sources */,
@@ -1114,24 +1063,14 @@
 			files = (
 				1285E865201B289E00AAC231 /* HeatSimulator.cpp in Sources */,
 				1285E866201B289E00AAC231 /* Commodity.cpp in Sources */,
-				1285E867201B289E00AAC231 /* factory.cpp in Sources */,
-				1285E868201B289E00AAC231 /* gang.cpp in Sources */,
-				1285E869201B289E00AAC231 /* type.cpp in Sources */,
-				1285E86A201B289E00AAC231 /* utility.cpp in Sources */,
 				1285E86B201B289E00AAC231 /* Skill.cpp in Sources */,
-				1285E86C201B289E00AAC231 /* drone.cpp in Sources */,
-				1285E86D201B289E00AAC231 /* charge.cpp in Sources */,
 				1285E86E201B289E00AAC231 /* Factory.cpp in Sources */,
 				1285E86F201B289E00AAC231 /* ProductionState.cpp in Sources */,
 				1285E870201B289E00AAC231 /* ExtractorControlUnit.cpp in Sources */,
 				1285E871201B289E00AAC231 /* Module.cpp in Sources */,
-				1285E872201B289E00AAC231 /* area.cpp in Sources */,
-				1285E873201B289E00AAC231 /* facility.cpp in Sources */,
 				1285E874201B289E00AAC231 /* Area.cpp in Sources */,
 				1285E875201B289E00AAC231 /* Gang.cpp in Sources */,
-				1285E876201B289E00AAC231 /* ship.cpp in Sources */,
 				1285E877201B289E00AAC231 /* Facility.cpp in Sources */,
-				1285E878201B289E00AAC231 /* character.cpp in Sources */,
 				1285E879201B289E00AAC231 /* Drone.cpp in Sources */,
 				1285E87A201B289E00AAC231 /* Planet.cpp in Sources */,
 				1285E87B201B289E00AAC231 /* Storage.cpp in Sources */,
@@ -1139,22 +1078,15 @@
 				1285E87D201B289E00AAC231 /* Spaceport.cpp in Sources */,
 				1285E87E201B289E00AAC231 /* CommandCenter.cpp in Sources */,
 				1285E87F201B289E00AAC231 /* Character.cpp in Sources */,
-				1285E880201B289E00AAC231 /* attribute.cpp in Sources */,
-				1285E881201B289E00AAC231 /* planet.cpp in Sources */,
 				1285E882201B289E00AAC231 /* Effect.cpp in Sources */,
 				1285E883201B289E00AAC231 /* SDE.cpp in Sources */,
-				1285E884201B289E00AAC231 /* structure.cpp in Sources */,
-				1285E885201B289E00AAC231 /* module.cpp in Sources */,
 				1285E886201B289E00AAC231 /* ProductionCycle.cpp in Sources */,
 				1285E887201B289E00AAC231 /* Structure.cpp in Sources */,
 				1285E888201B289E00AAC231 /* Attribute.cpp in Sources */,
 				1285E889201B289E00AAC231 /* Route.cpp in Sources */,
 				1285E88A201B289E00AAC231 /* Capacitor.cpp in Sources */,
-				1285E88B201B289E00AAC231 /* production_state.cpp in Sources */,
 				1285E88C201B289E00AAC231 /* Booster.cpp in Sources */,
-				1285E88D201B289E00AAC231 /* extractor_control_unit.cpp in Sources */,
 				1285E88E201B289E00AAC231 /* Charge.cpp in Sources */,
-				1285E88F201B289E00AAC231 /* storage.cpp in Sources */,
 				1285E890201B289E00AAC231 /* Implant.cpp in Sources */,
 				1285E891201B289E00AAC231 /* Ship.cpp in Sources */,
 				1285E892201B289E00AAC231 /* Modifier.cpp in Sources */,
@@ -1357,7 +1289,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1397,7 +1329,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;

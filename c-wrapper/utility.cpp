@@ -40,5 +40,6 @@ dgmpp_bool dgmpp_commodity_create(dgmpp_type_id type_id, size_t quantity, dgmpp_
 }
 
 dgmpp_version dgmpp_get_version () {
-	return {dgmpp::version.major, dgmpp::version.minor, {dgmpp::version.sde.build, dgmpp::version.sde.version}};
+    auto version = dgmpp::version();
+	return {version.major, version.minor, {version.sde.build, version.sde.version}};
 }

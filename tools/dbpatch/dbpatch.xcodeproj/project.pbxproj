@@ -101,7 +101,7 @@
 		12DBEA4E1E1D39400088A486 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Artem Shimanski";
 				TargetAttributes = {
 					12DBEA551E1D39400088A486 = {
@@ -113,10 +113,11 @@
 			};
 			buildConfigurationList = 12DBEA511E1D39400088A486 /* Build configuration list for PBXProject "dbpatch" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 12DBEA4D1E1D39400088A486;
 			productRefGroup = 12DBEA571E1D39400088A486 /* Products */;
@@ -143,6 +144,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -198,6 +200,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -245,6 +248,7 @@
 		12DBEA5E1E1D39400088A486 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/dbinit/tmp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -254,6 +258,7 @@
 		12DBEA5F1E1D39400088A486 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/dbinit/tmp";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -89,7 +89,7 @@ namespace dgmpp {
 		std::list<Drone*> drones;
 		
 		for (const auto& i: owner_.modulesSet_) {
-			auto m = std::get<std::unique_ptr<Module>>(i).get();
+			auto m = std::get<std::shared_ptr<Module>>(i).get();
 			if (m->state_() >= Module::State::active)
 				modules.push_back(m);
 		}

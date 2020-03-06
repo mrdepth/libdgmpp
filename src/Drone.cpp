@@ -14,8 +14,12 @@ namespace dgmpp {
 	const Drone::SquadronTag Drone::anySquadronTag = -1;
 	
 	Drone::~Drone() {
-		if (targetValue_)
-			targetValue_->removeProjected_(this);
+        if (auto target = targetValue_.lock())
+            target->removeProjected_(this);
+        
+        if (charge_ != nullptr) {
+            charge_->parent_(nullptr);
+        }
 	}
 	
 	Drone::Drone (TypeID typeID): Type(typeID) {
@@ -53,9 +57,9 @@ namespace dgmpp {
 		Type(other),
 		squadron_(other.squadron_),
 		squadronSize_(other.squadronSize_),
-		charge_ ([this, &other]() -> std::unique_ptr<Charge> {
+		charge_ ([this, &other]() -> std::shared_ptr<Charge> {
 			if (auto charge = other.charge_.get()) {
-				auto myCharge = Charge::Create(*charge);
+				auto myCharge = std::make_shared<Charge>(*charge);
 				myCharge->parent_(this);
 				return myCharge;
 			}
@@ -96,16 +100,16 @@ namespace dgmpp {
 		flags_.kamikaze = kamikaze;
 	}
 	
-	void Drone::target_(Ship* target) {
+	void Drone::target_(const std::shared_ptr<Ship>& target) {
 		batchUpdates_([&]() {
-			if (targetValue_) {
+			if (auto target = targetValue_.lock()) {
 				if (active_())
 					deactivateEffects_(MetaInfo::Effect::Category::target);
-				targetValue_->removeProjected_(this);
+				target->removeProjected_(this);
 			}
 			targetValue_ = target;
 			if (target) {
-				targetValue_->project_(this);
+				target->project_(this);
 				if (active_())
 					activateEffects_(MetaInfo::Effect::Category::target);
 			}
@@ -136,7 +140,7 @@ namespace dgmpp {
 	Type* Drone::domain_ (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::target :
-				return targetValue_;
+				return targetValue_.lock().get();
 			default:
 				return Type::domain_(domain);
 		}

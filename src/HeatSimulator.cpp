@@ -78,7 +78,7 @@ namespace dgmpp {
 		c.reserve(modules.size());
 
 		for (auto i: modules) {
-			hp[i->socket_()] = std::make_pair(i->attribute_(AttributeID::hp)->value_(), i);
+			hp[i->socket_()] = std::make_pair(i->attribute_(AttributeID::hp)->value_(), i.get());
 			if (i->state_() == Module::State::overloaded) {
 				c.emplace_back(i->rawCycleTime_(), i->reloadTime_(), i->attribute_(AttributeID::heatDamage)->value_(), i->shots_(), i->socket_());
 			}

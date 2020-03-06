@@ -15,47 +15,57 @@ namespace dgmpp {
 	Character::Character() : Type(TypeID::characterGallente) {
 		for (std::size_t i = 0; i < SDE::skillsCount; i++) {
 			auto metaInfo = SDE::skills[i];
-			auto skill = Skill::Create(*metaInfo);
-			auto ptr = skill.get();
-			skillsMap_.emplace(metaInfo->typeID, std::move(skill));
-			ptr->parent_(this);
+            auto skill = std::shared_ptr<Skill>(new Skill(*metaInfo));
+			skillsMap_.emplace(metaInfo->typeID, skill);
+			skill->parent_(this);
 		}
 	}
 	
 	Character::Character (const Character& other): Type(other) {
 		for (const auto& i: other.skillsMap_) {
-			auto skill = Skill::Create(*i.second);
-			auto ptr = skill.get();
-			skillsMap_.emplace(ptr->metaInfo().typeID, std::move(skill));
-			ptr->parent_(this);
+            auto skill = std::shared_ptr<Skill>(new Skill(*i.second));
+			skillsMap_.emplace(skill->metaInfo().typeID, skill);
+			skill->parent_(this);
 		}
 		
 		for (const auto& i: other.implantsSet_) {
-			auto implant = Implant::Create(*i);
-			auto ptr = implant.get();
-			implantsSet_.emplace(std::move(implant));
-			ptr->parent_(this);
+            auto implant = std::make_shared<Implant>(*i);
+			implantsSet_.emplace(implant);
+			implant->parent_(this);
 		}
 
 		for (const auto& i: other.boostersSet_) {
-			auto booster = Booster::Create(*i);
-			auto ptr = booster.get();
-			boostersSet_.emplace(std::move(booster));
-			ptr->parent_(this);
+			auto booster = std::make_shared<Booster>(*i);
+			boostersSet_.emplace(booster);
+			booster->parent_(this);
 		}
 
-		/*if (auto structure = other.structure_()) {
-			shipValue_ = Structure::Create(*structure);
-			shipValue_->parent_(this);
-		}
-		else */if (auto ship = other.ship_()) {
-			shipValue_ = Ship::Create(*ship);
+        if (auto ship = other.ship_()) {
+			shipValue_ = std::make_shared<Ship>(*ship);
 			shipValue_->parent_(this);
 		}
 		nameValue_ = other.nameValue_;
 	}
-	
-	Ship* Character::ship_(std::unique_ptr<Ship>&& ship) {
+
+    Character::~Character() {
+        if (shipValue_ != nullptr) {
+            shipValue_->parent_(nullptr);
+        }
+        for (const auto& i: skillsMap_) {
+            i.second->parent_(nullptr);
+        }
+        for (const auto& i: implantsSet_) {
+            i->parent_(nullptr);
+        }
+        for (const auto& i: boostersSet_) {
+            i->parent_(nullptr);
+        }
+
+    }
+
+	void Character::ship_(const std::shared_ptr<Ship>& ship) {
+        assert(ship == nullptr || ship->parent() == nullptr);
+        
 		batchUpdates_([&]() {
 			auto enabled = isEnabled_();
 			if (enabled)
@@ -67,20 +77,14 @@ namespace dgmpp {
 			}
 			
 			if (ship != nullptr) {
-				shipValue_ = std::move(ship);
+				shipValue_ = ship;
 				shipValue_->parent_(this);
 			}
 			
 			if (enabled)
 				setEnabled_(true);
 		});
-		
-		return shipValue_.get();
 	}
-	
-//	Structure* Character::structure_ (std::unique_ptr<Structure>&& structure) {
-//		return dynamic_cast<Structure*>(ship_(std::move(structure)));
-//	}
 	
 	Type* Character::domain_(MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
@@ -118,7 +122,9 @@ namespace dgmpp {
 			return false;
 	}
 	
-	Implant* Character::add_(std::unique_ptr<Implant>&& implant, bool replace) {
+	void Character::add_(const std::shared_ptr<Implant>& implant, bool replace) {
+        assert(implant != nullptr && implant->parent() == nullptr);
+            
 		auto old = implantsSet_.find(implant->slot());
 		if (old != implantsSet_.end()) {
 			if (replace) {
@@ -126,35 +132,32 @@ namespace dgmpp {
 				implantsSet_.erase(old);
 			}
 			else
-				throw CannotFit<Implant>(std::move(implant));
+				throw CannotFit<Implant>(implant);
 		}
 
-		auto ptr = implant.get();
-		implantsSet_.insert(std::move(implant));
-		ptr->parent_(this);
-		
-		return ptr;
+		implantsSet_.insert(implant);
+		implant->parent_(this);
 	}
 	
-	Booster* Character::add_(std::unique_ptr<Booster>&& booster, bool replace) {
-		auto old = boostersSet_.find(booster->slot());
+	void Character::add_(const std::shared_ptr<Booster>& booster, bool replace) {
+        assert(booster != nullptr && booster->parent() == nullptr);
+
+        auto old = boostersSet_.find(booster->slot());
 		if (old != boostersSet_.end()) {
 			if (replace) {
 				(*old)->parent_(nullptr);
 				boostersSet_.erase(old);
 			}
 			else
-				throw CannotFit<Booster>(std::move(booster));
+				throw CannotFit<Booster>(booster);
 		}
 		
-		auto ptr = booster.get();
-		boostersSet_.insert(std::move(booster));
-		ptr->parent_(this);
-		
-		return ptr;
+		boostersSet_.insert(booster);
+		booster->parent_(this);
 	}
 	
 	void Character::remove_(Implant* implant) {
+        assert(implant != nullptr && implant->parent() == this);
 		auto i = implantsSet_.find(implant);
 		assert(i != implantsSet_.end());
 		(*i)->parent_(nullptr);
@@ -162,41 +165,42 @@ namespace dgmpp {
 	}
 	
 	void Character::remove_(Booster* booster) {
+        assert(booster != nullptr && booster->parent() == this);
 		auto i = boostersSet_.find(booster);
 		assert(i != boostersSet_.end());
 		(*i)->parent_(nullptr);
 		boostersSet_.erase(i);
 	}
 	
-	std::vector<Skill*> Character::skills_() const {
-		std::vector<Skill*> result;
+	std::vector<std::shared_ptr<Skill>> Character::skills_() const {
+		std::vector<std::shared_ptr<Skill>> result;
 		result.reserve(skillsMap_.size());
-		std::transform(skillsMap_.begin(), skillsMap_.end(), std::back_inserter(result), [](const auto& i) { return i.second.get(); });
+		std::transform(skillsMap_.begin(), skillsMap_.end(), std::back_inserter(result), [](const auto& i) { return i.second; });
 		return result;
 	}
 
-	std::vector<Implant*> Character::implants_() const {
-		std::vector<Implant*> result;
+	std::vector<std::shared_ptr<Implant>> Character::implants_() const {
+		std::vector<std::shared_ptr<Implant>> result;
 		result.reserve(implantsSet_.size());
-		std::transform(implantsSet_.begin(), implantsSet_.end(), std::back_inserter(result), [](const auto& i) { return i.get(); });
+		std::transform(implantsSet_.begin(), implantsSet_.end(), std::back_inserter(result), [](const auto& i) { return i; });
 		return result;
 	}
 	
-	std::vector<Booster*> Character::boosters_() const {
-		std::vector<Booster*> result;
+	std::vector<std::shared_ptr<Booster>> Character::boosters_() const {
+		std::vector<std::shared_ptr<Booster>> result;
 		result.reserve(boostersSet_.size());
-		std::transform(boostersSet_.begin(), boostersSet_.end(), std::back_inserter(result), [](const auto& i) { return i.get(); });
+		std::transform(boostersSet_.begin(), boostersSet_.end(), std::back_inserter(result), [](const auto& i) { return i; });
 		return result;
 	}
 
-	Implant* Character::implant_ (Implant::Slot slot) const noexcept {
+	std::shared_ptr<Implant> Character::implant_ (Implant::Slot slot) const noexcept {
 		auto i = implantsSet_.find(slot);
-		return i != implantsSet_.end() ? i->get() : nullptr;
+		return i != implantsSet_.end() ? *i : nullptr;
 	}
 	
-	Booster* Character::booster_ (Booster::Slot slot) const noexcept {
+	std::shared_ptr<Booster> Character::booster_ (Booster::Slot slot) const noexcept {
 		auto i = boostersSet_.find(slot);
-		return i != boostersSet_.end() ? i->get() : nullptr;
+		return i != boostersSet_.end() ? *i : nullptr;
 	}
 	
 	Meter Character::droneControlDistance_() {

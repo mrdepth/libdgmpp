@@ -13,9 +13,17 @@ namespace dgmpp {
 	
 	template <typename T>
 	struct CannotFit: public std::logic_error {
-		CannotFit(std::unique_ptr<T> type): type(std::move(type)), std::logic_error("Cannot fit") {}
-		std::unique_ptr<T> type;
+		CannotFit(const std::shared_ptr<T>& type): type(type), std::logic_error("Cannot fit") {}
+		std::shared_ptr<T> type;
 	};
+
+//    template <typename T>
+//    struct TypeAlreadyHaveParent: public std::logic_error {
+//        template <typename Ptr, typename = std::enable_if_t<std::is_constructible_v<std::shared_ptr<T>, Ptr>>>
+//        TypeAlreadyHaveParent(Ptr&& type): type(std::forward<Ptr>(type)), std::logic_error("Type must not already have a parent") {}
+//        std::shared_ptr<T> type;
+//    };
+
 
 	struct InvalidSkillLevel: std::invalid_argument {
 		InvalidSkillLevel(): std::invalid_argument("Skill level should be in [0...5] range") {}

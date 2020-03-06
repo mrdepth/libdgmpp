@@ -109,12 +109,12 @@ namespace dgmpp {
 	};
 
 	template <typename T>
-	T* remove_unique_ptr(const std::unique_ptr<T>& ptr) noexcept {
+	T* remove_ptr(const std::shared_ptr<T>& ptr) noexcept {
 		return ptr.get();
 	}
 	
 	template<typename T>
-	T remove_unique_ptr(const T& t) noexcept {
+	T remove_ptr(const T& t) noexcept {
 		return t;
 	}
 	
@@ -128,7 +128,7 @@ namespace dgmpp {
 		
 		template <typename... Args2, std::size_t... Is>
 		std::tuple<Args2...> get(const Key& lhs, std::index_sequence<Is...>) const noexcept {
-			return std::make_tuple(remove_unique_ptr(std::get<Is>(lhs))...);
+			return std::make_tuple(remove_ptr(std::get<Is>(lhs))...);
 		}
 		
 		template <typename... Args2>

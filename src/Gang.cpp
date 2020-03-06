@@ -6,36 +6,38 @@
 //
 
 #include "Gang.hpp"
+#include "Errors.hpp"
 
 namespace dgmpp {
 	
 	Gang::Gang(const Gang& other): Type(other)  {
 
 		factorReloadValue_ = other.factorReloadValue_;
-		std::map<Ship*, Ship*> shipsMap;
+		std::map<Ship*, std::shared_ptr<Ship>> shipsMap;
 		std::map<Module*, Module*> modulesMap;
 		std::map<Drone*, Drone*> dronesMap;
 		
 		for (const auto& i: other.pilotsList_) {
-			auto pilot = Character::Create(*i);
-			auto ptr = pilot.get();
-			pilotsList_.emplace_back(std::move(pilot));
-			ptr->parent_(this);
+			auto pilot = std::make_shared<Character>(*i);
+			pilotsList_.push_back(pilot);
+			pilot->parent_(this);
 			auto otherShip = i->ship_();
-			auto myShip = ptr->ship_();
+			auto myShip = pilot->ship_();
 			if (myShip && otherShip) {
-				shipsMap.emplace(std::make_pair(otherShip,myShip));
+				shipsMap.emplace(std::make_pair(otherShip.get(),myShip));
 				
 				auto myModules = myShip->modules_();
 				auto j = myModules.begin();
 				for (auto m: otherShip->modules_()) {
-					modulesMap.emplace(std::make_pair(m,*(j++)));
+					modulesMap.emplace(std::make_pair(m.get(),j->get()));
+                    j++;
 				}
 				
 				auto myDrones = myShip->drones_();
 				auto k = myDrones.begin();
 				for (auto d: otherShip->drones_()) {
-					dronesMap.emplace(std::make_pair(d,*(k++)));
+					dronesMap.emplace(std::make_pair(d.get(),k->get()));
+                    k++;
 				}
 
 			}
@@ -44,45 +46,45 @@ namespace dgmpp {
 			if (auto ship = i->ship_()) {
 				for (const auto& j: ship->modules_()) {
 					if (auto target = j->target_()) {
-						modulesMap[j]->target_(shipsMap[target]);
+						modulesMap[j.get()]->target_(shipsMap[target.get()]);
 					}
 				}
 				for (const auto& j: ship->drones_()) {
 					if (auto target = j->target_()) {
-						dronesMap[j]->target_(shipsMap[target]);
+						dronesMap[j.get()]->target_(shipsMap[target.get()]);
 					}
 				}
 			}
 		}
 		
 		if (auto area = other.area_()) {
-			areaValue_ = Area::Create(*area);
+			areaValue_ = std::make_shared<Area>(*area);
 		}
 
 		setEnabled_(other.isEnabled_());
 	}
+
+    Gang::~Gang(){
+        for (const auto& i: pilotsList_) {
+            i->parent_(nullptr);
+        }
+        if (areaValue_ != nullptr) {
+            areaValue_->parent_(nullptr);
+        }
+    }
 	
-	Character* Gang::add_(std::unique_ptr<Character>&& pilot) {
+    void Gang::add_ (const std::shared_ptr<Character>& pilot) {
 		assert(pilot != nullptr);
-		auto ptr = pilot.get();
-		pilotsList_.push_back(std::move(pilot));
-		ptr->parent_(this);
-		return ptr;
+        assert(pilot->parent() == nullptr);
+
+        pilot->parent_(this);
+        pilotsList_.push_back(pilot);
 	}
 	
 	void Gang::remove_(Character* pilot) {
-		assert(pilot != nullptr);
+		assert(pilot != nullptr && pilot->parent() == this);
 		pilot->parent_(nullptr);
-//		if (pilot->isEnabled())
-//			pilot->setEnabled_(false);
 		pilotsList_.remove_if([=](const auto& i) { return i.get() == pilot; });
-	}
-	
-	std::vector<Character*> Gang::pilots_() const {
-		std::vector<Character*> result;
-		result.reserve(pilotsList_.size());
-		std::transform(pilotsList_.begin(), pilotsList_.end(), std::back_inserter(result), [](const auto& i) { return i.get(); });
-		return result;
 	}
 	
 	Type* Gang::domain_(MetaInfo::Modifier::Domain domain) noexcept {
@@ -105,11 +107,14 @@ namespace dgmpp {
 		});
 	}
 
-	Area* Gang::area_(std::unique_ptr<Area>&& area) {
-		if (areaValue_)
-			areaValue_->parent_(nullptr);
+    
+    void Gang::area_(const std::shared_ptr<Area>& area) {
+        assert(area == nullptr || area->parent() == nullptr);
+        if (areaValue_)
+            areaValue_->parent_(nullptr);
+
 		if (area) {
-			areaValue_ = std::move(area);
+			areaValue_ = area;
 			areaValue_->parent_(this);
 		}
 		else
@@ -117,12 +122,11 @@ namespace dgmpp {
 		for (const auto& pilot: pilotsList_) {
 			if (auto ship = pilot->ship_()) {
 				if (areaValue_)
-					ship->area_(Area::Create(*areaValue_));
+					ship->area_(std::make_shared<Area>(*areaValue_));
 				else
 					ship->area_(nullptr);
 			}
 		}
-		return areaValue_.get();
 	}
 	
 	void Gang::factorReload_(bool factorReload) noexcept {

@@ -37,9 +37,9 @@ namespace dgmpp {
 		};
 
 		
-		
-		static std::unique_ptr<Ship> Create (TypeID typeID) { return std::unique_ptr<Ship>(new Ship(typeID)); }
-		static std::unique_ptr<Ship> Create (const Ship& other) { return std::unique_ptr<Ship>(new Ship(other)); }
+        Ship (TypeID typeID);
+        Ship (const Ship& other);
+        virtual ~Ship();
 		
 		RaceID raceID() const noexcept { return raceID_; }
 		std::vector<CategoryID> supportedDroneCategories() const noexcept { return supportedDroneCategories_; }
@@ -47,24 +47,22 @@ namespace dgmpp {
 
 		const std::string& name() const noexcept { LOCK(this); return name_(); }
 		template<typename T>
-		void name (T&& name) noexcept { LOCK(this); name_(name); }
+		void name (T&& name) noexcept { LOCK(this); name_(std::forward<T>(name)); }
 
 		void damagePattern (const DamageVector& pattern) noexcept { LOCK(this); damagePattern_(pattern); }
 		const DamageVector& damagePattern() const noexcept { LOCK(this); return damagePattern_(); }
 
 		//Fitting
-		Module* add (std::unique_ptr<Module>&& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { LOCK(this); return add_(std::move(module), socket, ignoringRequirements); }
-		Drone* add (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { LOCK(this); return add_(std::move(drone), squadronTag); }
-		Module* addModule (TypeID typeID, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { return add(Module::Create(typeID), socket, ignoringRequirements); }
-		Drone* addDrone (TypeID typeID, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { return add(Drone::Create(typeID), squadronTag); }
+		void add (const std::shared_ptr<Module>& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { LOCK(this); add_(module, socket, ignoringRequirements); }
+		void add (const std::shared_ptr<Drone>& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { LOCK(this); add_(drone, squadronTag); }
 
 		void remove (Module* module) { LOCK(this); remove_(module); }
 		void remove (Drone* drone) { LOCK(this); remove_(drone); }
 		bool canFit (Module* module) { LOCK(this); return canFit_(module); }
 		bool canFit (Drone* drone) { LOCK(this); return canFit_(drone); }
-		std::vector<Module*> modules (Module::Slot slot) const { LOCK(this); return modules_(slot); }
-		std::vector<Module*> modules () const { LOCK(this); return modules_(); }
-		std::vector<Drone*> drones () const { LOCK(this); return drones_(); }
+		std::vector<std::shared_ptr<Module>> modules (Module::Slot slot) const { LOCK(this); return modules_(slot); }
+		std::vector<std::shared_ptr<Module>> modules () const { LOCK(this); return modules_(); }
+		std::vector<std::shared_ptr<Drone>> drones () const { LOCK(this); return drones_(); }
 		
 		//Drones
 		std::size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none) { LOCK(this); return totalDroneSquadron_(squadron); }
@@ -143,8 +141,8 @@ namespace dgmpp {
 		Millimeter scanResolution()	{ LOCK(this); return scanResolution_(); }
 		
 	protected:
-		using ModulesContainer = TuplesSet<Module::Slot, Module::Socket, std::unique_ptr<Module>>;
-		using DronesContainer = TuplesSet<TypeID, Drone::SquadronTag, std::unique_ptr<Drone>>;
+		using ModulesContainer = TuplesSet<Module::Slot, Module::Socket, std::shared_ptr<Module>>;
+		using DronesContainer = TuplesSet<TypeID, Drone::SquadronTag, std::shared_ptr<Drone>>;
 
 		ModulesContainer modulesSet_;
 		DronesContainer dronesSet_;
@@ -159,9 +157,6 @@ namespace dgmpp {
 		const RaceID raceID_ {[this]() {
 			return static_cast<RaceID>(static_cast<int>(attribute_(AttributeID::raceID)->value_()));
 		}()};
-
-		Ship (TypeID typeID);
-		Ship (const Ship& other);
 		
 		virtual void setEnabled_ (bool enabled) override;
 		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
@@ -177,8 +172,8 @@ namespace dgmpp {
 		virtual bool isDisallowedAssistance_() override;
 		virtual bool isDisallowedOffense_() override;
 
-		Area* area_() const noexcept { return areaValue_.get(); }
-		Area* area_(std::unique_ptr<Area>&& area);
+		std::shared_ptr<Area> area_() const noexcept { return areaValue_; }
+		void area_(const std::shared_ptr<Area>& area);
 
 	private:
 		friend class Character;
@@ -188,7 +183,7 @@ namespace dgmpp {
 		friend class Drone;
 		friend class Gang;
 		
-		std::unique_ptr<Area> areaValue_;
+		std::shared_ptr<Area> areaValue_;
 		
 		Capacitor capacitor_;
 		HeatSimulator heatSimulator_;
@@ -218,16 +213,16 @@ namespace dgmpp {
 		const DamageVector& damagePattern_() const noexcept { return damagePatternValue_; }
 
 		//Fitting
-		Module* add_ (std::unique_ptr<Module>&& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false);
-		Drone* add_ (std::unique_ptr<Drone>&& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
+		void add_ (const std::shared_ptr<Module>& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false);
+		void add_ (const std::shared_ptr<Drone>& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
 
 		void remove_ (Module* module);
 		void remove_ (Drone* drone);
 		bool canFit_ (Module* module);
 		bool canFit_ (Drone* drone);
-		std::vector<Module*> modules_ (Module::Slot slot) const;
-		std::vector<Module*> modules_ () const;
-		std::vector<Drone*> drones_ () const;
+		std::vector<std::shared_ptr<Module>> modules_ (Module::Slot slot) const;
+		std::vector<std::shared_ptr<Module>> modules_ () const;
+		std::vector<std::shared_ptr<Drone>> drones_ () const;
 
 		//Drones
 		std::size_t totalDroneSquadron_ (Drone::Squadron squadron = Drone::Squadron::none);

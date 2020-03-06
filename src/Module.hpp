@@ -44,9 +44,8 @@ namespace dgmpp {
 			turret
 		};
 
-		static std::unique_ptr<Module> Create (TypeID typeID) { return std::unique_ptr<Module>(new Module(typeID)); }
-		static std::unique_ptr<Module> Create (const Module& other) { return std::unique_ptr<Module>(new Module(other)); }
-		
+        Module (TypeID typeID);
+        Module (const Module& other);
 		virtual ~Module();
 		
 		Slot slot() const noexcept				{return slot_;}
@@ -62,14 +61,13 @@ namespace dgmpp {
 		State preferredState() const noexcept { LOCK(this); return preferredState_(); }
 		void state (State state) { LOCK(this); state_(state); }
 
-		Ship* target() const noexcept { LOCK(this); return target_(); }
-		void target(Ship* target) { LOCK(this); target_(target); }
+		std::shared_ptr<Ship> target() const noexcept { LOCK(this); return target_(); }
+		void target(const std::shared_ptr<Ship>& target) { LOCK(this); target_(target); }
 		
 		Socket socket() const noexcept { LOCK(this); return socket_(); }
 		
-		Charge* charge() const noexcept { LOCK(this); return charge_(); }
-		Charge* charge (std::unique_ptr<Charge>&& charge) { LOCK(this); return charge_(std::move(charge)); }
-		Charge* charge (TypeID typeID) { LOCK(this); return charge(Charge::Create(typeID)); }
+		std::shared_ptr<Charge> charge() const noexcept { LOCK(this); return charge_(); }
+		void charge (const std::shared_ptr<Charge>& charge) { LOCK(this); charge_(charge); }
 		bool canFit (Charge* charge) { LOCK(this); return canFit_(charge); }
 
 		
@@ -168,13 +166,10 @@ namespace dgmpp {
 			bool requireTarget : 1;
 			bool fail : 1;
 		} flags_;
-		std::unique_ptr<Charge> chargeValue_;
-		Ship* targetValue_ {nullptr};
+		std::shared_ptr<Charge> chargeValue_;
+		std::weak_ptr<Ship> targetValue_;
 		bool factorReload_() const noexcept;
 
-		Module (TypeID typeID);
-		Module (const Module& other);
-		
 		bool canBeOnline_()		const noexcept	{ return flags_.canBeOnline; }
 		bool canBeActive_()		const noexcept;
 		bool canBeOverloaded_()	const noexcept	{ return flags_.canBeOverloaded; }
@@ -192,11 +187,11 @@ namespace dgmpp {
 		State preferredState_() const noexcept {return preferredStateValue_;}
 		void state_ (State state);
 		
-		Ship* target_() const noexcept { return targetValue_; }
-		void target_(Ship* target);
+		std::shared_ptr<Ship> target_() const noexcept { return targetValue_.lock(); }
+		void target_(const std::shared_ptr<Ship>& target);
 
-		Charge* charge_() const noexcept { return chargeValue_.get(); }
-		Charge* charge_ (std::unique_ptr<Charge>&& charge);
+		std::shared_ptr<Charge> charge_() const noexcept { return chargeValue_; }
+		void charge_ (const std::shared_ptr<Charge>& charge);
 		bool canFit_ (Charge* charge);
 
 		bool requireTarget_()	const noexcept;
