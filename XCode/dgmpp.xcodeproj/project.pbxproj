@@ -154,17 +154,6 @@
 		128CA3C91FECF064006E0989 /* production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE897D1FE2871E00854893 /* production_state.cpp */; };
 		128CA3CA1FECF064006E0989 /* storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89891FE2873800854893 /* storage.cpp */; };
 		128CA3CB1FECF064006E0989 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
-		12AFFE091FFD2A2500B32307 /* DGMObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF4D5A1FF27743005E5255 /* DGMObject.swift */; };
-		12AFFE0A1FFD2A2500B32307 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
-		12AFFE0B1FFD2A2500B32307 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
-		12AFFE0C1FFD2A2500B32307 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
-		12AFFE0D1FFD2A2500B32307 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
-		12AFFE0E1FFD2A2500B32307 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
-		12AFFE0F1FFD2A2500B32307 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
-		12AFFE101FFD2A2500B32307 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
-		12AFFE111FFD2A2500B32307 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
-		12AFFE121FFD2A2500B32307 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
-		12AFFE131FFD2A2500B32307 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
 		12AFFE141FFD2A2500B32307 /* DGMPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E118D1FE9632D0057EB0D /* DGMPlanet.swift */; };
 		12AFFE151FFD2A2500B32307 /* DGMFacility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11931FE963460057EB0D /* DGMFacility.swift */; };
 		12AFFE161FFD2A2500B32307 /* DGMExtractorControlUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11961FE9685E0057EB0D /* DGMExtractorControlUnit.swift */; };
@@ -181,23 +170,38 @@
 		12FF4D531FF276E7005E5255 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F91FE2CBDC0045BD84 /* Utility.swift */; };
 		12FF4D541FF276ED005E5255 /* DGMRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DE1FE2CB210045BD84 /* DGMRate.swift */; };
 		12FF4D561FF276F3005E5255 /* dgm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29A1FE0213C00AD4ED3 /* dgm.swift */; };
-		12FF4D581FF27701005E5255 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
-		12FF4D5B1FF27743005E5255 /* DGMObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF4D5A1FF27743005E5255 /* DGMObject.swift */; };
-		12FF4D5E1FF27833005E5255 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
-		12FF4D601FF2793A005E5255 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
-		12FF4D611FF27955005E5255 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
-		12FF4D641FF27993005E5255 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
-		12FF4D651FF279F4005E5255 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
-		12FF4D681FF27A20005E5255 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
-		12FF4D691FF27A41005E5255 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
-		12FF4D6B1FF27B13005E5255 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
-		12FF4D6D1FF27B40005E5255 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
 		12FF4D6F1FF27B7C005E5255 /* DGMPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E118D1FE9632D0057EB0D /* DGMPlanet.swift */; };
 		12FF4D701FF27B7C005E5255 /* DGMFacility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11931FE963460057EB0D /* DGMFacility.swift */; };
 		12FF4D711FF27B7C005E5255 /* DGMExtractorControlUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11961FE9685E0057EB0D /* DGMExtractorControlUnit.swift */; };
 		12FF4D721FF27B7C005E5255 /* DGMFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11991FE968690057EB0D /* DGMFactory.swift */; };
 		12FF4D731FF27B7C005E5255 /* DGMStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119C1FE968740057EB0D /* DGMStorage.swift */; };
 		12FF4D741FF27B7C005E5255 /* DGMProductionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119F1FE968810057EB0D /* DGMProductionState.swift */; };
+		16B53A43241256330047CBA2 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
+		16B53A44241256330047CBA2 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
+		16B53A45241256490047CBA2 /* DGMObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF4D5A1FF27743005E5255 /* DGMObject.swift */; };
+		16B53A46241256490047CBA2 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
+		16B53A47241256490047CBA2 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
+		16B53A48241256490047CBA2 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
+		16B53A49241256490047CBA2 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
+		16B53A4A241256490047CBA2 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
+		16B53A4B241256490047CBA2 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
+		16B53A4C241256490047CBA2 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
+		16B53A4D241256490047CBA2 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
+		16B53A4E241256490047CBA2 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
+		16B53A4F241256490047CBA2 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
+		16B53A50241256490047CBA2 /* DGMObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF4D5A1FF27743005E5255 /* DGMObject.swift */; };
+		16B53A51241256490047CBA2 /* DGMArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E41FE2CB850045BD84 /* DGMArea.swift */; };
+		16B53A52241256490047CBA2 /* DGMAttirbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */; };
+		16B53A53241256490047CBA2 /* DGMCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E11FE2CB790045BD84 /* DGMCharacter.swift */; };
+		16B53A54241256490047CBA2 /* DGMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */; };
+		16B53A55241256490047CBA2 /* DGMDrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457EA1FE2CB990045BD84 /* DGMDrone.swift */; };
+		16B53A56241256490047CBA2 /* DGMGang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457ED1FE2CBA60045BD84 /* DGMGang.swift */; };
+		16B53A57241256490047CBA2 /* DGMModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F01FE2CBAF0045BD84 /* DGMModule.swift */; };
+		16B53A58241256490047CBA2 /* DGMShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F31FE2CBBA0045BD84 /* DGMShip.swift */; };
+		16B53A59241256490047CBA2 /* DGMStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457F61FE2CBC30045BD84 /* DGMStructure.swift */; };
+		16B53A5A241256490047CBA2 /* DGMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C457D81FE2C07F0045BD84 /* DGMType.swift */; };
+		16B53A5B24125CF70047CBA2 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
+		16B53A5C24125CF70047CBA2 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89181FE260CA00854893 /* type.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -997,26 +1001,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12FF4D611FF27955005E5255 /* DGMModule.swift in Sources */,
-				12FF4D601FF2793A005E5255 /* DGMArea.swift in Sources */,
 				12FF4D561FF276F3005E5255 /* dgm.swift in Sources */,
-				12FF4D651FF279F4005E5255 /* DGMDrone.swift in Sources */,
+				16B53A59241256490047CBA2 /* DGMStructure.swift in Sources */,
+				16B53A5A241256490047CBA2 /* DGMType.swift in Sources */,
+				16B53A52241256490047CBA2 /* DGMAttirbute.swift in Sources */,
 				12FF4D711FF27B7C005E5255 /* DGMExtractorControlUnit.swift in Sources */,
-				12FF4D5E1FF27833005E5255 /* DGMAttirbute.swift in Sources */,
 				12FF4D721FF27B7C005E5255 /* DGMFactory.swift in Sources */,
 				12FF4D541FF276ED005E5255 /* DGMRate.swift in Sources */,
-				12FF4D641FF27993005E5255 /* DGMShip.swift in Sources */,
 				12FF4D6F1FF27B7C005E5255 /* DGMPlanet.swift in Sources */,
-				12FF4D691FF27A41005E5255 /* DGMCharacter.swift in Sources */,
 				12FF4D701FF27B7C005E5255 /* DGMFacility.swift in Sources */,
-				12FF4D6D1FF27B40005E5255 /* DGMGang.swift in Sources */,
-				12FF4D6B1FF27B13005E5255 /* DGMStructure.swift in Sources */,
 				12FF4D741FF27B7C005E5255 /* DGMProductionState.swift in Sources */,
-				12FF4D581FF27701005E5255 /* DGMType.swift in Sources */,
+				16B53A51241256490047CBA2 /* DGMArea.swift in Sources */,
+				16B53A57241256490047CBA2 /* DGMModule.swift in Sources */,
+				16B53A50241256490047CBA2 /* DGMObject.swift in Sources */,
+				16B53A54241256490047CBA2 /* DGMCharge.swift in Sources */,
 				12FF4D731FF27B7C005E5255 /* DGMStorage.swift in Sources */,
-				12FF4D5B1FF27743005E5255 /* DGMObject.swift in Sources */,
+				16B53A55241256490047CBA2 /* DGMDrone.swift in Sources */,
+				16B53A58241256490047CBA2 /* DGMShip.swift in Sources */,
+				16B53A56241256490047CBA2 /* DGMGang.swift in Sources */,
+				16B53A53241256490047CBA2 /* DGMCharacter.swift in Sources */,
 				12FF4D531FF276E7005E5255 /* Utility.swift in Sources */,
-				12FF4D681FF27A20005E5255 /* DGMCharge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1026,6 +1030,7 @@
 			files = (
 				1285E838201B26EB00AAC231 /* HeatSimulator.cpp in Sources */,
 				1285E849201B26EB00AAC231 /* Commodity.cpp in Sources */,
+				16B53A43241256330047CBA2 /* utility.cpp in Sources */,
 				1285E840201B26EB00AAC231 /* Skill.cpp in Sources */,
 				1285E845201B26EB00AAC231 /* Factory.cpp in Sources */,
 				1285E84B201B26EB00AAC231 /* ProductionState.cpp in Sources */,
@@ -1050,6 +1055,7 @@
 				1285E837201B26EB00AAC231 /* Capacitor.cpp in Sources */,
 				1285E836201B26EB00AAC231 /* Booster.cpp in Sources */,
 				1285E83A201B26EB00AAC231 /* Charge.cpp in Sources */,
+				16B53A5B24125CF70047CBA2 /* type.cpp in Sources */,
 				1285E83D201B26EB00AAC231 /* Implant.cpp in Sources */,
 				1285E83F201B26EB00AAC231 /* Ship.cpp in Sources */,
 				1285E832201B26EB00AAC231 /* Modifier.cpp in Sources */,
@@ -1063,6 +1069,7 @@
 			files = (
 				1285E865201B289E00AAC231 /* HeatSimulator.cpp in Sources */,
 				1285E866201B289E00AAC231 /* Commodity.cpp in Sources */,
+				16B53A44241256330047CBA2 /* utility.cpp in Sources */,
 				1285E86B201B289E00AAC231 /* Skill.cpp in Sources */,
 				1285E86E201B289E00AAC231 /* Factory.cpp in Sources */,
 				1285E86F201B289E00AAC231 /* ProductionState.cpp in Sources */,
@@ -1087,6 +1094,7 @@
 				1285E88A201B289E00AAC231 /* Capacitor.cpp in Sources */,
 				1285E88C201B289E00AAC231 /* Booster.cpp in Sources */,
 				1285E88E201B289E00AAC231 /* Charge.cpp in Sources */,
+				16B53A5C24125CF70047CBA2 /* type.cpp in Sources */,
 				1285E890201B289E00AAC231 /* Implant.cpp in Sources */,
 				1285E891201B289E00AAC231 /* Ship.cpp in Sources */,
 				1285E892201B289E00AAC231 /* Modifier.cpp in Sources */,
@@ -1098,26 +1106,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12AFFE101FFD2A2500B32307 /* DGMModule.swift in Sources */,
-				12AFFE0A1FFD2A2500B32307 /* DGMArea.swift in Sources */,
 				12AFFE1B1FFD2A2500B32307 /* DGMRate.swift in Sources */,
-				12AFFE0D1FFD2A2500B32307 /* DGMCharge.swift in Sources */,
-				12AFFE0E1FFD2A2500B32307 /* DGMDrone.swift in Sources */,
+				16B53A4E241256490047CBA2 /* DGMStructure.swift in Sources */,
+				16B53A4F241256490047CBA2 /* DGMType.swift in Sources */,
+				16B53A47241256490047CBA2 /* DGMAttirbute.swift in Sources */,
 				12AFFE1A1FFD2A2500B32307 /* dgm.swift in Sources */,
-				12AFFE0B1FFD2A2500B32307 /* DGMAttirbute.swift in Sources */,
 				12AFFE171FFD2A2500B32307 /* DGMFactory.swift in Sources */,
 				12AFFE1C1FFD2A2500B32307 /* Utility.swift in Sources */,
-				12AFFE131FFD2A2500B32307 /* DGMType.swift in Sources */,
-				12AFFE0F1FFD2A2500B32307 /* DGMGang.swift in Sources */,
-				12AFFE111FFD2A2500B32307 /* DGMShip.swift in Sources */,
-				12AFFE0C1FFD2A2500B32307 /* DGMCharacter.swift in Sources */,
 				12AFFE151FFD2A2500B32307 /* DGMFacility.swift in Sources */,
 				12AFFE141FFD2A2500B32307 /* DGMPlanet.swift in Sources */,
-				12AFFE121FFD2A2500B32307 /* DGMStructure.swift in Sources */,
 				12AFFE181FFD2A2500B32307 /* DGMStorage.swift in Sources */,
+				16B53A46241256490047CBA2 /* DGMArea.swift in Sources */,
+				16B53A4C241256490047CBA2 /* DGMModule.swift in Sources */,
+				16B53A45241256490047CBA2 /* DGMObject.swift in Sources */,
+				16B53A49241256490047CBA2 /* DGMCharge.swift in Sources */,
 				12AFFE161FFD2A2500B32307 /* DGMExtractorControlUnit.swift in Sources */,
+				16B53A4A241256490047CBA2 /* DGMDrone.swift in Sources */,
+				16B53A4D241256490047CBA2 /* DGMShip.swift in Sources */,
+				16B53A4B241256490047CBA2 /* DGMGang.swift in Sources */,
+				16B53A48241256490047CBA2 /* DGMCharacter.swift in Sources */,
 				12AFFE191FFD2A2500B32307 /* DGMProductionState.swift in Sources */,
-				12AFFE091FFD2A2500B32307 /* DGMObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

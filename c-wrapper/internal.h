@@ -15,179 +15,146 @@
 
 using namespace dgmpp;
 
-struct unique_ptr_wrapper_base {
-	virtual ~unique_ptr_wrapper_base() {}
+struct dgmpp_handle_base {
+    virtual ~dgmpp_handle_base() {}
+private:
+    virtual void* get_value() = 0;
+};
+
+template <typename Wrapped>
+struct dgmpp_handle_impl: dgmpp_handle_base {
+    Wrapped value;
+    template <typename T>
+    dgmpp_handle_impl(T&& v): value(std::forward<T>(v)) {};
+    
+    virtual void* get_value() override {
+        return reinterpret_cast<void*>(&value);
+    }
 };
 
 template <typename T>
-struct unique_ptr_wrapper: public unique_ptr_wrapper_base {
-	std::unique_ptr<T> ptr;
-	unique_ptr_wrapper(std::unique_ptr<T>&& ptr): ptr(std::move(ptr)) {}
-	virtual ~unique_ptr_wrapper() {}
+dgmpp_handle new_handle(T&& value) {
+    return reinterpret_cast<dgmpp_handle>(new dgmpp_handle_impl<T>{std::forward<T>(value)});
+}
+
+template <typename T, typename = void>
+struct get {
+    dgmpp_handle handle;
+    get(dgmpp_handle h): handle(h) {}
+    T& operator -> () {
+        return operator*();
+    }
+    
+    T& operator*() {
+        auto baseHandle = reinterpret_cast<dgmpp_handle_base*>(handle);
+        auto h = dynamic_cast<dgmpp_handle_impl<T>>(baseHandle);
+        assert(h);
+        return h->value;
+    }
 };
 
-extern std::map<dgmpp_handle, std::unique_ptr<unique_ptr_wrapper_base>> unique_pointers;
+template<typename T>
+struct get<std::shared_ptr<T>, std::enable_if_t<std::is_base_of_v<Type, T>>> {
+    dgmpp_handle handle;
+    get(dgmpp_handle h): handle(h) {}
+    
+    std::shared_ptr<T> operator -> () {
+        return operator*();
+    }
+    
+    std::shared_ptr<T> operator*() {
+        auto baseHandle = reinterpret_cast<dgmpp_handle_base*>(handle);
+        
+        if (auto h = dynamic_cast<dgmpp_handle_impl<std::shared_ptr<Type>>*>(baseHandle))
+            return std::dynamic_pointer_cast<T>(h->value);
+        else
+            return nullptr;
+    }
+};
+
+/*template <typename T>
+T* get(dgmpp_handle handle) {
+    if (auto h = dynamic_cast<dgmpp_handle_impl<T>>(handle)) {
+        return &h->value;
+    }
+    else {
+        return nullptr;
+    }
+}
+
+
+template <typename T, typename = std::enable_if_t<is_shared_ptr<T>::value>>
+T* get(dgmpp_handle handle) {
+    if (auto h = dynamic_cast<dgmpp_handle_impl<T>>(handle)) {
+        return &h->value;
+    }
+    else {
+        return nullptr;
+    }
+}*/
+
+
+/*
+struct shared_ptr_wrapper_base {
+	virtual ~shared_ptr_wrapper_base() {}
+};
 
 template <typename T>
-T* add_unique_ptr_wrapper(std::unique_ptr<T>&& ptr) {
-	auto key = ptr.get();
-	unique_pointers.emplace(key, std::unique_ptr<unique_ptr_wrapper<T>>{new unique_ptr_wrapper<T>{std::move(ptr)}});
-	return key;
+struct shared_ptr_wrapper: public shared_ptr_wrapper_base {
+	std::shared_ptr<T> ptr;
+	shared_ptr_wrapper(std::shared_ptr<T>&& ptr): ptr(std::move(ptr)) {}
+    shared_ptr_wrapper(const std::shared_ptr<T>& ptr): ptr(ptr) {}
+	virtual ~shared_ptr_wrapper() {}
+};
+
+extern std::set<std::unique_ptr<shared_ptr_wrapper_base>> shared_pointers;
+
+template <typename T>
+dgmpp_handle add_shared_ptr_wrapper(const std::shared_ptr<T>& ptr) {
+    auto i = shared_pointers.emplace(std::make_unique<shared_ptr_wrapper<T>>(ptr));
+    return i.first;
 }
 
 template <typename T>
-std::unique_ptr<T> get_unique_ptr(dgmpp_handle h) {
-	auto i = unique_pointers.find(h);
-	if (i == unique_pointers.end())
+std::shared_ptr<T> get_shared_ptr(dgmpp_handle h) {
+    auto i = std::find_if(shared_pointers.begin(), shared_pointers.end(), [=](const auto& i) {
+        return static_cast<void*>(i.get()) == h;
+    });
+	if (i == shared_pointers.end())
 		return nullptr;
-	return std::move(dynamic_cast<unique_ptr_wrapper<T>*>(i->second.get())->ptr);
+    else if (auto ptr = dynamic_cast<shared_ptr_wrapper<T>*>(i->second)) {
+        return ptr->ptr;
+    }
 }
 
 
-enum class dgmpp_handle_tag: char {
-	invalid = -1,
-	ptr,
-	unique_ptr_gang,
-	unique_ptr_character,
-	unique_ptr_booster,
-	unique_ptr_implant,
-	unique_ptr_ship,
-	unique_ptr_structure,
-	unique_ptr_module,
-	unique_ptr_drone,
-	unique_ptr_charge,
-	unique_ptr_area,
-	unique_ptr_planet,
-	unique_ptr_array
-};
-	
+//enum class dgmpp_handle_tag: char {
+//	invalid = -1,
+//	ptr,
+//	unique_ptr_gang,
+//	unique_ptr_character,
+//	unique_ptr_booster,
+//	unique_ptr_implant,
+//	unique_ptr_ship,
+//	unique_ptr_structure,
+//	unique_ptr_module,
+//	unique_ptr_drone,
+//	unique_ptr_charge,
+//	unique_ptr_area,
+//	unique_ptr_planet,
+//	unique_ptr_array
+//};
+	*/
+
 struct dgmpp_array_impl_base {
 	size_t size;
 	dgmpp_array_impl_base (size_t size): size(size) {}
 	virtual const void* ptr() const = 0;
 };
 
-
-/*struct dgmpp_handle_impl: public dgmpp_handle {
-	void destroy() {
-		switch (static_cast<dgmpp_handle_tag>(tag)) {
-			case dgmpp_handle_tag::unique_ptr_gang:
-				delete reinterpret_cast<std::unique_ptr<Gang>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_character:
-				delete reinterpret_cast<std::unique_ptr<Character>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_booster:
-				delete reinterpret_cast<std::unique_ptr<Booster>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_implant:
-				delete reinterpret_cast<std::unique_ptr<Implant>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_ship:
-				delete reinterpret_cast<std::unique_ptr<Ship>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_structure:
-				delete reinterpret_cast<std::unique_ptr<Structure>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_module:
-				delete reinterpret_cast<std::unique_ptr<Module>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_drone:
-				delete reinterpret_cast<std::unique_ptr<Drone>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_charge:
-				delete reinterpret_cast<std::unique_ptr<Charge>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_area:
-				delete reinterpret_cast<std::unique_ptr<Area>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_planet:
-				delete reinterpret_cast<std::unique_ptr<Planet>*>(handle);
-				break;
-			case dgmpp_handle_tag::unique_ptr_array:
-				delete reinterpret_cast<std::unique_ptr<dgmpp_array_impl_base>*>(handle);
-				break;
-			default:
-				break;
-		}
-		tag = static_cast<char>(dgmpp_handle_tag::invalid);
-	}
-	
-	template<typename T> T* get() const {
-		if (static_cast<dgmpp_handle_tag>(tag) == dgmpp_handle_tag::ptr)
-			return reinterpret_cast<T*>(handle);
-		else
-			return reinterpret_cast<std::unique_ptr<T>*>(handle)->get();
-	};
-	
-	template<typename T> std::unique_ptr<T>&& move() {
-		return std::move(*reinterpret_cast<std::unique_ptr<T>*>(handle));
-	}
-
-	
-	template<typename T> operator T* () const {
-		return get<T>();
-	};
-	
-	template<typename T> dgmpp_handle_impl(std::unique_ptr<T>&& ptr, dgmpp_handle_tag tag) : dgmpp_handle{static_cast<char>(tag), nullptr} {
-		*reinterpret_cast<std::unique_ptr<T>**>(&handle) = new std::unique_ptr<T>(std::move(ptr));
-	}
-	
-	template<typename T> dgmpp_handle_impl(T* ptr) : dgmpp_handle{static_cast<char>(dgmpp_handle_tag::ptr), ptr} {}
-	
-	template<typename T>
-	void reset(T ptr) {
-		switch (static_cast<dgmpp_handle_tag>(tag)) {
-			case dgmpp_handle_tag::invalid:
-			case dgmpp_handle_tag::ptr:
-				break;
-			default:
-				destroy();
-				break;
-		}
-		handle = reinterpret_cast<void*>(ptr);
-		tag = static_cast<char>(dgmpp_handle_tag::ptr);
-	}
-
-	void reset(std::nullptr_t) {
-		switch (static_cast<dgmpp_handle_tag>(tag)) {
-			case dgmpp_handle_tag::invalid:
-			case dgmpp_handle_tag::ptr:
-				break;
-			default:
-				destroy();
-				break;
-		}
-		handle = nullptr;
-		tag = static_cast<char>(dgmpp_handle_tag::ptr);
-	}
-
-};*/
-
-
-template<typename T> dgmpp_handle dgmpp_make_handle(T* ptr) {
-	return dgmpp_handle{dgmpp_handle_tag::ptr, ptr};
-}
-
-/*template<typename T>
-T& dgmpp_cast(dgmpp_handle handle) {
-	return *reinterpret_cast<dgmpp_handle_impl*>(&handle)->get<T>();
-}
-
-template<typename T>
-std::unique_ptr<T>&& dgmpp_move(dgmpp_handle& handle) {
-	return reinterpret_cast<dgmpp_handle_impl*>(&handle)->move<T>();
-}
-
-template<typename T>
-void dgmpp_reset(dgmpp_handle& handle, T value) {
-	reinterpret_cast<dgmpp_handle_impl*>(&handle)->reset<T>(value);
-}
-
-template<>
-void dgmpp_reset<std::nullptr_t>(dgmpp_handle& handle, std::nullptr_t) {
-	reinterpret_cast<dgmpp_handle_impl*>(&handle)->reset<void*>(nullptr);
-}*/
+//template<typename T> dgmpp_handle dgmpp_make_handle(T* ptr) {
+//	return dgmpp_handle{dgmpp_handle_tag::ptr, ptr};
+//}
 
 template <typename T, typename = void>
 struct dgmpp_array_impl: public dgmpp_array_impl_base {
@@ -197,7 +164,7 @@ struct dgmpp_array_impl: public dgmpp_array_impl_base {
 	dgmpp_array_impl(const C& c): dgmpp_array_impl_base (std::size(c)) {
 		values.reserve(size);
 		std::transform(c.begin(), c.end(), std::back_inserter(values), [](const auto& i) {
-			return Constructor(remove_unique_ptr(i));
+			return Constructor(i);
 		});
 	}
 	
@@ -208,8 +175,8 @@ struct dgmpp_array_impl: public dgmpp_array_impl_base {
 
 
 template<typename T, typename C>
-dgmpp_array dgmpp_make_array(const C& c) {
-	return add_unique_ptr_wrapper(std::unique_ptr<dgmpp_array_impl<T>>(new dgmpp_array_impl<T>(c)));
+dgmpp_handle dgmpp_make_array(const C& c) {
+    return new_handle(dgmpp_array_impl<T>(c));
 }
 
 template<typename Rep, typename Ratio>
@@ -279,4 +246,5 @@ struct dgmpp_route_impl: public dgmpp_route {
 		route.to,
 		dgmpp_commodity_impl(route.commodity)} {}
 };
+
 

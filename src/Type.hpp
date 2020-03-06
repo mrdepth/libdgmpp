@@ -21,9 +21,11 @@ namespace dgmpp {
 	class Effect;
 	class Modifier;
 	
-	class Type {
+	class Type: public std::enable_shared_from_this<Type> {
 	public:
 		virtual ~Type();
+        
+        
 
 		Type (Type&& other) = delete;
 		Type& operator= (const Type& other) = delete;
