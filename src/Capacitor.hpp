@@ -61,14 +61,14 @@ namespace dgmpp {
 		struct {
 			bool isCalculated_: 1;
 		} flags_;
-		GigaJoule capacityValue_;
-		std::chrono::milliseconds rechargeTimeValue_;
-		rate<GigaJoule, std::chrono::milliseconds> useValue_;
-		rate<GigaJoule, std::chrono::milliseconds> rechargeValue_;
+		GigaJoule capacityValue_{ 0 };
+		std::chrono::milliseconds rechargeTimeValue_{ 0 };
+		rate<GigaJoule, std::chrono::milliseconds> useValue_{ 0 };
+		rate<GigaJoule, std::chrono::milliseconds> rechargeValue_{ 0 };
 		std::priority_queue<State, std::vector<State>, std::greater<>> states_;
-		std::chrono::milliseconds period_;
-		std::chrono::milliseconds simulationEndTime_;
-		Percent stableLevelValue_;
+		std::chrono::milliseconds period_{ 0 };
+		std::chrono::milliseconds simulationEndTime_{ 0 };
+		Percent stableLevelValue_{ 0 };
 		
 		Capacitor(Ship& owner) : owner_(owner) {
 			flags_.isCalculated_ = false;

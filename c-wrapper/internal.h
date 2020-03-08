@@ -15,29 +15,83 @@
 
 using namespace dgmpp;
 
-struct dgmpp_handle_base {
-    virtual ~dgmpp_handle_base() {}
+extern std::map<void*, std::shared_ptr<struct dgmpp_handle_store>> handles;
+
+
+struct dgmpp_handle_store {
+    virtual ~dgmpp_handle_store() {
+		handles.erase(ptr());
+	}
+
+	virtual void* ptr() = 0;
+
+	dgmpp_handle_store* retain() {
+		ref_count++;
+		return this;
+	}
+	
+	void release() {
+		ref_count--;
+		if (ref_count == 0) {
+			delete this;
+		}
+	}
+
 private:
-    virtual void* get_value() = 0;
+	size_t ref_count{ 1 };
 };
 
+
 template <typename Wrapped>
-struct dgmpp_handle_impl: dgmpp_handle_base {
-    Wrapped value;
-    template <typename T>
-    dgmpp_handle_impl(T&& v): value(std::forward<T>(v)) {};
-    
-    virtual void* get_value() override {
-        return reinterpret_cast<void*>(&value);
-    }
+struct dgmpp_handle_store_impl: dgmpp_handle_store {
+    std::shared_ptr<Wrapped> store;
+    dgmpp_handle_store_impl(const std::shared_ptr<Wrapped>& ptr): store(ptr) {};
+	dgmpp_handle_store_impl(std::shared_ptr<Wrapped>&& ptr) : store(std::move(ptr)) {};
+
+	virtual void* ptr() override {
+		return store.get();
+	}
 };
 
 template <typename T>
-dgmpp_handle new_handle(T&& value) {
-    return reinterpret_cast<dgmpp_handle>(new dgmpp_handle_impl<T>{std::forward<T>(value)});
+dgmpp_handle new_handle(const std::shared_ptr<T>& ptr) {
+	if (auto i = handles.find(ptr.get()); i != handles.end()) {
+		return i->second->retain();
+	}
+	return handles.emplace(ptr.get, new dgmpp_handle_store_impl<T>{ ptr }).first->second.get();
 }
 
-template <typename T, typename = void>
+template <typename T>
+dgmpp_handle new_handle(const std::shared_ptr<T>&& ptr) {
+	if (auto i = handles.find(ptr.get()); i != handles.end()) {
+		return i->second->retain();
+	}
+	return handles.emplace(ptr.get(), new dgmpp_handle_store_impl<T>{ std::move(ptr) }).first->second.get();
+}
+
+template <typename T, std::enable_if_t<!std::is_base_of_v<Type, T>, int> = 0>
+std::shared_ptr<T> get(dgmpp_handle handle) {
+	auto baseHandle = reinterpret_cast<dgmpp_handle_store*>(handle);
+	if (auto h = dynamic_cast<dgmpp_handle_store_impl<T>*>(baseHandle)) {
+		return h->store;
+	}
+	else {
+		return nullptr;
+	}
+}
+
+template <typename T, std::enable_if_t<std::is_base_of_v<Type, T>, int> = 0>
+std::shared_ptr<T> get(dgmpp_handle handle) {
+	auto baseHandle = reinterpret_cast<dgmpp_handle_store*>(handle);
+	if (auto h = dynamic_cast<dgmpp_handle_store_impl<Type>* >(baseHandle)) {
+		return std::dynamic_pointer_cast<T>(h->store);
+	}
+	else {
+		return nullptr;
+	}
+}
+
+/*template <typename T, typename = void>
 struct get {
     dgmpp_handle handle;
     get(dgmpp_handle h): handle(h) {}
@@ -46,10 +100,10 @@ struct get {
     }
     
     T& operator*() {
-        auto baseHandle = reinterpret_cast<dgmpp_handle_base*>(handle);
-        auto h = dynamic_cast<dgmpp_handle_impl<T>>(baseHandle);
+        auto baseHandle = reinterpret_cast<dgmpp_handle_store*>(handle);
+        auto h = dynamic_cast<dgmpp_handle_store_impl<T>*>(baseHandle);
         assert(h);
-        return h->value;
+        return h->store;
     }
 };
 
@@ -63,26 +117,16 @@ struct get<std::shared_ptr<T>, std::enable_if_t<std::is_base_of_v<Type, T>>> {
     }
     
     std::shared_ptr<T> operator*() {
-        auto baseHandle = reinterpret_cast<dgmpp_handle_base*>(handle);
+        auto baseHandle = reinterpret_cast<dgmpp_handle_store*>(handle);
         
-        if (auto h = dynamic_cast<dgmpp_handle_impl<std::shared_ptr<Type>>*>(baseHandle))
-            return std::dynamic_pointer_cast<T>(h->value);
+        if (auto h = dynamic_cast<dgmpp_handle_store_impl<std::shared_ptr<Type>>*>(baseHandle))
+            return std::dynamic_pointer_cast<T>(h->store);
         else
             return nullptr;
     }
-};
+};*/
 
-/*template <typename T>
-T* get(dgmpp_handle handle) {
-    if (auto h = dynamic_cast<dgmpp_handle_impl<T>>(handle)) {
-        return &h->value;
-    }
-    else {
-        return nullptr;
-    }
-}
-
-
+/*
 template <typename T, typename = std::enable_if_t<is_shared_ptr<T>::value>>
 T* get(dgmpp_handle handle) {
     if (auto h = dynamic_cast<dgmpp_handle_impl<T>>(handle)) {
@@ -146,7 +190,23 @@ std::shared_ptr<T> get_shared_ptr(dgmpp_handle h) {
 //};
 	*/
 
+template<typename T>
+struct array_deleter {
+	void operator()(std::vector<T>& elements) const {
+	}
+};
+
+template<>
+struct array_deleter<dgmpp_handle> {
+	void operator()(std::vector<dgmpp_handle>& elements) const {
+		for (auto& i : elements) {
+			reinterpret_cast<dgmpp_handle_store*>(i)->release();
+		}
+	}
+};
+
 struct dgmpp_array_impl_base {
+	virtual ~dgmpp_array_impl_base() = default;
 	size_t size;
 	dgmpp_array_impl_base (size_t size): size(size) {}
 	virtual const void* ptr() const = 0;
@@ -160,12 +220,16 @@ template <typename T, typename = void>
 struct dgmpp_array_impl: public dgmpp_array_impl_base {
 	std::vector<T> values;
 	
-	template <typename C, typename Constructor = T>
-	dgmpp_array_impl(const C& c): dgmpp_array_impl_base (std::size(c)) {
-		values.reserve(size);
-		std::transform(c.begin(), c.end(), std::back_inserter(values), [](const auto& i) {
-			return Constructor(i);
-		});
+	template <typename C>
+	dgmpp_array_impl(C&& container): dgmpp_array_impl_base (std::size(container)), values(std::forward<C>(container)) {
+		//values.reserve(size);
+		//std::transform(c.begin(), c.end(), std::back_inserter(values), [](const auto& i) {
+		//	return Constructor(i);
+		//});
+	}
+
+	virtual ~dgmpp_array_impl() {
+		array_deleter<T>()(values);
 	}
 	
 	virtual const void* ptr() const override {
@@ -175,13 +239,13 @@ struct dgmpp_array_impl: public dgmpp_array_impl_base {
 
 
 template<typename T, typename C>
-dgmpp_handle dgmpp_make_array(const C& c) {
-    return new_handle(dgmpp_array_impl<T>(c));
+dgmpp_handle dgmpp_make_array(C&& container) {
+    return new_handle(std::shared_ptr<dgmpp_array_impl_base>(new dgmpp_array_impl<T>(std::forward<C>(container))));
 }
 
 template<typename Rep, typename Ratio>
 inline dgmpp_seconds  dgmpp_make_seconds(const std::chrono::duration<Rep, Ratio>& v) {
-	return std::chrono::duration_cast<std::chrono::seconds>(v).count();
+	return static_cast<dgmpp_seconds>(std::chrono::duration_cast<std::chrono::seconds>(v).count());
 }
 
 inline dgmpp_damage_vector dgmpp_damage_vector_make(const DamageVector& v) {

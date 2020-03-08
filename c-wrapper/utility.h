@@ -9,6 +9,7 @@
 #define utility_h
 
 #include <stdlib.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 #define DGMPP_EXTERN extern "C"
@@ -56,7 +57,7 @@ typedef void* dgmpp_handle;
 //} dgmpp_handle;
 
 typedef dgmpp_handle dgmpp_type;
-typedef dgmpp_handle dgmpp_attribute;
+typedef void* dgmpp_attribute;
 typedef dgmpp_handle dgmpp_planet;
 typedef dgmpp_handle dgmpp_facility;
 typedef dgmpp_handle dgmpp_state;

@@ -35,7 +35,7 @@ namespace dgmpp {
 	}
 	
 	void HeatSimulator::run_(Module::Slot slot) {
-		const auto totalSlots = owner_.totalSlots_(slot);
+		const auto totalSlots = static_cast<int>(owner_.totalSlots_(slot));
 
 		auto modules = owner_.modules_(slot);
 		modules.erase(std::remove_if(modules.begin(), modules.end(), [totalSlots](auto i) {
@@ -97,7 +97,7 @@ namespace dgmpp {
 			tNow = state.tNow;
 			
 			auto h = heat(tNow, heatCapacity, heatGeneration);
-			std::size_t dead = 0;
+			int dead = 0;
 			for (int i = 0; i < totalSlots; i++) {
 				if (hp[i].first > 0) {
 					auto range = std::abs(i - static_cast<int>(state.socket));

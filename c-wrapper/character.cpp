@@ -9,12 +9,12 @@
 #include "internal.h"
 
 dgmpp_type dgmpp_character_create() {
-	return add_unique_ptr_wrapper(Character::Create());
+	return new_handle(std::shared_ptr<Type>(new Character()));
 }
 
 dgmpp_type dgmpp_character_copy (dgmpp_type character) {
 	try {
-		return add_unique_ptr_wrapper(Character::Create(*reinterpret_cast<Character*>(character)));
+		return new_handle(std::shared_ptr<Type>(new Character(*get<Character>(character))));
 	}
 	catch (...) {
 		return nullptr;
@@ -22,17 +22,17 @@ dgmpp_type dgmpp_character_copy (dgmpp_type character) {
 }
 
 const char*	dgmpp_character_get_name (dgmpp_type character) {
-	return reinterpret_cast<Character*>(character)->name().c_str();
+	return get<Character>(character)->name().c_str();
 }
 
 void dgmpp_character_set_name (dgmpp_type character, const char* name) {
-	reinterpret_cast<Character*>(character)->name(name);
+	return get<Character>(character)->name(name);
 }
 
 
 dgmpp_bool dgmpp_character_set_skill_levels (dgmpp_type character, int skill_levels) {
 	try {
-		reinterpret_cast<Character*>(character)->setSkillLevels(skill_levels);
+		get<Character>(character)->setSkillLevels(skill_levels);
 		return true;
 	}
 	catch (...) {
@@ -41,6 +41,8 @@ dgmpp_bool dgmpp_character_set_skill_levels (dgmpp_type character, int skill_lev
 }
 
 dgmpp_array dgmpp_character_copy_skills (dgmpp_type character) {
+	get<Character>(character)->skills();
+	std::transfo
 	return dgmpp_make_array<Type*>(reinterpret_cast<Character*>(character)->skills());
 }
 

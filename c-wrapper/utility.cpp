@@ -8,10 +8,20 @@
 #include "utility.h"
 #include "internal.h"
 
+std::map<void*, std::shared_ptr<struct dgmpp_handle_store>> handles;
+
 void dgmpp_free (dgmpp_handle handle) {
-    delete reinterpret_cast<dgmpp_handle_base*>(handle);
+    delete reinterpret_cast<dgmpp_handle_store*>(handle);
 }
 
+size_t dgmpp_array_get_size(dgmpp_array handle) {
+	return get<dgmpp_array_impl_base>(handle)->size;
+	//return reinterpret_cast<dgmpp_array_impl_base*>(array)->size;
+}
+const void* dgmpp_array_get_values(dgmpp_array handle) {
+	return get<dgmpp_array_impl_base>(handle)->ptr();
+	//return reinterpret_cast<dgmpp_array_impl_base*>(array)->ptr();
+}
 
 /*
 extern std::set<std::unique_ptr<shared_ptr_wrapper_base>> shared_pointers;
