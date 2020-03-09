@@ -11,7 +11,7 @@ import cwrapper
 public class DGMPlanet: DGMObject {
 	
 	public convenience init() {
-		self.init(dgmpp_planet_create(), owned: true)
+		self.init(dgmpp_planet_create())
 	}
 	
 	public func add(facility typeID: DGMTypeID, identifier: Int64 = 0) throws -> DGMFacility {

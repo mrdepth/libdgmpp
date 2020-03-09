@@ -9,12 +9,6 @@ import Foundation
 import cwrapper
 import Combine
 
-fileprivate struct WeakReference<Value: AnyObject> {
-    weak var value: Value?
-}
-
-fileprivate var handles: [dgmpp_type: WeakReference<DGMType>] = [:]
-
 public class DGMType: DGMObject, ObservableObject {
 	
 	public enum MetaGroup: Int, Codable {
@@ -36,50 +30,34 @@ public class DGMType: DGMObject, ObservableObject {
 	}
 	
 	class func type(_ handle: dgmpp_type) -> DGMType {
-        if let type = handles[handle] {
-            if let value = type.value {
-                return value
-            }
-            else {
-                handles[handle] = nil
+        DGMObject.get(handle) {
+            switch dgmpp_get_type(handle) {
+            case DGMPP_TYPE_GANG:
+                return DGMGang(handle)
+            case DGMPP_TYPE_CHARACTER:
+                return DGMCharacter(handle)
+            case DGMPP_TYPE_SKILL:
+                return DGMSkill(handle)
+            case DGMPP_TYPE_BOOSTER:
+                return DGMBooster(handle)
+            case DGMPP_TYPE_IMPLANT:
+                return DGMImplant(handle)
+            case DGMPP_TYPE_SHIP:
+                return DGMShip(handle)
+            case DGMPP_TYPE_STRUCTURE:
+                return DGMStructure(handle)
+            case DGMPP_TYPE_MODULE:
+                return DGMModule(handle)
+            case DGMPP_TYPE_DRONE:
+                return DGMDrone(handle)
+            case DGMPP_TYPE_CHARGE:
+                return DGMCharge(handle)
+            default:
+                return DGMType(handle)
             }
         }
-        
-		switch dgmpp_get_type(handle) {
-		case DGMPP_TYPE_GANG:
-			return DGMGang(handle)
-		case DGMPP_TYPE_CHARACTER:
-			return DGMCharacter(handle)
-		case DGMPP_TYPE_SKILL:
-			return DGMSkill(handle)
-		case DGMPP_TYPE_BOOSTER:
-			return DGMBooster(handle)
-		case DGMPP_TYPE_IMPLANT:
-			return DGMImplant(handle)
-		case DGMPP_TYPE_SHIP:
-			return DGMShip(handle)
-		case DGMPP_TYPE_STRUCTURE:
-			return DGMStructure(handle)
-		case DGMPP_TYPE_MODULE:
-			return DGMModule(handle)
-		case DGMPP_TYPE_DRONE:
-			return DGMDrone(handle)
-		case DGMPP_TYPE_CHARGE:
-			return DGMCharge(handle)
-		default:
-			return DGMType(handle)
-		}
 	}
 	
-	convenience init(_ handle: dgmpp_type) {
-		self.init(handle, owned: false)
-	}
-    
-    required init(_ handle: dgmpp_handle, owned: Bool) {
-        super.init(handle, owned: owned)
-        handles[handle] = WeakReference(value: self)
-    }
-    
 	public var typeID: DGMTypeID {
 		return DGMTypeID(dgmpp_type_get_type_id(handle))
 	}
@@ -101,13 +79,11 @@ public class DGMType: DGMObject, ObservableObject {
 	}
 
 	public var parent: DGMType? {
-        guard let parent = dgmpp_type_get_parent(handle) else {return nil}
-        return DGMType.type(parent)
+        dgmpp_type_copy_parent(handle).map{DGMType.type($0)}
     }
 	
 	public subscript(attributeID: DGMAttributeID) -> DGMAttribute? {
-		guard let attribute = dgmpp_type_get_attribute(handle, dgmpp_attribute_id(attributeID)) else {return nil}
-		return DGMAttribute(attribute)
+        dgmpp_type_get_attribute(handle, dgmpp_attribute_id(attributeID)).map{DGMAttribute($0)}
 	}
 	
 	public var affectors: [DGMType] {

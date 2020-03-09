@@ -30,7 +30,6 @@ namespace dgmpp {
 	}
 
 	Type::Type (const MetaInfo::Type& metaInfo): metaInfo_(metaInfo) {
-		
 		for (const auto& i: metaInfo.attributes())
 			attributesMap_.emplace(i.first->attributeID, new Attribute(*i.first, i.second, *this));
 		

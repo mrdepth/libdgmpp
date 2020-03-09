@@ -19,11 +19,11 @@ public class DGMCharge: DGMType, Codable {
 	
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_charge_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 
 	public convenience init(_ other: DGMCharge) {
-		self.init(dgmpp_charge_copy(other.handle), owned: true)
+		self.init(dgmpp_charge_copy(other.handle))
 	}
 
 	public var size: Size {
@@ -31,8 +31,8 @@ public class DGMCharge: DGMType, Codable {
 	}
 	
 	
-	public required init(_ handle: dgmpp_handle, owned: Bool) {
-		super.init(handle, owned: owned)
+	required init(_ handle: dgmpp_handle) {
+		super.init(handle)
 	}
 	
 	public convenience required init(from decoder: Decoder) throws {

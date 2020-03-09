@@ -12,11 +12,11 @@ public class DGMStructure: DGMShip {
 	
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_structure_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 
 	public convenience init(_ other: DGMStructure) {
-		self.init(dgmpp_structure_copy(other.handle), owned: true)
+		self.init(dgmpp_structure_copy(other.handle))
 	}
 
 	public var fuelBlockTypeID: DGMTypeID {

@@ -11,11 +11,11 @@ import cwrapper
 public class DGMGang: DGMType {
 	
 	public convenience init() throws {
-		self.init(dgmpp_gang_create()!, owned: true)
+		self.init(dgmpp_gang_create()!)
 	}
 
 	public convenience init(_ other: DGMGang) {
-		self.init(dgmpp_gang_copy(other.handle), owned: true)
+		self.init(dgmpp_gang_copy(other.handle))
 	}
 
 	public func add(_ pilot: DGMCharacter) {
@@ -44,8 +44,8 @@ public class DGMGang: DGMType {
 	
 	public var area: DGMArea? {
 		get {
-			guard let area = dgmpp_gang_get_area(handle) else {return nil}
-			return DGMArea(area)
+			guard let area = dgmpp_gang_copy_area(handle) else {return nil}
+            return DGMType.type(area) as? DGMArea
 		}
 		set {
             willChange()

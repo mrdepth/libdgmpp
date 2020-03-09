@@ -64,7 +64,8 @@ typedef dgmpp_handle dgmpp_state;
 typedef dgmpp_handle dgmpp_array;
 typedef dgmpp_handle dgmpp_capacitor;
 
-DGMPP_EXTERN void 	dgmpp_free		(dgmpp_handle handle);
+DGMPP_EXTERN void dgmpp_release (dgmpp_handle handle);
+DGMPP_EXTERN dgmpp_handle dgmpp_retain (dgmpp_handle handle);
 //DGMPP_EXTERN size_t	dgmpp_get_hash	(dgmpp_handle handle);
 
 DGMPP_EXTERN size_t			dgmpp_array_get_size	(dgmpp_array array);

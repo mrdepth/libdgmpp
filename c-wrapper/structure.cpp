@@ -10,7 +10,7 @@
 
 dgmpp_type dgmpp_structure_create (dgmpp_type_id type_id) {
 	try {
-		return add_unique_ptr_wrapper(Structure::Create(static_cast<TypeID>(type_id)));
+        return new_handle(std::make_shared<Structure>(static_cast<TypeID>(type_id)));
 	}
 	catch (...) {
 		return nullptr;
@@ -19,7 +19,7 @@ dgmpp_type dgmpp_structure_create (dgmpp_type_id type_id) {
 
 dgmpp_type dgmpp_structure_copy (dgmpp_type structure) {
 	try {
-		return add_unique_ptr_wrapper(Structure::Create(*reinterpret_cast<Structure*>(structure)));
+        return new_handle(std::make_shared<Structure>(*get<Structure>(structure)));
 	}
 	catch (...) {
 		return nullptr;
@@ -27,17 +27,16 @@ dgmpp_type dgmpp_structure_copy (dgmpp_type structure) {
 }
 
 dgmpp_type_id dgmpp_structure_get_fuel_block_type_id (dgmpp_type structure) {
-	return static_cast<dgmpp_type_id>(reinterpret_cast<Structure*>(structure)->fuelBlockTypeID());
+	return static_cast<dgmpp_type_id>(get<Structure>(structure)->fuelBlockTypeID());
 }
 
 dgmpp_fuel_units_per_hour dgmpp_structure_get_fuel_use (dgmpp_type structure) {
-	return reinterpret_cast<Structure*>(structure)->fuelUse() * 1h;
+	return get<Structure>(structure)->fuelUse() * 1h;
 }
 
 dgmpp_type dgmpp_structure_get_area (dgmpp_type structure) {
-	return reinterpret_cast<Structure*>(structure)->area();
+	return new_handle(get<Structure>(structure)->area());
 }
 void dgmpp_structure_set_area (dgmpp_type structure, dgmpp_type area) {
-	reinterpret_cast<Structure*>(structure)->area(get_unique_ptr<Area>(area));
-	dgmpp_free(area);
+	get<Structure>(structure)->area(get<Area>(area));
 }

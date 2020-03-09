@@ -10,7 +10,7 @@
 
 dgmpp_type dgmpp_charge_create (dgmpp_type_id type_id) {
 	try {
-		return add_unique_ptr_wrapper(Charge::Create(static_cast<TypeID>(type_id)));
+        return new_handle(std::make_shared<Charge>(static_cast<TypeID>(type_id)));
 	}
 	catch (...) {
 		return nullptr;
@@ -19,7 +19,7 @@ dgmpp_type dgmpp_charge_create (dgmpp_type_id type_id) {
 
 dgmpp_type dgmpp_charge_copy (dgmpp_type charge) {
 	try {
-		return add_unique_ptr_wrapper(Charge::Create(*reinterpret_cast<Charge*>(charge)));
+        return new_handle(std::make_shared<Charge>(*get<Charge>(charge)));
 	}
 	catch (...) {
 		return nullptr;

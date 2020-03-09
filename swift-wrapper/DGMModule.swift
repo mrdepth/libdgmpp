@@ -38,11 +38,11 @@ public class DGMModule: DGMType, Codable {
 	
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_module_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 
 	public convenience init(_ other: DGMModule) {
-		self.init(dgmpp_module_copy(other.handle), owned: true)
+		self.init(dgmpp_module_copy(other.handle))
 	}
 
 	public func canHaveState(_ state: State) -> Bool {
@@ -71,8 +71,8 @@ public class DGMModule: DGMType, Codable {
 	
 	public var target: DGMShip? {
 		get {
-			guard let target = dgmpp_module_get_target(handle) else {return nil}
-			return DGMShip(target)
+			guard let target = dgmpp_module_copy_target(handle) else {return nil}
+            return DGMType.type(target) as? DGMShip
 		}
 		set {
             willChange()
@@ -99,8 +99,8 @@ public class DGMModule: DGMType, Codable {
 	}
 	
 	public var charge: DGMCharge? {
-		guard let charge = dgmpp_module_get_charge(handle) else {return nil}
-		return DGMCharge(charge)
+		guard let charge = dgmpp_module_copy_charge(handle) else {return nil}
+		return DGMType.type(charge) as? DGMCharge
 	}
 	
 	public func setCharge(_ charge: DGMCharge?) throws {
@@ -206,10 +206,10 @@ public class DGMModule: DGMType, Codable {
 	}
 
 	
-	public required init(_ handle: dgmpp_handle, owned: Bool) {
-		super.init(handle, owned: owned)
-	}
-	
+    required init(_ handle: dgmpp_handle) {
+        super.init(handle)
+    }
+
 	public convenience required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)

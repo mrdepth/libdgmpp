@@ -96,11 +96,6 @@ extension DGMCommodity.Tier {
 }
 
 class DGMArray<T>: DGMObject {
-	
-	convenience init(_ handle: dgmpp_array) {
-		self.init(handle, owned: true)
-	}
-	
 }
 
 extension DGMArray where T: DGMType {
@@ -109,8 +104,7 @@ extension DGMArray where T: DGMType {
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_type.self, capacity: size)
 		return (0..<size).compactMap {
-			return T.type(ptr[$0]) as? T
-//			return T(ptr[$0], owned: false)
+			return T.type(dgmpp_retain(ptr[$0])) as? T
 		}
 	}
 }
@@ -121,7 +115,7 @@ extension DGMArray where T == DGMAttribute {
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_attribute.self, capacity: size)
 		return (0..<size).map {
-			return T(ptr[$0], owned: false)
+			return T(ptr[$0])
 		}
 	}
 }
@@ -141,7 +135,7 @@ extension DGMArray where T: DGMState {
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_state.self, capacity: size)
 		return (0..<size).map {
-			return T(ptr[$0], owned: false)
+			return T(dgmpp_retain(ptr[$0]))
 		}
 	}
 }

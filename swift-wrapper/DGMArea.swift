@@ -12,10 +12,10 @@ public class DGMArea: DGMType {
 	
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_area_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 	
 	public convenience init(_ other: DGMArea) {
-		self.init(dgmpp_area_copy(other.handle), owned: true)
+		self.init(dgmpp_area_copy(other.handle))
 	}
 }

@@ -50,8 +50,13 @@ dgmpp_category_id dgmpp_type_get_category_id (dgmpp_type type) {
 }
 
 dgmpp_type dgmpp_type_copy_parent (dgmpp_type type) {
-    auto parent = get<Type>(type)->parent()->shared_from_this();
-    return new_handle(std::move(parent));
+    if (auto parent = get<Type>(type)->parent()) {
+        return new_handle(parent->shared_from_this());
+    }
+    else {
+        return nullptr;
+    }
+    
 }
 
 dgmpp_attribute dgmpp_type_get_attribute (dgmpp_type type, dgmpp_attribute_id attribute_id) {

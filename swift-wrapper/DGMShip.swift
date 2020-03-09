@@ -58,13 +58,17 @@ public class DGMShip: DGMType, Codable {
 		case xLarge = 4
 	}
 	
+    required init(_ handle: dgmpp_type) {
+        super.init(handle)
+    }
+
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_ship_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 	
 	public convenience init(_ other: DGMShip) {
-		self.init(dgmpp_ship_copy(other.handle), owned: true)
+		self.init(dgmpp_ship_copy(other.handle))
 	}
 
 	public var name: String {
@@ -181,7 +185,10 @@ public class DGMShip: DGMType, Codable {
 	}
 
 	public var capacitor: DGMCapacitor {
-		return DGMCapacitor(dgmpp_ship_get_capacitor(handle), owned: false)
+        let capacitor = dgmpp_ship_get_capacitor(handle)!
+        return DGMObject.get(capacitor) {
+            DGMCapacitor(capacitor)
+        }
 	}
 	
 	public var usedCalibration: DGMCalibrationPoints {
@@ -369,10 +376,6 @@ public class DGMShip: DGMType, Codable {
 	}
 	
 
-	public required init(_ handle: dgmpp_handle, owned: Bool) {
-		super.init(handle, owned: owned)
-	}
-	
 	public convenience required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
