@@ -8,7 +8,12 @@
 import Foundation
 import cwrapper
 
-public class DGMCapacitor: DGMObject {
+public class DGMCapacitor {
+    private var handle: dgmpp_capacitor
+    
+    init(_ handle: dgmpp_capacitor) {
+        self.handle = handle
+    }
 	
 	public var capacity: DGMGigaJoule {
 		return dgmpp_capacitor_get_capacity(handle)
@@ -186,9 +191,7 @@ public class DGMShip: DGMType, Codable {
 
 	public var capacitor: DGMCapacitor {
         let capacitor = dgmpp_ship_get_capacitor(handle)!
-        return DGMObject.get(capacitor) {
-            DGMCapacitor(capacitor)
-        }
+        return DGMCapacitor(capacitor)
 	}
 	
 	public var usedCalibration: DGMCalibrationPoints {

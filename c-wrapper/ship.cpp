@@ -373,29 +373,29 @@ dgmpp_millimeter dgmpp_ship_get_scan_resolution (dgmpp_type ship) {
 }
 
 dgmpp_giga_joule dgmpp_capacitor_get_capacity (dgmpp_capacitor capacitor) {
-	return get<Capacitor>(capacitor)->capacity();
+    return reinterpret_cast<Capacitor*>(capacitor)->capacity();
 }
 
 dgmpp_seconds dgmpp_capacitor_get_recharge_time (dgmpp_capacitor capacitor) {
-	return dgmpp_make_seconds(get<Capacitor>(capacitor)->rechargeTime());
+	return dgmpp_make_seconds(reinterpret_cast<Capacitor*>(capacitor)->rechargeTime());
 }
 
 dgmpp_seconds dgmpp_capacitor_get_lasts_time (dgmpp_capacitor capacitor) {
-	return dgmpp_make_seconds(get<Capacitor>(capacitor)->lastsTime());
+	return dgmpp_make_seconds(reinterpret_cast<Capacitor*>(capacitor)->lastsTime());
 }
 
 dgmpp_bool dgmpp_capacitor_is_stable (dgmpp_capacitor capacitor) {
-	return get<Capacitor>(capacitor)->isStable();
+	return reinterpret_cast<Capacitor*>(capacitor)->isStable();
 }
 
 dgmpp_percent dgmpp_capacitor_get_stable_level (dgmpp_capacitor capacitor) {
-	return get<Capacitor>(capacitor)->stableLevel();
+	return reinterpret_cast<Capacitor*>(capacitor)->stableLevel();
 }
 
 dgmpp_giga_joule_per_second dgmpp_capacitor_get_use (dgmpp_capacitor capacitor) {
-	return get<Capacitor>(capacitor)->use() * 1s;
+	return reinterpret_cast<Capacitor*>(capacitor)->use() * 1s;
 }
 
 dgmpp_giga_joule_per_second dgmpp_capacitor_get_recharge (dgmpp_capacitor capacitor) {
-	return get<Capacitor>(capacitor)->recharge() * 1s;
+	return reinterpret_cast<Capacitor*>(capacitor)->recharge() * 1s;
 }
