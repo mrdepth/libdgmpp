@@ -88,6 +88,9 @@ public class DGMSkill: DGMType {
 		}
 	}
 	
+    fileprivate func setLevelWithoutUpdates(_ level: Int) {
+        dgmpp_skill_set_level(handle, Int32(level))
+    }
 }
 
 public class DGMCharacter: DGMType, Codable {
@@ -141,6 +144,14 @@ public class DGMCharacter: DGMType, Codable {
         willChange()
 		dgmpp_character_set_skill_levels(handle, Int32(level))
 	}
+    
+    public func setSkillLevels(_ levels: [DGMTypeID: Int]) {
+        willChange()
+        let skills = Dictionary(self.skills.map{($0.typeID, $0)}) {a, _ in a}
+        for (typeID, level) in levels {
+            skills[typeID]?.setLevelWithoutUpdates(level)
+        }
+    }
 	
 	public func add(_ implant: DGMImplant, replace: Bool = false) throws {
         willChange()
