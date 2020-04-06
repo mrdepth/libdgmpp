@@ -232,6 +232,7 @@
 		16BC8885241648DC00C6149A /* DGMFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E11991FE968690057EB0D /* DGMFactory.swift */; };
 		16BC8886241648DC00C6149A /* DGMStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119C1FE968740057EB0D /* DGMStorage.swift */; };
 		16BC8887241648DC00C6149A /* DGMProductionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E119F1FE968810057EB0D /* DGMProductionState.swift */; };
+		16C910282433999600BCEBA7 /* DGMRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C910272433999600BCEBA7 /* DGMRoute.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -416,6 +417,7 @@
 		16BC87FC241616BC00C6149A /* character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = character.h; sourceTree = "<group>"; };
 		16BC87FD241616BC00C6149A /* planet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = planet.h; sourceTree = "<group>"; };
 		16BC87FE241616BC00C6149A /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		16C910272433999600BCEBA7 /* DGMRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMRoute.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -471,6 +473,7 @@
 				122E11991FE968690057EB0D /* DGMFactory.swift */,
 				122E119C1FE968740057EB0D /* DGMStorage.swift */,
 				122E119F1FE968810057EB0D /* DGMProductionState.swift */,
+				16C910272433999600BCEBA7 /* DGMRoute.swift */,
 			);
 			name = PI;
 			sourceTree = "<group>";
@@ -1041,6 +1044,7 @@
 				16BC8881241648DB00C6149A /* DGMProductionState.swift in Sources */,
 				16BC88772416464500C6149A /* DGMModule.swift in Sources */,
 				16BC88742416461A00C6149A /* DGMCharge.swift in Sources */,
+				16C910282433999600BCEBA7 /* DGMRoute.swift in Sources */,
 				16BC88782416464500C6149A /* DGMStructure.swift in Sources */,
 				16BC8864241644C000C6149A /* DGMGang.swift in Sources */,
 				16BC88722416460B00C6149A /* DGMAttirbute.swift in Sources */,

@@ -14,7 +14,7 @@
 namespace dgmpp {
 	class Planet;
 	
-	class Facility {
+	class Facility: public std::enable_shared_from_this<Facility> {
 	public:
 		typedef int64_t Identifier;
 		virtual ~Facility() = default;

@@ -88,7 +88,10 @@ dgmpp_array dgmpp_facility_copy_inputs (dgmpp_facility facility) {
     const auto& inputs = get<Facility>(facility)->inputs();
     std::vector<dgmpp_route> result;
     std::transform(inputs.begin(), inputs.end(), std::back_inserter(result), [](const auto& i) {
-        return dgmpp_route_make(i);
+        auto handle = std::make_shared<dgmpp_route_impl>(i.from ? i.from->shared_from_this() : nullptr,
+                                                         i.to ? i.to->shared_from_this() : nullptr,
+                                                         dgmpp_commodity_make(i.commodity));
+        return new_handle(handle);
     });
     return dgmpp_make_array<dgmpp_route>(std::move(result));
 }
@@ -97,7 +100,10 @@ dgmpp_array dgmpp_facility_copy_outputs (dgmpp_facility facility) {
     const auto& outputs = get<Facility>(facility)->outputs();
     std::vector<dgmpp_route> result;
     std::transform(outputs.begin(), outputs.end(), std::back_inserter(result), [](const auto& i) {
-        return dgmpp_route_make(i);
+        auto handle = std::make_shared<dgmpp_route_impl>(i.from ? i.from->shared_from_this() : nullptr,
+                                                         i.to ? i.to->shared_from_this() : nullptr,
+                                                         dgmpp_commodity_make(i.commodity));
+        return new_handle(handle);
     });
     return dgmpp_make_array<dgmpp_route>(std::move(result));
 }
@@ -109,4 +115,16 @@ dgmpp_bool dgmpp_facility_is_configured (dgmpp_facility facility) {
 
 const char* dgmpp_facility_get_name (dgmpp_facility facility) {
 	return get<Facility>(facility)->name().c_str();
+}
+
+dgmpp_facility dgmpp_route_copy_from(dgmpp_route route) {
+    return new_handle(get<dgmpp_route_impl>(route)->from);
+}
+
+dgmpp_facility dgmpp_route_copy_to(dgmpp_route route) {
+    return new_handle(get<dgmpp_route_impl>(route)->to);
+}
+
+dgmpp_commodity dgmpp_route_get_commodity(dgmpp_route route) {
+    return get<dgmpp_route_impl>(route)->commodity;
 }

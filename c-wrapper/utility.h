@@ -63,6 +63,7 @@ typedef dgmpp_handle dgmpp_facility;
 typedef dgmpp_handle dgmpp_state;
 typedef dgmpp_handle dgmpp_array;
 typedef dgmpp_handle dgmpp_capacitor;
+typedef dgmpp_handle dgmpp_route;
 
 DGMPP_EXTERN void dgmpp_release (dgmpp_handle handle);
 DGMPP_EXTERN dgmpp_handle dgmpp_retain (dgmpp_handle handle);
@@ -243,11 +244,11 @@ typedef struct {
 	dgmpp_commodity waste;
 } dgmpp_production_cycle;
 
-typedef struct {
-	dgmpp_facility from;
-	dgmpp_facility to;
-	dgmpp_commodity commodity;
-} dgmpp_route;
+//typedef struct {
+//	dgmpp_facility from;
+//	dgmpp_facility to;
+//	dgmpp_commodity commodity;
+//} dgmpp_route;
 
 typedef enum {
 	DGMPP_FACILITY_CATEGORY_NONE,

@@ -196,18 +196,6 @@ public struct DGMProductionCycle{
 	public var waste: DGMCommodity;
 };
 
-public struct DGMRoute {
-	public var from: DGMFacility
-	public var to: DGMFacility
-	public var commodity: DGMCommodity
-	
-	public init(from: DGMFacility, to: DGMFacility, commodity: DGMCommodity) {
-		self.from = from
-		self.to = to
-		self.commodity = commodity
-	}
-}
-
 public struct DGMVersion {
 	public struct SDE {
 		public var build: Int

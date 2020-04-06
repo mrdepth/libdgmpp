@@ -211,8 +211,11 @@ namespace dgmpp {
 					chargeValue_ = charge;
 					chargeValue_->parent_(this);
 				}
-				else
+                else {
+                    if (enabled)
+                        setEnabled_(true);
 					throw CannotFit<Charge>(charge);
+                }
 			}
 			if (enabled)
 				setEnabled_(true);

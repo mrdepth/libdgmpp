@@ -34,4 +34,8 @@ DGMPP_EXTERN dgmpp_bool dgmpp_facility_is_configured (dgmpp_facility facility);
 
 DGMPP_EXTERN const char* dgmpp_facility_get_name (dgmpp_facility facility);
 
+DGMPP_EXTERN dgmpp_facility     dgmpp_route_copy_from(dgmpp_route route);
+DGMPP_EXTERN dgmpp_facility     dgmpp_route_copy_to(dgmpp_route route);
+DGMPP_EXTERN dgmpp_commodity    dgmpp_route_get_commodity(dgmpp_route route);
+
 #endif /* facility_h */
