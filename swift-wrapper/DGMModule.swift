@@ -16,6 +16,18 @@ public class DGMModule: DGMType, Codable {
 		case online
 		case active
 		case overloaded
+        
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode("\(self)")
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let key = try container.decode(String.self)
+            self = Self.allCases.first{"\($0.self)" == key} ?? .unknown
+        }
+        
 	}
 	
 	public enum Slot: Int, Codable, CaseIterable {
@@ -28,6 +40,17 @@ public class DGMModule: DGMType, Codable {
 		case mode
 		case service
 		case starbaseStructure
+        
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode("\(self)")
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let key = try container.decode(String.self)
+            self = Self.allCases.first{"\($0.self)" == key} ?? .none
+        }
 	}
 	
 	public enum Hardpoint: Int, CaseIterable {

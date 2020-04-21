@@ -11,7 +11,7 @@
 namespace dgmpp {
 	class Structure: public Ship {
 	public:
-		Structure(TypeID typeID) : Ship(typeID) { setEnabled_(true); }
+        Structure(TypeID typeID);
 		Structure(const Structure& other) : Ship(other) { setEnabled_(other.isEnabled_()); }
 
 		TypeID fuelBlockTypeID() { return fuelBlockTypeID_; }

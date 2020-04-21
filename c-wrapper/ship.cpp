@@ -88,12 +88,26 @@ dgmpp_bool dgmpp_ship_add_drone_v2 (dgmpp_type ship, dgmpp_type drone, int squad
 	}
 }
 
+dgmpp_bool dgmpp_ship_add_cargo (dgmpp_type ship, dgmpp_type cargo) {
+    try {
+        get<Ship>(ship)->add(get<Cargo>(cargo));
+        return true;
+    }
+    catch(...) {
+        return false;
+    }
+}
+
 void dgmpp_ship_remove_module (dgmpp_type ship, dgmpp_type module) {
 	get<Ship>(ship)->remove(get<Module>(module).get());
 }
 
 void dgmpp_ship_remove_drone (dgmpp_type ship, dgmpp_type drone) {
     get<Ship>(ship)->remove(get<Drone>(drone).get());
+}
+
+void dgmpp_ship_remove_cargo (dgmpp_type ship, dgmpp_type cargo) {
+    get<Ship>(ship)->remove(get<Cargo>(cargo).get());
 }
 
 dgmpp_bool dgmpp_ship_can_fit_module (dgmpp_type ship, dgmpp_type module) {
@@ -126,6 +140,15 @@ dgmpp_array dgmpp_ship_copy_modules_slot (dgmpp_type ship, DGMPP_MODULE_SLOT slo
     auto modules = get<Ship>(ship)->modules(static_cast<Module::Slot>(slot));
     std::vector<dgmpp_handle> result;
     std::transform(modules.begin(), modules.end(), std::back_inserter(result), [](const auto& i) {
+        return new_handle(i);
+    });
+    return dgmpp_make_array<dgmpp_handle>(std::move(result));
+}
+
+dgmpp_array dgmpp_ship_copy_cargo (dgmpp_type ship) {
+    const auto& cargo = get<Ship>(ship)->cargo();
+    std::vector<dgmpp_handle> result;
+    std::transform(cargo.begin(), cargo.end(), std::back_inserter(result), [](const auto& i) {
         return new_handle(i);
     });
     return dgmpp_make_array<dgmpp_handle>(std::move(result));
@@ -226,6 +249,10 @@ dgmpp_cubic_meter dgmpp_ship_get_total_fighter_hangar (dgmpp_type ship) {
 
 dgmpp_cubic_meter dgmpp_ship_get_cargo_capacity (dgmpp_type ship) {
 	return get<Ship>(ship)->cargoCapacity();
+}
+
+dgmpp_cubic_meter dgmpp_ship_get_used_cargo_capacity (dgmpp_type ship) {
+    return get<Ship>(ship)->usedCargoCapacity();
 }
 
 dgmpp_cubic_meter dgmpp_ship_get_special_hold_capacity (dgmpp_type ship) {

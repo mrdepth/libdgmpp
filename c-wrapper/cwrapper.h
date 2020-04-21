@@ -20,6 +20,7 @@ FOUNDATION_EXPORT const unsigned char cwrapperVersionString[];
 #include <cwrapper/attribute.h>
 #include <cwrapper/character.h>
 #include <cwrapper/charge.h>
+#include <cwrapper/cargo.h>
 #include <cwrapper/drone.h>
 #include <cwrapper/gang.h>
 #include <cwrapper/module.h>

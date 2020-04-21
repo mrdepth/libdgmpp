@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		122E116F1FE7FB760057EB0D /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BE89001FE17D9300854893 /* Dgmpp.framework */; };
 		1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1248DB3E1F1DE90E009625EC /* QuartzCore.framework */; };
 		1285E8CB201B300100AAC231 /* cwrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1285E8CC201B300100AAC231 /* cwrapper.framework */; };
 		12BE88E01FE17B0F00854893 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE888B1FE17B0F00854893 /* WarfareBuff.cpp */; };
@@ -51,6 +50,16 @@
 			dstSubfolderSpec = 6;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1642852B24489DF4004B15E9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -157,7 +166,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1285E8CB201B300100AAC231 /* cwrapper.framework in Frameworks */,
-				122E116F1FE7FB760057EB0D /* Dgmpp.framework in Frameworks */,
 				1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,6 +323,7 @@
 				12DBEA931E1D3AEA0088A486 /* Sources */,
 				12DBEA941E1D3AEA0088A486 /* Frameworks */,
 				12DBEA951E1D3AEA0088A486 /* CopyFiles */,
+				1642852B24489DF4004B15E9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

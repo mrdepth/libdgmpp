@@ -118,6 +118,11 @@ public class DGMShip: DGMType, Codable {
         willChange()
 		guard dgmpp_ship_add_drone_v2(handle, drone.handle, Int32(squadronTag)) != 0 else { throw DGMError.cannotFit(drone)}
 	}
+    
+    public func add(_ cargo: DGMCargo) throws {
+        willChange()
+        guard dgmpp_ship_add_cargo(handle, cargo.handle) != 0 else { throw DGMError.cannotFit(cargo)}
+    }
 	
 	public func remove(_ module: DGMModule) {
         willChange()
@@ -128,6 +133,11 @@ public class DGMShip: DGMType, Codable {
         willChange()
 		dgmpp_ship_remove_drone(handle, drone.handle)
 	}
+
+    public func remove(_ cargo: DGMCargo) {
+        willChange()
+        dgmpp_ship_remove_cargo(handle, cargo.handle)
+    }
 
 	public func canFit(_ module: DGMModule) -> Bool {
 		return dgmpp_ship_can_fit_module(handle, module.handle) != 0
@@ -148,7 +158,11 @@ public class DGMShip: DGMType, Codable {
 	public func modules(slot: DGMModule.Slot) -> [DGMModule] {
 		return DGMArray<DGMModule>(dgmpp_ship_copy_modules_slot(handle, DGMPP_MODULE_SLOT(slot))).array
 	}
-	
+
+    public var cargo: [DGMCargo] {
+        return DGMArray<DGMCargo>(dgmpp_ship_copy_cargo(handle)).array
+    }
+
 	public func totalDroneSquadron(_ squadron: DGMDrone.Squadron = .none) -> Int {
 		return dgmpp_ship_get_total_drone_squadron(handle, DGMPP_DRONE_SQUADRON(squadron))
 	}
@@ -245,7 +259,11 @@ public class DGMShip: DGMType, Codable {
 	public var cargoCapacity: DGMCubicMeter {
 		return dgmpp_ship_get_cargo_capacity(handle)
 	}
-	
+
+    public var usedCargoCapacity: DGMCubicMeter {
+        return dgmpp_ship_get_used_cargo_capacity(handle)
+    }
+
 	public var specialHoldCapacity: DGMCubicMeter {
 		return dgmpp_ship_get_special_hold_capacity(handle)
 	}
@@ -473,6 +491,9 @@ public class DGMShip: DGMType, Codable {
             $0.sendChange()
         }
         drones.forEach {
+            $0.sendChange()
+        }
+        cargo.forEach {
             $0.sendChange()
         }
     }

@@ -32,6 +32,8 @@ DGMPP_TYPE dgmpp_get_type (dgmpp_type type) {
 		return DGMPP_TYPE_CHARGE;
     else if (dynamic_cast<Area*>(base))
         return DGMPP_TYPE_AREA;
+    else if (dynamic_cast<Cargo*>(base))
+        return DGMPP_TYPE_CARGO;
 	else
 		return DGMPP_TYPE_NONE;
 }

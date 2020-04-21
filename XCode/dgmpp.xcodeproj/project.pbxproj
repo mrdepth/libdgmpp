@@ -124,6 +124,17 @@
 		12D9F9BB1CC3A98B00313F8D /* Dgmpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 12564BA71B84AFAD000F68D8 /* Dgmpp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12DFCED11CD74242006A19BD /* dgmppTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12DFCED01CD74242006A19BD /* dgmppTests.mm */; };
 		12DFCED31CD74242006A19BD /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9F9F21CC3A98B00313F8D /* Dgmpp.framework */; };
+		1642850F24489B4B004B15E9 /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1642850924489B44004B15E9 /* Cargo.cpp */; };
+		1642851024489B4C004B15E9 /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1642850924489B44004B15E9 /* Cargo.cpp */; };
+		1642851124489B4F004B15E9 /* Cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1642850924489B44004B15E9 /* Cargo.cpp */; };
+		1642852C24489E89004B15E9 /* DGMRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C910272433999600BCEBA7 /* DGMRoute.swift */; };
+		1642853124489F2A004B15E9 /* cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1642852E24489F26004B15E9 /* cargo.cpp */; };
+		1642853224489F2A004B15E9 /* cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1642852E24489F26004B15E9 /* cargo.cpp */; };
+		1642853324489F2B004B15E9 /* cargo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1642852E24489F26004B15E9 /* cargo.cpp */; };
+		164285352448A3F3004B15E9 /* DGMCargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164285342448A3F3004B15E9 /* DGMCargo.swift */; };
+		164285362448A3F3004B15E9 /* DGMCargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164285342448A3F3004B15E9 /* DGMCargo.swift */; };
+		164285372448A478004B15E9 /* cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 1642852D24489EBA004B15E9 /* cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		164285382448A479004B15E9 /* cargo.h in Headers */ = {isa = PBXBuildFile; fileRef = 1642852D24489EBA004B15E9 /* cargo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		16B53A43241256330047CBA2 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
 		16B53A44241256330047CBA2 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE89131FE25BB100854893 /* utility.cpp */; };
 		16B53A45241256490047CBA2 /* DGMObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF4D5A1FF27743005E5255 /* DGMObject.swift */; };
@@ -400,6 +411,11 @@
 		12EC66501FBECD840083DBB8 /* Capacitor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Capacitor.hpp; sourceTree = "<group>"; };
 		12EFCCDD1C1ACE4E003ECA7F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		12FF4D5A1FF27743005E5255 /* DGMObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMObject.swift; sourceTree = "<group>"; };
+		1642850924489B44004B15E9 /* Cargo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cargo.cpp; sourceTree = "<group>"; };
+		1642850A24489B44004B15E9 /* Cargo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Cargo.hpp; sourceTree = "<group>"; };
+		1642852D24489EBA004B15E9 /* cargo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cargo.h; sourceTree = "<group>"; };
+		1642852E24489F26004B15E9 /* cargo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cargo.cpp; sourceTree = "<group>"; };
+		164285342448A3F3004B15E9 /* DGMCargo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DGMCargo.swift; sourceTree = "<group>"; };
 		16BC87EE241616BB00C6149A /* gang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gang.h; sourceTree = "<group>"; };
 		16BC87EF241616BB00C6149A /* drone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drone.h; sourceTree = "<group>"; };
 		16BC87F0241616BB00C6149A /* area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = area.h; sourceTree = "<group>"; };
@@ -529,6 +545,8 @@
 				123BEF2E1FBDB3AB00AC8EB1 /* Skill.hpp */,
 				12649A151FCD5E77007B22CD /* Structure.cpp */,
 				12649A161FCD5E77007B22CD /* Structure.hpp */,
+				1642850924489B44004B15E9 /* Cargo.cpp */,
+				1642850A24489B44004B15E9 /* Cargo.hpp */,
 			);
 			name = Fitting;
 			sourceTree = "<group>";
@@ -676,6 +694,7 @@
 				12BE89201FE2660A00854893 /* attribute.cpp */,
 				12BE892C1FE26ADD00854893 /* character.cpp */,
 				12BE89441FE2831E00854893 /* charge.cpp */,
+				1642852E24489F26004B15E9 /* cargo.cpp */,
 				12BE893E1FE2819800854893 /* drone.cpp */,
 				12BE89261FE26A0700854893 /* gang.cpp */,
 				12BE89381FE27D5800854893 /* module.cpp */,
@@ -707,6 +726,7 @@
 				12C457DB1FE2C0890045BD84 /* DGMAttirbute.swift */,
 				12C457E11FE2CB790045BD84 /* DGMCharacter.swift */,
 				12C457E71FE2CB8E0045BD84 /* DGMCharge.swift */,
+				164285342448A3F3004B15E9 /* DGMCargo.swift */,
 				12C457EA1FE2CB990045BD84 /* DGMDrone.swift */,
 				12C457ED1FE2CBA60045BD84 /* DGMGang.swift */,
 				12C457F01FE2CBAF0045BD84 /* DGMModule.swift */,
@@ -733,6 +753,7 @@
 				16BC87FB241616BC00C6149A /* attribute.h */,
 				16BC87FC241616BC00C6149A /* character.h */,
 				16BC87F2241616BB00C6149A /* charge.h */,
+				1642852D24489EBA004B15E9 /* cargo.h */,
 				16BC87EF241616BB00C6149A /* drone.h */,
 				16BC87FA241616BB00C6149A /* extractor_control_unit.h */,
 				16BC87F9241616BB00C6149A /* facility.h */,
@@ -805,6 +826,7 @@
 				16BC884324163ACD00C6149A /* drone.h in Headers */,
 				16BC884C24163ACD00C6149A /* storage.h in Headers */,
 				16BC884524163ACD00C6149A /* facility.h in Headers */,
+				164285372448A478004B15E9 /* cargo.h in Headers */,
 				16BC884E24163ACD00C6149A /* type.h in Headers */,
 				16BC884124163ACD00C6149A /* character.h in Headers */,
 				16BC884F24163ACD00C6149A /* utility.h in Headers */,
@@ -830,6 +852,7 @@
 				16BC885424163ACD00C6149A /* drone.h in Headers */,
 				16BC885D24163ACD00C6149A /* storage.h in Headers */,
 				16BC885624163ACD00C6149A /* facility.h in Headers */,
+				164285382448A479004B15E9 /* cargo.h in Headers */,
 				16BC885F24163ACD00C6149A /* type.h in Headers */,
 				16BC885224163ACD00C6149A /* character.h in Headers */,
 				16BC886024163ACD00C6149A /* utility.h in Headers */,
@@ -952,7 +975,7 @@
 				TargetAttributes = {
 					12564B8D1B84AF15000F68D8 = {
 						CreatedOnToolsVersion = 6.4;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1140;
 					};
 					1285E827201B26A800AAC231 = {
 						CreatedOnToolsVersion = 9.2;
@@ -962,7 +985,7 @@
 						ProvisioningStyle = Manual;
 					};
 					12D9F9821CC3A98B00313F8D = {
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1140;
 					};
 					12DFCECD1CD74242006A19BD = {
 						CreatedOnToolsVersion = 7.3;
@@ -1045,6 +1068,7 @@
 				16BC88772416464500C6149A /* DGMModule.swift in Sources */,
 				16BC88742416461A00C6149A /* DGMCharge.swift in Sources */,
 				16C910282433999600BCEBA7 /* DGMRoute.swift in Sources */,
+				164285352448A3F3004B15E9 /* DGMCargo.swift in Sources */,
 				16BC88782416464500C6149A /* DGMStructure.swift in Sources */,
 				16BC8864241644C000C6149A /* DGMGang.swift in Sources */,
 				16BC88722416460B00C6149A /* DGMAttirbute.swift in Sources */,
@@ -1078,6 +1102,7 @@
 				16BC88142416177500C6149A /* character.cpp in Sources */,
 				1285E83C201B26EB00AAC231 /* Gang.cpp in Sources */,
 				16BC881E2416275B00C6149A /* ship.cpp in Sources */,
+				1642853224489F2A004B15E9 /* cargo.cpp in Sources */,
 				1285E844201B26EB00AAC231 /* Facility.cpp in Sources */,
 				16BC881624161D0B00C6149A /* charge.cpp in Sources */,
 				1285E83B201B26EB00AAC231 /* Drone.cpp in Sources */,
@@ -1100,6 +1125,7 @@
 				1285E830201B26EB00AAC231 /* Attribute.cpp in Sources */,
 				1285E84A201B26EB00AAC231 /* Route.cpp in Sources */,
 				1285E837201B26EB00AAC231 /* Capacitor.cpp in Sources */,
+				1642850F24489B4B004B15E9 /* Cargo.cpp in Sources */,
 				1285E836201B26EB00AAC231 /* Booster.cpp in Sources */,
 				1285E83A201B26EB00AAC231 /* Charge.cpp in Sources */,
 				16BC881A24161EAB00C6149A /* gang.cpp in Sources */,
@@ -1132,6 +1158,7 @@
 				16BC88152416177600C6149A /* character.cpp in Sources */,
 				1285E875201B289E00AAC231 /* Gang.cpp in Sources */,
 				16BC881F2416275C00C6149A /* ship.cpp in Sources */,
+				1642853324489F2B004B15E9 /* cargo.cpp in Sources */,
 				1285E877201B289E00AAC231 /* Facility.cpp in Sources */,
 				16BC881724161D0C00C6149A /* charge.cpp in Sources */,
 				1285E879201B289E00AAC231 /* Drone.cpp in Sources */,
@@ -1154,6 +1181,7 @@
 				1285E888201B289E00AAC231 /* Attribute.cpp in Sources */,
 				1285E889201B289E00AAC231 /* Route.cpp in Sources */,
 				1285E88A201B289E00AAC231 /* Capacitor.cpp in Sources */,
+				1642851024489B4C004B15E9 /* Cargo.cpp in Sources */,
 				1285E88C201B289E00AAC231 /* Booster.cpp in Sources */,
 				1285E88E201B289E00AAC231 /* Charge.cpp in Sources */,
 				16BC881B24161EAC00C6149A /* gang.cpp in Sources */,
@@ -1180,6 +1208,8 @@
 				16BC8887241648DC00C6149A /* DGMProductionState.swift in Sources */,
 				16BC887A2416464500C6149A /* DGMModule.swift in Sources */,
 				16BC88752416461B00C6149A /* DGMCharge.swift in Sources */,
+				1642852C24489E89004B15E9 /* DGMRoute.swift in Sources */,
+				164285362448A3F3004B15E9 /* DGMCargo.swift in Sources */,
 				16BC887B2416464500C6149A /* DGMStructure.swift in Sources */,
 				16BC8865241644C100C6149A /* DGMGang.swift in Sources */,
 				16BC88732416460B00C6149A /* DGMAttirbute.swift in Sources */,
@@ -1199,6 +1229,7 @@
 			files = (
 				128CA3CB1FECF064006E0989 /* utility.cpp in Sources */,
 				128CA3A21FECF064006E0989 /* Area.cpp in Sources */,
+				1642853124489F2A004B15E9 /* cargo.cpp in Sources */,
 				128CA3AB1FECF064006E0989 /* Module.cpp in Sources */,
 				128CA3B81FECF064006E0989 /* ProductionState.cpp in Sources */,
 				128CA3C11FECF064006E0989 /* module.cpp in Sources */,
@@ -1223,6 +1254,7 @@
 				128CA3C81FECF064006E0989 /* planet.cpp in Sources */,
 				128CA3BB1FECF064006E0989 /* area.cpp in Sources */,
 				128CA3B71FECF064006E0989 /* Route.cpp in Sources */,
+				1642851124489B4F004B15E9 /* Cargo.cpp in Sources */,
 				128CA3BE1FECF064006E0989 /* charge.cpp in Sources */,
 				128CA3C71FECF064006E0989 /* factory.cpp in Sources */,
 				128CA3B91FECF064006E0989 /* ProductionCycle.cpp in Sources */,
@@ -1272,7 +1304,6 @@
 		12564BA21B84AF15000F68D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ADDITIONAL_SDKS = "";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1280,7 +1311,6 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1300,16 +1330,13 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_dylib;
-				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shimanski.dgmpp;
 				PRODUCT_NAME = Dgmpp;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1318,7 +1345,6 @@
 		12564BA31B84AF15000F68D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ADDITIONAL_SDKS = "";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1343,16 +1369,12 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_dylib;
-				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shimanski.dgmpp;
 				PRODUCT_NAME = Dgmpp;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1383,7 +1405,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "../c-wrapper/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1429,7 +1451,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "../c-wrapper/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1474,7 +1496,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "../c-wrapper/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1488,9 +1509,7 @@
 				PRODUCT_NAME = cwrapper;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = x86_64;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1511,7 +1530,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -1522,7 +1540,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "../c-wrapper/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1536,10 +1553,8 @@
 				PRODUCT_NAME = cwrapper;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = x86_64;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1570,7 +1585,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "${PROJECT_DIR}/../swift-wrapper/Dgmpp - Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1582,13 +1596,9 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shimanski.dgmpp;
 				PRODUCT_NAME = Dgmpp;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = x86_64;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1604,7 +1614,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1616,7 +1625,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "${PROJECT_DIR}/../swift-wrapper/Dgmpp - Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1628,13 +1636,9 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shimanski.dgmpp;
 				PRODUCT_NAME = Dgmpp;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = x86_64;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
