@@ -135,7 +135,7 @@ extension DGMArray where T: DGMState {
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_state.self, capacity: size)
 		return (0..<size).map {
-			return T(dgmpp_retain(ptr[$0]))
+			return T(ptr[$0])
 		}
 	}
 }
