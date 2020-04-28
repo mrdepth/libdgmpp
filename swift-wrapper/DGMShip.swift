@@ -397,11 +397,15 @@ public class DGMShip: DGMType, Codable {
 	}
 	
 
-	public convenience required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
+
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
 
-		try self.init(typeID: typeID)
+        guard let type = dgmpp_ship_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
+        super.init(type)
+
+//		try self.init(typeID: typeID)
 
 		
 		let modules = try container.nestedContainer(keyedBy: DGMModule.Slot.self, forKey: .modules)
