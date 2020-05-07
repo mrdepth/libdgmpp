@@ -25,7 +25,7 @@ public class DGMCargo: DGMType {
         }
         set {
             willChange()
-            dgmpp_cargo_set_quantity(handle, newValue)
+            dgmpp_cargo_set_quantity(handle, max(newValue, 1))
         }
     }
     
