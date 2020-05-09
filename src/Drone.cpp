@@ -81,14 +81,14 @@ namespace dgmpp {
 		
 		batchUpdates_([&]() {
 			if (active) {
-				activateEffects_(MetaInfo::Effect::Category::generic);
+				activateEffects_(MetaInfo::Effect::Category::passive);
 				activateEffects_(MetaInfo::Effect::Category::target);
 				if (charge_ != nullptr)
 					charge_->setEnabled_(true);
 			}
 			else {
 				deactivateEffects_(MetaInfo::Effect::Category::target);
-				deactivateEffects_(MetaInfo::Effect::Category::generic);
+				deactivateEffects_(MetaInfo::Effect::Category::passive);
 				if (charge_ != nullptr)
 					charge_->setEnabled_(false);
 			}
@@ -124,14 +124,14 @@ namespace dgmpp {
 		
 
 		if (enabled && active_()) {
-			activateEffects_(MetaInfo::Effect::Category::generic);
+			activateEffects_(MetaInfo::Effect::Category::passive);
 			activateEffects_(MetaInfo::Effect::Category::target);
 			if (charge_ != nullptr)
 				charge_->setEnabled_(enabled);
 		}
 		else {
 			deactivateEffects_(MetaInfo::Effect::Category::target);
-			deactivateEffects_(MetaInfo::Effect::Category::generic);
+			deactivateEffects_(MetaInfo::Effect::Category::passive);
 			if (charge_ != nullptr)
 				charge_->setEnabled_(enabled);
 		}

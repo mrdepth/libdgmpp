@@ -121,6 +121,10 @@ for id, effect in sorted(dogmaEffects.items()):
 
 devnull = open(os.devnull, 'w')
 
+def getBuffID(b):
+    group, buff = b
+    return '{}{}'.format(buff['id'], group)
+
 with open(os.path.join(SDE, 'CategoryID.hpp'), "w") as f:
     env['categoryIDsMap'] = dumpIDs({k: getName(v) for k, v in categoryIDs.items()}, 'CategoryID', f)
 with open(os.path.join(SDE, 'GroupID.hpp'), "w") as f:
@@ -134,7 +138,7 @@ with open(os.path.join(SDE, 'EffectID.hpp'), "w") as f:
 with open(os.path.join(SDE, 'SchematicID.hpp'), "w") as f:
     env['schematicIDsMap'] = dumpIDs({k: v['schematicName'] for k, v in planetSchematics.items()}, 'SchematicID', f)
 with open(os.path.join(SDE, 'WarfareBuffID.hpp'), "w") as f:
-    env['warfareBuffIDsMap'] = dumpIDs({k: next(iter(v.values()))['id'] for k, v in env['warfareBuffs'].items()}, 'WarfareBuffID', f)
+    env['warfareBuffIDsMap'] = dumpIDs({k: v['id'] for k, v in env['warfareBuffs'].items()}, 'WarfareBuffID', f)
 
 with open(os.path.join(SDE, 'Attributes.hpp'), "w") as f:
     dumpAttributeTypes(env, f)
@@ -152,6 +156,8 @@ with open(os.path.join(SDE, 'Facilities.hpp'), "w") as f:
     dumpFacilities(env, f)
 with open(os.path.join(SDE, 'Schematics.hpp'), "w") as f:
     dumpSchematics(env, f)
+with open(os.path.join(SDE, 'Skills.hpp'), "w") as f:
+    dumpSkills(env, f)
 
 with open(os.path.join(SDE, 'Version.hpp'), "w") as f:
     x = datetime.date.today().strftime("%Y.%m.%d")

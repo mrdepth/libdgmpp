@@ -1,23 +1,22 @@
 #pragma once
-
 namespace dgmpp {
 	enum class WarfareBuffID: unsigned short {
 		none = 0,
-		shieldHarmonizingChargeBuff1 = 10,
-		activeShieldingChargeBuff1 = 11,
-		shieldExtensionChargeBuff1 = 12,
-		armorEnergizingChargeBuff1 = 13,
-		rapidRepairChargeBuff1 = 14,
-		armorReinforcementChargeBuff1 = 15,
+		shieldHarmonizingChargeBuff = 10,
+		activeShieldingChargeBuf = 11,
+		shieldExtensionChargeBuff = 12,
+		armorEnergizingChargeBuff = 13,
+		rapidRepairChargeBuff = 14,
+		armorReinforcementChargeBuff = 15,
 		sensorOptimizationChargeBuff1 = 16,
-		electronicSuperiorityChargeBuff1 = 17,
+		electronicSuperiorityChargeBuff = 17,
 		electronicHardeningChargeBuff1 = 18,
 		electronicHardeningChargeBuff2 = 19,
 		evasiveManeuversChargeBuff1 = 20,
-		interdictionManeuversChargeBuff1 = 21,
-		rapidDeploymentChargeBuff1 = 22,
-		miningLaserFieldEnhancementChargeBuff1 = 23,
-		miningLaserOptimizationChargeBuff1 = 24,
+		interdictionManeuversChargeBuff = 21,
+		rapidDeploymentChargeBuff = 22,
+		miningLaserFieldEnhancementChargeBuff = 23,
+		miningLaserOptimizationChargeBuff = 24,
 		miningEquipmentPreservationChargeBuff1 = 25,
 		sensorOptimizationChargeBuff2 = 26,
 		amarrPhenomenaGeneratorBuff1 = 39,
@@ -36,6 +35,21 @@ namespace dgmpp {
 		gallentePhenomenaGeneratorBuff4 = 52,
 		caldariPhenomenaGeneratorBuff4 = 53,
 		minmatarPhenomenaGeneratorBuff4 = 54,
-		evasiveManeuversChargeBuff2 = 60
-	};
+		evasiveManeuversChargeBuff2 = 60,
+		aoeBeaconBioluminescenceCloud = 79,
+		aoeBeaconCausticCloudLocalRepair = 80,
+		aoeBeaconCausticCloudRemoteRepair = 81,
+		aoeBeaconFilamentCloudShieldBoosterShieldBonus = 88,
+		aoeBeaconFilamentCloudShieldBoosterDuration = 89,
+		weatherElectricStormEMResistancePenalty = 90,
+		weatherElectricStormCapacitorRechargeBonus = 92,
+		weatherXenonGasExplosiveResistancePenalty = 93,
+		weatherXenonGasShieldHPBonus = 94,
+		weatherInfernalThermalResistancePenalty = 95,
+		weatherInfernalArmorHPBonus = 96,
+		weatherDarknessTurretRangePenalty = 97,
+		weatherDarknessVelocityBonus = 98,
+		weatherCausticToxinKineticResistancePenalty = 99,
+		weatherCausticToxinScanResolutionBonus = 100
+    };
 }

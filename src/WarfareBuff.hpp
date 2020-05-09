@@ -16,7 +16,7 @@ namespace dgmpp {
 	
 	class WarfareBuff {
 	public:
-		WarfareBuff (const MetaInfo::WarfareBuff& metaInfo, Type& owner, Effect& effect);
+		WarfareBuff (const MetaInfo::WarfareBuff& metaInfo, Type& owner, AttributeID modifyingAttributeID, Effect& effect);
 		WarfareBuff (const WarfareBuff& other) = delete;
 		WarfareBuff (WarfareBuff&& other) = delete;
 		WarfareBuff& operator= (const WarfareBuff& other) = delete;
@@ -32,8 +32,9 @@ namespace dgmpp {
 		Type& owner_;
 		
 		const MetaInfo::WarfareBuff& metaInfo_;
+        AttributeID modifyingAttributeID_;
 		std::list<Modifier>	modifiers_;
-
+        std::list<MetaInfo::Modifier> modifiersMetaInfo_;
 
 	};
 }

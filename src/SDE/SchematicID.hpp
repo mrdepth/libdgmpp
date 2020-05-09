@@ -1,5 +1,4 @@
 #pragma once
-
 namespace dgmpp {
 	enum class SchematicID: unsigned short {
 		none = 0,
@@ -71,5 +70,5 @@ namespace dgmpp {
 		proteins = 133,
 		biofuels = 134,
 		industrialFibers = 135
-	};
+    };
 }

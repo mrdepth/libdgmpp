@@ -37,7 +37,7 @@ namespace dgmpp {
 		flags_.canBeOnline = effect_(EffectID::online) != nullptr || effect_(EffectID::onlineForStructures);
 		
 		flags_.canBeOverloaded = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
-			return i->metaInfo().category == MetaInfo::Effect::Category::overloaded;
+			return i->metaInfo().category == MetaInfo::Effect::Category::overload;
 		});
 		
 		flags_.requireTarget = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
@@ -45,7 +45,7 @@ namespace dgmpp {
 		});
 		
 		flags_.canBeActive = flags_.canBeOverloaded || flags_.requireTarget || std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
-			return i->metaInfo().category == MetaInfo::Effect::Category::active;
+			return i->metaInfo().category == MetaInfo::Effect::Category::activation;
 		});
 		
 		flags_.fail = false;
@@ -275,43 +275,43 @@ namespace dgmpp {
 				if (state != stateValue_) {
 					if (state < stateValue_) {
 						if (stateValue_ >= State::overloaded	&& state < State::overloaded)
-							deactivateEffects_(MetaInfo::Effect::Category::overloaded);
+							deactivateEffects_(MetaInfo::Effect::Category::overload);
 						
 						if (stateValue_ >= State::active		&& state < State::active) {
-							deactivateEffects_(MetaInfo::Effect::Category::active);
+							deactivateEffects_(MetaInfo::Effect::Category::activation);
 							if (target_())
 								deactivateEffects_(MetaInfo::Effect::Category::target);
 						}
 						
 						if (stateValue_ >= State::online		&& state < State::online)
-							deactivateEffects_(MetaInfo::Effect::Category::passive);
+							deactivateEffects_(MetaInfo::Effect::Category::online);
 					}
 					else if (state > stateValue_) {
 						if (stateValue_ < State::online		&& state >= State::online)
-							activateEffects_(MetaInfo::Effect::Category::passive);
+							activateEffects_(MetaInfo::Effect::Category::online);
 						
 						if (stateValue_ < State::active		&& state >= State::active) {
-							activateEffects_(MetaInfo::Effect::Category::active);
+							activateEffects_(MetaInfo::Effect::Category::activation);
 							if (target_())
 								activateEffects_(MetaInfo::Effect::Category::target);
 						}
 						
 						if (stateValue_ < State::overloaded	&& state >= State::overloaded)
-							activateEffects_(MetaInfo::Effect::Category::overloaded);
+							activateEffects_(MetaInfo::Effect::Category::overload);
 					}
 					stateValue_ = state;
 				}
 			}
 			else {
 				if (stateValue_ >= State::overloaded)
-					deactivateEffects_(MetaInfo::Effect::Category::overloaded);
+					deactivateEffects_(MetaInfo::Effect::Category::overload);
 				if (stateValue_ >= State::active) {
-					deactivateEffects_(MetaInfo::Effect::Category::active);
+					deactivateEffects_(MetaInfo::Effect::Category::activation);
 					if (target_())
 						deactivateEffects_(MetaInfo::Effect::Category::target);
 				}
 				if (stateValue_ >= State::online)
-					deactivateEffects_(MetaInfo::Effect::Category::passive);
+					deactivateEffects_(MetaInfo::Effect::Category::online);
                 stateValue_ = Module::State::offline;
 			}
 		});

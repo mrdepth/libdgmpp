@@ -72,14 +72,14 @@ def patchRepairers(env):
     updateEffect('armorRepair', env, [ItemModifier(Domain.shipID, 'armorDamage', Operation.subRate, 'armorDamageAmount')])
     updateEffect('targetArmorRepair', env, [ItemModifier(Domain.targetID, 'armorDamage', Operation.subRate, 'armorDamageAmount')])
     #updateEffect('remoteArmorRepairFalloff', env, [ItemModifier(Domain.targetID, 'armorDamage', Operation.subRate, 'armorDamageAmount')])
-    updateEffect('fueledArmorRepair', env, [ItemModifier(Domain.targetID, 'armorDamage', Operation.subRate, 'armorDamageAmount')])
+    updateEffect('fueledArmorRepair', env, [ItemModifier(Domain.shipID, 'armorDamage', Operation.subRate, 'armorDamageAmount')])
     updateEffect('shipModuleRemoteArmorRepairer', env, [ItemModifier(Domain.targetID, 'armorDamage', Operation.subRate, 'armorDamageAmount')])
     updateEffect('shipModuleAncillaryRemoteArmorRepairer', env, [ItemModifier(Domain.targetID, 'armorDamage', Operation.subRate, 'armorDamageAmount')])
 
     updateEffect('shieldBoosting', env, [ItemModifier(Domain.shipID, 'shieldCharge', Operation.addRate, 'shieldBonus')])
     updateEffect('shieldTransfer', env, [ItemModifier(Domain.targetID, 'shieldCharge', Operation.addRate, 'shieldBonus')])
     #updateEffect('remoteShieldTransferFalloff', env, [ItemModifier(Domain.targetID, 'shieldCharge', Operation.addRate, 'shieldBonus')])
-    updateEffect('fueledShieldBoosting', env, [ItemModifier(Domain.targetID, 'shieldCharge', Operation.addRate, 'shieldBonus')])
+    updateEffect('fueledShieldBoosting', env, [ItemModifier(Domain.shipID, 'shieldCharge', Operation.addRate, 'shieldBonus')])
     updateEffect('shipModuleRemoteShieldBooster', env, [ItemModifier(Domain.targetID, 'shieldCharge', Operation.addRate, 'shieldBonus')])
     updateEffect('shipModuleAncillaryRemoteShieldBooster', env, [ItemModifier(Domain.targetID, 'shieldCharge', Operation.addRate, 'shieldBonus')])
 
@@ -178,41 +178,42 @@ def patchGangBoost(env):
         for attribute in type['dogmaAttributes']:
             name = env['dogmaAttributes'][attribute['attributeID']]['name']
             if name.startswith('warfareBuff'):
-                group = int(name[11])
                 bufID = int(attribute['value'])
-                modifyingAttribute = 'warfareBuff{}Value'.format(group)
+                if bufID in warfareBuffs:
+                    continue
+                modifyingAttribute = 'none'
 
                 if bufID == 10:
-                    id = 'shieldHarmonizingChargeBuff1'
+                    id = 'shieldHarmonizingChargeBuff'
                     attributes = ["shieldEmDamageResonance", "shieldKineticDamageResonance", "shieldThermalDamageResonance", "shieldExplosiveDamageResonance"]
                     modifiers = [ItemModifier(Domain.shipID, x, Operation.postPercent, modifyingAttribute) for x in attributes]
                 elif bufID == 11:
-                    id = 'activeShieldingChargeBuff1'
+                    id = 'activeShieldingChargeBuf'
                     modifiers = list()
                     for modifiedAttribute in ["capacitorNeed", "duration"]:
                         for skill in ["Shield Operation", "Shield Emission Systems"]:
                             modifiers.append(LocationRequiredSkillModifier(Domain.shipID, skill, modifiedAttribute, Operation.postPercent, modifyingAttribute))
                 elif bufID == 12:
-                    id = 'shieldExtensionChargeBuff1'
+                    id = 'shieldExtensionChargeBuff'
                     modifiers = [ItemModifier(Domain.shipID, 'shieldCapacity', Operation.postPercent, modifyingAttribute)]
                 elif bufID == 13:
-                    id = 'armorEnergizingChargeBuff1'
+                    id = 'armorEnergizingChargeBuff'
                     attributes = ["armorEmDamageResonance", "armorKineticDamageResonance", "armorThermalDamageResonance", "armorExplosiveDamageResonance"]
                     modifiers = [ItemModifier(Domain.shipID, x, Operation.postPercent, modifyingAttribute) for x in attributes]
                 elif bufID == 14:
-                    id = 'rapidRepairChargeBuff1'
+                    id = 'rapidRepairChargeBuff'
                     modifiers = list()
                     for modifiedAttribute in ["capacitorNeed", "duration"]:
                         for skill in ["Repair Systems", "Remote Armor Repair Systems"]:
                             modifiers.append(LocationRequiredSkillModifier(Domain.shipID, skill, modifiedAttribute, Operation.postPercent, modifyingAttribute))
                 elif bufID == 15:
-                    id = 'armorReinforcementChargeBuff1'
+                    id = 'armorReinforcementChargeBuff'
                     modifiers = [ItemModifier(Domain.shipID, 'armorHP', Operation.postPercent, modifyingAttribute)]
                 elif bufID == 16:
                     id = 'sensorOptimizationChargeBuff1'
                     modifiers = [ItemModifier(Domain.shipID, 'scanResolution', Operation.postPercent, modifyingAttribute)]
                 elif bufID == 17:
-                    id = 'electronicSuperiorityChargeBuff1'
+                    id = 'electronicSuperiorityChargeBuff'
                     modifiers = list()
                     for modifiedAttribute in ["maxRange", "falloffEffectiveness"]:
                         for group in ["ECM", "Sensor Dampener", "Weapon Disruptor", "Target Painter"]:
@@ -239,20 +240,20 @@ def patchGangBoost(env):
                     id = 'evasiveManeuversChargeBuff1'
                     modifiers = [ItemModifier(Domain.shipID, 'signatureRadius', Operation.postPercent, modifyingAttribute)]
                 elif bufID == 21:
-                    id = 'interdictionManeuversChargeBuff1'
+                    id = 'interdictionManeuversChargeBuff'
                     groups = ["Stasis Web", "Warp Scrambler"]
                     modifiers = [LocationGroupModifier(Domain.shipID, x, 'maxRange', Operation.postPercent, modifyingAttribute) for x in groups]
                 elif bufID == 22:
-                    id = 'rapidDeploymentChargeBuff1'
+                    id = 'rapidDeploymentChargeBuff'
                     skills = ["Afterburner", "High Speed Maneuvering"]
                     modifiers = [LocationRequiredSkillModifier(Domain.shipID, x, 'speedFactor', Operation.postPercent, modifyingAttribute) for x in skills]
                 elif bufID == 23:
-                    id = 'miningLaserFieldEnhancementChargeBuff1'
+                    id = 'miningLaserFieldEnhancementChargeBuff'
                     skills = ["Mining", "Ice Harvesting", "Gas Cloud Harvesting"]
                     modifiers = [LocationRequiredSkillModifier(Domain.shipID, x, 'maxRange', Operation.postPercent, modifyingAttribute) for x in skills]
                     modifiers.append(LocationRequiredSkillModifier(Domain.shipID, 'CPU Management', 'surveyScanRange', Operation.postPercent, modifyingAttribute))
                 elif bufID == 24:
-                    id = 'miningLaserOptimizationChargeBuff1'
+                    id = 'miningLaserOptimizationChargeBuff'
                     modifiers = list()
                     for modifiedAttribute in ["capacitorNeed", "duration"]:
                         for skill in ["Mining", "Ice Harvesting", "Gas Cloud Harvesting"]:
@@ -286,8 +287,8 @@ def patchGangBoost(env):
                     attributes = ["armorThermalDamageResonance", "shieldThermalDamageResonance", "thermalDamageResonance"]
                     modifiers = [ItemModifier(Domain.shipID, x, Operation.postPercent, modifyingAttribute) for x in attributes]
                 elif bufID == 45:
-                    id = 'gallentePhenomenaGeneratorBuff1'
-                    modifiers = [ItemModifier(Domain.shipID, 'armorHP', Operation.postPercent, modifyingAttribute)]
+                    id = 'minmatarPhenomenaGeneratorBuff1'
+                    modifiers = [ItemModifier(Domain.shipID, 'signatureRadius', Operation.postPercent, modifyingAttribute)]
                 elif bufID == 46:
                     id = 'minmatarPhenomenaGeneratorBuff2'
                     attributes = ["armorThermalDamageResonance", "shieldThermalDamageResonance", "thermalDamageResonance"]
@@ -375,9 +376,7 @@ def patchGangBoost(env):
                     modifiers = [ItemModifier(Domain.shipID, 'scanResolution', Operation.postPercent, modifyingAttribute)]
                 else:
                     continue
-                if bufID not in warfareBuffs:
-                    warfareBuffs[bufID] = dict()
-                warfareBuffs[bufID][group] = {'id': id, 'modifiers': modifiers}
+                warfareBuffs[bufID] = {'id': id, 'modifiers': modifiers}
     env['warfareBuffs'] = warfareBuffs
 
 def patch(env):

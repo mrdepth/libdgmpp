@@ -1,5 +1,4 @@
 #pragma once
-
 namespace dgmpp {
 	enum class AttributeID: unsigned short {
 		none = 0,
@@ -754,8 +753,8 @@ namespace dgmpp {
 		missileEntityAoeFalloffMultiplier = 860,
 		canJump = 861,
 		usageWeighting = 862,
-		implantSetAngel = 863,
-		implantSetSansha = 864,
+		implantSetHalo = 863,
+		implantSetAmulet = 864,
 		planetAnchorDistance = 865,
 		jumpDriveConsumptionType = 866,
 		jumpDriveRange = 867,
@@ -2481,7 +2480,23 @@ namespace dgmpp {
 		siegeHAWTurretDamageBonus = 2820,
 		siegeHAWMissileROFBonus = 2821,
 		ecmJamDuration = 2822,
+		damageMultiplierBonusMaxModifier = 2823,
+		damageMultiplierBonusPerCycleModifier = 2824,
+		setBonusMimesis = 2825,
+		isIndustrialCyno = 2826,
+		hasLongAnimationWhenAddedToSpaceScene = 2827,
+		shipBonusPDread1 = 2828,
+		shipBonusDreadnoughtPC2 = 2829,
+		shipBonusDreadnoughtPC1 = 2830,
+		shipBonusDreadnoughtPC3 = 2831,
+		mjdShipJumpCap = 2832,
+		shieldHpBonus = 3015,
+		implantSetNirvana = 3017,
+		implantSetSavior = 3023,
+		remoteRepDurationBonus = 3024,
+		activeSystemJump = 3025,
+		filamentDescriptionMessageID = 3026,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
-	};
+    };
 }

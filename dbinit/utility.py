@@ -26,6 +26,16 @@ class EffectCategory(Enum):
                 EffectCategory.passive: "passive",
                 EffectCategory.system: "system"}[self]
 
+    def order(self):
+        return {EffectCategory.activation: 1,
+                EffectCategory.target: 2,
+                EffectCategory.area: 7,
+                EffectCategory.dungeon: 5,
+                EffectCategory.online: 3,
+                EffectCategory.overload: 4,
+                EffectCategory.passive: 0,
+                EffectCategory.system: 6}[self]
+
 
 class Func(Enum):
     LocationModifier = 'LocationModifier'
@@ -67,7 +77,7 @@ class Domain(Enum):
         return {Domain.itemID: "self",
                 Domain.target: "target",
                 Domain.targetID: "target",
-                Domain.charID: "char",
+                Domain.charID: "character",
                 Domain.otherID: "other",
                 Domain.structureID: "structure",
                 Domain.shipID: "ship"}[self]
@@ -90,7 +100,10 @@ class Operation(Enum):
         return cls.__dict__['_value2member_map_'][s]
 
     def esiName(self):
-        return self.name
+        if self == Operation.specialSkillOp:
+            return "skillTime"
+        else:
+            return self.name
 
 class Modifier:
     def __init__(self, domain: Domain, func: Func, modifiedAttribute, operation: Operation, modifyingAttribute, skillType, group, domainID):
@@ -197,7 +210,7 @@ def getName(obj):
         return None
 
 def getTypeID(typeName, env):
-    env['typeNames'][typeName]['typeID']
+    return env['typeNames'][typeName]['typeID']
 
 def addEffect(id, name, category: EffectCategory, isOffensive, isAssistance, env):
     env['dogmaEffects'][id] = {'effectID': id, 'effectName': name, 'effectCategory': category.name, 'isOffensive': isOffensive, 'isAssistance': isAssistance}
@@ -255,6 +268,9 @@ def safeName(s):
         s = "".join(ss)
     if r4.match(s):
         s = '_' + s
+    if len(s) == 0:
+        s = "unknown"
+
     return s
 
 def uniqueName(name, uniqueNames):
@@ -323,12 +339,17 @@ namespace dgmpp {{
 
 
 def dumpModifier(env, modifier: Modifier, id):
+    if modifier.modifyingAttribute == 'none':
+        modifyingAttribute = 'AttributeID::none'
+    else:
+        modifyingAttribute = 'AttributeID::{}'.format(env['attributeIDsMap'][env['attributeNames'][modifier.modifyingAttribute]['attributeID']])
+
     args = [
         'MetaInfo::Modifier::ModifierType::{}'.format(modifier.func.esiName()),
         'MetaInfo::Modifier::Association::{}'.format(modifier.operation.esiName()),
         'MetaInfo::Modifier::Domain::{}'.format(modifier.domain.esiName()),
         'AttributeID::{}'.format(env['attributeIDsMap'][env['attributeNames'][modifier.modifiedAttribute]['attributeID']]),
-        'AttributeID::{}'.format(env['attributeIDsMap'][env['attributeNames'][modifier.modifyingAttribute]['attributeID']])
+        modifyingAttribute
         ]
     if modifier.func == Func.LocationGroupModifier:
         args.append('GroupID::{}'.format(env['groupIDsMap'][env['groupNames'][modifier.group]['groupID']]))
@@ -337,7 +358,7 @@ def dumpModifier(env, modifier: Modifier, id):
     elif modifier.func == Func.LocationRequiredDomainSkillModifier:
         args.append('MetaInfo::Modifier::Domain::{}'.format(modifier.domainID.esiName()))
 
-    return 'constexpr MetaInfo::Modifier {id} = {{ {args} }};'.format(id = id, args = ','.join(args))
+    return '\t\t\tconstexpr MetaInfo::Modifier {id} = {{{args}}};'.format(id = id, args = ', '.join(args))
 
 def dumpModifiers(env, modifiers, f: io.IOBase):
     m = {v: k for k, v in modifiers.items()}
@@ -404,8 +425,10 @@ def dumpItemEffects(typeID, env):
     except:
         fx = []
 
+    fx = sorted(fx, key = lambda x: EffectCategory.fromString(env['dogmaEffects'][x['effectID']]['effectCategory']).order())
+
     for i in fx:
-        effects.append('"&Effects::{}'.format(env['effectIDsMap'][i['effectID']]))
+        effects.append('&Effects::{}'.format(env['effectIDsMap'][i['effectID']]))
     return effects
 
 def dumpAttribute(attributeName, value):
@@ -485,32 +508,26 @@ namespace dgmpp {{
 {}
         }}
 constexpr const MetaInfo::Type* types[] {{
-{}
+&Types::none, {}
         }};
     }}
 }}
 """.format('\n'.join(rows), ', '.join(names)))
 
-def dumpWarfareBuff(group, buff, id, env):
-    
+def dumpWarfareBuff(buff, env):
+    id = buff['id']
     ids = ['{}_modifier{}'.format(id, i) for i, x in enumerate(buff['modifiers'])]
     modifiers = [dumpModifier(env, x, i) for i, x in zip(ids, buff['modifiers'])]
 
-    return '{modifiers}\n\t\t\tconstexpr auto {id} = MakeBuff(WarfareBuffID::{id}, AttributeID::{modifyingAttributeID}, _modifiers({ids})'.format(modifiers = '\n'.join(modifiers),
+    return '{modifiers}\n\t\t\tconstexpr auto {id} = MakeBuff(WarfareBuffID::{id}, _modifiers({ids}));'.format(modifiers = '\n'.join(modifiers),
                                                                                                                                                   id = id,
-                                                                                                                                                  modifyingAttributeID = 'warfareBuff{}Value'.format(group),
                                                                                                                                                   ids = ', '.join(['&' + x for x in ids]))
 
 
 def dumpWarfareBuffs(env, f: io.IOBase):
-    buffs = list()
-    ids = list()
-    for buffID, i in sorted(env['warfareBuffs'].items()):
-        for group, buff in sorted(i.items()):
-            id = '{}_{}'.format(buff['id'], group)
-            buffs.append(dumpWarfareBuff(group, buff, id, env))
-            ids.append(id)
-
+    bufIDs = sorted(env['warfareBuffs'].items())
+    buffs = [dumpWarfareBuff(v, env) for k, v in bufIDs]
+    ids = ['&WafrareBuffs::{}'.format(v['id']) for k, v in bufIDs]
 
     f.write("""#pragma once
 #include "MetaInfo.hpp"
@@ -527,7 +544,7 @@ namespace dgmpp {{
         }};
     }}
 }}
-""".format('\n'.join(buffs), ', '.join(['&WafrareBuffs::' + x for x in ids])))
+""".format('\n'.join(buffs), ', '.join(ids)))
 
 def dumpCommodities(env, f: io.IOBase):
     planetSchematicsTypeMap = env['planetSchematicsTypeMap']
@@ -563,8 +580,8 @@ namespace dgmpp {{
 	namespace SDE {{
 		namespace Commodities {{
 {}
-            constexpr const MetaInfo::Commodity* commodities[] {{ {} }};
         }}
+        constexpr const MetaInfo::Commodity* commodities[] {{ {} }};
     }}
 }}
 """.format('\n'.join(rows), ', '.join(ids)))
@@ -587,8 +604,8 @@ namespace dgmpp {{
 	namespace SDE {{
 		namespace Facilities {{
 {}
-            constexpr const MetaInfo::Facility* facilities[] {{ {} }};
         }}
+        constexpr const MetaInfo::Facility* facilities[] {{ {} }};
     }}
 }}
 """.format('\n'.join(rows), ', '.join(['&Facilities::' + x for x in ids])))
@@ -619,8 +636,26 @@ namespace dgmpp {{
 		namespace Schematics {{
             using namespace std::chrono_literals;
 {}
-            constexpr const MetaInfo::Schematic* schematics[] {{ {} }};
         }}
+        constexpr const MetaInfo::Schematic* schematics[] {{ {} }};
     }}
 }}
 """.format('\n'.join(rows), ', '.join(['&Schematics::' + x for x in ids])))
+
+def dumpSkills(env, f: io.IOBase):
+    skills = {k: v for k, v in env['typeIDs'].items() if env['groupIDs'][v['groupID']]['categoryID'] == 16}
+    skills = sorted(skills.items())
+
+    names = ['\t\t\t&Types::{}'.format(env['typeIDsMap'][typeID]) for typeID, v in skills]
+
+    f.write("""#pragma once
+#include "Types.hpp"
+
+namespace dgmpp {{
+	namespace SDE {{
+        constexpr const MetaInfo::Type* skills_array[] = {{
+{}
+        }};
+    }}
+}}
+""".format(',\n'.join(names)))

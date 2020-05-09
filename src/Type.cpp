@@ -98,9 +98,9 @@ namespace dgmpp {
 		enabled_ = enabled;
 
 		if (enabled)
-			activateEffects_(MetaInfo::Effect::Category::generic);
+			activateEffects_(MetaInfo::Effect::Category::passive);
 		else
-			deactivateEffects_(MetaInfo::Effect::Category::generic);
+			deactivateEffects_(MetaInfo::Effect::Category::passive);
 
 		if (enabled)
 			resetCache_();
