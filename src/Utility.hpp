@@ -85,7 +85,6 @@ namespace dgmpp {
 	}
 	
 	struct SDEVersion {
-		size_t build;
 		const char* version;
 	};
 

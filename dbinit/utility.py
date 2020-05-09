@@ -215,7 +215,7 @@ def addItemAttribute(typeName, attributeName, value, env):
     attributeID = env['attributeNames'][attributeName]['attributeID']
     env['typeNames'][typeName]['dogmaAttributes'].append({'attributeID': attributeID, 'value': value})
 
-def addAttributeGroup(groupID, attributeName, value, env):
+def addAttributeGroup(groupName, attributeName, value, env):
     groupID = env['groupNames'][groupName]['groupID']
     attributeID = env['attributeNames'][attributeName]['attributeID']
     for k, v in env['typeDogma'].items():
@@ -289,8 +289,10 @@ namespace dgmpp {{
 
     return idsMap
 
-def dumpAttributeTypes(env, idsMap, f: io.IOBase):
+def dumpAttributeTypes(env, f: io.IOBase):
     rows = list()
+    idsMap = env['attributeIDsMap']
+    names = list()
     for id, attribute in sorted(env['dogmaAttributes'].items()):
         try:
             maxAttributeID = attribute['maxAttributeID']
@@ -304,6 +306,7 @@ def dumpAttributeTypes(env, idsMap, f: io.IOBase):
             defaultValue = attribute['defaultValue'],
             isStackable = 'true' if attribute['stackable'] else 'false',
             highIsGood = 'true' if attribute['highIsGood'] else 'false'))
+        names.append("&Attributes::{}".format(idsMap[id]))
 
     f.write("""#pragma once
 #include "MetaInfo.hpp"
@@ -312,8 +315,11 @@ namespace dgmpp {{
 		namespace Attributes {{
 {}
         }}
+        constexpr const MetaInfo::Attribute* attributes[] {{
+            {}
+        }};
     }}
-}}""".format('\n'.join(rows)))
+}}""".format('\n'.join(rows), ', '.join(names)))
 
 
 def dumpModifier(env, modifier: Modifier, id):
@@ -335,7 +341,7 @@ def dumpModifier(env, modifier: Modifier, id):
 
 def dumpModifiers(env, modifiers, f: io.IOBase):
     m = {v: k for k, v in modifiers.items()}
-    rows = [dumpModifiers(env, v, 'modifier{}'.format(k)) for k, v in sorted(m.items())]
+    rows = [dumpModifier(env, v, 'modifier{}'.format(k)) for k, v in sorted(m.items())]
 
     f.write("""#pragma once
 #include "MetaInfo.hpp"
@@ -349,22 +355,22 @@ namespace dgmpp {{
 }}""".format('\n'.join(rows)))
 
 
-def dumpEffect(env, effect, modifiers):
+def dumpEffect(env, effectID, effect, modifiers):
     if 'modifierInfo' in effect:
         modifierInfo = [Modifier.fromDict(x, env) for x in effect['modifierInfo']]
         modifierInfo = ['&Modifiers::modifier{}'.format(modifiers[x]) for x in modifierInfo if x is not None]
     else:
         modifierInfo = []
     return '\t\t\tconstexpr auto {effectName} = MakeEffect(EffectID::{effectName}, MetaInfo::Effect::Category::{category}, {isOffensive}, {isAssistance}, _modifiers({modifierInfo}));'.format(
-        effectName = env['effectIDsMap'][k],
-        category = EffectCategory.fromString(v['effectCategory']).esiName(),
-        isOffensive = 'true' if v['isOffensive'] else 'false',
-        isAssistance = 'true' if v['isAssistance'] else 'false',
+        effectName = env['effectIDsMap'][effectID],
+        category = EffectCategory.fromString(effect['effectCategory']).esiName(),
+        isOffensive = 'true' if effect['isOffensive'] else 'false',
+        isAssistance = 'true' if effect['isAssistance'] else 'false',
         modifierInfo = ','.join(modifierInfo))
 
 
 def dumpEffects(env, modifiers, f: io.IOBase):
-    rows = [dumpEffect(env, v, modifiers) for k, v in sorted(env['dogmaEffects'].items())]
+    rows = [dumpEffect(env, k, v, modifiers) for k, v in sorted(env['dogmaEffects'].items())]
 
     f.write("""#pragma once
 #include "MetaInfo.hpp"
@@ -515,8 +521,10 @@ namespace dgmpp {{
 		namespace WafrareBuffs {{
 			using namespace MetaInfo;
 {}
-{}
         }}
+        constexpr const MetaInfo::WarfareBuff* warfareBuffs[] {{
+{}
+        }};
     }}
 }}
 """.format('\n'.join(buffs), ', '.join(['&WafrareBuffs::' + x for x in ids])))

@@ -259,7 +259,6 @@ typedef enum {
 } DGMPP_FACILITY_CATEGORY;
 
 typedef struct {
-	size_t build;
 	const char* version;
 } dgmpp_sde_version;
 

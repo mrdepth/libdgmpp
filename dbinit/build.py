@@ -4,10 +4,14 @@ import json
 from utility import *
 from patch import *
 import io
+import datetime
 
+print(sys.argv)
 validCategoryIDs = [1, 2, 4, 8, 17, 18, 20, 7, 6, 16, 23, 32, 41, 42, 43, 65, 66, 87]
 
-SDE='./tmp/sde/'
+#SDE = os.path.join(os.getcwd(), "sde")
+SDE = sys.argv[1]
+os.chdir(sys.argv[2])
 
 with open(os.path.join(SDE, 'fsd/categoryIDs.json')) as f:
     categoryIDs = {int(k): v for k,v in json.load(f).items()}
@@ -117,18 +121,43 @@ for id, effect in sorted(dogmaEffects.items()):
 
 devnull = open(os.devnull, 'w')
 
-env['categoryIDsMap'] = dumpIDs({k: getName(v) for k, v in categoryIDs.items()}, 'CategoryID', devnull)
-env['groupIDsMap'] = dumpIDs({k: getName(v) for k, v in groupIDs.items()}, 'GroupID', devnull)
-env['typeIDsMap'] = dumpIDs({k: getName(v) for k, v in typeIDs.items()}, 'TypeID', devnull)
-env['attributeIDsMap'] = dumpIDs({k: v['name'] for k, v in dogmaAttributes.items()}, 'AttributeID', devnull)
-env['effectIDsMap'] = dumpIDs({k: v['effectName'] for k, v in dogmaEffects.items()}, 'EffectID', devnull)
-env['schematicIDsMap'] = dumpIDs({k: v['schematicName'] for k, v in planetSchematics.items()}, 'SchematicID', devnull)
-env['warfareBuffIDsMap'] = dumpIDs({k: next(iter(v.values()))['id'] for k, v in env['warfareBuffs'].items()}, 'WarfareBuffID', devnull)
-#dumpAttributes(env, attributeIDsMap, sys.stdout)
-#dumpModifiers(env, modifiers, attributeIDsMap, typeIDsMap, groupIDsMap, sys.stdout)
-#dumpEffects(env, modifiers,  sys.stdout)
-#dumpItems(env, sys.stdout)
-#dumpWarfareBuffs(env, sys.stdout)
-#dumpCommodities(env, sys.stdout)
-#dumpFacilities(env, sys.stdout)
-dumpSchematics(env, sys.stdout)
+with open(os.path.join(SDE, 'CategoryID.hpp'), "w") as f:
+    env['categoryIDsMap'] = dumpIDs({k: getName(v) for k, v in categoryIDs.items()}, 'CategoryID', f)
+with open(os.path.join(SDE, 'GroupID.hpp'), "w") as f:
+    env['groupIDsMap'] = dumpIDs({k: getName(v) for k, v in groupIDs.items()}, 'GroupID', f)
+with open(os.path.join(SDE, 'TypeID.hpp'), "w") as f:
+    env['typeIDsMap'] = dumpIDs({k: getName(v) for k, v in typeIDs.items()}, 'TypeID', f)
+with open(os.path.join(SDE, 'AttributeID.hpp'), "w") as f:
+    env['attributeIDsMap'] = dumpIDs({k: v['name'] for k, v in dogmaAttributes.items()}, 'AttributeID', f)
+with open(os.path.join(SDE, 'EffectID.hpp'), "w") as f:
+    env['effectIDsMap'] = dumpIDs({k: v['effectName'] for k, v in dogmaEffects.items()}, 'EffectID', f)
+with open(os.path.join(SDE, 'SchematicID.hpp'), "w") as f:
+    env['schematicIDsMap'] = dumpIDs({k: v['schematicName'] for k, v in planetSchematics.items()}, 'SchematicID', f)
+with open(os.path.join(SDE, 'WarfareBuffID.hpp'), "w") as f:
+    env['warfareBuffIDsMap'] = dumpIDs({k: next(iter(v.values()))['id'] for k, v in env['warfareBuffs'].items()}, 'WarfareBuffID', f)
+
+with open(os.path.join(SDE, 'Attributes.hpp'), "w") as f:
+    dumpAttributeTypes(env, f)
+with open(os.path.join(SDE, 'Modifiers.hpp'), "w") as f:
+    dumpModifiers(env, modifiers, f)
+with open(os.path.join(SDE, 'Effects.hpp'), "w") as f:
+    dumpEffects(env, modifiers,  f)
+with open(os.path.join(SDE, 'Types.hpp'), "w") as f:
+    dumpItems(env, f)
+with open(os.path.join(SDE, 'WarfareBuffs.hpp'), "w") as f:
+    dumpWarfareBuffs(env, f)
+with open(os.path.join(SDE, 'Commodities.hpp'), "w") as f:
+    dumpCommodities(env, f)
+with open(os.path.join(SDE, 'Facilities.hpp'), "w") as f:
+    dumpFacilities(env, f)
+with open(os.path.join(SDE, 'Schematics.hpp'), "w") as f:
+    dumpSchematics(env, f)
+
+with open(os.path.join(SDE, 'Version.hpp'), "w") as f:
+    x = datetime.date.today().strftime("%Y.%m.%d")
+    f.write("""#pragma once
+
+namespace dgmpp {{
+	const SDEVersion sdeVersion{{"{}"}};
+}}
+""".format(x))

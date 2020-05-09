@@ -197,7 +197,6 @@ public struct DGMRoute {
 
 public struct DGMVersion {
 	public struct SDE {
-		public var build: Int
 		public var version: String
 	}
 
@@ -208,7 +207,7 @@ public struct DGMVersion {
 	
 	public static let current: DGMVersion = {
 		let version = dgmpp_get_version()
-		return DGMVersion(major: version.major, minor: version.minor, sde: DGMVersion.SDE(build: version.sde.build, version: String(cString: version.sde.version)))
+		return DGMVersion(major: version.major, minor: version.minor, sde: DGMVersion.SDE(version: String(cString: version.sde.version)))
 	}()
 }
 

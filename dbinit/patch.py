@@ -169,6 +169,9 @@ def patchMissing(env):
 
     
 def patchGangBoost(env):
+    addEffect(1004, 'gangBoost', EffectCategory.activation, False, False, env)
+    addEffectGroup('Command Burst', 'gangBoost', env)
+    addEffectGroup('Titan Phenomena Generator', 'gangBoost', env)
     warfareBuffs = dict()
 
     for typeID, type in env['typeDogma'].items():
