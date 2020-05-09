@@ -88,6 +88,9 @@ public class DGMSkill: DGMType {
 		}
 	}
 	
+    fileprivate func setLevelWithoutUpdates(_ level: Int) {
+        dgmpp_skill_set_level(handle, Int32(level))
+    }
 }
 
 public class DGMCharacter: DGMType, Codable {
@@ -141,6 +144,14 @@ public class DGMCharacter: DGMType, Codable {
         willChange()
 		dgmpp_character_set_skill_levels(handle, Int32(level))
 	}
+    
+    public func setSkillLevels(_ levels: [DGMTypeID: Int]) {
+        willChange()
+        let skills = Dictionary(self.skills.map{($0.typeID, $0)}) {a, _ in a}
+        for (typeID, level) in levels {
+            skills[typeID]?.setLevelWithoutUpdates(level)
+        }
+    }
 	
 	public func add(_ implant: DGMImplant, replace: Bool = false) throws {
         willChange()
@@ -183,9 +194,26 @@ public class DGMCharacter: DGMType, Codable {
 
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		try container.decode([DGMImplant].self, forKey: .implants).forEach { try add($0) }
-		try container.decode([DGMImplant].self, forKey: .boosters).forEach { try add($0) }
+		try container.decode([DGMBooster].self, forKey: .boosters).forEach { try add($0) }
+        name = try container.decode(String.self, forKey: .name)
+        
+        let data = try container.decode(Data.self, forKey: .skills)
+        let skills = self.skills
+        let n = skills.count
+        let last = n - 1
+
+        data.withUnsafeBytes { buffer in
+            let ptr = buffer.bindMemory(to: UInt8.self)
+            for i in stride(from: 0, to: n, by: 2) {
+                let l = ptr[i >> 1]
+                skills[i].level = Int(l >> 4)
+                if i < last {
+                    skills[i + 1].level = Int(l & 0xf)
+                }
+            }
+        }
+        
 		ship = try container.decodeIfPresent(DGMShip.self, forKey: .ship)
-		
 		if let identifier = try container.decodeIfPresent(Int.self, forKey: .identifier) {
 			self.identifier = identifier
 		}
@@ -197,6 +225,19 @@ public class DGMCharacter: DGMType, Codable {
 		try container.encode(boosters, forKey: .boosters)
 		try container.encodeIfPresent(ship, forKey: .ship)
 		try container.encode(identifier, forKey: .identifier)
+        try container.encode(name, forKey: .name)
+        
+        let skills = self.skills
+        let n = skills.count
+        let last = n - 1
+        var data = Data(count: n / 2 + n % 2)
+        data.withUnsafeMutableBytes { buffer in
+            let ptr = buffer.bindMemory(to: UInt8.self)
+            for i in stride(from: 0, to: n, by: 2) {
+                ptr[i >> 1] = UInt8((skills[i].level << 4) + (i < last ? skills[i + 1].level : 0))
+            }
+        }
+        try container.encode(data, forKey: .skills)
 	}
 	
 	enum CodingKeys: String, CodingKey {
@@ -204,6 +245,8 @@ public class DGMCharacter: DGMType, Codable {
 		case boosters
 		case ship
 		case identifier
+        case skills
+        case name
 	}
     
     override func sendChange() {

@@ -26,14 +26,17 @@ DGMPP_EXTERN dgmpp_bool dgmpp_ship_add_module		(dgmpp_type ship, dgmpp_type modu
 DGMPP_EXTERN dgmpp_bool dgmpp_ship_add_module_v2	(dgmpp_type ship, dgmpp_type module, int socket, dgmpp_bool ignoring_requirements);
 DGMPP_EXTERN dgmpp_bool dgmpp_ship_add_drone		(dgmpp_type ship, dgmpp_type drone);
 DGMPP_EXTERN dgmpp_bool dgmpp_ship_add_drone_v2	(dgmpp_type ship, dgmpp_type drone, int squadron_tag);
+DGMPP_EXTERN dgmpp_bool dgmpp_ship_add_cargo        (dgmpp_type ship, dgmpp_type cargo);
 DGMPP_EXTERN void dgmpp_ship_remove_module	(dgmpp_type ship, dgmpp_type module);
 DGMPP_EXTERN void dgmpp_ship_remove_drone	(dgmpp_type ship, dgmpp_type drone);
+DGMPP_EXTERN void dgmpp_ship_remove_cargo    (dgmpp_type ship, dgmpp_type cargo);
 DGMPP_EXTERN dgmpp_bool dgmpp_ship_can_fit_module	(dgmpp_type ship, dgmpp_type module);
 DGMPP_EXTERN dgmpp_bool dgmpp_ship_can_fit_drone	(dgmpp_type ship, dgmpp_type drone);
 
-DGMPP_EXTERN dgmpp_array dgmpp_ship_copy_modules			(dgmpp_type ship);
+DGMPP_EXTERN dgmpp_array dgmpp_ship_copy_modules		(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_array dgmpp_ship_copy_drones			(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_array dgmpp_ship_copy_modules_slot	(dgmpp_type ship, DGMPP_MODULE_SLOT slot);
+DGMPP_EXTERN dgmpp_array dgmpp_ship_copy_cargo          (dgmpp_type ship);
 
 
 DGMPP_EXTERN size_t dgmpp_ship_get_total_drone_squadron			(dgmpp_type ship, DGMPP_DRONE_SQUADRON squadron);
@@ -63,6 +66,7 @@ DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_total_drone_bay			(dgmpp_type sh
 DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_used_fighter_hangar		(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_total_fighter_hangar		(dgmpp_type ship);
 DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_cargo_capacity			(dgmpp_type ship);
+DGMPP_EXTERN dgmpp_cubic_meter          dgmpp_ship_get_used_cargo_capacity      (dgmpp_type ship);
 DGMPP_EXTERN dgmpp_cubic_meter			dgmpp_ship_get_special_hold_capacity	(dgmpp_type ship);
 
 DGMPP_EXTERN dgmpp_resistances	dgmpp_ship_get_resistances					(dgmpp_type ship);

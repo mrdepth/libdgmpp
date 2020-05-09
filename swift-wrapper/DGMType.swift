@@ -52,6 +52,10 @@ public class DGMType: DGMObject, ObservableObject {
                 return DGMDrone(handle)
             case DGMPP_TYPE_CHARGE:
                 return DGMCharge(handle)
+			case DGMPP_TYPE_AREA:
+				return DGMArea(handle)
+            case DGMPP_TYPE_CARGO:
+                return DGMCargo(handle)
             default:
                 return DGMType(handle)
             }

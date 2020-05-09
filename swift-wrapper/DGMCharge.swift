@@ -9,7 +9,7 @@ import Foundation
 import cwrapper
 
 public class DGMCharge: DGMType, Codable {
-	public enum Size: Int {
+	public enum Size: Int, Codable {
 		case none = 0
 		case small = 1
 		case medium = 2

@@ -51,7 +51,7 @@ struct dgmpp_handle_store_impl: dgmpp_handle_store {
 	}
 };
 
-template <typename T, std::enable_if_t<!std::is_base_of_v<Type, typename std::decay<T>::type::element_type>, int> = 0>
+template <typename T, std::enable_if_t<!std::is_base_of_v<Type, typename std::decay<T>::type::element_type> && !std::is_base_of_v<Facility, typename std::decay<T>::type::element_type>, int> = 0>
 dgmpp_handle new_handle(T&& ptr) {
     auto key = ptr.get();
 	if (auto i = handles.find(key); i != handles.end()) {
@@ -72,15 +72,20 @@ dgmpp_handle new_handle(const std::shared_ptr<T>& ptr) {
     return handles.emplace(ptr.get(), new dgmpp_handle_store_impl<Type>{ std::static_pointer_cast<Type>(ptr) }).first->second.get();
 }
 
-//template <typename T>
-//dgmpp_handle new_handle(const std::shared_ptr<T>&& ptr) {
-//	if (auto i = handles.find(ptr.get()); i != handles.end()) {
-//		return i->second->retain();
-//	}
-//	return handles.emplace(ptr.get(), new dgmpp_handle_store_impl<T>{ std::move(ptr) }).first->second.get();
-//}
+template <typename T, std::enable_if_t<std::is_base_of_v<Facility, T>, int> = 0>
+dgmpp_handle new_handle(const std::shared_ptr<T>& ptr) {
+    if (ptr == nullptr) {
+        return nullptr;
+    }
+    
+    if (auto i = handles.find(ptr.get()); i != handles.end()) {
+        return i->second->retain();
+    }
+    return handles.emplace(ptr.get(), new dgmpp_handle_store_impl<Facility>{ std::static_pointer_cast<Facility>(ptr) }).first->second.get();
+}
 
-template <typename T, std::enable_if_t<!std::is_base_of_v<Type, T>, int> = 0>
+
+template <typename T, std::enable_if_t<!std::is_base_of_v<Type, T> && !std::is_base_of_v<Facility, T>, int> = 0>
 std::shared_ptr<T> get(dgmpp_handle handle) {
 	auto baseHandle = reinterpret_cast<dgmpp_handle_store*>(handle);
 	if (auto h = dynamic_cast<dgmpp_handle_store_impl<T>*>(baseHandle)) {
@@ -105,104 +110,20 @@ std::shared_ptr<T> get(dgmpp_handle handle) {
 	}
 }
 
-/*template <typename T, typename = void>
-struct get {
-    dgmpp_handle handle;
-    get(dgmpp_handle h): handle(h) {}
-    T& operator -> () {
-        return operator*();
+template <typename T, std::enable_if_t<std::is_base_of_v<Facility, T>, int> = 0>
+std::shared_ptr<T> get(dgmpp_handle handle) {
+    if (handle == nullptr) {
+        return nullptr;
     }
-    
-    T& operator*() {
-        auto baseHandle = reinterpret_cast<dgmpp_handle_store*>(handle);
-        auto h = dynamic_cast<dgmpp_handle_store_impl<T>*>(baseHandle);
-        assert(h);
-        return h->store;
-    }
-};
-
-template<typename T>
-struct get<std::shared_ptr<T>, std::enable_if_t<std::is_base_of_v<Type, T>>> {
-    dgmpp_handle handle;
-    get(dgmpp_handle h): handle(h) {}
-    
-    std::shared_ptr<T> operator -> () {
-        return operator*();
-    }
-    
-    std::shared_ptr<T> operator*() {
-        auto baseHandle = reinterpret_cast<dgmpp_handle_store*>(handle);
-        
-        if (auto h = dynamic_cast<dgmpp_handle_store_impl<std::shared_ptr<Type>>*>(baseHandle))
-            return std::dynamic_pointer_cast<T>(h->store);
-        else
-            return nullptr;
-    }
-};*/
-
-/*
-template <typename T, typename = std::enable_if_t<is_shared_ptr<T>::value>>
-T* get(dgmpp_handle handle) {
-    if (auto h = dynamic_cast<dgmpp_handle_impl<T>>(handle)) {
-        return &h->value;
+    auto baseHandle = reinterpret_cast<dgmpp_handle_store*>(handle);
+    if (auto h = dynamic_cast<dgmpp_handle_store_impl<Facility>* >(baseHandle)) {
+        return std::dynamic_pointer_cast<T>(h->store);
     }
     else {
         return nullptr;
     }
-}*/
-
-
-/*
-struct shared_ptr_wrapper_base {
-	virtual ~shared_ptr_wrapper_base() {}
-};
-
-template <typename T>
-struct shared_ptr_wrapper: public shared_ptr_wrapper_base {
-	std::shared_ptr<T> ptr;
-	shared_ptr_wrapper(std::shared_ptr<T>&& ptr): ptr(std::move(ptr)) {}
-    shared_ptr_wrapper(const std::shared_ptr<T>& ptr): ptr(ptr) {}
-	virtual ~shared_ptr_wrapper() {}
-};
-
-extern std::set<std::unique_ptr<shared_ptr_wrapper_base>> shared_pointers;
-
-template <typename T>
-dgmpp_handle add_shared_ptr_wrapper(const std::shared_ptr<T>& ptr) {
-    auto i = shared_pointers.emplace(std::make_unique<shared_ptr_wrapper<T>>(ptr));
-    return i.first;
 }
 
-template <typename T>
-std::shared_ptr<T> get_shared_ptr(dgmpp_handle h) {
-    auto i = std::find_if(shared_pointers.begin(), shared_pointers.end(), [=](const auto& i) {
-        return static_cast<void*>(i.get()) == h;
-    });
-	if (i == shared_pointers.end())
-		return nullptr;
-    else if (auto ptr = dynamic_cast<shared_ptr_wrapper<T>*>(i->second)) {
-        return ptr->ptr;
-    }
-}
-
-
-//enum class dgmpp_handle_tag: char {
-//	invalid = -1,
-//	ptr,
-//	unique_ptr_gang,
-//	unique_ptr_character,
-//	unique_ptr_booster,
-//	unique_ptr_implant,
-//	unique_ptr_ship,
-//	unique_ptr_structure,
-//	unique_ptr_module,
-//	unique_ptr_drone,
-//	unique_ptr_charge,
-//	unique_ptr_area,
-//	unique_ptr_planet,
-//	unique_ptr_array
-//};
-	*/
 
 template<typename T>
 struct array_deleter {
@@ -257,6 +178,15 @@ dgmpp_handle dgmpp_make_array(C&& container) {
     return new_handle(std::shared_ptr<dgmpp_array_impl_base>(new dgmpp_array_impl<T>(std::forward<C>(container))));
 }
 
+struct dgmpp_route_impl {
+    std::shared_ptr<Facility> from;
+    std::shared_ptr<Facility> to;
+    const dgmpp_commodity commodity;
+    
+    dgmpp_route_impl(const std::shared_ptr<Facility>& from, const std::shared_ptr<Facility>& to, const dgmpp_commodity& commodity):
+        from(from), to(to), commodity(commodity) {}
+};
+
 template<typename Rep, typename Ratio>
 inline dgmpp_seconds  dgmpp_make_seconds(const std::chrono::duration<Rep, Ratio>& v) {
 	return static_cast<dgmpp_seconds>(std::chrono::duration_cast<std::chrono::seconds>(v).count());
@@ -310,12 +240,12 @@ inline dgmpp_production_cycle dgmpp_production_cycle_make(const ProductionCycle&
         dgmpp_commodity_make(c.waste)};
 }
 
-inline dgmpp_route dgmpp_route_make(const Route& route) {
-    return dgmpp_route{
-        route.from,
-        route.to,
-        dgmpp_commodity_make(route.commodity)};
-}
+//inline dgmpp_route dgmpp_route_make(const Route& route) {
+//    return dgmpp_route{
+//        route.from,
+//        route.to,
+//        dgmpp_commodity_make(route.commodity)};
+//}
 
 //struct dgmpp_commodity_impl: public dgmpp_commodity {
 //	dgmpp_commodity_impl(const Commodity& c)

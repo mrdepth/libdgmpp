@@ -36,6 +36,10 @@ namespace dgmpp {
 			dronesSet_.emplace(ptr->metaInfo().typeID, ptr->squadronTag_(), std::move(drone));
 			ptr->parent_(this);
 		}
+        
+        for (const auto& i: other.cargo_) {
+            cargo_.push_back(std::make_shared<Cargo>(*i));
+        }
 		
 		if (auto area = other.area_()) {
 			areaValue_ = std::make_shared<Area>(*area);
@@ -164,12 +168,29 @@ namespace dgmpp {
 					if (size < std::get<std::shared_ptr<Drone>>(*squadron)->squadronSize_) {
 						active = std::get<std::shared_ptr<Drone>>(*squadron)->active_();
 					}
-					else
-						squadronTag++;
+                    else {
+                        auto i = std::max_element(dronesSet_.begin(), dronesSet_.end(), [](const auto& a, const auto& b) {
+                            return std::get<Drone::SquadronTag>(a) < std::get<Drone::SquadronTag>(b);
+                        });
+                        if (i != dronesSet_.end()) {
+                            squadronTag = std::get<Drone::SquadronTag>(*i) + 1;
+                        }
+                        else {
+                            squadronTag++;
+                        }
+                    }
 
 				}
 				else {
-					squadronTag = 0;
+                    auto i = std::max_element(dronesSet_.begin(), dronesSet_.end(), [](const auto& a, const auto& b) {
+                        return std::get<Drone::SquadronTag>(a) < std::get<Drone::SquadronTag>(b);
+                    });
+                    if (i != dronesSet_.end()) {
+                        squadronTag = std::get<Drone::SquadronTag>(*i) + 1;
+                    }
+                    else {
+                        squadronTag = 0;
+                    }
 				}
 				
 			}
@@ -181,6 +202,11 @@ namespace dgmpp {
 		else
 			throw CannotFit<Drone>(std::move(drone));
 	}
+
+    void Ship::add_ (const std::shared_ptr<Cargo>& cargo) {
+        cargo->parent_(this);
+        cargo_.push_back(cargo);
+    }
 	
 	void Ship::remove_ (Module* module) {
 		assert(module != nullptr && module->parent() == this);
@@ -200,6 +226,15 @@ namespace dgmpp {
 		dronesSet_.erase(i);
 	}
 	
+    void Ship::remove_ (Cargo* cargo) {
+        assert(cargo != nullptr && cargo->parent() == this);
+        auto i = std::find_if(cargo_.begin(), cargo_.end(), [=](const auto& i) {
+            return i.get() == cargo;
+        });
+        assert(i != cargo_.end());
+        cargo_.erase(i);
+    }
+
 	bool Ship::canFit_(Module* module) {
 		assert(module != nullptr);
 		
@@ -543,6 +578,12 @@ namespace dgmpp {
 	CubicMeter Ship::totalFighterHangar_() {
 		return attribute_(AttributeID::fighterCapacity)->value_();
 	}
+
+    CubicMeter Ship::usedCargoCapacity_() {
+        return std::accumulate(cargo_.begin(), cargo_.end(), CubicMeter(0), [](auto sum, const auto& i) {
+            return sum + i->volume();
+        });
+    }
 	
 	CubicMeter Ship::cargoCapacity_() {
 		return attribute_(AttributeID::capacity)->value_();

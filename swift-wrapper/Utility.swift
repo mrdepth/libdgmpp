@@ -62,8 +62,13 @@ public struct DGMDamageVector: Scalable {
 	public var explosive: DGMHP
 	
 	public func scale(_ s: Double) -> DGMDamageVector {
-		return DGMDamageVector(em: em * s, thermal: thermal * s, kinetic: kinetic * s, explosive: explosive * s)
+		return self * s
 	}
+    
+    public var normalized: DGMDamageVector {
+        let total = abs(self.total)
+        return total > 0 ? self / total : self
+    }
 	
 	public init (em: DGMHP, thermal: DGMHP, kinetic: DGMHP, explosive: DGMHP) {
 		self.em = em
@@ -83,6 +88,14 @@ public struct DGMDamageVector: Scalable {
 	public static func - (lhs: DGMDamageVector, rhs: DGMDamageVector) -> DGMDamageVector {
 		return DGMDamageVector(em: lhs.em - rhs.em, thermal: lhs.thermal - rhs.thermal, kinetic: lhs.kinetic - rhs.kinetic, explosive: lhs.explosive - rhs.explosive)
 	}
+
+    public static func / (lhs: DGMDamageVector, rhs: Double) -> DGMDamageVector {
+        return DGMDamageVector(em: lhs.em / rhs, thermal: lhs.thermal / rhs, kinetic: lhs.kinetic / rhs, explosive: lhs.explosive / rhs)
+    }
+
+    public static func * (lhs: DGMDamageVector, rhs: Double) -> DGMDamageVector {
+        return DGMDamageVector(em: lhs.em * rhs, thermal: lhs.thermal * rhs, kinetic: lhs.kinetic * rhs, explosive: lhs.explosive * rhs)
+    }
 
 	public static let omni = DGMDamageVector(em: 0.25, thermal: 0.25, kinetic: 0.25, explosive: 0.25)
     public static let zero = DGMDamageVector(em: 0.0, thermal: 0.0, kinetic: 0.0, explosive: 0.0)
@@ -182,18 +195,6 @@ public struct DGMProductionCycle{
 	public var yield: DGMCommodity;
 	public var waste: DGMCommodity;
 };
-
-public struct DGMRoute {
-	public var from: DGMFacility
-	public var to: DGMFacility
-	public var commodity: DGMCommodity
-	
-	public init(from: DGMFacility, to: DGMFacility, commodity: DGMCommodity) {
-		self.from = from
-		self.to = to
-		self.commodity = commodity
-	}
-}
 
 public struct DGMVersion {
 	public struct SDE {

@@ -135,19 +135,19 @@ extension DGMArray where T: DGMState {
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_state.self, capacity: size)
 		return (0..<size).map {
-			return T(dgmpp_retain(ptr[$0]))
+			return T(ptr[$0])
 		}
 	}
 }
 
-extension DGMArray where T == DGMFacility {
+extension DGMArray where T: DGMFacility {
 	var array: [T] {
-		let size = dgmpp_array_get_size(handle)
-		guard size > 0 else {return []}
-		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_facility.self, capacity: size)
-		return (0..<size).map {
-			return DGMFacility.facility(ptr[$0])
-		}
+        let size = dgmpp_array_get_size(handle)
+        guard size > 0 else {return []}
+        let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_facility.self, capacity: size)
+        return (0..<size).compactMap {
+            return T.facility(dgmpp_retain(ptr[$0])) as? T
+        }
 	}
 }
 
@@ -269,14 +269,6 @@ extension DGMProductionCycle {
 		duration = cycle.duration
 		yield = DGMCommodity(cycle.yield)
 		waste = DGMCommodity(cycle.waste)
-	}
-}
-
-extension DGMRoute {
-	init(_ route: dgmpp_route) {
-		from = DGMFacility.facility(route.from)
-		to = DGMFacility.facility(route.to)
-		commodity = DGMCommodity(route.commodity)
 	}
 }
 

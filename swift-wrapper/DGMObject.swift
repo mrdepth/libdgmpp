@@ -22,14 +22,16 @@ public class DGMObject {
             return value
         }
         else {
-            let value = block()
-            handles[handle] = WeakReference(value: value)
-            return value
+            return block()
+//            let value = block()
+//            handles[handle] = WeakReference(value: value)
+//            return value
         }
     }
 	
 	required init(_ handle: dgmpp_handle) {
 		self.handle = handle
+        handles[handle] = WeakReference(value: self)
 	}
 	
 	deinit {

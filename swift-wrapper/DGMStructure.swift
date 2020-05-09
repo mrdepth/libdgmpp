@@ -37,5 +37,25 @@ public class DGMStructure: DGMShip {
 			dgmpp_structure_set_area(handle, newValue?.handle)
 		}
 	}
+    
+    enum StructureCodingKeys: String, CodingKey {
+        case area
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: StructureCodingKeys.self)
+        try container.encodeIfPresent(area, forKey: .area)
+    }
 
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+        let container = try decoder.container(keyedBy: StructureCodingKeys.self)
+        area = try container.decodeIfPresent(DGMArea.self, forKey: .area)
+    }
+    
+    required init(_ handle: dgmpp_type) {
+        super.init(handle)
+    }
+    
 }

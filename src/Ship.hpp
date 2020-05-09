@@ -14,6 +14,7 @@
 #include "HitPoints.hpp"
 #include "Area.hpp"
 #include "HeatSimulator.hpp"
+#include "Cargo.hpp"
 
 namespace dgmpp {
 	
@@ -55,14 +56,18 @@ namespace dgmpp {
 		//Fitting
 		void add (const std::shared_ptr<Module>& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false) { LOCK(this); add_(module, socket, ignoringRequirements); }
 		void add (const std::shared_ptr<Drone>& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag) { LOCK(this); add_(drone, squadronTag); }
+        void add (const std::shared_ptr<Cargo>& cargo) { LOCK(this); add_(cargo); }
 
 		void remove (Module* module) { LOCK(this); remove_(module); }
 		void remove (Drone* drone) { LOCK(this); remove_(drone); }
+        void remove (Cargo* cargo) { LOCK(this); remove_(cargo); }
 		bool canFit (Module* module) { LOCK(this); return canFit_(module); }
 		bool canFit (Drone* drone) { LOCK(this); return canFit_(drone); }
 		std::vector<std::shared_ptr<Module>> modules (Module::Slot slot) const { LOCK(this); return modules_(slot); }
 		std::vector<std::shared_ptr<Module>> modules () const { LOCK(this); return modules_(); }
 		std::vector<std::shared_ptr<Drone>> drones () const { LOCK(this); return drones_(); }
+        const std::list<std::shared_ptr<Cargo>>& cargo () const { LOCK(this); return cargo_; }
+
 		
 		//Drones
 		std::size_t totalDroneSquadron (Drone::Squadron squadron = Drone::Squadron::none) { LOCK(this); return totalDroneSquadron_(squadron); }
@@ -95,6 +100,7 @@ namespace dgmpp {
 		CubicMeter			usedFighterHangar()		{ LOCK(this); return usedFighterHangar_(); }
 		CubicMeter			totalFighterHangar()	{ LOCK(this); return totalFighterHangar_(); }
 		CubicMeter			cargoCapacity()			{ LOCK(this); return cargoCapacity_(); }
+        CubicMeter          usedCargoCapacity()     { LOCK(this); return usedCargoCapacity_(); }
 		CubicMeter			specialHoldCapacity()	{ LOCK(this); return specialHoldCapacity_(); }
 
 		//Tank
@@ -146,9 +152,11 @@ namespace dgmpp {
 
 		ModulesContainer modulesSet_;
 		DronesContainer dronesSet_;
-		
+        std::list<std::shared_ptr<Cargo>> cargo_;
+
 		std::list<Module*> projectedModules_;
 		std::list<Drone*> projectedDrones_;
+
 
 		const RigSize rigSize_ {[this]() {
 			return static_cast<RigSize>(static_cast<int>(attribute_(AttributeID::rigSize)->value_()));
@@ -215,9 +223,11 @@ namespace dgmpp {
 		//Fitting
 		void add_ (const std::shared_ptr<Module>& module, Module::Socket socket = Module::anySocket, bool ignoringRequirements = false);
 		void add_ (const std::shared_ptr<Drone>& drone, Drone::SquadronTag squadronTag = Drone::anySquadronTag);
+        void add_ (const std::shared_ptr<Cargo>& cargo);
 
 		void remove_ (Module* module);
 		void remove_ (Drone* drone);
+        void remove_ (Cargo* cargo);
 		bool canFit_ (Module* module);
 		bool canFit_ (Drone* drone);
 		std::vector<std::shared_ptr<Module>> modules_ (Module::Slot slot) const;
@@ -229,7 +239,6 @@ namespace dgmpp {
 		std::size_t usedDroneSquadron_ (Drone::Squadron squadron = Drone::Squadron::none);
 		std::size_t totalFighterLaunchTubes_();
 		std::size_t usedFighterLaunchTubes_();
-		
 		
 		//Resources
 		std::size_t totalSlots_	(Module::Slot slot);
@@ -252,6 +261,7 @@ namespace dgmpp {
 		CubicMeter			totalDroneBay_();
 		CubicMeter			usedFighterHangar_();
 		CubicMeter			totalFighterHangar_();
+        CubicMeter          usedCargoCapacity_();
 		CubicMeter			cargoCapacity_();
 		CubicMeter			specialHoldCapacity_();
 		

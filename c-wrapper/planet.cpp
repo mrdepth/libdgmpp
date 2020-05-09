@@ -25,7 +25,12 @@ void dgmpp_planet_remove_facility (dgmpp_planet planet, dgmpp_facility facility)
 }
 
 dgmpp_facility dgmpp_planet_get_facility (dgmpp_planet planet, int64_t identifier) {
-	return new_handle((*get<Planet>(planet))[identifier]);
+    if (auto facility = (*get<Planet>(planet))[identifier]) {
+        return new_handle(facility);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 dgmpp_array dgmpp_planet_copy_facilities (dgmpp_planet planet) {

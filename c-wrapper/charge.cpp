@@ -27,5 +27,5 @@ dgmpp_type dgmpp_charge_copy (dgmpp_type charge) {
 }
 
 DGMPP_CHARGE_SIZE dgmpp_charge_get_charge_size (dgmpp_type charge) {
-	return static_cast<DGMPP_CHARGE_SIZE>(reinterpret_cast<Charge*>(charge)->size());
+	return static_cast<DGMPP_CHARGE_SIZE>(get<Charge>(charge)->size());
 }
