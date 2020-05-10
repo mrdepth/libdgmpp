@@ -2492,10 +2492,16 @@ namespace dgmpp {
 		mjdShipJumpCap = 2832,
 		shieldHpBonus = 3015,
 		implantSetNirvana = 3017,
+		frigateEscapeBayCapacity = 3020,
 		implantSetSavior = 3023,
 		remoteRepDurationBonus = 3024,
 		activeSystemJump = 3025,
 		filamentDescriptionMessageID = 3026,
+		implantSetHydra = 3027,
+		hydraDroneTrackingBonus = 3028,
+		hydraDroneRangeBonus = 3029,
+		hydraMissileFlightTimeBonus = 3030,
+		hydraMissileExplosionVelocityBonus = 3031,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
     };

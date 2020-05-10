@@ -416,7 +416,7 @@ def dumpItemRequiredSkills(typeID, env):
     for i in attr:
         if env['dogmaAttributes'][i['attributeID']]['name'] in {'requiredSkill1', 'requiredSkill2', 'requiredSkill3', 'requiredSkill4', 'requiredSkill5', 'requiredSkill6', 'requiredSkill7', 'requiredSkill8'}:
             skills.append('TypeID::{}'.format(env['typeIDsMap'][int(i['value'])]))
-    return skills
+    return sorted(skills)
 
 def dumpItemEffects(typeID, env):
     effects = list()
@@ -456,7 +456,7 @@ def dumpItemAttributes(typeID, env):
         if name in type and type[name] > 0:
             attributes.append(dumpAttribute(name, type[name]))
 
-    return attributes
+    return sorted(attributes)
 
 def dumpItem(typeID, env):
     metaGroup = 'none'
@@ -481,7 +481,7 @@ def dumpItem(typeID, env):
         elif name == 'metaLevel':
             metaLevel = int(i['value'])
     
-    return 'constexpr auto {typeName} = MakeType(TypeID::{typeName}, GroupID::{groupName}, CategoryID::{categoryName}, MetaInfo::Type::MetaGroup::{metaGroup}, {metaLevel}, _attributes({attributes}), _effects({effects}), _typeIDs({typeIDs}));'.format(
+    return 'constexpr auto {typeName} = MakeType(TypeID::{typeName}, GroupID::{groupName}, CategoryID::{categoryName}, MetaInfo::Type::MetaGroup::{metaGroup}, {metaLevel},\n\t\t\t\t_attributes({attributes}),\n\t\t\t\t_effects({effects}),\n\t\t\t\t_typeIDs({typeIDs}));'.format(
         typeName = env['typeIDsMap'][typeID],
         groupName = env['groupIDsMap'][groupID],
         categoryName = env['categoryIDsMap'][categoryID],

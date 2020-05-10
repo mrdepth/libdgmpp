@@ -537,7 +537,7 @@ using namespace dgmpp;
 	auto res1 = ship->resistances();
 	
 	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
-	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.782, 0.0005);
+	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.714, 0.0005);
 }
 
 - (void) testVindicator3 {
@@ -601,7 +601,7 @@ using namespace dgmpp;
 	auto res1 = ship->resistances();
 	
 	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
-	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.856, 0.0005);
+	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.825, 0.0005);
 }
 
 - (void) testCyno {
