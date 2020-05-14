@@ -49,9 +49,14 @@ public class DGMStructure: DGMShip {
     }
 
     public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-        let container = try decoder.container(keyedBy: StructureCodingKeys.self)
-        area = try container.decodeIfPresent(DGMArea.self, forKey: .area)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
+        guard let type = dgmpp_structure_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
+        super.init(type)
+        
+        try decodeLoadout(from: decoder)
+
+        area = try decoder.container(keyedBy: StructureCodingKeys.self).decodeIfPresent(DGMArea.self, forKey: .area)
     }
     
     required init(_ handle: dgmpp_type) {

@@ -379,6 +379,15 @@ def patchGangBoost(env):
                 warfareBuffs[bufID] = {'id': id, 'modifiers': modifiers}
     env['warfareBuffs'] = warfareBuffs
 
+def patchSubsystems(env):
+    for type in env['typeDogma'].values():
+        for attribute in type['dogmaAttributes']:
+            if attribute['attributeID'] == 1367: #maxSubSystems
+                attribute['value'] = 4
+                break
+
+    #maxSubSystems
+
 def patch(env):
     patchMissilesDamage(env)
     patchTacticalModes(env)
@@ -391,6 +400,7 @@ def patch(env):
     patchSpeedBoost(env)
     patchMissing(env)
     patchGangBoost(env)
+    patchSubsystems(env)
     #patchConfessor(env)
     #patchSvipul(env)
     #patchJackdaw(env)

@@ -205,7 +205,9 @@ public class DGMCharacter: DGMType, Codable {
         data.withUnsafeBytes { buffer in
             let ptr = buffer.bindMemory(to: UInt8.self)
             for i in stride(from: 0, to: n, by: 2) {
-                let l = ptr[i >> 1]
+                let j = i >> 1
+                guard j < ptr.count else {continue}
+                let l = ptr[j]
                 skills[i].level = Int(l >> 4)
                 if i < last {
                     skills[i + 1].level = Int(l & 0xf)

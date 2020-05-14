@@ -8,7 +8,7 @@
 import Foundation
 import cwrapper
 
-public class DGMCargo: DGMType {
+public class DGMCargo: DGMType, Codable {
 
     public convenience init(typeID: DGMTypeID) throws {
         guard let type = dgmpp_cargo_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
@@ -38,14 +38,22 @@ public class DGMCargo: DGMType {
         super.init(handle)
     }
     
+    enum CodingKeys: String, CodingKey {
+        case typeID
+        case quantity
+    }
+    
     public convenience required init(from decoder: Decoder) throws {
-        let typeID = try decoder.singleValueContainer().decode(DGMTypeID.self)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
         try self.init(typeID: typeID)
+        quantity = try container.decode(Int.self, forKey: .quantity)
     }
     
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(typeID)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(typeID, forKey: .typeID)
+        try container.encode(quantity, forKey: .quantity)
     }
     
 }
