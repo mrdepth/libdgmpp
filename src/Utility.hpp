@@ -20,7 +20,7 @@
 #include <chrono>
 #include <algorithm>
 #include <cassert>
-#include <experimental/optional>
+#include <optional>
 #include <functional>
 #include <cmath>
 
@@ -37,14 +37,13 @@
 #include "SDE/SchematicID.hpp"
 #include "Rate.hpp"
 
-#if !defined(_LIBCPP_OPTIONAL) && !defined(_GLIBCXX_OPTIONAL)
+#if !defined(_LIBCPP_OPTIONAL) && !defined(_GLIBCXX_OPTIONAL) && !defined(_OPTIONAL_)
 namespace std {
 	template<typename T>
 	using optional = std::experimental::optional<T>;
 	constexpr auto nullopt = std::experimental::nullopt;
 }
 #endif
-
 
 namespace dgmpp {
 	using Float = double;
@@ -86,7 +85,6 @@ namespace dgmpp {
 	}
 	
 	struct SDEVersion {
-		size_t build;
 		const char* version;
 	};
 
@@ -97,7 +95,7 @@ namespace dgmpp {
 	};
 
 	extern const SDEVersion sdeVersion;
-	extern const Version version;
+	Version version();
 	
 	
 	
@@ -110,12 +108,12 @@ namespace dgmpp {
 	};
 
 	template <typename T>
-	T* remove_unique_ptr(const std::unique_ptr<T>& ptr) noexcept {
+	T* remove_ptr(const std::shared_ptr<T>& ptr) noexcept {
 		return ptr.get();
 	}
 	
 	template<typename T>
-	T remove_unique_ptr(const T& t) noexcept {
+	T remove_ptr(const T& t) noexcept {
 		return t;
 	}
 	
@@ -129,7 +127,7 @@ namespace dgmpp {
 		
 		template <typename... Args2, std::size_t... Is>
 		std::tuple<Args2...> get(const Key& lhs, std::index_sequence<Is...>) const noexcept {
-			return std::make_tuple(remove_unique_ptr(std::get<Is>(lhs))...);
+			return std::make_tuple(remove_ptr(std::get<Is>(lhs))...);
 		}
 		
 		template <typename... Args2>
@@ -201,8 +199,8 @@ namespace dgmpp {
 	};
 	
 	struct HostileTarget {
-		RadiansPerSecond angularVelocity = RadiansPerSecond(0);
-		MetersPerSecond velocity = MetersPerSecond(0);
+		RadiansPerSecond angularVelocity = RadiansPerSecond(0.0);
+		MetersPerSecond velocity = MetersPerSecond(0.0);
 		Meter signature = 0;
 		Meter range = 0;
 		static HostileTarget Default() noexcept { return HostileTarget(); }

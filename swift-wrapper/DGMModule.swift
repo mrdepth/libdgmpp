@@ -10,15 +10,27 @@ import cwrapper
 
 public class DGMModule: DGMType, Codable {
 	
-	public enum State: Int, Codable {
+	public enum State: Int, Codable, CaseIterable {
 		case unknown = -1
 		case offline
 		case online
 		case active
 		case overloaded
+        
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode("\(self)")
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let key = try container.decode(String.self)
+            self = Self.allCases.first{"\($0.self)" == key} ?? .unknown
+        }
+        
 	}
 	
-	public enum Slot: Int, Codable {
+	public enum Slot: Int, Codable, CaseIterable {
 		case none = 0
 		case hi
 		case med
@@ -28,9 +40,20 @@ public class DGMModule: DGMType, Codable {
 		case mode
 		case service
 		case starbaseStructure
+        
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode("\(self)")
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let key = try container.decode(String.self)
+            self = Self.allCases.first{"\($0.self)" == key} ?? .none
+        }
 	}
 	
-	public enum Hardpoint: Int {
+	public enum Hardpoint: Int, CaseIterable {
 		case none
 		case launcher
 		case turret
@@ -38,11 +61,11 @@ public class DGMModule: DGMType, Codable {
 	
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_module_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 
 	public convenience init(_ other: DGMModule) {
-		self.init(dgmpp_module_copy(other.handle), owned: true)
+		self.init(dgmpp_module_copy(other.handle))
 	}
 
 	public func canHaveState(_ state: State) -> Bool {
@@ -50,7 +73,7 @@ public class DGMModule: DGMType, Codable {
 	}
 	
 	public var availableStates: [State] {
-		return DGMArray<Int>(dgmpp_module_copy_available_states(handle)).array.flatMap {State(rawValue: $0)}
+		return DGMArray<Int>(dgmpp_module_copy_available_states(handle)).array.compactMap {State(rawValue: $0)}
 	}
 	
 	public var state: State {
@@ -58,6 +81,7 @@ public class DGMModule: DGMType, Codable {
 			return State(dgmpp_module_get_state(handle)) ?? .unknown
 		}
 		set {
+            willChange()
 			dgmpp_module_set_state(handle, DGMPP_MODULE_STATE(newValue))
 		}
 	}
@@ -70,10 +94,11 @@ public class DGMModule: DGMType, Codable {
 	
 	public var target: DGMShip? {
 		get {
-			guard let target = dgmpp_module_get_target(handle) else {return nil}
-			return DGMShip(target)
+			guard let target = dgmpp_module_copy_target(handle) else {return nil}
+            return DGMType.type(target) as? DGMShip
 		}
 		set {
+            willChange()
 			dgmpp_module_set_target(handle, newValue?.handle)
 		}
 	}
@@ -97,11 +122,12 @@ public class DGMModule: DGMType, Codable {
 	}
 	
 	public var charge: DGMCharge? {
-		guard let charge = dgmpp_module_get_charge(handle) else {return nil}
-		return DGMCharge(charge)
+		guard let charge = dgmpp_module_copy_charge(handle) else {return nil}
+		return DGMType.type(charge) as? DGMCharge
 	}
 	
 	public func setCharge(_ charge: DGMCharge?) throws {
+        willChange()
 		if let charge = charge {
 			guard dgmpp_module_set_charge(handle, charge.handle) != 0 else {throw DGMError.cannotFit(charge)}
 		}
@@ -203,10 +229,10 @@ public class DGMModule: DGMType, Codable {
 	}
 
 	
-	public required init(_ handle: dgmpp_handle, owned: Bool) {
-		super.init(handle, owned: owned)
-	}
-	
+    required init(_ handle: dgmpp_handle) {
+        super.init(handle)
+    }
+
 	public convenience required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)

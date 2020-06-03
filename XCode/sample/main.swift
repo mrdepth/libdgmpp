@@ -43,6 +43,7 @@ do {
 	pilot.ship = ship
 	
 	let form = ship.uniformString
+    print(ship.parent?.hashValue ?? 0, pilot.hashValue)
 	
 	let d = try JSONEncoder().encode(pilot)
 	let s = String(data: d, encoding: .utf8)

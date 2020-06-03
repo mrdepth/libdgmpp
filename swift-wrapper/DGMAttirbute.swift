@@ -8,10 +8,12 @@
 import Foundation
 import cwrapper
 
-public class DGMAttribute: DGMObject {
+public class DGMAttribute {
+    
+    private var handle: dgmpp_attribute
 	
-	convenience init(_ handle: dgmpp_attribute) {
-		self.init(handle, owned: false)
+	init(_ handle: dgmpp_attribute) {
+        self.handle = handle
 	}
 	
 	public var attributeID: DGMAttributeID {
@@ -19,7 +21,7 @@ public class DGMAttribute: DGMObject {
 	}
 	
 	public var owner: DGMType {
-		return DGMType.type(dgmpp_attribute_get_owner(handle))
+		return DGMType.type(dgmpp_attribute_copy_owner(handle))
 	}
 
 	public var value: Double {

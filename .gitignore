@@ -8,3 +8,11 @@ android/.externalNativeBuild/
 android/.gradle/
 android/build/
 
+/VisualStudio/.vs/dgmpp/v16
+/VisualStudio/x64/Debug
+/.vs
+/VisualStudio/.vs/cwrapper/v16
+/VisualStudio/cwrapper/Debug
+/VisualStudio/Debug
+/VisualStudio/dgmpp/Debug
+/dbinit/__pycache__

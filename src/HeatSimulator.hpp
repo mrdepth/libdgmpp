@@ -54,7 +54,7 @@ namespace dgmpp {
 		struct {
 			bool isCalculated_: 1;
 		} flags_;
-		Float heatGenerationMultiplier_;
+		Float heatGenerationMultiplier_{ 0 };
 		
 		HeatSimulator(Ship& owner) : owner_(owner) {
 			flags_.isCalculated_ = false;

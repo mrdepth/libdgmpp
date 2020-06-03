@@ -11,26 +11,23 @@ import cwrapper
 public class DGMFacility: DGMObject {
 	
 	class func facility(_ handle: dgmpp_facility) -> DGMFacility {
-		switch dgmpp_facility_get_category(handle) {
-		case DGMPP_FACILITY_CATEGORY_COMMAND_CENTER:
-			return DGMCommandCenter(handle)
-		case DGMPP_FACILITY_CATEGORY_SPACEPORT:
-			return DGMSpaceport(handle)
-		case DGMPP_FACILITY_CATEGORY_FACTORY:
-			return DGMFactory(handle)
-		case DGMPP_FACILITY_CATEGORY_ECU:
-			return DGMExtractorControlUnit(handle)
-		case DGMPP_FACILITY_CATEGORY_STORAGE:
-			return DGMStorage(handle)
-		default:
-			return DGMFactory(handle)
-		}
+        DGMObject.get(handle) {
+            switch dgmpp_facility_get_category(handle) {
+            case DGMPP_FACILITY_CATEGORY_COMMAND_CENTER:
+                return DGMCommandCenter(handle)
+            case DGMPP_FACILITY_CATEGORY_SPACEPORT:
+                return DGMSpaceport(handle)
+            case DGMPP_FACILITY_CATEGORY_FACTORY:
+                return DGMFactory(handle)
+            case DGMPP_FACILITY_CATEGORY_ECU:
+                return DGMExtractorControlUnit(handle)
+            case DGMPP_FACILITY_CATEGORY_STORAGE:
+                return DGMStorage(handle)
+            default:
+                return DGMFactory(handle)
+            }
+        }
 	}
-	
-	convenience init(_ handle: dgmpp_facility) {
-		self.init(handle, owned: false)
-	}
-
 	
 	public var typeID: DGMTypeID {
 		return DGMTypeID(dgmpp_facility_get_type_id(handle))

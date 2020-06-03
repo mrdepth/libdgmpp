@@ -7,13 +7,18 @@
 
 #pragma once
 #include "Utility.hpp"
+#include <type_traits>
 
 namespace dgmpp {
 	
 	class DamageVector {
 	public:
-		DamageVector (HP value = 0)
-		: em(value), thermal(value), kinetic(value), explosive(value) {}
+
+		DamageVector(const DamageVector& other) = default;
+
+		template<typename T, typename = std::enable_if_t<std::is_convertible_v<T, HP>>>
+		DamageVector(T value)
+			: em(static_cast<HP>(value)), thermal(static_cast<HP>(value)), kinetic(static_cast<HP>(value)), explosive(static_cast<HP>(value)) {}
 		
 		DamageVector (HP em, HP thermal, HP kinetic, HP explosive)
 		: em(em), thermal(thermal), kinetic(kinetic), explosive(explosive) {}
@@ -46,7 +51,7 @@ namespace dgmpp {
 			em = thermal = kinetic = explosive = value / 4;
 			return *this;
 		}
-		
+
 		DamageVector operator/ (HP value) const noexcept {
 			return {em / value, thermal / value, kinetic / value, explosive / value};
 		}
@@ -79,12 +84,13 @@ namespace dgmpp {
 			return {em - value.em, thermal - value.thermal, kinetic - value.kinetic, explosive - value.explosive};
 		}
 		
-		template <typename T2, typename = std::enable_if_t<std::is_arithmetic_v<T2>>>
+		template <typename T2, typename = std::enable_if_t<std::is_convertible_v<T2, HP>>>
 		DamageVector& operator/= (T2 value) noexcept {
-			em /= value;
-			thermal /= value;
-			kinetic /= value;
-			explosive /= value;
+			auto v = static_cast<HP>(value);
+			em /= v;
+			thermal /= v;
+			kinetic /= v;
+			explosive /= v;
 			return *this;
 		}
 		

@@ -20,14 +20,17 @@ public class DGMDrone: DGMType, Codable {
 		case standupSupport
 	}
 
-	
+    required init(_ handle: dgmpp_handle) {
+        super.init(handle)
+    }
+
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_drone_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 
 	public convenience init(_ other: DGMDrone) {
-		self.init(dgmpp_drone_copy(other.handle), owned: true)
+		self.init(dgmpp_drone_copy(other.handle))
 	}
 
 	public var isActive: Bool {
@@ -35,6 +38,7 @@ public class DGMDrone: DGMType, Codable {
 			return dgmpp_drone_is_active(handle) != 0
 		}
 		set {
+            willChange()
 			dgmpp_drone_set_active(handle, newValue ? 1 : 0)
 		}
 	}
@@ -48,13 +52,14 @@ public class DGMDrone: DGMType, Codable {
 			return dgmpp_drone_is_kamikaze(handle) != 0
 		}
 		set {
+            willChange()
 			dgmpp_drone_set_kamikaze(handle, newValue ? 1 : 0)
 		}
 	}
 
 	public var charge: DGMCharge? {
-		guard let charge = dgmpp_drone_get_charge(handle) else {return nil}
-		return DGMCharge(charge)
+		guard let charge = dgmpp_drone_copy_charge(handle) else {return nil}
+        return DGMType.type(charge) as? DGMCharge
 	}
 	
 	public var squadron: Squadron {
@@ -71,10 +76,11 @@ public class DGMDrone: DGMType, Codable {
 	
 	public var target: DGMShip? {
 		get {
-			guard let target = dgmpp_drone_get_target(handle) else {return nil}
-			return DGMShip(target)
+			guard let target = dgmpp_drone_copy_target(handle) else {return nil}
+			return DGMType.type(target) as? DGMShip
 		}
 		set {
+            willChange()
 			dgmpp_drone_set_target(handle, newValue?.handle)
 		}
 	}
@@ -111,11 +117,7 @@ public class DGMDrone: DGMType, Codable {
 		return DGMCubicMeterPerSecond(dgmpp_drone_get_velocity(handle))
 	}
 
-	
-	public required init(_ handle: dgmpp_handle, owned: Bool) {
-		super.init(handle, owned: owned)
-	}
-	
+		
 	public convenience required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)

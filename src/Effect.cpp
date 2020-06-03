@@ -45,7 +45,24 @@ namespace dgmpp {
 				auto attribute = owner.attribute_(attributeID);
 				if (auto value = attribute->value_(); value > 0) {
 					auto buffID = static_cast<WarfareBuffID>(static_cast<int>(value));
-					warfareBuffs_.emplace_back(SDE::get(buffID), owner, *this);
+                    AttributeID modifyingAttributeID = AttributeID::none;
+                    switch (attributeID) {
+                        case AttributeID::warfareBuff1ID:
+                            modifyingAttributeID = AttributeID::warfareBuff1Value;
+                            break;
+                        case AttributeID::warfareBuff2ID:
+                            modifyingAttributeID = AttributeID::warfareBuff2Value;
+                            break;
+                        case AttributeID::warfareBuff3ID:
+                            modifyingAttributeID = AttributeID::warfareBuff3Value;
+                            break;
+                        case AttributeID::warfareBuff4ID:
+                            modifyingAttributeID = AttributeID::warfareBuff4Value;
+                            break;
+                        default:
+                            continue;
+                    }
+					warfareBuffs_.emplace_back(SDE::get(buffID), owner, modifyingAttributeID, *this);
 				}
 			}
 		}

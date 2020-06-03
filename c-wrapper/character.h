@@ -19,16 +19,14 @@ DGMPP_EXTERN void			dgmpp_character_set_name (dgmpp_type character, const char* 
 DGMPP_EXTERN dgmpp_bool 	dgmpp_character_set_skill_levels	(dgmpp_type character, int skill_levels);
 DGMPP_EXTERN dgmpp_array	dgmpp_character_copy_skills			(dgmpp_type character);
 	
-DGMPP_EXTERN dgmpp_bool		dgmpp_character_add_implant		(dgmpp_type character, dgmpp_type implant);
-DGMPP_EXTERN dgmpp_bool		dgmpp_character_add_implant_v2	(dgmpp_type character, dgmpp_type implant, dgmpp_bool replace);
-DGMPP_EXTERN dgmpp_bool		dgmpp_character_add_booster		(dgmpp_type character, dgmpp_type booster);
-DGMPP_EXTERN dgmpp_bool		dgmpp_character_add_booster_v2	(dgmpp_type character, dgmpp_type booster, dgmpp_bool replace);
+DGMPP_EXTERN dgmpp_bool		dgmpp_character_add_implant	(dgmpp_type character, dgmpp_type implant, dgmpp_bool replace);
+DGMPP_EXTERN dgmpp_bool		dgmpp_character_add_booster	(dgmpp_type character, dgmpp_type booster, dgmpp_bool replace);
 DGMPP_EXTERN void			dgmpp_character_remove_implant	(dgmpp_type character, dgmpp_type implant);
 DGMPP_EXTERN void			dgmpp_character_remove_booster	(dgmpp_type character, dgmpp_type booster);
 DGMPP_EXTERN dgmpp_array 	dgmpp_character_copy_implants	(dgmpp_type character);
 DGMPP_EXTERN dgmpp_array 	dgmpp_character_copy_boosters	(dgmpp_type character);
 
-DGMPP_EXTERN dgmpp_type	dgmpp_character_get_ship		(dgmpp_type character);
+DGMPP_EXTERN dgmpp_type	dgmpp_character_copy_ship		(dgmpp_type character);
 //DGMPP_EXTERN dgmpp_type	dgmpp_character_get_structure	(dgmpp_type character);
 DGMPP_EXTERN void 		dgmpp_character_set_ship		(dgmpp_type character, dgmpp_type ship);
 //DGMPP_EXTERN void 		dgmpp_character_set_structure	(dgmpp_type character, dgmpp_type structure);

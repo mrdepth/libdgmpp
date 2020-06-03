@@ -9,6 +9,7 @@
 #define utility_h
 
 #include <stdlib.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 #define DGMPP_EXTERN extern "C"
@@ -56,14 +57,16 @@ typedef void* dgmpp_handle;
 //} dgmpp_handle;
 
 typedef dgmpp_handle dgmpp_type;
-typedef dgmpp_handle dgmpp_attribute;
+typedef void* dgmpp_attribute;
 typedef dgmpp_handle dgmpp_planet;
 typedef dgmpp_handle dgmpp_facility;
 typedef dgmpp_handle dgmpp_state;
 typedef dgmpp_handle dgmpp_array;
 typedef dgmpp_handle dgmpp_capacitor;
+typedef dgmpp_handle dgmpp_route;
 
-DGMPP_EXTERN void 	dgmpp_free		(dgmpp_handle handle);
+DGMPP_EXTERN void dgmpp_release (dgmpp_handle handle);
+DGMPP_EXTERN dgmpp_handle dgmpp_retain (dgmpp_handle handle);
 //DGMPP_EXTERN size_t	dgmpp_get_hash	(dgmpp_handle handle);
 
 DGMPP_EXTERN size_t			dgmpp_array_get_size	(dgmpp_array array);
@@ -80,7 +83,9 @@ typedef enum {
 	DGMPP_TYPE_STRUCTURE,
 	DGMPP_TYPE_MODULE,
 	DGMPP_TYPE_DRONE,
-	DGMPP_TYPE_CHARGE
+	DGMPP_TYPE_CHARGE,
+    DGMPP_TYPE_AREA,
+    DGMPP_TYPE_CARGO
 } DGMPP_TYPE;
 
 typedef enum {
@@ -240,11 +245,11 @@ typedef struct {
 	dgmpp_commodity waste;
 } dgmpp_production_cycle;
 
-typedef struct {
-	dgmpp_facility from;
-	dgmpp_facility to;
-	dgmpp_commodity commodity;
-} dgmpp_route;
+//typedef struct {
+//	dgmpp_facility from;
+//	dgmpp_facility to;
+//	dgmpp_commodity commodity;
+//} dgmpp_route;
 
 typedef enum {
 	DGMPP_FACILITY_CATEGORY_NONE,
@@ -256,7 +261,6 @@ typedef enum {
 } DGMPP_FACILITY_CATEGORY;
 
 typedef struct {
-	size_t build;
 	const char* version;
 } dgmpp_sde_version;
 

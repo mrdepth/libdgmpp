@@ -7,8 +7,9 @@
 
 import Foundation
 import cwrapper
+import Combine
 
-public class DGMType: DGMObject {
+public class DGMType: DGMObject, ObservableObject {
 	
 	public enum MetaGroup: Int, Codable {
 		case none
@@ -29,36 +30,38 @@ public class DGMType: DGMObject {
 	}
 	
 	class func type(_ handle: dgmpp_type) -> DGMType {
-		switch dgmpp_get_type(handle) {
-		case DGMPP_TYPE_GANG:
-			return DGMGang(handle)
-		case DGMPP_TYPE_CHARACTER:
-			return DGMCharacter(handle)
-		case DGMPP_TYPE_SKILL:
-			return DGMSkill(handle)
-		case DGMPP_TYPE_BOOSTER:
-			return DGMBooster(handle)
-		case DGMPP_TYPE_IMPLANT:
-			return DGMImplant(handle)
-		case DGMPP_TYPE_SHIP:
-			return DGMShip(handle)
-		case DGMPP_TYPE_STRUCTURE:
-			return DGMStructure(handle)
-		case DGMPP_TYPE_MODULE:
-			return DGMModule(handle)
-		case DGMPP_TYPE_DRONE:
-			return DGMDrone(handle)
-		case DGMPP_TYPE_CHARGE:
-			return DGMCharge(handle)
-		default:
-			return DGMType(handle)
-		}
+        DGMObject.get(handle) {
+            switch dgmpp_get_type(handle) {
+            case DGMPP_TYPE_GANG:
+                return DGMGang(handle)
+            case DGMPP_TYPE_CHARACTER:
+                return DGMCharacter(handle)
+            case DGMPP_TYPE_SKILL:
+                return DGMSkill(handle)
+            case DGMPP_TYPE_BOOSTER:
+                return DGMBooster(handle)
+            case DGMPP_TYPE_IMPLANT:
+                return DGMImplant(handle)
+            case DGMPP_TYPE_SHIP:
+                return DGMShip(handle)
+            case DGMPP_TYPE_STRUCTURE:
+                return DGMStructure(handle)
+            case DGMPP_TYPE_MODULE:
+                return DGMModule(handle)
+            case DGMPP_TYPE_DRONE:
+                return DGMDrone(handle)
+            case DGMPP_TYPE_CHARGE:
+                return DGMCharge(handle)
+			case DGMPP_TYPE_AREA:
+				return DGMArea(handle)
+            case DGMPP_TYPE_CARGO:
+                return DGMCargo(handle)
+            default:
+                return DGMType(handle)
+            }
+        }
 	}
 	
-	convenience init(_ handle: dgmpp_type) {
-		self.init(handle, owned: false)
-	}
-
 	public var typeID: DGMTypeID {
 		return DGMTypeID(dgmpp_type_get_type_id(handle))
 	}
@@ -80,13 +83,11 @@ public class DGMType: DGMObject {
 	}
 
 	public var parent: DGMType? {
-		guard let parent = dgmpp_type_get_parent(handle) else {return nil}
-		return DGMType.type(parent)
-	}
+        dgmpp_type_copy_parent(handle).map{DGMType.type($0)}
+    }
 	
 	public subscript(attributeID: DGMAttributeID) -> DGMAttribute? {
-		guard let attribute = dgmpp_type_get_attribute(handle, dgmpp_attribute_id(attributeID)) else {return nil}
-		return DGMAttribute(attribute)
+        dgmpp_type_get_attribute(handle, dgmpp_attribute_id(attributeID)).map{DGMAttribute($0)}
 	}
 	
 	public var affectors: [DGMType] {
@@ -102,8 +103,23 @@ public class DGMType: DGMObject {
 			return dgmpp_type_get_identifier(handle)
 		}
 		set {
+            willChange()
 			dgmpp_type_set_identifier(handle, newValue)
 		}
 	}
+    
+    public var objectWillChange = ObservableObjectPublisher()
 
+    func willChange() {
+        if let parent = parent {
+            parent.willChange()
+        }
+        else {
+            sendChange()
+        }
+    }
+    
+    func sendChange() {
+        objectWillChange.send()
+    }
 }

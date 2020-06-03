@@ -149,7 +149,7 @@ auto dumpItemRequiredSkills(SQLiteDatabase& database, int typeID) {
 }
 
 void dumpItems(SQLiteDatabase& database) {
-	auto result = database.fetch<int, std::string, std::string, std::string, Optional<double>, Optional<double>, Optional<double>, Optional<double>, Optional<int>, Optional<int>, Optional<int>, Optional<int>>("select a.typeID, typeName, b.groupName, c.categoryName, radius, mass, volume, capacity, raceID, metaGroupID, e.value, f.value from invTypes as a, invGroups as b, invCategories as c left join invMetaTypes as d on a.typeID=d.typeID left join dgmTypeAttributes as e on a.typeID = e.typeID and e.attributeID=633 left join dgmTypeAttributes as f on a.typeID = f.typeID and f.attributeID=1692 where a.groupID=b.groupID and b.categoryID=c.categoryID order by a.typeID");
+	auto result = database.fetch<int, std::string, std::string, std::string, Optional<double>, Optional<double>, Optional<double>, Optional<double>, Optional<int>, Optional<int>, Optional<int>, Optional<int>>("select a.typeID, typeName, b.groupName, c.categoryName, radius, mass, volume, capacity, raceID, metaGroupID, e.value, f.value from invTypes as a, invGroups as b, invCategories as c left join dgmTypeAttributes as e on a.typeID = e.typeID and e.attributeID=633 left join dgmTypeAttributes as f on a.typeID = f.typeID and f.attributeID=1692 where a.groupID=b.groupID and b.categoryID=c.categoryID order by a.typeID");
 
 	std::cout
 	<< "#pragma once" << std::endl
@@ -1123,7 +1123,7 @@ void dumpVersion(SQLiteDatabase& database) {
 	if (auto row = result.next()) {
 		auto build = row.get<0>();
 		auto version = row.get<1>();
-		std::cout << "\t" << "const auto sdeVersion = SDEVersion({" << build << ", \"" << version << "\"});" << std::endl;
+		std::cout << "\t" << "const SDEVersion sdeVersion{" << build << ", \"" << version << "\"};" << std::endl;
 	}
 	
 	std::cout << "}" << std::endl;

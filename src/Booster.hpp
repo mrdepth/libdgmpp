@@ -12,9 +12,9 @@ namespace dgmpp {
 	
 	class Booster: public Type {
 	public:
-		static std::unique_ptr<Booster> Create (TypeID typeID) { return std::unique_ptr<Booster>(new Booster(typeID)); }
-		static std::unique_ptr<Booster> Create (const Booster& other) { return std::unique_ptr<Booster>(new Booster(other)); }
-		
+        Booster (TypeID typeID);
+        Booster (const Booster& other) : Type(other), slot_(other.slot_) {}
+
 		using Slot = int;
 		
 		Slot slot() const noexcept { return slot_; }
@@ -23,10 +23,6 @@ namespace dgmpp {
 		const Slot slot_ {static_cast<Slot>(attribute_(AttributeID::boosterness)->value_())};
 		friend class Character;
 		
-		Booster (TypeID typeID);
-		
-		Booster (const Booster& other)
-		: Type(other), slot_(other.slot_) {}
 
 	};
 }

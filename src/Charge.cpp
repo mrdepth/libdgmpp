@@ -20,8 +20,8 @@ namespace dgmpp {
 		
 		flags_.canBeActive = flags_.requireTarget || std::any_of(effects.begin(), effects.end(), [](const auto& i) {
 			switch (i->metaInfo().category) {
-				case MetaInfo::Effect::Category::active:
-				case MetaInfo::Effect::Category::overloaded:
+				case MetaInfo::Effect::Category::activation:
+				case MetaInfo::Effect::Category::overload:
 					return true;
 				default:
 					return false;

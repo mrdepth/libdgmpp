@@ -9,7 +9,7 @@
 #include "internal.h"
 
 DGMPP_FACILITY_CATEGORY dgmpp_facility_get_category (dgmpp_facility facility) {
-	switch (reinterpret_cast<Facility*>(facility)->metaInfo().groupID) {
+	switch (get<Facility>(facility)->metaInfo().groupID) {
 		case GroupID::commandCenters:
 			return DGMPP_FACILITY_CATEGORY_COMMAND_CENTER;
 		case GroupID::processors:
@@ -22,45 +22,44 @@ DGMPP_FACILITY_CATEGORY dgmpp_facility_get_category (dgmpp_facility facility) {
 			return DGMPP_FACILITY_CATEGORY_ECU;
 		default:
 			return DGMPP_FACILITY_CATEGORY_NONE;
-			break;
 	}
 }
 
 dgmpp_type_id dgmpp_facility_get_type_id (dgmpp_facility facility) {
-	return static_cast<dgmpp_type_id>(reinterpret_cast<Facility*>(facility)->metaInfo().typeID);
+	return static_cast<dgmpp_type_id>(get<Facility>(facility)->metaInfo().typeID);
 }
 
 dgmpp_group_id dgmpp_facility_get_group_id (dgmpp_facility facility) {
-	return static_cast<dgmpp_type_id>(reinterpret_cast<Facility*>(facility)->metaInfo().groupID);
+	return static_cast<dgmpp_type_id>(get<Facility>(facility)->metaInfo().groupID);
 }
 
 int64_t dgmpp_facility_get_identifier (dgmpp_facility facility) {
-	return (reinterpret_cast<Facility*>(facility)->identifier());
+	return (get<Facility>(facility)->identifier());
 }
 
 dgmpp_cubic_meter dgmpp_facility_get_capacity (dgmpp_facility facility) {
-	return reinterpret_cast<Facility*>(facility)->capacity();
+	return get<Facility>(facility)->capacity();
 }
 
 dgmpp_cubic_meter dgmpp_facility_get_free_volume (dgmpp_facility facility) {
-	return reinterpret_cast<Facility*>(facility)->freeVolume();
+	return get<Facility>(facility)->freeVolume();
 }
 
 dgmpp_cubic_meter dgmpp_facility_get_used_volume (dgmpp_facility facility) {
-	return reinterpret_cast<Facility*>(facility)->usedVolume();
+	return get<Facility>(facility)->usedVolume();
 }
 
 dgmpp_commodity dgmpp_facility_get_free (dgmpp_facility facility, dgmpp_type_id commodity_id) {
-	return dgmpp_commodity_impl(reinterpret_cast<Facility*>(facility)->free(dgmpp::Commodity(static_cast<TypeID>(commodity_id))));
+	return dgmpp_commodity_make(get<Facility>(facility)->free(dgmpp::Commodity(static_cast<TypeID>(commodity_id))));
 }
 
 void dgmpp_facility_add_commodity (dgmpp_facility facility, dgmpp_commodity commodity) {
-	reinterpret_cast<Facility*>(facility)->add(dgmpp::Commodity(static_cast<TypeID>(commodity.type_id), commodity.quantity));
+	get<Facility>(facility)->add(dgmpp::Commodity(static_cast<TypeID>(commodity.type_id), commodity.quantity));
 }
 
 dgmpp_bool dgmpp_facility_extract_commodity (dgmpp_facility facility, dgmpp_commodity commodity) {
 	try {
-		reinterpret_cast<Facility*>(facility)->extract(dgmpp::Commodity(static_cast<TypeID>(commodity.type_id), commodity.quantity));
+		get<Facility>(facility)->extract(dgmpp::Commodity(static_cast<TypeID>(commodity.type_id), commodity.quantity));
 		return true;
 	}
 	catch(...) {
@@ -69,30 +68,63 @@ dgmpp_bool dgmpp_facility_extract_commodity (dgmpp_facility facility, dgmpp_comm
 }
 
 dgmpp_array dgmpp_facility_copy_commodities (dgmpp_facility facility) {
-	return dgmpp_make_array<dgmpp_commodity_impl>(reinterpret_cast<Facility*>(facility)->commodities());
+    const auto& commodities = get<Facility>(facility)->commodities();
+    std::vector<dgmpp_commodity> result;
+    std::transform(commodities.begin(), commodities.end(), std::back_inserter(result), [](const auto& i) {
+        return dgmpp_commodity_make(i);
+    });
+    return dgmpp_make_array<dgmpp_commodity>(std::move(result));
 }
 
 dgmpp_commodity dgmpp_facility_get_commodity (dgmpp_facility facility, dgmpp_type_id commodity_id) {
-	return dgmpp_commodity_impl((*reinterpret_cast<Facility*>(facility))[static_cast<TypeID>(commodity_id)]);
+	return dgmpp_commodity_make((*get<Facility>(facility))[static_cast<TypeID>(commodity_id)]);
 }
 
 dgmpp_commodity dgmpp_facility_get_income (dgmpp_facility facility, dgmpp_type_id commodity_id) {
-	return dgmpp_commodity_impl(reinterpret_cast<Facility*>(facility)->income(static_cast<TypeID>(commodity_id)));
+	return dgmpp_commodity_make(get<Facility>(facility)->income(static_cast<TypeID>(commodity_id)));
 }
 
 dgmpp_array dgmpp_facility_copy_inputs (dgmpp_facility facility) {
-	return dgmpp_make_array<dgmpp_route_impl>(reinterpret_cast<Facility*>(facility)->inputs());
+    const auto& inputs = get<Facility>(facility)->inputs();
+    std::vector<dgmpp_route> result;
+    std::transform(inputs.begin(), inputs.end(), std::back_inserter(result), [](const auto& i) {
+        auto handle = std::make_shared<dgmpp_route_impl>(i.from ? i.from->shared_from_this() : nullptr,
+                                                         i.to ? i.to->shared_from_this() : nullptr,
+                                                         dgmpp_commodity_make(i.commodity));
+        return new_handle(handle);
+    });
+    return dgmpp_make_array<dgmpp_route>(std::move(result));
 }
 
 dgmpp_array dgmpp_facility_copy_outputs (dgmpp_facility facility) {
-	return dgmpp_make_array<dgmpp_route_impl>(reinterpret_cast<Facility*>(facility)->outputs());
+    const auto& outputs = get<Facility>(facility)->outputs();
+    std::vector<dgmpp_route> result;
+    std::transform(outputs.begin(), outputs.end(), std::back_inserter(result), [](const auto& i) {
+        auto handle = std::make_shared<dgmpp_route_impl>(i.from ? i.from->shared_from_this() : nullptr,
+                                                         i.to ? i.to->shared_from_this() : nullptr,
+                                                         dgmpp_commodity_make(i.commodity));
+        return new_handle(handle);
+    });
+    return dgmpp_make_array<dgmpp_route>(std::move(result));
 }
 
 
 dgmpp_bool dgmpp_facility_is_configured (dgmpp_facility facility) {
-	return reinterpret_cast<Facility*>(facility)->configured();
+	return get<Facility>(facility)->configured();
 }
 
 const char* dgmpp_facility_get_name (dgmpp_facility facility) {
-	return reinterpret_cast<Facility*>(facility)->name().c_str();
+	return get<Facility>(facility)->name().c_str();
+}
+
+dgmpp_facility dgmpp_route_copy_from(dgmpp_route route) {
+    return new_handle(get<dgmpp_route_impl>(route)->from);
+}
+
+dgmpp_facility dgmpp_route_copy_to(dgmpp_route route) {
+    return new_handle(get<dgmpp_route_impl>(route)->to);
+}
+
+dgmpp_commodity dgmpp_route_get_commodity(dgmpp_route route) {
+    return get<dgmpp_route_impl>(route)->commodity;
 }

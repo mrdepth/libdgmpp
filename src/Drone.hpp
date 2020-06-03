@@ -27,9 +27,9 @@ namespace dgmpp {
 			standupSupport
 		};
 
+        Drone (TypeID typeID);
+        Drone (const Drone& other);
 		virtual ~Drone();
-		static std::unique_ptr<Drone> Create (TypeID typeID) { return std::unique_ptr<Drone>(new Drone(typeID)); }
-		static std::unique_ptr<Drone> Create (const Drone& other) { return std::unique_ptr<Drone>(new Drone(other)); }
 		
 		void active (bool active) { LOCK(this); active_(active); }
 		bool active() const noexcept { LOCK(this); return active_(); }
@@ -37,13 +37,13 @@ namespace dgmpp {
 		void kamikaze (bool kamikaze) { LOCK(this); kamikaze_(kamikaze); }
 		bool kamikaze() const noexcept { LOCK(this); return kamikaze_(); }
 
-		Charge* charge() const noexcept { return charge_.get(); }
+		std::shared_ptr<Charge> charge() const noexcept { return charge_; }
 
 		Squadron squadron() const noexcept { return squadron_; }
 		std::size_t squadronSize() { return squadronSize_; }
 		SquadronTag squadronTag() const noexcept { LOCK(this); return squadronTag_(); };
-		Ship* target() const noexcept { LOCK(this); return target_(); }
-		void target(Ship* target) { LOCK(this); target_(target); }
+		std::shared_ptr<Ship> target() const noexcept { LOCK(this); return target_(); }
+		void target(const std::shared_ptr<Ship>& target) { LOCK(this); target_(target); }
 
 		
 		//Calculations
@@ -101,16 +101,16 @@ namespace dgmpp {
 			}
 		}()};
 
-		const std::unique_ptr<Charge> charge_ {[this]() -> std::unique_ptr<Charge> {
+		const std::shared_ptr<Charge> charge_ {[this]() -> std::shared_ptr<Charge> {
 			if (auto attribute = attribute_(AttributeID::entityMissileTypeID)) {
 				auto typeID = static_cast<TypeID>(static_cast<int>(attribute->value_()));
-				auto charge = Charge::Create(typeID);
+				auto charge = std::make_shared<Charge>(typeID);
 				charge->parent_(this);
 				return charge;
 			}
 			else if (auto attribute = attribute_(AttributeID::fighterAbilityLaunchBombType)) {
 				auto typeID = static_cast<TypeID>(static_cast<int>(attribute->value_()));
-				auto charge = Charge::Create(typeID);
+				auto charge = std::make_shared<Charge>(typeID);
 				charge->parent_(this);
 				return charge;
 			}
@@ -118,11 +118,8 @@ namespace dgmpp {
 				return nullptr;
 		}()};
 		
-		Ship* targetValue_ {nullptr};
+		std::weak_ptr<Ship> targetValue_;
 		
-		Drone (TypeID typeID);
-		Drone (const Drone& other);
-
 		void active_ (bool active);
 		bool active_() const noexcept { return flags_.active; }
 		void kamikaze_ (bool kamikaze);
@@ -134,8 +131,8 @@ namespace dgmpp {
 		void squadronTag_ (SquadronTag squadronTag) noexcept { squadronTagValue_ = squadronTag; }
 		SquadronTag squadronTag_() const noexcept { return squadronTagValue_; };
 		
-		Ship* target_() const noexcept { return targetValue_; }
-		void target_ (Ship* target);
+		std::shared_ptr<Ship> target_() const noexcept { return targetValue_.lock(); }
+		void target_ (const std::shared_ptr<Ship>& target);
 
 		std::chrono::milliseconds cycleTime_();
 		DamageVector volley_();

@@ -8,7 +8,12 @@
 import Foundation
 import cwrapper
 
-public class DGMCapacitor: DGMObject {
+public class DGMCapacitor {
+    private var handle: dgmpp_capacitor
+    
+    init(_ handle: dgmpp_capacitor) {
+        self.handle = handle
+    }
 	
 	public var capacity: DGMGigaJoule {
 		return dgmpp_capacitor_get_capacity(handle)
@@ -58,13 +63,17 @@ public class DGMShip: DGMType, Codable {
 		case xLarge = 4
 	}
 	
+    required init(_ handle: dgmpp_type) {
+        super.init(handle)
+    }
+
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_ship_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 	
 	public convenience init(_ other: DGMShip) {
-		self.init(dgmpp_ship_copy(other.handle), owned: true)
+		self.init(dgmpp_ship_copy(other.handle))
 	}
 
 	public var name: String {
@@ -73,6 +82,7 @@ public class DGMShip: DGMType, Codable {
 		}
 		set {
 			guard let string = newValue.cString(using: .utf8) else {return}
+            willChange()
 			dgmpp_ship_set_name(handle, string)
 		}
 	}
@@ -94,25 +104,40 @@ public class DGMShip: DGMType, Codable {
 			return DGMDamageVector(dgmpp_ship_get_damage_pattern(handle))
 		}
 		set {
+            willChange()
 			dgmpp_ship_set_damage_pattern(handle, dgmpp_damage_vector(newValue))
 		}
 	}
 	
 	public func add(_ module: DGMModule, socket: Int = -1, ignoringRequirements: Bool = false) throws {
+        willChange()
 		guard dgmpp_ship_add_module_v2(handle, module.handle, Int32(socket), ignoringRequirements ? 1 : 0) != 0 else { throw DGMError.cannotFit(module)}
 	}
 	
 	public func add(_ drone: DGMDrone, squadronTag: Int = -1) throws {
+        willChange()
 		guard dgmpp_ship_add_drone_v2(handle, drone.handle, Int32(squadronTag)) != 0 else { throw DGMError.cannotFit(drone)}
 	}
+    
+    public func add(_ cargo: DGMCargo) throws {
+        willChange()
+        guard dgmpp_ship_add_cargo(handle, cargo.handle) != 0 else { throw DGMError.cannotFit(cargo)}
+    }
 	
 	public func remove(_ module: DGMModule) {
+        willChange()
 		dgmpp_ship_remove_module(handle, module.handle)
 	}
 	
 	public func remove(_ drone: DGMDrone) {
+        willChange()
 		dgmpp_ship_remove_drone(handle, drone.handle)
 	}
+
+    public func remove(_ cargo: DGMCargo) {
+        willChange()
+        dgmpp_ship_remove_cargo(handle, cargo.handle)
+    }
 
 	public func canFit(_ module: DGMModule) -> Bool {
 		return dgmpp_ship_can_fit_module(handle, module.handle) != 0
@@ -133,7 +158,11 @@ public class DGMShip: DGMType, Codable {
 	public func modules(slot: DGMModule.Slot) -> [DGMModule] {
 		return DGMArray<DGMModule>(dgmpp_ship_copy_modules_slot(handle, DGMPP_MODULE_SLOT(slot))).array
 	}
-	
+
+    public var cargo: [DGMCargo] {
+        return DGMArray<DGMCargo>(dgmpp_ship_copy_cargo(handle)).array
+    }
+
 	public func totalDroneSquadron(_ squadron: DGMDrone.Squadron = .none) -> Int {
 		return dgmpp_ship_get_total_drone_squadron(handle, DGMPP_DRONE_SQUADRON(squadron))
 	}
@@ -175,7 +204,8 @@ public class DGMShip: DGMType, Codable {
 	}
 
 	public var capacitor: DGMCapacitor {
-		return DGMCapacitor(dgmpp_ship_get_capacitor(handle), owned: false)
+        let capacitor = dgmpp_ship_get_capacitor(handle)!
+        return DGMCapacitor(capacitor)
 	}
 	
 	public var usedCalibration: DGMCalibrationPoints {
@@ -229,7 +259,11 @@ public class DGMShip: DGMType, Codable {
 	public var cargoCapacity: DGMCubicMeter {
 		return dgmpp_ship_get_cargo_capacity(handle)
 	}
-	
+
+    public var usedCargoCapacity: DGMCubicMeter {
+        return dgmpp_ship_get_used_cargo_capacity(handle)
+    }
+
 	public var specialHoldCapacity: DGMCubicMeter {
 		return dgmpp_ship_get_special_hold_capacity(handle)
 	}
@@ -363,47 +397,53 @@ public class DGMShip: DGMType, Codable {
 	}
 	
 
-	public required init(_ handle: dgmpp_handle, owned: Bool) {
-		super.init(handle, owned: owned)
-	}
-	
-	public convenience required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
+
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
 
-		try self.init(typeID: typeID)
+        guard let type = dgmpp_ship_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
+        super.init(type)
 
-		
-		let modules = try container.nestedContainer(keyedBy: DGMModule.Slot.self, forKey: .modules)
-		try modules.allKeys.sorted {$0.rawValue > $1.rawValue}.map { slot -> [(DGMModule, Int)] in
-			let array = try modules.nestedContainer(keyedBy: DGMSocketKey.self, forKey: slot)
-			return try array.allKeys.map { (socket) -> (DGMModule, Int) in
-				return (try array.decode(DGMModule.self, forKey: socket), socket.intValue!)
-			}
-			}.joined().forEach { (module, socket) in
-				try add(module, socket: socket)
-		}
-
-		var drones = try container.nestedUnkeyedContainer(forKey: .drones)
-
-		for _ in (0..<(drones.count ?? 0)) {
-			do {
-				let c = try drones.nestedContainer(keyedBy: AdditionalDroneKeys.self)
-				let count = try c.decode(Int.self, forKey: .count)
-				let squadronTag = try c.decode(Int.self, forKey: .squadronTag)
-				for _ in 0..<count {
-					try add(c.decode(DGMDrone.self, forKey: .drone), squadronTag: squadronTag)
-				}
-			}
-			catch {
-			}
-		}
-		if let identifier = try container.decodeIfPresent(Int.self, forKey: .identifier) {
-			self.identifier = identifier
-		}
-		
-
+        try decodeLoadout(from: decoder)
 	}
+    
+    func decodeLoadout(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let modules = try container.nestedContainer(keyedBy: DGMModule.Slot.self, forKey: .modules)
+        try modules.allKeys.sorted {$0.rawValue > $1.rawValue}.map { slot -> [(DGMModule, Int)] in
+            let array = try modules.nestedContainer(keyedBy: DGMSocketKey.self, forKey: slot)
+            return try array.allKeys.map { (socket) -> (DGMModule, Int) in
+                return (try array.decode(DGMModule.self, forKey: socket), socket.intValue!)
+            }
+            }.joined().forEach { (module, socket) in
+                try add(module, socket: socket)
+        }
+
+        var drones = try container.nestedUnkeyedContainer(forKey: .drones)
+
+        for _ in (0..<(drones.count ?? 0)) {
+            do {
+                let c = try drones.nestedContainer(keyedBy: AdditionalDroneKeys.self)
+                let count = try c.decode(Int.self, forKey: .count)
+                let squadronTag = try c.decode(Int.self, forKey: .squadronTag)
+                for _ in 0..<count {
+                    try add(c.decode(DGMDrone.self, forKey: .drone), squadronTag: squadronTag)
+                }
+            }
+            catch {
+            }
+        }
+        if let identifier = try container.decodeIfPresent(Int.self, forKey: .identifier) {
+            self.identifier = identifier
+        }
+        
+        try container.decode([DGMCargo].self, forKey: .cargo).forEach {
+            try add($0)
+        }
+        name = try container.decode(String.self, forKey: .name)
+    }
 	
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
@@ -438,15 +478,20 @@ public class DGMShip: DGMType, Codable {
 				try c.encode(drone, forKey: .drone)
 			}
 		}
+        
+        try container.encode(cargo, forKey: .cargo)
 		
 		try container.encode(identifier, forKey: .identifier)
+        try container.encode(name, forKey: .name)
 	}
 	
 	enum CodingKeys: String, CodingKey {
+        case name
 		case typeID
 		case modules
 		case drones
 		case identifier
+        case cargo
 	}
 	
 	enum AdditionalDroneKeys: String, CodingKey {
@@ -454,6 +499,19 @@ public class DGMShip: DGMType, Codable {
 		case squadronTag
 		case count
 	}
+    
+    override func sendChange() {
+        super.sendChange()
+        modules.forEach{
+            $0.sendChange()
+        }
+        drones.forEach {
+            $0.sendChange()
+        }
+        cargo.forEach {
+            $0.sendChange()
+        }
+    }
 
 }
 

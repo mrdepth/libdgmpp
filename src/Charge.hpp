@@ -19,8 +19,8 @@ namespace dgmpp {
 			xLarge = 4
 		};
 
-		static std::unique_ptr<Charge> Create (TypeID typeID) { return std::unique_ptr<Charge>(new Charge(typeID)); }
-		static std::unique_ptr<Charge> Create (const Charge& other) { return std::unique_ptr<Charge>(new Charge(other)); }
+        Charge (TypeID typeID);
+        Charge (const Charge& other);
 		
 		Size size() const noexcept { return size_; }
 		
@@ -40,8 +40,6 @@ namespace dgmpp {
 		friend class Drone;
 		
 		
-		Charge (TypeID typeID);
-		Charge (const Charge& other);
 		
 		const Size size_ { [this]{
 			if (auto attribute = attribute_(AttributeID::chargeSize))

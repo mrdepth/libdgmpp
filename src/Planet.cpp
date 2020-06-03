@@ -15,35 +15,35 @@
 #include <algorithm>
 
 namespace dgmpp {
-	Facility* Planet::add(TypeID typeID, Facility::Identifier identifier) {
+	std::shared_ptr<Facility> Planet::add(TypeID typeID, Facility::Identifier identifier) {
 		const auto& metaInfo = SDE::facility(typeID);
-		Facility* facility = nullptr;
+        std::shared_ptr<Facility> facility;
 		
 		if (identifier <= 0)
 			identifier = facilities_.size() + 1;
 		
 		switch (metaInfo.groupID) {
 			case GroupID::commandCenters:
-				facility = new CommandCenter(metaInfo, *this, identifier);
+				facility.reset(new CommandCenter(metaInfo, *this, identifier));
 				break;
 			case GroupID::processors:
-				facility = new Factory(metaInfo, *this, identifier);
+				facility.reset(new Factory(metaInfo, *this, identifier));
 				break;
 			case GroupID::storageFacilities:
-				facility = new Storage(metaInfo, *this, identifier);
+				facility.reset(new Storage(metaInfo, *this, identifier));
 				break;
 			case GroupID::spaceports:
-				facility = new Spaceport(metaInfo, *this, identifier);
+				facility.reset(new Spaceport(metaInfo, *this, identifier));
 				break;
 			case GroupID::extractorControlUnits:
-				facility = new ExtractorControlUnit(metaInfo, *this, identifier);
+				facility.reset(new ExtractorControlUnit(metaInfo, *this, identifier));
 				break;
 			default:
 				break;
 		}
 		assert(facility);
 		
-		facilities_.emplace_back(facility);
+		facilities_.push_back(facility);
 		return facility;
 	}
 	
@@ -59,20 +59,13 @@ namespace dgmpp {
 		facilities_.erase(i);
 	}
 	
-	std::vector<Facility*> Planet::facilities() const {
-		std::vector<Facility*> result;
-		result.reserve(facilities_.size());
-//		std::set<Facility*, FacilityCompare> set;
-//		std::transform(facilities_.begin(), facilities_.end(), std::inserter(set, set.end()), [](const auto& i) { return i.get(); });
-//		std::copy(set.begin(), set.end(), std::back_inserter(result));
-		
-		std::transform(facilities_.begin(), facilities_.end(), std::back_inserter(result), [](const auto& i) { return i.get(); });
-		return result;
+	const std::list<std::shared_ptr<Facility>>& Planet::facilities() const {
+        return facilities_;
 	}
 	
-	Facility* Planet::operator[] (Facility::Identifier key) const {
+	std::shared_ptr<Facility> Planet::operator[] (Facility::Identifier key) const {
 		auto i = std::find_if(facilities_.begin(), facilities_.end(), [key](const auto& i) { return i->identifier() == key; });
-		return i != facilities_.end() ? i->get() : nullptr;
+		return i != facilities_.end() ? *i : nullptr;
 	}
 
 	void Planet::add(const Route& route) {
@@ -108,8 +101,6 @@ namespace dgmpp {
 		}
 		
 		while(true) {
-			if (timestamp_.count() == 442800)
-				assert(1);
 			if (auto next = nextCycleTime_(facilities); next && next->count() >= 0) {
 				timestamp_ = *next;
 				for (auto& i: facilities)

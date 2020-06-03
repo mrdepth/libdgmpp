@@ -14,7 +14,7 @@
 namespace dgmpp {
 	class Planet;
 	
-	class Facility {
+	class Facility: public std::enable_shared_from_this<Facility> {
 	public:
 		typedef int64_t Identifier;
 		virtual ~Facility() = default;
@@ -58,7 +58,7 @@ namespace dgmpp {
 	private:
 		friend class Planet;
 		friend class Factory;
-		friend class Route;
+		friend struct Route;
 		const MetaInfo::Facility& metaInfo_;
 		Planet& planet_;
 		Identifier identifier_;

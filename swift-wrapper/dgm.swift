@@ -96,11 +96,6 @@ extension DGMCommodity.Tier {
 }
 
 class DGMArray<T>: DGMObject {
-	
-	convenience init(_ handle: dgmpp_array) {
-		self.init(handle, owned: true)
-	}
-	
 }
 
 extension DGMArray where T: DGMType {
@@ -108,8 +103,8 @@ extension DGMArray where T: DGMType {
 		let size = dgmpp_array_get_size(handle)
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_type.self, capacity: size)
-		return (0..<size).map {
-			return T(ptr[$0], owned: false)
+		return (0..<size).compactMap {
+			return T.type(dgmpp_retain(ptr[$0])) as? T
 		}
 	}
 }
@@ -120,7 +115,7 @@ extension DGMArray where T == DGMAttribute {
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_attribute.self, capacity: size)
 		return (0..<size).map {
-			return T(ptr[$0], owned: false)
+			return T(ptr[$0])
 		}
 	}
 }
@@ -140,19 +135,19 @@ extension DGMArray where T: DGMState {
 		guard size > 0 else {return []}
 		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_state.self, capacity: size)
 		return (0..<size).map {
-			return T(ptr[$0], owned: false)
+			return T(ptr[$0])
 		}
 	}
 }
 
-extension DGMArray where T == DGMFacility {
+extension DGMArray where T: DGMFacility {
 	var array: [T] {
-		let size = dgmpp_array_get_size(handle)
-		guard size > 0 else {return []}
-		let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_facility.self, capacity: size)
-		return (0..<size).map {
-			return DGMFacility.facility(ptr[$0])
-		}
+        let size = dgmpp_array_get_size(handle)
+        guard size > 0 else {return []}
+        let ptr = dgmpp_array_get_values(handle).bindMemory(to: dgmpp_facility.self, capacity: size)
+        return (0..<size).compactMap {
+            return T.facility(dgmpp_retain(ptr[$0])) as? T
+        }
 	}
 }
 
@@ -200,10 +195,10 @@ extension DGMDamageVector {
 
 extension dgmpp_damage_vector {
 	init(_ damageVector: DGMDamageVector) {
-		em = damageVector.em
-		thermal = damageVector.thermal
-		kinetic = damageVector.kinetic
-		explosive = damageVector.explosive
+		self.init(em: damageVector.em,
+				  thermal: damageVector.thermal,
+				  kinetic: damageVector.kinetic,
+				  explosive: damageVector.explosive)
 	}
 }
 
@@ -218,10 +213,10 @@ extension DGMHostileTarget {
 
 extension dgmpp_hostile_target {
 	init(_ target: DGMHostileTarget) {
-		angular_velocity = target.angularVelocity.value
-		velocity = target.velocity.value
-		signature = target.signature
-		range = target.range
+		self.init(angular_velocity: target.angularVelocity.value,
+				  velocity: target.velocity.value,
+				  signature: target.signature,
+				  range: target.range)
 	}
 }
 
@@ -261,10 +256,10 @@ extension DGMCommodity {
 
 extension dgmpp_commodity {
 	init(_ commodity: DGMCommodity) {
-		type_id = dgmpp_type_id(commodity.typeID)
-		tier = DGMPP_COMMODITY_TIER(Int32(commodity.tier.rawValue))
-		volume = commodity.volume
-		quantity = commodity.quantity
+		self.init(type_id: dgmpp_type_id(commodity.typeID),
+				  tier: DGMPP_COMMODITY_TIER(Int32(commodity.tier.rawValue)),
+				  volume: commodity.volume,
+				  quantity: commodity.quantity)
 	}
 }
 
@@ -274,14 +269,6 @@ extension DGMProductionCycle {
 		duration = cycle.duration
 		yield = DGMCommodity(cycle.yield)
 		waste = DGMCommodity(cycle.waste)
-	}
-}
-
-extension DGMRoute {
-	init(_ route: dgmpp_route) {
-		from = DGMFacility.facility(route.from)
-		to = DGMFacility.facility(route.to)
-		commodity = DGMCommodity(route.commodity)
 	}
 }
 

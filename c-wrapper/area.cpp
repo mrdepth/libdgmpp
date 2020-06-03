@@ -10,7 +10,7 @@
 
 dgmpp_type dgmpp_area_create (dgmpp_type_id type_id) {
 	try {
-		return add_unique_ptr_wrapper(Area::Create(static_cast<TypeID>(type_id)));
+		return new_handle(std::make_shared<Area>(static_cast<TypeID>(type_id)));
 	}
 	catch (...) {
 		return nullptr;
@@ -19,7 +19,7 @@ dgmpp_type dgmpp_area_create (dgmpp_type_id type_id) {
 
 dgmpp_type dgmpp_area_copy (dgmpp_type area) {
 	try {
-		return add_unique_ptr_wrapper(Area::Create(*reinterpret_cast<Area*>(area)));
+		return new_handle(std::make_shared<Area>(*get<Area>(area)));
 	}
 	catch (...) {
 		return nullptr;

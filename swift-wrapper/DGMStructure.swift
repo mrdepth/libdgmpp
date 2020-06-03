@@ -12,11 +12,11 @@ public class DGMStructure: DGMShip {
 	
 	public convenience init(typeID: DGMTypeID) throws {
 		guard let type = dgmpp_structure_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
-		self.init(type, owned: true)
+		self.init(type)
 	}
 
 	public convenience init(_ other: DGMStructure) {
-		self.init(dgmpp_structure_copy(other.handle), owned: true)
+		self.init(dgmpp_structure_copy(other.handle))
 	}
 
 	public var fuelBlockTypeID: DGMTypeID {
@@ -33,8 +33,34 @@ public class DGMStructure: DGMShip {
 			return DGMArea(area)
 		}
 		set {
+            willChange()
 			dgmpp_structure_set_area(handle, newValue?.handle)
 		}
 	}
+    
+    enum StructureCodingKeys: String, CodingKey {
+        case area
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: StructureCodingKeys.self)
+        try container.encodeIfPresent(area, forKey: .area)
+    }
 
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let typeID = try container.decode(DGMTypeID.self, forKey: .typeID)
+        guard let type = dgmpp_structure_create(dgmpp_type_id(typeID)) else { throw DGMError.typeNotFound(typeID)}
+        super.init(type)
+        
+        try decodeLoadout(from: decoder)
+
+        area = try decoder.container(keyedBy: StructureCodingKeys.self).decodeIfPresent(DGMArea.self, forKey: .area)
+    }
+    
+    required init(_ handle: dgmpp_type) {
+        super.init(handle)
+    }
+    
 }

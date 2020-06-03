@@ -1,5 +1,4 @@
 #pragma once
-
 namespace dgmpp {
 	enum class CategoryID: unsigned short {
 		none = 0,
@@ -21,5 +20,5 @@ namespace dgmpp {
 		structure = 65,
 		structureModule = 66,
 		fighter = 87
-	};
+    };
 }

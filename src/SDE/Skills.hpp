@@ -3,7 +3,7 @@
 
 namespace dgmpp {
 	namespace SDE {
-		constexpr const MetaInfo::Type* skills_array[] = {
+        constexpr const MetaInfo::Type* skills_array[] = {
 			&Types::advancedPlanetology,
 			&Types::planetology,
 			&Types::interplanetaryConsolidation,
@@ -494,6 +494,21 @@ namespace dgmpp {
 			&Types::rareMoonOreProcessing,
 			&Types::exceptionalMoonOreProcessing,
 			&Types::flagCruisers,
-		};
-	}
+			&Types::precursorFrigate,
+			&Types::precursorCruiser,
+			&Types::precursorBattleship,
+			&Types::smallPrecursorWeapon,
+			&Types::mediumPrecursorWeapon,
+			&Types::largePrecursorWeapon,
+			&Types::smallDisintegratorSpecialization,
+			&Types::mediumDisintegratorSpecialization,
+			&Types::largeDisintegratorSpecialization,
+			&Types::precursorDestroyer,
+			&Types::precursorBattlecruiser,
+			&Types::triglavianQuantumEngineering,
+			&Types::triglavianEncryptionMethods,
+			&Types::precursorDreadnought,
+			&Types::capitalPrecursorWeapon
+        };
+    }
 }

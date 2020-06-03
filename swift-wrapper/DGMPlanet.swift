@@ -8,10 +8,10 @@
 import Foundation
 import cwrapper
 
-public class DGMPlanet: DGMObject {
+public class DGMPlanet: DGMObject, ObservableObject {
 	
 	public convenience init() {
-		self.init(dgmpp_planet_create(), owned: true)
+		self.init(dgmpp_planet_create())
 	}
 	
 	public func add(facility typeID: DGMTypeID, identifier: Int64 = 0) throws -> DGMFacility {
@@ -33,11 +33,13 @@ public class DGMPlanet: DGMObject {
 	}
 	
 	public func add(route: DGMRoute) {
-		dgmpp_planet_add_route(handle, route.from.handle, route.to.handle, dgmpp_commodity(route.commodity))
+        guard let from = route.from?.handle, let to = route.to?.handle else {return}
+		dgmpp_planet_add_route(handle, from, to, dgmpp_commodity(route.commodity))
 	}
 	
 	public func remove(route: DGMRoute) {
-		dgmpp_planet_remove_route(handle, route.from.handle, route.to.handle, dgmpp_commodity(route.commodity))
+        guard let from = route.from?.handle, let to = route.to?.handle else {return}
+		dgmpp_planet_remove_route(handle, from, to, dgmpp_commodity(route.commodity))
 	}
 	
 	public var lastUpdate: Date {

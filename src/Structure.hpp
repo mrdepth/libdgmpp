@@ -11,18 +11,14 @@
 namespace dgmpp {
 	class Structure: public Ship {
 	public:
-		Structure(TypeID typeID) : Ship(typeID) { setEnabled_(true); }
+        Structure(TypeID typeID);
 		Structure(const Structure& other) : Ship(other) { setEnabled_(other.isEnabled_()); }
 
-		static std::unique_ptr<Structure> Create (TypeID typeID) { return std::unique_ptr<Structure>(new Structure(typeID)); }
-		static std::unique_ptr<Structure> Create (const Structure& other) { return std::unique_ptr<Structure>(new Structure(other)); }
-		
 		TypeID fuelBlockTypeID() { return fuelBlockTypeID_; }
 		rate<Float, std::chrono::hours> fuelUse() { LOCK(this); return fuelUse_(); }
 		
-		Area* area() const noexcept { LOCK(this); return area_(); }
-		Area* area(std::unique_ptr<Area>&& area) { LOCK(this); return area_(std::move(area)); }
-		Area* area(TypeID typeID) { return area(Area::Create(typeID)); }
+		std::shared_ptr<Area> area() const noexcept { LOCK(this); return area_(); }
+		void area(const std::shared_ptr<Area>& area) { LOCK(this); return area_(area); }
 	protected:
 		virtual Type* domain_ (MetaInfo::Modifier::Domain domain) noexcept override;
 	private:

@@ -14,7 +14,8 @@ dgm-tool: tmp
 	$(CC) $(CFLAGS) ../tools/dgm-tool/src/Compiler.cpp ../tools/dgm-tool/src/main.cpp ../tools/dgm-tool/src/modifiersdump.cpp ../tools/dgm-tool/src/SQLiteDatabase.cpp -o $(T)/$@ -lsqlite3
 
 dgmExpressions.sql:
-	cd $(T); ${DUMP}/dump.py
+	cd $(T); cp ${DUMP}/*.sql .
+#cd $(T); ${DUMP}/dump.py
 
 dbpatch: dbpatch.h
 	$(CC) $(CFLAGS) ../tools/dbpatch/dbpatch/dbpatch.cpp -o $(T)/$@ -lsqlite3 -I $(T)/

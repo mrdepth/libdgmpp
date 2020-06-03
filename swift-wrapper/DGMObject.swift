@@ -8,19 +8,35 @@
 import Foundation
 import cwrapper
 
+fileprivate struct WeakReference<Value: AnyObject> {
+    weak var value: Value?
+}
+
+fileprivate var handles: [dgmpp_handle: WeakReference<DGMObject>] = [:]
+
 public class DGMObject {
 	var handle: dgmpp_handle
-	let owned: Bool
+    
+    static func get<T: DGMObject>(_ handle: dgmpp_handle, orCreate block: () -> T) -> T {
+        if let value = handles[handle]?.value as? T {
+            return value
+        }
+        else {
+            return block()
+//            let value = block()
+//            handles[handle] = WeakReference(value: value)
+//            return value
+        }
+    }
 	
-	public required init(_ handle: dgmpp_handle, owned: Bool) {
+	required init(_ handle: dgmpp_handle) {
 		self.handle = handle
-		self.owned = owned
+        handles[handle] = WeakReference(value: self)
 	}
 	
 	deinit {
-		if owned {
-			dgmpp_free(handle)
-		}
+        handles[handle] = nil
+        dgmpp_release(handle)
 	}
 	
 }
@@ -28,8 +44,8 @@ public class DGMObject {
 
 extension DGMObject: Hashable {
 	
-	public var hashValue: Int {
-		return handle.hashValue
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(handle)
 	}
 	
 	public static func ==(lhs: DGMObject, rhs: DGMObject) -> Bool {

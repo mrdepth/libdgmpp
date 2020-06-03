@@ -9,7 +9,7 @@
 #include "internal.h"
 
 DGMPP_TYPE dgmpp_get_type (dgmpp_type type) {
-	auto base = reinterpret_cast<Type*>(type);
+    auto base = get<Type>(type).get();
 	if (dynamic_cast<Gang*>(base))
 		return DGMPP_TYPE_GANG;
 	else if (dynamic_cast<Character*>(base))
@@ -30,51 +30,71 @@ DGMPP_TYPE dgmpp_get_type (dgmpp_type type) {
 		return DGMPP_TYPE_DRONE;
 	else if (dynamic_cast<Charge*>(base))
 		return DGMPP_TYPE_CHARGE;
+    else if (dynamic_cast<Area*>(base))
+        return DGMPP_TYPE_AREA;
+    else if (dynamic_cast<Cargo*>(base))
+        return DGMPP_TYPE_CARGO;
 	else
 		return DGMPP_TYPE_NONE;
 }
 
 
 dgmpp_type_id dgmpp_type_get_type_id (dgmpp_type type) {
-	return static_cast<dgmpp_type_id>(reinterpret_cast<Type*>(type)->metaInfo().typeID);
+    return static_cast<dgmpp_type_id>(get<Type>(type)->metaInfo().typeID);
 }
 
 dgmpp_group_id dgmpp_type_get_group_id (dgmpp_type type) {
-	return static_cast<dgmpp_group_id>(reinterpret_cast<Type*>(type)->metaInfo().groupID);
+    return static_cast<dgmpp_group_id>(get<Type>(type)->metaInfo().groupID);
 }
 
 dgmpp_category_id dgmpp_type_get_category_id (dgmpp_type type) {
-	return static_cast<dgmpp_category_id>(reinterpret_cast<Type*>(type)->metaInfo().categoryID);
+    return static_cast<dgmpp_category_id>(get<Type>(type)->metaInfo().categoryID);
 }
 
-dgmpp_type dgmpp_type_get_parent (dgmpp_type type) {
-	return reinterpret_cast<Type*>(type)->parent();
+dgmpp_type dgmpp_type_copy_parent (dgmpp_type type) {
+    if (auto parent = get<Type>(type)->parent()) {
+        return new_handle(parent->shared_from_this());
+    }
+    else {
+        return nullptr;
+    }
+    
 }
 
 dgmpp_attribute dgmpp_type_get_attribute (dgmpp_type type, dgmpp_attribute_id attribute_id) {
-	return (*reinterpret_cast<Type*>(type))[static_cast<AttributeID>(attribute_id)];
+	auto attribute = (*get<Type>(type))[static_cast<AttributeID>(attribute_id)];
+	return attribute;
 }
 
 dgmpp_array dgmpp_type_copy_affectors (dgmpp_type type) {
-	return dgmpp_make_array<Type*>(reinterpret_cast<Type*>(type)->affectors());
+    auto affectors = get<Type>(type)->affectors();
+    std::vector<dgmpp_handle> result;
+	result.reserve(affectors.size());
+    std::transform(affectors.begin(), affectors.end(), std::back_inserter(result), [](const auto& i) {
+		return new_handle(i->shared_from_this());
+        //return dgmpp_handle_store_impl<std::shared_ptr<Type>>(i->shared_from_this());
+    });
+    return dgmpp_make_array< dgmpp_handle>(std::move(result));
 }
 
 dgmpp_array dgmpp_type_copy_attributes (dgmpp_type type) {
-	return dgmpp_make_array<Attribute*>(reinterpret_cast<Type*>(type)->attributes());
+    auto attributes = get<Type>(type)->attributes();
+	std::vector<Attribute*> result(attributes.begin(), attributes.end());
+	return dgmpp_make_array<Attribute*>(std::move(result));
 }
 
 size_t dgmpp_type_get_identifier (dgmpp_type type) {
-	return reinterpret_cast<Type*>(type)->identifier();
+    return get<Type>(type)->identifier();
 }
 
 void dgmpp_type_set_identifier (dgmpp_type type, size_t identifier) {
-	reinterpret_cast<Type*>(type)->identifier(identifier);
+    get<Type>(type)->identifier(identifier);
 }
 
 DGMPP_META_GROUP dgmpp_type_get_meta_group (dgmpp_type type) {
-	return static_cast<DGMPP_META_GROUP>(reinterpret_cast<Type*>(type)->metaInfo().metaGroup);
+    return static_cast<DGMPP_META_GROUP>(get<Type>(type)->metaInfo().metaGroup);
 }
 
 size_t dgmpp_type_get_meta_level (dgmpp_type type) {
-	return reinterpret_cast<Type*>(type)->metaInfo().metaLevel;
+    return get<Type>(type)->metaInfo().metaLevel;
 }

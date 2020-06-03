@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		122E116F1FE7FB760057EB0D /* Dgmpp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12BE89001FE17D9300854893 /* Dgmpp.framework */; };
-		1246C465203C2D28000E0406 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DBEAA71E1D3B0E0088A486 /* main.cpp */; };
 		1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1248DB3E1F1DE90E009625EC /* QuartzCore.framework */; };
 		1285E8CB201B300100AAC231 /* cwrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1285E8CC201B300100AAC231 /* cwrapper.framework */; };
 		12BE88E01FE17B0F00854893 /* WarfareBuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE888B1FE17B0F00854893 /* WarfareBuff.cpp */; };
@@ -41,6 +39,7 @@
 		12BE88FB1FE17B0F00854893 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88DC1FE17B0F00854893 /* Type.cpp */; };
 		12BE88FC1FE17B0F00854893 /* CommandCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88DD1FE17B0F00854893 /* CommandCenter.cpp */; };
 		12BE88FD1FE17B0F00854893 /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BE88DE1FE17B0F00854893 /* Planet.cpp */; };
+		16BC88882416651100C6149A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128AA29E1FE0248600AD4ED3 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +50,16 @@
 			dstSubfolderSpec = 6;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1642852B24489DF4004B15E9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -157,7 +166,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1285E8CB201B300100AAC231 /* cwrapper.framework in Frameworks */,
-				122E116F1FE7FB760057EB0D /* Dgmpp.framework in Frameworks */,
 				1248DB3F1F1DE90E009625EC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,6 +323,7 @@
 				12DBEA931E1D3AEA0088A486 /* Sources */,
 				12DBEA941E1D3AEA0088A486 /* Frameworks */,
 				12DBEA951E1D3AEA0088A486 /* CopyFiles */,
+				1642852B24489DF4004B15E9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -331,23 +340,24 @@
 		12DBEA8F1E1D3AEA0088A486 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Artem Shimanski";
 				TargetAttributes = {
 					12DBEA961E1D3AEA0088A486 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = YB4RLQ4M9A;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 12DBEA921E1D3AEA0088A486 /* Build configuration list for PBXProject "sample" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 12DBEA8E1E1D3AEA0088A486;
 			productRefGroup = 12DBEA981E1D3AEA0088A486 /* Products */;
@@ -376,6 +386,7 @@
 				12BE88EA1FE17B0F00854893 /* Capacitor.cpp in Sources */,
 				12BE88F31FE17B0F00854893 /* Attribute.cpp in Sources */,
 				12BE88FD1FE17B0F00854893 /* Planet.cpp in Sources */,
+				16BC88882416651100C6149A /* main.swift in Sources */,
 				12BE88E71FE17B0F00854893 /* Character.cpp in Sources */,
 				12BE88F41FE17B0F00854893 /* Skill.cpp in Sources */,
 				12BE88FC1FE17B0F00854893 /* CommandCenter.cpp in Sources */,
@@ -393,7 +404,6 @@
 				12BE88E41FE17B0F00854893 /* Implant.cpp in Sources */,
 				12BE88F81FE17B0F00854893 /* ProductionCycle.cpp in Sources */,
 				12BE88E61FE17B0F00854893 /* Structure.cpp in Sources */,
-				1246C465203C2D28000E0406 /* main.cpp in Sources */,
 				12BE88F11FE17B0F00854893 /* Effect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +415,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -414,6 +425,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -421,6 +433,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -458,6 +471,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -467,6 +481,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -474,6 +489,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -506,12 +522,14 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -520,11 +538,13 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = YB4RLQ4M9A;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

@@ -15,7 +15,9 @@ namespace dgmpp {
 		using period = Period;
 		
 		rate() {};
-		constexpr explicit rate(const Rep& value) : rep_(value) {}
+		constexpr explicit rate(Rep value) : rep_{ value } {}
+		//template<typename T>
+		//constexpr explicit rate(T value) : rep_{ value } {}
 		
 		template<typename Period2>
 		constexpr operator rate<Rep, Period2> () noexcept {
@@ -39,7 +41,7 @@ namespace dgmpp {
 		
 		template<typename Period2, typename Rep2>
 		Rep operator* (const std::chrono::duration<Rep2, Period2>& p) const noexcept {
-			return rep_ * std::chrono::duration_cast<Period>(p).count();
+			return rep_ * Rep(std::chrono::duration_cast<Period>(p).count());
 		}
 		
 		auto operator/ (const rate<Rep, Period>& other) const noexcept {
@@ -109,6 +111,6 @@ namespace dgmpp {
 	template<typename Rep, typename Period>
 	auto make_rate(const Rep& value, const Period& period) noexcept {
 		auto c = period.count();
-		return rate<Rep, Period> (c > 0 ? value / c : Rep(0));
+		return rate<Rep, Period> (c > 0 ? value / static_cast<Rep>(c) : Rep(0));
 	}
 }

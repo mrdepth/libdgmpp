@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{8B2976C6-C7E6-40C7-9838-0272DB63B61B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>dgmpp</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Area.hpp" />
+    <ClInclude Include="..\..\src\Attribute.hpp" />
+    <ClInclude Include="..\..\src\Booster.hpp" />
+    <ClInclude Include="..\..\src\Capacitor.hpp" />
+    <ClInclude Include="..\..\src\Character.hpp" />
+    <ClInclude Include="..\..\src\Charge.hpp" />
+    <ClInclude Include="..\..\src\CommandCenter.hpp" />
+    <ClInclude Include="..\..\src\Commodity.hpp" />
+    <ClInclude Include="..\..\src\DamageVector.hpp" />
+    <ClInclude Include="..\..\src\dgmpp.hpp" />
+    <ClInclude Include="..\..\src\Drone.hpp" />
+    <ClInclude Include="..\..\src\Effect.hpp" />
+    <ClInclude Include="..\..\src\Errors.hpp" />
+    <ClInclude Include="..\..\src\ExtractorControlUnit.hpp" />
+    <ClInclude Include="..\..\src\Facility.hpp" />
+    <ClInclude Include="..\..\src\Factory.hpp" />
+    <ClInclude Include="..\..\src\Gang.hpp" />
+    <ClInclude Include="..\..\src\HeatSimulator.hpp" />
+    <ClInclude Include="..\..\src\HitPoints.hpp" />
+    <ClInclude Include="..\..\src\Implant.hpp" />
+    <ClInclude Include="..\..\src\MetaInfo.hpp" />
+    <ClInclude Include="..\..\src\Modifier.hpp" />
+    <ClInclude Include="..\..\src\Module.hpp" />
+    <ClInclude Include="..\..\src\Planet.hpp" />
+    <ClInclude Include="..\..\src\ProductionCycle.hpp" />
+    <ClInclude Include="..\..\src\ProductionState.hpp" />
+    <ClInclude Include="..\..\src\Rate.hpp" />
+    <ClInclude Include="..\..\src\Route.hpp" />
+    <ClInclude Include="..\..\src\SDE.hpp" />
+    <ClInclude Include="..\..\src\SDE\AttributeID.hpp" />
+    <ClInclude Include="..\..\src\SDE\Attributes.hpp" />
+    <ClInclude Include="..\..\src\SDE\CategoryID.hpp" />
+    <ClInclude Include="..\..\src\SDE\Commodities.hpp" />
+    <ClInclude Include="..\..\src\SDE\EffectID.hpp" />
+    <ClInclude Include="..\..\src\SDE\Effects.hpp" />
+    <ClInclude Include="..\..\src\SDE\Facilities.hpp" />
+    <ClInclude Include="..\..\src\SDE\GroupID.hpp" />
+    <ClInclude Include="..\..\src\SDE\Modifiers.hpp" />
+    <ClInclude Include="..\..\src\SDE\SchematicID.hpp" />
+    <ClInclude Include="..\..\src\SDE\Schematics.hpp" />
+    <ClInclude Include="..\..\src\SDE\Skills.hpp" />
+    <ClInclude Include="..\..\src\SDE\TypeID.hpp" />
+    <ClInclude Include="..\..\src\SDE\Types.hpp" />
+    <ClInclude Include="..\..\src\SDE\Version.hpp" />
+    <ClInclude Include="..\..\src\SDE\WarfareBuffID.hpp" />
+    <ClInclude Include="..\..\src\SDE\WarfareBuffs.hpp" />
+    <ClInclude Include="..\..\src\Ship.hpp" />
+    <ClInclude Include="..\..\src\Skill.hpp" />
+    <ClInclude Include="..\..\src\Spaceport.hpp" />
+    <ClInclude Include="..\..\src\Storage.hpp" />
+    <ClInclude Include="..\..\src\Structure.hpp" />
+    <ClInclude Include="..\..\src\Tank.hpp" />
+    <ClInclude Include="..\..\src\Type.hpp" />
+    <ClInclude Include="..\..\src\Utility.hpp" />
+    <ClInclude Include="..\..\src\WarfareBuff.hpp" />
+    <ClInclude Include="framework.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Area.cpp" />
+    <ClCompile Include="..\..\src\Attribute.cpp" />
+    <ClCompile Include="..\..\src\Booster.cpp" />
+    <ClCompile Include="..\..\src\Capacitor.cpp" />
+    <ClCompile Include="..\..\src\Character.cpp" />
+    <ClCompile Include="..\..\src\Charge.cpp" />
+    <ClCompile Include="..\..\src\CommandCenter.cpp" />
+    <ClCompile Include="..\..\src\Commodity.cpp" />
+    <ClCompile Include="..\..\src\Drone.cpp" />
+    <ClCompile Include="..\..\src\Effect.cpp" />
+    <ClCompile Include="..\..\src\ExtractorControlUnit.cpp" />
+    <ClCompile Include="..\..\src\Facility.cpp" />
+    <ClCompile Include="..\..\src\Factory.cpp" />
+    <ClCompile Include="..\..\src\Gang.cpp" />
+    <ClCompile Include="..\..\src\HeatSimulator.cpp" />
+    <ClCompile Include="..\..\src\Implant.cpp" />
+    <ClCompile Include="..\..\src\Modifier.cpp" />
+    <ClCompile Include="..\..\src\Module.cpp" />
+    <ClCompile Include="..\..\src\Planet.cpp" />
+    <ClCompile Include="..\..\src\ProductionCycle.cpp" />
+    <ClCompile Include="..\..\src\ProductionState.cpp" />
+    <ClCompile Include="..\..\src\Route.cpp" />
+    <ClCompile Include="..\..\src\SDE.cpp" />
+    <ClCompile Include="..\..\src\Ship.cpp" />
+    <ClCompile Include="..\..\src\Skill.cpp" />
+    <ClCompile Include="..\..\src\Spaceport.cpp" />
+    <ClCompile Include="..\..\src\Storage.cpp" />
+    <ClCompile Include="..\..\src\Structure.cpp" />
+    <ClCompile Include="..\..\src\Type.cpp" />
+    <ClCompile Include="..\..\src\WarfareBuff.cpp" />
+    <ClCompile Include="dgmpp.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

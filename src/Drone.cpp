@@ -14,8 +14,12 @@ namespace dgmpp {
 	const Drone::SquadronTag Drone::anySquadronTag = -1;
 	
 	Drone::~Drone() {
-		if (targetValue_)
-			targetValue_->removeProjected_(this);
+        if (auto target = targetValue_.lock())
+            target->removeProjected_(this);
+        
+        if (charge_ != nullptr) {
+            charge_->parent_(nullptr);
+        }
 	}
 	
 	Drone::Drone (TypeID typeID): Type(typeID) {
@@ -53,9 +57,9 @@ namespace dgmpp {
 		Type(other),
 		squadron_(other.squadron_),
 		squadronSize_(other.squadronSize_),
-		charge_ ([this, &other]() -> std::unique_ptr<Charge> {
+		charge_ ([this, &other]() -> std::shared_ptr<Charge> {
 			if (auto charge = other.charge_.get()) {
-				auto myCharge = Charge::Create(*charge);
+				auto myCharge = std::make_shared<Charge>(*charge);
 				myCharge->parent_(this);
 				return myCharge;
 			}
@@ -77,14 +81,14 @@ namespace dgmpp {
 		
 		batchUpdates_([&]() {
 			if (active) {
-				activateEffects_(MetaInfo::Effect::Category::generic);
+				activateEffects_(MetaInfo::Effect::Category::passive);
 				activateEffects_(MetaInfo::Effect::Category::target);
 				if (charge_ != nullptr)
 					charge_->setEnabled_(true);
 			}
 			else {
 				deactivateEffects_(MetaInfo::Effect::Category::target);
-				deactivateEffects_(MetaInfo::Effect::Category::generic);
+				deactivateEffects_(MetaInfo::Effect::Category::passive);
 				if (charge_ != nullptr)
 					charge_->setEnabled_(false);
 			}
@@ -96,16 +100,16 @@ namespace dgmpp {
 		flags_.kamikaze = kamikaze;
 	}
 	
-	void Drone::target_(Ship* target) {
+	void Drone::target_(const std::shared_ptr<Ship>& target) {
 		batchUpdates_([&]() {
-			if (targetValue_) {
+			if (auto target = targetValue_.lock()) {
 				if (active_())
 					deactivateEffects_(MetaInfo::Effect::Category::target);
-				targetValue_->removeProjected_(this);
+				target->removeProjected_(this);
 			}
 			targetValue_ = target;
 			if (target) {
-				targetValue_->project_(this);
+				target->project_(this);
 				if (active_())
 					activateEffects_(MetaInfo::Effect::Category::target);
 			}
@@ -120,14 +124,14 @@ namespace dgmpp {
 		
 
 		if (enabled && active_()) {
-			activateEffects_(MetaInfo::Effect::Category::generic);
+			activateEffects_(MetaInfo::Effect::Category::passive);
 			activateEffects_(MetaInfo::Effect::Category::target);
 			if (charge_ != nullptr)
 				charge_->setEnabled_(enabled);
 		}
 		else {
 			deactivateEffects_(MetaInfo::Effect::Category::target);
-			deactivateEffects_(MetaInfo::Effect::Category::generic);
+			deactivateEffects_(MetaInfo::Effect::Category::passive);
 			if (charge_ != nullptr)
 				charge_->setEnabled_(enabled);
 		}
@@ -136,7 +140,7 @@ namespace dgmpp {
 	Type* Drone::domain_ (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::target :
-				return targetValue_;
+				return targetValue_.lock().get();
 			default:
 				return Type::domain_(domain);
 		}
@@ -179,11 +183,11 @@ namespace dgmpp {
 			return volley;
 		}
 		else
-			return {0};
+			return DamageVector{0};
 	}
 	
 	DamageVector Drone::droneVolley_() {
-		auto volley = DamageVector(0);
+		auto volley = DamageVector{ 0 };
 		auto& item = charge_ ? *static_cast<Type*> (charge_.get()) : *static_cast<Type*>(this);
 		
 		if (auto attribute = item.attribute_(AttributeID::emDamage))
@@ -288,7 +292,7 @@ namespace dgmpp {
 				if (target.velocity.count() > 0) {
 					auto velocity = this->velocity_();
 					if (velocity < target.velocity)
-						return DamagePerSecond(0);
+						return DamagePerSecond(0.0);
 					
 					decltype(velocity) v {std::sqrt(velocity.count() * velocity.count() - target.velocity.count() * target.velocity.count())};
 					orbitVelocity = std::min(orbitVelocity, v);
@@ -328,7 +332,6 @@ namespace dgmpp {
 	}
 	
 	DamagePerSecond Drone::rawDPS_() {
-		
 		auto dps = make_rate(droneVolley_(), cycleTime_());
 		
 		if (auto attribute = attribute_(AttributeID::fighterAbilityAttackMissileDuration); attribute && attribute->value_() > 0)

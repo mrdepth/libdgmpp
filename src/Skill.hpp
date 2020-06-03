@@ -17,8 +17,6 @@ namespace dgmpp {
 	protected:
 	private:
 		friend class Character;
-		static std::unique_ptr<Skill> Create (const MetaInfo::Type& metaInfo) { return std::unique_ptr<Skill>(new Skill(metaInfo)); }
-		static std::unique_ptr<Skill> Create (const Skill& other) { return std::unique_ptr<Skill>(new Skill(other)); }
 		Skill (const MetaInfo::Type& metaInfo) : Type(metaInfo) {};
 		Skill (const Skill& other) : Type(other) {};
 		

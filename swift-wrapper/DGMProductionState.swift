@@ -8,8 +8,13 @@
 import Foundation
 import cwrapper
 
-public class DGMState: DGMObject {
-	
+public class DGMState {
+	var handle: dgmpp_state
+    
+    required init(_ handle: dgmpp_state) {
+        self.handle = handle
+    }
+    
 	public var timestamp: Date {
 		return Date(timeIntervalSinceReferenceDate: dgmpp_state_get_timestamp(handle))
 	}

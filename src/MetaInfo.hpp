@@ -113,7 +113,7 @@ namespace dgmpp {
 								Domain require)
 			: type(type), association(association), domain(domain), modifiedAttributeID(modifiedAttributeID), modifyingAttributeID(modifyingAttributeID), require(require) {}
 			
-			Modifier (const Modifier& other) = delete;
+			Modifier (const Modifier& other) = default;
 			Modifier (Modifier&& other) = delete;
 			Modifier& operator= (const Modifier& other) = delete;
 			Modifier& operator= (Modifier&& other) = delete;
@@ -122,11 +122,11 @@ namespace dgmpp {
 		
 		struct Effect {
 			enum class Category {
-				generic,
-				active,
-				target,
 				passive,
-				overloaded,
+				activation,
+				target,
+				online,
+				overload,
 				dungeon,
 				system
 			};
@@ -164,9 +164,7 @@ namespace dgmpp {
 
 		struct WarfareBuff {
 			WarfareBuffID warfareBuffID;
-			AttributeID modifyingAttributeID;
-			constexpr WarfareBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID)
-			: warfareBuffID(warfareBuffID), modifyingAttributeID(modifyingAttributeID) {}
+			constexpr WarfareBuff(WarfareBuffID warfareBuffID) : warfareBuffID(warfareBuffID) {}
 			virtual slice<const Modifier* const*> modifiers() const noexcept = 0;
 			
 			WarfareBuff (const WarfareBuff& other) = delete;
@@ -178,8 +176,8 @@ namespace dgmpp {
 		
 		template<typename Modifiers>
 		struct _WarfareBuff : public WarfareBuff {
-			constexpr _WarfareBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID, const Modifiers& modifiers)
-			: WarfareBuff(warfareBuffID, modifyingAttributeID), modifiers_(modifiers) {}
+			constexpr _WarfareBuff(WarfareBuffID warfareBuffID, const Modifiers& modifiers)
+			: WarfareBuff(warfareBuffID), modifiers_(modifiers) {}
 			
 			virtual slice<const Modifier* const*> modifiers() const noexcept override {
 				return { modifiers_.data(), modifiers_.data() + modifiers_.size() };
@@ -331,8 +329,8 @@ namespace dgmpp {
 		}
 
 		template <typename Modifiers>
-		constexpr _WarfareBuff<Modifiers> MakeBuff(WarfareBuffID warfareBuffID, AttributeID modifyingAttributeID, const Modifiers& modifiers) {
-			return { warfareBuffID, modifyingAttributeID, modifiers };
+		constexpr _WarfareBuff<Modifiers> MakeBuff(WarfareBuffID warfareBuffID, const Modifiers& modifiers) {
+			return { warfareBuffID, modifiers };
 		}
 
 		template <typename Inputs>

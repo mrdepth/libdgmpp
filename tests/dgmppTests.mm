@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "dgmpp.hpp"
 #include <memory>
+#include <iterator>
 
 using namespace std::chrono_literals;
 using namespace dgmpp;
@@ -32,21 +33,25 @@ using namespace dgmpp;
 
 - (void) testSlots {
 	auto gang = Gang();
-	auto pilot = gang.addPilot();
-	auto ship = pilot->ship(TypeID::dominix);
+    auto pilot = std::make_shared<Character>();
+	gang.add(pilot);
+    auto ship = std::make_shared<Ship>(TypeID::dominix);
+	pilot->ship(ship);
+    
 	auto hi0 = ship->freeSlots(Module::Slot::hi);
 	auto med0 = ship->freeSlots(Module::Slot::med);
 	auto low0 = ship->freeSlots(Module::Slot::low);
 	auto turrets0 = ship->freeHardpoints(Module::Hardpoint::turret);
 	
-	auto module = ship->addModule(TypeID::ionBlasterCannonII);
+    auto module = std::make_shared<Module>(TypeID::ionBlasterCannonII);
+	ship->add(module);
 	
 	auto hi1 = ship->freeSlots(Module::Slot::hi);
 	auto med1 = ship->freeSlots(Module::Slot::med);
 	auto low1 = ship->freeSlots(Module::Slot::low);
 	auto turrets1 = ship->freeHardpoints(Module::Hardpoint::turret);
 	
-	ship->remove(module);
+	ship->remove(module.get());
 
 	auto hi2 = ship->freeSlots(Module::Slot::hi);
 	auto med2 = ship->freeSlots(Module::Slot::med);
@@ -71,10 +76,12 @@ using namespace dgmpp;
 }
 
 - (void) testSkills {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	auto ship = pilot->ship(Ship::Create(TypeID::dominix));
-	ship->add(Module::Create(TypeID::largeArmorRepairerI));
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    auto ship = std::make_shared<Ship>(TypeID::dominix);
+    pilot->ship(ship);
+    ship->add(std::make_shared<Module>(TypeID::largeArmorRepairerI));
 	
 	auto hp0 = ship->hitPoints();
 	auto tank0 = ship->tank();
@@ -91,23 +98,28 @@ using namespace dgmpp;
 }
 
 - (void) testGangBoost {
-	auto gang = Gang::Create();
-	auto pilotA = gang->add(Character::Create());
+    auto gang = Gang();
+    auto pilotA = std::make_shared<Character>();
+    gang.add(pilotA);
 	pilotA->setSkillLevels(5);
-	auto shipA = pilotA->ship(Ship::Create(TypeID::dominix));
-	shipA->add(Module::Create(TypeID::largeArmorRepairerI));
+    auto shipA = std::make_shared<Ship>(TypeID::dominix);
+	pilotA->ship(shipA);
+    shipA->add(std::make_shared<Module>(TypeID::largeArmorRepairerI));
 	
 	auto ehp0 = shipA->effectiveHitPoints();
 
-	auto pilotB = gang->add(Character::Create());
+    auto pilotB = std::make_shared<Character>();
+    gang.add(pilotB);
 	pilotB->setSkillLevels(5);
-	auto shipB = pilotB->ship(Ship::Create(TypeID::erebus));
-	shipB->add(Module::Create(TypeID::gallentePhenomenaGenerator));
+    auto shipB = std::make_shared<Ship>(TypeID::erebus);
+    pilotB->ship(shipB);
+    shipB->add(std::make_shared<Module>(TypeID::gallentePhenomenaGenerator));
 	
 	auto ehp1 = shipA->effectiveHitPoints();
 	
-	auto burst = shipB->add(Module::Create(TypeID::shieldCommandBurstI));
-	burst->charge(Charge::Create(TypeID::shieldHarmonizingCharge));
+    auto burst = std::make_shared<Module>(TypeID::shieldCommandBurstI);
+	shipB->add(burst);
+	burst->charge(std::make_shared<Charge>(TypeID::shieldHarmonizingCharge));
 	
 	auto ehp2 = shipA->effectiveHitPoints();
 	burst->charge(nullptr);
@@ -121,15 +133,17 @@ using namespace dgmpp;
 
 
 - (void) testRepairers {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
 	pilot->setSkillLevels(5);
 
-	auto ship = pilot->ship(TypeID::dominix);
+    auto ship = std::make_shared<Ship>(TypeID::dominix);
+    pilot->ship(ship);
 	auto tank0 = ship->tank();
-	XCTAssertNotEqual(ship->addModule(TypeID::largeArmorRepairerI), nullptr);
-	XCTAssertNotEqual(ship->addModule(TypeID::largeShieldBoosterI), nullptr);
-	XCTAssertNotEqual(ship->addModule(TypeID::largeHullRepairerI), nullptr);
+    ship->add(std::make_shared<Module>(TypeID::largeArmorRepairerI));
+    ship->add(std::make_shared<Module>(TypeID::largeShieldBoosterI));
+    ship->add(std::make_shared<Module>(TypeID::largeHullRepairerI));
 	auto tank1 = ship->tank();
 	
 	XCTAssertTrue(tank1.armorRepair > tank0.armorRepair);
@@ -139,16 +153,22 @@ using namespace dgmpp;
 }
 
 - (void) testRemoteRepairers {
-	auto gang = Gang::Create();
-	auto pilotA = gang->addPilot();
-	auto pilotB = gang->addPilot();
+    auto gang = Gang();
+    auto pilotA = std::make_shared<Character>();
+    auto pilotB = std::make_shared<Character>();
+	gang.add(pilotA);
+	gang.add(pilotB);
 	pilotA->setSkillLevels(5);
 	pilotB->setSkillLevels(5);
 	
-	auto shipA = pilotA->ship(TypeID::dominix);
-	auto shipB = pilotB->ship(TypeID::dominix);
+    auto shipA = std::make_shared<Ship>(TypeID::dominix);
+    auto shipB = std::make_shared<Ship>(TypeID::dominix);
+	pilotA->ship(shipA);
+	pilotB->ship(shipB);
 	
-	auto repairers = {shipA->addModule(TypeID::largeRemoteArmorRepairerI), shipA->addModule(TypeID::largeRemoteShieldBoosterI), shipA->addModule(TypeID::largeRemoteHullRepairerI)};
+	auto repairers = {std::make_shared<Module>(TypeID::largeRemoteArmorRepairerI), std::make_shared<Module>(TypeID::largeRemoteShieldBoosterI), std::make_shared<Module>(TypeID::largeRemoteHullRepairerI)};
+    for (auto i: repairers)
+        shipA->add(i);
 	
 	auto tank0 = shipB->tank();
 	
@@ -162,26 +182,30 @@ using namespace dgmpp;
 }
 
 - (void) testAncillaries {
-	auto gang = Gang::Create();
-	auto pilot = gang->addPilot();
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
 	pilot->setSkillLevels(5);
 	
-	auto ship = pilot->ship(TypeID::dominix);
+    auto ship = std::make_shared<Ship>(TypeID::dominix);
+    pilot->ship(ship);
 	auto tank0 = ship->tank();
-	auto repairer = ship->addModule(TypeID::largeAncillaryArmorRepairer);
+    auto repairer = std::make_shared<Module>(TypeID::largeAncillaryArmorRepairer);
+	ship->add(repairer);
+    
 	auto tank1 = ship->tank();
-	repairer->charge(TypeID::naniteRepairPaste);
+	repairer->charge(std::make_shared<Charge>(TypeID::naniteRepairPaste));
 	auto tank2 = ship->tank();
 
 	XCTAssertGreaterThan(tank1.armorRepair, tank0.armorRepair);
 	XCTAssertGreaterThan(tank2.armorRepair, tank1.armorRepair);
 	
-	ship->remove(repairer);
+	ship->remove(repairer.get());
 	auto capUsed0 = ship->capacitor().use();
-	auto booster = ship->addModule(TypeID::largeAncillaryShieldBooster);
+    auto booster = std::make_shared<Module>(TypeID::largeAncillaryShieldBooster);
+	ship->add(booster);
 	auto capUsed1 = ship->capacitor().use();
-	auto charge = booster->charge(TypeID::capBooster200);
-	XCTAssertNotEqual(charge, nullptr);
+	booster->charge(std::make_shared<Charge>(TypeID::capBooster200));
 	auto capUsed2 = ship->capacitor().use();
 
 	XCTAssertGreaterThan(capUsed1, capUsed0);
@@ -190,19 +214,30 @@ using namespace dgmpp;
 }
 
 - (void) testEnergyDrainers {
-	auto gang = Gang::Create();
-	auto pilotA = gang->addPilot();
-	auto pilotB = gang->addPilot();
+    auto gang = Gang();
+    auto pilotA = std::make_shared<Character>();
+    auto pilotB = std::make_shared<Character>();
+    gang.add(pilotA);
+    gang.add(pilotB);
 	pilotA->setSkillLevels(5);
 	pilotB->setSkillLevels(5);
 	
-	auto shipA = pilotA->ship(TypeID::dominix);
-	auto shipB = pilotB->ship(TypeID::dominix);
+    auto shipA = std::make_shared<Ship>(TypeID::dominix);
+    auto shipB = std::make_shared<Ship>(TypeID::dominix);
+    pilotA->ship(shipA);
+    pilotB->ship(shipB);
 
 	GigaJoulePerSecond capUsed0[] = {shipA->capacitor().use(), shipB->capacitor().use(), shipA->capacitor().recharge(), shipB->capacitor().recharge()};
-	shipA->addModule(TypeID::heavyEnergyNeutralizerI)->target(shipB);
+    auto moduleA = std::make_shared<Module>(TypeID::heavyEnergyNeutralizerI);
+    shipA->add(moduleA);
+    moduleA->target(shipB);
+    
 	GigaJoulePerSecond capUsed1[] = {shipA->capacitor().use(), shipB->capacitor().use(), shipA->capacitor().recharge(), shipB->capacitor().recharge()};
-	shipA->addModule(TypeID::heavyEnergyNosferatuI)->target(shipB);
+    
+    auto moduleB = std::make_shared<Module>(TypeID::heavyEnergyNosferatuI);
+    shipA->add(moduleB);
+    moduleB->target(shipB);
+
 	GigaJoulePerSecond capUsed2[] = {shipA->capacitor().use(), shipB->capacitor().use(), shipA->capacitor().recharge(), shipB->capacitor().recharge()};
 
 	XCTAssertGreaterThan(capUsed1[0], capUsed0[0]);
@@ -213,7 +248,9 @@ using namespace dgmpp;
 	XCTAssertGreaterThan(capUsed1[1], capUsed0[1]);
 	XCTAssertGreaterThan(capUsed2[1], capUsed1[1]);
 	
-	shipA->addModule(TypeID::largeRemoteCapacitorTransmitterI)->target(shipB);
+    auto moduleC = std::make_shared<Module>(TypeID::largeRemoteCapacitorTransmitterI);
+    shipA->add(moduleC);
+    moduleC->target(shipB);
 	GigaJoulePerSecond capUsed3[] = {shipA->capacitor().use(), shipB->capacitor().use(), shipA->capacitor().recharge(), shipB->capacitor().recharge()};
 
 	XCTAssertGreaterThan(capUsed3[0], capUsed2[0]);
@@ -221,18 +258,20 @@ using namespace dgmpp;
 }
 
 - (void) testDrones {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(Ship::Create(TypeID::dominix));
-	
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::dominix);
+    pilot->ship(ship);
+
 	auto dps0 = ship->dronesDPS() * 1s;
 	for (int i = 0; i < 5; i++)
-		ship->add(Drone::Create(TypeID::ogreII));
+		ship->add(std::make_shared<Drone>(TypeID::ogreII));
 	auto dps1 = ship->dronesDPS() * 1s;
 	
 	for (const auto& i: ship->drones())
-		ship->remove(i);
+		ship->remove(i.get());
 	
 	auto dps2 = ship->dronesDPS() * 1s;
 
@@ -242,15 +281,17 @@ using namespace dgmpp;
 }
 
 - (void) testArea {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(Ship::Create(TypeID::dominix));
-	
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::dominix);
+    pilot->ship(ship);
+
 	auto ehp0 = ship->effectiveHitPoints();
-	gang->area(Area::Create(TypeID::wolfRayetEffectBeaconClass6));
+	gang.area(std::make_shared<Area>(TypeID::wolfRayetEffectBeaconClass6));
 	auto ehp1 = ship->effectiveHitPoints();
-	gang->area(nullptr);
+	gang.area(nullptr);
 	auto ehp2 = ship->effectiveHitPoints();
 	
 	XCTAssertGreaterThan(ehp1.total(), ehp0.total());
@@ -259,21 +300,30 @@ using namespace dgmpp;
 }
 
 - (void) testCopy {
-	auto gang = Gang::Create();
-	auto pilotA = gang->addPilot();
-	auto pilotB = gang->addPilot();
-	pilotA->setSkillLevels(5);
-	pilotB->setSkillLevels(5);
-	
-	auto shipA = pilotA->ship(TypeID::dominix);
-	auto shipB = pilotB->ship(TypeID::dominix);
-	
-	shipA->addModule(TypeID::heavyEnergyNeutralizerI)->target(shipB);
+    auto gang = Gang();
+    auto pilotA = std::make_shared<Character>();
+    auto pilotB = std::make_shared<Character>();
+    gang.add(pilotA);
+    gang.add(pilotB);
+    pilotA->setSkillLevels(5);
+    pilotB->setSkillLevels(5);
+    
+    auto shipA = std::make_shared<Ship>(TypeID::dominix);
+    auto shipB = std::make_shared<Ship>(TypeID::dominix);
+    pilotA->ship(shipA);
+    pilotB->ship(shipB);
+
+    auto module = std::make_shared<Module>(TypeID::heavyEnergyNeutralizerI);
+	shipA->add(module);
+    module->target(shipB);
 	GigaJoulePerSecond capUsed0[] = {shipA->capacitor().use(), shipB->capacitor().use(), shipA->capacitor().recharge(), shipB->capacitor().recharge()};
 	
-	auto gangB = Gang::Create(*gang);
-	auto shipA2 = gangB->pilots()[0]->ship();
-	auto shipB2 = gangB->pilots()[1]->ship();
+	auto gangB = Gang(gang);
+    auto pilots = gangB.pilots();
+    auto i = pilots.begin();
+	auto shipA2 = (*i)->ship();
+    i = std::next(i);
+	auto shipB2 = (*i)->ship();
 	GigaJoulePerSecond capUsed1[] = {shipA2->capacitor().use(), shipB2->capacitor().use(), shipA2->capacitor().recharge(), shipB2->capacitor().recharge()};
 	
 	for (auto i = 0; i < 3; i++)
@@ -281,32 +331,47 @@ using namespace dgmpp;
 }
 
 - (void) testDisallows {
-	auto gang = Gang::Create();
-	auto pilotA = gang->addPilot();
-	auto pilotB = gang->addPilot();
-	auto pilotC = gang->addPilot();
-	pilotA->setSkillLevels(5);
-	pilotB->setSkillLevels(5);
-	pilotC->setSkillLevels(5);
-	
-	auto shipA = pilotA->ship(TypeID::kronos);
-	auto shipB = pilotB->ship(TypeID::dominix);
-	auto shipC = pilotC->ship(TypeID::erebus);
-	
+    auto gang = Gang();
+    auto pilotA = std::make_shared<Character>();
+    auto pilotB = std::make_shared<Character>();
+    auto pilotC = std::make_shared<Character>();
+    gang.add(pilotA);
+    gang.add(pilotB);
+    gang.add(pilotC);
+    pilotA->setSkillLevels(5);
+    pilotB->setSkillLevels(5);
+    pilotC->setSkillLevels(5);
+    
+    auto shipA = std::make_shared<Ship>(TypeID::kronos);
+    auto shipB = std::make_shared<Ship>(TypeID::dominix);
+    auto shipC = std::make_shared<Ship>(TypeID::erebus);
+    pilotA->ship(shipA);
+    pilotB->ship(shipB);
+    pilotC->ship(shipC);
+
 	auto capUse0 = shipA->capacitor().use();
 	auto tankA0 = shipA->tank();
 	auto tankC0 = shipC->tank();
 	
-	shipB->addModule(TypeID::heavyEnergyNeutralizerI)->target(shipA);
-	shipB->addModule(TypeID::largeRemoteArmorRepairerI)->target(shipA);
-	shipB->addModule(TypeID::largeRemoteArmorRepairerI)->target(shipC);
+    auto module1 = std::make_shared<Module>(TypeID::heavyEnergyNeutralizerI);
+    auto module2 = std::make_shared<Module>(TypeID::largeRemoteArmorRepairerI);
+    auto module3 = std::make_shared<Module>(TypeID::largeRemoteArmorRepairerI);
+    
+    shipB->add(module1);
+    shipB->add(module2);
+    shipB->add(module3);
+    
+	module1->target(shipA);
+	module2->target(shipA);
+	module3->target(shipC);
 	
 	auto capUse1 = shipA->capacitor().use();
 	auto tankA1 = shipA->tank();
 	auto tankC1 = shipC->tank();
 	
-	auto bastion = shipA->addModule(TypeID::bastionModuleI);
-	shipC->addModule(TypeID::jumpPortalGeneratorI);
+    auto bastion = std::make_shared<Module>(TypeID::bastionModuleI);
+	shipA->add(bastion);
+	shipC->add(std::make_shared<Module>(TypeID::jumpPortalGeneratorI));
 
 	auto capUse2 = shipA->capacitor().use();
 	auto tankA2 = shipA->tank();
@@ -322,15 +387,17 @@ using namespace dgmpp;
 }
 	
 - (void) testKamikaze {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(Ship::Create(TypeID::nyx));
-	
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::nyx);
+    pilot->ship(ship);
+
 	auto volley0 = ship->dronesVolley();
 	
 	for (int i = 0; i < 6 * 3; i++)
-		ship->add(Drone::Create(TypeID::shadow));
+		ship->add(std::make_shared<Drone>(TypeID::shadow));
 	
 	auto volley1 = ship->dronesVolley();
 	
@@ -346,30 +413,36 @@ using namespace dgmpp;
 }
 
 - (void) testCapBooster {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(Ship::Create(TypeID::loki));
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::loki);
+    pilot->ship(ship);
 	
-	ship->addModule(TypeID::lokiCoreImmobilityDrivers);
-	ship->addModule(TypeID::lokiDefensiveCovertReconfiguration);
-	ship->addModule(TypeID::lokiOffensiveProjectileScopingArray);
-	ship->addModule(TypeID::lokiPropulsionWakeLimiter);
+	ship->add(std::make_shared<Module>(TypeID::lokiCoreImmobilityDrivers));
+	ship->add(std::make_shared<Module>(TypeID::lokiDefensiveCovertReconfiguration));
+	ship->add(std::make_shared<Module>(TypeID::lokiOffensiveProjectileScopingArray));
+	ship->add(std::make_shared<Module>(TypeID::lokiPropulsionWakeLimiter));
 	
-	ship->addModule(TypeID::gyrostabilizerII);
-	ship->addModule(TypeID::gyrostabilizerII);
+	ship->add(std::make_shared<Module>(TypeID::gyrostabilizerII));
+	ship->add(std::make_shared<Module>(TypeID::gyrostabilizerII));
 
-	ship->addModule(TypeID::adaptiveInvulnerabilityFieldII);
-	ship->addModule(TypeID::pithXTypeLargeShieldBooster);
-	ship->addModule(TypeID::_100MNYS8CompactAfterburner);
-	auto capBooster = ship->addModule(TypeID::ammatarNavyMediumCapacitorBooster);
-	capBooster->charge(TypeID::navyCapBooster800);
-	ship->addModule(TypeID::caldariNavyStasisWebifier);
-	ship->addModule(TypeID::caldariNavyWarpDisruptor);
-	ship->addModule(TypeID::caldariNavyStasisWebifier);
+	ship->add(std::make_shared<Module>(TypeID::adaptiveInvulnerabilityFieldII));
+	ship->add(std::make_shared<Module>(TypeID::pithXTypeLargeShieldBooster));
+	ship->add(std::make_shared<Module>(TypeID::_100MNYS8CompactAfterburner));
+	auto capBooster = std::make_shared<Module>(TypeID::ammatarNavyMediumCapacitorBooster);
+    ship->add(capBooster);
+	capBooster->charge(std::make_shared<Charge>(TypeID::navyCapBooster800));
+	ship->add(std::make_shared<Module>(TypeID::caldariNavyStasisWebifier));
+	ship->add(std::make_shared<Module>(TypeID::caldariNavyWarpDisruptor));
+	ship->add(std::make_shared<Module>(TypeID::caldariNavyStasisWebifier));
 	
-	for (int i = 0; i < 5; i++)
-		ship->addModule(TypeID::_425mmAutoCannonII)->charge(TypeID::republicFleetEMPM);
+    for (int i = 0; i < 5; i++) {
+        auto module = std::make_shared<Module>(TypeID::_425mmAutoCannonII);
+        ship->add(module);
+        module->charge(std::make_shared<Charge>(TypeID::republicFleetEMPM));
+    }
 	
 	auto lasts0 = ship->capacitor().lastsTime().count();
 	capBooster->state(Module::State::offline);
@@ -378,7 +451,7 @@ using namespace dgmpp;
 }
 
 - (void) testStructure {
-	auto structure = Structure::Create(TypeID::astrahus);
+	auto structure = std::make_shared<Structure>(TypeID::astrahus);
 	auto hi0 = structure->freeSlots(Module::Slot::hi);
 	auto med0 = structure->freeSlots(Module::Slot::med);
 	auto low0 = structure->freeSlots(Module::Slot::low);
@@ -386,10 +459,11 @@ using namespace dgmpp;
 	auto cpu0 = structure->usedCPU();
 	auto ehp0 = structure->effectiveHitPoints();
 
-	structure->add(Module::Create(TypeID::standupXLEnergyNeutralizerII));
-	structure->add(Module::Create(TypeID::standupCapBatteryII));
-	structure->add(Module::Create(TypeID::standupCapacitorPowerRelayII));
-	structure->add(Module::Create(TypeID::standupLayeredArmorPlatingI));
+	structure->add(std::make_shared<Module>(TypeID::standupXLEnergyNeutralizerII));
+	structure->add(std::make_shared<Module>(TypeID::standupCapBatteryII));
+	structure->add(std::make_shared<Module>(TypeID::standupCapacitorPowerRelayII));
+	structure->add(std::make_shared<Module>(TypeID::standupHyasyodaResearchLab));
+	structure->add(std::make_shared<Module>(TypeID::standupLayeredArmorPlatingI));
 
 	auto hi1 = structure->freeSlots(Module::Slot::hi);
 	auto med1 = structure->freeSlots(Module::Slot::med);
@@ -407,8 +481,9 @@ using namespace dgmpp;
 }
 
 - (void) testVindicator1 {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
+	auto gang = std::make_shared<Gang>();
+    auto pilot = std::make_shared<Character>();
+	gang->add(pilot);
 	pilot->setSkillLevels(5);
 
 	auto skills = pilot->skills();
@@ -416,24 +491,27 @@ using namespace dgmpp;
 
 	(*std::find_if(skills.begin(), skills.end(), [](auto i) { return i->metaInfo().typeID == TypeID::largeBlasterSpecialization; }))->level(4);
 
-	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+    auto ship = std::make_shared<Ship>(TypeID::vindicator);
+	pilot->ship(ship);
 	
-	ship->addModule(TypeID::expandedCargoholdII);
-	ship->addModule(TypeID::expandedCargoholdI);
-	ship->addModule(TypeID::overdriveInjectorSystemI);
-	ship->addModule(TypeID::overdriveInjectorSystemII);
-	ship->addModule(TypeID::largeAntiKineticPumpI);
-	ship->addModule(TypeID::largeAntiThermalPumpII);
-	ship->addModule(TypeID::_500MNMicrowarpdriveII);
-	ship->addModule(TypeID::magneticFieldStabilizerI);
-	ship->addModule(TypeID::magneticFieldStabilizerII);
-	ship->addModule(TypeID::magneticFieldStabilizerII);
+	ship->add(std::make_shared<Module>(TypeID::expandedCargoholdII));
+	ship->add(std::make_shared<Module>(TypeID::expandedCargoholdI));
+	ship->add(std::make_shared<Module>(TypeID::overdriveInjectorSystemI));
+	ship->add(std::make_shared<Module>(TypeID::overdriveInjectorSystemII));
+	ship->add(std::make_shared<Module>(TypeID::largeAntiKineticPumpI));
+	ship->add(std::make_shared<Module>(TypeID::largeAntiThermalPumpII));
+	ship->add(std::make_shared<Module>(TypeID::_500MNMicrowarpdriveII));
+	ship->add(std::make_shared<Module>(TypeID::magneticFieldStabilizerI));
+	ship->add(std::make_shared<Module>(TypeID::magneticFieldStabilizerII));
+	ship->add(std::make_shared<Module>(TypeID::magneticFieldStabilizerII));
 	auto res0 = ship->resistances();
-	ship->addModule(TypeID::largeAntiExplosivePumpII);
+	ship->add(std::make_shared<Module>(TypeID::largeAntiExplosivePumpII));
 	auto res1 = ship->resistances();
-	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
-	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
-	ship->addModule(TypeID::neutronBlasterCannonII)->charge(TypeID::nullL);
+    for (int i = 0; i < 3; i++) {
+        auto module = std::make_shared<Module>(TypeID::neutronBlasterCannonII);
+        ship->add(module);
+        module->charge(std::make_shared<Charge>(TypeID::nullL));
+    }
 	auto dps = ship->turretsDPS() * 1s;
 	
 	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
@@ -443,39 +521,41 @@ using namespace dgmpp;
 }
 
 - (void) testVindicator2 {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	
-	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::vindicator);
+    pilot->ship(ship);
 	
 //	ship->addModule(TypeID::capitalFlexArmorHardenerII)->charge(TypeID::armorExplosiveResistanceScript);
-	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
-	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
-	ship->addModule(TypeID::armorExplosiveHardenerII);
+	ship->add(std::make_shared<Module>(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane));
+	ship->add(std::make_shared<Module>(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane));
+	ship->add(std::make_shared<Module>(TypeID::armorExplosiveHardenerII));
 	auto res0 = ship->resistances();
-	ship->addModule(TypeID::largeAntiExplosivePumpII);
+	ship->add(std::make_shared<Module>(TypeID::largeAntiExplosivePumpII));
 	auto res1 = ship->resistances();
 	
 	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
-	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.782, 0.0005);
+	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.714, 0.0005);
 }
 
 - (void) testVindicator3 {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	
-	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
-	
-	ship->addModule(TypeID::reinforcedBulkheadsII);
-	ship->addModule(TypeID::reinforcedBulkheadsII);
-	ship->addModule(TypeID::reinforcedBulkheadsI);
-	ship->addModule(TypeID::inertialStabilizersII);
-	ship->addModule(TypeID::inertialStabilizersII);
-	ship->addModule(TypeID::inertialStabilizersI);
-	ship->addModule(TypeID::_500MNMicrowarpdriveII);
-	ship->addModule(TypeID::expandedCargoholdII);
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::vindicator);
+    pilot->ship(ship);
+
+	ship->add(std::make_shared<Module>(TypeID::reinforcedBulkheadsII));
+	ship->add(std::make_shared<Module>(TypeID::reinforcedBulkheadsII));
+	ship->add(std::make_shared<Module>(TypeID::reinforcedBulkheadsI));
+	ship->add(std::make_shared<Module>(TypeID::inertialStabilizersII));
+	ship->add(std::make_shared<Module>(TypeID::inertialStabilizersII));
+	ship->add(std::make_shared<Module>(TypeID::inertialStabilizersI));
+	ship->add(std::make_shared<Module>(TypeID::_500MNMicrowarpdriveII));
+	ship->add(std::make_shared<Module>(TypeID::expandedCargoholdII));
 
 	auto alignTime = ship->alignTime();
 	
@@ -484,96 +564,106 @@ using namespace dgmpp;
 }
 
 - (void) testVindicator4 {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	
-	auto ship = pilot->ship(Ship::Create(TypeID::vindicator));
-	
-	ship->addModule(TypeID::shieldPowerRelayII);
-	ship->addModule(TypeID::shieldPowerRelayII);
-	ship->addModule(TypeID::shieldPowerRelayI);
-	ship->addModule(TypeID::capacitorFluxCoilII);
-	ship->addModule(TypeID::capacitorFluxCoilII);
-	ship->addModule(TypeID::capacitorFluxCoilI);
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::vindicator);
+    pilot->ship(ship);
+
+	ship->add(std::make_shared<Module>(TypeID::shieldPowerRelayII));
+	ship->add(std::make_shared<Module>(TypeID::shieldPowerRelayII));
+	ship->add(std::make_shared<Module>(TypeID::shieldPowerRelayI));
+	ship->add(std::make_shared<Module>(TypeID::capacitorFluxCoilII));
+	ship->add(std::make_shared<Module>(TypeID::capacitorFluxCoilII));
+	ship->add(std::make_shared<Module>(TypeID::capacitorFluxCoilI));
 	
 	auto rechargeTime = ship->capacitor().rechargeTime();
-	
 	XCTAssertEqualWithAccuracy(rechargeTime.count() / 1000.0, 488, 0.5);
 }
 
 - (void) testNyx {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(Ship::Create(TypeID::nyx));
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::nyx);
+    pilot->ship(ship);
 	
-	ship->addModule(TypeID::capitalFlexArmorHardenerII)->charge(TypeID::armorExplosiveResistanceScript);
-	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
-	ship->addModule(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane);
-	ship->addModule(TypeID::armorExplosiveHardenerII);
+    auto module = std::make_shared<Module>(TypeID::capitalFlexArmorHardenerII);
+    module->charge(std::make_shared<Charge>(TypeID::armorExplosiveResistanceScript));
+	ship->add(module);
+	ship->add(std::make_shared<Module>(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane));
+	ship->add(std::make_shared<Module>(TypeID::imperialNavyEnergizedAdaptiveNanoMembrane));
+	ship->add(std::make_shared<Module>(TypeID::armorExplosiveHardenerII));
 	auto res0 = ship->resistances();
-	ship->addModule(TypeID::capitalAntiExplosivePumpII);
+	ship->add(std::make_shared<Module>(TypeID::capitalAntiExplosivePumpII));
 	auto res1 = ship->resistances();
 	
 	XCTAssertLessThan(res0.armor.explosive, res1.armor.explosive);
-	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.856, 0.0005);
+	XCTAssertEqualWithAccuracy(res1.armor.explosive, 0.825, 0.0005);
 }
 
 - (void) testCyno {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(Ship::Create(TypeID::drake));
-	try {
-		ship->addModule(TypeID::covertCynosuralFieldGeneratorI);
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::drake);
+    pilot->ship(ship);
+
+    try {
+		ship->add(std::make_shared<Module>(TypeID::covertCynosuralFieldGeneratorI));
 		XCTFail("Error");
 	}
 	catch(...) {
 	}
-	ship = pilot->ship(TypeID::sin);
-	ship->addModule(TypeID::covertCynosuralFieldGeneratorI);
+    ship = std::make_shared<Ship>(TypeID::sin);
+	pilot->ship(ship);
+    ship->add(std::make_shared<Module>(TypeID::covertCynosuralFieldGeneratorI));
 
 }
 
 - (void) testProteus {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(Ship::Create(TypeID::proteus));
-	auto modules = {
-		ship->addModule(TypeID::_10MNAfterburnerI, Module::anySocket, true),
-		ship->addModule(TypeID::mediumShieldBoosterII, Module::anySocket, true),
-		ship->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true),
-		ship->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true)
-	};
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::proteus);
+    pilot->ship(ship);
+
+    
+    ship->add(std::make_shared<Module>(TypeID::_10MNAfterburnerI), Module::anySocket, true);
+    ship->add(std::make_shared<Module>(TypeID::mediumShieldBoosterII), Module::anySocket, true);
+    ship->add(std::make_shared<Module>(TypeID::ionBlasterCannonII), Module::anySocket, true);
+    ship->add(std::make_shared<Module>(TypeID::ionBlasterCannonII), Module::anySocket, true);
+    auto modules = ship->modules();
 	for (auto module: modules) {
 		XCTAssertEqual(module->fail(), true);
 	}
 	
-	ship->addModule(TypeID::proteusCoreAugmentedFusionReactor);
-	ship->addModule(TypeID::proteusDefensiveAugmentedPlating);
-	ship->addModule(TypeID::proteusOffensiveDroneSynthesisProjector);
-	ship->addModule(TypeID::proteusPropulsionHyperspatialOptimization);
+	ship->add(std::make_shared<Module>(TypeID::proteusCoreAugmentedFusionReactor));
+	ship->add(std::make_shared<Module>(TypeID::proteusDefensiveAugmentedPlating));
+	ship->add(std::make_shared<Module>(TypeID::proteusOffensiveDroneSynthesisProjector));
+	ship->add(std::make_shared<Module>(TypeID::proteusPropulsionHyperspatialOptimization));
 	
 	for (auto module: modules) {
 		XCTAssertEqual(module->fail(), false);
 	}
 	
-	auto ship2 = Ship::Create(TypeID::proteus);
+    auto ship2 = std::make_shared<Ship>(TypeID::proteus);
 	
-	ship2->addModule(TypeID::proteusCoreAugmentedFusionReactor);
-	ship2->addModule(TypeID::proteusDefensiveAugmentedPlating);
-	ship2->addModule(TypeID::proteusOffensiveDroneSynthesisProjector);
-	ship2->addModule(TypeID::proteusPropulsionHyperspatialOptimization);
+	ship2->add(std::make_shared<Module>(TypeID::proteusCoreAugmentedFusionReactor));
+	ship2->add(std::make_shared<Module>(TypeID::proteusDefensiveAugmentedPlating));
+	ship2->add(std::make_shared<Module>(TypeID::proteusOffensiveDroneSynthesisProjector));
+	ship2->add(std::make_shared<Module>(TypeID::proteusPropulsionHyperspatialOptimization));
 
-	modules = {
-		ship2->addModule(TypeID::_10MNAfterburnerI, Module::anySocket, true),
-		ship2->addModule(TypeID::mediumShieldBoosterII, Module::anySocket, true),
-		ship2->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true),
-		ship2->addModule(TypeID::ionBlasterCannonII, Module::anySocket, true)
-	};
-	
+    ship2->add(std::make_shared<Module>(TypeID::_10MNAfterburnerI), Module::anySocket, true);
+    ship2->add(std::make_shared<Module>(TypeID::mediumShieldBoosterII), Module::anySocket, true);
+    ship2->add(std::make_shared<Module>(TypeID::ionBlasterCannonII), Module::anySocket, true);
+    ship2->add(std::make_shared<Module>(TypeID::ionBlasterCannonII), Module::anySocket, true);
+    modules = ship2->modules();
+               
 	pilot->ship(std::move(ship2));
 	
 	for (auto module: modules) {
@@ -582,19 +672,22 @@ using namespace dgmpp;
 }
 
 - (void) testMonitor {
-	auto gang = Gang::Create();
-	auto pilot = gang->add(Character::Create());
-	pilot->setSkillLevels(5);
-	auto ship = pilot->ship(Ship::Create(TypeID::monitor));
-	
-	ship->addModule(TypeID::_50MNMicrowarpdriveII);
-	ship->addModule(TypeID::targetPainterII);
-	ship->addModule(TypeID::sistersExpandedProbeLauncher);
+    auto gang = Gang();
+    auto pilot = std::make_shared<Character>();
+    gang.add(pilot);
+    pilot->setSkillLevels(5);
+    auto ship = std::make_shared<Ship>(TypeID::monitor);
+    pilot->ship(ship);
+
+    
+	ship->add(std::make_shared<Module>(TypeID::_50MNMicrowarpdriveII));
+	ship->add(std::make_shared<Module>(TypeID::targetPainterII));
+	ship->add(std::make_shared<Module>(TypeID::sistersExpandedProbeLauncher));
 
 	
 	XCTAssertGreaterThan(ship->totalCPU(), ship->usedCPU());
 	XCTAssertGreaterThan(ship->totalPowerGrid(), ship->usedPowerGrid());
-	ship->addModule(TypeID::smallShieldBoosterI);
+	ship->add(std::make_shared<Module>(TypeID::smallShieldBoosterI));
 	XCTAssertLessThan(ship->totalCPU(), ship->usedCPU());
 
 }

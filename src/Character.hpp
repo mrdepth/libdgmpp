@@ -15,36 +15,33 @@
 namespace dgmpp {
 	class Character: public Type {
 	public:
-		static std::unique_ptr<Character> Create() { return std::unique_ptr<Character>(new Character); }
-		static std::unique_ptr<Character> Create (const Character& other) { return std::unique_ptr<Character>(new Character(other)); }
-		
+        Character();
+        Character (const Character& other);
+        virtual ~Character();
+
 		const std::string& name() const noexcept { LOCK(this); return name_(); }
 		template<typename T>
 		void name (T&& name) noexcept { LOCK(this); name_(std::forward<T>(name)); }
 
 		
-		Ship* ship() const { LOCK(this); return ship_(); }
-		Ship* ship (std::unique_ptr<Ship>&& ship) { LOCK(this); return ship_(std::move(ship)); }
-		Ship* ship (TypeID typeID) { return ship(Ship::Create(typeID)); }
-//		Structure* structure() const { LOCK(this); return structure_(); }
-//		Structure* structure (std::unique_ptr<Structure>&& structure) { LOCK(this); return structure_(std::move(structure)); }
-//		Structure* structure (TypeID typeID) { return structure(Structure::Create(typeID)); }
+		std::shared_ptr<Ship> ship() const { LOCK(this); return ship_(); }
+		void ship (const std::shared_ptr<Ship>& ship) { LOCK(this); return ship_(ship); }
 
 		void setSkillLevels (int level) { LOCK(this); setSkillLevels_(level); }
 		
-		Implant* add(std::unique_ptr<Implant>&& implant, bool replace = false) { LOCK(this); return add_(std::move(implant), replace); }
-		Booster* add(std::unique_ptr<Booster>&& booster, bool replace = false) { LOCK(this); return add_(std::move(booster), replace); }
-		Implant* addImplant(TypeID typeID, bool replace = false) { return add(Implant::Create(typeID), replace); }
-		Booster* addBooster(TypeID typeID, bool replace = false) { return add(Booster::Create(typeID), replace); }
+		void add(const std::shared_ptr<Implant>& implant, bool replace = false) { LOCK(this); add_(implant, replace); }
+		void add(const std::shared_ptr<Booster>& booster, bool replace = false) { LOCK(this); add_(booster, replace); }
+//		Implant* addImplant(TypeID typeID, bool replace = false) { return add(Implant::Create(typeID), replace); }
+//		Booster* addBooster(TypeID typeID, bool replace = false) { return add(Booster::Create(typeID), replace); }
 		void remove(Implant* implant) { LOCK(this); remove_(implant); }
 		void remove(Booster* booster) { LOCK(this); remove_(booster); }
 		
-		std::vector<Skill*> skills() const { LOCK(this); return skills_(); }
-		std::vector<Implant*> implants() const { LOCK(this); return implants_(); }
-		std::vector<Booster*> boosters() const { LOCK(this); return boosters_(); }
+		std::vector<std::shared_ptr<Skill>> skills() const { LOCK(this); return skills_(); }
+		std::vector<std::shared_ptr<Implant>> implants() const { LOCK(this); return implants_(); }
+		std::vector<std::shared_ptr<Booster>> boosters() const { LOCK(this); return boosters_(); }
 		
-		Implant* implant (Implant::Slot slot) const noexcept { LOCK(this); return implant_(slot); }
-		Booster* booster (Booster::Slot slot) const noexcept { LOCK(this); return booster_(slot); }
+		std::shared_ptr<Implant> implant (Implant::Slot slot) const noexcept { LOCK(this); return implant_(slot); }
+		std::shared_ptr<Booster> booster (Booster::Slot slot) const noexcept { LOCK(this); return booster_(slot); }
 		
 		Meter droneControlDistance() { LOCK(this); return droneControlDistance_(); }
 
@@ -76,17 +73,13 @@ namespace dgmpp {
 		
 		friend class Gang;
 		friend class Ship;
-		std::unique_ptr<Ship> shipValue_;
-		std::map<TypeID, std::unique_ptr<Skill>> skillsMap_;
+		std::shared_ptr<Ship> shipValue_;
+		std::map<TypeID, std::shared_ptr<Skill>> skillsMap_;
 		
-		std::set<std::unique_ptr<Implant>, SlotCompare> implantsSet_;
-		std::set<std::unique_ptr<Booster>, SlotCompare> boostersSet_;
+		std::set<std::shared_ptr<Implant>, SlotCompare> implantsSet_;
+		std::set<std::shared_ptr<Booster>, SlotCompare> boostersSet_;
 		std::string nameValue_;
 		
-		Character();
-		Character (const Character& other);
-		
-
 		bool factorReload_() const noexcept;
 
 		
@@ -95,24 +88,22 @@ namespace dgmpp {
 		void name_ (T&& name) noexcept { nameValue_ = std::forward<T>(name); }
 		
 		
-		Ship* ship_() const { return shipValue_.get(); }
-		Ship* ship_ (std::unique_ptr<Ship>&& ship);
-//		Structure* structure_() const { return dynamic_cast<Structure*>(shipValue_.get()); }
-//		Structure* structure_ (std::unique_ptr<Structure>&& structure);
+		std::shared_ptr<Ship> ship_() const { return shipValue_; }
+		void ship_ (const std::shared_ptr<Ship>& ship);
 
 		void setSkillLevels_ (int level);
 		
-		Implant* add_(std::unique_ptr<Implant>&& implant, bool replace = false);
-		Booster* add_(std::unique_ptr<Booster>&& booster, bool replace = false);
+		void add_(const std::shared_ptr<Implant>& implant, bool replace = false);
+		void add_(const std::shared_ptr<Booster>& booster, bool replace = false);
 		void remove_(Implant* implant);
 		void remove_(Booster* booster);
 		
-		std::vector<Skill*> skills_() const;
-		std::vector<Implant*> implants_() const;
-		std::vector<Booster*> boosters_() const;
+		std::vector<std::shared_ptr<Skill>> skills_() const;
+		std::vector<std::shared_ptr<Implant>> implants_() const;
+		std::vector<std::shared_ptr<Booster>> boosters_() const;
 		
-		Implant* implant_ (Implant::Slot slot) const noexcept;
-		Booster* booster_ (Booster::Slot slot) const noexcept;
+		std::shared_ptr<Implant> implant_ (Implant::Slot slot) const noexcept;
+		std::shared_ptr<Booster> booster_ (Booster::Slot slot) const noexcept;
 		
 		Meter droneControlDistance_();
 	};

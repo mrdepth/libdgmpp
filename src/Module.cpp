@@ -37,7 +37,7 @@ namespace dgmpp {
 		flags_.canBeOnline = effect_(EffectID::online) != nullptr || effect_(EffectID::onlineForStructures);
 		
 		flags_.canBeOverloaded = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
-			return i->metaInfo().category == MetaInfo::Effect::Category::overloaded;
+			return i->metaInfo().category == MetaInfo::Effect::Category::overload;
 		});
 		
 		flags_.requireTarget = std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
@@ -45,7 +45,7 @@ namespace dgmpp {
 		});
 		
 		flags_.canBeActive = flags_.canBeOverloaded || flags_.requireTarget || std::any_of(effects_.begin(), effects_.end(), [](const auto& i) {
-			return i->metaInfo().category == MetaInfo::Effect::Category::active;
+			return i->metaInfo().category == MetaInfo::Effect::Category::activation;
 		});
 		
 		flags_.fail = false;
@@ -87,14 +87,18 @@ namespace dgmpp {
 		stateValue_ = State::unknown;
 		socketValue_ = other.socketValue_;
 		if (auto charge = other.charge_()) {
-			chargeValue_ = Charge::Create(*charge);
+			chargeValue_ = std::make_shared<Charge>(*charge);
 			chargeValue_->parent_(this);
 		}
 	}
 	
 	Module::~Module() {
-		if (targetValue_)
-			targetValue_->removeProjected_(this);
+        if (auto target = targetValue_.lock()) {
+			target->removeProjected_(this);
+        }
+        if (chargeValue_ != nullptr) {
+            chargeValue_->parent_(nullptr);
+        }
 	}
 	
 	void Module::setEnabled_ (bool enabled) {
@@ -137,7 +141,7 @@ namespace dgmpp {
 							auto groupID = metaInfo().groupID;
 							
 							for (const auto& i: ship->modulesSet_) {
-								auto module = std::get<std::unique_ptr<Module>>(i).get();
+								auto module = std::get<std::shared_ptr<Module>>(i).get();
 								if (module == this)
 									continue;
 								
@@ -164,18 +168,19 @@ namespace dgmpp {
 		return states;
 	}
 	
-	void Module::target_(Ship* target) {
+	void Module::target_(const std::shared_ptr<Ship>& target) {
+        assert(parent() == nullptr || static_cast<Ship*>(parent()) != target.get());
 		batchUpdates_([&]() {
-			if (targetValue_) {
+			if (auto target = targetValue_.lock()) {
 				if (state_() >= State::active)
 					deactivateEffects_(MetaInfo::Effect::Category::target);
-				targetValue_->removeProjected_(this);
+				target->removeProjected_(this);
 			}
 			targetValue_ = target;
 			if (target) {
 				assert(!isDescendant_(*target));
 				
-				targetValue_->project_(this);
+				target->project_(this);
 				if (state_() >= State::active)
 					activateEffects_(MetaInfo::Effect::Category::target);
 			}
@@ -185,13 +190,14 @@ namespace dgmpp {
 	Type* Module::domain_ (MetaInfo::Modifier::Domain domain) noexcept {
 		switch (domain) {
 			case MetaInfo::Modifier::Domain::target :
-				return targetValue_;
+				return targetValue_.lock().get();
 			default:
 				return Type::domain_(domain);
 		}
 	}
 	
-	Charge* Module::charge_ (std::unique_ptr<Charge>&& charge) {
+	void Module::charge_ (const std::shared_ptr<Charge>& charge) {
+        assert(charge == nullptr || charge->parent() == nullptr);
 		batchUpdates_([&]() {
 			auto enabled = isEnabled_();
 			
@@ -202,16 +208,18 @@ namespace dgmpp {
 			}
 			if (charge != nullptr) {
 				if (canFit_(charge.get())) {
-					chargeValue_ = std::move(charge);
+					chargeValue_ = charge;
 					chargeValue_->parent_(this);
 				}
-				else
-					throw CannotFit<Charge>(std::move(charge));
+                else {
+                    if (enabled)
+                        setEnabled_(true);
+					throw CannotFit<Charge>(charge);
+                }
 			}
 			if (enabled)
 				setEnabled_(true);
 		});
-		return chargeValue_.get();
 	}
 	
 	bool Module::canFit_(Charge* charge) {
@@ -267,43 +275,43 @@ namespace dgmpp {
 				if (state != stateValue_) {
 					if (state < stateValue_) {
 						if (stateValue_ >= State::overloaded	&& state < State::overloaded)
-							deactivateEffects_(MetaInfo::Effect::Category::overloaded);
+							deactivateEffects_(MetaInfo::Effect::Category::overload);
 						
 						if (stateValue_ >= State::active		&& state < State::active) {
-							deactivateEffects_(MetaInfo::Effect::Category::active);
+							deactivateEffects_(MetaInfo::Effect::Category::activation);
 							if (target_())
 								deactivateEffects_(MetaInfo::Effect::Category::target);
 						}
 						
 						if (stateValue_ >= State::online		&& state < State::online)
-							deactivateEffects_(MetaInfo::Effect::Category::passive);
+							deactivateEffects_(MetaInfo::Effect::Category::online);
 					}
 					else if (state > stateValue_) {
 						if (stateValue_ < State::online		&& state >= State::online)
-							activateEffects_(MetaInfo::Effect::Category::passive);
+							activateEffects_(MetaInfo::Effect::Category::online);
 						
 						if (stateValue_ < State::active		&& state >= State::active) {
-							activateEffects_(MetaInfo::Effect::Category::active);
+							activateEffects_(MetaInfo::Effect::Category::activation);
 							if (target_())
 								activateEffects_(MetaInfo::Effect::Category::target);
 						}
 						
 						if (stateValue_ < State::overloaded	&& state >= State::overloaded)
-							activateEffects_(MetaInfo::Effect::Category::overloaded);
+							activateEffects_(MetaInfo::Effect::Category::overload);
 					}
 					stateValue_ = state;
 				}
 			}
 			else {
 				if (stateValue_ >= State::overloaded)
-					deactivateEffects_(MetaInfo::Effect::Category::overloaded);
+					deactivateEffects_(MetaInfo::Effect::Category::overload);
 				if (stateValue_ >= State::active) {
-					deactivateEffects_(MetaInfo::Effect::Category::active);
+					deactivateEffects_(MetaInfo::Effect::Category::activation);
 					if (target_())
 						deactivateEffects_(MetaInfo::Effect::Category::target);
 				}
 				if (stateValue_ >= State::online)
-					deactivateEffects_(MetaInfo::Effect::Category::passive);
+					deactivateEffects_(MetaInfo::Effect::Category::online);
                 stateValue_ = Module::State::offline;
 			}
 		});
@@ -440,7 +448,7 @@ namespace dgmpp {
 	DamageVector Module::volley_() {
 		if (state_() >= State::active) {
 			auto volley = DamageVector(0);
-			auto& item = chargeValue_ ? *static_cast<Type*> (charge_()) : *static_cast<Type*>(this);
+			auto& item = chargeValue_ ? *static_cast<Type*> (charge_().get()) : *static_cast<Type*>(this);
 			
 			if (auto attribute = item.attribute_(AttributeID::emDamage))
 				volley.em += attribute->value_();
@@ -459,7 +467,7 @@ namespace dgmpp {
 			return volley;
 		}
 		else
-			return {0};
+			return DamageVector{0};
 	}
 	
 	DamagePerSecond Module::dps_(const HostileTarget& target) {

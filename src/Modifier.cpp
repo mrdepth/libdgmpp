@@ -18,6 +18,8 @@ namespace dgmpp {
 			case CategoryID::charge:
 			case CategoryID::fighter:
 			case CategoryID::starbase:
+			case CategoryID::structure:
+			case CategoryID::structureModule:
 				needsStackingCheck_ = true;
 				break;
 			default:
@@ -52,6 +54,7 @@ namespace dgmpp {
 					return false;
 			default:
 				assert(!"Invalid MetaInfo::Modifier::ModifierType value");
+				return false;
 		}
 	}
 	

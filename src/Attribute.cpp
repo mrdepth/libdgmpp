@@ -374,7 +374,7 @@ namespace dgmpp {
 		std::cout << "postPercent: ";
 		range = partition(AssociationComparer(MetaInfo::Modifier::Association::postPercent));
 		value = multiply(range, value);
-		std::cout << std::endl;
+		std::cout << value << std::endl;
 	}
 #endif
 }

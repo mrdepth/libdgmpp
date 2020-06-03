@@ -9,7 +9,7 @@
 #include "internal.h"
 
 dgmpp_schematic_id dgmpp_factory_get_schematic_id (dgmpp_facility facility) {
-	if (auto schematic = reinterpret_cast<Factory*>(facility)->schematic())
+	if (auto schematic = get<Factory>(facility)->schematic())
 		return static_cast<dgmpp_schematic_id>(schematic->schematicID);
 	else
 		return static_cast<dgmpp_schematic_id>(SchematicID::none);
@@ -17,7 +17,7 @@ dgmpp_schematic_id dgmpp_factory_get_schematic_id (dgmpp_facility facility) {
 
 dgmpp_bool dgmpp_factory_set_schematic_id (dgmpp_facility facility, dgmpp_schematic_id schematic_id) {
 	try {
-		reinterpret_cast<Factory*>(facility)->schematic(static_cast<SchematicID>(schematic_id));
+		get<Factory>(facility)->schematic(static_cast<SchematicID>(schematic_id));
 		return true;
 	}
 	catch(...) {
@@ -26,23 +26,23 @@ dgmpp_bool dgmpp_factory_set_schematic_id (dgmpp_facility facility, dgmpp_schema
 }
 
 dgmpp_seconds dgmpp_factory_get_launch_time (dgmpp_facility facility) {
-	return dgmpp_make_seconds(reinterpret_cast<Factory*>(facility)->launchTime());
+	return dgmpp_make_seconds(get<Factory>(facility)->launchTime());
 }
 
 void dgmpp_factory_set_launch_time (dgmpp_facility facility, dgmpp_seconds launch_time) {
-	reinterpret_cast<Factory*>(facility)->launchTime(std::chrono::seconds(std::chrono::seconds::rep(launch_time)));
+	get<Factory>(facility)->launchTime(std::chrono::seconds(std::chrono::seconds::rep(launch_time)));
 }
 
 dgmpp_seconds dgmpp_factory_get_cycle_time (dgmpp_facility facility) {
-	if (auto cycleTime = reinterpret_cast<Factory*>(facility)->cycleTime())
+	if (auto cycleTime = get<Factory>(facility)->cycleTime())
 		return dgmpp_make_seconds(*cycleTime);
 	else
 		return 0;
 }
 
 dgmpp_bool dgmpp_factory_get_output (dgmpp_facility facility, dgmpp_commodity* commodity) {
-	if (auto output = reinterpret_cast<Factory*>(facility)->output()) {
-		*commodity = dgmpp_commodity_impl(*output);
+	if (auto output = get<Factory>(facility)->output()) {
+		*commodity = dgmpp_commodity_make(*output);
 		return true;
 	}
 	else
@@ -50,9 +50,19 @@ dgmpp_bool dgmpp_factory_get_output (dgmpp_facility facility, dgmpp_commodity* c
 }
 
 dgmpp_array dgmpp_factory_copy_states (dgmpp_facility facility) {
-	return dgmpp_make_array<ProductionState*>(reinterpret_cast<Factory*>(facility)->states());
+    const auto& states = get<Factory>(facility)->states();
+    std::vector<ProductionState*> result;
+    std::transform(states.begin(), states.end(), std::back_inserter(result), [](const auto& i) {
+        return i.get();
+    });
+    return dgmpp_make_array<ProductionState*>(std::move(result));
 }
 
 dgmpp_array dgmpp_factory_copy_cycles (dgmpp_facility facility) {
-	return dgmpp_make_array<dgmpp_production_cycle_impl>(reinterpret_cast<Factory*>(facility)->cycles());
+    const auto& cycles = get<Factory>(facility)->cycles();
+    std::vector<dgmpp_production_cycle> result;
+    std::transform(cycles.begin(), cycles.end(), std::back_inserter(result), [](const auto& i) {
+        return dgmpp_production_cycle_make(*i);
+    });
+    return dgmpp_make_array<dgmpp_production_cycle>(std::move(result));
 }

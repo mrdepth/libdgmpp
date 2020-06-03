@@ -12,8 +12,8 @@ dgmpp_attribute_id dgmpp_attribute_get_attribute_id (dgmpp_attribute attribute) 
 	return static_cast<dgmpp_attribute_id>(reinterpret_cast<Attribute*>(attribute)->metaInfo().attributeID);
 }
 
-dgmpp_type dgmpp_attribute_get_owner (dgmpp_attribute attribute) {
-	return &reinterpret_cast<Attribute*>(attribute)->owner();
+dgmpp_type dgmpp_attribute_copy_owner (dgmpp_attribute attribute) {
+	return new_handle(reinterpret_cast<Attribute*>(attribute)->owner().shared_from_this());
 }
 
 double dgmpp_attribute_get_value (dgmpp_attribute attribute) {

@@ -7,11 +7,20 @@
 
 #include "Structure.hpp"
 #include <numeric>
+#include "Errors.hpp"
 
 namespace dgmpp {
+
+    Structure::Structure(TypeID typeID) : Ship(typeID) {
+        if (metaInfo().categoryID != CategoryID::structure) {
+            throw InvalidCategoryID(metaInfo().categoryID);
+        }
+        setEnabled_(true);
+    }
+
 	rate<Float, std::chrono::hours> Structure::fuelUse_() {
 		auto use = std::accumulate(modulesSet_.begin(), modulesSet_.end(), Float(0), [](auto sum, const auto& i) {
-			auto& module = std::get<std::unique_ptr<Module>>(i);
+			auto& module = std::get<std::shared_ptr<Module>>(i);
 			if (auto attribute = module->attribute_(AttributeID::serviceModuleFuelAmount))
 				return sum + attribute->value_();
 			else

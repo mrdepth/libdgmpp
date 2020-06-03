@@ -30,7 +30,6 @@ namespace dgmpp {
 	}
 
 	Type::Type (const MetaInfo::Type& metaInfo): metaInfo_(metaInfo) {
-		
 		for (const auto& i: metaInfo.attributes())
 			attributesMap_.emplace(i.first->attributeID, new Attribute(*i.first, i.second, *this));
 		
@@ -99,9 +98,9 @@ namespace dgmpp {
 		enabled_ = enabled;
 
 		if (enabled)
-			activateEffects_(MetaInfo::Effect::Category::generic);
+			activateEffects_(MetaInfo::Effect::Category::passive);
 		else
-			deactivateEffects_(MetaInfo::Effect::Category::generic);
+			deactivateEffects_(MetaInfo::Effect::Category::passive);
 
 		if (enabled)
 			resetCache_();
@@ -419,8 +418,10 @@ namespace dgmpp {
 	std::unordered_set<Type*> Type::affectors_() {
 		std::unordered_set<Type*> types;
 		for (const auto& i: attributesMap_) {
-			for (const auto& j: modifiers_(i.second->metaInfo())) {
-				types.insert(&j->owner());
+			if (i.second) {
+				for (const auto& j: modifiers_(i.second->metaInfo())) {
+					types.insert(&j->owner());
+				}
 			}
 		}
 		return types;
