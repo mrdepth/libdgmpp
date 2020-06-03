@@ -3716,9 +3716,10 @@ namespace dgmpp {
 			constexpr MetaInfo::Modifier modifier3710 = {MetaInfo::Modifier::ModifierType::locationRequiredSkill, MetaInfo::Modifier::Association::preMul, MetaInfo::Modifier::Domain::character, AttributeID::shieldHpBonus, AttributeID::implantSetNirvana, TypeID::cybernetics};
 			constexpr MetaInfo::Modifier modifier3711 = {MetaInfo::Modifier::ModifierType::locationGroup, MetaInfo::Modifier::Association::postAssignment, MetaInfo::Modifier::Domain::ship, AttributeID::maxGroupFitted, AttributeID::shipBonusRole7, GroupID::capacitorBooster};
 			constexpr MetaInfo::Modifier modifier3712 = {MetaInfo::Modifier::ModifierType::locationGroup, MetaInfo::Modifier::Association::postAssignment, MetaInfo::Modifier::Domain::ship, AttributeID::maxGroupOnline, AttributeID::shipBonusRole7, GroupID::capacitorBooster};
-			constexpr MetaInfo::Modifier modifier3713 = {MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::postAssignment, MetaInfo::Modifier::Domain::other, AttributeID::chargedArmorDamageMultiplierPostDiv, AttributeID::chargedArmorDamageMultiplierPostDiv};
-			constexpr MetaInfo::Modifier modifier3714 = {MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::postDiv, MetaInfo::Modifier::Domain::self, AttributeID::chargedArmorDamageMultiplier, AttributeID::chargedArmorDamageMultiplierPostDiv};
-			constexpr MetaInfo::Modifier modifier3715 = {MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::postMul, MetaInfo::Modifier::Domain::self, AttributeID::armorDamageAmount, AttributeID::chargedArmorDamageMultiplier};
+			constexpr MetaInfo::Modifier modifier3713 = {MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::postMul, MetaInfo::Modifier::Domain::ship, AttributeID::maxLockedTargets, AttributeID::maxLockedTargetsMultiplier};
+			constexpr MetaInfo::Modifier modifier3714 = {MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::postAssignment, MetaInfo::Modifier::Domain::other, AttributeID::chargedArmorDamageMultiplierPostDiv, AttributeID::chargedArmorDamageMultiplierPostDiv};
+			constexpr MetaInfo::Modifier modifier3715 = {MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::postDiv, MetaInfo::Modifier::Domain::self, AttributeID::chargedArmorDamageMultiplier, AttributeID::chargedArmorDamageMultiplierPostDiv};
+			constexpr MetaInfo::Modifier modifier3716 = {MetaInfo::Modifier::ModifierType::item, MetaInfo::Modifier::Association::postMul, MetaInfo::Modifier::Domain::self, AttributeID::armorDamageAmount, AttributeID::chargedArmorDamageMultiplier};
         }
     }
 }

@@ -2726,6 +2726,7 @@ namespace dgmpp {
 		shieldHpBonusPostPercentHpLocationShip = 8011,
 		setBonusNirvana = 8013,
 		roleBonus7CapBoosterGroupRestriction = 8029,
+		systemMaxTargets = 8031,
 		tacticalMode = 10000,
 		naniteRepairPasteArmorDamageBonus = 10001,
 		fueledArmorRepairBonus = 10003

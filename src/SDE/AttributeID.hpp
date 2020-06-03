@@ -2502,6 +2502,11 @@ namespace dgmpp {
 		hydraDroneRangeBonus = 3029,
 		hydraMissileFlightTimeBonus = 3030,
 		hydraMissileExplosionVelocityBonus = 3031,
+		maxLockedTargetsMultiplier = 3034,
+		warpScrambleStrengthBonus = 3035,
+		isCynoJammer = 3038,
+		behaviorSmartBombEntityDamageMultiplier = 3039,
+		showSystemInfoBubble = 3093,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
     };

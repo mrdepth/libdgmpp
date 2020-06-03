@@ -2730,9 +2730,10 @@ namespace dgmpp {
 			constexpr auto shieldHpBonusPostPercentHpLocationShip = MakeEffect(EffectID::shieldHpBonusPostPercentHpLocationShip, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3709));
 			constexpr auto setBonusNirvana = MakeEffect(EffectID::setBonusNirvana, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3710));
 			constexpr auto roleBonus7CapBoosterGroupRestriction = MakeEffect(EffectID::roleBonus7CapBoosterGroupRestriction, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3711,&Modifiers::modifier3712));
+			constexpr auto systemMaxTargets = MakeEffect(EffectID::systemMaxTargets, MetaInfo::Effect::Category::system, false, false, _modifiers(&Modifiers::modifier3713));
 			constexpr auto tacticalMode = MakeEffect(EffectID::tacticalMode, MetaInfo::Effect::Category::passive, false, false, _modifiers());
-			constexpr auto naniteRepairPasteArmorDamageBonus = MakeEffect(EffectID::naniteRepairPasteArmorDamageBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3713));
-			constexpr auto fueledArmorRepairBonus = MakeEffect(EffectID::fueledArmorRepairBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3714,&Modifiers::modifier3715));
+			constexpr auto naniteRepairPasteArmorDamageBonus = MakeEffect(EffectID::naniteRepairPasteArmorDamageBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3714));
+			constexpr auto fueledArmorRepairBonus = MakeEffect(EffectID::fueledArmorRepairBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3715,&Modifiers::modifier3716));
         }
     }
 }
