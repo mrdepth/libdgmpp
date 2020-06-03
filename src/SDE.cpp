@@ -109,6 +109,6 @@ namespace dgmpp {
 	}
 	
 	Version version() {
-		return Version{ 2, 0, sdeVersion };
+		return Version{ 2, 1, sdeVersion };
 	}
 }
