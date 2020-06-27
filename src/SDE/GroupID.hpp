@@ -134,7 +134,7 @@ namespace dgmpp {
 		remoteArmorRepairer = 325,
 		armorPlatingEnergized = 326,
 		armorHardener = 328,
-		armorReinforcer = 329,
+		armorPlate = 329,
 		cloakingDevice = 330,
 		tool = 332,
 		datacores = 333,
@@ -717,6 +717,13 @@ namespace dgmpp {
 		cynosuralFields = 2020,
 		triglavianArtifacts = 2026,
 		destructibleEffectBeacon = 4033,
-		jumpFilaments = 4041
+		jumpFilaments = 4041,
+		invisibleBeacon = 4055,
+		vortonProjector = 4060,
+		advancedCondenserPack = 4061,
+		condenserPack = 4062,
+		vortonProjectorUpgrade = 4067,
+		exoticArtefact = 4070,
+		expiredJumpFilaments = 4072
     };
 }

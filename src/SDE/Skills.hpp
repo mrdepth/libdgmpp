@@ -266,7 +266,7 @@ namespace dgmpp {
 			&Types::procurement,
 			&Types::daytrading,
 			&Types::wholesale,
-			&Types::marginTrading,
+			&Types::advancedBrokerRelations,
 			&Types::marketing,
 			&Types::accounting,
 			&Types::miningBarge,
@@ -508,7 +508,21 @@ namespace dgmpp {
 			&Types::triglavianQuantumEngineering,
 			&Types::triglavianEncryptionMethods,
 			&Types::precursorDreadnought,
-			&Types::capitalPrecursorWeapon
+			&Types::capitalPrecursorWeapon,
+			&Types::EDENCOMBattleship,
+			&Types::largeVortonProjector,
+			&Types::smallVortonSpecialization,
+			&Types::mediumVortonSpecialization,
+			&Types::largeVortonSpecialization,
+			&Types::vortonPowerAmplification,
+			&Types::vortonArcGuidance,
+			&Types::upwellEncryptionMethods,
+			&Types::EDENCOMFrigate,
+			&Types::EDENCOMCruiser,
+			&Types::vortonProjectorOperation,
+			&Types::smallVortonProjector,
+			&Types::mediumVortonProjector,
+			&Types::vortonArcExtension
         };
     }
 }
