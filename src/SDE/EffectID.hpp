@@ -2763,8 +2763,9 @@ namespace dgmpp {
 		vortonProjectorOptimalRangeBonus = 8064,
 		vortonProjectorSkillRangeBonus = 8065,
 		vortonProjectorDamageBonus = 8066,
-		tacticalMode = 10000,
+		characterDamageMissiles = 10000,
 		naniteRepairPasteArmorDamageBonus = 10001,
+		tacticalMode = 10002,
 		fueledArmorRepairBonus = 10003
     };
 }

@@ -189,7 +189,7 @@ struct dgmpp_route_impl {
 
 template<typename Rep, typename Ratio>
 inline dgmpp_seconds  dgmpp_make_seconds(const std::chrono::duration<Rep, Ratio>& v) {
-	return static_cast<dgmpp_seconds>(std::chrono::duration_cast<std::chrono::seconds>(v).count());
+    return static_cast<dgmpp_seconds>(std::chrono::duration_cast<std::chrono::milliseconds>(v).count() / 1000.0);
 }
 
 inline dgmpp_damage_vector dgmpp_damage_vector_make(const DamageVector& v) {

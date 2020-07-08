@@ -2767,9 +2767,10 @@ namespace dgmpp {
 			constexpr auto vortonProjectorOptimalRangeBonus = MakeEffect(EffectID::vortonProjectorOptimalRangeBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3762));
 			constexpr auto vortonProjectorSkillRangeBonus = MakeEffect(EffectID::vortonProjectorSkillRangeBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3762));
 			constexpr auto vortonProjectorDamageBonus = MakeEffect(EffectID::vortonProjectorDamageBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3763));
+			constexpr auto characterDamageMissiles = MakeEffect(EffectID::characterDamageMissiles, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3764,&Modifiers::modifier3765,&Modifiers::modifier3766,&Modifiers::modifier3767));
+			constexpr auto naniteRepairPasteArmorDamageBonus = MakeEffect(EffectID::naniteRepairPasteArmorDamageBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3768));
 			constexpr auto tacticalMode = MakeEffect(EffectID::tacticalMode, MetaInfo::Effect::Category::passive, false, false, _modifiers());
-			constexpr auto naniteRepairPasteArmorDamageBonus = MakeEffect(EffectID::naniteRepairPasteArmorDamageBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3764));
-			constexpr auto fueledArmorRepairBonus = MakeEffect(EffectID::fueledArmorRepairBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3765,&Modifiers::modifier3766));
+			constexpr auto fueledArmorRepairBonus = MakeEffect(EffectID::fueledArmorRepairBonus, MetaInfo::Effect::Category::passive, false, false, _modifiers(&Modifiers::modifier3769,&Modifiers::modifier3770));
         }
     }
 }

@@ -18,7 +18,7 @@ def patchTacticalDestroyer(name, env):
     addItemAttribute(name, 'tacticalModes', 1, env)
 
 def patchTacticalModes(env):
-    addEffect(10000, 'tacticalMode', EffectCategory.passive, False, False, env)
+    addEffect(10002, 'tacticalMode', EffectCategory.passive, False, False, env)
     addAttribute(10000, 'tacticalModes', 4, 122, True, True, 0, env)
     patchTacticalDestroyer('Confessor', env)
     patchTacticalDestroyer('Svipul', env)
