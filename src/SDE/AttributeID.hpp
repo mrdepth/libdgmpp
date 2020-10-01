@@ -2514,7 +2514,11 @@ namespace dgmpp {
 		shipBonusUC2 = 3044,
 		shipBonusUB1 = 3045,
 		shipBonusUB2 = 3046,
+		amountOfFleetsPerMatch = 3050,
+		fleetMemberPickupRadius = 3051,
+		fleetMembersNeeded = 3052,
 		showSystemInfoBubble = 3093,
+		scanProbeStrengthBonus = 3095,
 		tacticalModes = 10000,
 		chargedArmorDamageMultiplierPostDiv = 10002
     };
