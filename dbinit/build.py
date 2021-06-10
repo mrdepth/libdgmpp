@@ -62,22 +62,22 @@ with open(os.path.join(SDE, 'fsd/dogmaEffects.json')) as f:
     dogmaEffects = {k: v for k, v in dogmaEffects.items() if k in validEffectIDs}
     effectNames = {v['effectName']: v for k, v in dogmaEffects.items()}
 
-with open(os.path.join(SDE, 'bsd/dgmEffects.json')) as f:
-    dgmEffects = {v['effectID']: v for v in json.load(f)}
-    dgmEffects = {k: v for k, v in dgmEffects.items() if k in validEffectIDs}
+# with open(os.path.join(SDE, 'fsd/dgmEffects.json')) as f:
+#     dgmEffects = {v['effectID']: v for v in json.load(f)}
+#     dgmEffects = {k: v for k, v in dgmEffects.items() if k in validEffectIDs}
 
 with open(os.path.join(SDE, 'fsd/metaGroups.json')) as f:
     metaGroups = {int(k): v for k,v in json.load(f).items()}
     metaGroupIDsMap = {k: safeName(v['nameID']['en']) for k, v in metaGroups.items()}
 
-with open(os.path.join(SDE, 'bsd/planetSchematics.json')) as f:
-    planetSchematics = {v['schematicID']: v for v in json.load(f)}
+with open(os.path.join(SDE, 'fsd/planetSchematics.json')) as f:
+    planetSchematics = {int(k): v for k,v in json.load(f).items()}
 
-with open(os.path.join(SDE, 'bsd/planetSchematicsPinMap.json')) as f:
-    planetSchematicsPinMap = json.load(f)
+# with open(os.path.join(SDE, 'bsd/planetSchematicsPinMap.json')) as f:
+#     planetSchematicsPinMap = json.load(f)
 
-with open(os.path.join(SDE, 'bsd/planetSchematicsTypeMap.json')) as f:
-    planetSchematicsTypeMap = json.load(f)
+# with open(os.path.join(SDE, 'bsd/planetSchematicsTypeMap.json')) as f:
+#     planetSchematicsTypeMap = json.load(f)
 
 env = {'categoryIDs': categoryIDs,
        'categoryNames': categoryNames,
@@ -91,10 +91,12 @@ env = {'categoryIDs': categoryIDs,
        'effectNames': effectNames,
        'typeDogma': typeDogma,
        'metaGroupIDsMap': metaGroupIDsMap,
-       'planetSchematics': planetSchematics,
-       'planetSchematicsPinMap': planetSchematicsPinMap,
-       'planetSchematicsTypeMap': planetSchematicsTypeMap}
+       'planetSchematics': planetSchematics}
+    #    'planetSchematicsPinMap': planetSchematicsPinMap,
+    #    'planetSchematicsTypeMap': planetSchematicsTypeMap}
 
+planetSchematicsTypeMap = [dict(y, **{'schematicID': schematicID, 'typeID': int(typeID)}) for (schematicID, x) in env['planetSchematics'].items() for (typeID, y) in x['types'].items()]
+env['planetSchematicsTypeMap'] = planetSchematicsTypeMap
 patch(env)
 
 #empty = {k: v for k, v in dogmaeffects.items() if 'modifierinfo' not in v}
@@ -136,7 +138,7 @@ with open(os.path.join(OUT, 'AttributeID.hpp'), "w") as f:
 with open(os.path.join(OUT, 'EffectID.hpp'), "w") as f:
     env['effectIDsMap'] = dumpIDs({k: v['effectName'] for k, v in dogmaEffects.items()}, 'EffectID', f)
 with open(os.path.join(OUT, 'SchematicID.hpp'), "w") as f:
-    env['schematicIDsMap'] = dumpIDs({k: v['schematicName'] for k, v in planetSchematics.items()}, 'SchematicID', f)
+    env['schematicIDsMap'] = dumpIDs({k: v['nameID']['en'] for k, v in planetSchematics.items()}, 'SchematicID', f)
 with open(os.path.join(OUT, 'WarfareBuffID.hpp'), "w") as f:
     env['warfareBuffIDsMap'] = dumpIDs({k: v['id'] for k, v in env['warfareBuffs'].items()}, 'WarfareBuffID', f)
 

@@ -43,8 +43,8 @@ def patchAncillaryArmorRepairer(env):
     addItemAttribute('Nanite Repair Paste', 'chargedArmorDamageMultiplierPostDiv', 1, env)
 
 def patchFitting(env):
-    env['effectNames']['online']['effectCategory'] = EffectCategory.online.name
-    env['effectNames']['onlineForStructures']['effectCategory'] = EffectCategory.online.name
+    env['effectNames']['online']['effectCategory'] = EffectCategory.online.value
+    env['effectNames']['onlineForStructures']['effectCategory'] = EffectCategory.online.value
 
     updateEffect('online', env, [ItemModifier(Domain.shipID, 'cpuLoad', Operation.modAdd, 'cpu'),
                                  ItemModifier(Domain.shipID, 'powerLoad', Operation.modAdd, 'power')])

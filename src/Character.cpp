@@ -12,7 +12,7 @@
 
 namespace dgmpp {
 	
-	Character::Character() : Type(TypeID::characterGallente) {
+	Character::Character() : Type(TypeID::characterType) {
 		for (std::size_t i = 0; i < SDE::skillsCount; i++) {
 			auto metaInfo = SDE::skills[i];
             auto skill = std::shared_ptr<Skill>(new Skill(*metaInfo));

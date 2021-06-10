@@ -3,18 +3,18 @@ import re
 import io
 
 class EffectCategory(Enum):
-    activation = 'activation'
-    target = 'target'
-    area = 'area'
-    dungeon = 'dungeon'
-    online = 'online'
-    overload = 'overload'
-    passive = 'passive'
-    system = 'system'
+    activation = '1'
+    target = '2'
+    area = '3'
+    dungeon = '6'
+    online = '4'
+    overload = '5'
+    passive = '0'
+    system = '7'
 
     @classmethod
     def fromString(cls, s):
-        return cls.__dict__['_value2member_map_'][s]
+        return cls.__dict__['_value2member_map_'][str(s)]
 
     def esiName(self):
         return {EffectCategory.activation: "activation",
@@ -83,21 +83,22 @@ class Domain(Enum):
                 Domain.shipID: "ship"}[self]
 
 class Operation(Enum):
-    modSub = 'modSub'
-    postDiv = 'postDiv'
-    preAssignment = 'preAssignment'
-    preMul = 'preMul'
+    modSub = '3'
+    postDiv = '5'
+    preAssignment = '-1'
+    preMul = '0'
     specialSkillOp = 'specialSkillOp'
-    postPercent = 'postPercent'
-    postAssignment = 'postAssignment'
-    postMul = 'postMul'
-    modAdd = 'modAdd'
+    postPercent = '6'
+    postAssignment = '7'
+    postMul = '4'
+    modAdd = '2'
     subRate = 'subRate'
     addRate = 'addRate'
+    skillTime = '9'
 
     @classmethod
     def fromString(cls, s):
-        return cls.__dict__['_value2member_map_'][s]
+        return cls.__dict__['_value2member_map_'][str(s)]
 
     def esiName(self):
         if self == Operation.specialSkillOp:
@@ -156,7 +157,7 @@ class Modifier:
 
         modifier = {'domain': self.domain.name,
                 'func': self.func.name,
-                'operation': self.operation.name,
+                'operation': self.operation.value,
                 'modifiedAttributeID': env['attributeNames'][self.modifiedAttribute]['attributeID'],
                 'modifyingAttributeID': env['attributeNames'][self.modifyingAttribute]['attributeID'],
                 'skillTypeID': skillTypeID,
@@ -169,7 +170,7 @@ class Modifier:
     def dic(self):
         return {'domain': self.domain.name,
                 'func': self.func.name,
-                'operation': self.operation.name,
+                'operation': self.operation.value,
                 'modifiedAttribute': self.modifiedAttribute,
                 'modifyingAttribute': self.modifyingAttribute,
                 'skillType': self.skillType,
@@ -213,7 +214,7 @@ def getTypeID(typeName, env):
     return env['typeNames'][typeName]['typeID']
 
 def addEffect(id, name, category: EffectCategory, isOffensive, isAssistance, env):
-    env['dogmaEffects'][id] = {'effectID': id, 'effectName': name, 'effectCategory': category.name, 'isOffensive': isOffensive, 'isAssistance': isAssistance}
+    env['dogmaEffects'][id] = {'effectID': id, 'effectName': name, 'effectCategory': category.value, 'isOffensive': isOffensive, 'isAssistance': isAssistance}
     env['effectNames'][name] = env['dogmaEffects'][id]
 
 def addAttribute(id, name, categoryID, unitID, stackable, highIsGood, defaultValue, env):
@@ -548,6 +549,7 @@ namespace dgmpp {{
 
 def dumpCommodities(env, f: io.IOBase):
     planetSchematicsTypeMap = env['planetSchematicsTypeMap']
+    # planetSchematicsTypeMap = [dict(y, **{'schematicID': schematicID, 'typeID': typeID}) for (schematicID, x) in env['planetSchematics'].items() for (typeID, y) in x['types'].items()]
     products = {x['typeID'] for x in planetSchematicsTypeMap if x['isInput'] == 0}
     tiers = list()
     tiers.append({x['typeID'] for x in planetSchematicsTypeMap if x['isInput'] not in products})
@@ -566,6 +568,7 @@ def dumpCommodities(env, f: io.IOBase):
     tiers = {typeID: tier for tier, types in enumerate(tiers) for typeID in types}
     ids = list()
     for typeID, tier in sorted(tiers.items()):
+        typeID = int(typeID)
         row = '\t\t\tconstexpr MetaInfo::Commodity {typeName} = {{TypeID::{typeName}, MetaInfo::Commodity::Tier::{tier}, {volume} }};'.format(
             typeName = env['typeIDsMap'][typeID],
                 tier = 'raw' if tier == 0 else 'tier{}'.format(tier),
@@ -619,7 +622,7 @@ def dumpSchematic(id, schematic, env):
     output = dumpPort(output, env)
     inputs = [dumpPort(x, env) for id, x in sorted(inputs.items())]
     return '\t\t\tconstexpr auto {typeName} = MakeSchematic(SchematicID::{typeName}, {cycleTime}s, {output}, _inputs({inputs}));'.format(
-        typeName = safeName(schematic['schematicName']),
+        typeName = safeName(schematic['nameID']['en']),
         cycleTime = schematic['cycleTime'],
         output = output,
         inputs = ', '.join(inputs)
@@ -627,7 +630,7 @@ def dumpSchematic(id, schematic, env):
 
 def dumpSchematics(env, f: io.IOBase):
     rows = [dumpSchematic(id, x, env) for id, x in sorted(env['planetSchematics'].items())]
-    ids = [safeName(x['schematicName']) for id, x in sorted(env['planetSchematics'].items())]
+    ids = [safeName(x['nameID']['en']) for id, x in sorted(env['planetSchematics'].items())]
     f.write("""#pragma once
 #include "Commodities.hpp"
 

@@ -423,7 +423,7 @@ namespace dgmpp {
 		researchData = 1141,
 		armorResistanceShiftHardener = 1150,
 		shieldBoosterScript = 1153,
-		targetBreaker = 1154,
+		signatureSuppressor = 1154,
 		ancillaryShieldBooster = 1156,
 		heavyDefenderMissile = 1158,
 		salvageDrone = 1159,
@@ -455,7 +455,7 @@ namespace dgmpp {
 		subsystems = 1240,
 		planetManagement = 1241,
 		missileLauncherRapidHeavy = 1245,
-		empireBountyReimbursementTags = 1248,
+		bountyEncryptedBonds = 1248,
 		compressionArray = 1282,
 		expeditionFrigate = 1283,
 		warpAccelerator = 1289,
@@ -725,6 +725,15 @@ namespace dgmpp {
 		condenserPack = 4062,
 		vortonProjectorUpgrade = 4067,
 		exoticArtefact = 4070,
-		expiredJumpFilaments = 4072
+		expiredJumpFilaments = 4072,
+		encounterSurveillanceSystem = 4079,
+		disruptedGate = 4081,
+		quantumCores = 4086,
+		triglavianSpaceFilaments = 4087,
+		interdictionBurstProbes = 4088,
+		scalableDecorativeAsteroid = 4094,
+		molecularForgedMaterials = 4096,
+		tournamentChampionMonument = 4100,
+		interdictionNullifier = 4117
     };
 }

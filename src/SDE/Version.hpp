@@ -1,5 +1,5 @@
 #pragma once
 
 namespace dgmpp {
-	const SDEVersion sdeVersion{"2020-09-28"};
+	const SDEVersion sdeVersion{"2021-06-10"};
 }

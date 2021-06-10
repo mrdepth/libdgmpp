@@ -159,7 +159,7 @@ namespace dgmpp {
 			&Types::distributionConnections,
 			&Types::securityConnections,
 			&Types::microJumpDriveOperation,
-			&Types::targetBreakerAmplification,
+			&Types::signatureMasking,
 			&Types::polaris,
 			&Types::concord,
 			&Types::test,
@@ -522,7 +522,13 @@ namespace dgmpp {
 			&Types::vortonProjectorOperation,
 			&Types::smallVortonProjector,
 			&Types::mediumVortonProjector,
-			&Types::vortonArcExtension
+			&Types::vortonArcExtension,
+			&Types::bezdnacineProcessing,
+			&Types::talassoniteProcessing,
+			&Types::rakoveneProcessing,
+			&Types::salvageDroneSpecialization,
+			&Types::fleetFormations,
+			&Types::fleetCoordination
         };
     }
 }

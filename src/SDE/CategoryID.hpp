@@ -14,7 +14,7 @@ namespace dgmpp {
 		implant = 20,
 		starbase = 23,
 		subsystem = 32,
-		planetaryInteraction = 41,
+		planetaryIndustry = 41,
 		planetaryResources = 42,
 		planetaryCommodities = 43,
 		structure = 65,
